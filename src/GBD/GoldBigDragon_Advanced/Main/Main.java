@@ -54,11 +54,11 @@ public class Main extends JavaPlugin implements Listener
 	public static YamlController Main_YC,GUI_YC,Party_YC,Config_YC,Event_YC,Monster_YC,Location_YC,Scheduler_YC;
 	private YamlManager YM;
 
-	public static long serverUpdate = 20151107;
+	public static long serverUpdate = 20151108;
 	public static String serverVersion = "Advanced";
-	private static String updateCheckURL = "http://cafeattach.naver.net/75e069dac195914d6383e0d4eb087209adfb07e568/20151101_263_cafefile/22043725_1446309515063_Tw5QoM_txt/%B9%F6%C0%FC%20%C3%BC%C5%A9.txt?type=attachment";
+	private static String updateCheckURL = "https://goldbigdragon.github.io/";
 	
-	public static long currentServerUpdate = 20151107;
+	public static long currentServerUpdate = 20151108;
 	public static String currentServerVersion = "Advanced";
 	
 	public static String SpawnMobName;
@@ -182,11 +182,13 @@ public class Main extends JavaPlugin implements Listener
 			in = new BufferedInputStream(urlConnection.getInputStream());
 			byte[] bufRead = new byte[10];
 			int lenRead = 0;
-			while ((lenRead = in.read(bufRead)) > 0)
-			sb.append(new String(bufRead, 0, lenRead));
-			String ParsedString = sb.toString();
-			String Version = ParsedString.split("%enter%")[0].split(": ")[1];
-			Long Update = Long.parseLong(ParsedString.split("%enter%")[1].split(": ")[1]);
+			
+			while ((lenRead = in.read(bufRead)) >0)
+				sb.append(new String(bufRead, 0, lenRead));
+			String[] Parsed = sb.toString().split("<br>");
+			
+			String Version = Parsed[1].split(": ")[1];
+			long Update = Long.parseLong(Parsed[2].split(": ")[1]);
 			
 		  	Bukkit.getConsoleSender().sendMessage(ChatColor.WHITE + "최신 버전 : "+Version);
 		  	Bukkit.getConsoleSender().sendMessage(ChatColor.GRAY + "현재 버전 : "+serverVersion);
