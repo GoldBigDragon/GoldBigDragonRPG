@@ -155,10 +155,23 @@ public class OPBoxGUI extends GUIutil
 		else
 			Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "퇴장 메시지", 166,0,1,Arrays.asList(ChatColor.RED+"[제거]",ChatColor.GRAY + "퇴장 메시지가 없습니다.","",ChatColor.YELLOW+"[좌 클릭시 퇴장 메시지 등록]"), 15, inv);
 		Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "공지사항", 323,0,1,Arrays.asList(ChatColor.GRAY + "서버에 일정 시간마다",ChatColor.GRAY+"공지사항을 알립니다.","",ChatColor.YELLOW+"[좌 클릭시 공지사항 설정]"), 16, inv);
-		
-		
-		
-		
+
+		if(Config.getString("Server.ChatPrefix")==null)
+			ItemStackStack(getPlayerSkull(ChatColor.GREEN +""+ ChatColor.BOLD + "채팅 형태", 1, Arrays.asList(ChatColor.GRAY+"채팅 형태를 변경합니다.",ChatColor.GRAY+"단, 형태를 변경할 경우",ChatColor.GRAY+"모든 일반 채팅이 브로드",ChatColor.GRAY+"캐스트 형식으로 변경되므로",ChatColor.GRAY+"주의해야 합니다.","",ChatColor.DARK_AQUA+"[현재 채팅 형태]",ChatColor.WHITE+"[   없음   ]","",ChatColor.YELLOW+"[좌 클릭시 접두사 변경]",ChatColor.RED+"[우 클릭시 접두사 제거]","",ChatColor.GREEN+"[코드 제공]",ChatColor.WHITE+""+ChatColor.BOLD+"B4TT3RY"), "B4TT3RY__"), 19, inv);
+		else
+		{
+			String Prefix = Config.getString("Server.ChatPrefix");
+			Prefix=Prefix.replace("%t%","[시각]");
+			Prefix=Prefix.replace("%gm%","[게임 모드]");
+			Prefix=Prefix.replace("%ct%","[채팅 타입]");
+			Prefix=Prefix.replace("%lv%","[레벨]");
+			Prefix=Prefix.replace("%rlv%","[누적 레벨]");
+			Prefix=Prefix.replace("%job%","[직업]");
+			Prefix=Prefix.replace("%player%","[닉네임]");
+			Prefix=Prefix.replace("%message%", "[내용]");
+			ItemStackStack(getPlayerSkull(ChatColor.GREEN +""+ ChatColor.BOLD + "채팅 형태", 1, Arrays.asList(ChatColor.GRAY+"채팅 형태를 변경합니다.",ChatColor.GRAY+"단, 형태를 변경할 경우",ChatColor.GRAY+"모든 일반 채팅이 브로드",ChatColor.GRAY+"캐스트 형식으로 변경되므로",ChatColor.GRAY+"주의해야 합니다.","",ChatColor.DARK_AQUA+"[현재 채팅 형태]",ChatColor.WHITE+Prefix,"",ChatColor.YELLOW+"[좌 클릭시 접두사 변경]",ChatColor.RED+"[우 클릭시 접두사 제거]","",ChatColor.GREEN+"[코드 제공]",ChatColor.WHITE+""+ChatColor.BOLD+"B4TT3RY"), "B4TT3RY__"), 19, inv);
+		}
+
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
 		Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "작업 관리자 창을 닫습니다."), 53, inv);
 		
@@ -181,7 +194,7 @@ public class OPBoxGUI extends GUIutil
 				String AreaName = BroadCastList[count].toString();
 				
 				Stack2(ChatColor.BLACK + "" + ChatColor.BOLD + count, 340,0,1,Arrays.asList(BroadCast.getString(count+"")
-						,"",ChatColor.RED+"[Shift + 우클릭시 알리 삭제]"), loc, inv);
+						,"",ChatColor.RED+"[Shift + 우클릭시 알림 삭제]"), loc, inv);
 				
 				loc=loc+1;
 			}
@@ -412,6 +425,37 @@ public class OPBoxGUI extends GUIutil
 		case 16://공지사항
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
 			OPBoxGUI_BroadCast(player, 0);
+			return;
+		case 19://채팅 형태 변경
+			if(event.isLeftClick())
+			{
+				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+				player.closeInventory();
+				Main.UserData.get(player).setType("System");
+				Main.UserData.get(player).setString((byte)1,"CCP");
+				player.sendMessage(ChatColor.GREEN+"[SYSTEM] : 채팅 형태를 입력 해 주세요!");
+				player.sendMessage(ChatColor.GOLD + "%t%"+ChatColor.WHITE + " - 현재 시각 지칭하기 -");
+				player.sendMessage(ChatColor.GOLD + "%gm%"+ChatColor.WHITE + " - 게임모드 지칭하기 -");
+				player.sendMessage(ChatColor.GOLD + "%ct%"+ChatColor.WHITE + " - 채팅 타입 지칭하기 -");
+				player.sendMessage(ChatColor.GOLD + "%lv%"+ChatColor.WHITE + " - 레벨 지칭하기 -");
+				player.sendMessage(ChatColor.GOLD + "%rlv%"+ChatColor.WHITE + " - 누적 레벨 지칭하기 - (서버 성향이 메이플스토리일 경우 쓸모 없음.)");
+				player.sendMessage(ChatColor.GOLD + "%job%"+ChatColor.WHITE + " - 직업 지칭하기 - (서버 성향이 마비노기일 경우 쓸모 없음.)");
+				player.sendMessage(ChatColor.GOLD + "%player%"+ChatColor.WHITE + " - 플레이어 지칭하기 -");
+				player.sendMessage(ChatColor.GOLD + "%message%"+ChatColor.WHITE + " - 채팅 내용 지칭하기 -");
+				player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
+				ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
+						ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
+				ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
+						ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
+			}
+			else if(event.isRightClick())
+			{
+				s.SP(player, Sound.LAVA_POP, 0.8F, 1.0F);
+				Config.removeKey("Server.ChatPrefix");
+				Config.saveConfig();
+				player.sendMessage(ChatColor.RED+"[SYSTEM] : 접두사를 삭제하였습니다!");
+				OPBoxGUI_Setting(player);
+			}
 			return;
 		case 45://이전 목록
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.8F);

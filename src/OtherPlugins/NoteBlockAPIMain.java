@@ -69,7 +69,7 @@ public class NoteBlockAPIMain implements Listener
 		if(Musics.size()==0)
 		{
 			player.sendMessage(ChatColor.RED+"[BGM] : 재생 가능한 nbs파일이 없습니다! nbs 파일을 아래 경로에 넣어 주세요.");
-			player.sendMessage(ChatColor.RED+"[자신의 버킷 폴더] -> [plugins] -> [GoldBigDragon_Advanced] -> [NoteBlockSound]");
+			player.sendMessage(ChatColor.RED+"[자신의 버킷 폴더] -> [plugins] -> [GoldBigDragonRPG] -> [NoteBlockSound]");
 			return false;
 		}
 		else

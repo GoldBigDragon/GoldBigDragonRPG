@@ -1,10 +1,12 @@
 package GBD.GoldBigDragon_Advanced.Event;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.WorldCreator;
@@ -64,36 +66,37 @@ public class PlayerAction
 		{
 			YamlController Location_YC = GBD.GoldBigDragon_Advanced.Main.Main.Location_YC;
 			YamlManager AreaList = Location_YC.getNewConfig("Area/AreaList.yml");
-			if(AreaList.getConfigurationSection(Area+".MonsterSpawnRule").getKeys(false).size()!=0)
-				if(GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.contains(Area)==false)
-				{
-					GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.add(Area);
-					Long UTC = new GBD.GoldBigDragon_Advanced.Util.ETC().getNowUTC()+5;
-					for(int count = 0; count <AreaList.getConfigurationSection(Area+".MonsterSpawnRule").getKeys(false).size();count++)
+			if(AreaList.contains(Area+".MonsterSpawnRule")==true)
+				if(AreaList.getConfigurationSection(Area+".MonsterSpawnRule").getKeys(false).size()!=0)
+					if(GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.contains(Area)==false)
 					{
-						for(;;)
+						GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.add(Area);
+						Long UTC = new GBD.GoldBigDragon_Advanced.Util.ETC().getNowUTC()+5;
+						for(int count = 0; count <AreaList.getConfigurationSection(Area+".MonsterSpawnRule").getKeys(false).size();count++)
 						{
-							if(GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.containsKey(UTC))
-								UTC=UTC+1;
-							else
-								break;
+							for(;;)
+							{
+								if(GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.containsKey(UTC))
+									UTC=UTC+1;
+								else
+									break;
+							}
+							GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleObject OBJECT = new GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleObject(UTC, "A_MS");
+							OBJECT.setString((byte)0, Area);
+							OBJECT.setString((byte)1, AreaList.getString(Area+".MonsterSpawnRule."+count+".loc.world"));
+							if(AreaList.contains(Area+".MonsterSpawnRule."+count+".Monster"))
+								OBJECT.setString((byte)2, AreaList.getString(Area+".MonsterSpawnRule."+count+".Monster"));
+							OBJECT.setInt((byte)0, AreaList.getInt(Area+".MonsterSpawnRule."+count+".loc.x"));
+							OBJECT.setInt((byte)1, AreaList.getInt(Area+".MonsterSpawnRule."+count+".loc.y"));
+							OBJECT.setInt((byte)2, AreaList.getInt(Area+".MonsterSpawnRule."+count+".loc.z"));
+							OBJECT.setInt((byte)3, AreaList.getInt(Area+".MonsterSpawnRule."+count+".range"));
+							OBJECT.setInt((byte)4, AreaList.getInt(Area+".MonsterSpawnRule."+count+".count"));
+							OBJECT.setInt((byte)5, AreaList.getInt(Area+".MonsterSpawnRule."+count+".max"));
+							OBJECT.setMaxCount(AreaList.getInt(Area+".MonsterSpawnRule."+count+".timer"));
+							GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.put(UTC, OBJECT);
 						}
-						GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleObject OBJECT = new GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleObject(UTC, "A_MS");
-						OBJECT.setString((byte)0, Area);
-						OBJECT.setString((byte)1, AreaList.getString(Area+".MonsterSpawnRule."+count+".loc.world"));
-						if(AreaList.contains(Area+".MonsterSpawnRule."+count+".Monster"))
-							OBJECT.setString((byte)2, AreaList.getString(Area+".MonsterSpawnRule."+count+".Monster"));
-						OBJECT.setInt((byte)0, AreaList.getInt(Area+".MonsterSpawnRule."+count+".loc.x"));
-						OBJECT.setInt((byte)1, AreaList.getInt(Area+".MonsterSpawnRule."+count+".loc.y"));
-						OBJECT.setInt((byte)2, AreaList.getInt(Area+".MonsterSpawnRule."+count+".loc.z"));
-						OBJECT.setInt((byte)3, AreaList.getInt(Area+".MonsterSpawnRule."+count+".range"));
-						OBJECT.setInt((byte)4, AreaList.getInt(Area+".MonsterSpawnRule."+count+".count"));
-						OBJECT.setInt((byte)5, AreaList.getInt(Area+".MonsterSpawnRule."+count+".max"));
-						OBJECT.setMaxCount(AreaList.getInt(Area+".MonsterSpawnRule."+count+".timer"));
-						GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.put(UTC, OBJECT);
+						
 					}
-					
-				}
 			if(Main.PlayerCurrentArea.get(player).equals(Area)==false)
 			{
 				if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
@@ -206,50 +209,125 @@ public class PlayerAction
 	  		stat.CreateNewStats(player);
 
 	  	YamlManager Chatter = Main_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
-	  	
-	  	switch(Chatter.getInt("Option.ChattingType"))
+	  	YamlManager Config = Main_YC.getNewConfig("config.yml");
+	  	String Prefix = "";
+	  	if(Config.contains("Server.ChatPrefix"))
 	  	{
-	  	case 0:
-	  		return;
-	  	case 1: 
+		  	Calendar C = Calendar.getInstance();
+	  		Prefix = Config.getString("Server.ChatPrefix");
+			Prefix=Prefix.replace("%t%",C.get(Calendar.HOUR_OF_DAY)+"시"+C.get(Calendar.MINUTE)+"분");
+			if(player.getGameMode()==GameMode.SURVIVAL)
+				Prefix=Prefix.replace("%gm%","서바이벌");
+			else if(player.getGameMode()==GameMode.ADVENTURE)
+				Prefix=Prefix.replace("%gm%","어드밴쳐");
+			else if(player.getGameMode()==GameMode.CREATIVE)
+				Prefix=Prefix.replace("%gm%","크리에이티브");
+			else if(player.getGameMode()==GameMode.SPECTATOR)
+				Prefix=Prefix.replace("%gm%","관전");
+			if(Chatter.getInt("Option.ChattingType")==0)
+				Prefix=Prefix.replace("%ct%","일반");
+			else if(Chatter.getInt("Option.ChattingType")==1)
+				Prefix=Prefix.replace("%ct%","파티");
+			else if(Chatter.getInt("Option.ChattingType")==3)
+				Prefix=Prefix.replace("%ct%","관리자");
+			Prefix=Prefix.replace("%lv%",Chatter.getInt("Stat.Level")+"");
+			Prefix=Prefix.replace("%rlv%",Chatter.getInt("Stat.RealLevel")+"");
+		  	YamlManager Job = Main_YC.getNewConfig("Skill/PlayerData/" + player.getUniqueId()+".yml");
+			Prefix=Prefix.replace("%job%",Job.getString("Job.Type"));
+			Prefix=Prefix.replace("%player%",player.getName());
+			Prefix=Prefix.replace("%message%",event.getMessage());
   			event.setCancelled(true);
-	  		if(Main.PartyJoiner.containsKey(player) == false)
-	  		{
-	  			player.sendMessage(ChatColor.BLUE + "[파티] : 파티에 가입되어 있지 않습니다!");
-  				sound.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
-	  		}
-	  		else
-	  		{
-	  			Main.Party.get(Main.PartyJoiner.get(player)).PartyBroadCastMessage(ChatColor.BLUE + "[파티] "+player.getName()+" : " + event.getMessage(),null);
-		  		Bukkit.getConsoleSender().sendMessage("[파티] "+player.getName()+" : " + event.getMessage());
-	  		}
-  			return;
-	  	case 2:
-  			event.setCancelled(true);
-	  		return;
-	  	case 3:
-  			event.setCancelled(true);
-  			if(player.isOp() == false)
-  			{
-	  			player.sendMessage(ChatColor.LIGHT_PURPLE + "[관리자] : 당신은 관리자가 아닙니다!");
-  				sound.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
-  			}
-  			else
-  			{
-  		    	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
-  		    	Player[] a = new Player[playerlist.size()];
-  		    	playerlist.toArray(a);
-  	  			for(int count = 0; count<a.length;count++)
-  	  			{
-  	  		    	if(a[count].isOnline() == true)
-  	  		    	{
-  	  		    		Player send = (Player) Bukkit.getOfflinePlayer(((Player)a[count]).getName());
-  	  		    		send.sendMessage(ChatColor.LIGHT_PURPLE + "[관리자] "+player.getName()+" : " + event.getMessage());
-  	  		    	}	
-  	  		    }
-  		  		Bukkit.getConsoleSender().sendMessage("[관리자] "+player.getName()+" : " + event.getMessage());
-  			}
-  			return;
+		  	switch(Chatter.getInt("Option.ChattingType"))
+		  	{
+		  	case 0:
+		  		Bukkit.broadcastMessage(Prefix);
+		  		return;
+		  	case 1: 
+		  		if(Main.PartyJoiner.containsKey(player) == false)
+		  		{
+		  			player.sendMessage(ChatColor.BLUE + "[파티] : 파티에 가입되어 있지 않습니다!");
+	  				sound.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+		  		}
+		  		else
+		  		{
+		  			Main.Party.get(Main.PartyJoiner.get(player)).PartyBroadCastMessage(ChatColor.BLUE + "[파티] "+Prefix,null);
+			  		Bukkit.getConsoleSender().sendMessage("[파티] "+Prefix);
+		  		}
+	  			return;
+		  	case 2:
+	  			event.setCancelled(true);
+		  		return;
+		  	case 3:
+	  			event.setCancelled(true);
+	  			if(player.isOp() == false)
+	  			{
+		  			player.sendMessage(ChatColor.LIGHT_PURPLE + "[관리자] : 당신은 관리자가 아닙니다!");
+	  				sound.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+	  			}
+	  			else
+	  			{
+	  		    	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
+	  		    	Player[] a = new Player[playerlist.size()];
+	  		    	playerlist.toArray(a);
+	  	  			for(int count = 0; count<a.length;count++)
+	  	  			{
+	  	  		    	if(a[count].isOnline() == true)
+	  	  		    	{
+	  	  		    		Player send = (Player) Bukkit.getOfflinePlayer(((Player)a[count]).getName());
+	  	  		    		send.sendMessage(ChatColor.LIGHT_PURPLE + "[관리자] "+Prefix);
+	  	  		    	}	
+	  	  		    }
+	  		  		Bukkit.getConsoleSender().sendMessage("[관리자] "+Prefix);
+	  			}
+	  			return;
+		  	}
+	  	}
+	  	else
+	  	{
+		  	switch(Chatter.getInt("Option.ChattingType"))
+		  	{
+		  	case 0:
+		  		return;
+		  	case 1: 
+	  			event.setCancelled(true);
+		  		if(Main.PartyJoiner.containsKey(player) == false)
+		  		{
+		  			player.sendMessage(ChatColor.BLUE + "[파티] : 파티에 가입되어 있지 않습니다!");
+	  				sound.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+		  		}
+		  		else
+		  		{
+		  			Main.Party.get(Main.PartyJoiner.get(player)).PartyBroadCastMessage(ChatColor.BLUE + "[파티] "+player.getName()+" : " + event.getMessage(),null);
+			  		Bukkit.getConsoleSender().sendMessage("[파티] "+player.getName()+" : " + event.getMessage());
+		  		}
+	  			return;
+		  	case 2:
+	  			event.setCancelled(true);
+		  		return;
+		  	case 3:
+	  			event.setCancelled(true);
+	  			if(player.isOp() == false)
+	  			{
+		  			player.sendMessage(ChatColor.LIGHT_PURPLE + "[관리자] : 당신은 관리자가 아닙니다!");
+	  				sound.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+	  			}
+	  			else
+	  			{
+	  		    	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
+	  		    	Player[] a = new Player[playerlist.size()];
+	  		    	playerlist.toArray(a);
+	  	  			for(int count = 0; count<a.length;count++)
+	  	  			{
+	  	  		    	if(a[count].isOnline() == true)
+	  	  		    	{
+	  	  		    		Player send = (Player) Bukkit.getOfflinePlayer(((Player)a[count]).getName());
+	  	  		    		send.sendMessage(ChatColor.LIGHT_PURPLE + "[관리자] "+player.getName()+" : " + event.getMessage());
+	  	  		    	}	
+	  	  		    }
+	  		  		Bukkit.getConsoleSender().sendMessage("[관리자] "+player.getName()+" : " + event.getMessage());
+	  			}
+	  			return;
+		  	}
 	  	}
 	}
 
@@ -2242,9 +2320,17 @@ public class PlayerAction
 	    String message = ChatColor.stripColor(event.getMessage());
 		switch(Main.UserData.get(player).getString((byte)1))
 		{
+		case "CCP"://ChangeChatPrefix
+			s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+			Config.set("Server.ChatPrefix", event.getMessage());
+			Config.saveConfig();
+			Main.UserData.get(player).clearAll();
+			new GBD.GoldBigDragon_Advanced.GUI.OPBoxGUI().OPBoxGUI_Setting(player);
+			return;
 		case "BMT"://BroadcastMessageTick
 			if(isIntMinMax(message, player, 1, 3600))
 			{
+				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
 				Config.set("Server.BroadCastSecond", Integer.parseInt(message));
 				Config.saveConfig();
 				new GBD.GoldBigDragon_Advanced.GUI.OPBoxGUI().OPBoxGUI_BroadCast(player, 0);
@@ -2252,6 +2338,7 @@ public class PlayerAction
 			}
 			return;
 		case "NBM"://NewBroadcastMessage
+			s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
 			YamlManager BroadCast =GUI_YC.getNewConfig("BroadCast.yml");
 			BroadCast.set(Main.UserData.get(player).getInt((byte)0)+"", ChatColor.WHITE+event.getMessage());
 			BroadCast.saveConfig();
@@ -2259,6 +2346,7 @@ public class PlayerAction
 			new GBD.GoldBigDragon_Advanced.GUI.OPBoxGUI().OPBoxGUI_BroadCast(player, 0);
 			return;
 		case "JM"://JoinMessage
+			s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
 			if(message.equals("없음"))
 				Config.set("Server.JoinMessage", null);
 			else
@@ -2268,6 +2356,7 @@ public class PlayerAction
 			new GBD.GoldBigDragon_Advanced.GUI.OPBoxGUI().OPBoxGUI_Setting(player);
 			return;
 		case "QM"://QuitMessage
+			s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
 			if(message.equals("없음"))
 				Config.set("Server.QuitMessage", null);
 			else

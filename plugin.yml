@@ -1,6 +1,6 @@
 ﻿name: GoldBigDragonRPG
 main: GBD.GoldBigDragon_Advanced.Main.Main
-version: 1.0
+version: 20151108
 description: Mabinogi!!!
 commands:
   돈:
