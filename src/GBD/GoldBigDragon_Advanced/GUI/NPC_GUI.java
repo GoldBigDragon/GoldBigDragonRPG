@@ -38,7 +38,8 @@ public class NPC_GUI extends GUIutil
 		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "선물하기", 54,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"에게",ChatColor.GRAY + "자신이 가지고 있는",ChatColor.GRAY + "아이템을 선물합니다.",ChatColor.GRAY + "(NPC와의 호감도 상승)","",
 				ChatColor.RED+"[GoldBigDragonRPG 버전 업데이트 필요]",ChatColor.RED+"현재 버전 : 프로토타입 1.0"), 16, inv);
 		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "나가기", 324,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"와의",ChatColor.GRAY + "대화를 종료합니다.",ChatColor.BLACK + Main.PlayerClickedNPCuuid.get(player)), 26, inv);
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "GUI 비 활성화", 166,0,1,Arrays.asList(ChatColor.GRAY +"이 NPC는 GoldBigDragonRPG의",ChatColor.GRAY + "NPC GUI 화면을 사용하지 않게 합니다.",""), 8, inv);
+		if(player.isOp())
+			Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "GUI 비 활성화", 166,0,1,Arrays.asList(ChatColor.GRAY +"이 NPC는 GoldBigDragonRPG의",ChatColor.GRAY + "NPC GUI 화면을 사용하지 않게 합니다.",""), 8, inv);
 
 		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
 		YamlManager NPCscript = GUI_YC.getNewConfig("NPC/NPCData/"+ Main.PlayerClickedNPCuuid.get(player)  +".yml");

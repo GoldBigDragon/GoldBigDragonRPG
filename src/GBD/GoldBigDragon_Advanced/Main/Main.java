@@ -12,6 +12,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.WorldCreator;
 import org.bukkit.command.Command;
@@ -750,7 +751,22 @@ public class Main extends JavaPlugin implements Listener
 			case"테스트":
 				if(player.isOp() == true)
 				{
-				 	s.SP((Player)talker, org.bukkit.Sound.VILLAGER_HAGGLE, 1.0F, 1.8F);
+					long UTC2 = new GBD.GoldBigDragon_Advanced.Util.ETC().getNowUTC();
+					Location DestinationLocation = player.getWorld().getSpawnLocation();
+					GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleObject STSO = new GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleObject(UTC2, "NV");
+					STSO.setCount(0);//횟 수 초기화
+					STSO.setMaxCount(50);//N초간 네비게이션
+					//-1초 설정시, N초간이 아닌, 찾아 갈 때 까지 네비게이션 지원
+					STSO.setString((byte)1, DestinationLocation.getWorld().getName());//목적지 월드 이름 저장
+					STSO.setString((byte)2, player.getName());//플레이어 이름 저장
+					
+					STSO.setInt((byte)0, (int)DestinationLocation.getX());//목적지X 위치저장
+					STSO.setInt((byte)1, (int)DestinationLocation.getY());//목적지Y 위치저장
+					STSO.setInt((byte)2, (int)DestinationLocation.getZ());//목적지Z 위치저장
+					
+					GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.put(UTC2, STSO);
+					
+					/*
 				    for(int count= 0; count < GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.size(); count++)
 				    	player.sendMessage(ChatColor.GREEN+"현재 몬스터 스폰 중인 영역 : "+GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.get(count));
 				    for(int count= 0; count < GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.size(); count++)
@@ -763,6 +779,7 @@ public class Main extends JavaPlugin implements Listener
 				    	player.sendMessage(ChatColor.GREEN+"["+UTC+"] : "+GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.get(UTC).getString((byte)3));
 				    	player.sendMessage(ChatColor.BLUE+"────────────────────────────");
 				    }
+				    */
 				}
 				else
 				{
