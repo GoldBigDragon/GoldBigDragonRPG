@@ -752,7 +752,17 @@ public class Main extends JavaPlugin implements Listener
 				{
 				 	s.SP((Player)talker, org.bukkit.Sound.VILLAGER_HAGGLE, 1.0F, 1.8F);
 				    for(int count= 0; count < GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.size(); count++)
-				    	player.sendMessage(GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.get(count));
+				    	player.sendMessage(ChatColor.GREEN+"현재 몬스터 스폰 중인 영역 : "+GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.get(count));
+				    for(int count= 0; count < GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.size(); count++)
+				    {
+				    	long UTC = Long.parseLong(GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.keySet().toArray()[count].toString());
+				    	player.sendMessage(ChatColor.GREEN+"["+UTC+"] : "+GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.get(UTC).getType());
+				    	player.sendMessage(ChatColor.GREEN+"["+UTC+"] : "+GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.get(UTC).getString((byte)0));
+				    	player.sendMessage(ChatColor.GREEN+"["+UTC+"] : "+GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.get(UTC).getString((byte)1));
+				    	player.sendMessage(ChatColor.GREEN+"["+UTC+"] : "+GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.get(UTC).getString((byte)2));
+				    	player.sendMessage(ChatColor.GREEN+"["+UTC+"] : "+GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.get(UTC).getString((byte)3));
+				    	player.sendMessage(ChatColor.BLUE+"────────────────────────────");
+				    }
 				}
 				else
 				{
@@ -802,6 +812,34 @@ public class Main extends JavaPlugin implements Listener
 					    	}
 					    }
 					    player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 반경 "+args[0]+"블록 이내에 있던 "+amount+"마리의 엔티티를 삭제하였습니다!");
+					}
+					else
+					{
+						talker.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
+						s.SP((Player)talker, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+						return true;
+					}
+					return true;
+				case "아이템제거":
+					if(args.length != 1 ||Integer.parseInt(args[0]) > 10000)
+					{
+						talker.sendMessage(ChatColor.RED + "[SYSTEM] : /아이템제거 [1~10000]");
+						s.SP((Player)talker, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+						return true;
+					}
+					if(player.isOp() == true)
+					{
+					    List<Entity> entities = player.getNearbyEntities(Integer.parseInt(args[0]), Integer.parseInt(args[0]), Integer.parseInt(args[0]));
+					    int amount = 0;
+					    for(int count = 0; count < entities.size(); count++)
+					    {
+					    	if(entities.get(count).getType() == EntityType.DROPPED_ITEM)
+					    	{
+					    		entities.get(count).remove();
+					    		amount = amount+1;
+					    	}
+					    }
+					    player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 반경 "+args[0]+"블록 이내에 있던 "+amount+"개의 아이템을 삭제하였습니다!");
 					}
 					else
 					{

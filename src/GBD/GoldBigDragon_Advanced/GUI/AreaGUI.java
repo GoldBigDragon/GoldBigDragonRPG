@@ -178,22 +178,23 @@ public class AreaGUI extends GUIutil
 		for(int count = page*45; count <RuleList.length ;count++)
 		{
 			if(count > RuleList.length || loc >= 45) break;
-			if(AreaConfig.contains(AreaName+".MonsterSpawnRule."+count+".Monster"))
-				Stack2(ChatColor.BLACK + "" + ChatColor.BOLD + (count), 383,0,1,Arrays.asList(
-						ChatColor.GOLD+"[     스폰 옵션     ]",ChatColor.RED+"-영역에 유저가 있을 때만 작동 -",ChatColor.GOLD+"월드 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+count+".loc.world"),
-						ChatColor.GOLD+"좌표 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+count+".loc.x")+","+AreaConfig.getString(AreaName+".MonsterSpawnRule."+count+".loc.y")+","+AreaConfig.getString(AreaName+".MonsterSpawnRule."+count+".loc.z"),
-						ChatColor.GOLD+"인식 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+count+".range")+"블록",
-						ChatColor.GOLD+"시간 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+count+".timer")+"초마다 "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+count+".count")+"마리 스폰",
-						ChatColor.GOLD+"최대 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+count+".max")+"마리",
-						ChatColor.GOLD+"스폰 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+count+".Monster")
+			String RuleNumber = RuleList[count].toString();
+			if(AreaConfig.contains(AreaName+".MonsterSpawnRule."+RuleNumber+".Monster"))
+				Stack2(ChatColor.BLACK + "" + ChatColor.BOLD + (RuleNumber), 383,0,1,Arrays.asList(
+						ChatColor.GOLD+"[     스폰 옵션     ]",ChatColor.RED+"-영역에 유저가 있을 때만 작동 -",ChatColor.GOLD+"월드 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+RuleNumber+".loc.world"),
+						ChatColor.GOLD+"좌표 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+RuleNumber+".loc.x")+","+AreaConfig.getString(AreaName+".MonsterSpawnRule."+RuleNumber+".loc.y")+","+AreaConfig.getString(AreaName+".MonsterSpawnRule."+RuleNumber+".loc.z"),
+						ChatColor.GOLD+"인식 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+RuleNumber+".range")+"블록",
+						ChatColor.GOLD+"시간 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+RuleNumber+".timer")+"초마다 "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+RuleNumber+".count")+"마리 스폰",
+						ChatColor.GOLD+"최대 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+RuleNumber+".max")+"마리",
+						ChatColor.GOLD+"스폰 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+RuleNumber+".Monster")
 						,"",ChatColor.RED+"[Shift + 우클릭시 룰 삭제]"), loc, inv);
 			else
-				Stack2(ChatColor.BLACK + "" + ChatColor.BOLD + (count), 52,0,1,Arrays.asList(
-					ChatColor.GOLD+"[     스폰 옵션     ]",ChatColor.RED+"-영역에 유저가 있을 때만 작동 -",ChatColor.GOLD+"월드 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+count+".loc.world"),
-					ChatColor.GOLD+"좌표 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+count+".loc.x")+","+AreaConfig.getString(AreaName+".MonsterSpawnRule."+count+".loc.y")+","+AreaConfig.getString(AreaName+".MonsterSpawnRule."+count+".loc.z"),
-					ChatColor.GOLD+"인식 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+count+".range")+"블록",
-					ChatColor.GOLD+"시간 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+count+".timer")+"초마다 "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+count+".count")+"마리 스폰",
-					ChatColor.GOLD+"최대 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+count+".max")+"마리"
+				Stack2(ChatColor.BLACK + "" + ChatColor.BOLD + (RuleNumber), 52,0,1,Arrays.asList(
+					ChatColor.GOLD+"[     스폰 옵션     ]",ChatColor.RED+"-영역에 유저가 있을 때만 작동 -",ChatColor.GOLD+"월드 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+RuleNumber+".loc.world"),
+					ChatColor.GOLD+"좌표 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+RuleNumber+".loc.x")+","+AreaConfig.getString(AreaName+".MonsterSpawnRule."+RuleNumber+".loc.y")+","+AreaConfig.getString(AreaName+".MonsterSpawnRule."+RuleNumber+".loc.z"),
+					ChatColor.GOLD+"인식 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+RuleNumber+".range")+"블록",
+					ChatColor.GOLD+"시간 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+RuleNumber+".timer")+"초마다 "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+RuleNumber+".count")+"마리 스폰",
+					ChatColor.GOLD+"최대 : "+AreaConfig.getString(AreaName+".MonsterSpawnRule."+RuleNumber+".max")+"마리"
 					,"",ChatColor.RED+"[Shift + 우클릭시 룰 삭제]"), loc, inv);
 			loc=loc+1;
 		}
@@ -448,7 +449,7 @@ public class AreaGUI extends GUIutil
 		player.openInventory(inv);
 	}
 	
-	public void AreaSpawnSpecialMonsterListGUI(Player player, int page,String AreaName,int RuleCount)
+	public void AreaSpawnSpecialMonsterListGUI(Player player, int page,String AreaName,String RuleCount)
 	{
 		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
 		YamlManager MobList = GUI_YC.getNewConfig("Monster/MonsterList.yml");
@@ -534,7 +535,7 @@ public class AreaGUI extends GUIutil
 		if(page!=0)
 		Stack(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack(ChatColor.WHITE + "" + ChatColor.BOLD + "취소", 166,0,1,Arrays.asList(ChatColor.GRAY + "따로 새로운 몬스터를 스폰하지 않고,",ChatColor.GRAY+"영역에 등록 된 몬스터들 중,"+ChatColor.GRAY+"랜덤하게 스폰 합니다.",ChatColor.BLACK+AreaName,ChatColor.BLACK+""+RuleCount), 49, inv);
+		Stack(ChatColor.WHITE + "" + ChatColor.BOLD + "취소", 166,0,1,Arrays.asList(ChatColor.GRAY + "지정 몬스터 스폰대신",ChatColor.GRAY+"영역에 등록 된 몬스터를",ChatColor.GRAY+"랜덤하게 스폰 합니다.",ChatColor.BLACK+AreaName,ChatColor.BLACK+""+RuleCount), 49, inv);
 		player.openInventory(inv);
 	}
 	
@@ -931,17 +932,13 @@ public class AreaGUI extends GUIutil
 			return;
 		case 49://룰 추가
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
-			int count = AreaConfig.getConfigurationSection(AreaName+".MonsterSpawnRule").getKeys(false).size();
-			AreaConfig.set(AreaName+".MonsterSpawnRule."+count+".loc.world", AreaConfig.get(AreaName+".World"));
-			AreaConfig.set(AreaName+".MonsterSpawnRule."+count+".loc.x", AreaConfig.get(AreaName+".SpawnLocation.X"));
-			AreaConfig.set(AreaName+".MonsterSpawnRule."+count+".loc.y", AreaConfig.get(AreaName+".SpawnLocation.Y"));
-			AreaConfig.set(AreaName+".MonsterSpawnRule."+count+".loc.z", AreaConfig.get(AreaName+".SpawnLocation.Z"));
+			long count = new GBD.GoldBigDragon_Advanced.Util.ETC().getNowUTC();
 			AreaConfig.set(AreaName+".MonsterSpawnRule."+count+".range", 1);
 			AreaConfig.set(AreaName+".MonsterSpawnRule."+count+".count", 4);
 			AreaConfig.set(AreaName+".MonsterSpawnRule."+count+".timer", 10);
 			AreaConfig.set(AreaName+".MonsterSpawnRule."+count+".max", 10);
 			Main.UserData.get(player).setType("Area");
-			Main.UserData.get(player).setInt((byte)1, count);
+			Main.UserData.get(player).setString((byte)1, count+"");
 			Main.UserData.get(player).setString((byte)2, AreaName);
 			Main.UserData.get(player).setString((byte)3, "MLS");
 			AreaConfig.saveConfig();
@@ -956,14 +953,9 @@ public class AreaGUI extends GUIutil
 			if(event.isRightClick()&&event.isShiftClick())
 			{
 				s.SP(player, Sound.LAVA_POP, 1.0F, 1.0F);
-				int Acount =  AreaConfig.getConfigurationSection(AreaName+".MonsterSpawnRule").getKeys(false).toArray().length-1;
-				int number = ((page*45)+event.getSlot());
-				for(int counter = number;counter <Acount;counter++)
-					AreaConfig.set(AreaName+".MonsterSpawnRule."+counter, AreaConfig.get(AreaName+".MonsterSpawnRule."+(counter+1)));
-				AreaConfig.removeKey(AreaName+".MonsterSpawnRule."+Acount);
+				AreaConfig.removeKey(AreaName+".MonsterSpawnRule."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 				AreaConfig.saveConfig();
 				AreaMonsterSpawnSettingGUI(player, page, AreaName);
-				player.sendMessage(ChatColor.YELLOW+"[영역] : 변경된 몬스터 스폰 룰은 영역에 아무도 없을 때 적용됩니다!");
 			}
 		}
 	}
@@ -1017,8 +1009,8 @@ public class AreaGUI extends GUIutil
 		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		
-		String AreaName = ChatColor.stripColor(event.getInventory().getItem(49).getItemMeta().getLore().get(2));
-		int RuleCounter = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(49).getItemMeta().getLore().get(3)));
+		String AreaName = ChatColor.stripColor(event.getInventory().getItem(49).getItemMeta().getLore().get(3));
+		String RuleCounter = ChatColor.stripColor(event.getInventory().getItem(49).getItemMeta().getLore().get(4));
 
 		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
 		
@@ -1027,6 +1019,7 @@ public class AreaGUI extends GUIutil
 		case 49://나가기
 			s.SP(player, Sound.PISTON_RETRACT, 0.8F, 1.8F);
 			AreaMonsterSpawnSettingGUI(player, 0, AreaName);
+			new GBD.GoldBigDragon_Advanced.ETC.Area().AreaMonsterSpawnAdd(AreaName, RuleCounter);
 			return;
 		case 48://이전 페이지
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
@@ -1044,7 +1037,8 @@ public class AreaGUI extends GUIutil
 			AreaConfig.set(AreaName+".MonsterSpawnRule."+RuleCounter+".Monster", MobName);
 			AreaConfig.saveConfig();
 			AreaMonsterSpawnSettingGUI(player, 0, AreaName);
-			player.sendMessage(ChatColor.YELLOW+"[영역] : 변경된 몬스터 스폰 룰은 영역에 아무도 없을 때 적용됩니다!");
+			
+			new GBD.GoldBigDragon_Advanced.ETC.Area().AreaMonsterSpawnAdd(AreaName, RuleCounter);
 			return;
 		}
 	}

@@ -45,16 +45,16 @@ public class ServerTickScheduleManager
 			for(int count = 0; count < PHSF.getConfigurationSection("Schedule").getKeys(false).size(); count++)
 			{
 				long UTC =PHSF.getLong("Schedule."+count+".Tick");
-				ServerTickMain.Schedule.put(UTC, new ServerTickScheduleObject(UTC, PHSF.getString("Schedule."+count+".Type")));
-				ServerTickMain.Schedule.get(UTC).setCount(PHSF.getInt("Schedule."+count+".count"));
-				ServerTickMain.Schedule.get(UTC).setMaxCount(PHSF.getInt("Schedule."+count+".MaxCount"));
-				for(int counter=0; counter<PHSF.getConfigurationSection("Schedule."+count+".String").getKeys(false).size();counter++)
-					ServerTickMain.Schedule.get(UTC).setString((byte)counter, PHSF.getString("Schedule."+count+".String."+counter));
-				for(int counter=0; counter<PHSF.getConfigurationSection("Schedule."+count+".Int").getKeys(false).size();counter++)
-					ServerTickMain.Schedule.get(UTC).setInt((byte)counter, PHSF.getInt("Schedule."+count+".Int."+counter));
-				for(int counter=0; counter<PHSF.getConfigurationSection("Schedule."+count+".Bool").getKeys(false).size();counter++)
-					ServerTickMain.Schedule.get(UTC).setBoolean((byte)counter, PHSF.getBoolean("Schedule."+count+".Bool."+counter));
-				PHSF.saveConfig();
+				ServerTickScheduleObject STSO = new ServerTickScheduleObject(UTC, PHSF.getString("Schedule."+count+".Type"));
+				STSO.setCount(PHSF.getInt("Schedule."+count+".count"));
+				STSO.setMaxCount(PHSF.getInt("Schedule."+count+".MaxCount"));
+				for(int counter=0; counter<STSO.getStringSize();counter++)
+					STSO.setString((byte)counter, PHSF.getString("Schedule."+count+".String."+counter));
+				for(int counter=0; counter<STSO.getIntSize();counter++)
+					STSO.setInt((byte)counter, PHSF.getInt("Schedule."+count+".Int."+counter));
+				for(int counter=0; counter<STSO.getBooleanSize();counter++)
+					STSO.setBoolean((byte)counter, PHSF.getBoolean("Schedule."+count+".Bool."+counter));
+				ServerTickMain.Schedule.put(UTC, STSO);
 			}
 		}
 		PHSF.removeKey("MonbSpawningAreaList");

@@ -553,5 +553,90 @@ public class Area
 		AreaConfig.saveConfig();
 		
 	}
-	
+
+	public void AreaMonsterSpawnAdd(String AreaName, String Count)
+	{
+		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
+		YamlManager AreaConfig =GUI_YC.getNewConfig("Area/AreaList.yml");
+		if(Long.parseLong(Count)!=-1)
+		{
+			if(AreaConfig.contains(AreaName+".MonsterSpawnRule")==true)
+			{
+				if(AreaConfig.getConfigurationSection(AreaName+".MonsterSpawnRule").getKeys(false).size()!=0)
+				{
+					if(AreaConfig.getString(AreaName+".MonsterSpawnRule."+Count+".loc.world")!=null)
+					{
+						if(GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.contains(AreaName)==false)
+							GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.add(AreaName);
+						
+						Long UTC = new GBD.GoldBigDragon_Advanced.Util.ETC().getNowUTC()+5;
+						for(;;)
+						{
+							if(GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.containsKey(UTC))
+								UTC=UTC+1;
+							else
+								break;
+						}
+						GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleObject OBJECT = new GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleObject(UTC, "A_MS");
+						OBJECT.setString((byte)0, AreaName);
+						OBJECT.setString((byte)1, AreaConfig.getString(AreaName+".MonsterSpawnRule."+Count+".loc.world"));
+						if(AreaConfig.contains(AreaName+".MonsterSpawnRule."+Count+".Monster"))
+							OBJECT.setString((byte)2, AreaConfig.getString(AreaName+".MonsterSpawnRule."+Count+".Monster"));
+						OBJECT.setString((byte)3, Count);
+						OBJECT.setInt((byte)0, AreaConfig.getInt(AreaName+".MonsterSpawnRule."+Count+".loc.x"));
+						OBJECT.setInt((byte)1, AreaConfig.getInt(AreaName+".MonsterSpawnRule."+Count+".loc.y"));
+						OBJECT.setInt((byte)2, AreaConfig.getInt(AreaName+".MonsterSpawnRule."+Count+".loc.z"));
+						OBJECT.setInt((byte)3, AreaConfig.getInt(AreaName+".MonsterSpawnRule."+Count+".range"));
+						OBJECT.setInt((byte)4, AreaConfig.getInt(AreaName+".MonsterSpawnRule."+Count+".count"));
+						OBJECT.setInt((byte)5, AreaConfig.getInt(AreaName+".MonsterSpawnRule."+Count+".max"));
+						OBJECT.setMaxCount(AreaConfig.getInt(AreaName+".MonsterSpawnRule."+Count+".timer"));
+						GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.put(UTC, OBJECT);
+					}
+				}
+			}
+		}
+		else
+		{
+			if(AreaConfig.contains(AreaName+".MonsterSpawnRule")==true)
+			{
+				if(AreaConfig.getConfigurationSection(AreaName+".MonsterSpawnRule").getKeys(false).size()!=0)
+				{
+					if(GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.contains(AreaName)==false)
+					{
+						GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.add(AreaName);
+						Object[] RuleName = AreaConfig.getConfigurationSection(AreaName+".MonsterSpawnRule").getKeys(false).toArray();
+						for(int count=0;count<RuleName.length;count++)
+						{
+							String ruleNumber = RuleName[count].toString();
+							if(AreaConfig.getString(AreaName+".MonsterSpawnRule."+ruleNumber+".loc.world")!=null)
+							{
+								Long UTC = new GBD.GoldBigDragon_Advanced.Util.ETC().getNowUTC()+5;
+								for(;;)
+								{
+									if(GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.containsKey(UTC))
+										UTC=UTC+1;
+									else
+										break;
+								}
+								GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleObject OBJECT = new GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleObject(UTC, "A_MS");
+								OBJECT.setString((byte)0, AreaName);
+								OBJECT.setString((byte)1, AreaConfig.getString(AreaName+".MonsterSpawnRule."+ruleNumber+".loc.world"));
+								if(AreaConfig.contains(AreaName+".MonsterSpawnRule."+ruleNumber+".Monster"))
+									OBJECT.setString((byte)2, AreaConfig.getString(AreaName+".MonsterSpawnRule."+ruleNumber+".Monster"));
+								OBJECT.setString((byte)3, ruleNumber);
+								OBJECT.setInt((byte)0, AreaConfig.getInt(AreaName+".MonsterSpawnRule."+ruleNumber+".loc.x"));
+								OBJECT.setInt((byte)1, AreaConfig.getInt(AreaName+".MonsterSpawnRule."+ruleNumber+".loc.y"));
+								OBJECT.setInt((byte)2, AreaConfig.getInt(AreaName+".MonsterSpawnRule."+ruleNumber+".loc.z"));
+								OBJECT.setInt((byte)3, AreaConfig.getInt(AreaName+".MonsterSpawnRule."+ruleNumber+".range"));
+								OBJECT.setInt((byte)4, AreaConfig.getInt(AreaName+".MonsterSpawnRule."+ruleNumber+".count"));
+								OBJECT.setInt((byte)5, AreaConfig.getInt(AreaName+".MonsterSpawnRule."+ruleNumber+".max"));
+								OBJECT.setMaxCount(AreaConfig.getInt(AreaName+".MonsterSpawnRule."+ruleNumber+".timer"));
+								GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.put(UTC, OBJECT);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

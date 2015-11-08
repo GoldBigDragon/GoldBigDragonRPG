@@ -257,7 +257,6 @@ public class Interact
 		String AreaName = Main.UserData.get(player).getString((byte)2);
 		if(event.getAction()==Action.LEFT_CLICK_BLOCK)
 		{
-			
 			if(Main.UserData.get(player).getString((byte)3)=="ANBI")
 			{
 				String BlockData = block.getTypeId()+":"+block.getData();
@@ -274,7 +273,7 @@ public class Interact
 		{
 			if(Main.UserData.get(player).getString((byte)3)=="MLS")//MonsterLocationSetting
 			{
-				int count = Main.UserData.get(player).getInt((byte)1);
+				String count = Main.UserData.get(player).getString((byte)1);
 				AreaConfig.set(AreaName+".MonsterSpawnRule."+count+".loc.world", block.getLocation().getWorld().getName());
 				AreaConfig.set(AreaName+".MonsterSpawnRule."+count+".loc.x", (int)block.getLocation().getX());
 				AreaConfig.set(AreaName+".MonsterSpawnRule."+count+".loc.y", (int)block.getLocation().getY()+1);
@@ -283,7 +282,7 @@ public class Interact
 				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.8F);
 		    	Main.UserData.get(player).clearAll();
 				Main.UserData.get(player).setType("Area");
-				Main.UserData.get(player).setInt((byte)1, count);
+				Main.UserData.get(player).setString((byte)1, count);
 				Main.UserData.get(player).setString((byte)2, "AMSC");
 				Main.UserData.get(player).setString((byte)3, AreaName);
 				player.sendMessage(ChatColor.GREEN+"[영역] : 한 번에 몇 마리 씩 스폰 할까요?");

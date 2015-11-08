@@ -6,7 +6,7 @@ public class ServerTickScheduleObject
 	private int count = 0;
 	private int MaxCount = 0;
 	private String Type = null;
-	private String Stringa[] = new String[3];
+	private String Stringa[] = new String[4];
 	private int Int[] = {-1,-1,-1,-1,-1,-1,-1,-1,-1};
 	private boolean Boolean[] = new boolean[2];
 	

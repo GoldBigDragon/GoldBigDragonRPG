@@ -27,6 +27,8 @@ commands:
     description: NPC의 상점 관련 명령어를 실행합니다.
   엔티티제거:
     description: /엔티티제거 [숫자]
+  아이템제거:
+    description: /아이템제거 [숫자]
   퀘스트:
     description: 퀘스트 관련 GUI창을 엽니다.
   커맨드:

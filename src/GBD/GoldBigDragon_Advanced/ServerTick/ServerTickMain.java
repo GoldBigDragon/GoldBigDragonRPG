@@ -1,9 +1,7 @@
 package GBD.GoldBigDragon_Advanced.ServerTick;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -90,44 +88,49 @@ public class ServerTickMain
 		String AreaName = Schedule.get(UTC).getString((byte)0);
 		if(MobSpawningAreaList.contains(AreaName))
 		{
-			if(Schedule.get(UTC).getCount() >= Schedule.get(UTC).getMaxCount())
+			YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
+			YamlManager AreaConfig =GUI_YC.getNewConfig("Area/AreaList.yml");
+			if(AreaConfig.contains(Schedule.get(UTC).getString((byte)0)+".MonsterSpawnRule."+Schedule.get(UTC).getString((byte)3)))
 			{
-				Schedule.get(UTC).setCount(0);
-				YamlController Scheduler_YC = GBD.GoldBigDragon_Advanced.Main.Main.Scheduler_YC;
-				YamlManager AreaList = Scheduler_YC.getNewConfig("Area/AreaList.yml");
-				String mob = null;
-				if(Schedule.get(UTC).getString((byte)2)==null)
+				if(Schedule.get(UTC).getCount() >= Schedule.get(UTC).getMaxCount())
 				{
-					Object[] MobList=AreaList.getConfigurationSection(AreaName+".Monster").getKeys(false).toArray();
-					if(MobList.length!=0)
-						mob=MobList[new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, MobList.length-1)].toString();
-				}
-				else
-					mob = Schedule.get(UTC).getString((byte)2);
-				YamlManager MobList = Scheduler_YC.getNewConfig("Monster/MonsterList.yml");
-				Object[] MonsterList = MobList.getConfigurationSection("").getKeys(false).toArray();
-				for(int counter = 0; counter < MonsterList.length; counter++)
-				{
-					if(MonsterList[counter].toString().equals(mob))
+					Schedule.get(UTC).setCount(0);
+					YamlController Scheduler_YC = GBD.GoldBigDragon_Advanced.Main.Main.Scheduler_YC;
+					YamlManager AreaList = Scheduler_YC.getNewConfig("Area/AreaList.yml");
+					String mob = null;
+					if(Schedule.get(UTC).getString((byte)2)==null)
 					{
-						Location loc = new Location(Bukkit.getServer().getWorld(Schedule.get(UTC).getString((byte)1)), Schedule.get(UTC).getInt((byte)0), Schedule.get(UTC).getInt((byte)1), Schedule.get(UTC).getInt((byte)2));
-						if(Bukkit.getServer().getWorld(Schedule.get(UTC).getString((byte)1)).getNearbyEntities(loc, 20, 20, 20).size() <= Schedule.get(UTC).getInt((byte)5))
+						Object[] MobList=AreaList.getConfigurationSection(AreaName+".Monster").getKeys(false).toArray();
+						if(MobList.length!=0)
+							mob=MobList[new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, MobList.length-1)].toString();
+					}
+					else
+						mob = Schedule.get(UTC).getString((byte)2);
+					YamlManager MobList = Scheduler_YC.getNewConfig("Monster/MonsterList.yml");
+					Object[] MonsterList = MobList.getConfigurationSection("").getKeys(false).toArray();
+					for(int counter = 0; counter < MonsterList.length; counter++)
+					{
+						if(MonsterList[counter].toString().equals(mob))
 						{
-							GBD.GoldBigDragon_Advanced.ETC.Monster MC = new GBD.GoldBigDragon_Advanced.ETC.Monster();
-							for(int mobspawn=0;mobspawn<Schedule.get(UTC).getInt((byte)4);mobspawn++)
+							Location loc = new Location(Bukkit.getServer().getWorld(Schedule.get(UTC).getString((byte)1)), Schedule.get(UTC).getInt((byte)0), Schedule.get(UTC).getInt((byte)1), Schedule.get(UTC).getInt((byte)2));
+							if(Bukkit.getServer().getWorld(Schedule.get(UTC).getString((byte)1)).getNearbyEntities(loc, 20, 20, 20).size() <= Schedule.get(UTC).getInt((byte)5))
 							{
-								MC.SpawnMob(loc.add(-0.5, -1,-0.5), mob);
+								GBD.GoldBigDragon_Advanced.ETC.Monster MC = new GBD.GoldBigDragon_Advanced.ETC.Monster();
+								for(int mobspawn=0;mobspawn<Schedule.get(UTC).getInt((byte)4);mobspawn++)
+								{
+									MC.SpawnMob(loc.add(-0.5, -1,-0.5), mob);
+								}
 							}
+							break;
 						}
-						break;
 					}
 				}
+				else
+				{
+					Schedule.get(UTC).setCount(Schedule.get(UTC).getCount()+1);
+				}
+				Schedule.get(UTC).copyThisScheduleObject(UTC+1000);
 			}
-			else
-			{
-				Schedule.get(UTC).setCount(Schedule.get(UTC).getCount()+1);
-			}
-			Schedule.get(UTC).copyThisScheduleObject(UTC+1000);
 		}
 	}
 }

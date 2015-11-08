@@ -65,38 +65,8 @@ public class PlayerAction
 		if(Area != null)
 		{
 			YamlController Location_YC = GBD.GoldBigDragon_Advanced.Main.Main.Location_YC;
-			YamlManager AreaList = Location_YC.getNewConfig("Area/AreaList.yml");
-			if(AreaList.contains(Area+".MonsterSpawnRule")==true)
-				if(AreaList.getConfigurationSection(Area+".MonsterSpawnRule").getKeys(false).size()!=0)
-					if(GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.contains(Area)==false)
-					{
-						GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.add(Area);
-						Long UTC = new GBD.GoldBigDragon_Advanced.Util.ETC().getNowUTC()+5;
-						for(int count = 0; count <AreaList.getConfigurationSection(Area+".MonsterSpawnRule").getKeys(false).size();count++)
-						{
-							for(;;)
-							{
-								if(GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.containsKey(UTC))
-									UTC=UTC+1;
-								else
-									break;
-							}
-							GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleObject OBJECT = new GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleObject(UTC, "A_MS");
-							OBJECT.setString((byte)0, Area);
-							OBJECT.setString((byte)1, AreaList.getString(Area+".MonsterSpawnRule."+count+".loc.world"));
-							if(AreaList.contains(Area+".MonsterSpawnRule."+count+".Monster"))
-								OBJECT.setString((byte)2, AreaList.getString(Area+".MonsterSpawnRule."+count+".Monster"));
-							OBJECT.setInt((byte)0, AreaList.getInt(Area+".MonsterSpawnRule."+count+".loc.x"));
-							OBJECT.setInt((byte)1, AreaList.getInt(Area+".MonsterSpawnRule."+count+".loc.y"));
-							OBJECT.setInt((byte)2, AreaList.getInt(Area+".MonsterSpawnRule."+count+".loc.z"));
-							OBJECT.setInt((byte)3, AreaList.getInt(Area+".MonsterSpawnRule."+count+".range"));
-							OBJECT.setInt((byte)4, AreaList.getInt(Area+".MonsterSpawnRule."+count+".count"));
-							OBJECT.setInt((byte)5, AreaList.getInt(Area+".MonsterSpawnRule."+count+".max"));
-							OBJECT.setMaxCount(AreaList.getInt(Area+".MonsterSpawnRule."+count+".timer"));
-							GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.put(UTC, OBJECT);
-						}
-						
-					}
+			YamlManager AreaList = Location_YC.getNewConfig("Area/AreaList.yml");			
+			new GBD.GoldBigDragon_Advanced.ETC.Area().AreaMonsterSpawnAdd(Area, "-1");
 			if(Main.PlayerCurrentArea.get(player).equals(Area)==false)
 			{
 				if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
@@ -1062,7 +1032,7 @@ public class PlayerAction
 			case "AMSC"://AreaMonsterSpawnCount
 				if(isIntMinMax(Message, player, 1, 100))
 				{
-					AreaConfig.set(Main.UserData.get(player).getString((byte)3)+".MonsterSpawnRule."+Main.UserData.get(player).getInt((byte)1)+".count", Integer.parseInt(Message));
+					AreaConfig.set(Main.UserData.get(player).getString((byte)3)+".MonsterSpawnRule."+Main.UserData.get(player).getString((byte)1)+".count", Integer.parseInt(Message));
 	    			AreaConfig.saveConfig();
 	    			s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
 					Main.UserData.get(player).setString((byte)2, "AMSMC");
@@ -1073,7 +1043,7 @@ public class PlayerAction
 			case "AMSMC"://AreaMonsterSpawnMaximumCount
 				if(isIntMinMax(Message, player, 1, 300))
 				{
-					AreaConfig.set(Main.UserData.get(player).getString((byte)3)+".MonsterSpawnRule."+Main.UserData.get(player).getInt((byte)1)+".max", Integer.parseInt(Message));
+					AreaConfig.set(Main.UserData.get(player).getString((byte)3)+".MonsterSpawnRule."+Main.UserData.get(player).getString((byte)1)+".max", Integer.parseInt(Message));
 	    			AreaConfig.saveConfig();
 	    			s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
 					Main.UserData.get(player).setString((byte)2, "AMST");
@@ -1084,7 +1054,7 @@ public class PlayerAction
 			case "AMST"://AreaMonsterSpawnTimer
 				if(isIntMinMax(Message, player, 1, 7200))
 				{
-					AreaConfig.set(Main.UserData.get(player).getString((byte)3)+".MonsterSpawnRule."+Main.UserData.get(player).getInt((byte)1)+".timer", Integer.parseInt(Message));
+					AreaConfig.set(Main.UserData.get(player).getString((byte)3)+".MonsterSpawnRule."+Main.UserData.get(player).getString((byte)1)+".timer", Integer.parseInt(Message));
 	    			AreaConfig.saveConfig();
 	    			s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
 	    			/*
@@ -1101,7 +1071,7 @@ public class PlayerAction
 			case "AMSR"://AreaMonsterSpawnRange
 				if(isIntMinMax(Message, player, 1, 1000))
 				{
-					AreaConfig.set(Main.UserData.get(player).getString((byte)3)+".MonsterSpawnRule."+Main.UserData.get(player).getInt((byte)1)+".range", Integer.parseInt(Message));
+					AreaConfig.set(Main.UserData.get(player).getString((byte)3)+".MonsterSpawnRule."+Main.UserData.get(player).getString((byte)1)+".range", Integer.parseInt(Message));
 	    			AreaConfig.saveConfig();
 	    			s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
 					Main.UserData.get(player).setString((byte)2, "AMSM");
@@ -1118,15 +1088,15 @@ public class PlayerAction
 					{
 		    			s.SP(player, Sound.ANVIL_LAND, 1.0F, 1.0F);
 		    			AGUI.AreaMonsterSpawnSettingGUI(player, 0, Main.UserData.get(player).getString((byte)3));
-		    			Main.UserData.get(player).clearAll();
-						player.sendMessage(ChatColor.YELLOW+"[영역] : 변경된 몬스터 스폰 룰은 리로드 이후 적용됩니다!");
+		    			String AreaName =Main.UserData.get(player).getString((byte)3);
+		    			new GBD.GoldBigDragon_Advanced.ETC.Area().AreaMonsterSpawnAdd(AreaName, Main.UserData.get(player).getString((byte)1));
 					}
 					else
 					{
 						s.SP(player, Sound.HORSE_ARMOR, 1.0F, 1.7F);
-						AGUI.AreaSpawnSpecialMonsterListGUI(player, 0, Main.UserData.get(player).getString((byte)3),Main.UserData.get(player).getInt((byte)1));
-		    			Main.UserData.get(player).clearAll();
+						AGUI.AreaSpawnSpecialMonsterListGUI(player, 0, Main.UserData.get(player).getString((byte)3),Main.UserData.get(player).getString((byte)1));
 					}
+	    			Main.UserData.get(player).clearAll();
 				}
 				return;
 			case "MusicSetting":

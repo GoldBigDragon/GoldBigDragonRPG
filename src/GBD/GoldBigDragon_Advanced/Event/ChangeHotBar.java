@@ -69,6 +69,7 @@ public class ChangeHotBar
 									  		stat.CreateNewStats(player);
 									  	}
 										YM = Event_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
+										YM.set("Stat.RealLevel", YM.getInt("Stat.RealLevel")+1);
 										YM.set("Stat.Level", 1);
 										YM.set("Stat.EXP", 0);
 										YM.set("Stat.MaxEXP", 100);
