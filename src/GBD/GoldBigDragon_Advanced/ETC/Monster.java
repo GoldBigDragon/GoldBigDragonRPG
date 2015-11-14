@@ -211,47 +211,57 @@ public class Monster
 		if(Equip == null)
 			Monster.getEquipment().setHelmet(null);
 		else
+		{
 			Monster.getEquipment().setHelmet(Equip);
-		if(Equip.hasItemMeta()==true)
-			if(Equip.getItemMeta().hasLore()==true)
-				if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
-					Monster.getEquipment().setHelmet(null);
+			if(Equip.hasItemMeta()==true)
+				if(Equip.getItemMeta().hasLore()==true)
+					if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
+						Monster.getEquipment().setHelmet(null);
+		}
 		Equip = MobList.getItemStack(mob+".Chest.Item");
 		if(Equip == null)
 			Monster.getEquipment().setChestplate(null);
 		else
+		{
 			Monster.getEquipment().setChestplate(Equip);
-		if(Equip.hasItemMeta()==true)
-			if(Equip.getItemMeta().hasLore()==true)
-				if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
-					Monster.getEquipment().setChestplate(null);
+			if(Equip.hasItemMeta()==true)
+				if(Equip.getItemMeta().hasLore()==true)
+					if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
+						Monster.getEquipment().setChestplate(null);
+		}
 		Equip = MobList.getItemStack(mob+".Leggings.Item");
 		if(Equip == null)
 			Monster.getEquipment().setLeggings(null);
 		else
+		{
 			Monster.getEquipment().setLeggings(Equip);
-		if(Equip.hasItemMeta()==true)
-			if(Equip.getItemMeta().hasLore()==true)
-				if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
-					Monster.getEquipment().setLeggings(null);
+			if(Equip.hasItemMeta()==true)
+				if(Equip.getItemMeta().hasLore()==true)
+					if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
+						Monster.getEquipment().setLeggings(null);
+		}
 		Equip = MobList.getItemStack(mob+".Boots.Item");
 		if(Equip == null)
 			Monster.getEquipment().setBoots(null);
 		else
+		{
 			Monster.getEquipment().setBoots(Equip);
-		if(Equip.hasItemMeta()==true)
-			if(Equip.getItemMeta().hasLore()==true)
-				if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
-					Monster.getEquipment().setBoots(null);
+			if(Equip.hasItemMeta()==true)
+				if(Equip.getItemMeta().hasLore()==true)
+					if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
+						Monster.getEquipment().setBoots(null);
+		}
 		Equip = MobList.getItemStack(mob+".Hand.Item");
 		if(Equip == null)
 			Monster.getEquipment().setItemInHand(null);
 		else
+		{
 			Monster.getEquipment().setItemInHand(Equip);
-		if(Equip.hasItemMeta()==true)
-			if(Equip.getItemMeta().hasLore()==true)
-				if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
-					Monster.getEquipment().setItemInHand(null);
+			if(Equip.hasItemMeta()==true)
+				if(Equip.getItemMeta().hasLore()==true)
+					if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
+						Monster.getEquipment().setItemInHand(null);
+		}
 	    YamlManager Config =  Monster_YC.getNewConfig("config.yml");
 		Monster.getEquipment().setHelmetDropChance((float)(MobList.getInt(mob+".Head.DropChance")*Config.getInt("Event.DropChance")/1000.0));
 		Monster.getEquipment().setChestplateDropChance((float)(MobList.getInt(mob+".Chest.DropChance")*Config.getInt("Event.DropChance")/1000.0));
