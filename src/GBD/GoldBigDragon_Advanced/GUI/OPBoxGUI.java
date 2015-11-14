@@ -62,7 +62,7 @@ public class OPBoxGUI extends GUIutil
 				else
 				{{Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "게임 성향", 40,0,1,Arrays.asList(ChatColor.GOLD + "[메이플 스토리]",ChatColor.GRAY+"스텟을 임의로 올릴 수 있으며,",ChatColor.GRAY+"누적레벨과 환생이 존재하지 않습니다.",ChatColor.RED+"플레이어의 스텟 데이터가 이어지므로",ChatColor.RED+"변경시 주의가 필요합니다."), 28, inv);}	}
 				Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "커스텀 아이템", 389,0,1,Arrays.asList(ChatColor.WHITE + "커스텀 아이템을 생성하거나",ChatColor.WHITE+"클릭하여 지급 받습니다.","",ChatColor.YELLOW+"[좌 클릭시 아이템 받기]",ChatColor.YELLOW+"[Shift + 좌 클릭시 아이템 수정]",ChatColor.RED+"[Shift + 우 클릭시 아이템 삭제]"), 30, inv);
-				//Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "NPC", 383,120,1,Arrays.asList(ChatColor.WHITE + "서버 내의 NPC를 관리합니다."), 32, inv);
+				Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "네비게이션", 358,120,1,Arrays.asList(ChatColor.WHITE + "길찾기 시스템을 관리합니다."), 32, inv);
 				Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "퀘스트", 403,0,1,Arrays.asList(ChatColor.WHITE + "퀘스트를 새로 만들거나",ChatColor.WHITE+"수정하거나 삭제합니다."), 34, inv);
 				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
 				break;
@@ -224,6 +224,10 @@ public class OPBoxGUI extends GUIutil
 		GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
 		switch ((ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())))
 		{
+		case"네비게이션":
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			new NavigationGUI().NavigationListGUI(player,0);
+			break;
 		case"GoldBigDragonRPG":
 			if(Main.serverVersion.equals(Main.currentServerVersion)&&
 				Main.serverUpdate == Main.currentServerUpdate)
@@ -251,18 +255,15 @@ public class OPBoxGUI extends GUIutil
 			return;
 		case "월드 생성":
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
-			GBD.GoldBigDragon_Advanced.GUI.WorldCreateGUI WGUI = new GBD.GoldBigDragon_Advanced.GUI.WorldCreateGUI();
-			WGUI.WorldCreateGUIMain(player);
+			new GBD.GoldBigDragon_Advanced.GUI.WorldCreateGUI().WorldCreateGUIMain(player);
 			return;
 		case "몬스터":
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
-			MonsterGUI MGUI = new MonsterGUI();
-			MGUI.MonsterListGUI(player, 0);
+			new MonsterGUI().MonsterListGUI(player, 0);
 			return;
 		case "초심자":
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
-			NewBieGUI NGUI = new NewBieGUI();
-			NGUI.NewBieGUIMain(player);
+			new NewBieGUI().NewBieGUIMain(player);
 			return;
 		case "[현재 위치를 스폰으로]":
 			s.SP(player, Sound.VILLAGER_YES, 0.8F, 1.0F);
@@ -271,8 +272,7 @@ public class OPBoxGUI extends GUIutil
 			return;
 		case "개조식":
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
-			UpGradeGUI UpGUI = new UpGradeGUI();
-			UpGUI.UpgradeRecipeGUI(player,0);
+			new UpGradeGUI().UpgradeRecipeGUI(player,0);
 			return;
 		case "엔티티 스폰":
 			if(Config.getBoolean("Server.EntitySpawn") == true) {Config.set("Server.EntitySpawn", false);}
@@ -290,8 +290,7 @@ public class OPBoxGUI extends GUIutil
 			return;
 		case "이벤트":
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
-			EventGUI EGUI = new EventGUI();
-			EGUI.EventGUI_Main(player);
+			new EventGUI().EventGUI_Main(player);
 			return;
 		case "게임 성향":
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
@@ -319,29 +318,24 @@ public class OPBoxGUI extends GUIutil
 			Guide_GUI(player);
 			return;
 		case "퀘스트":
-			QuestGUI QGUI = new QuestGUI();
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
-			QGUI.AllOfQuestListGUI(player, 0,false);
+			new QuestGUI().AllOfQuestListGUI(player, 0,false);
 			return;
 		case "스킬":
-			OPBoxSkillGUI SKGUI = new OPBoxSkillGUI();
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
-			SKGUI.AllSkillsGUI(player,0,false,null);
+			new OPBoxSkillGUI().AllSkillsGUI(player,0,false,null);
 			return;
 		case "카테고리 및 직업":
-			JobGUI JGUI = new JobGUI();
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
-			JGUI.ChooseSystemGUI(player);
+			new JobGUI().ChooseSystemGUI(player);
 			return;
 		case "소비 아이템":
-			 UseableItemGUI UGUI = new UseableItemGUI();
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
-			UGUI.UseableItemListGUI(player, 0);
+			new UseableItemGUI().UseableItemListGUI(player, 0);
 			return;
 		case "영역":
-			 AreaGUI AGUI = new AreaGUI();
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
-			AGUI.AreaListGUI(player, 0);
+			new AreaGUI().AreaListGUI(player, 0);
 			return;
 		case "이전 페이지":
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);

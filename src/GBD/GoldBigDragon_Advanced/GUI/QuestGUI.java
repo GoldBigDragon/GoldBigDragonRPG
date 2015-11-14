@@ -9,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -18,6 +19,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffectType;
 
 import GBD.GoldBigDragon_Advanced.Main.*;
+import GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain;
 import GBD.GoldBigDragon_Advanced.Util.YamlController;
 import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 
@@ -209,6 +211,61 @@ public class QuestGUI extends GUIutil
 			if(count > a.length || loc >= 45) break;
 			switch(QuestList.getString(QuestName+".FlowChart."+count+".Type"))
 			{
+			case "Nevigation":
+			{
+				String UTC = QuestList.getString(QuestName+".FlowChart."+count+".NeviUTC");
+				YamlManager NavigationConfig =GUI_YC.getNewConfig("Navigation/NavigationList.yml");
+				if(NavigationConfig.contains(UTC))
+				{
+					String NaviName = NavigationConfig.getString(UTC+".Name");
+					String world = NavigationConfig.getString(UTC+".world");
+					int x = NavigationConfig.getInt(UTC+".x");
+					int y = NavigationConfig.getInt(UTC+".y");
+					int z = NavigationConfig.getInt(UTC+".z");
+					int Time = NavigationConfig.getInt(UTC+".time");
+					int sensitive = NavigationConfig.getInt(UTC+".sensitive");
+					int ShowArrow = NavigationConfig.getInt(UTC+".ShowArrow");
+					
+					String TimeS = ChatColor.DARK_AQUA+"<도착할 때 까지 유지>";
+					String sensitiveS = ChatColor.BLUE+"<반경 "+sensitive+"블록 이내를 도착지로 판정>";
+					String ShowArrowS = ChatColor.DARK_AQUA+"<기본 화살표 모양>";
+					if(Time >= 0)
+						TimeS = ChatColor.DARK_AQUA+"<"+Time+"초 동안 유지>";
+					switch(ShowArrow)
+					{
+					default:
+						ShowArrowS = ChatColor.DARK_AQUA+"<기본 화살표 모양>";
+						break;
+					}
+					Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + count, 395,0,1,Arrays.asList(
+					ChatColor.YELLOW+""+ChatColor.BOLD+NaviName,"",
+					ChatColor.BLUE+"[도착 지점]",ChatColor.BLUE+"월드 : "+ChatColor.WHITE+world,
+					ChatColor.BLUE+"좌표 : " + ChatColor.WHITE+x+","+y+","+z,sensitiveS,"",
+					ChatColor.DARK_AQUA+"[기타 옵션]",TimeS,ShowArrowS,""
+					,ChatColor.RED+"[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+				}
+				else
+					Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + count, 166,0,1,Arrays.asList(ChatColor.RED+"[네비게이션을 찾을 수 없습니다!]","",ChatColor.RED+"[Shift + 우클릭시 삭제됩니다.]"),loc,inv);
+			}
+				break;
+			case "Whisper":
+			{
+				String script3 = ChatColor.WHITE+"타입 : 귓말%enter%%enter%"+QuestList.getString(QuestName+".FlowChart."+count+".Message")+"%enter% %enter%"+ChatColor.RED + "[Shift + 우클릭시 삭제됩니다.]";
+				String[] scriptA3 = script3.split("%enter%");
+				for(int counter = 0; counter < scriptA3.length; counter++)
+					scriptA3[counter] = ChatColor.WHITE + scriptA3[counter];
+				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD +""+count, 421,0,1,Arrays.asList(scriptA3), loc, inv);
+			}
+			break;
+			case "BroadCast":
+			{
+				String script3 = ChatColor.WHITE+"타입 : 전체%enter%%enter%"+QuestList.getString(QuestName+".FlowChart."+count+".Message")+"%enter% %enter%"+ChatColor.RED + "[Shift + 우클릭시 삭제됩니다.]";
+				String[] scriptA3 = script3.split("%enter%");
+				for(int counter = 0; counter < scriptA3.length; counter++)
+					scriptA3[counter] = ChatColor.WHITE + scriptA3[counter];
+				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD +""+count, 138,0,1,Arrays.asList(scriptA3), loc, inv);
+			}
+			break;
 			case "Script":
 				String script = ChatColor.WHITE+"타입 : 대사%enter%"+ChatColor.WHITE+"말하는 주체 : "+QuestList.getString(QuestName+".FlowChart."+count+".NPCname")+"%enter%%enter%"+QuestList.getString(QuestName+".FlowChart."+count+".Script")+"%enter% %enter%"+ChatColor.RED + "[Shift + 우클릭시 삭제됩니다.]";
 				String[] scriptA = script.split("%enter%");
@@ -248,6 +305,9 @@ public class QuestGUI extends GUIutil
 			case "Harvest":
 				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD +""+count, 56,0,1,Arrays.asList(ChatColor.WHITE+"타입 : 채집","",ChatColor.YELLOW+"[좌클릭시 채집 블록 확인]","",ChatColor.RED + "[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 				break;
+			case "BlockPlace":
+				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD +""+count, 152,0,1,Arrays.asList(ChatColor.WHITE+"타입 : 블록 설치",ChatColor.WHITE+"월드 : "+QuestList.getString(QuestName+".FlowChart."+count+".World"),ChatColor.WHITE+"좌표 : " + (int)QuestList.getDouble(QuestName+".FlowChart."+count+".X")+","+ (int)QuestList.getDouble(QuestName+".FlowChart."+count+".Y")+","+ (int)QuestList.getDouble(QuestName+".FlowChart."+count+".Z"),ChatColor.WHITE+"블록 타입 : " + QuestList.getInt(QuestName+".FlowChart."+count+".ID")+":"+ QuestList.getInt(QuestName+".FlowChart."+count+".DATA"),"",ChatColor.RED + "[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+				break;
 			}
 			loc=loc+1;
 		}
@@ -276,10 +336,11 @@ public class QuestGUI extends GUIutil
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "보상", 54,0,1,Arrays.asList(ChatColor.GRAY + "플레이어에게 보상을 줍니다."), 6, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이동", 368,0,1,Arrays.asList(ChatColor.GRAY + "플레이어를 특정 위치로",ChatColor.GRAY+"이동 시킵니다."), 7, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "채집", 56,0,1,Arrays.asList(ChatColor.GRAY + "플레이어에게 특정 블록을",ChatColor.GRAY+"채취하는 퀘스트를 줍니다."), 8, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "블록"+ ChatColor.RED + "[사용 불가]", 152,0,1,Arrays.asList(ChatColor.GRAY + "특정 위치에 정해진 블록을",ChatColor.GRAY+"생성합니다.",ChatColor.GRAY+"생겼다 다시 사라지기 때문에",ChatColor.GRAY+"연속적 이용이 가능합니다."), 9, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "블록", 152,0,1,Arrays.asList(ChatColor.GRAY + "특정 위치에 정해진",ChatColor.GRAY+"블록을 생성합니다."), 9, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "소리"+ ChatColor.RED + "[사용 불가]", 84,0,1,Arrays.asList(ChatColor.GRAY + "특정 위치에 소리가 나게 합니다."), 10, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "귓말"+ ChatColor.RED + "[사용 불가]", 421,0,1,Arrays.asList(ChatColor.GRAY + "플레이어의 채팅창에 메시지가 나타납니다."), 11, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "전체"+ ChatColor.RED + "[사용 불가]", 138,0,1,Arrays.asList(ChatColor.GRAY + "서버 전체에 메시지가 나타납니다."), 12, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "귓말", 421,0,1,Arrays.asList(ChatColor.GRAY + "플레이어의 채팅창에 메시지가 나타납니다."), 11, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "전체", 138,0,1,Arrays.asList(ChatColor.GRAY + "서버 전체에 메시지가 나타납니다."), 12, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "네비", 358,0,1,Arrays.asList(ChatColor.GRAY + "플레이어에게 네비게이션을 작동 시킵니다."), 13, inv);
 		
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 18, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 26, inv);
@@ -324,6 +385,64 @@ public class QuestGUI extends GUIutil
 			PlayerQuestList.saveConfig();
 			switch(QuestType)
 			{
+			case "Nevigation":
+			{
+				String UTC = QuestList.getString(QuestName+".FlowChart."+Flow+".NeviUTC");
+				YamlManager NavigationConfig =GUI_YC.getNewConfig("Navigation/NavigationList.yml");
+				if(NavigationConfig.contains(UTC))
+				{
+					ServerTickMain.NaviUsingList.add(player.getName());
+					player.closeInventory();
+					s.SP(player, Sound.NOTE_PLING, 1.0F, 1.0F);
+					
+					GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleObject STSO = new GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleObject(Long.parseLong(UTC), "NV");
+					STSO.setCount(0);//횟 수 초기화
+					STSO.setMaxCount(NavigationConfig.getInt(UTC+".time"));//N초간 네비게이션
+					//-1초 설정시, N초간이 아닌, 찾아 갈 때 까지 네비게이션 지원
+					STSO.setString((byte)1, NavigationConfig.getString(UTC+".world"));//목적지 월드 이름 저장
+					STSO.setString((byte)2, player.getName());//플레이어 이름 저장
+					
+					STSO.setInt((byte)0, NavigationConfig.getInt(UTC+".x"));//목적지X 위치저장
+					STSO.setInt((byte)1, NavigationConfig.getInt(UTC+".y"));//목적지Y 위치저장
+					STSO.setInt((byte)2, NavigationConfig.getInt(UTC+".z"));//목적지Z 위치저장
+					STSO.setInt((byte)3, NavigationConfig.getInt(UTC+".sensitive"));//판정 범위 저장
+					STSO.setInt((byte)4, NavigationConfig.getInt(UTC+".ShowArrow"));//파티클 설정
+					
+					GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.put(Long.parseLong(UTC), STSO);
+					player.sendMessage(ChatColor.YELLOW+"[네비게이션] : 길찾기 시스템이 가동됩니다!");
+					player.sendMessage(ChatColor.YELLOW+"(화살표가 보이지 않을 경우, [ESC] → [설정] → [비디오 설정] 속의 [입자]를 [모두]로 변경해 주세요!)");
+					
+				}
+				else
+				{
+					s.SP(player, Sound.NOTE_BASS, 1.0F, 1.0F);
+					player.sendMessage(ChatColor.RED+"[네비게이션] : 등록된 네비게이션을 찾을 수 없습니다! 관리자에게 문의하세요!");
+				}
+				PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
+				PlayerQuestList.saveConfig();
+				QuestTypeRouter(player, QuestName);
+			}
+			break;
+			case "Whisper":
+			{
+				String script3 = ChatColor.WHITE+QuestList.getString(QuestName+".FlowChart."+Flow+".Message");
+				script3 = script3.replace("%player%", player.getName());
+				player.sendMessage(script3);
+				PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
+				PlayerQuestList.saveConfig();
+				QuestTypeRouter(player, QuestName);
+			}
+			break;
+			case "BroadCast":
+			{
+				String script3 = ChatColor.WHITE+QuestList.getString(QuestName+".FlowChart."+Flow+".Message");
+				script3 = script3.replace("%player%", player.getName());
+				Bukkit.getServer().broadcastMessage(script3);
+				PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
+				PlayerQuestList.saveConfig();
+				QuestTypeRouter(player, QuestName);
+			}
+			break;
 			case "Script": 
 				String script = QuestList.getString(QuestName+".FlowChart."+Flow+".Script");
 				String[] scriptA = script.split("%enter%");
@@ -358,14 +477,28 @@ public class QuestGUI extends GUIutil
 				ShowItemGUI(player, QuestName, Flow, false,true);
 				break;
 			case "TelePort":
-				Location l = new Location(Bukkit.getServer().getWorld(QuestList.getString(QuestName+".FlowChart."+Flow+".World")), QuestList.getDouble(QuestName+".FlowChart."+Flow+".X"),
+				{
+					Location l = new Location(Bukkit.getServer().getWorld(QuestList.getString(QuestName+".FlowChart."+Flow+".World")), QuestList.getDouble(QuestName+".FlowChart."+Flow+".X"),
 						QuestList.getDouble(QuestName+".FlowChart."+Flow+".Y")+1, QuestList.getDouble(QuestName+".FlowChart."+Flow+".Z"));
-				player.teleport(l);
-				p.givePotionEffect(player, PotionEffectType.BLINDNESS, 1, 15);
-				s.SL(player.getLocation(), Sound.ENDERMAN_TELEPORT, 0.8F, 1.0F);
-				PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
-				PlayerQuestList.saveConfig();
-				QuestTypeRouter(player, QuestName);
+					player.teleport(l);
+					p.givePotionEffect(player, PotionEffectType.BLINDNESS, 1, 15);
+					s.SL(player.getLocation(), Sound.ENDERMAN_TELEPORT, 0.8F, 1.0F);
+					PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
+					PlayerQuestList.saveConfig();
+					QuestTypeRouter(player, QuestName);
+				}
+				break;
+			case "BlockPlace":
+				{
+					Location l = new Location(Bukkit.getServer().getWorld(QuestList.getString(QuestName+".FlowChart."+Flow+".World")), QuestList.getDouble(QuestName+".FlowChart."+Flow+".X"),
+						QuestList.getDouble(QuestName+".FlowChart."+Flow+".Y"), QuestList.getDouble(QuestName+".FlowChart."+Flow+".Z"));
+					Block block = Bukkit.getWorld(QuestList.getString(QuestName+".FlowChart."+Flow+".World")).getBlockAt(l);
+					block.setTypeId(QuestList.getInt(QuestName+".FlowChart."+Flow+".ID"));
+					block.setData((byte)QuestList.getInt(QuestName+".FlowChart."+Flow+".DATA"));
+					PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
+					PlayerQuestList.saveConfig();
+					QuestTypeRouter(player, QuestName);
+				}
 				break;
 			case "Harvest":
 				Object[] BlockList = QuestList.getConfigurationSection(QuestName+".FlowChart."+Flow+".Block").getKeys(false).toArray();
@@ -638,6 +771,63 @@ public class QuestGUI extends GUIutil
 		player.openInventory(inv);
 	}
 	
+	public void Quest_NavigationListGUI(Player player, int page, String QuestName)
+	{
+		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
+		YamlManager NavigationConfig =GUI_YC.getNewConfig("Navigation/NavigationList.yml");
+
+		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "퀘스트 네비 설정 : " + (page+1));
+
+		Object[] Navi= NavigationConfig.getConfigurationSection("").getKeys(false).toArray();
+		
+		int loc=0;
+		for(int count = page*45; count < Navi.length;count++)
+		{
+			if(count > Navi.length || loc >= 45) break;
+			String NaviName = NavigationConfig.getString(Navi[count]+".Name");
+			String world = NavigationConfig.getString(Navi[count]+".world");
+			int x = NavigationConfig.getInt(Navi[count]+".x");
+			int y = NavigationConfig.getInt(Navi[count]+".y");
+			int z = NavigationConfig.getInt(Navi[count]+".z");
+			int Time = NavigationConfig.getInt(Navi[count]+".time");
+			int sensitive = NavigationConfig.getInt(Navi[count]+".sensitive");
+			boolean Permition = NavigationConfig.getBoolean(Navi[count]+".onlyOPuse");
+			int ShowArrow = NavigationConfig.getInt(Navi[count]+".ShowArrow");
+			
+			
+			String TimeS = ChatColor.DARK_AQUA+"<도착할 때 까지 유지>";
+			String PermitionS = ChatColor.DARK_AQUA+"<OP만 사용 가능>";
+			String sensitiveS = ChatColor.BLUE+"<반경 "+sensitive+"블록 이내를 도착지로 판정>";
+			String ShowArrowS = ChatColor.DARK_AQUA+"<기본 화살표 모양>";
+			if(Permition == false)
+				PermitionS = ChatColor.DARK_AQUA+"<모두 사용 가능>";
+			if(Time >= 0)
+				TimeS = ChatColor.DARK_AQUA+"<"+Time+"초 동안 유지>";
+			switch(ShowArrow)
+			{
+			default:
+				ShowArrowS = ChatColor.DARK_AQUA+"<기본 화살표 모양>";
+				break;
+			}
+			Stack2(ChatColor.BLACK + "" + ChatColor.BOLD + Navi[count].toString(), 395,0,1,Arrays.asList(
+			ChatColor.YELLOW+""+ChatColor.BOLD+NaviName,"",
+			ChatColor.BLUE+"[도착 지점]",ChatColor.BLUE+"월드 : "+ChatColor.WHITE+world,
+			ChatColor.BLUE+"좌표 : " + ChatColor.WHITE+x+","+y+","+z,sensitiveS,"",
+			ChatColor.DARK_AQUA+"[기타 옵션]",TimeS,PermitionS,ShowArrowS,""
+			,ChatColor.YELLOW+"[좌 클릭시 네비 선택]"), loc, inv);
+			loc=loc+1;
+		}
+		
+		if(Navi.length-(page*44)>45)
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+		if(page!=0)
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+QuestName), 53, inv);
+		player.openInventory(inv);
+	}
+	
+	
 	
 	
 	
@@ -775,22 +965,24 @@ public class QuestGUI extends GUIutil
 				int Flow = Integer.parseInt(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 				if(event.getClick().isLeftClick() == true)
 				{
-					switch(event.getCurrentItem().getItemMeta().getLore().get(0).split(" : ")[1])
-					{
-						case "전달":
-							ShowItemGUI(player, QuestName, Flow,true,false);
-							break;
-						case "보상":
-							Main.UserData.get(player).setInt((byte)1,-9);
-							ShowItemGUI(player, QuestName, Flow,true,true);
-							break;
-						case "사냥":
-							KillMonsterGUI(player, QuestName, Flow, player.isOp());
-							break;
-						case "채집" :
-							HarvestGUI(player, QuestName, Flow, player.isOp());
-					}
-					break;
+					if(event.getCurrentItem().getItemMeta().getLore().get(0).contains(" : "))
+						switch(event.getCurrentItem().getItemMeta().getLore().get(0).split(" : ")[1])
+						{
+							case "전달":
+								ShowItemGUI(player, QuestName, Flow,true,false);
+								break;
+							case "보상":
+								Main.UserData.get(player).setInt((byte)1,-9);
+								ShowItemGUI(player, QuestName, Flow,true,true);
+								break;
+							case "사냥":
+								KillMonsterGUI(player, QuestName, Flow, player.isOp());
+								break;
+							case "채집" :
+								HarvestGUI(player, QuestName, Flow, player.isOp());
+							default :
+								break;
+						}
 				}
 				else if(event.getClick().isRightClick() == true && event.isShiftClick() == true)
 				{
@@ -806,6 +998,7 @@ public class QuestGUI extends GUIutil
 					QuestList.saveConfig();
 					FixQuestGUI(player,Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1,QuestName);
 				}
+				return;
 		}
 		return;
 	}
@@ -864,8 +1057,13 @@ public class QuestGUI extends GUIutil
 		Player player = (Player) event.getWhoClicked();
 		
 		String QuestName = ChatColor.stripColor(event.getInventory().getItem(26).getItemMeta().getLore().get(1));
+
 		switch ((ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())))
 		{
+			case "네비":
+				s.SP(player, org.bukkit.Sound.ITEM_PICKUP, 0.5F,1.2F);
+				Quest_NavigationListGUI(player, 0, QuestName);
+				break;
 			case "대사":
 			case "독백":
 				s.SP(player, org.bukkit.Sound.ITEM_PICKUP, 0.5F,1.2F);
@@ -967,12 +1165,46 @@ public class QuestGUI extends GUIutil
 				player.closeInventory();
 				break;
 			case "블록":
+				s.SP(player, org.bukkit.Sound.ITEM_PICKUP, 0.5F,1.2F);
+				Main.UserData.get(player).setType("Quest");
+				Main.UserData.get(player).setString((byte)1,"BlockPlace");
+				Main.UserData.get(player).setString((byte)2,QuestName);
+				Main.UserData.get(player).setString((byte)3,"null");
+				
+				Main.UserData.get(player).setInt((byte)1, 0);//블록 ID
+				Main.UserData.get(player).setInt((byte)2, 0);//블록 DATA
+				player.sendMessage(ChatColor.GREEN + "[퀘스트] : 블록이 설치될 지점을 우클릭 하세요!");
+				player.closeInventory();
 				break;
 			case "소리":
 				break;
 			case "귓말":
+				s.SP(player, org.bukkit.Sound.ITEM_PICKUP, 0.5F,1.2F);
+				Main.UserData.get(player).setType("Quest");
+				Main.UserData.get(player).setString((byte)1,"Whisper");
+				Main.UserData.get(player).setString((byte)2,QuestName);
+				player.sendMessage(ChatColor.GREEN + "[퀘스트] : 어떤 메시지를 전달하고 싶으신가요?");
+				player.sendMessage(ChatColor.GOLD + "%player%"+ChatColor.WHITE + " - 플레이어 지칭하기 -");
+				player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
+				ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
+						ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
+				ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c" +
+						ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
+				player.closeInventory();
 				break;
 			case "전체":
+				s.SP(player, org.bukkit.Sound.ITEM_PICKUP, 0.5F,1.2F);
+				Main.UserData.get(player).setType("Quest");
+				Main.UserData.get(player).setString((byte)1,"BroadCast");
+				Main.UserData.get(player).setString((byte)2,QuestName);
+				player.sendMessage(ChatColor.GREEN + "[퀘스트] : 어떤 메시지를 전달하고 싶으신가요?");
+				player.sendMessage(ChatColor.GOLD + "%player%"+ChatColor.WHITE + " - 플레이어 지칭하기 -");
+				player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
+				ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
+						ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
+				ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c" +
+						ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
+				player.closeInventory();
 				break;
 			case "이전 목록":
 				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
@@ -1331,6 +1563,50 @@ public class QuestGUI extends GUIutil
 			return;
 		}
 	}
+	
+
+	public void Quest_NavigationListGUIClick(InventoryClickEvent event)
+	{
+		GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
+		event.setCancelled(true);
+		Player player = (Player) event.getWhoClicked();
+		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
+		String QuestName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+		switch (event.getSlot())
+		{
+		case 45://이전 목록
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			SelectObjectPage(player, 0, QuestName);
+			return;
+		case 53://나가기
+			s.SP(player, Sound.PISTON_RETRACT, 0.8F, 1.8F);
+			player.closeInventory();
+			return;
+		case 48://이전 페이지
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			Quest_NavigationListGUI(player, page-1, QuestName);
+			return;
+		case 50://다음 페이지
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			Quest_NavigationListGUI(player, page+1, QuestName);
+			return;
+		default :
+			if(event.isLeftClick() == true)
+			{
+				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+				YamlController Config_YC = GBD.GoldBigDragon_Advanced.Main.Main.Config_YC;
+				YamlManager QuestConfig=Config_YC.getNewConfig("Quest/QuestList.yml");
+	    		int size = QuestConfig.getConfigurationSection(QuestName+".FlowChart").getKeys(false).size();
+	    		QuestConfig.set(QuestName+".FlowChart."+size+".Type", "Nevigation");
+		    	QuestConfig.set(QuestName+".FlowChart."+size+".NeviUTC",ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+		    	QuestConfig.saveConfig();
+				player.sendMessage(ChatColor.GREEN+"[퀘스트] : 네비게이션이 성공적으로 등록되었습니다!");
+				FixQuestGUI(player, 0, QuestName);
+			}
+			return;
+		}
+	}
+	
 	
 	
 	public void ItemAddInvnetoryClose(InventoryCloseEvent event)

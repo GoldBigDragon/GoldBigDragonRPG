@@ -23,7 +23,7 @@ import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 
 public class NoteBlockAPIMain implements Listener
 {
-	static List<Song> Musics = new ArrayList<Song>();
+	public static List<Song> Musics = new ArrayList<Song>();
 	HashMap<Player,SongPlayer> currentStations = new HashMap<Player,SongPlayer>();
 	HashMap<Player,SongPlayer> joinedPlayer = new HashMap<Player,SongPlayer>();
 	int maxStations = 1000;
@@ -73,16 +73,7 @@ public class NoteBlockAPIMain implements Listener
 			return false;
 		}
 		else
-		{
-			for(int count = 0; count <Musics.size();count++)
-			{
-				player.sendMessage(ChatColor.BLUE+"[트랙 번호 " +ChatColor.WHITE+count+ChatColor.BLUE+"] [제목 "+ChatColor.WHITE+ Musics.get(count).getTitle()+ChatColor.BLUE+"]");
-			}
-			player.sendMessage(ChatColor.BLUE+"[BGM] : 현재 등록된 사운드 수 : "+Musics.size() +"개");
-			if(isGUIclicked == true)
-				player.sendMessage(ChatColor.DARK_AQUA+"[영역] : 배경음으로 사용하실 트랙 번호를 입력하세요!");
 			return true;
-		}
 	}
 	
 	public String getTitle(int MusicNumber)

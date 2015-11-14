@@ -107,6 +107,10 @@ public class Attack
 							{
 								DamageSetter(event,"R_A",(Entity) projectile.getShooter());
 							}
+							if(projectile.getType() == EntityType.FISHING_HOOK)
+							{
+								DamageSetter(event,"R_FH",(Entity) projectile.getShooter());
+							}
 						}
 					}
 		    	}

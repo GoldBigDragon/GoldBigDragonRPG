@@ -1,5 +1,7 @@
 package GBD.GoldBigDragon_Advanced.ServerTick;
 
+import org.bukkit.Bukkit;
+
 import GBD.GoldBigDragon_Advanced.Util.YamlController;
 import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 
@@ -28,13 +30,18 @@ public class ServerTickScheduleManager
 				PHSF.set("Schedule."+count+".Bool."+counter, ServerTickMain.Schedule.get(UTC).getBoolean((byte)counter));
 			PHSF.saveConfig();
 		}
+		for(int counter=0; counter<ServerTickMain.NaviUsingList.size();counter++)
+			PHSF.set("NaviUsingList."+counter, ServerTickMain.NaviUsingList.get(counter));
+		PHSF.saveConfig();
 		ServerTickMain.Schedule.clear();
+		ServerTickMain.NaviUsingList.clear();
 	}
 	
 	public void loadCategoriFile()
 	{
 		YamlController Config_YC = GBD.GoldBigDragon_Advanced.Main.Main.Config_YC;
 		YamlManager PHSF=Config_YC.getNewConfig("PlayerHashMapSaveFile.yml");
+
 		if(PHSF.contains("MonbSpawningAreaList"))
 		{
 			for(int count = 0; count < PHSF.getConfigurationSection("MonbSpawningAreaList").getKeys(false).size(); count++)
@@ -57,8 +64,18 @@ public class ServerTickScheduleManager
 				ServerTickMain.Schedule.put(UTC, STSO);
 			}
 		}
+		if(PHSF.contains("NaviUsingList"))
+		{
+			for(int count = 0; count < PHSF.getConfigurationSection("NaviUsingList").getKeys(false).size(); count++)
+			{
+				if(Bukkit.getServer().getPlayer(PHSF.getString("NaviUsingList."+count))!=null)
+					if(Bukkit.getServer().getPlayer(PHSF.getString("NaviUsingList."+count)).isOnline())
+						ServerTickMain.NaviUsingList.add(PHSF.getString("NaviUsingList."+count));
+			}
+		}
 		PHSF.removeKey("MonbSpawningAreaList");
 		PHSF.removeKey("Schedule");
+		PHSF.removeKey("NaviUsingList");
 		PHSF.saveConfig();
 	}
 }

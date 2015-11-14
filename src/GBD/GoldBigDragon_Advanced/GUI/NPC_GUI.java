@@ -608,7 +608,7 @@ public class NPC_GUI extends GUIutil
 			boolean isExit =false;
 			for(int counter = 0; counter < c.length; counter ++)
 			{
-				if(NPCscript.getString("Quest."+counter).equalsIgnoreCase(QuestName))
+				if(NPCscript.getString("Quest."+counter).equals(QuestName))
 				{
 					isExit = true;
 					break;

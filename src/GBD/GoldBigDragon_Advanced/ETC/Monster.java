@@ -195,6 +195,7 @@ public class Monster
 				case "오징어": Squid squid = (Squid) loc.getWorld().spawn(loc, Squid.class);squid = (Squid) getEntity(squid,mob); break;
 				case "주민": Villager villager = (Villager) loc.getWorld().spawn(loc, Villager.class);villager = (Villager) getEntity(villager,mob); break;
 				case "눈사람": Snowman snowman = (Snowman) loc.getWorld().spawn(loc, Snowman.class);snowman = (Snowman) getEntity(snowman,mob); break;
+				case "골렘": IronGolem golem = (IronGolem) loc.getWorld().spawn(loc, IronGolem.class);golem = (IronGolem) getEntity(golem,mob); break;
 			}
 			GBD.GoldBigDragon_Advanced.Main.Main.spawntime=true;
 		}
@@ -207,31 +208,46 @@ public class Monster
 		Monster.setCustomName(MobList.getString(mob + ".Name").replace("&", "§"));
 		Monster.setCustomNameVisible(true);
 		ItemStack Equip = MobList.getItemStack(mob+".Head.Item");
-		Monster.getEquipment().setHelmet(Equip);
+		if(Equip == null)
+			Monster.getEquipment().setHelmet(null);
+		else
+			Monster.getEquipment().setHelmet(Equip);
 		if(Equip.hasItemMeta()==true)
 			if(Equip.getItemMeta().hasLore()==true)
 				if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
 					Monster.getEquipment().setHelmet(null);
 		Equip = MobList.getItemStack(mob+".Chest.Item");
-		Monster.getEquipment().setChestplate(Equip);
+		if(Equip == null)
+			Monster.getEquipment().setChestplate(null);
+		else
+			Monster.getEquipment().setChestplate(Equip);
 		if(Equip.hasItemMeta()==true)
 			if(Equip.getItemMeta().hasLore()==true)
 				if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
 					Monster.getEquipment().setChestplate(null);
 		Equip = MobList.getItemStack(mob+".Leggings.Item");
-		Monster.getEquipment().setLeggings(Equip);
+		if(Equip == null)
+			Monster.getEquipment().setLeggings(null);
+		else
+			Monster.getEquipment().setLeggings(Equip);
 		if(Equip.hasItemMeta()==true)
 			if(Equip.getItemMeta().hasLore()==true)
 				if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
 					Monster.getEquipment().setLeggings(null);
 		Equip = MobList.getItemStack(mob+".Boots.Item");
-		Monster.getEquipment().setBoots(Equip);
+		if(Equip == null)
+			Monster.getEquipment().setBoots(null);
+		else
+			Monster.getEquipment().setBoots(Equip);
 		if(Equip.hasItemMeta()==true)
 			if(Equip.getItemMeta().hasLore()==true)
 				if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
 					Monster.getEquipment().setBoots(null);
 		Equip = MobList.getItemStack(mob+".Hand.Item");
-		Monster.getEquipment().setItemInHand(Equip);
+		if(Equip == null)
+			Monster.getEquipment().setItemInHand(null);
+		else
+			Monster.getEquipment().setItemInHand(Equip);
 		if(Equip.hasItemMeta()==true)
 			if(Equip.getItemMeta().hasLore()==true)
 				if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
@@ -653,6 +669,8 @@ public class Monster
 				return 120;
 			case "눈사람":
 				return 97;
+			case "골렘":
+				return 99;
 			case "박쥐":
 				return 65;
 			default : return -60;
@@ -725,6 +743,8 @@ public class Monster
 				return "CUSTOMVILLAGER";
 			case "눈사람":
 				return "CUSTOMSNOWGOLEM";
+			case "골렘":
+				return "CUSTOMIRONGOLEM";
 			case "박쥐":
 				return "CUSTOMBAT";
 			default:

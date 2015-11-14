@@ -35,7 +35,8 @@ public class Interact
 	{
 		if(event.getAction()==Action.RIGHT_CLICK_AIR||event.getAction()==Action.RIGHT_CLICK_BLOCK)
 		{ItemUse(event);}
-		AreaChecker(event);
+		if(event.getPlayer().isOp())
+			AreaChecker(event);
 		if(event.getAction() == Action.RIGHT_CLICK_BLOCK)
 		{
 			CustomMonsterSpawnEggUse(event);
@@ -233,15 +234,37 @@ public class Interact
 		if(event.getAction() ==Action.RIGHT_CLICK_BLOCK)
 		{
 			if(Main.UserData.get(player).getString((byte)1)!=null&&
-			    	Main.UserData.get(player).getString((byte)3)!=null)
+				Main.UserData.get(player).getString((byte)3)!=null)
 			{
-				if(Main.UserData.get(player).getString((byte)1)=="Harvest"&&Main.UserData.get(player).getString((byte)3)!=null)
+				if(Main.UserData.get(player).getString((byte)1)=="Harvest")
 				{
 					Main.UserData.get(player).setInt((byte)1, block.getTypeId());
 					Main.UserData.get(player).setInt((byte)2,(int)block.getData());
 			    	player.sendMessage(ChatColor.GREEN + "[SYSTEM] : " + ChatColor.GREEN + "블록의 데이터까지 완벽히 같아야 하나요? ("+ChatColor.RED + "X"+ChatColor.GREEN +" 혹은 "+ChatColor.DARK_AQUA +"O"+ChatColor.GREEN +")");
 			    	player.closeInventory();
 			    	return;
+				}
+				else if(Main.UserData.get(player).getString((byte)1)=="BlockPlace")
+				{
+					String QuestName = Main.UserData.get(player).getString((byte)2);
+					YamlController Config_YC = GBD.GoldBigDragon_Advanced.Main.Main.Config_YC;
+					YamlManager QuestConfig=Config_YC.getNewConfig("Quest/QuestList.yml");
+					int	size = QuestConfig.getConfigurationSection(QuestName+".FlowChart").getKeys(false).toArray().length;
+					
+					QuestConfig.set(QuestName+".FlowChart."+size+".Type", "BlockPlace");
+					QuestConfig.set(QuestName+".FlowChart."+size+".World", block.getLocation().getWorld().getName());
+					QuestConfig.set(QuestName+".FlowChart."+size+".X", block.getLocation().getX());
+					QuestConfig.set(QuestName+".FlowChart."+size+".Y", block.getLocation().getY());
+					QuestConfig.set(QuestName+".FlowChart."+size+".Z", block.getLocation().getZ());
+					QuestConfig.set(QuestName+".FlowChart."+size+".ID", 1);
+					QuestConfig.set(QuestName+".FlowChart."+size+".DATA", 0);
+					QuestConfig.saveConfig();
+			    	Main.UserData.get(player).setString((byte)3, null);
+			    	Main.UserData.get(player).setString((byte)1, "BPID");
+			    	Main.UserData.get(player).setInt((byte)1, size);
+					s.SP(event.getPlayer(), org.bukkit.Sound.ITEM_PICKUP, 0.5F,1.2F);
+			    	player.sendMessage(ChatColor.GREEN + "[퀘스트] : 설치 될 블록 ID를 입력 해 주세요!");
+					return;
 				}
 			}
 		}

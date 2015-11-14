@@ -42,6 +42,7 @@ public final class ETCGUI extends GUIutil
 		Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "파티", 389,0,1,Arrays.asList(ChatColor.GRAY + "파티에 대한 내용을 확인합니다."), 3, inv);
 		Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "워프", 345,0,1,Arrays.asList(ChatColor.GRAY + "워프 가능한 지역을 확인합니다."), 4, inv);
 		Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "친구", 397,3,1,Arrays.asList(ChatColor.GRAY + "친구 목록을 확인합니다."), 5, inv);
+		Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "네비게이션", 358,3,1,Arrays.asList(ChatColor.GRAY + "서버에 설정된 네비게이션을",ChatColor.GRAY+"동작 시킵니다."), 6, inv);
 		
 		Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 26, inv);
 
@@ -279,6 +280,10 @@ public final class ETCGUI extends GUIutil
 		case 5://친구
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
 			FriendsGUI(player, 0);
+			break;
+		case 6://네비게이션
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			new NavigationGUI().UseNavigationGUI(player, 0);
 			break;
 		case 26://닫기
 			s.SP(player, Sound.PISTON_RETRACT, 0.8F, 1.8F);

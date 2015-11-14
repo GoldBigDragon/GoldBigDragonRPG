@@ -7,16 +7,12 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-
-import com.nisovin.magicspells.MagicSpells;
-import com.nisovin.magicspells.Spell;
 
 import GBD.GoldBigDragon_Advanced.Main.Main;
 import GBD.GoldBigDragon_Advanced.Util.YamlController;
@@ -174,6 +170,8 @@ public class PlayerAction
 		    	{EventChatting(event);return;}
 			    else if(Main.UserData.get(player).getType().equals("System"))
 		    	{SystemTypeChatting(event);return;}
+			    else if(Main.UserData.get(player).getType().equals("Navi"))
+		    	{NaviTypeChatting(event);return;}
 		YamlController Main_YC = GBD.GoldBigDragon_Advanced.Main.Main.Main_YC;
 	  	if(Main_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
 	  		stat.CreateNewStats(player);
@@ -340,20 +338,57 @@ public class PlayerAction
 		YamlManager QuestConfig=Config_YC.getNewConfig("Quest/QuestList.yml");
 
     	event.setCancelled(true);
+    	String message = ChatColor.stripColor(event.getMessage());
     	switch(Main.UserData.get(player).getString((byte)1))
     	{
+    	case "Whisper":
+    	case "BroadCast":
+    	case "PScript":
+	    	{
+	    		int size = QuestConfig.getConfigurationSection(Main.UserData.get(player).getString((byte)2)+".FlowChart").getKeys(false).size();
+	    		QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Type", Main.UserData.get(player).getString((byte)1));
+		    	QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Message", event.getMessage());
+		    	QuestConfig.saveConfig();
+				player.sendMessage(ChatColor.GREEN+"[퀘스트] : 대사가 성공적으로 등록되었습니다!");
+				QGUI.FixQuestGUI(player, 0, Main.UserData.get(player).getString((byte)2));
+		    	Main.UserData.get(player).clearAll();
+	    	}
+	    	return;
+    	case "BPID"://BlockPlaceID
+			if(isIntMinMax(message, player, 1, Integer.MAX_VALUE))
+			{
+				GBD.GoldBigDragon_Advanced.Event.Interact I = new GBD.GoldBigDragon_Advanced.Event.Interact();
+				if(I.SetItemDefaultName(Integer.parseInt(message),(byte)0).equalsIgnoreCase("지정되지 않은 아이템"))
+				{
+					player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 아이템은 존재하지 않습니다!");
+	  				sound.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+	  				return;
+				}
+				String QuestName = Main.UserData.get(player).getString((byte)2);
+				int size = Main.UserData.get(player).getInt((byte)1);
+				sound.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+				QuestConfig.set(QuestName+".FlowChart."+size+".ID", Integer.parseInt(message));
+				QuestConfig.saveConfig();
+		    	Main.UserData.get(player).setString((byte)1, "BPDATA");
+		    	player.sendMessage(ChatColor.GREEN + "[퀘스트] : 설치 될 블록 DATA를 입력 해 주세요!");
+			}
+	    	return;
+    	case "BPDATA"://BlockPlaceDATA
+			if(isIntMinMax(message, player, 0, Integer.MAX_VALUE))
+			{
+				String QuestName = Main.UserData.get(player).getString((byte)2);
+				int size = Main.UserData.get(player).getInt((byte)1);
+				sound.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+				QuestConfig.set(QuestName+".FlowChart."+size+".DATA", Integer.parseInt(message));
+				QuestConfig.saveConfig();
+		    	Main.UserData.get(player).setString((byte)1, "BPDATA");
+		    	Main.UserData.get(player).clearAll();
+		    	QGUI.FixQuestGUI(player, 0, QuestName);
+			}
+	    	return;
     	case "Script":
 	    	Main.UserData.get(player).setString((byte)3,ChatColor.WHITE + event.getMessage());
 			player.sendMessage(ChatColor.GREEN+"[퀘스트] : 해당 대사를 말할 NPC를 우클릭 하세요.");
-	    	return;
-    	case "PScript":
-			Set<String> b3 = QuestConfig.getConfigurationSection(Main.UserData.get(player).getString((byte)2)+".FlowChart").getKeys(false);
-	    	QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+b3.size()+".Type", "PScript");
-	    	QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+b3.size()+".Message", event.getMessage());
-	    	QuestConfig.saveConfig();
-			player.sendMessage(ChatColor.GREEN+"[퀘스트] : 대사가 성공적으로 등록되었습니다!");
-			QGUI.FixQuestGUI(player, 0, Main.UserData.get(player).getString((byte)2));
-	    	Main.UserData.get(player).clearAll();
 	    	return;
     	case "Visit":
 			YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
@@ -1036,7 +1071,7 @@ public class PlayerAction
 	    			AreaConfig.saveConfig();
 	    			s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
 					Main.UserData.get(player).setString((byte)2, "AMSMC");
-					player.sendMessage(ChatColor.GREEN+"[영역] : 최대 몇 마리 까지 스폰 할까요?");
+					player.sendMessage(ChatColor.GREEN+"[영역] : 반경 20블록 이내 엔티티가 몇 마리 미만일 동안 스폰 할까요?");
 					player.sendMessage(ChatColor.YELLOW+"(최소 1마리 ~ 최대 300마리)");
 				}
 				return;
@@ -1096,21 +1131,6 @@ public class PlayerAction
 						s.SP(player, Sound.HORSE_ARMOR, 1.0F, 1.7F);
 						AGUI.AreaSpawnSpecialMonsterListGUI(player, 0, Main.UserData.get(player).getString((byte)3),Main.UserData.get(player).getString((byte)1));
 					}
-	    			Main.UserData.get(player).clearAll();
-				}
-				return;
-			case "MusicSetting":
-				if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
-				{
-	    			AreaConfig.set(Main.UserData.get(player).getString((byte)3)+".BGM", Integer.parseInt(Message));
-	    			AreaConfig.saveConfig();
-	    			AGUI.AreaGUI_Main(player, Main.UserData.get(player).getString((byte)3));
-	    			Main.UserData.get(player).clearAll();
-				}
-				else
-				{
-			    	s.SP(player, Sound.ORB_PICKUP,1.0F, 1.8F);
-		    		player.sendMessage(ChatColor.RED + "[영역] : NoteBlockAPI 플러그인이 존재하지 않습니다!");
 	    			Main.UserData.get(player).clearAll();
 				}
 				return;
@@ -2334,6 +2354,74 @@ public class PlayerAction
 			Config.saveConfig();
 			Main.UserData.get(player).clearAll();
 			new GBD.GoldBigDragon_Advanced.GUI.OPBoxGUI().OPBoxGUI_Setting(player);
+			return;
+		}
+	}
+
+	private void NaviTypeChatting(PlayerChatEvent event)
+	{
+		Player player = event.getPlayer();
+
+		YamlController Config_YC = GBD.GoldBigDragon_Advanced.Main.Main.Config_YC;
+		YamlManager NavigationConfig =Config_YC.getNewConfig("Navigation/NavigationList.yml");
+
+	    GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
+	    event.setCancelled(true);
+	    String message = ChatColor.stripColor(event.getMessage());
+		switch(Main.UserData.get(player).getString((byte)0))
+		{
+		case "NN"://NewNavigation
+			s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+			long UTC = new GBD.GoldBigDragon_Advanced.Util.ETC().getNowUTC();
+			NavigationConfig.set(UTC+".Name", event.getMessage());
+			NavigationConfig.set(UTC+".world", player.getLocation().getWorld().getName());
+			NavigationConfig.set(UTC+".x", (int)player.getLocation().getX());
+			NavigationConfig.set(UTC+".y", (int)player.getLocation().getY());
+			NavigationConfig.set(UTC+".z", (int)player.getLocation().getZ());
+			NavigationConfig.set(UTC+".time", -1);
+			NavigationConfig.set(UTC+".sensitive", 5);
+			NavigationConfig.set(UTC+".onlyOPuse", true);
+			NavigationConfig.set(UTC+".ShowArrow", 0);
+			NavigationConfig.saveConfig();
+			Main.UserData.get(player).clearAll();
+			new GBD.GoldBigDragon_Advanced.GUI.NavigationGUI().NavigationOptionGUI(player,UTC+"");
+			return;
+		case "CNN"://ChangeNavigationName이름 변경
+			s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+			NavigationConfig.set(Main.UserData.get(player).getString((byte)1)+".Name", event.getMessage());
+			NavigationConfig.saveConfig();
+			new GBD.GoldBigDragon_Advanced.GUI.NavigationGUI().NavigationOptionGUI(player,Main.UserData.get(player).getString((byte)1));
+			Main.UserData.get(player).clearAll();
+			return;
+		case "CNT"://ChangeNavigationTimer지속 시간
+			if(isIntMinMax(message, player, -1, 3600))
+			{
+				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+				NavigationConfig.set(Main.UserData.get(player).getString((byte)1)+".time", Integer.parseInt(message));
+				NavigationConfig.saveConfig();
+				new GBD.GoldBigDragon_Advanced.GUI.NavigationGUI().NavigationOptionGUI(player,Main.UserData.get(player).getString((byte)1));
+				Main.UserData.get(player).clearAll();
+			}
+			return;
+		case "CNS"://ChangeNavigationSensitive도착 반경
+			if(isIntMinMax(message, player, 1, 1000))
+			{
+				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+				NavigationConfig.set(Main.UserData.get(player).getString((byte)1)+".sensitive", Integer.parseInt(message));
+				NavigationConfig.saveConfig();
+				new GBD.GoldBigDragon_Advanced.GUI.NavigationGUI().NavigationOptionGUI(player,Main.UserData.get(player).getString((byte)1));
+				Main.UserData.get(player).clearAll();
+			}
+			return;
+		case "CNA"://ChangeNavigationArrow네비 타입
+			if(isIntMinMax(message, player, 0, 10))
+			{
+				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+				NavigationConfig.set(Main.UserData.get(player).getString((byte)1)+".ShowArrow", Integer.parseInt(message));
+				NavigationConfig.saveConfig();
+				new GBD.GoldBigDragon_Advanced.GUI.NavigationGUI().NavigationOptionGUI(player,Main.UserData.get(player).getString((byte)1));
+				Main.UserData.get(player).clearAll();
+			}
 			return;
 		}
 	}

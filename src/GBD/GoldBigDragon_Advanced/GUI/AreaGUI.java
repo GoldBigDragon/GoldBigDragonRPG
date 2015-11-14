@@ -538,7 +538,50 @@ public class AreaGUI extends GUIutil
 		Stack(ChatColor.WHITE + "" + ChatColor.BOLD + "취소", 166,0,1,Arrays.asList(ChatColor.GRAY + "지정 몬스터 스폰대신",ChatColor.GRAY+"영역에 등록 된 몬스터를",ChatColor.GRAY+"랜덤하게 스폰 합니다.",ChatColor.BLACK+AreaName,ChatColor.BLACK+""+RuleCount), 49, inv);
 		player.openInventory(inv);
 	}
-	
+
+	public void AreaMusicSettingGUI(Player player, int page,String AreaName)
+	{
+		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "영역 배경음 : " + (page+1));
+		int loc=0;
+		int model = new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 11);
+		for(int count = page*45; count < new OtherPlugins.NoteBlockAPIMain().Musics.size();count++)
+		{
+			if(model<11)
+				model=model+1;
+			else
+				model=0;
+			String lore = " %enter%"+ChatColor.DARK_AQUA+"[트랙] "+ChatColor.BLUE +""+ count+"%enter%"
+			+ChatColor.DARK_AQUA+"[제목] "+ChatColor.BLUE +""+ new OtherPlugins.NoteBlockAPIMain().getTitle(count)+"%enter%"
+			+ChatColor.DARK_AQUA+"[저자] "+ChatColor.BLUE+new OtherPlugins.NoteBlockAPIMain().getAuthor(count)+"%enter%"+ChatColor.DARK_AQUA+"[설명] ";
+			String Description = new OtherPlugins.NoteBlockAPIMain().getDescription(count);
+			String lore2="";
+			int a = 0;
+			for(int counter = 0; counter <Description.toCharArray().length; counter++)
+			{
+				lore2 = lore2+ChatColor.BLUE+Description.toCharArray()[counter];
+				a=a+1;
+				if(a >= 15)
+				{
+					a = 0;
+					lore2 = lore2+"%enter%      ";
+				}
+			}
+			lore = lore + lore2+"%enter% %enter%"+ChatColor.YELLOW+"[좌 클릭시 배경음 설정]";
+			if(count > new OtherPlugins.NoteBlockAPIMain().Musics.size() || loc >= 45) break;
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + count, 2256+model,0,1,Arrays.asList(lore.split("%enter%")), loc, inv);
+			
+			loc=loc+1;
+		}
+		
+		if(new OtherPlugins.NoteBlockAPIMain().Musics.size()-(page*44)>45)
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+		if(page!=0)
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+AreaName), 53, inv);
+		player.openInventory(inv);
+	}
 	
 	
 	public void AreaListGUIClick(InventoryClickEvent event)
@@ -686,13 +729,8 @@ public class AreaGUI extends GUIutil
 			if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
 			{
 				OtherPlugins.NoteBlockAPIMain NBAPIM = new OtherPlugins.NoteBlockAPIMain();
-				if(NBAPIM.SoundList(player,true) == true)
-				{
-					Main.UserData.get(player).setType("Area");
-					Main.UserData.get(player).setString((byte)2, "MusicSetting");
-					Main.UserData.get(player).setString((byte)3, AreaName);
-				}
-				player.closeInventory();
+				if(NBAPIM.SoundList(player,true))
+					AreaMusicSettingGUI(player, 0, AreaName);
 			}
 			else
 				s.SP(player, Sound.ANVIL_LAND, 1.0F, 1.9F);
@@ -1039,6 +1077,47 @@ public class AreaGUI extends GUIutil
 			AreaMonsterSpawnSettingGUI(player, 0, AreaName);
 			
 			new GBD.GoldBigDragon_Advanced.ETC.Area().AreaMonsterSpawnAdd(AreaName, RuleCounter);
+			return;
+		}
+	}
+
+	public void AreaMusicSettingGUIClick(InventoryClickEvent event)
+	{
+		GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
+		event.setCancelled(true);
+		Player player = (Player) event.getWhoClicked();
+		
+		String AreaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+
+		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
+		
+		switch (event.getSlot())
+		{
+		case 45://이전 목록
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			AreaGUI_Main(player, AreaName);
+			return;
+		case 53://나가기
+			s.SP(player, Sound.PISTON_RETRACT, 0.8F, 1.8F);
+			player.closeInventory();
+			return;
+		case 48://이전 페이지
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			AreaMusicSettingGUI(player, page-1,AreaName);
+			return;
+		case 50://다음 페이지
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			AreaMusicSettingGUI(player, page+1,AreaName);
+			return;
+		default :
+			if(event.isLeftClick())
+			{
+				YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
+				YamlManager AreaConfig =GUI_YC.getNewConfig("Area/AreaList.yml");
+				AreaConfig.set(AreaName+".BGM", Integer.parseInt(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())));
+				AreaConfig.saveConfig();
+				AreaGUI_Main(player, AreaName);
+			}
 			return;
 		}
 	}

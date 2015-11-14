@@ -115,6 +115,8 @@ public class InventoryClick
 				{new OtherPlugins.SpellMain().ShowAllMaigcGUIClick(event);return;}
 				else if(InventoryName.contains("친구"))
 				{IC_Friend(event, InventoryName);return;}
+				else if(InventoryName.contains("네비"))
+				{IC_Navi(event, InventoryName);return;}
 				return;
 		}
 	}
@@ -183,6 +185,8 @@ public class InventoryClick
 			NPGUI.NPCQuestclickMain(event);
 		else if(InventoryName.contains("흐름도"))
 			QGUI.FixQuestListInventoryclick(event);
+		else if(InventoryName.contains("네비"))
+			QGUI.Quest_NavigationListGUIClick(event);
 		else
 			QGUI.MyQuestListInventoryclick(event);
 		
@@ -310,6 +314,8 @@ public class InventoryClick
 	    	AGUI.AreaBlockSettingGUIClick(event);
 	    else if(InventoryName.contains("어류"))
 	    	AGUI.AreaFishSettingGUIClick(event);
+	    else if(InventoryName.contains("배경음"))
+	    	AGUI.AreaMusicSettingGUIClick(event);
 	}
 
 	private void IC_Upgrade(InventoryClickEvent event, String InventoryName)
@@ -373,8 +379,16 @@ public class InventoryClick
 	    	EGUI.FriendsGUIclick(event);
 	    if(InventoryName.contains("요청"))
 	    	EGUI.WaittingFriendsGUIclick(event);
-	}		
+	}
 
-
-
+	private void IC_Navi(InventoryClickEvent event, String InventoryName)
+	{
+	    GBD.GoldBigDragon_Advanced.GUI.NavigationGUI NGUI = new GBD.GoldBigDragon_Advanced.GUI.NavigationGUI();
+	    if(InventoryName.contains("목록"))
+	    	NGUI.NavigationListGUIClick(event);
+	    else if(InventoryName.contains("설정"))
+	    	NGUI.NavigationOptionGUIClick(event);
+	    else if(InventoryName.contains("사용"))
+	    	NGUI.UseNavigationGUIClick(event);
+	}
 }

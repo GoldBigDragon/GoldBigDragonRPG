@@ -29,6 +29,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -480,6 +481,31 @@ public class Main extends JavaPlugin implements Listener
 		return;
 	}
 	
+	@EventHandler
+	private void PlayerDeath(PlayerDeathEvent event)
+	{
+		List<ItemStack> Ilist = event.getDrops();
+		for(int count = 0; count < Ilist.size(); count++)
+		{
+			ItemStack IT = Ilist.get(count);
+			if(IT.hasItemMeta() == true)
+			{
+				if(IT.getItemMeta().hasLore() == true)
+				{
+					if(IT.getItemMeta().getLore().size() >= 4)
+					{
+						if(IT.getItemMeta().getLore().get(3).equals(ChatColor.YELLOW+"[클릭시 퀵슬롯에서 삭제]")==true)
+						{
+							Ilist.set(count,new ItemStack(0));
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	
+	
 	public void MagicSpellCatch()
 	{
 		if(MagicSpellsCatched == false)
@@ -657,11 +683,11 @@ public class Main extends JavaPlugin implements Listener
 
 		if(event.getInventory().getName().length() >= 3)
 		{
-			String InventoryName = ChatColor.stripColor(event.getInventory().getName().toString());
-			if(event.getInventory().getType()==InventoryType.CHEST)
+			if(event.getInventory().getName().charAt(0)=='§'
+			&&event.getInventory().getName().charAt(1)=='0')
 			{
-				if(event.getInventory().getName().charAt(0)=='§'
-				&&event.getInventory().getName().charAt(1)=='0')
+				String InventoryName = ChatColor.stripColor(event.getInventory().getName().toString());
+				if(event.getInventory().getType()==InventoryType.CHEST)
 				{
 					if(!(InventoryName.equals("몬스터 장비 설정")||InventoryName.equals("모아야 할 아이템 등록")
 					||InventoryName.equals("보상 아이템 등록")||InventoryName.equals("초심자 지원")
@@ -674,24 +700,24 @@ public class Main extends JavaPlugin implements Listener
 						event.setCancelled(true);
 					}
 				}
-			}
-			
-			if(InventoryName.contains("스텟")||InventoryName.contains("옵션")||InventoryName.contains("개조식")||
-			   InventoryName.equals("기타")||InventoryName.contains("가이드")||
-			   InventoryName.contains("파티")||InventoryName.contains("NPC")
-			   ||InventoryName.contains("던전")||InventoryName.equals("이벤트 진행")
-			   ||InventoryName.contains("목록")||InventoryName.contains("퀘스트")||
-			   InventoryName.contains("관리자")||InventoryName.contains("등록")||InventoryName.equals("오브젝트 추가")
-			   ||InventoryName.contains("장비")||InventoryName.contains("선택")||InventoryName.contains("아이템")
-			    ||InventoryName.contains("[MapleStory]")||InventoryName.contains("[Mabinogi]")
-			    ||InventoryName.contains("스킬")||InventoryName.contains("랭크")||InventoryName.contains("몬스터")
-			    ||InventoryName.contains("등록된")||InventoryName.contains("직업군")||InventoryName.contains("초심자")
-			    ||InventoryName.contains("카테고리")||InventoryName.equals("해당 블록을 캐면 나올 아이템")||InventoryName.contains("영역")
-			    ||InventoryName.contains("월드")||InventoryName.contains("워프")||InventoryName.contains("매직스펠")
-			    ||InventoryName.contains("이벤트")||InventoryName.contains("친구"))
-			{
-				GBD.GoldBigDragon_Advanced.Event.InventoryClick IC = new GBD.GoldBigDragon_Advanced.Event.InventoryClick();
-				IC.InventoryClickRouter(event, InventoryName);
+				
+				if(InventoryName.contains("스텟")||InventoryName.contains("옵션")||InventoryName.contains("개조식")||
+				   InventoryName.equals("기타")||InventoryName.contains("가이드")||
+				   InventoryName.contains("파티")||InventoryName.contains("NPC")
+				   ||InventoryName.contains("던전")||InventoryName.equals("이벤트 진행")
+				   ||InventoryName.contains("목록")||InventoryName.contains("퀘스트")||
+				   InventoryName.contains("관리자")||InventoryName.contains("등록")||InventoryName.equals("오브젝트 추가")
+				   ||InventoryName.contains("장비")||InventoryName.contains("선택")||InventoryName.contains("아이템")
+				    ||InventoryName.contains("[MapleStory]")||InventoryName.contains("[Mabinogi]")
+				    ||InventoryName.contains("스킬")||InventoryName.contains("랭크")||InventoryName.contains("몬스터")
+				    ||InventoryName.contains("등록된")||InventoryName.contains("직업군")||InventoryName.contains("초심자")
+				    ||InventoryName.contains("카테고리")||InventoryName.equals("해당 블록을 캐면 나올 아이템")||InventoryName.contains("영역")
+				    ||InventoryName.contains("월드")||InventoryName.contains("워프")||InventoryName.contains("매직스펠")
+				    ||InventoryName.contains("이벤트")||InventoryName.contains("친구")||InventoryName.contains("네비"))
+				{
+					GBD.GoldBigDragon_Advanced.Event.InventoryClick IC = new GBD.GoldBigDragon_Advanced.Event.InventoryClick();
+					IC.InventoryClickRouter(event, InventoryName);
+				}
 			}
 		}
 	}
@@ -751,21 +777,6 @@ public class Main extends JavaPlugin implements Listener
 			case"테스트":
 				if(player.isOp() == true)
 				{
-					long UTC2 = new GBD.GoldBigDragon_Advanced.Util.ETC().getNowUTC();
-					Location DestinationLocation = player.getWorld().getSpawnLocation();
-					GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleObject STSO = new GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleObject(UTC2, "NV");
-					STSO.setCount(0);//횟 수 초기화
-					STSO.setMaxCount(50);//N초간 네비게이션
-					//-1초 설정시, N초간이 아닌, 찾아 갈 때 까지 네비게이션 지원
-					STSO.setString((byte)1, DestinationLocation.getWorld().getName());//목적지 월드 이름 저장
-					STSO.setString((byte)2, player.getName());//플레이어 이름 저장
-					
-					STSO.setInt((byte)0, (int)DestinationLocation.getX());//목적지X 위치저장
-					STSO.setInt((byte)1, (int)DestinationLocation.getY());//목적지Y 위치저장
-					STSO.setInt((byte)2, (int)DestinationLocation.getZ());//목적지Z 위치저장
-					
-					GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.put(UTC2, STSO);
-					
 					/*
 				    for(int count= 0; count < GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.size(); count++)
 				    	player.sendMessage(ChatColor.GREEN+"현재 몬스터 스폰 중인 영역 : "+GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.get(count));

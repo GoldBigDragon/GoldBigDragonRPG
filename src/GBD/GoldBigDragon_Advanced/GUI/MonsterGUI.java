@@ -183,6 +183,8 @@ public class MonsterGUI extends GUIutil
 			case "¸»" : data=100; break;
 			case "Åä³¢" : data=101; break;
 			case "ÁÖ¹Î" : data=120; break;
+			case "´«»ç¶÷" :id = 332; data=0; break;
+			case "°ñ·½" :id = 265; data=0; break;
 			case "À§´õ" : id=399; break;
 			case "¿£´õµå·¡°ï" : id=122; break;
 			case "¿£´õÅ©¸®½ºÅ»" : id=46; break;
@@ -352,7 +354,6 @@ public class MonsterGUI extends GUIutil
 	
 	
 	
-	
 	public void MonsterListGUIClick(InventoryClickEvent event)
 	{
 		GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
@@ -482,7 +483,9 @@ public class MonsterGUI extends GUIutil
 				case "¿À¼¿·Ô" : MobList.set(MonsterName+".Type", "¸»"); break;
 				case "¸»" : MobList.set(MonsterName+".Type", "Åä³¢"); break;
 				case "Åä³¢" : MobList.set(MonsterName+".Type", "ÁÖ¹Î"); break;
-				case "ÁÖ¹Î" : MobList.set(MonsterName+".Type", "À§´õ"); break;
+				case "ÁÖ¹Î" : MobList.set(MonsterName+".Type", "´«»ç¶÷"); break;
+				case "´«»ç¶÷" : MobList.set(MonsterName+".Type", "°ñ·½"); break;
+				case "°ñ·½" : MobList.set(MonsterName+".Type", "À§´õ"); break;
 				case "À§´õ" : MobList.set(MonsterName+".Type", "¿£´õµå·¡°ï"); break;
 				case "¿£´õµå·¡°ï" : MobList.set(MonsterName+".Type", "¿£´õÅ©¸®½ºÅ»"); break;
 				case "¿£´õÅ©¸®½ºÅ»" : MobList.set(MonsterName+".Type", "Å©¸®ÆÛ"); break;
@@ -528,7 +531,9 @@ public class MonsterGUI extends GUIutil
 					case "¸»" : MobList.set(MonsterName+".Type", "¿À¼¿·Ô"); break;
 					case "Åä³¢" : MobList.set(MonsterName+".Type", "¸»"); break;
 					case "ÁÖ¹Î" : MobList.set(MonsterName+".Type", "Åä³¢"); break;
-					case "À§´õ" : MobList.set(MonsterName+".Type", "ÁÖ¹Î"); break;
+					case "´«»ç¶÷" : MobList.set(MonsterName+".Type", "ÁÖ¹Î"); break;
+					case "°ñ·½" : MobList.set(MonsterName+".Type", "´«»ç¶÷"); break;
+					case "À§´õ" : MobList.set(MonsterName+".Type", "°ñ·½"); break;
 					case "¿£´õµå·¡°ï" : MobList.set(MonsterName+".Type", "À§´õ"); break;
 					case "¿£´õÅ©¸®½ºÅ»" : MobList.set(MonsterName+".Type", "¿£´õµå·¡°ï"); break;
 					default : MobList.set(MonsterName+".Type", "Á»ºñ");break;
