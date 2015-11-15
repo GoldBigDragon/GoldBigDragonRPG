@@ -55,7 +55,7 @@ public class QuestCommand extends HelpMessage
 				  			||args[1].equalsIgnoreCase("일주")||args[1].equalsIgnoreCase("한달"))
 				  			{
 				  				Object[] questList = QuestConfig.getConfigurationSection("").getKeys(false).toArray();
-							  	String QuestName = null;
+							  	String QuestName = "";
 							  	
 							    for(int i =2; i<args.length-1;i++)
 							    	QuestName=QuestName+args[i]+" ";

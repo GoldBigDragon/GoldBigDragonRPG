@@ -15,7 +15,7 @@ public class ServerTickMain
 	public static ArrayList<String> MobSpawningAreaList = new ArrayList<String>();
 	public static ArrayList<String> NaviUsingList = new ArrayList<String>();
 	public static HashMap<Long, ServerTickScheduleObject> Schedule = new HashMap<Long, ServerTickScheduleObject>();
-	long nowUTC = 0;
+	public static long nowUTC = 0;
 	int BroadCastMessageTime =0;
   	int BroadCastMessageCool = 0;
   	public static int SafeLine = 30;
@@ -24,6 +24,7 @@ public class ServerTickMain
   	
 	public ServerTickMain(Main plugin)
 	{
+		nowUTC = new GBD.GoldBigDragon_Advanced.Util.ETC().getNowUTC();
 	  	BukkitScheduler scheduler1 = Bukkit.getServer().getScheduler();
 	  	scheduler1.scheduleSyncRepeatingTask(plugin,  new Runnable()
         {
@@ -32,6 +33,7 @@ public class ServerTickMain
             {
         		BroadCastMessage();
             	CheckShcedule();
+            	nowUTC = nowUTC +980;
         	  	//Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA +"1"+"ÃÊ °æ°ú");
             }
         }, 10, 20);
@@ -60,7 +62,6 @@ public class ServerTickMain
 	
 	public void CheckShcedule()
 	{
-		nowUTC=new GBD.GoldBigDragon_Advanced.Util.ETC().getNowUTC();
 		Object[] ScheduleList = Schedule.keySet().toArray();
 		long scheduleUTC = 0;
 		int SafeLineCounter = SafeLine;
@@ -86,11 +87,19 @@ public class ServerTickMain
 		case "A_MS"://Area_MonsterSpawn
 			new ServerTask_Area().AreaMobSpawn(UTC);
 			return;
+		case "A_RB"://Area_RegenBlock
+			new ServerTask_Area().AreaRegenBlock(UTC);
+			return;
 		case "NV"://Navigation
 			new ServerTask_Navigation().Navigation(UTC);
 			return;
 		default:
 			return;
 		}
+	}
+	
+	public Long getNowUTC()
+	{
+		return nowUTC;
 	}
 }

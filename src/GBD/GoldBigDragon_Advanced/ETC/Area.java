@@ -563,7 +563,7 @@ public class Area
 						if(GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.contains(AreaName)==false)
 							GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.add(AreaName);
 						
-						Long UTC = new GBD.GoldBigDragon_Advanced.Util.ETC().getNowUTC()+5;
+						Long UTC = GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.nowUTC+5;
 						for(;;)
 						{
 							if(GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.containsKey(UTC))
@@ -604,7 +604,7 @@ public class Area
 							String ruleNumber = RuleName[count].toString();
 							if(AreaConfig.getString(AreaName+".MonsterSpawnRule."+ruleNumber+".loc.world")!=null)
 							{
-								Long UTC = new GBD.GoldBigDragon_Advanced.Util.ETC().getNowUTC()+5;
+								Long UTC = GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.nowUTC+5;
 								for(;;)
 								{
 									if(GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.containsKey(UTC))

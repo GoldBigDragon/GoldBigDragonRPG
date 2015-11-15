@@ -1045,6 +1045,16 @@ public class PlayerAction
 		String Message = ChatColor.stripColor(event.getMessage());
 		switch(Main.UserData.get(player).getString((byte)2))
 		{
+			case "ARR"://AreaRegenBlock
+				if(isIntMinMax(Message, player, 1, 3600))
+				{
+					AreaConfig.set(Main.UserData.get(player).getString((byte)3)+".RegenBlock", Integer.parseInt(Message));
+	    			AreaConfig.saveConfig();
+	    			s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+					AGUI.AreaGUI_Main(player, Main.UserData.get(player).getString((byte)3));
+	    			Main.UserData.get(player).clearAll();
+				}
+				return;
 			case "AMSC"://AreaMonsterSpawnCount
 				if(isIntMinMax(Message, player, 1, 100))
 				{

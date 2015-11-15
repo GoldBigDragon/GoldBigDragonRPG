@@ -91,4 +91,13 @@ public class ServerTask_Area
         }
         return entities.size();
     }
+
+	public void AreaRegenBlock(Long UTC)
+	{
+		Location loc = new Location(Bukkit.getServer().getWorld(ServerTickMain.Schedule.get(UTC).getString((byte)1)), ServerTickMain.Schedule.get(UTC).getInt((byte)0), ServerTickMain.Schedule.get(UTC).getInt((byte)1), ServerTickMain.Schedule.get(UTC).getInt((byte)2));
+		loc.getWorld().getBlockAt(loc).setTypeId(ServerTickMain.Schedule.get(UTC).getInt((byte)3));
+		loc.getWorld().getBlockAt(loc).setData((byte) ServerTickMain.Schedule.get(UTC).getInt((byte)4));
+		ServerTickMain.Schedule.remove(UTC);
+	}
+
 }

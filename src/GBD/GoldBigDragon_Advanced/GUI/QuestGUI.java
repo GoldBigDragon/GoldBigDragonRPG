@@ -325,7 +325,7 @@ public class QuestGUI extends GUIutil
 
 	public void SelectObjectPage(Player player, int page, String QuestName)
 	{
-		Inventory inv = Bukkit.createInventory(null, 27, ChatColor.BLACK + "오브젝트 추가");
+		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "오브젝트 추가");
 
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "대사", 323,0,1,Arrays.asList(ChatColor.GRAY + "대화창을 띄우고, 작성된",ChatColor.GRAY+"스크립트를 유저에게 띄웁니다.",ChatColor.GRAY+"(화자 : NPC)"), 0, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "독백", 323,0,1,Arrays.asList(ChatColor.GRAY + "대화창을 띄우고, 작성된",ChatColor.GRAY+"스크립트를 유저에게 띄웁니다.",ChatColor.GRAY+"(화자 : 유저)"), 1, inv);
@@ -342,8 +342,17 @@ public class QuestGUI extends GUIutil
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "전체", 138,0,1,Arrays.asList(ChatColor.GRAY + "서버 전체에 메시지가 나타납니다."), 12, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "네비", 358,0,1,Arrays.asList(ChatColor.GRAY + "플레이어에게 네비게이션을 작동 시킵니다."), 13, inv);
 		
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 18, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 26, inv);
+
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "선택", 72,0,1,Arrays.asList(ChatColor.GRAY + "플레이어가 원하는 대답을",ChatColor.GRAY+"선택 하도록 합니다.",ChatColor.GRAY+"선택한 대답에 따라",ChatColor.GRAY+"다른 변수값을 가질 수 있습니다."), 36, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "변수", 143,0,1,Arrays.asList(ChatColor.GRAY + "플레이어의 변수를 강제로 수정합니다."), 37, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "IF", 184,0,1,Arrays.asList(ChatColor.GRAY + "플레이어의 현재 변수값을 확인하여",ChatColor.GRAY+"비교한 값과 동일할 경우",ChatColor.GRAY+"IF와 ENDIF 사이의 구문을",ChatColor.GRAY+"실행하게 됩니다.","",ChatColor.RED+"[반드시 IF의 개수 = ENDIF의 개수]"), 38, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "ENDIF", 191,0,1,Arrays.asList(ChatColor.GRAY + "IF의 끝 부분을 나타냅니다.","",ChatColor.RED+"[반드시 IF의 개수 = ENDIF의 개수]"), 39, inv);
+		
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 초기화", 395,0,1,Arrays.asList(ChatColor.GRAY + "퀘스트를 중간에 포기 합니다.",ChatColor.GREEN+"퀘스트를 다시 받을 수 있습니다."), 43, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 실패", 395,0,2,Arrays.asList(ChatColor.GRAY + "퀘스트를 중간에 포기 합니다.",ChatColor.GRAY+"일반 퀘스트일 경우 플레이어는",ChatColor.RED+"퀘스트를 다시 받을 수 없습니다."), 44, inv);
+		
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 53, inv);
 		player.openInventory(inv);
 	}
 
@@ -829,8 +838,6 @@ public class QuestGUI extends GUIutil
 	
 	
 	
-	
-	
 	public void OPboxAllQuestListInventoryclick(InventoryClickEvent event)
 	{
 		GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
@@ -1056,7 +1063,7 @@ public class QuestGUI extends GUIutil
 		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		
-		String QuestName = ChatColor.stripColor(event.getInventory().getItem(26).getItemMeta().getLore().get(1));
+		String QuestName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
 
 		switch ((ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())))
 		{
