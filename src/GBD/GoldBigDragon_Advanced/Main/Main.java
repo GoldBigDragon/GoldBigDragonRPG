@@ -55,11 +55,11 @@ public class Main extends JavaPlugin implements Listener
 {
 	public static YamlController Main_YC,GUI_YC,Party_YC,Config_YC,Event_YC,Monster_YC,Location_YC,Scheduler_YC;
 
-	public static long serverUpdate = 20151114;
+	public static long serverUpdate = 20151115;
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/";
 	
-	public static long currentServerUpdate = 20151114;
+	public static long currentServerUpdate = 20151115;
 	public static String currentServerVersion = "Advanced";
 	
 	public static String SpawnMobName;

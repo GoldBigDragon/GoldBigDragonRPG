@@ -23,11 +23,11 @@ public class OPBoxGUI extends GUIutil
 		
 		Stack2(ChatColor.BLACK +""+page, 160,11,1,null, 0, inv);
 		Stack2(" ", 160,11,1,null, 1, inv);
-		Stack2(" ", 160,11,1,null, 2, inv);
-		Stack2(" ", 160,11,1,null, 3, inv);
-		Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "[현재 위치를 스폰으로]", 160,4,1,Arrays.asList(ChatColor.WHITE +"현재 위치를 스폰 지점으로",ChatColor.WHITE +"변경 시킵니다."), 4, inv);
-		Stack2(" ", 160,11,1,null, 5, inv);
-		Stack2(" ", 160,11,1,null, 6, inv);
+		Stack2(ChatColor.RED +""+ ChatColor.BOLD + "[월드 시간 변경 -낮-]", 160,4,1,Arrays.asList(ChatColor.WHITE +"현재 월드 시간을 낮으로",ChatColor.WHITE +"변경 시킵니다."), 2, inv);
+		Stack2(ChatColor.GRAY +""+ ChatColor.BOLD + "[월드 시간 변경 -밤-]", 160,4,1,Arrays.asList(ChatColor.WHITE +"현재 월드 시간을 밤으로",ChatColor.WHITE +"변경 시킵니다."), 3, inv);
+		Stack2(ChatColor.YELLOW +""+ ChatColor.BOLD + "[현재 위치를 스폰으로]", 160,4,1,Arrays.asList(ChatColor.WHITE +"현재 위치를 스폰 지점으로",ChatColor.WHITE +"변경 시킵니다."), 4, inv);
+		Stack2(ChatColor.DARK_AQUA +""+ ChatColor.BOLD + "[월드 날씨 변경 -맑음-]", 160,4,1,Arrays.asList(ChatColor.WHITE +"현재 월드 날씨를 맑게",ChatColor.WHITE +"변경 시킵니다."), 5, inv);
+		Stack2(ChatColor.GRAY +""+ ChatColor.BOLD + "[월드 날씨 변경 -흐림-]", 160,4,1,Arrays.asList(ChatColor.WHITE +"현재 월드 날씨를 흐리게",ChatColor.WHITE +"변경 시킵니다."), 6, inv);
 		Stack2(" ", 160,11,1,null, 7, inv);
 		Stack2(" ", 160,11,1,null, 8, inv);
 		Stack2(" ", 160,11,1,null, 9, inv);
@@ -217,11 +217,55 @@ public class OPBoxGUI extends GUIutil
 	//각종 GUI창 속의 아이콘을 눌렸을 때, 해당 아이콘에 기능을 넣는 메소드1   -스텟 GUI, 오피박스, 커스텀 몬스터GUI-//
 	public void OPBoxGUIInventoryclick(InventoryClickEvent event)
 	{
-		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
-		YamlManager Config =GUI_YC.getNewConfig("config.yml");
+
 		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
+		if(event.getSlot() >= 2 && event.getSlot()<=6)
+		{
+			switch(event.getSlot())
+			{
+			case 2:
+				{
+					s.SP(player, Sound.CHICKEN_IDLE, 0.8F, 1.0F);
+					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setTime(0);
+					player.sendMessage(ChatColor.GOLD+"[System] : "+player.getLocation().getWorld().getName()+" 월드 시간을 낮으로 변경하였습니다!");
+				}
+				return;
+			case 3:
+				{
+					s.SP(player, Sound.WOLF_HOWL, 0.8F, 1.0F);
+					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setTime(14000);
+					player.sendMessage(ChatColor.GOLD+"[System] : "+player.getLocation().getWorld().getName()+" 월드 시간을 밤으로 변경하였습니다!");
+				}
+				return;
+			case 4:
+				{
+					s.SP(player, Sound.VILLAGER_YES, 0.8F, 1.0F);
+					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setSpawnLocation((int)player.getLocation().getX(), (int)player.getLocation().getY(), (int)player.getLocation().getZ());
+					player.sendMessage(ChatColor.GOLD+"[System] : "+player.getLocation().getWorld().getName()+" 월드의 스폰 지점을 "+(int)player.getLocation().getX()+","+(int)player.getLocation().getY()+","+(int)player.getLocation().getZ()+" 로 변경하였습니다!");
+				}
+				return;
+			case 5:
+				{
+					s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setStorm(false);
+					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setWeatherDuration(180000);
+					player.sendMessage(ChatColor.GOLD+"[System] : "+player.getLocation().getWorld().getName()+" 월드 날씨를 맑음으로 변경하였습니다!");
+				}
+				return;
+			case 6:
+				{
+					s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setStorm(true);
+					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setWeatherDuration(180000);
+					player.sendMessage(ChatColor.GOLD+"[System] : "+player.getLocation().getWorld().getName()+" 월드 날씨를 흐림으로 변경하였습니다!");
+				}
+				return;
+			}
+		}
+		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
+		YamlManager Config =GUI_YC.getNewConfig("config.yml");
 		switch ((ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())))
 		{
 		case"네비게이션":
@@ -264,11 +308,6 @@ public class OPBoxGUI extends GUIutil
 		case "초심자":
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
 			new NewBieGUI().NewBieGUIMain(player);
-			return;
-		case "[현재 위치를 스폰으로]":
-			s.SP(player, Sound.VILLAGER_YES, 0.8F, 1.0F);
-			Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setSpawnLocation((int)player.getLocation().getX(), (int)player.getLocation().getY(), (int)player.getLocation().getZ());
-			player.sendMessage(ChatColor.GOLD+"[System] : "+player.getLocation().getWorld().getName()+" 월드의 스폰 지점을 "+(int)player.getLocation().getX()+","+(int)player.getLocation().getY()+","+(int)player.getLocation().getZ()+" 로 변경하였습니다!");
 			return;
 		case "개조식":
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);

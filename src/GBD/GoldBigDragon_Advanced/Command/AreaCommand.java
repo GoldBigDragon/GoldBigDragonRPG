@@ -91,7 +91,7 @@ public class AreaCommand extends HelpMessage
 		else
 		{
 			GBD.GoldBigDragon_Advanced.ETC.Area A = new GBD.GoldBigDragon_Advanced.ETC.Area();
-			String SB = null;
+			String SB = "";
 			for(int a =2; a<= ((args.length)-1);a++)
 				SB = SB+args[a]+" ";
 			switch(args[1])
