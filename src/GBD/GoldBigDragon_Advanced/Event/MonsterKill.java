@@ -1,7 +1,5 @@
 package GBD.GoldBigDragon_Advanced.Event;
 
-import java.util.Set;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Creeper;
@@ -22,12 +20,6 @@ import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 
 public class MonsterKill
 {
-	private Level LV = new Level();
-	private ItemDrop ID = new ItemDrop();
-	private GBD.GoldBigDragon_Advanced.Effect.Sound sound = new GBD.GoldBigDragon_Advanced.Effect.Sound();
-	private GBD.GoldBigDragon_Advanced.Util.Number N = new GBD.GoldBigDragon_Advanced.Util.Number();
-	private GBD.GoldBigDragon_Advanced.Config.StatConfig stat = new GBD.GoldBigDragon_Advanced.Config.StatConfig();
-
 	@EventHandler
 	public void MonsterKill(EntityDeathEvent event)
 	{
@@ -40,10 +32,10 @@ public class MonsterKill
 				{
 					Player player = (Player) Bukkit.getServer().getPlayer(event.getEntity().getKiller().getName());
 					YamlManager attacker;
-					
+
 					YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
 				  	if(Event_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-				  		stat.CreateNewStats(player);
+				  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
 				  	attacker = Event_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 				  	
 					if(attacker.getBoolean("Alert.MobHealth") == true)
@@ -55,14 +47,18 @@ public class MonsterKill
 				}
 			}
 		}
+    	return;
 	}
 
 	public void Reward(EntityDeathEvent event, Player player)
 	{
+		GBD.GoldBigDragon_Advanced.Util.Number N = new GBD.GoldBigDragon_Advanced.Util.Number();
+		Level LV = new Level();
+		ItemDrop ID = new ItemDrop();
 		YamlController Monster_YC = GBD.GoldBigDragon_Advanced.Main.Main.Monster_YC;
 		YamlManager YM,Config;
 	  	if(Monster_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-	  		stat.CreateNewStats(player);
+	  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
 
 		YM = Monster_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 		Config = Monster_YC.getNewConfig("config.yml");
@@ -74,6 +70,7 @@ public class MonsterKill
 			if(lucky <= 0) lucky = 1;
 			if(lucky >= N.RandomNum(0, 100))
 			{
+				GBD.GoldBigDragon_Advanced.Effect.Sound sound = new GBD.GoldBigDragon_Advanced.Effect.Sound();
 				int luckysize = N.RandomNum(0, 100);
 				if(luckysize <= 80){player.sendMessage(ChatColor.YELLOW +""+ChatColor.BOLD+ "럭키 피니시!");amount = 2;	sound.SP(player, org.bukkit.Sound.LEVEL_UP, 0.5F, 0.9F);}
 				else if(luckysize <= 95){player.sendMessage(ChatColor.YELLOW +""+ChatColor.BOLD+ "빅 럭키 피니시!");amount = 5;	sound.SP(player, org.bukkit.Sound.LEVEL_UP, 0.7F, 1.0F);}
@@ -88,8 +85,7 @@ public class MonsterKill
 			String name2 = ChatColor.stripColor(event.getEntity().getName());
 			YamlManager Monster  = Monster_YC.getNewConfig("Monster/MonsterList.yml");
 
-			Set<String> a = Monster.getConfigurationSection("").getKeys(false);
-			Object[] monsterlist =a.toArray();
+			Object[] monsterlist = Monster.getConfigurationSection("").getKeys(false).toArray();
 			for(int count = 0; count < monsterlist.length; count ++)
 			{
 				if(ChatColor.stripColor(Monster.getString(monsterlist[count].toString()+".Name")).equalsIgnoreCase(ChatColor.stripColor(name)) == true||
@@ -251,20 +247,14 @@ public class MonsterKill
 
 	public void Quest(EntityDeathEvent event, Player player)
 	{
-		YamlController Party_YC = GBD.GoldBigDragon_Advanced.Main.Main.Party_YC;
-	  	if(Party_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-	  		stat.CreateNewStats(player);
-	  	YamlManager YM = Party_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
-
 		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
 		YamlManager QuestList  = GUI_YC.getNewConfig("Quest/QuestList.yml");
 		YamlManager PlayerQuestList  = GUI_YC.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
 
 		if(Main.PartyJoiner.containsKey(player)==false)
 		{
-			Set<String> b = PlayerQuestList.getConfigurationSection("Started.").getKeys(false);
-			Object[] a =b.toArray();
-			for(int count = 0; count < b.size(); count++)
+			Object[] a = PlayerQuestList.getConfigurationSection("Started.").getKeys(false).toArray();
+			for(int count = 0; count < a.length; count++)
 			{
 				String QuestName = (String) a[count];
 				int Flow = PlayerQuestList.getInt("Started."+QuestName+".Flow");
@@ -326,9 +316,8 @@ public class MonsterKill
 					{
 						PlayerQuestList  = GUI_YC.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
 						
-						Set<String> b = PlayerQuestList.getConfigurationSection("Started.").getKeys(false);
-						Object[] a =b.toArray();
-						for(int count = 0; count < b.size(); count++)
+						Object[] a = PlayerQuestList.getConfigurationSection("Started.").getKeys(false).toArray();
+						for(int count = 0; count < a.length; count++)
 						{
 							String QuestName = (String) a[count];
 							int Flow = PlayerQuestList.getInt("Started."+QuestName+".Flow");
@@ -372,5 +361,6 @@ public class MonsterKill
 				}
 			}
 		}
+		return;
 	}
 }

@@ -1,7 +1,9 @@
 package GBD.GoldBigDragon_Advanced.Event;
 
-import org.bukkit.*;
-import org.bukkit.event.inventory.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 
 public class InventoryClick
 {
@@ -119,15 +121,14 @@ public class InventoryClick
 				{IC_Navi(event, InventoryName);return;}
 				return;
 		}
+		return;
 	}
 	
 	private void IC_NPC(InventoryClickEvent event, String InventoryName)
 	{
 	    GBD.GoldBigDragon_Advanced.GUI.NPC_GUI NPGUI = new GBD.GoldBigDragon_Advanced.GUI.NPC_GUI();
     	if(InventoryName.equals("NPC 직업 선택"))
-    	{
     		NPGUI.NPCJobClick(event, ChatColor.stripColor(event.getInventory().getItem(18).getItemMeta().getLore().get(1)));
-    	}
     	else if(InventoryName.contains("NPC"))
 	    {
         	if(InventoryName.contains("[NPC]"))
@@ -166,6 +167,7 @@ public class InventoryClick
         			NPGUI.TalkGUIClick(event);
         	}
 	    }
+		return;
 	}
 
 	private void IC_Quest(InventoryClickEvent event, String InventoryName)
@@ -189,7 +191,7 @@ public class InventoryClick
 			QGUI.Quest_NavigationListGUIClick(event);
 		else
 			QGUI.MyQuestListInventoryclick(event);
-		
+		return;
 	}
 
 	private void IC_MapleStory(InventoryClickEvent event, String InventoryName)
@@ -200,6 +202,7 @@ public class InventoryClick
 			JGUI.MapleStory_ChooseJobClick(event);
 		else if(InventoryName.contains("설정"))
 			JGUI.MapleStory_JobSettingClick(event);
+		return;
 	}
 
 	private void IC_Mabinogi(InventoryClickEvent event, String InventoryName)
@@ -212,6 +215,7 @@ public class InventoryClick
 			JGUI.MapleStory_JobSettingClick(event);
 		else if(InventoryName.contains("관리"))
 			JGUI.Mabinogi_SkillSettingClick(event);
+		return;
 	}
 
 	private void IC_Skill(InventoryClickEvent event, String InventoryName)
@@ -230,6 +234,7 @@ public class InventoryClick
 	    	GBD.GoldBigDragon_Advanced.GUI.UseableItemGUI UIGUI = new GBD.GoldBigDragon_Advanced.GUI.UseableItemGUI();
 	    	UIGUI.SelectSkillGUIClick(event);
 	    }
+		return;
 	}
 
 	private void IC_OP(InventoryClickEvent event, String InventoryName)
@@ -257,6 +262,7 @@ public class InventoryClick
 			PGUI.PartyListInventoryclick(event);
 		else if(InventoryName.contains("멤버")||InventoryName.contains("교체"))
 			PGUI.PartyMemberInformationClick(event);
+		return;
 	}
 	
 	private void IC_Item(InventoryClickEvent event, String InventoryName)
@@ -290,6 +296,7 @@ public class InventoryClick
 			else if(InventoryName.contains("목록"))
 				IGUI.ItemListInventoryclick(event);
 	    }
+		return;
 	}
 
 	private void IC_Area(InventoryClickEvent event, String InventoryName)
@@ -316,6 +323,7 @@ public class InventoryClick
 	    	AGUI.AreaFishSettingGUIClick(event);
 	    else if(InventoryName.contains("배경음"))
 	    	AGUI.AreaMusicSettingGUIClick(event);
+		return;
 	}
 
 	private void IC_Upgrade(InventoryClickEvent event, String InventoryName)
@@ -325,6 +333,7 @@ public class InventoryClick
 	    	UGUI.UpgradeRecipeGUIClick(event);
 	    else if(InventoryName.contains("설정"))
 	    	UGUI.UpgradeRecipeSettingGUIClick(event);
+		return;
 	}	
 	
 	private void IC_NewBie(InventoryClickEvent event, String InventoryName)
@@ -336,6 +345,7 @@ public class InventoryClick
 	    	NGUI.NewBieSupportItemGUIInventoryclick(event);
 	    else if(InventoryName.contains("기본퀘"))
 	    	NGUI.NewBieQuestGUIInventoryclick(event);
+		return;
 	}
 	
 	private void IC_Monster(InventoryClickEvent event, String InventoryName)
@@ -347,6 +357,7 @@ public class InventoryClick
 	    	MGUI.MonsterOptionSettingGUIClick(event);
 	    else if(InventoryName.contains("포션"))
 	    	MGUI.MonsterPotionGUIClick(event);
+		return;
 	}	
 	
 	private void IC_World(InventoryClickEvent event, String InventoryName)
@@ -354,6 +365,7 @@ public class InventoryClick
 	    GBD.GoldBigDragon_Advanced.GUI.WorldCreateGUI WGUI = new GBD.GoldBigDragon_Advanced.GUI.WorldCreateGUI();
 	    if(InventoryName.contains("선택"))
 	    	WGUI.WorldCreateGUIClick(event);
+		return;
 	}	
 
 	private void IC_Warp(InventoryClickEvent event, String InventoryName)
@@ -361,6 +373,7 @@ public class InventoryClick
 	    GBD.GoldBigDragon_Advanced.GUI.WarpGUI WGUI = new GBD.GoldBigDragon_Advanced.GUI.WarpGUI();
 	    if(InventoryName.contains("목록"))
 	    	WGUI.WarpListGUIInventoryclick(event);
+		return;
 	}
 	
 	private void IC_Event(InventoryClickEvent event, String InventoryName)
@@ -370,6 +383,7 @@ public class InventoryClick
 	    	EGUI.AllPlayerGiveEventGUIclick(event);
 		else if(InventoryName.contains("진행"))
 			EGUI.EventGUIInventoryclick(event);
+		return;
 	}		
 
 	private void IC_Friend(InventoryClickEvent event, String InventoryName)
@@ -379,6 +393,7 @@ public class InventoryClick
 	    	EGUI.FriendsGUIclick(event);
 	    if(InventoryName.contains("요청"))
 	    	EGUI.WaittingFriendsGUIclick(event);
+		return;
 	}
 
 	private void IC_Navi(InventoryClickEvent event, String InventoryName)
@@ -390,5 +405,6 @@ public class InventoryClick
 	    	NGUI.NavigationOptionGUIClick(event);
 	    else if(InventoryName.contains("사용"))
 	    	NGUI.UseNavigationGUIClick(event);
+		return;
 	}
 }

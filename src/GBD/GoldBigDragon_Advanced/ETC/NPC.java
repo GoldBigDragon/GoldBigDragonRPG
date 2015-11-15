@@ -11,9 +11,6 @@ import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 
 public class NPC
 {
-	GBD.GoldBigDragon_Advanced.Util.Number n = new GBD.GoldBigDragon_Advanced.Util.Number();
-	GBD.GoldBigDragon_Advanced.Config.NPCconfig NPCconfig = new GBD.GoldBigDragon_Advanced.Config.NPCconfig();
-	
 	public String[] getScript(Player player, char ScriptType)
 	{
 		if(ScriptType == -1)
@@ -26,6 +23,7 @@ public class NPC
 		String TalkSubject = "NatureTalk";
 		int randomScript = 0;
 
+		GBD.GoldBigDragon_Advanced.Config.NPCconfig NPCconfig = new GBD.GoldBigDragon_Advanced.Config.NPCconfig();
 		NPCconfig.PlayerNPCconfig(player, Main.PlayerClickedNPCuuid.get(player));
 		NPCconfig.NPCNPCconfig(Main.PlayerClickedNPCuuid.get(player));
 
@@ -44,7 +42,7 @@ public class NPC
 		if(arealist.length <= 0)
 		{
 			String[] script = new String[1];
-			randomScript  = (char) n.RandomNum(0, 2);
+			randomScript  = (char) new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 2);
 			if(randomScript == 0)
 				script[0] = ChatColor.GRAY + "....";
 			if(randomScript == 1)
@@ -59,7 +57,7 @@ public class NPC
 		
 		for(int counter = 1; counter < 125; counter++)
 		{
-			randomScript  = n.RandomNum(1, arealist.length);
+			randomScript  = new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(1, arealist.length);
 			if(PlayerNPC.getInt(Main.PlayerClickedNPCuuid.get(player)+".love") >= NPCscript.getInt(TalkSubject + "."+randomScript+".love"))
 			{
 				scriptString = NPCscript.getString(TalkSubject + "."+randomScript+".Script");
@@ -92,7 +90,7 @@ public class NPC
 		if(scriptget == false)
 		{
 			String[] script = new String[1];
-			randomScript  = (char) n.RandomNum(0, 2);
+			randomScript  = (char) new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 2);
 			if(randomScript == 0)
 				script[0] = ChatColor.GRAY + "....";
 			if(randomScript == 1)
@@ -113,8 +111,7 @@ public class NPC
 	public void InventoryClose_NPC(InventoryCloseEvent event)
 	{
 		if(event.getInventory().getItem(13)!=null)
-		{
 			event.getPlayer().getInventory().addItem(event.getInventory().getItem(13));
-		}
+		return;
 	}
 }

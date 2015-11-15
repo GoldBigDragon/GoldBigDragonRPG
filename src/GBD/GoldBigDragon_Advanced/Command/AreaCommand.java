@@ -1,25 +1,25 @@
 package GBD.GoldBigDragon_Advanced.Command;
 
-import java.util.*;
-
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import GBD.GoldBigDragon_Advanced.Util.*;
+import GBD.GoldBigDragon_Advanced.Util.YamlController;
+import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 
 public class AreaCommand extends HelpMessage
 {
 	public void onCommand(CommandSender talker, Command command, String string, String[] args)
 	{
-	  	Config = Main_YC.getNewConfig("config.yml");
+	    GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
 		Player player = (Player) talker;
 		if(player.isOp() == false)
 		{
-		talker.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
-		s.SP((Player)talker, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
-		return;
+			talker.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
+			s.SP((Player)talker, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+			return;
 		}
 		if(args.length == 1)
 		{
@@ -35,8 +35,7 @@ public class AreaCommand extends HelpMessage
 				YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
 				YamlManager AreaList = Event_YC.getNewConfig("Area/AreaList.yml");
 				
-				Set<String> a = AreaList.getConfigurationSection("").getKeys(false);
-				Object[] arealist =a.toArray();
+				Object[] arealist = AreaList.getConfigurationSection("").getKeys(false).toArray();
 
 				if(arealist.length <= 0)
 				{
@@ -73,6 +72,8 @@ public class AreaCommand extends HelpMessage
 				else
 				{
 					GBD.GoldBigDragon_Advanced.Event.Interact IT = new GBD.GoldBigDragon_Advanced.Event.Interact();
+					YamlController Main_YC = GBD.GoldBigDragon_Advanced.Main.Main.Main_YC;
+				  	YamlManager Config = Main_YC.getNewConfig("config.yml");
 					player.sendMessage(ChatColor.RED + "[SYSTEM] : 먼저 " + IT.SetItemDefaultName(Config.getInt("Server.AreaSettingWand"),(byte)0) +ChatColor.RED+" 아이템을 손에 든 채로 블록을 좌/우 클릭하여 구역을 설정해 주세요!");
 					s.SP((Player)player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 				}
@@ -90,16 +91,16 @@ public class AreaCommand extends HelpMessage
 		else
 		{
 			GBD.GoldBigDragon_Advanced.ETC.Area A = new GBD.GoldBigDragon_Advanced.ETC.Area();
-			String s="";
+			String SB = null;
 			for(int a =2; a<= ((args.length)-1);a++)
-				s = s+args[a]+" ";
+				SB = SB+args[a]+" ";
 			switch(args[1])
 			{
 			case "이름" :
-				A.OptionSetting(player, args[0],(char) 0, s);
+				A.OptionSetting(player, args[0],(char) 0, SB);
 				return;
 			case "설명" :
-				A.OptionSetting(player, args[0],(char) 1, s);
+				A.OptionSetting(player, args[0],(char) 1, SB);
 				return;
 			}
 		}

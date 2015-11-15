@@ -8,13 +8,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
-//import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class ItemsCommand extends HelpMessage
 {
-	GBD.GoldBigDragon_Advanced.ETC.Items I = new GBD.GoldBigDragon_Advanced.ETC.Items();
 	public void onCommand1(CommandSender talker, Command command, String string, String[] args)
 	{
 		Player player = (Player) talker;
@@ -28,21 +26,24 @@ public class ItemsCommand extends HelpMessage
 			  switch(ChatColor.stripColor(args[0]))
 			  {
 		  			case "목록" :
-		  			GBD.GoldBigDragon_Advanced.GUI.ItemGUI IGUI = new GBD.GoldBigDragon_Advanced.GUI.ItemGUI();
-		  			IGUI.ItemListGUI(player,0);
+		  			{
+		  				GBD.GoldBigDragon_Advanced.GUI.ItemGUI IGUI = new GBD.GoldBigDragon_Advanced.GUI.ItemGUI();
+		  				IGUI.ItemListGUI(player,0);
+		  			}
 		  			return;
 			  }
 		  }
 		  else
 		  {
 			  talker.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
-			  s.SP((Player)talker, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+			  new GBD.GoldBigDragon_Advanced.Effect.Sound().SP((Player)talker, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 			  return;
 		  }
 	}
 
 	public void onCommand2(CommandSender talker, Command command, String string, String[] args)
 	{
+		GBD.GoldBigDragon_Advanced.ETC.Items I = new GBD.GoldBigDragon_Advanced.ETC.Items();
 		Player player = (Player) talker;
 		if(talker.isOp() == true)
 		{
@@ -50,6 +51,7 @@ public class ItemsCommand extends HelpMessage
 			switch(ChatColor.stripColor(args[0]))
 			{
 				case "태그삭제" :
+				{
 					ItemMeta itemMeta = player.getItemInHand().getItemMeta();
 					itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 					itemMeta.addItemFlags(ItemFlag.HIDE_DESTROYS);
@@ -58,32 +60,40 @@ public class ItemsCommand extends HelpMessage
 					itemMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 					itemMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
 					player.getItemInHand().setItemMeta(itemMeta);
-					return;
+				}
+				return;
 				case "ID" :
+				{
 			  		if(args.length != 2)
 					{
 						HelpMessager((Player)talker,1);
 						return;
 					}
 				  	I.SettingItemMeta(player, 0, Integer.parseInt(args[1]));
-					return;
+				}
+				return;
 				case "DATA" :
+				{
 			  		if(args.length != 2)
 					{
 						HelpMessager((Player)talker,1);
 						return;
 					}
 				  	I.SettingItemMeta(player, 1, Integer.parseInt(args[1]));
-					return;
+				}
+				return;
 				case "개수" :
+				{
 			  		if(args.length != 2)
 					{
 						HelpMessager((Player)talker,1);
 						return;
 					}
 				  	I.SettingItemMeta(player, 2, Integer.parseInt(args[1]));
-					return;
+				}
+				return;
 				case "이름" :
+				{
 			  		if(args.length < 2)
 					{
 						HelpMessager((Player)talker,1);
@@ -96,8 +106,10 @@ public class ItemsCommand extends HelpMessage
 	  						s = s+" "+args[a];
 	  				}
 				  	I.SettingItemMeta(player, 0, s);
-					return;
+				}
+				return;
 				case "설명추가" :
+				{
 			  		if(args.length < 2)
 					{
 						HelpMessager((Player)talker,1);
@@ -110,11 +122,15 @@ public class ItemsCommand extends HelpMessage
 	  						s = s+" "+args[a];
 	  				}
 				  	I.SettingItemMeta(player, 1, s);
-					return;
+				}
+				return;
 				case "설명제거" :
+				{
 					I.SettingItemMeta(player, 2, null);
-					return;
+				}
+				return;
 				case "수리" :
+				{
 					if(player.getItemInHand().getType() == Material.AIR)
 					{
 						GBD.GoldBigDragon_Advanced.Effect.Sound sound = new GBD.GoldBigDragon_Advanced.Effect.Sound();
@@ -143,20 +159,23 @@ public class ItemsCommand extends HelpMessage
 							}
 						}
 					}
-					return;
+				}
+				return;
 				case "포션" :
 					return;
 				case "인챈트" :
 					return;
 				default:
+				{
 					HelpMessager((Player)talker,1);
-				  	return;
+				}
+			  	return;
 			}
 		}
 		else
 		{
 			talker.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
-			s.SP((Player)talker, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+			new GBD.GoldBigDragon_Advanced.Effect.Sound().SP((Player)talker, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 			return;
 		}
 	}

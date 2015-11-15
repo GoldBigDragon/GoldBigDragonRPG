@@ -39,8 +39,11 @@ public class InventoryClose
 				Main.UserData.put(player, new UserDataObject(player));
 			else
 				if(Main.UserData.get(player).getType() == "Quest")
-				{InventoryClose_Quest(event, InventoryName, player);return;	}
-			
+				{
+					InventoryClose_Quest(event, InventoryName, player);
+					return;
+				}
+		return;
 	}
 
 	private void InventoryClose_Quest(InventoryCloseEvent event, String InventoryName, Player player)
@@ -68,6 +71,7 @@ public class InventoryClose
 			}
 			return;
 		}
+		return;
 	}
 
 	private void InventoryClose_Monster(InventoryCloseEvent event, String InventoryName)
@@ -75,6 +79,7 @@ public class InventoryClose
 	    GBD.GoldBigDragon_Advanced.ETC.Monster MC = new GBD.GoldBigDragon_Advanced.ETC.Monster();
 		if(InventoryName.contains("Àåºñ") == true)
 			MC.InventorySetting(event);
+		return;
 	}
 	
 	private void InventoryClose_Area(InventoryCloseEvent event, String InventoryName)
@@ -84,6 +89,7 @@ public class InventoryClose
 			A.BlockItemSettingInventoryClose(event);
 		 else if(InventoryName.contains(ChatColor.stripColor("¾î·ù")) == true)
 			A.FishingSettingInventoryClose(event);
+		return;
 	}
 	
 	private void InventoryClose_NPC(InventoryCloseEvent event, String InventoryName)
@@ -91,6 +97,7 @@ public class InventoryClose
 	    GBD.GoldBigDragon_Advanced.ETC.NPC NP = new GBD.GoldBigDragon_Advanced.ETC.NPC();
 		 if(InventoryName.contains(ChatColor.stripColor("·é")) == true)
 			 NP.InventoryClose_NPC(event);
+		return;
 	}
 
 	private void InventoryClose_NewBie(InventoryCloseEvent event,String InventoryName)

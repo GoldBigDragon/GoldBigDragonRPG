@@ -10,11 +10,6 @@ import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 
 public class Level
 {
-	private GBD.GoldBigDragon_Advanced.Effect.Sound sound = new GBD.GoldBigDragon_Advanced.Effect.Sound();
-	private GBD.GoldBigDragon_Advanced.Config.StatConfig stat = new GBD.GoldBigDragon_Advanced.Config.StatConfig();
-	private GBD.GoldBigDragon_Advanced.Effect.PacketSender PS = new GBD.GoldBigDragon_Advanced.Effect.PacketSender();
-	
-	
 	public void EXPadd(Player player, long EXP, Location loc)
 	{
 		if(EXP != 0)
@@ -28,8 +23,8 @@ public class Level
 		    else
 		    	EXP = EXP*Config.getInt("Event.Multiple_EXP_Get");
 		  	if(Event_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-		  		stat.CreateNewStats(player);
-		  	
+		  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
+
 			YM = Event_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 			
 			if(Main.PartyJoiner.containsKey(player)==false)
@@ -59,8 +54,9 @@ public class Level
 						YM.set("Stat.SkillPoint", YM.getInt("Stat.SkillPoint") + (Config.getInt("Server.Level_Up_SkillPoint")*Config.getInt("Event.Multiple_Level_Up_SkillPoint")));
 						YM.set("Stat.StatPoint", YM.getInt("Stat.StatPoint") + (Config.getInt("Server.Level_Up_StatPoint")*Config.getInt("Event.Multiple_Level_Up_StatPoint")));
 						YM.saveConfig();
-						PS.sendTitleSubTitle(player, "\'"+ChatColor.WHITE+"Level Up!\'", "\'"+ChatColor.WHITE + "레벨 " +ChatColor.YELLOW+ YM.getInt("Stat.Level")+ChatColor.WHITE + "이 되었습니다!\'", 1, 3, 1);
-						sound.SP(player, org.bukkit.Sound.LEVEL_UP, 1.5F, 1.8F);
+
+						new GBD.GoldBigDragon_Advanced.Effect.PacketSender().sendTitleSubTitle(player, "\'"+ChatColor.WHITE+"Level Up!\'", "\'"+ChatColor.WHITE + "레벨 " +ChatColor.YELLOW+ YM.getInt("Stat.Level")+ChatColor.WHITE + "이 되었습니다!\'", 1, 3, 1);
+						new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, org.bukkit.Sound.LEVEL_UP, 1.5F, 1.8F);
 						if(Config.getInt("Server.MaxLevel") <= YM.getInt("Stat.Level"))
 							player.sendMessage(ChatColor.YELLOW + "[최대 레벨에 도달하여 더이상 레벨업 하실 수가 없습니다!]");
 					}
@@ -69,10 +65,9 @@ public class Level
 				return;
 			}
 			else
-			{
 				PartyEXPadd(Main.PartyJoiner.get(player),EXP,loc);
-			}
 		}
+		return;
 	}
 	
 	
@@ -109,7 +104,7 @@ public class Level
 					if(loc.distance(player[count].getLocation()) <= Config.getInt("Party.EXPShareDistance"))
 					{
 					  	if(Event_YC.isExit("Stats/" + player[count].getUniqueId()+".yml") == false)
-					  		stat.CreateNewStats(player[count]);
+					  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player[count]);
 					  	
 						YM = Event_YC.getNewConfig("Stats/" + player[count].getUniqueId()+".yml");
 						
@@ -134,8 +129,8 @@ public class Level
 								YM.set("Stat.SkillPoint", YM.getInt("Stat.SkillPoint") + (Config.getInt("Server.Level_Up_SkillPoint")*Config.getInt("Event.Multiple_Level_Up_SkillPoint")));
 								YM.set("Stat.StatPoint", YM.getInt("Stat.StatPoint") + (Config.getInt("Server.Level_Up_StatPoint")*Config.getInt("Event.Multiple_Level_Up_StatPoint")));
 								YM.saveConfig();
-								PS.sendTitleSubTitle(player[count], "\'"+ChatColor.WHITE+"Level Up!\'", "\'"+ChatColor.WHITE + "레벨 " +ChatColor.YELLOW+ YM.getInt("Stat.Level")+ChatColor.WHITE + "이 되었습니다!\'", 1, 3, 1);
-								sound.SP(player[count], org.bukkit.Sound.LEVEL_UP, 1.5F, 1.8F);
+								new GBD.GoldBigDragon_Advanced.Effect.PacketSender().sendTitleSubTitle(player[count], "\'"+ChatColor.WHITE+"Level Up!\'", "\'"+ChatColor.WHITE + "레벨 " +ChatColor.YELLOW+ YM.getInt("Stat.Level")+ChatColor.WHITE + "이 되었습니다!\'", 1, 3, 1);
+								new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player[count], org.bukkit.Sound.LEVEL_UP, 1.5F, 1.8F);
 							}
 						}
 						YM.saveConfig();

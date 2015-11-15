@@ -1,10 +1,7 @@
 package GBD.GoldBigDragon_Advanced.ETC;
 
-import java.util.Set;
-
-import net.md_5.bungee.api.ChatColor;
-
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
@@ -14,11 +11,10 @@ import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 
 public class Teleport
 {
-	private GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
-	private GBD.GoldBigDragon_Advanced.Effect.Potion p = new GBD.GoldBigDragon_Advanced.Effect.Potion();
-
 	public void CreateNewTeleportSpot(Player player, String TeleportName)
 	{
+		GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
+
 		if(player.isOp() == false)
 		{
 			s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
@@ -30,8 +26,7 @@ public class Teleport
 			YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
 			YamlManager TeleportList = GUI_YC.getNewConfig("Teleport/TeleportList.yml");
 			
-			Set<String> a = TeleportList.getConfigurationSection("").getKeys(false);
-			Object[] teleportlist =a.toArray();
+			Object[] teleportlist = TeleportList.getConfigurationSection("").getKeys(false).toArray();
 
 			for(int count =0; count <teleportlist.length;count++)
 			{
@@ -65,8 +60,7 @@ public class Teleport
 			YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
 			YamlManager TeleportList = GUI_YC.getNewConfig("Teleport/TeleportList.yml");
 			
-			Set<String> a = TeleportList.getConfigurationSection("").getKeys(false);
-			Object[] teleportlist =a.toArray();
+			Object[] teleportlist = TeleportList.getConfigurationSection("").getKeys(false).toArray();
 
 			for(int count =0; count <teleportlist.length;count++)
 			{
@@ -84,17 +78,17 @@ public class Teleport
 						
 					}
 					TeleportList.saveConfig();
-					s.SP(player, org.bukkit.Sound.CHICKEN_EGG_POP, 2.0F, 1.7F);
+					new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, org.bukkit.Sound.CHICKEN_EGG_POP, 2.0F, 1.7F);
 					return;
 				}
 			}
-			s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+			new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 	  		player.sendMessage(ChatColor.RED+"[SYSTEM] : 해당 이름으로 등록된 워프 지점이 없습니다!");
 	  		return;
 		}
 		else
 		{
-			s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+			new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 			player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
 			return;	
 		}
@@ -105,7 +99,7 @@ public class Teleport
 	{
 		if(player.isOp() == false)
 		{
-			s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+			new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 			player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
 			return;
 		}
@@ -114,8 +108,7 @@ public class Teleport
 			YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
 			YamlManager TeleportList = GUI_YC.getNewConfig("Teleport/TeleportList.yml");
 			
-			Set<String> a = TeleportList.getConfigurationSection("").getKeys(false);
-			Object[] teleportlist =a.toArray();
+			Object[] teleportlist = TeleportList.getConfigurationSection("").getKeys(false).toArray();
 
 			for(int count =0; count <teleportlist.length;count++)
 			{
@@ -131,23 +124,26 @@ public class Teleport
 					TeleportList.removeKey(TeleportName+"");
 					TeleportList.saveConfig();
 
-		    		s.SP(player,org.bukkit.Sound.ITEM_BREAK,0.7F,1.0F);
+					new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player,org.bukkit.Sound.ITEM_BREAK,0.7F,1.0F);
 		    		player.sendMessage(ChatColor.GREEN+"[SYSTEM] : "+ChatColor.YELLOW+TeleportName+ChatColor.GREEN+" 워프 지점을 성공적으로 삭제하였습니다!");
 					return;
 				}
 			}
-    		s.SP(player,org.bukkit.Sound.ITEM_BREAK,0.7F,1.0F);
+			new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player,org.bukkit.Sound.ITEM_BREAK,0.7F,1.0F);
 	  		player.sendMessage(ChatColor.RED+"[SYSTEM] : 해당 이름으로 등록된 워프 지점이 없습니다!");
 		}
+		return;
 	}
 	
 	public void TeleportUser(Player player, String TeleportSpotName)
 	{
+		GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
+		GBD.GoldBigDragon_Advanced.Effect.Potion p = new GBD.GoldBigDragon_Advanced.Effect.Potion();
+
 		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
 		YamlManager TeleportList = GUI_YC.getNewConfig("Teleport/TeleportList.yml");
 
-		Set<String> a = TeleportList.getConfigurationSection("").getKeys(false);
-		Object[] teleportlist =a.toArray();
+		Object[] teleportlist = TeleportList.getConfigurationSection("").getKeys(false).toArray();
 
 		for(int count =0; count <teleportlist.length;count++)
 		{
@@ -200,11 +196,10 @@ public class Teleport
 		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
 		YamlManager TeleportList = GUI_YC.getNewConfig("Teleport/TeleportList.yml");
 
-		Set<String> a = TeleportList.getConfigurationSection("").getKeys(false);
-		Object[] teleportlist =a.toArray();
+		Object[] teleportlist = TeleportList.getConfigurationSection("").getKeys(false).toArray();
 		if(teleportlist.length <= 0)
 		{
-			  s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+			new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 			  player.sendMessage(ChatColor.RED+"[SYSTEM] : 현재 등록된 워프 장소가 없습니다!");
 			  player.sendMessage("─────────────────────────");
 			  String worldname="";
@@ -236,5 +231,6 @@ public class Teleport
 				worldname = worldname +Bukkit.getServer().getWorlds().get(count).getName()+"  ";
 		player.sendMessage(ChatColor.GOLD+"[월드] : "+worldname);
 		player.sendMessage("─────────────────────────");
+		return;
 	}
 }

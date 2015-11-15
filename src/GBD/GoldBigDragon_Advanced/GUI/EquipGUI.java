@@ -22,7 +22,7 @@ public class EquipGUI extends GUIutil
 		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
 	    
 	  	if(GUI_YC.isExit("Stats/" + target.getUniqueId()+".yml") == false)
-	  		stat.CreateNewStats(target);
+	  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(target);
 	  	YamlManager Target = GUI_YC.getNewConfig("Stats/" + target.getUniqueId()+".yml");
 	  	
 	  	if(Target.getBoolean("Option.EquipLook") == true)

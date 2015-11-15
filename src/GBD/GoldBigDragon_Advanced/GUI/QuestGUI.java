@@ -1289,7 +1289,7 @@ public class QuestGUI extends GUIutil
 					if(emptySlot >= item.length)
 					{
 					  	if(GUI_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-					  		stat.CreateNewStats(player);
+					  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
 						YM = GUI_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 						
 						for(int counter = 0;counter < q.size(); counter++)
@@ -1304,7 +1304,7 @@ public class QuestGUI extends GUIutil
 				}
 
 			  	if(GUI_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-			  		stat.CreateNewStats(player);
+			  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
 				YM = GUI_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 				YM.set("Stat.Money", YM.getLong("Stat.Money") + QuestList.getLong(QuestName + ".FlowChart."+QuestFlow+".Money"));
 				YM.saveConfig();

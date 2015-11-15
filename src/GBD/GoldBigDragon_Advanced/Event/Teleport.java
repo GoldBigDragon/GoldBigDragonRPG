@@ -17,5 +17,6 @@ public class Teleport
 		player.teleport(loc);
 		p.givePotionEffect(player, PotionEffectType.BLINDNESS, 1, 15);
 		s.SL(player.getLocation(), Sound.ENDERMAN_TELEPORT, 0.8F, 1.0F);
+		return;
 	}
 }

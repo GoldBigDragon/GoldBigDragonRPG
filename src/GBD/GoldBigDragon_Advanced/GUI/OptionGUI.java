@@ -19,7 +19,7 @@ public class OptionGUI extends GUIutil
 		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
 	    YamlManager YM;
 	  	if(GUI_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-	  		stat.CreateNewStats(player);
+	  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
 
 		YM = GUI_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 		
@@ -89,7 +89,7 @@ public class OptionGUI extends GUIutil
 		Player player = (Player) event.getWhoClicked();
 		
 	  	if(GUI_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-	  		stat.CreateNewStats(player);
+	  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
 
 		YM = GUI_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 		

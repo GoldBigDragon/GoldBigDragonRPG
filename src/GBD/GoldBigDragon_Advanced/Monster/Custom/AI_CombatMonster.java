@@ -55,6 +55,7 @@ public class AI_CombatMonster extends EntityMonster
 
 			Main.SpawnMobName = null;
 		}
+		return;
 	}
 	
 	public static CraftMonster spawn(Location location)

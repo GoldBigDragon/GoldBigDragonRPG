@@ -323,7 +323,7 @@ public class NPC_GUI extends GUIutil
 		YamlManager NPCscript = GUI_YC.getNewConfig("NPC/NPCData/"+ Main.PlayerClickedNPCuuid.get(player) +".yml");
 	  	
 	  	if(GUI_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-	  		stat.CreateNewStats(player);
+	  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
 	  	YamlManager YM = GUI_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 		
 		ItemStack item;
@@ -769,7 +769,7 @@ public class NPC_GUI extends GUIutil
 		Set<String> PlayerFinished = PlayerQuestList.getConfigurationSection("Ended").getKeys(false);
 		
 	  	if(GUI_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-	  		stat.CreateNewStats(player);
+	  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
 	  	YamlManager YM = GUI_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 	  	YamlManager PlayerNPC;
     	if(GUI_YC.isExit("NPC/PlayerData/"+player.getUniqueId()+".yml")==false)
@@ -1797,7 +1797,7 @@ public class NPC_GUI extends GUIutil
 						else
 						{
 						  	if(GUI_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-						  		stat.CreateNewStats(player);
+						  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
 						  	YamlManager PlayerStat = GUI_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 
 							int NeedLevel = QuestList.getInt(QuestName+".Need.LV");
@@ -1956,7 +1956,7 @@ public class NPC_GUI extends GUIutil
 								YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
 
 							  	if(GUI_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-							  		stat.CreateNewStats(player);
+							  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
 							  	YamlManager YM = GUI_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 							  	
 							  	if(GUI_YC.isExit("NPC/NPCData/"+ Main.PlayerClickedNPCuuid.get(player) +".yml") == false)
@@ -2518,7 +2518,7 @@ public class NPC_GUI extends GUIutil
 								YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
 	
 							  	if(GUI_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-							  		stat.CreateNewStats(player);
+							  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
 							  	YamlManager YM = GUI_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 	
 								long price = Long.parseLong(ChatColor.stripColor(item.getItemMeta().getLore().get(item.getItemMeta().getLore().size()-2).split("АЁАн : ")[1].split(" Gold")[0]));

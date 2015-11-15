@@ -16,7 +16,6 @@ public class BlockBreak
 {
 	public void BlockBreaking(BlockBreakEvent event)
 	{
-		GBD.GoldBigDragon_Advanced.Event.Damage D = new GBD.GoldBigDragon_Advanced.Event.Damage();
 		Player player = (Player) event.getPlayer();
 		
 		GBD.GoldBigDragon_Advanced.ETC.Area A = new GBD.GoldBigDragon_Advanced.ETC.Area();
@@ -51,7 +50,7 @@ public class BlockBreak
 		}
 		
 		Quest(event, player);
-		D.decreaseDurabilityWeapon(player);
+		new GBD.GoldBigDragon_Advanced.Event.Damage().decreaseDurabilityWeapon(player);
 		if(player.getGameMode()!=GameMode.CREATIVE)
 			EXPadd(event);
 		LuckyBonus(event);
@@ -62,6 +61,7 @@ public class BlockBreak
 			event.setCancelled(true);
 			return;
 		}
+		return;
 	}
 
 	private void Quest(BlockBreakEvent event, Player player)
@@ -112,9 +112,7 @@ public class BlockBreak
 								}
 							}
 							if(MAX == PlayerQuestList.getInt("Started."+QuestName+".Block."+counter))
-							{
 								Finish = Finish+1;
-							}
 							if(Finish == MobList.length)
 							{
 								PlayerQuestList.set("Started."+QuestName+".Type",QuestList.getString(QuestName+".FlowChart."+(PlayerQuestList.getInt("Started."+QuestName+".Flow")+1)+".Type"));
@@ -192,80 +190,80 @@ public class BlockBreak
 								}
 							}
 						}
-						
 					}
 				}
 			}
 		}
+		return;
 	}
 
 	private void LuckyBonus(BlockBreakEvent event)
 	{
 		Player player = event.getPlayer();
-		GBD.GoldBigDragon_Advanced.Effect.PacketSender t = new GBD.GoldBigDragon_Advanced.Effect.PacketSender();
-		GBD.GoldBigDragon_Advanced.Util.Number n = new GBD.GoldBigDragon_Advanced.Util.Number();
-		GBD.GoldBigDragon_Advanced.Effect.Sound sound = new GBD.GoldBigDragon_Advanced.Effect.Sound();
 
 		YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
 	  	if(Event_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
 	  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
 	  	YamlManager YM = Event_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
-	  	
+
 		int lucky = YM.getInt("Stat.LUK")/30;
 		if(lucky >= 150) lucky =150;
 		if(lucky <= 0) lucky = 1;
-		if(lucky >= n.RandomNum(0, 1000))
+		if(lucky >= new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 1000))
 		{
+			GBD.GoldBigDragon_Advanced.Effect.Sound sound = new GBD.GoldBigDragon_Advanced.Effect.Sound();
+			GBD.GoldBigDragon_Advanced.Effect.PacketSender t = new GBD.GoldBigDragon_Advanced.Effect.PacketSender();
 			int amount = 0;
-			int luckysize = n.RandomNum(0, 100);
+			int luckysize = new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100);
 			if(luckysize <= 80){t.sendActionBar(player, ChatColor.YELLOW +""+ChatColor.BOLD+ "럭키 보너스!");amount = 1;	sound.SP(player, Sound.LEVEL_UP, 0.5F, 0.9F);}
 			else if(luckysize <= 95){t.sendActionBar(player, ChatColor.YELLOW +""+ChatColor.BOLD+ "빅 럭키 보너스!");amount = 5;	sound.SP(player, Sound.LEVEL_UP, 0.7F, 1.0F);}
 			else{t.sendActionBar(player, ChatColor.YELLOW +""+ChatColor.BOLD+ "휴즈 럭키 보너스!");amount = 20;	sound.SP(player, Sound.LEVEL_UP, 1.0F, 1.1F);}
 			switch(event.getBlock().getType())
 			{
 				case COAL_ORE:
-					new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), 263,0,amount);
+					{new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), 263,0,amount);}
 					break;
 				case IRON_ORE:
-					new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), 15,0,amount);
+					{new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), 15,0,amount);}
 					break;
 				case GOLD_ORE:
-					new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), 14,0,amount);
+					{new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), 14,0,amount);}
 					break;
 				case DIAMOND_ORE:
-					new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), 264,0,amount);
+					{new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), 264,0,amount);}
 					break;
 				case EMERALD_ORE:
-					new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), 388,0,amount);
+					{new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), 388,0,amount);}
 					break;
 				case REDSTONE_ORE:
-					new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), 331,0,amount);
+					{new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), 331,0,amount);}
 					break;
 				case LAPIS_ORE:
-					new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), 351,4,amount);
+					{new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), 351,4,amount);}
 					break;
 				case SEA_LANTERN:
-					new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), 410,0,amount);
+					{new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), 410,0,amount);}
 					break;
 				case LOG:
-					new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), event.getBlock().getTypeId(),event.getBlock().getData(),amount);
+					{new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), event.getBlock().getTypeId(),event.getBlock().getData(),amount);}
 					break;
 				case LOG_2:
-					new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), event.getBlock().getTypeId(),event.getBlock().getData(),amount);
+					{new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), event.getBlock().getTypeId(),event.getBlock().getData(),amount);}
 					break;
 				case DIRT:
-					new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), event.getBlock().getTypeId(),event.getBlock().getData(),amount);
+					{new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), event.getBlock().getTypeId(),event.getBlock().getData(),amount);}
 					break;
 				case STONE:
-					new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), event.getBlock().getTypeId(),event.getBlock().getData(),amount);
+					{new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), event.getBlock().getTypeId(),event.getBlock().getData(),amount);}
 					break;
 				case SAND:
-					new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), event.getBlock().getTypeId(),event.getBlock().getData(),amount);
+					{new ItemDrop().PureItemNaturalDrop(event.getBlock().getLocation(), event.getBlock().getTypeId(),event.getBlock().getData(),amount);}
 					break;
 				default:
 					break;	
 			}
 		}
+		return;
 	}
 
 	private void EXPadd(BlockBreakEvent event)
@@ -280,47 +278,48 @@ public class BlockBreak
 		switch(event.getBlock().getType())
 		{
 			case COAL_ORE:
-				LV.EXPadd(player, Config.getLong("Getting.Coal.EXP"), player.getLocation());
+			{	LV.EXPadd(player, Config.getLong("Getting.Coal.EXP"), player.getLocation());
 				ID.MoneyDrop(player.getLocation(), Config.getInt("Getting.Coal.Money"));
-				break;
+			}	break;
 			case IRON_ORE:
-				LV.EXPadd(player, Config.getLong("Getting.Iron.EXP"), player.getLocation());
+			{	LV.EXPadd(player, Config.getLong("Getting.Iron.EXP"), player.getLocation());
 				ID.MoneyDrop(player.getLocation(), Config.getInt("Getting.Iron.Money"));
-				break;
+			}	break;
 			case GOLD_ORE:
-				LV.EXPadd(player, Config.getLong("Getting.Gold.EXP"), player.getLocation());
+			{	LV.EXPadd(player, Config.getLong("Getting.Gold.EXP"), player.getLocation());
 				ID.MoneyDrop(player.getLocation(), Config.getInt("Getting.Gold.Money"));
-				break;
+			}	break;
 			case DIAMOND_ORE:
-				LV.EXPadd(player, Config.getLong("Getting.Diamond.EXP"), player.getLocation());
+			{	LV.EXPadd(player, Config.getLong("Getting.Diamond.EXP"), player.getLocation());
 				ID.MoneyDrop(player.getLocation(), Config.getInt("Getting.Diamond.Money"));
-				break;
+			}	break;
 			case EMERALD_ORE:
-				LV.EXPadd(player, Config.getLong("Getting.Emerald.EXP"), player.getLocation());
+			{	LV.EXPadd(player, Config.getLong("Getting.Emerald.EXP"), player.getLocation());
 				ID.MoneyDrop(player.getLocation(), Config.getInt("Getting.Emerald.Money"));
-				break;
+			}	break;
 			case REDSTONE_ORE:
-				LV.EXPadd(player, Config.getLong("Getting.RedStone.EXP"), player.getLocation());
+			{	LV.EXPadd(player, Config.getLong("Getting.RedStone.EXP"), player.getLocation());
 				ID.MoneyDrop(player.getLocation(), Config.getInt("Getting.RedStone.Money"));
-				break;
+			}	break;
 			case LAPIS_ORE:
-				LV.EXPadd(player, Config.getLong("Getting.Lapis.EXP"), player.getLocation());
+			{	LV.EXPadd(player, Config.getLong("Getting.Lapis.EXP"), player.getLocation());
 				ID.MoneyDrop(player.getLocation(), Config.getInt("Getting.Lapis.Money"));
-				break;
+			}	break;
 			case LOG:
-				LV.EXPadd(player, Config.getLong("Getting.Wood.EXP"), player.getLocation());
+			{	LV.EXPadd(player, Config.getLong("Getting.Wood.EXP"), player.getLocation());
 				ID.MoneyDrop(player.getLocation(), Config.getInt("Getting.Wood.Money"));
-				break;
+			}	break;
 			case LOG_2:
-				LV.EXPadd(player, Config.getLong("Getting.Wood.EXP"), player.getLocation());
+			{	LV.EXPadd(player, Config.getLong("Getting.Wood.EXP"), player.getLocation());
 				ID.MoneyDrop(player.getLocation(), Config.getInt("Getting.Wood.Money"));
-				break;
+			}	break;
 			case QUARTZ_ORE:
-				LV.EXPadd(player, Config.getLong("Getting.NetherQuartz.EXP"), player.getLocation());
+			{	LV.EXPadd(player, Config.getLong("Getting.NetherQuartz.EXP"), player.getLocation());
 				ID.MoneyDrop(player.getLocation(), Config.getInt("Getting.NetherQuartz.Money"));
-				break;
+			}	break;
 			default:
 				break;	
 		}
+		return;
 	}
 }

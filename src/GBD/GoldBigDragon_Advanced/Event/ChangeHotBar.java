@@ -176,7 +176,7 @@ public class ChangeHotBar
 										switch(DistrictWeapon)
 										{
 										case "근접 무기":
-											switch(PlayerItemIDItemStack)
+										{	switch(PlayerItemIDItemStack)
 											{
 												case 267:
 												case 268:
@@ -196,9 +196,9 @@ public class ChangeHotBar
 												Useable = true;
 												break;
 											}
-											break;
+										}	break;
 										case "한손 검":
-											switch(PlayerItemIDItemStack)
+										{	switch(PlayerItemIDItemStack)
 											{
 												case 267:
 												case 268:
@@ -208,9 +208,9 @@ public class ChangeHotBar
 												Useable = true;
 												break;
 											}
-											break;
+										}	break;
 										case "도끼":
-											switch(PlayerItemIDItemStack)
+										{	switch(PlayerItemIDItemStack)
 											{
 												case 271:
 												case 275:
@@ -220,9 +220,9 @@ public class ChangeHotBar
 												Useable = true;
 												break;
 											}
-											break;
+										}	break;
 										case "낫":
-											switch(PlayerItemIDItemStack)
+										{	switch(PlayerItemIDItemStack)
 											{
 												case 290:
 												case 291:
@@ -232,26 +232,26 @@ public class ChangeHotBar
 												Useable = true;
 												break;
 											}
-											break;
+										}	break;
 										case "원거리 무기":
-											switch(PlayerItemIDItemStack)
+										{	switch(PlayerItemIDItemStack)
 											{
 												case 261:
 												case 23:
 												Useable = true;
 												break;
 											}
-											break;
+										}	break;
 										case "활":
-											if(PlayerItemIDItemStack == 261)
+										{	if(PlayerItemIDItemStack == 261)
 												Useable = true;
-											break;
+										}	break;
 										case "석궁":
-											if(PlayerItemIDItemStack == 23)
+										{	if(PlayerItemIDItemStack == 23)
 												Useable = true;
-											break;
+										}	break;
 										case "마법 무기":
-											switch(PlayerItemIDItemStack)
+										{	switch(PlayerItemIDItemStack)
 											{
 												case 280:
 												case 352:
@@ -259,15 +259,15 @@ public class ChangeHotBar
 												Useable = true;
 												break;
 											}
-											break;
+										}	break;
 										case "원드":
-											if(PlayerItemIDItemStack == 280 || PlayerItemIDItemStack==352)
+										{	if(PlayerItemIDItemStack == 280 || PlayerItemIDItemStack==352)
 												Useable = true;
-											break;
+										}	break;
 										case "스태프":
-											if(PlayerItemIDItemStack == 369)
+										{	if(PlayerItemIDItemStack == 369)
 												Useable = true;
-											break;
+										}	break;
 										}
 									}
 									else
@@ -335,8 +335,6 @@ public class ChangeHotBar
 								player.sendMessage(ChatColor.RED + "필요 무기 타입 : "+DistrictWeapon);
 								return;
 							}
-							
-							
 							if(Command.equalsIgnoreCase("null") == false)
 							{
 								if(isConsole == true)
@@ -411,18 +409,15 @@ public class ChangeHotBar
 			ETC.SlotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()));
 			HotBarSound(player, -1);
 		}
+		return;
 	}
 	
 	public void HotBarSound(Player player,int itemID)
 	{
 		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
-	    YamlManager YM;
 	  	if(GUI_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-	  	{
-	  		GBD.GoldBigDragon_Advanced.Config.StatConfig stat = new GBD.GoldBigDragon_Advanced.Config.StatConfig();
-	  		stat.CreateNewStats(player);
-	  	}
-		YM = GUI_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
+	  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
+	  	YamlManager YM = GUI_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 
 		if(YM.getBoolean("Option.HotBarSound") == true)
 		{
@@ -508,5 +503,6 @@ public class ChangeHotBar
 				return;
 			}
 		}
+		return;
 	}
 }

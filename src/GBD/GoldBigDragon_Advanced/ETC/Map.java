@@ -3,8 +3,7 @@ package GBD.GoldBigDragon_Advanced.ETC;
 import org.bukkit.event.server.MapInitializeEvent;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
-
-import GBD.GoldBigDragon_Advanced.Main.*;
+import GBD.GoldBigDragon_Advanced.Main.Main;
 
 public class Map
 {

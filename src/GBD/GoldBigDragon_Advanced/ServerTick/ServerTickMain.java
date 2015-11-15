@@ -18,7 +18,7 @@ public class ServerTickMain
 	long nowUTC = 0;
 	int BroadCastMessageTime =0;
   	int BroadCastMessageCool = 0;
-  	public static int SafeLine = 50;
+  	public static int SafeLine = 30;
   	//초당 최대 실행 스케줄 갯수 설정
   	//(값이 클수록 초당 많은 작업을 하지만, 그만큼 서버에 부담이 된다.)
   	
@@ -35,6 +35,7 @@ public class ServerTickMain
         	  	//Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA +"1"+"초 경과");
             }
         }, 10, 20);
+    	return;
 	}
 	
 	public void BroadCastMessage()
@@ -54,6 +55,7 @@ public class ServerTickMain
 		}
 		else
 			BroadCastMessageCool=BroadCastMessageCool+1;
+    	return;
 	}
 	
 	public void CheckShcedule()
@@ -73,6 +75,7 @@ public class ServerTickMain
 				Schedule.remove(Long.parseLong(ScheduleList[count].toString()));
 			}
 		}
+    	return;
 	}
 
 	public void ExcuteSchedule(Long UTC)

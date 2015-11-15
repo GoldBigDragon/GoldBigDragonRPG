@@ -11,16 +11,14 @@ public class MonsterSpawn
 	public void EntitySpawn(CreatureSpawnEvent event)
 	{
 	    YamlController Monster_YC=GBD.GoldBigDragon_Advanced.Main.Main.Monster_YC;
-	    YamlManager 	Config = Monster_YC.getNewConfig("config.yml");
+	    YamlManager Config = Monster_YC.getNewConfig("config.yml");
 		if(Config.getString("Server.EntitySpawn") == "false")
 		{
 			event.setCancelled(true);
 			return;
 		}
-		GBD.GoldBigDragon_Advanced.ETC.Monster M= new GBD.GoldBigDragon_Advanced.ETC.Monster();
 		GBD.GoldBigDragon_Advanced.ETC.Area A = new GBD.GoldBigDragon_Advanced.ETC.Area();
-		GBD.GoldBigDragon_Advanced.Util.Number etc = new GBD.GoldBigDragon_Advanced.Util.Number();
-		
+
 		String[] Area = A.getAreaName(event.getEntity());
 		if(Area != null)
 		{
@@ -39,10 +37,10 @@ public class MonsterSpawn
 				if(isExit==true) break;
 				if(MobNameList.length != 0)
 				{
-					int RandomMob = etc.RandomNum(0, MobNameList.length-1);
+					int RandomMob = new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, MobNameList.length-1);
 					if(Monster.contains(MobNameList[RandomMob].toString()) == true)
 					{
-						M.SpawnMob(event.getLocation(), MobNameList[RandomMob].toString());
+						new GBD.GoldBigDragon_Advanced.ETC.Monster().SpawnMob(event.getLocation(), MobNameList[RandomMob].toString());
 						if(GBD.GoldBigDragon_Advanced.Main.Main.spawntime==true)
 							event.setCancelled(true);
 						isExit = true;
@@ -68,6 +66,7 @@ public class MonsterSpawn
 				return;
 			}
 		}
-		M.SpawnEffect(event.getEntity(),event.getLocation(), Config.getInt("Server.MonsterSpawnEffect"));
+		new GBD.GoldBigDragon_Advanced.ETC.Monster().SpawnEffect(event.getEntity(),event.getLocation(), Config.getInt("Server.MonsterSpawnEffect"));
+		return;
 	}
 }

@@ -311,7 +311,7 @@ public class UseUseableItem
 					player.setFoodLevel(20);
 				player.setFoodLevel(player.getFoodLevel()+Food);
 			}
-			
 		}
+		return;
 	}
 }

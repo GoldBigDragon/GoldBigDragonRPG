@@ -10,10 +10,9 @@ public class SkillConfig
 {
     public void CreateNewPlayerSkill(Player player)
 	{
-	    YamlManager PlayerSkillYML,Config;
 		YamlController Config_YC = GBD.GoldBigDragon_Advanced.Main.Main.Config_YC;
-		PlayerSkillYML = Config_YC.getNewConfig("Skill/PlayerData/"+player.getUniqueId()+".yml");
-		Config = Config_YC.getNewConfig("config.yml");
+		YamlManager PlayerSkillYML = Config_YC.getNewConfig("Skill/PlayerData/"+player.getUniqueId()+".yml");
+		YamlManager Config = Config_YC.getNewConfig("config.yml");
 		YamlManager JobList  = Config_YC.getNewConfig("Skill/JobList.yml");
 		
 		PlayerSkillYML.set("Job.Type",Config.getString("Server.DefaultJob"));

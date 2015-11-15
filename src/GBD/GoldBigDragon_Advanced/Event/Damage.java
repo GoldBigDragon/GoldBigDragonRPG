@@ -17,8 +17,6 @@ import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 
 public class Damage
 {
-	public Number num = new Number();
-	
 	//플레이어의 근접최소 공격력을 따 오는 메소드//
 	public int CombatMinDamageGet(Entity entity, int DefaultDamage, int STR)
 	{
@@ -239,6 +237,7 @@ public class Damage
     //플레이어의 밸런스를 구하고, 랜덤하게 데미지를 설정 해 주는 메소드//
 	public int damagerand(Entity entity, int min, int max, int balance)
 	{
+		Number num = new Number();
 		if(min > max)
 		{
 			int temp = max;
@@ -256,6 +255,7 @@ public class Damage
 	}
 	public int damagerand(Player player, int min, int max, int player_dex,int player_balance)
 	{
+		Number num = new Number();
 		if(min > max)
 		{
 			int temp = max;
@@ -275,6 +275,7 @@ public class Damage
 	//플레이어의 크리티컬 확률을 계산하고, 크리티컬 여부를 설정하는 메소드//
 	public int criticalrend(Entity entity, int attacker_luk, int attacker_will, int attacker_damage, int defenser_protect)
 	{
+		Number num = new Number();
 		 int critical;
 		if((int)defenser_protect/2 <= 1) 
 			critical= getCritical(entity, attacker_luk, attacker_will);
@@ -294,6 +295,7 @@ public class Damage
 	}
 	public int criticalrend(int attacker_luk, int attacker_will, int attacker_damage, int defenser_protect, int attacker_critical)
 	{
+		Number num = new Number();
 		 int critical;
 		if((int)defenser_protect/2 <= 1) 
 			critical= getCritical(attacker_luk, attacker_will,attacker_critical);
@@ -880,6 +882,7 @@ public class Damage
 				}
 			}
 		}
+		return;
 	}
 	
 	public void decreaseDurabilityWeapon(Player player)
@@ -975,5 +978,6 @@ public class Damage
 				}
 			}
 		}
+		return;
 	}
 }

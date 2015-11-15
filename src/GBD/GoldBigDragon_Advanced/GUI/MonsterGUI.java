@@ -619,9 +619,6 @@ public class MonsterGUI extends GUIutil
 			GBD.GoldBigDragon_Advanced.ETC.Monster MC = new GBD.GoldBigDragon_Advanced.ETC.Monster();
 			s.SP(player, Sound.HORSE_ARMOR, 1.0F, 1.0F);
 			MC.ArmorGUI(player, MonsterName);
-			Main.UserData.get(player).setType("Monster");
-			Main.UserData.get(player).setString((byte)1, "Equip");
-			Main.UserData.get(player).setString((byte)2, ChatColor.stripColor(event.getInventory().getItem(19).getItemMeta().getDisplayName()));
 			break;
 		case 25://장비 드랍률 변경
 			s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);

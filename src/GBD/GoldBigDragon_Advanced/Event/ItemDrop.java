@@ -21,12 +21,14 @@ public class ItemDrop
 	{
 		ItemStack Item = new MaterialData(Id, (byte) Data).toItemStack(Stack);
         Item item = loc.getWorld().dropItem(loc, Item);
+		return;
 	}
 	
 	public void PureItemPowerDrop(Location loc, Material m, double X, double Y, double Z)
 	{
 		Item item = loc.getWorld().dropItem(loc, new ItemStack(m));
         item.setVelocity(new Vector(X, Y, Z));
+		return;
 	}
 	
 	public void FixedItemNaturalDrop(Location loc, String Display, int ID, int DATA, int STACK, List<String> Lore)
@@ -37,6 +39,7 @@ public class ItemDrop
 		Item_Meta.setLore(Lore);
 		Item.setItemMeta(Item_Meta);
 	    loc.getWorld().dropItemNaturally(loc, Item);
+		return;
 	}
 	
 	public void FixedItemPowerDrop(Location loc, String Display, int ID, int DATA, int STACK, List<String> Lore, double X, double Y, double Z)
@@ -48,11 +51,13 @@ public class ItemDrop
 		Item.setItemMeta(Item_Meta);
 		Item item = loc.getWorld().dropItemNaturally(loc, Item);
         item.setVelocity(new Vector(X, Y, Z));
+		return;
 	}
 
 	public void CustomItemDrop(Location loc, ItemStack m)
 	{
         Item item = loc.getWorld().dropItem(loc, new ItemStack(m));
+		return;
 	}
 	
 	
@@ -81,5 +86,6 @@ public class ItemDrop
 		Item_Meta.addEnchant(org.bukkit.enchantments.Enchantment.LUCK, 500, true);
 		Item.setItemMeta(Item_Meta);
 	    loc.getWorld().dropItemNaturally(loc, Item);
+		return;
 	}
 }

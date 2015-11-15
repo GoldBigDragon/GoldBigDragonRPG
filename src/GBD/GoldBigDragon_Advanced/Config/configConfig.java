@@ -10,9 +10,8 @@ public class configConfig
     public void CreateNewConfig(YamlController YC)
 	{
     	YM = YC.getNewConfig("config.yml");
-    	if(YM.getBoolean("Do_not_touch_this") != true)
+    	if(YM.contains("Version") == false)
     	{
-		  	YM.set("Do_not_touch_this", true);
 		  	YM.set("Version", "Advanced");
 		  	YM.set("Update", 20151101);
 		  	YM.set("Server.BroadCastSecond", 30);
@@ -209,11 +208,9 @@ public class configConfig
 	}
     public void CreateMapImageConfig(YamlController YC)
 	{
-    	
     	YM = YC.getNewConfig("MapImageURL.yml");
-    	if(YM.getBoolean("Do_not_touch_this") != true)
+    	if(YM.contains("GBD.URL") == false)
     	{
-		  	YM.set("Do_not_touch_this", true);
     		YM.set("KoreaLanguage(UTF-8)->JavaEntityLanguage", "http://itpro.cz/juniconv/");
 		  	YM.set("GBD.URL", "http://cafeptthumb3.phinf.naver.net/20140309_183/dnwndugod642_1394374547812opRrb_PNG/GBD%28classic%29.png?type=w740");
 		  	YM.set("GBD.Xcenter", 0);
@@ -224,7 +221,6 @@ public class configConfig
 		  	YM.set("MinimicAngry.URL", "http://cafeptthumb3.phinf.naver.net/20150828_84/dnwndugod642_1440694230655boUgx_PNG/%B9%CC%B4%CF%B9%CD_%C4%BC%BE%D32.png?type=w740");
 		  	YM.set("MinimicAngry.Xcenter", 0);
 		  	YM.set("MinimicAngry.Ycenter", 0);
-		  	
 		  	YM.saveConfig();
     	}
 	  	return;

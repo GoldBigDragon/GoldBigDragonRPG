@@ -35,13 +35,13 @@ public class AI_Animal extends EntityMonster
 	        this.goalSelector.a(8, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
 	        this.goalSelector.a(8, new PathfinderGoalRandomLookaround(this));
 
-	        
 	        List targetB = (List)NMSUtils.getPrivateField("b", PathfinderGoalSelector.class, targetSelector); targetB.clear();
 	        List targetC = (List)NMSUtils.getPrivateField("c", PathfinderGoalSelector.class, targetSelector); targetC.clear();
 	        this.goalSelector.a(2, new PathfinderGoalPanic(this, 0.6D));
 
 			Main.SpawnMobName = null;
 		}
+		return;
 	}
 	
 	public static CraftMonster spawn(Location location)

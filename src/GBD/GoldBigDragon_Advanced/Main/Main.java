@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,7 +13,6 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.ChatColor;
-import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.WorldCreator;
 import org.bukkit.command.Command;
@@ -54,7 +54,6 @@ import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 public class Main extends JavaPlugin implements Listener
 {
 	public static YamlController Main_YC,GUI_YC,Party_YC,Config_YC,Event_YC,Monster_YC,Location_YC,Scheduler_YC;
-	private YamlManager YM;
 
 	public static long serverUpdate = 20151114;
 	public static String serverVersion = "Advanced";
@@ -165,6 +164,14 @@ public class Main extends JavaPlugin implements Listener
 	}
 	public void onDisable()
 	{
+		if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI"))
+		{
+	    	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
+	    	Player[] a = new Player[playerlist.size()];
+	    	playerlist.toArray(a);
+	    	for(int count = 0; count <a.length;count++)
+	    		new OtherPlugins.NoteBlockAPIMain().Stop(a[count]);
+		}
 	  	new UserDataManager().saveCategoriFile();
 	  	new PartyDataManager().saveParty();
 
@@ -360,7 +367,7 @@ public class Main extends JavaPlugin implements Listener
 	  	    GBD.GoldBigDragon_Advanced.Config.StatConfig stat = new GBD.GoldBigDragon_Advanced.Config.StatConfig();
 	  		stat.CreateNewStats(player);
 	  	}
-		YM = Config_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
+	  	YamlManager YM = Config_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 		YM.set("ETC.Death", true);
 		YM.saveConfig();
     	GBD.GoldBigDragon_Advanced.Util.ETC ETC = new GBD.GoldBigDragon_Advanced.Util.ETC();
@@ -407,6 +414,7 @@ public class Main extends JavaPlugin implements Listener
 				return;
 			}
 		}
+		return;
 	}
 	@EventHandler
 	private void Move(PlayerMoveEvent event){GBD.GoldBigDragon_Advanced.Event.PlayerAction PA = new GBD.GoldBigDragon_Advanced.Event.PlayerAction();PA.PlayerMove(event);return;}
@@ -417,6 +425,7 @@ public class Main extends JavaPlugin implements Listener
 		if(MagicSpellsCatched == false)
 			MagicSpellCatch();
 		 new GBD.GoldBigDragon_Advanced.Event.ChangeHotBar().HotBarMove(event);
+		 return;
 	}
 	
 	@EventHandler
@@ -436,6 +445,7 @@ public class Main extends JavaPlugin implements Listener
 				}
 			}
 		}
+		return;
 	}
 	
 	@EventHandler
@@ -471,6 +481,7 @@ public class Main extends JavaPlugin implements Listener
 	{
 		GBD.GoldBigDragon_Advanced.Event.Fishing F = new GBD.GoldBigDragon_Advanced.Event.Fishing();
 		F.PlayerFishing(event);
+		return;
 	}
 	
 	@EventHandler
@@ -502,6 +513,7 @@ public class Main extends JavaPlugin implements Listener
 				}
 			}
 		}
+		return;
 	}
 	
 	
@@ -535,6 +547,7 @@ public class Main extends JavaPlugin implements Listener
 				OtherPlugins.SpellMain MS = new OtherPlugins.SpellMain(this);
 			}
 		}
+		return;
 	}
 	
 	public void CitizensCatch()
@@ -566,12 +579,14 @@ public class Main extends JavaPlugin implements Listener
 				OtherPlugins.CitizensMain CZ = new OtherPlugins.CitizensMain(this);
 			}
 		}
+		return;
 	}
 	
 	public void NoteBlockAPICatch()
 	{
 		if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI"))
 			new OtherPlugins.NoteBlockAPIMain(this);
+		return;
 	}
 	
 	public void NoteBlockAPICatchPJ()
@@ -603,6 +618,7 @@ public class Main extends JavaPlugin implements Listener
 				new OtherPlugins.NoteBlockAPIMain(this);
 			}
 		}
+		return;
 	}
 	
 	@EventHandler
@@ -651,6 +667,7 @@ public class Main extends JavaPlugin implements Listener
 	    	GBD.GoldBigDragon_Advanced.Util.ETC ETC = new GBD.GoldBigDragon_Advanced.Util.ETC();
 	    	ETC.UpdatePlayerHPMP((Player)event.getEntity());
 	    }
+		return;
 	}
 	
 	@EventHandler
@@ -720,6 +737,7 @@ public class Main extends JavaPlugin implements Listener
 				}
 			}
 		}
+		return;
 	}
 	
 	@EventHandler
@@ -732,8 +750,8 @@ public class Main extends JavaPlugin implements Listener
 			GBD.GoldBigDragon_Advanced.Util.ETC ETC = new GBD.GoldBigDragon_Advanced.Util.ETC();
 			ETC.UpdatePlayerHPMP((Player)event.getPlayer());
 		}
-		GBD.GoldBigDragon_Advanced.Event.InventoryClose IC = new GBD.GoldBigDragon_Advanced.Event.InventoryClose();
-			IC.InventoryCloseRouter(event);
+		new GBD.GoldBigDragon_Advanced.Event.InventoryClose().InventoryCloseRouter(event);
+		return;
 	}
 
 	public boolean onCommand(CommandSender talker, Command command, String string, String[] args)
@@ -906,7 +924,7 @@ public class Main extends JavaPlugin implements Listener
 		  			return true;
 		  		case "µ·":
 				 	s.SP((Player)talker, org.bukkit.Sound.LAVA_POP, 0.8F, 1.8F);
-					YM = Main_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
+				 	YamlManager YM = Main_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 				 	player.sendMessage(ChatColor.YELLOW + "[ÇöÀç ¼ÒÁö ±Ý¾×] " + ChatColor.YELLOW+ChatColor.BOLD +"" +YM.getInt("Stat.Money") + ""+ ChatColor.YELLOW+ " Gold");
 					return true;
 		  		case "½ºÅÝ":

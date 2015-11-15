@@ -46,10 +46,10 @@ public class NewBieConfig
 		Icon.setItemMeta(Icon_Meta);
 	  	YM.set("SupportItem.0", Icon);
 
-		ItemStack Icon2 = new MaterialData(340, (byte) 0).toItemStack(1);
-		ItemMeta Icon_Meta2 = Icon2.getItemMeta();
-		Icon_Meta2.setDisplayName(ChatColor.YELLOW+""+ChatColor.BOLD+"[서버 가이드]");
-		Icon_Meta2.setLore(Arrays.asList(ChatColor.LIGHT_PURPLE+""+ChatColor.BOLD+"[오퍼레이터]",
+	  	Icon = new MaterialData(340, (byte) 0).toItemStack(1);
+	  	Icon_Meta = Icon.getItemMeta();
+	  	Icon_Meta.setDisplayName(ChatColor.YELLOW+""+ChatColor.BOLD+"[서버 가이드]");
+	  	Icon_Meta.setLore(Arrays.asList(ChatColor.LIGHT_PURPLE+""+ChatColor.BOLD+"[오퍼레이터]",
 				ChatColor.YELLOW+""+ChatColor.BOLD+"/오피박스",
 				ChatColor.WHITE+" 오피 전용 설정창을 엽니다.",
 				ChatColor.YELLOW+""+ChatColor.BOLD+"/영역",
@@ -58,19 +58,18 @@ public class NewBieConfig
 				ChatColor.WHITE+" 자신을 기준으로 해당 범위 내의",
 				ChatColor.WHITE+" 모든 엔티티를 제거합니다."
 				));
-		Icon2.setItemMeta(Icon_Meta2);
-	  	YM.set("SupportItem.1", Icon2);
-	  	
+	  	Icon.setItemMeta(Icon_Meta);
+	  	YM.set("SupportItem.1", Icon);
 	  	
 	  	YM.set("SupportMoney", 1000);
 	  	YM.set("FirstQuest", "null");
 
-		Icon2 = new MaterialData(340, (byte) 0).toItemStack(1);
-		Icon_Meta2 = Icon2.getItemMeta();
-		Icon_Meta2.setDisplayName(ChatColor.YELLOW +""+ ChatColor.BOLD + "스텟 시스템");
-		Icon_Meta2.setLore(Arrays.asList(ChatColor.GRAY+ "플러그인에는 5가지 스텟이 있습니다.",ChatColor.RED +"[체력]",ChatColor.GRAY+"체력은 플레이어의",ChatColor.GRAY+"물리적 데미지에 관여합니다.",ChatColor.GREEN +  "[솜씨]",ChatColor.GRAY+"솜씨는 플레이어의 밸런스 및",ChatColor.GRAY+"생산 성공률과 생산 품질,",ChatColor.GRAY+"원거리 데미지에 관여합니다.",ChatColor.BLUE+"[지력]",ChatColor.GRAY+"지력은 마법방어 및 마법보호,",ChatColor.GRAY+"마법 공격력에 관여합니다.",ChatColor.WHITE+"[의지]",ChatColor.GRAY + "의지는 플레이어의",ChatColor.GRAY + "크리티컬에 관여합니다.",ChatColor.YELLOW + "[행운]",ChatColor.GRAY + "행운은 크리티컬 및",ChatColor.GRAY +"럭키 피니시, 럭키 보너스 등",ChatColor.GRAY +"각종 '확률'에 관여합니다."));
-		Icon2.setItemMeta(Icon_Meta2);
-	  	YM.set("Guide.0", Icon2);
+	  	Icon = new MaterialData(340, (byte) 0).toItemStack(1);
+	  	Icon_Meta = Icon.getItemMeta();
+	  	Icon_Meta.setDisplayName(ChatColor.YELLOW +""+ ChatColor.BOLD + "스텟 시스템");
+	  	Icon_Meta.setLore(Arrays.asList(ChatColor.GRAY+ "플러그인에는 5가지 스텟이 있습니다.",ChatColor.RED +"[체력]",ChatColor.GRAY+"체력은 플레이어의",ChatColor.GRAY+"물리적 데미지에 관여합니다.",ChatColor.GREEN +  "[솜씨]",ChatColor.GRAY+"솜씨는 플레이어의 밸런스 및",ChatColor.GRAY+"생산 성공률과 생산 품질,",ChatColor.GRAY+"원거리 데미지에 관여합니다.",ChatColor.BLUE+"[지력]",ChatColor.GRAY+"지력은 마법방어 및 마법보호,",ChatColor.GRAY+"마법 공격력에 관여합니다.",ChatColor.WHITE+"[의지]",ChatColor.GRAY + "의지는 플레이어의",ChatColor.GRAY + "크리티컬에 관여합니다.",ChatColor.YELLOW + "[행운]",ChatColor.GRAY + "행운은 크리티컬 및",ChatColor.GRAY +"럭키 피니시, 럭키 보너스 등",ChatColor.GRAY +"각종 '확률'에 관여합니다."));
+	  	Icon.setItemMeta(Icon_Meta);
+	  	YM.set("Guide.0", Icon);
 
 		Icon = new MaterialData(340, (byte) 0).toItemStack(1);
 		Icon_Meta = Icon.getItemMeta();

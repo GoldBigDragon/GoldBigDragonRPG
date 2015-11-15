@@ -21,15 +21,6 @@ import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 
 public class Interact
 {
-	private GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
-	private GBD.GoldBigDragon_Advanced.Effect.Particle p = new GBD.GoldBigDragon_Advanced.Effect.Particle();
-	private GBD.GoldBigDragon_Advanced.Effect.PacketSender t = new GBD.GoldBigDragon_Advanced.Effect.PacketSender();
-	private GBD.GoldBigDragon_Advanced.ETC.Monster MC = new GBD.GoldBigDragon_Advanced.ETC.Monster();
-	private GBD.GoldBigDragon_Advanced.Config.StatConfig stat = new GBD.GoldBigDragon_Advanced.Config.StatConfig();
-
-	YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
-    private YamlManager YM;
-    
 	//블럭 우클/좌클 할 때//
 	public void PlayerInteract(PlayerInteractEvent event)
 	{
@@ -45,7 +36,6 @@ public class Interact
 		}
 		if(Main.UserData.containsKey(event.getPlayer()))
 		{OPwork(event);}
-		
 		return;
 	}
 	
@@ -72,6 +62,7 @@ public class Interact
 		    	Q.EntityInteract(event);
 			}
 		}
+	    return;
 	}
 	
 	private void OPwork(PlayerInteractEvent event)
@@ -82,6 +73,7 @@ public class Interact
 			OPwork_Quest(event);
 		if(Main.UserData.get(player).getType()=="Area")
 			OPwork_Area(event);
+		return;
 	}
 	
 	private void ItemUse(PlayerInteractEvent event)
@@ -135,10 +127,12 @@ public class Interact
 				}
 			}
 		}
+		return;
 	}
 	
 	private void CustomMonsterSpawnEggUse(PlayerInteractEvent event)
 	{
+		YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
 		Player player = event.getPlayer();
 		if(player.getItemInHand() != null && player.getItemInHand().hasItemMeta() == true)
 		{
@@ -146,27 +140,30 @@ public class Interact
 			{
 				YamlManager Monster  = Event_YC.getNewConfig("Monster/MonsterList.yml");
 
-				Set<String> a = Monster.getConfigurationSection("").getKeys(false);
-				Object[] monsterlist =a.toArray();
+				Object[] monsterlist = Monster.getConfigurationSection("").getKeys(false).toArray();
 				
 				for(int count = 0; count < monsterlist.length;count++)
 		    	{
 		    		if(monsterlist[count].toString().equalsIgnoreCase(ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName())) == true)
 		    		{
-						MC.SpawnMob(event.getClickedBlock().getLocation(), ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName()));
+		    			new GBD.GoldBigDragon_Advanced.ETC.Monster().SpawnMob(event.getClickedBlock().getLocation(), ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName()));
 						return;
 		    		}
 		    	}
-			  	s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+				new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 		    	player.sendMessage(ChatColor.RED+"[SYSTEM] : 해당 이름의 몬스터가 존재하지 않습니다!");
 		    	return;
 			}
 		}
+		return;
 	}
 	
 	private void Dungeon(PlayerInteractEvent event)
 	{
 		Block block = event.getClickedBlock();
+		GBD.GoldBigDragon_Advanced.ETC.Monster MC = new GBD.GoldBigDragon_Advanced.ETC.Monster();
+		GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
+		GBD.GoldBigDragon_Advanced.Effect.Particle p = new GBD.GoldBigDragon_Advanced.Effect.Particle();
 		if(block.getType().getId()==146)
 		{
 			MC.SpawnMob(block.getLocation(), "골바기");
@@ -196,8 +193,8 @@ public class Interact
 					p.PL(block.getLocation(), Effect.CRIT, 0);
 				s.SL(block.getLocation(), org.bukkit.Sound.HURT_FLESH, 0.5F, 0.5F);
 			}
-			
 		}
+		return;
 	}
 	
 	private void OPwork_Quest(PlayerInteractEvent event)
@@ -226,7 +223,7 @@ public class Interact
 				QuestConfig.saveConfig();
 		    	QGUI.FixQuestGUI(player, 0, QuestName);
 		    	Main.UserData.get(player).clearAll();
-				s.SP(event.getPlayer(), org.bukkit.Sound.ITEM_PICKUP, 0.5F,1.2F);
+		    	new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(event.getPlayer(), org.bukkit.Sound.ITEM_PICKUP, 0.5F,1.2F);
 		    	player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 성공적으로 등록되었습니다!");
 		    	return;
 			}
@@ -262,12 +259,13 @@ public class Interact
 			    	Main.UserData.get(player).setString((byte)3, null);
 			    	Main.UserData.get(player).setString((byte)1, "BPID");
 			    	Main.UserData.get(player).setInt((byte)1, size);
-					s.SP(event.getPlayer(), org.bukkit.Sound.ITEM_PICKUP, 0.5F,1.2F);
+			    	new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(event.getPlayer(), org.bukkit.Sound.ITEM_PICKUP, 0.5F,1.2F);
 			    	player.sendMessage(ChatColor.GREEN + "[퀘스트] : 설치 될 블록 ID를 입력 해 주세요!");
 					return;
 				}
 			}
 		}
+		return;
 	}
 	
 	private void OPwork_Area(PlayerInteractEvent event)
@@ -287,7 +285,7 @@ public class Interact
 				AreaConfig.set(AreaName+".Mining."+BlockData,item);
 				AreaConfig.saveConfig();
 				GBD.GoldBigDragon_Advanced.GUI.AreaGUI AGUI = new GBD.GoldBigDragon_Advanced.GUI.AreaGUI();
-				s.SP(player, Sound.HORSE_SADDLE, 1.0F, 1.8F);
+				new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, Sound.HORSE_SADDLE, 1.0F, 1.8F);
 				AGUI.AreaBlockItemSettingGUI(player, AreaName, BlockData);
 		    	Main.UserData.get(player).clearAll();
 			}
@@ -302,7 +300,7 @@ public class Interact
 				AreaConfig.set(AreaName+".MonsterSpawnRule."+count+".loc.y", (int)block.getLocation().getY()+1);
 				AreaConfig.set(AreaName+".MonsterSpawnRule."+count+".loc.z", (int)block.getLocation().getZ());
 				AreaConfig.saveConfig();
-				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.8F);
+				new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, Sound.ITEM_PICKUP, 1.0F, 1.8F);
 		    	Main.UserData.get(player).clearAll();
 				Main.UserData.get(player).setType("Area");
 				Main.UserData.get(player).setString((byte)1, count);
@@ -312,6 +310,7 @@ public class Interact
 				player.sendMessage(ChatColor.YELLOW+"(최소 1마리 ~ 최대 100마리)");
 			}
 		}
+		return;
 	}
 	
 	private void AreaChecker(PlayerInteractEvent event)
@@ -339,13 +338,15 @@ public class Interact
 				return;
 			}
 		}
+		return;
 	}
 	
 	public void PlayerGetItem(PlayerPickupItemEvent event)
 	{
+		YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
 	  	if(Event_YC.isExit("Stats/" + event.getPlayer().getUniqueId()+".yml") == false)
-	  		stat.CreateNewStats(event.getPlayer());
-		YM = Event_YC.getNewConfig("Stats/" + event.getPlayer().getUniqueId()+".yml");
+	  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(event.getPlayer());
+		YamlManager YM = Event_YC.getNewConfig("Stats/" + event.getPlayer().getUniqueId()+".yml");
 		String ItemName = null;
 		if((event.getItem().getItemStack().hasItemMeta() == true && event.getItem().getItemStack().getItemMeta().hasDisplayName()))
 		{
@@ -353,7 +354,7 @@ public class Interact
 			if(ItemName.contains("§e[골드]") == true && event.getItem().getItemStack().getEnchantmentLevel(Enchantment.LUCK) == 500)
 			{
 			  	if(Event_YC.isExit("Stats/" + event.getPlayer().getUniqueId()+".yml") == false)
-			  		stat.CreateNewStats(event.getPlayer());
+			  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(event.getPlayer());
 
 				YM = Event_YC.getNewConfig("Stats/" + event.getPlayer().getUniqueId()+".yml");
 				
@@ -361,7 +362,7 @@ public class Interact
 				YM.saveConfig();
 				event.setCancelled(true);
 				event.getItem().remove();
-				s.SP(event.getPlayer(), org.bukkit.Sound.ITEM_PICKUP, 0.5F,1.2F);
+				new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(event.getPlayer(), org.bukkit.Sound.ITEM_PICKUP, 0.5F,1.2F);
 			}
 		}
 		else
@@ -371,14 +372,11 @@ public class Interact
 	  	if(YM.getBoolean("Alert.ItemPickUp") == true)
 		{
 			if(ItemName.contains(ChatColor.YELLOW + "[골드]") == true)
-			{
-				t.sendActionBar(event.getPlayer(), ChatColor.GRAY+""+ChatColor.BOLD+""+""+ChatColor.BOLD+ChatColor.BOLD+""+ChatColor.BOLD+"("+""+ChatColor.BOLD+ItemName+""+ChatColor.GRAY+""+ChatColor.BOLD+")");
-			}
+				new GBD.GoldBigDragon_Advanced.Effect.PacketSender().sendActionBar(event.getPlayer(), ChatColor.GRAY+""+ChatColor.BOLD+""+""+ChatColor.BOLD+ChatColor.BOLD+""+ChatColor.BOLD+"("+""+ChatColor.BOLD+ItemName+""+ChatColor.GRAY+""+ChatColor.BOLD+")");
 			else
-			{
-				t.sendActionBar(event.getPlayer(), ChatColor.GRAY+""+ChatColor.BOLD+""+""+ChatColor.BOLD+ChatColor.BOLD+""+ChatColor.BOLD+"("+""+ChatColor.BOLD+ItemName+""+" "+ChatColor.GRAY+""+ChatColor.BOLD+event.getItem().getItemStack().getAmount()+"개)");
-			}
+				new GBD.GoldBigDragon_Advanced.Effect.PacketSender().sendActionBar(event.getPlayer(), ChatColor.GRAY+""+ChatColor.BOLD+""+""+ChatColor.BOLD+ChatColor.BOLD+""+ChatColor.BOLD+"("+""+ChatColor.BOLD+ItemName+""+" "+ChatColor.GRAY+""+ChatColor.BOLD+event.getItem().getItemStack().getAmount()+"개)");
 		}
+	  	return;
 	}
 
 	public String SetItemDefaultName(int itemCode,byte itemData)

@@ -13,8 +13,6 @@ import org.bukkit.material.MaterialData;
 
 public class GUIutil
 {
-	GBD.GoldBigDragon_Advanced.Config.StatConfig stat = new GBD.GoldBigDragon_Advanced.Config.StatConfig();
-    
 	public void Stack(String Display, int ID, int DATA, int Stack, List<String> Lore, int Loc, Inventory inventory)
 	{
 		ItemStack Icon = new MaterialData(ID, (byte) DATA).toItemStack(Stack);
@@ -23,6 +21,7 @@ public class GUIutil
 		Icon_Meta.setLore(Lore);
 		Icon.setItemMeta(Icon_Meta);
 		inventory.setItem(Loc, Icon);
+		return;
 	}
 	
 	public void Stack2(String Display, int ID, int DATA, int Stack, List<String> Lore, int Loc, Inventory inventory)
@@ -39,6 +38,7 @@ public class GUIutil
 		Icon_Meta.setLore(Lore);
 		Icon.setItemMeta(Icon_Meta);
 		inventory.setItem(Loc, Icon);
+		return;
 	}
 	
 	public ItemStack getPlayerSkull(String Display,int Stack, List<String> Lore, String PlayerName)
@@ -56,6 +56,7 @@ public class GUIutil
 	public void ItemStackStack(ItemStack Item, int Loc, Inventory inventory)
 	{
 		inventory.setItem(Loc, Item);
+		return;
 	}
 
 	public ItemStack getItemStack(String Display, int ID, int DATA, int Stack, List<String> Lore)

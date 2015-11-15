@@ -26,7 +26,7 @@ public class StatsGUI extends GUIutil
 	    YamlManager YM,Config;
 		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
 	  	if(GUI_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-	  		stat.CreateNewStats(player);
+	  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
 		YM = GUI_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 		Config = GUI_YC.getNewConfig("config.yml");
 		
@@ -304,7 +304,7 @@ public class StatsGUI extends GUIutil
 		Player player = (Player) event.getWhoClicked();
 		GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
 	  	if(GUI_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-	  		stat.CreateNewStats(player);
+	  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
 		YM = GUI_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 		
 		switch (event.getSlot())

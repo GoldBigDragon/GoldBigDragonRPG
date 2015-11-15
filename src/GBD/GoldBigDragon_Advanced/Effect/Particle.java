@@ -1,6 +1,5 @@
 package GBD.GoldBigDragon_Advanced.Effect;
 
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;

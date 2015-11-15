@@ -20,48 +20,28 @@ import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 
 public class PlayerAction
 {
-
-	private GBD.GoldBigDragon_Advanced.Effect.Sound sound = new GBD.GoldBigDragon_Advanced.Effect.Sound();
-	
 	public void PlayerMove(PlayerMoveEvent event)
 	{
-		GBD.GoldBigDragon_Advanced.ETC.Area A = new GBD.GoldBigDragon_Advanced.ETC.Area();
-		GBD.GoldBigDragon_Advanced.Config.StatConfig stat = new GBD.GoldBigDragon_Advanced.Config.StatConfig();
-
 		YamlController Config_YC = GBD.GoldBigDragon_Advanced.Main.Main.Config_YC;
 	    YamlManager YM;
 
 		Player player = event.getPlayer();
-
-		/*
-		if(Main.PSHM.containsKey(player)==true)
-		{
-			if(Main.PSHM.get(player).get("TEMP").containsKey("3")==true)
-			{
-				if(Main.PSHM.get(player).get("TEMP").get("3").equals("워프"))
-				{
-					Main.PSHM.get(player).get("TEMP").remove("3");
-					player.sendMessage(ChatColor.RED+"[워프] : 워프가 취소되었습니다!");
-				}
-			}
-		}
-		*/
 		
 		//플레이어 움직이지 못하게 하기
 		//player.teleport(event.getPlayer().getLocation());
 		
 	  	if(Config_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-	  		stat.CreateNewStats(player);
+	  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
 		YM = Config_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 		
 		if(Main.PlayerCurrentArea.get(player)==null)
 			Main.PlayerCurrentArea.put(player, "null");
+		
 		String Area;
+		GBD.GoldBigDragon_Advanced.ETC.Area A = new GBD.GoldBigDragon_Advanced.ETC.Area();
 		Area = A.getAreaName(event.getPlayer());
 		if(Area != null)
 		{
-			YamlController Location_YC = GBD.GoldBigDragon_Advanced.Main.Main.Location_YC;
-			YamlManager AreaList = Location_YC.getNewConfig("Area/AreaList.yml");			
 			new GBD.GoldBigDragon_Advanced.ETC.Area().AreaMonsterSpawnAdd(Area, "-1");
 			if(Main.PlayerCurrentArea.get(player).equals(Area)==false)
 			{
@@ -75,6 +55,7 @@ public class PlayerAction
 				}
 				if(A.getAreaOption(Area, (char) 6) == true)
 				{
+					YamlManager AreaList = Config_YC.getNewConfig("Area/AreaList.yml");
 					if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
 						new OtherPlugins.NoteBlockAPIMain().Play(player, AreaList.getInt(Area+".BGM"));
 				}
@@ -84,11 +65,10 @@ public class PlayerAction
 					YamlManager QuestList  = GUI_YC.getNewConfig("Quest/QuestList.yml");
 					YamlManager PlayerQuestList  = GUI_YC.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
 					
-					Set<String> b = PlayerQuestList.getConfigurationSection("Started.").getKeys(false);
-					Object[] a =b.toArray();
-					for(int count = 0; count < b.size(); count++)
+					Object[] b = PlayerQuestList.getConfigurationSection("Started.").getKeys(false).toArray();
+					for(int count = 0; count < b.length; count++)
 					{
-						String QuestName = (String) a[count];
+						String QuestName = (String) b[count];
 						if(PlayerQuestList.getString("Started."+QuestName+".Type").equalsIgnoreCase("Visit"))
 						{
 							if(PlayerQuestList.getString("Started."+QuestName+".AreaName").equalsIgnoreCase(Area))
@@ -128,12 +108,13 @@ public class PlayerAction
 			}
 			return;
 		}
+		return;
 	}
 
 	public void PlayerChatting(PlayerChatEvent event)
 	{
 	    GBD.GoldBigDragon_Advanced.Config.StatConfig stat = new GBD.GoldBigDragon_Advanced.Config.StatConfig();
-
+		GBD.GoldBigDragon_Advanced.Effect.Sound sound = new GBD.GoldBigDragon_Advanced.Effect.Sound();
 	    Player player = event.getPlayer();
 
 	    if(Main.TEMP.containsKey(player)==true)
@@ -332,6 +313,7 @@ public class PlayerAction
 	
 	private void QuestTypeChatting(PlayerChatEvent event)
 	{
+		GBD.GoldBigDragon_Advanced.Effect.Sound sound = new GBD.GoldBigDragon_Advanced.Effect.Sound();
 	    Player player = event.getPlayer();
     	GBD.GoldBigDragon_Advanced.GUI.QuestGUI QGUI = new GBD.GoldBigDragon_Advanced.GUI.QuestGUI();
 		YamlController Config_YC = GBD.GoldBigDragon_Advanced.Main.Main.Config_YC;
@@ -393,9 +375,7 @@ public class PlayerAction
     	case "Visit":
 			YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
 			YamlManager AreaList = Event_YC.getNewConfig("Area/AreaList.yml");
-			
-			Set<String> a = AreaList.getConfigurationSection("").getKeys(false);
-			Object[] arealist =a.toArray();
+			Object[] arealist = AreaList.getConfigurationSection("").getKeys(false).toArray();
 
 			if(arealist.length <= 0)
 			{
@@ -598,6 +578,7 @@ public class PlayerAction
 			}
 			return;
     	}
+		return;
 	}
 	
 	private void WorldCreaterTypeChatting(PlayerChatEvent event)
@@ -643,7 +624,6 @@ public class PlayerAction
     	s.SP(player, Sound.WOLF_BARK,1.0F, 0.8F);
 		player.sendMessage(ChatColor.GOLD+""+ChatColor.BOLD+"[월드 생성] : 월드 생성 성공!");
 		return;
-    	
 	}
 	
 	private void ItemTypeChatting(PlayerChatEvent event)
@@ -1051,6 +1031,7 @@ public class PlayerAction
 		else
 			IGUI.NewItemGUI(player, number);
 		Main.UserData.get(player).clearAll();
+		return;
 	}
 
 	private void AreaTypeChatting(PlayerChatEvent event)
@@ -1145,7 +1126,7 @@ public class PlayerAction
 				}
 				return;
 		}
-    	
+		return;
 	}
 
 	private void NPCTypeChatting(PlayerChatEvent event)
@@ -1366,6 +1347,7 @@ public class PlayerAction
 			}
 			return;
 		}
+		return;
 	}
 
 	private void NewBieTypeChatting(PlayerChatEvent event)
@@ -1388,7 +1370,7 @@ public class PlayerAction
 			}
 			return;
 		}
-
+		return;
 	}
 
 	private void SkillTypeChatting(PlayerChatEvent event)
@@ -1868,6 +1850,7 @@ public class PlayerAction
 			}
 			return;
 		}
+		return;
 	}
 
 	private void MonsterTypeChatting(PlayerChatEvent event)
@@ -2123,6 +2106,7 @@ public class PlayerAction
 			}
 			return;
 		}
+		return;
 	}
 	
 	private void TeleportTypeChatting(PlayerChatEvent event)
@@ -2140,6 +2124,7 @@ public class PlayerAction
 			Main.UserData.get(player).clearAll();
 			return;
 		}
+		return;
 	}
 	
 	private void EventChatting(PlayerChatEvent event)
@@ -2296,6 +2281,7 @@ public class PlayerAction
 			}
 			return;
 		}
+		return;
 	}
 
 	private void SystemTypeChatting(PlayerChatEvent event)
@@ -2356,6 +2342,7 @@ public class PlayerAction
 			new GBD.GoldBigDragon_Advanced.GUI.OPBoxGUI().OPBoxGUI_Setting(player);
 			return;
 		}
+		return;
 	}
 
 	private void NaviTypeChatting(PlayerChatEvent event)
@@ -2424,10 +2411,12 @@ public class PlayerAction
 			}
 			return;
 		}
+		return;
 	}
 	
 	private boolean isIntMinMax(String message,Player player, int Min, int Max)
 	{
+		GBD.GoldBigDragon_Advanced.Effect.Sound sound = new GBD.GoldBigDragon_Advanced.Effect.Sound();
 		try
 		{
 			if(message.split(" ").length <= 1 && Integer.parseInt(message) >= Min&& Integer.parseInt(message) <= Max)
@@ -2448,6 +2437,7 @@ public class PlayerAction
 
 	private byte askOX(String message,Player player)
 	{
+		GBD.GoldBigDragon_Advanced.Effect.Sound sound = new GBD.GoldBigDragon_Advanced.Effect.Sound();
 		if(message.split(" ").length <= 1)
 		{
 			if(message.equals("x")||message.equals("X"))

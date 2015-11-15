@@ -21,6 +21,7 @@ public class Job
 			FixPlayerJobList(players[count]);
 			FixPlayerSkillList(players[count]);
 		}
+		return;
 	}
 
 	public void AllPlayerSkillRankFix()
@@ -31,6 +32,7 @@ public class Job
 		FixJobList();
 		for(int count = 0; count < players.length;count++)
 			SkillRankFix(players[count]);
+		return;
 	}
 	
 	public void FixJobList()
@@ -38,7 +40,7 @@ public class Job
 	{
 		YamlController Config_YC = GBD.GoldBigDragon_Advanced.Main.Main.Config_YC;
 		YamlManager JobList  = Config_YC.getNewConfig("Skill/JobList.yml");
-		YamlManager SkillList  = Config_YC.getNewConfig("Skill/SkillList.yml");
+		
 		YamlManager Config  = Config_YC.getNewConfig("config.yml");
 
 		if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == true)
@@ -51,6 +53,7 @@ public class Job
 					Object[] Skills = JobList.getConfigurationSection("Mabinogi."+Categori[counter].toString()).getKeys(false).toArray();
 					for(int countta = 0; countta < Skills.length; countta++)
 					{
+						YamlManager SkillList  = Config_YC.getNewConfig("Skill/SkillList.yml");
 						if(SkillList.getConfigurationSection("").getKeys(false).contains(Skills[countta].toString())==false)
 						{
 							JobList.removeKey("Mabinogi."+Categori[counter].toString()+"."+Skills[countta].toString());
@@ -71,6 +74,7 @@ public class Job
 					Object[] SubJobSkills = JobList.getConfigurationSection("MapleStory."+Job[counter].toString()+"."+SubJob[count]+".Skill").getKeys(false).toArray();
 					for(int countta = 0; countta < SubJobSkills.length; countta++)
 					{
+						YamlManager SkillList  = Config_YC.getNewConfig("Skill/SkillList.yml");
 						if(SkillList.getConfigurationSection("").getKeys(false).contains(SubJobSkills[countta].toString())==false)
 						{
 							JobList.removeKey("MapleStory."+Job[counter].toString()+"."+SubJob[count].toString()+".Skill."+SubJobSkills[countta].toString());

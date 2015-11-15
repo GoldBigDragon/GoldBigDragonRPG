@@ -77,7 +77,7 @@ public class Fishing
 					fish.setItemStack(item);
 				}
 			}
-			
 		}
+		return;
 	}
 }

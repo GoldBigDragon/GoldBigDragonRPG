@@ -38,9 +38,6 @@ import net.minecraft.server.v1_8_R3.EntityZombie;
 
 public class Monster
 {
-	private GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
-	private GBD.GoldBigDragon_Advanced.Effect.Particle p = new GBD.GoldBigDragon_Advanced.Effect.Particle();
-	//NameList//
 	public void CreateMonster(String MonsterName)
 	{
 		ItemStack Item = new ItemStack(Material.AIR);
@@ -75,6 +72,7 @@ public class Monster
 		Monster.set(MonsterName+".Hand.DropChance", 0);
 		Monster.set(MonsterName+".Hand.Item", Item);
 		Monster.saveConfig();
+		return;
 	}
 
 	public void SpawnMob(Location loc, String mob)
@@ -162,43 +160,44 @@ public class Monster
 			else
 			switch(Monster.getString(mob + ".Type"))
 			{
-				case "좀비": Zombie zombie = (Zombie) loc.getWorld().spawn(loc, Zombie.class);zombie = (Zombie) getEntity(zombie,mob); break;
-				case "자이언트": Giant giant = (Giant) loc.getWorld().spawn(loc, Giant.class);giant = (Giant) getEntity(giant,mob); break;
-				case "스켈레톤": case "네더스켈레톤": Skeleton skeleton = (Skeleton) loc.getWorld().spawn(loc, Skeleton.class);skeleton = (Skeleton) getEntity(skeleton,mob); break;
-				case "엔더맨": Enderman enderman = (Enderman) loc.getWorld().spawn(loc, Enderman.class);enderman = (Enderman) getEntity(enderman,mob); break;
-				case "크리퍼": Creeper creeper = (Creeper) loc.getWorld().spawn(loc, Creeper.class);creeper = (Creeper) getEntity(creeper,mob); break;
-				case "번개크리퍼": Creeper Lcreeper = (Creeper) loc.getWorld().spawn(loc, Creeper.class);Lcreeper = (Creeper) getEntity(Lcreeper,mob); break;
-				case "거미": Spider spider = (Spider) loc.getWorld().spawn(loc, Spider.class);spider = (Spider) getEntity(spider,mob); break;
-				case "동굴거미": CaveSpider cavespider = (CaveSpider) loc.getWorld().spawn(loc, CaveSpider.class);cavespider = (CaveSpider) getEntity(cavespider,mob); break;
-				case "좀벌레": Silverfish silverfish = (Silverfish) loc.getWorld().spawn(loc, Silverfish.class);silverfish = (Silverfish) getEntity(silverfish,mob); break;
-				case "엔더진드기": Endermite endermite = (Endermite) loc.getWorld().spawn(loc, Endermite.class);endermite = (Endermite) getEntity(endermite,mob); break;
-				case "초대형슬라임": case "특대슬라임": case "큰슬라임": case "보통슬라임": case "작은슬라임": Slime Sslime = (Slime) loc.getWorld().spawn(loc, Slime.class);Sslime = (Slime) getEntity(Sslime,mob); break;
-				case "특대마그마큐브": case "큰마그마큐브": case "보통마그마큐브": case "작은마그마큐브": MagmaCube Smagmacube = (MagmaCube) loc.getWorld().spawn(loc, MagmaCube.class);Sslime = (MagmaCube) getEntity(Smagmacube,mob); break;
-				case "블레이즈": Blaze blaze = (Blaze) loc.getWorld().spawn(loc, Blaze.class);blaze = (Blaze) getEntity(blaze,mob); break;
-				case "가스트": Ghast ghast = (Ghast) loc.getWorld().spawn(loc, Ghast.class);ghast = (Ghast) getEntity(ghast,mob); break;
-				case "좀비피그맨": PigZombie pigzombie = (PigZombie) loc.getWorld().spawn(loc, PigZombie.class);pigzombie = (PigZombie) getEntity(pigzombie,mob); break;
-				case "마녀": Witch witch = (Witch) loc.getWorld().spawn(loc, Witch.class);witch = (Witch) getEntity(witch,mob); break;
-				case "위더": Wither wither = (Wither) loc.getWorld().spawn(loc, Wither.class);wither = (Wither) getEntity(wither,mob); break;
-				case "엔더드래곤": EnderDragon ED = (EnderDragon) loc.getWorld().spawn(loc, EnderDragon.class);ED = (EnderDragon) getEntity(ED,mob); break;
-				case "엔더크리스탈": EnderCrystal EC = (EnderCrystal) loc.getWorld().spawn(loc, EnderCrystal.class);EC = getEnderCrystal(EC,mob); break;
-				case "수호자": Guardian guardian = (Guardian) loc.getWorld().spawn(loc, Guardian.class);guardian = (Guardian) getEntity(guardian,mob); break;
-				case "양": Sheep sheep = (Sheep) loc.getWorld().spawn(loc, Sheep.class);sheep = (Sheep) getEntity(sheep,mob); break;
-				case "소": Cow cow = (Cow) loc.getWorld().spawn(loc, Cow.class);cow = (Cow) getEntity(cow,mob); break;
-				case "돼지": Pig pig = (Pig) loc.getWorld().spawn(loc, Pig.class);pig = (Pig) getEntity(pig,mob); break;
-				case "말": Horse horse = (Horse) loc.getWorld().spawn(loc, Horse.class);horse = (Horse) getEntity(horse,mob); break;
-				case "토끼": Rabbit rabbit = (Rabbit) loc.getWorld().spawn(loc, Rabbit.class);rabbit = (Rabbit) getEntity(rabbit,mob); break;
-				case "오셀롯": Ocelot oceleot = (Ocelot) loc.getWorld().spawn(loc, Ocelot.class);oceleot = (Ocelot) getEntity(oceleot,mob); break;
-				case "늑대": Wolf wolf = (Wolf) loc.getWorld().spawn(loc, Wolf.class);wolf = (Wolf) getEntity(wolf,mob); break;
-				case "닭": Chicken chicken = (Chicken) loc.getWorld().spawn(loc, Chicken.class);chicken = (Chicken) getEntity(chicken,mob); break;
-				case "버섯소": MushroomCow Mcow = (MushroomCow) loc.getWorld().spawn(loc, MushroomCow.class);Mcow = (MushroomCow) getEntity(Mcow,mob); break;
-				case "박쥐": Bat bat = (Bat) loc.getWorld().spawn(loc, Bat.class);bat = (Bat) getEntity(bat,mob); break;
-				case "오징어": Squid squid = (Squid) loc.getWorld().spawn(loc, Squid.class);squid = (Squid) getEntity(squid,mob); break;
-				case "주민": Villager villager = (Villager) loc.getWorld().spawn(loc, Villager.class);villager = (Villager) getEntity(villager,mob); break;
-				case "눈사람": Snowman snowman = (Snowman) loc.getWorld().spawn(loc, Snowman.class);snowman = (Snowman) getEntity(snowman,mob); break;
-				case "골렘": IronGolem golem = (IronGolem) loc.getWorld().spawn(loc, IronGolem.class);golem = (IronGolem) getEntity(golem,mob); break;
+				case "좀비":{Zombie zombie = (Zombie) loc.getWorld().spawn(loc, Zombie.class);zombie = (Zombie) getEntity(zombie,mob);}break;
+				case "자이언트":{Giant giant = (Giant) loc.getWorld().spawn(loc, Giant.class);giant = (Giant) getEntity(giant,mob);}break;
+				case "스켈레톤": case "네더스켈레톤":{Skeleton skeleton = (Skeleton) loc.getWorld().spawn(loc, Skeleton.class);skeleton = (Skeleton) getEntity(skeleton,mob);}break;
+				case "엔더맨":{Enderman enderman = (Enderman) loc.getWorld().spawn(loc, Enderman.class);enderman = (Enderman) getEntity(enderman,mob);}break;
+				case "크리퍼":{Creeper creeper = (Creeper) loc.getWorld().spawn(loc, Creeper.class);creeper = (Creeper) getEntity(creeper,mob);}break;
+				case "번개크리퍼":{Creeper Lcreeper = (Creeper) loc.getWorld().spawn(loc, Creeper.class);Lcreeper = (Creeper) getEntity(Lcreeper,mob);}break;
+				case "거미":{Spider spider = (Spider) loc.getWorld().spawn(loc, Spider.class);spider = (Spider) getEntity(spider,mob);}break;
+				case "동굴거미":{CaveSpider cavespider = (CaveSpider) loc.getWorld().spawn(loc, CaveSpider.class);cavespider = (CaveSpider) getEntity(cavespider,mob);}break;
+				case "좀벌레":{Silverfish silverfish = (Silverfish) loc.getWorld().spawn(loc, Silverfish.class);silverfish = (Silverfish) getEntity(silverfish,mob);}break;
+				case "엔더진드기":{Endermite endermite = (Endermite) loc.getWorld().spawn(loc, Endermite.class);endermite = (Endermite) getEntity(endermite,mob);}break;
+				case "초대형슬라임": case "특대슬라임": case "큰슬라임": case "보통슬라임": case "작은슬라임":{Slime Sslime = (Slime) loc.getWorld().spawn(loc, Slime.class);Sslime = (Slime) getEntity(Sslime,mob);}break;
+				case "특대마그마큐브": case "큰마그마큐브": case "보통마그마큐브": case "작은마그마큐브":{MagmaCube Smagmacube = (MagmaCube) loc.getWorld().spawn(loc, MagmaCube.class);Smagmacube = (MagmaCube) getEntity(Smagmacube,mob);}break;
+				case "블레이즈":{Blaze blaze = (Blaze) loc.getWorld().spawn(loc, Blaze.class);blaze = (Blaze) getEntity(blaze,mob);}break;
+				case "가스트":{Ghast ghast = (Ghast) loc.getWorld().spawn(loc, Ghast.class);ghast = (Ghast) getEntity(ghast,mob);}break;
+				case "좀비피그맨":{PigZombie pigzombie = (PigZombie) loc.getWorld().spawn(loc, PigZombie.class);pigzombie = (PigZombie) getEntity(pigzombie,mob);}break;
+				case "마녀":{Witch witch = (Witch) loc.getWorld().spawn(loc, Witch.class);witch = (Witch) getEntity(witch,mob);}break;
+				case "위더":{Wither wither = (Wither) loc.getWorld().spawn(loc, Wither.class);wither = (Wither) getEntity(wither,mob);}break;
+				case "엔더드래곤":{EnderDragon ED = (EnderDragon) loc.getWorld().spawn(loc, EnderDragon.class);ED = (EnderDragon) getEntity(ED,mob);}break;
+				case "엔더크리스탈":{EnderCrystal EC = (EnderCrystal) loc.getWorld().spawn(loc, EnderCrystal.class);EC = getEnderCrystal(EC,mob);}break;
+				case "수호자":{Guardian guardian = (Guardian) loc.getWorld().spawn(loc, Guardian.class);guardian = (Guardian) getEntity(guardian,mob);}break;
+				case "양":{Sheep sheep = (Sheep) loc.getWorld().spawn(loc, Sheep.class);sheep = (Sheep) getEntity(sheep,mob);}break;
+				case "소":{Cow cow = (Cow) loc.getWorld().spawn(loc, Cow.class);cow = (Cow) getEntity(cow,mob);}break;
+				case "돼지":{Pig pig = (Pig) loc.getWorld().spawn(loc, Pig.class);pig = (Pig) getEntity(pig,mob);}break;
+				case "말":{Horse horse = (Horse) loc.getWorld().spawn(loc, Horse.class);horse = (Horse) getEntity(horse,mob);}break;
+				case "토끼":{Rabbit rabbit = (Rabbit) loc.getWorld().spawn(loc, Rabbit.class);rabbit = (Rabbit) getEntity(rabbit,mob);}break;
+				case "오셀롯":{Ocelot oceleot = (Ocelot) loc.getWorld().spawn(loc, Ocelot.class);oceleot = (Ocelot) getEntity(oceleot,mob);}break;
+				case "늑대":{Wolf wolf = (Wolf) loc.getWorld().spawn(loc, Wolf.class);wolf = (Wolf) getEntity(wolf,mob);}break;
+				case "닭":{Chicken chicken = (Chicken) loc.getWorld().spawn(loc, Chicken.class);chicken = (Chicken) getEntity(chicken,mob);}break;
+				case "버섯소":{MushroomCow Mcow = (MushroomCow) loc.getWorld().spawn(loc, MushroomCow.class);Mcow = (MushroomCow) getEntity(Mcow,mob);}break;
+				case "박쥐":{Bat bat = (Bat) loc.getWorld().spawn(loc, Bat.class);bat = (Bat) getEntity(bat,mob);}break;
+				case "오징어":{Squid squid = (Squid) loc.getWorld().spawn(loc, Squid.class);squid = (Squid) getEntity(squid,mob);}break;
+				case "주민":{Villager villager = (Villager) loc.getWorld().spawn(loc, Villager.class);villager = (Villager) getEntity(villager,mob);}break;
+				case "눈사람":{Snowman snowman = (Snowman) loc.getWorld().spawn(loc, Snowman.class);snowman = (Snowman) getEntity(snowman,mob);}break;
+				case "골렘":{IronGolem golem = (IronGolem) loc.getWorld().spawn(loc, IronGolem.class);golem = (IronGolem) getEntity(golem,mob);}break;
 			}
 			GBD.GoldBigDragon_Advanced.Main.Main.spawntime=true;
 		}
+		return;
 	}
 
 	private LivingEntity getEntity(LivingEntity Monster, String mob)
@@ -351,6 +350,7 @@ public class Monster
 		Icon_Meta.setLore(Lore);
 		Icon.setItemMeta(Icon_Meta);
 		inventory.setItem(Loc, Icon);
+		return;
 	}
 	
 	public void ArmorGUI(Player player, String mob)
@@ -395,6 +395,7 @@ public class Monster
 		Stack(ChatColor.WHITE + "", 30,0,1,Arrays.asList(ChatColor.GRAY +"이곳에는 아이템을",ChatColor.GRAY +"올려두지 마세요."), 5, inv);
 		
 		player.openInventory(inv);
+		return;
 	}
 
 	public void ArmorGUIClick(InventoryClickEvent event)
@@ -412,6 +413,7 @@ public class Monster
 			event.setCancelled(true);
 			return;
 		}
+		return;
 	}
 	
 	public void InventorySetting(InventoryCloseEvent event)
@@ -443,6 +445,7 @@ public class Monster
 			Monster.set(MonsterName+".Hand.Item", event.getInventory().getItem(4));
 		Monster.saveConfig();
 		event.getPlayer().sendMessage(ChatColor.GREEN + "[SYSTEM] : 아이템 설정이 저장되었습니다.");
+		return;
 	}
 
 	public void SpawnEggGive(Player player, String mob)
@@ -455,160 +458,204 @@ public class Monster
 		Icon.setItemMeta(Icon_Meta);
 		player.getInventory().addItem(Icon);
 		player.sendMessage(ChatColor.YELLOW+"[SYSTEM] : "+ChatColor.GREEN+mob +ChatColor.YELLOW+ "스폰 에그를 얻었습니다!");
+		return;
 	}
 	
 	public void SpawnEffect (Entity mob,Location loc, int type)
 	{
+		GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
+		GBD.GoldBigDragon_Advanced.Effect.Particle p = new GBD.GoldBigDragon_Advanced.Effect.Particle();
 		switch(type)
 		{
 		case 0: return;
 		case 1:
-			s.SL(loc, org.bukkit.Sound.ENDERDRAGON_GROWL, 1.0F, 0.5F);
-			for(int counter=0;counter<400;counter++)
-			p.PLC(loc, Effect.SPELL, 4);
-			for(int counter=0;counter<300;counter++)
-			p.PLC(loc, Effect.FLYING_GLYPH, 0);
-			for(int counter=0;counter<200;counter++)
-			p.PLC(loc, Effect.SMOKE, 4);
-			return;
-		case 2:
-			loc.setY((double)(loc.getBlockY()+1));
-			s.SL(loc, org.bukkit.Sound.ENDERMAN_TELEPORT, 1.0F, 0.5F);
-			p.PLC(loc, Effect.ENDER_SIGNAL, 0);
-			for(int counter=0;counter<100;counter++)
-			p.PLC(loc, Effect.ENDER_SIGNAL, 0);
-			for(int counter=0;counter<50;counter++)
-			p.PLC(loc, Effect.MAGIC_CRIT, 4);
-			return;
-		case 3:
-			s.SL(loc, org.bukkit.Sound.EXPLODE, 1.0F, 0.5F);
-			p.PLC(loc, Effect.EXPLOSION_LARGE, 0);
-			for(int counter=0;counter<3;counter++)
-			p.PLC(loc, Effect.EXPLOSION_HUGE, 0);
-			for(int counter=0;counter<10;counter++)
-			p.PLC(loc, Effect.EXPLOSION, 4);
-			return;
-		case 4:
-			s.SL(loc, org.bukkit.Sound.GHAST_FIREBALL, 1.0F, 0.5F);
-			p.PLC(loc, Effect.FLAME, 0);
-			for(int counter=0;counter<200;counter++)
-			p.PLC(loc, Effect.SMOKE, 9);
-			for(int counter=0;counter<200;counter++)
-			p.PLC(loc, Effect.FLAME, 0);
-			return;
-		case 5:
-			s.SL(loc, org.bukkit.Sound.ZOMBIE_METAL, 1.0F, 0.6F);
-			p.PLC(loc, Effect.CRIT, 0);
-			for(int counter=0;counter<400;counter++)
-			p.PLC(loc, Effect.SPELL, 4);
-			loc.setY((double)(loc.getBlockY()+1.5));
-			for(int counter=0;counter<1;counter++)
-			p.PLC(loc, Effect.VILLAGER_THUNDERCLOUD, counter);
-			return;
-		case 6:
-			s.SL(loc, org.bukkit.Sound.CHEST_CLOSE, 1.0F, 0.5F);
-			loc.setY((double)(loc.getBlockY()+1.8));
-			p.PLC(loc, Effect.HEART, 0);
-			return;
-		case 7:
-			switch(mob.getType())
 			{
-			case ZOMBIE :
-			case GIANT :
-				s.SL(loc, org.bukkit.Sound.ZOMBIE_IDLE, 1.0F, 0.5F);
-				loc.setY((double)(loc.getBlockY()+1.8));
-				p.PLC(loc, Effect.VILLAGER_THUNDERCLOUD, 0);
-				for(int counter=0;counter<50;counter++)
-					p.PLC(loc, Effect.MAGIC_CRIT, counter);
-				break;
-			case SKELETON :
-				s.SL(loc, org.bukkit.Sound.SKELETON_DEATH, 1.0F, 0.5F);
-				loc.setY((double)(loc.getBlockY()+1.8));
-				p.PLC(loc, Effect.VILLAGER_THUNDERCLOUD, 0);
-				for(int counter=0;counter<50;counter++)
-					p.PLC(loc, Effect.MAGIC_CRIT, counter);
-				break;
-			case ENDERMAN :
-			case ENDERMITE :
-				s.SL(loc, org.bukkit.Sound.ENDERMAN_TELEPORT, 1.0F, 0.5F);
-				loc.setY((double)(loc.getBlockY()+1));
-				for(int counter=0;counter<100;counter++)
-					p.PLC(loc, Effect.ENDER_SIGNAL, 0);
-				break;
-			case CREEPER :
-				s.SL(loc, org.bukkit.Sound.EXPLODE, 1.0F, 0.5F);
-				loc.setY((double)(loc.getBlockY()+1));
-				p.PLC(loc, Effect.EXPLOSION_LARGE, 0);
-				for(int counter=0;counter<3;counter++)
-				p.PLC(loc, Effect.EXPLOSION_HUGE, counter);
-				for(int counter=0;counter<5;counter++)
-				p.PLC(loc, Effect.EXPLOSION, counter);
-				break;
-			case SPIDER :
-			case CAVE_SPIDER :
-			case SILVERFISH:
-				s.SL(loc, org.bukkit.Sound.SPIDER_IDLE, 1.0F, 0.5F);
-				for(int counter=0;counter<10;counter++)
-				p.PLC(loc, Effect.LARGE_SMOKE, counter);
-				loc.setY((double)(loc.getBlockY()+1));
-				p.PLC(loc, Effect.SMOKE, 0);
-				break;
-			case SLIME:
-				s.SL(loc, org.bukkit.Sound.SLIME_WALK, 1.0F, 0.5F);
-				loc.setY((double)(loc.getBlockY()+1));
-				for(int counter=0;counter<20;counter++)
-				p.PLC(loc, Effect.SLIME, counter);
-				break;
-			case MAGMA_CUBE:
-				loc.setY((double)(loc.getBlockY()+1));
-				s.SL(loc, org.bukkit.Sound.SLIME_WALK, 1.0F, 0.5F);
-				for(int counter=0;counter<40;counter++)
-				p.PLC(loc, Effect.MOBSPAWNER_FLAMES, counter);
-				break;
-			case BLAZE :
-				s.SL(loc, org.bukkit.Sound.BLAZE_BREATH, 1.0F, 0.5F);
-				for(int counter=0;counter<200;counter++)
-				p.PLC(loc, Effect.SMOKE, 9);
-				for(int counter=0;counter<200;counter++)
-				p.PLC(loc, Effect.FLAME, 0);
-				break;
-			case GHAST :
-				s.SL(loc, org.bukkit.Sound.GHAST_MOAN, 1.0F, 0.5F);
-				p.PLC(loc, Effect.FLAME, 0);
-				for(int counter=0;counter<100;counter++)
-					p.PLC(loc, Effect.SMOKE, 4);
-				for(int counter=0;counter<40;counter++)
-				p.PLC(loc, Effect.MOBSPAWNER_FLAMES, counter);
-				break;
-			case PIG_ZOMBIE :
-				s.SL(loc, org.bukkit.Sound.ZOMBIE_PIG_IDLE, 1.0F, 0.5F);
-				for(int counter=0;counter<100;counter++)
-					p.PLC(loc, Effect.SMOKE, 4);
-				for(int counter=0;counter<40;counter++)
-				p.PLC(loc, Effect.MOBSPAWNER_FLAMES, counter);
-				break;
-			case WITCH:
-				s.SL(loc, org.bukkit.Sound.VILLAGER_NO, 1.0F, 0.5F);
+				s.SL(loc, org.bukkit.Sound.ENDERDRAGON_GROWL, 1.0F, 0.5F);
 				for(int counter=0;counter<400;counter++)
 				p.PLC(loc, Effect.SPELL, 4);
 				for(int counter=0;counter<300;counter++)
 				p.PLC(loc, Effect.FLYING_GLYPH, 0);
 				for(int counter=0;counter<200;counter++)
 				p.PLC(loc, Effect.SMOKE, 4);
-				break;
-			case GUARDIAN : 
-				s.SL(loc, org.bukkit.Sound.SWIM, 1.0F, 0.5F);
-				for(int counter=0;counter<400;counter++)
-				p.PLC(loc, Effect.WATERDRIP, counter);
-				break;
-			case SNOWMAN : 
-				s.SL(loc, org.bukkit.Sound.DIG_SNOW, 1.0F, 0.5F);
+			}
+			return;
+		case 2:
+			{
+				loc.setY((double)(loc.getBlockY()+1));
+				s.SL(loc, org.bukkit.Sound.ENDERMAN_TELEPORT, 1.0F, 0.5F);
+				p.PLC(loc, Effect.ENDER_SIGNAL, 0);
+				for(int counter=0;counter<100;counter++)
+				p.PLC(loc, Effect.ENDER_SIGNAL, 0);
+				for(int counter=0;counter<50;counter++)
+				p.PLC(loc, Effect.MAGIC_CRIT, 4);
+			}
+			return;
+		case 3:
+			{
+				s.SL(loc, org.bukkit.Sound.EXPLODE, 1.0F, 0.5F);
+				p.PLC(loc, Effect.EXPLOSION_LARGE, 0);
+				for(int counter=0;counter<3;counter++)
+				p.PLC(loc, Effect.EXPLOSION_HUGE, 0);
+				for(int counter=0;counter<10;counter++)
+				p.PLC(loc, Effect.EXPLOSION, 4);
+			}
+			return;
+		case 4:
+			{
+				s.SL(loc, org.bukkit.Sound.GHAST_FIREBALL, 1.0F, 0.5F);
+				p.PLC(loc, Effect.FLAME, 0);
 				for(int counter=0;counter<200;counter++)
-				p.PLC(loc, Effect.SNOWBALL_BREAK, counter);
-				break;
+				p.PLC(loc, Effect.SMOKE, 9);
+				for(int counter=0;counter<200;counter++)
+				p.PLC(loc, Effect.FLAME, 0);
+			}
+			return;
+		case 5:
+			{
+				s.SL(loc, org.bukkit.Sound.ZOMBIE_METAL, 1.0F, 0.6F);
+				p.PLC(loc, Effect.CRIT, 0);
+				for(int counter=0;counter<400;counter++)
+				p.PLC(loc, Effect.SPELL, 4);
+				loc.setY((double)(loc.getBlockY()+1.5));
+				for(int counter=0;counter<1;counter++)
+				p.PLC(loc, Effect.VILLAGER_THUNDERCLOUD, counter);
+			}
+			return;
+		case 6:
+			{
+				s.SL(loc, org.bukkit.Sound.CHEST_CLOSE, 1.0F, 0.5F);
+				loc.setY((double)(loc.getBlockY()+1.8));
+				p.PLC(loc, Effect.HEART, 0);
+			}
+			return;
+		case 7:
+			{
+				switch(mob.getType())
+				{
+				case ZOMBIE :
+				case GIANT :
+					{
+						s.SL(loc, org.bukkit.Sound.ZOMBIE_IDLE, 1.0F, 0.5F);
+						loc.setY((double)(loc.getBlockY()+1.8));
+						p.PLC(loc, Effect.VILLAGER_THUNDERCLOUD, 0);
+						for(int counter=0;counter<50;counter++)
+							p.PLC(loc, Effect.MAGIC_CRIT, counter);
+					}
+					break;
+				case SKELETON :
+					{
+						s.SL(loc, org.bukkit.Sound.SKELETON_DEATH, 1.0F, 0.5F);
+						loc.setY((double)(loc.getBlockY()+1.8));
+						p.PLC(loc, Effect.VILLAGER_THUNDERCLOUD, 0);
+						for(int counter=0;counter<50;counter++)
+							p.PLC(loc, Effect.MAGIC_CRIT, counter);
+					}
+					break;
+				case ENDERMAN :
+				case ENDERMITE :
+					{
+						s.SL(loc, org.bukkit.Sound.ENDERMAN_TELEPORT, 1.0F, 0.5F);
+						loc.setY((double)(loc.getBlockY()+1));
+						for(int counter=0;counter<100;counter++)
+							p.PLC(loc, Effect.ENDER_SIGNAL, 0);
+					}
+					break;
+				case CREEPER :
+					{
+						s.SL(loc, org.bukkit.Sound.EXPLODE, 1.0F, 0.5F);
+						loc.setY((double)(loc.getBlockY()+1));
+						p.PLC(loc, Effect.EXPLOSION_LARGE, 0);
+						for(int counter=0;counter<3;counter++)
+						p.PLC(loc, Effect.EXPLOSION_HUGE, counter);
+						for(int counter=0;counter<5;counter++)
+						p.PLC(loc, Effect.EXPLOSION, counter);
+					}
+					break;
+				case SPIDER :
+				case CAVE_SPIDER :
+				case SILVERFISH:
+					{
+						s.SL(loc, org.bukkit.Sound.SPIDER_IDLE, 1.0F, 0.5F);
+						for(int counter=0;counter<10;counter++)
+						p.PLC(loc, Effect.LARGE_SMOKE, counter);
+						loc.setY((double)(loc.getBlockY()+1));
+						p.PLC(loc, Effect.SMOKE, 0);
+					}
+					break;
+				case SLIME:
+					{
+						s.SL(loc, org.bukkit.Sound.SLIME_WALK, 1.0F, 0.5F);
+						loc.setY((double)(loc.getBlockY()+1));
+						for(int counter=0;counter<20;counter++)
+						p.PLC(loc, Effect.SLIME, counter);
+					}
+					break;
+				case MAGMA_CUBE:
+					{
+						loc.setY((double)(loc.getBlockY()+1));
+						s.SL(loc, org.bukkit.Sound.SLIME_WALK, 1.0F, 0.5F);
+						for(int counter=0;counter<40;counter++)
+						p.PLC(loc, Effect.MOBSPAWNER_FLAMES, counter);
+					}
+					break;
+				case BLAZE :
+					{
+						s.SL(loc, org.bukkit.Sound.BLAZE_BREATH, 1.0F, 0.5F);
+						for(int counter=0;counter<200;counter++)
+						p.PLC(loc, Effect.SMOKE, 9);
+						for(int counter=0;counter<200;counter++)
+						p.PLC(loc, Effect.FLAME, 0);
+					}
+					break;
+				case GHAST :
+					{
+						s.SL(loc, org.bukkit.Sound.GHAST_MOAN, 1.0F, 0.5F);
+						p.PLC(loc, Effect.FLAME, 0);
+						for(int counter=0;counter<100;counter++)
+							p.PLC(loc, Effect.SMOKE, 4);
+						for(int counter=0;counter<40;counter++)
+						p.PLC(loc, Effect.MOBSPAWNER_FLAMES, counter);
+					}
+					break;
+				case PIG_ZOMBIE :
+					{
+						s.SL(loc, org.bukkit.Sound.ZOMBIE_PIG_IDLE, 1.0F, 0.5F);
+						for(int counter=0;counter<100;counter++)
+							p.PLC(loc, Effect.SMOKE, 4);
+						for(int counter=0;counter<40;counter++)
+						p.PLC(loc, Effect.MOBSPAWNER_FLAMES, counter);
+					}
+					break;
+				case WITCH:
+					{
+						s.SL(loc, org.bukkit.Sound.VILLAGER_NO, 1.0F, 0.5F);
+						for(int counter=0;counter<400;counter++)
+						p.PLC(loc, Effect.SPELL, 4);
+						for(int counter=0;counter<300;counter++)
+						p.PLC(loc, Effect.FLYING_GLYPH, 0);
+						for(int counter=0;counter<200;counter++)
+						p.PLC(loc, Effect.SMOKE, 4);
+					}
+					break;
+				case GUARDIAN :
+					{
+						s.SL(loc, org.bukkit.Sound.SWIM, 1.0F, 0.5F);
+						for(int counter=0;counter<400;counter++)
+						p.PLC(loc, Effect.WATERDRIP, counter);
+					}
+					break;
+				case SNOWMAN :
+					{
+						s.SL(loc, org.bukkit.Sound.DIG_SNOW, 1.0F, 0.5F);
+						for(int counter=0;counter<200;counter++)
+						p.PLC(loc, Effect.SNOWBALL_BREAK, counter);
+					}
+					break;
+				}
 			}
 			return;
 		}
+		return;
 	}
 	
 	public int getMonsterID(String MonsterType)

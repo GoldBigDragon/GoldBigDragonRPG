@@ -68,6 +68,7 @@ public class AreaGUI extends GUIutil
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
+		return;
 	}
 	
 	public void AreaGUI_Main (Player player, String AreaName)
@@ -148,15 +149,12 @@ public class AreaGUI extends GUIutil
 			Stack2(ChatColor.RED + ""+ChatColor.BOLD+"[영역 배경음]", 2266,0,1,Arrays.asList("",ChatColor.GRAY + "영역 입장시 테마 음을",ChatColor.GRAY+"재생 시킬 수 있습니다.","",ChatColor.RED + "[     필요 플러그인     ]",ChatColor.RED+" - NoteBlockAPI"), 25, inv);
 		}
 		
-		
-
 		Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "영역 이동", 368,0,1,Arrays.asList(ChatColor.GRAY + "현재 영역으로 빠르게 이동합니다."), 40, inv);
-
-		
 		Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "영역 목록으로 돌아갑니다."), 36, inv);
 		Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "현재 창을 닫습니다.",ChatColor.BLACK+AreaName), 44, inv);
 		
 		player.openInventory(inv);
+		return;
 	}
 	
 	public void AreaMonsterSpawnSettingGUI(Player player, int page, String AreaName)
@@ -165,15 +163,12 @@ public class AreaGUI extends GUIutil
 		YamlManager AreaConfig =GUI_YC.getNewConfig("Area/AreaList.yml");
 
 		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "영역 몬스터 스폰 룰 : " + (page+1));
-
 		if(AreaConfig.contains(AreaName+".MonsterSpawnRule")==false)
 		{
 			AreaConfig.set(AreaName+".MonsterSpawnRule.1", null);
 			AreaConfig.saveConfig();
 		}
-		
 		Object[] RuleList= AreaConfig.getConfigurationSection(AreaName+".MonsterSpawnRule").getKeys(false).toArray();
-		
 		int loc=0;
 		for(int count = page*45; count <RuleList.length ;count++)
 		{
@@ -208,6 +203,7 @@ public class AreaGUI extends GUIutil
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + AreaName), 53, inv);
 		player.openInventory(inv);
+		return;
 	}
 	
 	public void AreaMonsterSettingGUI(Player player, int page, String AreaName)
@@ -252,6 +248,7 @@ public class AreaGUI extends GUIutil
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + AreaName), 53, inv);
 		player.openInventory(inv);
+		return;
 	}
 	
 	public void AreaFishSettingGUI(Player player, String AreaName)
@@ -341,6 +338,7 @@ public class AreaGUI extends GUIutil
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK+ItemData), 0, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + AreaName), 8, inv);
 		player.openInventory(inv);
+		return;
 	}
 	
 	public void AreaAddMonsterListGUI(Player player, int page,String AreaName)

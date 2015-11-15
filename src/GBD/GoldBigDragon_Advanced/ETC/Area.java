@@ -1,7 +1,5 @@
 package GBD.GoldBigDragon_Advanced.ETC;
 
-import java.util.Set;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -15,28 +13,25 @@ import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 
 public class Area
 {
-	private static GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
-	
 	public void CreateNewArea(Player player, Location loc1, Location loc2, String name)
 	{
 		YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
 		YamlManager AreaList = Event_YC.getNewConfig("Area/AreaList.yml");
 		
-		Set<String> a = AreaList.getConfigurationSection("").getKeys(false);
-		Object[] arealist =a.toArray();
+		Object[] arealist = AreaList.getConfigurationSection("").getKeys(false).toArray();
 
 		for(int count =0; count <arealist.length;count++)
 		{
 			if(arealist[count].toString().equalsIgnoreCase(name) == true)
 			{
-				s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+				new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 				player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 이름은 이미 등록되어 있습니다!");
 				return;
 			}
 		}
 		if(loc1.getWorld().equals(loc2.getWorld()) == false)
 		{
-			s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+			new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 			player.sendMessage(ChatColor.RED + "[SYSTEM] : 서로 다른 월드간은 영역 지정을 할 수 없습니다!");
 			return;
 		}
@@ -100,7 +95,7 @@ public class Area
 		AreaList.set(name+".Mining.1", null);
 		AreaList.saveConfig();
 		
-		s.SP(player, org.bukkit.Sound.CHICKEN_EGG_POP, 2.0F, 1.7F);
+		new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, org.bukkit.Sound.CHICKEN_EGG_POP, 2.0F, 1.7F);
 		player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 지정 구역 등록 성공!");
 		GBD.GoldBigDragon_Advanced.GUI.AreaGUI AGUI = new GBD.GoldBigDragon_Advanced.GUI.AreaGUI();
 		AGUI.AreaGUI_Main(player, name);
@@ -112,8 +107,7 @@ public class Area
 		YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
 		YamlManager AreaList = Event_YC.getNewConfig("Area/AreaList.yml");
 		
-		Set<String> a = AreaList.getConfigurationSection("").getKeys(false);
-		Object[] arealist =a.toArray();
+		Object[] arealist = AreaList.getConfigurationSection("").getKeys(false).toArray();
 
 		for(int count =0; count <arealist.length;count++)
 		{
@@ -141,12 +135,12 @@ public class Area
 				AreaList.removeKey(name+".Alert");
 				AreaList.removeKey(name);
 				AreaList.saveConfig();
-				s.SP(player, org.bukkit.Sound.CHICKEN_EGG_POP, 2.0F, 1.7F);
+				new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, org.bukkit.Sound.CHICKEN_EGG_POP, 2.0F, 1.7F);
 				player.sendMessage(ChatColor.RED + "[SYSTEM] : 지정 구역 삭제 성공!");
 				return;
 			}
 		}
-		s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+		new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 		player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 이름의 구역은 존재하지 않습니다!");
 		return;
 	}
@@ -156,12 +150,11 @@ public class Area
 		YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
 		YamlManager AreaList = Event_YC.getNewConfig("Area/AreaList.yml");
 		
-		Set<String> a = AreaList.getConfigurationSection("").getKeys(false);
-		Object[] arealist =a.toArray();
+		Object[] arealist = AreaList.getConfigurationSection("").getKeys(false).toArray();
 
 		if(arealist.length <= 0)
 		{
-			s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+			new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 			player.sendMessage(ChatColor.RED + "[SYSTEM] : 생성된 영역이 없습니다!");
 			return;
 		}
@@ -171,7 +164,7 @@ public class Area
 			player.sendMessage(ChatColor.GREEN +"  "+ arealist[count].toString());
 		}
 		player.sendMessage(ChatColor.GREEN + "└────────영역 목록────────┘");
-		s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+		new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 		return;
 	}
 	
@@ -180,8 +173,7 @@ public class Area
 		YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
 		YamlManager AreaList = Event_YC.getNewConfig("Area/AreaList.yml");
 		
-		Set<String> a = AreaList.getConfigurationSection("").getKeys(false);
-		Object[] arealist =a.toArray();
+		Object[] arealist = AreaList.getConfigurationSection("").getKeys(false).toArray();
 
 		for(int count =0; count <arealist.length;count++)
 		{
@@ -190,19 +182,23 @@ public class Area
 				switch(type)
 				{
 				case 0:
-					AreaList.set(AreaName+".Name", string);
-					player.sendMessage(ChatColor.GREEN + "[SYSTEM] : " + ChatColor.YELLOW + AreaName+ChatColor.GREEN+" 영역의 이름이 "+ChatColor.YELLOW + string+ChatColor.GREEN+ " 으로 변경 되었습니다!");
+					{
+						AreaList.set(AreaName+".Name", string);
+						player.sendMessage(ChatColor.GREEN + "[SYSTEM] : " + ChatColor.YELLOW + AreaName+ChatColor.GREEN+" 영역의 이름이 "+ChatColor.YELLOW + string+ChatColor.GREEN+ " 으로 변경 되었습니다!");
+					}
 					break;
 				case 1:
-					AreaList.set(AreaName+".Description", string);
-					player.sendMessage(ChatColor.GREEN + "[SYSTEM] : " + ChatColor.YELLOW + AreaName+ChatColor.GREEN+" 영역의 설명이 "+ChatColor.YELLOW + string+ChatColor.GREEN+ " 으로 변경 되었습니다!");
+					{
+						AreaList.set(AreaName+".Description", string);
+						player.sendMessage(ChatColor.GREEN + "[SYSTEM] : " + ChatColor.YELLOW + AreaName+ChatColor.GREEN+" 영역의 설명이 "+ChatColor.YELLOW + string+ChatColor.GREEN+ " 으로 변경 되었습니다!");
+					}
 					break;
 				}
 				AreaList.saveConfig();
 				return;
 			}
 		}
-		s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+		new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 		player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 이름의 구역은 존재하지 않습니다!");
 		return;
 	}
@@ -331,16 +327,15 @@ public class Area
 	
 	public void sendAreaTitle(Player player, String AreaName)
 	{
-		GBD.GoldBigDragon_Advanced.Effect.PacketSender PS = new GBD.GoldBigDragon_Advanced.Effect.PacketSender();
-		
 		YamlController Location_YC = GBD.GoldBigDragon_Advanced.Main.Main.Location_YC;
 		YamlManager AreaList = Location_YC.getNewConfig("Area/AreaList.yml");
 		if(getAreaOption(AreaName, (char)4) == true)
 		{
 			String Title = AreaList.getString(AreaName+".Name").replace("%player%", player.getName());
 			String Description = AreaList.getString(AreaName+".Description").replace("%player%", player.getName());
-			PS.sendTitleSubTitle(player, "\'"+Title+"\'", "\'"+Description+"\'", 1, 10, 1);
+			new GBD.GoldBigDragon_Advanced.Effect.PacketSender().sendTitleSubTitle(player, "\'"+Title+"\'", "\'"+Description+"\'", 1, 10, 1);
 		}
+		return;
 	}
 	
 	public String[] getAreaName(Block block)
@@ -348,8 +343,7 @@ public class Area
 		YamlController Location_YC = GBD.GoldBigDragon_Advanced.Main.Main.Location_YC;
 		YamlManager AreaList = Location_YC.getNewConfig("Area/AreaList.yml");
 		
-		Set<String> a = AreaList.getConfigurationSection("").getKeys(false);
-		Object[] arealist =a.toArray();
+		Object[] arealist = AreaList.getConfigurationSection("").getKeys(false).toArray();
 
 		for(int count =0; count <arealist.length;count++)
 		{
@@ -533,8 +527,8 @@ public class Area
 		for(int count = line5; count <7;count++)
 			if(AreaConfig.contains(AreaName+".Fishing.1."+count))
 				AreaConfig.removeKey(AreaName+".Fishing.1."+count);
-		
 		AreaConfig.saveConfig();
+		return;
 	}
 	
 	public void BlockItemSettingInventoryClose(InventoryCloseEvent event)
@@ -551,7 +545,7 @@ public class Area
 			AreaConfig.set(AreaName+".Mining."+ItemData,"0:0");
 		}
 		AreaConfig.saveConfig();
-		
+		return;
 	}
 
 	public void AreaMonsterSpawnAdd(String AreaName, String Count)
@@ -638,5 +632,6 @@ public class Area
 				}
 			}
 		}
+		return;
 	}
 }

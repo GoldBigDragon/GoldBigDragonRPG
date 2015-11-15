@@ -6,6 +6,7 @@ import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 import GBD.GoldBigDragon_Advanced.Effect.PacketSender;
 import GBD.GoldBigDragon_Advanced.Main.Main;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Damageable;
@@ -24,12 +25,12 @@ public class Attack
 	{
 		YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
 		GBD.GoldBigDragon_Advanced.Config.StatConfig stat = new GBD.GoldBigDragon_Advanced.Config.StatConfig();
-	    PacketSender t = new PacketSender();
+
 		YamlManager Config =Event_YC.getNewConfig("config.yml");
-	    
-	  	if(Event_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-	  		stat.CreateNewStats(player);
+
 	  	YamlManager attacker = Event_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
+	  	if(attacker.contains("Player.Name") == false)
+	  		stat.CreateNewStats(player);
 		
         if(Config.getBoolean("Server.AttackDelay") == true)
         {
@@ -37,7 +38,7 @@ public class Attack
         	if(attacker.getLong("Stat.AttackTime") + 2000 >=  time)
         	{
         		if(attacker.getBoolean("Alert.AttackDelay") == true)
-	    			t.sendActionBar(player, ChatColor.GRAY+""+ChatColor.BOLD+(attacker.getLong("Stat.AttackTime")+2000 - time)/1000 + "초 후에 공격이 가능합니다!");
+        		    new PacketSender().sendActionBar(player, ChatColor.GRAY+""+ChatColor.BOLD+(attacker.getLong("Stat.AttackTime")+2000 - time)/1000 + "초 후에 공격이 가능합니다!");
 	     		return false;
         	}
         }
@@ -62,18 +63,18 @@ public class Attack
 	{
 	    YamlManager attacker;
 		YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
-		GBD.GoldBigDragon_Advanced.Config.StatConfig stat = new GBD.GoldBigDragon_Advanced.Config.StatConfig();
 
 		if(event.getEntityType() == EntityType.PLAYER)
 		{
 			Player player = (Player) event.getEntity();
-		  	if(Event_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-		  		stat.CreateNewStats(player);
-			attacker = Event_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
+		  	attacker = Event_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
+		  	if(attacker.contains("Player.Name") == false)
+		  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
 			attacker.set("Stat.BowPull", (int)(event.getForce()*100));
 			attacker.saveConfig();
 			Main.PlayerUseSpell.remove(player);
 		}
+		return;
 	}
 
 	public void AttackRouter(EntityDamageByEntityEvent event)
@@ -116,7 +117,7 @@ public class Attack
 		    	}
 			}
 		}
-		
+		return;
 	}
 	
 	public void DamageSetter(EntityDamageByEntityEvent event,String AttackType,Entity Attacker)
@@ -232,50 +233,29 @@ public class Attack
 		int DamageMinus = Defender_Stat[0]-Attacker_Stat[5]; 
 		if(DamageMinus <= 0)
 			DamageMinus = 0;
-		if(Defender_Stat[1] > 0)
-		{
-			if(Damage-DamageMinus>=10)
-			{
-				if(((Damage-DamageMinus)/100) * (100-Defender_Stat[1])  <= 0)
-				{
-					if(Attacker instanceof Player)
-					{
-						Player player = (Player)Attacker;
-						if(player.isOnline())
-							DamageCancellMessage(player, event.getEntity()); event.setDamage(0);
-					}
-					return;
-				}
-				else
-				{
-					Damage = (int)((Damage - DamageMinus)/100) * (100 - Defender_Stat[1])  ;
-					event.setDamage(Damage - DamageMinus);
-				}
-			}
-			else
-			{
-				Damage = (int)(Damage-DamageMinus-Defender_Stat[1]);
-				event.setDamage(Damage);
-			}
-		}
+		
+		Damage = Damage-DamageMinus;
+		if(Defender_Stat[1] < 0)
+			Defender_Stat[1] = 0;
+		if(Damage >= 100)
+			Damage =(int)((Damage/100)*(100-Defender_Stat[1]));
+		else if(Damage >= 10)
+			Damage =(int)((Damage/10)*((100-Defender_Stat[1])/10));
 		else
+			Damage =(int)(Damage-Defender_Stat[1]);
+		if(Damage <= 0 || (100-Defender_Stat[1])<=0/*보호가 100 이상일 경우*/)
 		{
-			Damage = (int) (Damage-DamageMinus);
-			if(Damage <= 0)
+			if(Attacker instanceof Player)
 			{
-				if(Attacker instanceof Player)
-				{
-					Player player = (Player)Attacker;
-					if(player.isOnline())
-						DamageCancellMessage(player, event.getEntity()); event.setDamage(0);
-				}
-				else
-					sound.SL(event.getEntity().getLocation(), Sound.ZOMBIE_METAL, 1.0F, 0.7F);
-				event.setCancelled(true);
-				return;
+				Player player = (Player)Attacker;
+				if(player.isOnline())
+					DamageCancellMessage(player, event.getEntity());
 			}
-			event.setDamage(Damage);
+			event.setCancelled(true);
+			return;
 		}
+		event.setDamage(Damage);
+		
 		if(AttackType == "E_E")
 		{
 			Damageable d = (Damageable) event.getEntity();
@@ -292,6 +272,7 @@ public class Attack
 			if(player.isOnline())
 				Alert(player, event.getEntity(), Damage);
 		}
+		return;
 	}
 	
 	public int[] getAttackerStats(Entity entity)
@@ -376,7 +357,7 @@ public class Attack
 	
 	public int[] getDefenderStats(Entity entity)
 	{
-		int Defender_Stat[] = new int[9];
+		int Defender_Stat[] = new int[4];
 		GBD.GoldBigDragon_Advanced.Config.StatConfig stat = new GBD.GoldBigDragon_Advanced.Config.StatConfig();
 	    YamlManager defenser;
 		YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
@@ -452,10 +433,11 @@ public class Attack
 	    PacketSender t = new PacketSender();
 	    
 		if (a == 1) t.sendActionBar(player, ChatColor.RED +""+ChatColor.BOLD+ "이 공격은 전혀 통하지 않는다!");
-		if (a == 2) t.sendActionBar(player, ChatColor.RED +""+ChatColor.BOLD+ "자세를 흐트릴 수 없다!");
-		if (a == 3) t.sendActionBar(player, ChatColor.RED +""+ChatColor.BOLD+ "충격이 분산되었다!");
-		if (a == 4) t.sendActionBar(player, ChatColor.RED +""+ChatColor.BOLD+ "이 공격으로는 쓰러뜨릴 수 없을 것 같다!");
-		if (a == 5) t.sendActionBar(player, ChatColor.RED +""+ChatColor.BOLD+ "적의 자세를 흐트릴 수 없다!");
+		else if (a == 2) t.sendActionBar(player, ChatColor.RED +""+ChatColor.BOLD+ "자세를 흐트릴 수 없다!");
+		else if (a == 3) t.sendActionBar(player, ChatColor.RED +""+ChatColor.BOLD+ "충격이 분산되었다!");
+		else if (a == 4) t.sendActionBar(player, ChatColor.RED +""+ChatColor.BOLD+ "이 공격으로는 쓰러뜨릴 수 없을 것 같다!");
+		else if (a == 5) t.sendActionBar(player, ChatColor.RED +""+ChatColor.BOLD+ "적의 자세를 흐트릴 수 없다!");
+		return;
 	}
 
 	public void Alert (Player player, Entity defenser, int Damage)
@@ -534,6 +516,6 @@ public class Attack
 				t.sendTitleSubTitle(player,Title, HealthBar, 0, 0, 1);
 			}
 		}
+		return;
 	}
-	
 }

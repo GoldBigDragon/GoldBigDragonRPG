@@ -10,9 +10,8 @@ public class StatConfig
     private YamlManager YM;
     public void CreateNewStats(Player player)
 	{
-	    YamlManager Config;
 		YamlController Config_YC = GBD.GoldBigDragon_Advanced.Main.Main.Config_YC;
-	    Config=Config_YC.getNewConfig("config.yml");
+		YamlManager Config=Config_YC.getNewConfig("config.yml");
 	  	YM = Config_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 		YamlManager NewBieYM = Config_YC.getNewConfig("ETC/NewBie.yml");
 		
