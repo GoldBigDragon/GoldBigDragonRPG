@@ -9,14 +9,13 @@ public class Map
 {
 	public void onMap(MapInitializeEvent event)
 	{
-		if(Main.Mapping == true)
+		if(Main.Mapping)
 		{
 			MapView MV = event.getMap();
 			for(MapRenderer MR : MV.getRenderers())
-			{
 				MV.removeRenderer(MR);
-			}
 			MV.addRenderer(new MapList());
+			return;
 		}
 	}
 }

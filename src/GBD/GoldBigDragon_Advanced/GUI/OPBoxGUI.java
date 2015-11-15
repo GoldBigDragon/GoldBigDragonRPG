@@ -122,12 +122,12 @@ public class OPBoxGUI extends GUIutil
 		if(Config.getBoolean("Server.EntitySpawn") == true)
 		{Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "엔티티 스폰", 52,0,1,Arrays.asList(ChatColor.GREEN+"[활성화]",ChatColor.GRAY +"해당 옵션이 비활성화 상태일 경우",ChatColor.GRAY+"더이상 엔티티들이 소환되지 않습니다."), 10, inv);}
 		else
-		{{Stack2(ChatColor.RED +""+ ChatColor.BOLD + "엔티티 스폰", 52,0,1,Arrays.asList(ChatColor.RED+"[비 활성화]",ChatColor.GRAY +"해당 옵션이 비활성화 상태일 경우",ChatColor.GRAY+"더이상 엔티티들이 소환되지 않습니다."), 10, inv);}	}
+		{{Stack2(ChatColor.RED +""+ ChatColor.BOLD + "엔티티 스폰", 166,0,1,Arrays.asList(ChatColor.RED+"[비 활성화]",ChatColor.GRAY +"해당 옵션이 비활성화 상태일 경우",ChatColor.GRAY+"더이상 엔티티들이 소환되지 않습니다."), 10, inv);}	}
 		
 		if(Config.getBoolean("Server.AttackDelay") == true)
 		{Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "공격 딜레이", 276,0,1,Arrays.asList(ChatColor.GREEN+"[활성화]",ChatColor.GRAY +"해당 옵션이 활성화 상태일 경우",ChatColor.GRAY+"공격시 딜레이가 생깁니다."), 11, inv);}
 		else
-		{{Stack2(ChatColor.RED +""+ ChatColor.BOLD + "공격 딜레이", 272,0,1,Arrays.asList(ChatColor.RED+"[비 활성화]",ChatColor.GRAY +"해당 옵션이 활성화 상태일 경우",ChatColor.GRAY+"공격시 딜레이가 생깁니다."), 11, inv);}	}
+		{{Stack2(ChatColor.RED +""+ ChatColor.BOLD + "공격 딜레이", 166,0,1,Arrays.asList(ChatColor.RED+"[비 활성화]",ChatColor.GRAY +"해당 옵션이 활성화 상태일 경우",ChatColor.GRAY+"공격시 딜레이가 생깁니다."), 11, inv);}	}
 		switch(Config.getInt("Server.MonsterSpawnEffect"))
 		{
 			case 0 : Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "몬스터 스폰 효과", 383,0,1,Arrays.asList(ChatColor.WHITE + "[없음]"), 12, inv); break;
@@ -143,7 +143,7 @@ public class OPBoxGUI extends GUIutil
 		if(Config.getBoolean("Server.CustomWeaponBreak") == true)
 		{Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "커스텀 무기 파괴", 268,50,1,Arrays.asList(ChatColor.GREEN+"[활성화]",ChatColor.GRAY +"커스텀 무기의 내구도가 0이 될 경우",ChatColor.GRAY+"일반 무기와 같이 파괴됩니다."), 13, inv);}
 		else
-		{{Stack2(ChatColor.RED +""+ ChatColor.BOLD + "커스텀 무기 파괴", 145,0,1,Arrays.asList(ChatColor.RED+"[비 활성화]",ChatColor.GRAY +"커스텀 무기는 내구도가 0이 되어도",ChatColor.GRAY+"파괴되지 않습니다."), 13, inv);}	}
+		{{Stack2(ChatColor.RED +""+ ChatColor.BOLD + "커스텀 무기 파괴", 166,0,1,Arrays.asList(ChatColor.RED+"[비 활성화]",ChatColor.GRAY +"커스텀 무기는 내구도가 0이 되어도",ChatColor.GRAY+"파괴되지 않습니다."), 13, inv);}	}
 
 		if(Config.getString("Server.JoinMessage") != null)
 			Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "입장 메시지", 386,0,1,Arrays.asList(ChatColor.GREEN+"[적용]",ChatColor.GRAY +Config.getString("Server.JoinMessage"),"",ChatColor.YELLOW+"[좌 클릭시 입장 메시지 변경]"), 14, inv);
@@ -172,6 +172,12 @@ public class OPBoxGUI extends GUIutil
 			ItemStackStack(getPlayerSkull(ChatColor.GREEN +""+ ChatColor.BOLD + "채팅 형태", 1, Arrays.asList(ChatColor.GRAY+"채팅 형태를 변경합니다.",ChatColor.GRAY+"단, 형태를 변경할 경우",ChatColor.GRAY+"모든 일반 채팅이 브로드",ChatColor.GRAY+"캐스트 형식으로 변경되므로",ChatColor.GRAY+"주의해야 합니다.","",ChatColor.DARK_AQUA+"[현재 채팅 형태]",ChatColor.WHITE+Prefix,"",ChatColor.YELLOW+"[좌 클릭시 접두사 변경]",ChatColor.RED+"[우 클릭시 접두사 제거]","",ChatColor.GREEN+"[코드 제공]",ChatColor.WHITE+""+ChatColor.BOLD+"B4TT3RY"), "B4TT3RY__"), 19, inv);
 		}
 
+		if(Config.getBoolean("Server.CustomBlockPlace") == true)
+		{Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "커스텀 블록 설치", 1,0,1,Arrays.asList(ChatColor.GREEN+"[가능]",ChatColor.GRAY +"아이템에 설명이 붙어 있거나",ChatColor.GRAY+"이름이 변경된 아이템이",ChatColor.GRAY+"설치되는 것을 막지 않습니다."), 20, inv);}
+		else
+		{{Stack2(ChatColor.RED +""+ ChatColor.BOLD + "커스텀 블록 설치", 166,0,1,Arrays.asList(ChatColor.RED+"[불가능]",ChatColor.GRAY +"아이템에 설명이 붙어 있거나",ChatColor.GRAY+"이름이 변경된 아이템이",ChatColor.GRAY+"설치되는 것을 막습니다."), 20, inv);}	}
+
+		
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
 		Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "작업 관리자 창을 닫습니다."), 53, inv);
 		
@@ -489,6 +495,13 @@ public class OPBoxGUI extends GUIutil
 				player.sendMessage(ChatColor.RED+"[SYSTEM] : 접두사를 삭제하였습니다!");
 				OPBoxGUI_Setting(player);
 			}
+			return;
+		case 20://커스텀 블록 설치/설치 금지
+			if(Config.getBoolean("Server.CustomBlockPlace") == true) {Config.set("Server.CustomBlockPlace", false);}
+			else{Config.set("Server.CustomBlockPlace", true);}
+			Config.saveConfig();
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			OPBoxGUI_Setting(player);
 			return;
 		case 45://이전 목록
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.8F);

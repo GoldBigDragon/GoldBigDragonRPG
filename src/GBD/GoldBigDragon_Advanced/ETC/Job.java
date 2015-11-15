@@ -183,14 +183,14 @@ public class Job
 				{
 					Object[] JSkillList = JobList.getConfigurationSection("Mabinogi."+CategoriList[count]).getKeys(false).toArray();
 					Object[] PlayerSkillList = PlayerList.getConfigurationSection("Mabinogi."+CategoriList[count]).getKeys(false).toArray();
-					String SkillList=" , ";
+					StringBuffer SkillList = new StringBuffer();
 					for(int a = 0; a < JSkillList.length; a++)
-						SkillList = SkillList + JSkillList[a].toString() + " , ";
+						SkillList.append(JSkillList[a].toString());
 					for(int countta = 0; countta < PlayerSkillList.length; countta++)
 					{
-						if(SkillList.contains(PlayerSkillList[countta].toString())==false)
+						if(SkillList.indexOf(PlayerSkillList[countta].toString())==-1)
 						{
-							PlayerList.removeKey("Mabinogi."+CategoriList[count]+"."+JSkillList[countta].toString());
+							PlayerList.removeKey("Mabinogi."+CategoriList[count]+"."+PlayerSkillList[countta].toString());
 						}
 					}
 				}

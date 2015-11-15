@@ -204,7 +204,6 @@ public class PlayerSkillGUI extends GUIutil
 	
 	
 	
-	
 	public void MapleStory_MainSkillsListGUIClick(InventoryClickEvent event)
 	{
 		GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();

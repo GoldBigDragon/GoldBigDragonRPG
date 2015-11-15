@@ -71,7 +71,7 @@ public class ServerTask_Area
         for(Iterator<Entity> it = entities.iterator(); it.hasNext();)
         {
         	Entity entity = it.next();
-            if(entity.getType()==EntityType.DROPPED_ITEM)
+            if(entity.getType() == EntityType.DROPPED_ITEM)
                 it.remove();
             else if(entity.getType() == EntityType.EXPERIENCE_ORB)
                 it.remove();

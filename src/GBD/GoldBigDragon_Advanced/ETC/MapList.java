@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 
 import javax.imageio.ImageIO;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapView;
 import org.bukkit.map.MapCanvas;
@@ -30,10 +31,7 @@ public class MapList extends MapRenderer
 			YamlController Config_YC = GBD.GoldBigDragon_Advanced.Main.Main.Config_YC;
 			YamlManager MapConfig=Config_YC.getNewConfig("MapImageURL.yml");
 			if(Config_YC.isExit("MapImageURL.yml") == false)
-			{
-				GBD.GoldBigDragon_Advanced.Config.configConfig c = new GBD.GoldBigDragon_Advanced.Config.configConfig();
-				c.CreateMapImageConfig(Config_YC);
-			}
+				new GBD.GoldBigDragon_Advanced.Config.configConfig().CreateMapImageConfig(Config_YC);
 			String Name = Main.UserData.get(player).getString((byte)1);
 			URL = MapConfig.getString(Name+".URL");
 			Xcenter = MapConfig.getInt(Name+".Xcenter");
@@ -46,6 +44,7 @@ public class MapList extends MapRenderer
 				try
 				{
 					MC.drawImage(Xcenter, Ycenter, ImageIO.read(new URL(URL)));
+					return;
 				}
 				catch (MalformedURLException e)
 				{

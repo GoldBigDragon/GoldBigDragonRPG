@@ -4,6 +4,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 
+import GBD.GoldBigDragon_Advanced.Util.YamlController;
+import GBD.GoldBigDragon_Advanced.Util.YamlManager;
+
 public class BlockPlace
 {
 	public void BlockPlace(BlockPlaceEvent event)
@@ -11,7 +14,10 @@ public class BlockPlace
 		Player player = event.getPlayer();
 		if(event.getItemInHand().hasItemMeta() == true && player.isOp() == false)
 		{
-			event.setCancelled(true);
+			YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
+			YamlManager Config =GUI_YC.getNewConfig("config.yml");
+			if(Config.getBoolean("Server.CustomBlockPlace") == false)
+				event.setCancelled(true);
 			return;
 		}
 		if(event.getBlock().getLocation().getWorld().getName().equalsIgnoreCase("Dungeon")==true

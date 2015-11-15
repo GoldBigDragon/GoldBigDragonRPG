@@ -1456,7 +1456,7 @@ public class PlayerAction
 			}
 			return;
 		case "SP"://SkillPoint
-			if(isIntMinMax(Message, player, 1, Integer.MAX_VALUE))
+			if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
 			{
 				SkillList.set(Main.UserData.get(player).getString((byte)2)+".SkillRank."+Main.UserData.get(player).getInt((byte)4)+".SkillPoint",Integer.parseInt(Message));
 				SkillList.saveConfig();

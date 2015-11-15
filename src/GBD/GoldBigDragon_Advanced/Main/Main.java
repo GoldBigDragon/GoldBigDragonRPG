@@ -122,41 +122,31 @@ public class Main extends JavaPlugin implements Listener
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "http://cafe.naver.com/goldbigdragon");
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "﹛﹛﹛﹛");
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "式式式式式式式式式式式式式式式式式式式式式式");
-	    GBD.GoldBigDragon_Advanced.Config.configConfig config = new GBD.GoldBigDragon_Advanced.Config.configConfig();
+
+	  	GBD.GoldBigDragon_Advanced.Config.configConfig config = new GBD.GoldBigDragon_Advanced.Config.configConfig();
 	  	config.CreateNewConfig(Main_YC);
 	  	config.CreateMapImageConfig(Main_YC);
 	  	if(Main_YC.isExit("Skill/SkillList.yml") == false)
-	  	{
-	  	    GBD.GoldBigDragon_Advanced.Config.SkillConfig skill = new GBD.GoldBigDragon_Advanced.Config.SkillConfig();
-	  	    skill.CreateNewSkillList();
-	  	}
+	  	  new GBD.GoldBigDragon_Advanced.Config.SkillConfig().CreateNewSkillList();
 	  	if(Main_YC.isExit("Skill/JobList.yml") == false)
-	  	{
-	  	    GBD.GoldBigDragon_Advanced.Config.SkillConfig skill = new GBD.GoldBigDragon_Advanced.Config.SkillConfig();
-	  	    skill.CreateNewJobList();
-	  	}
+	  		new GBD.GoldBigDragon_Advanced.Config.SkillConfig().CreateNewJobList();
 	  	if(Main_YC.isExit("ETC/NewBie.yml") == false)
-	  	{
-	  	    GBD.GoldBigDragon_Advanced.Config.NewBieConfig NewBie = new GBD.GoldBigDragon_Advanced.Config.NewBieConfig();
-	  	    NewBie.CreateNewConfig();
-	  	}
-	  	GBD.GoldBigDragon_Advanced.Config.NPCconfig NC = new GBD.GoldBigDragon_Advanced.Config.NPCconfig();
-	  	NC.NPCscriptExample();
+	  		new GBD.GoldBigDragon_Advanced.Config.NewBieConfig().CreateNewConfig();
+	  	new GBD.GoldBigDragon_Advanced.Config.NPCconfig().NPCscriptExample();
+	  	
 	  	new UserDataManager().loadCategoriFile();
 	  	new PartyDataManager().loadParty();
 	  	
 		YamlManager WorldConfig =GUI_YC.getNewConfig("WorldList.yml");
 		Object[] worldname = WorldConfig.getKeys().toArray();
 		for(int count = 0; count < WorldConfig.getKeys().size();count++)
-		{
 			if(Bukkit.getWorld(worldname[count].toString()) == null)
-			{
 				WorldCreator.name(worldname[count].toString()).createWorld();
-			}
-		}
+		
 		VersionCheck();
 		UpdateConfig();
 		NoteBlockAPICatch();
+		
 		new GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain(this);
 		new GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleManager().loadCategoriFile();
 		
@@ -487,8 +477,7 @@ public class Main extends JavaPlugin implements Listener
 	@EventHandler
 	private void Map(MapInitializeEvent event)
 	{
-		GBD.GoldBigDragon_Advanced.ETC.Map M = new GBD.GoldBigDragon_Advanced.ETC.Map();
-		M.onMap(event);
+		new GBD.GoldBigDragon_Advanced.ETC.Map().onMap(event);
 		return;
 	}
 	
