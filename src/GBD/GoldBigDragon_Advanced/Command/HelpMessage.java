@@ -31,7 +31,7 @@ public class HelpMessage
 				player.sendMessage(ChatColor.GREEN + "[추가 가능한 옵션 태그]");
 				player.sendMessage(ChatColor.AQUA + "[대미지 : <숫자> ~ <숫자>] [방어 : <숫자>] [보호 : <숫자>]\n"
 						+ "[마법 대미지 : <숫자> ~ <숫자>] [마법 방어 : <숫자>] [마법 보호 : <숫자>]\n"
-						+ "[체력 : <숫자>] [솜씨 : <숫자>] [지력 : <숫자>] [의지 : <숫자>] [행운 : <숫자>]\n"
+						+ "["+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : <숫자>] ["+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : <숫자>] ["+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : <숫자>] ["+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : <숫자>] ["+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : <숫자>]\n"
 						+ "[크리티컬 : <숫자>] [밸런스 : <숫자>] [내구도 : <숫자> / <숫자>] \n"
 						+ "[업그레이드 : <숫자> / <숫자>] [생명력 : <숫자>] [마나 : <숫자>]\n"+ChatColor.GREEN+"[아이템 타입 태그] - 퀵슬롯 등록된 스킬의 무기 제한 옵션에 관여"+ChatColor.AQUA+"\n[소비] [근접 무기] [한손 검] [양손 검] [원거리 무기] [활] [석궁] [도끼] [낫] [마법 무기] [원드] [스태프]");
 				player.sendMessage(ChatColor.YELLOW+"────────────────────────────────");

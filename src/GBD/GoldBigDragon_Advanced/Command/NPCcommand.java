@@ -68,7 +68,7 @@ public class NPCcommand extends HelpMessage
 							NPCscript.set("Shop.Buy."+directory+".item", player.getItemInHand());
 							NPCscript.set("Shop.Buy."+directory+".price", Integer.parseInt(args[1]));
 							NPCscript.saveConfig();
-							talker.sendMessage(ChatColor.GREEN +"["+ NearbyEntity.get(count).getCustomName()+"] : 보여주신 물품을 "+args[1]+"원에 사 들이겠습니다.");
+							talker.sendMessage(ChatColor.GREEN +"["+ NearbyEntity.get(count).getCustomName()+"] : 보여주신 물품을 "+args[1]+GBD.GoldBigDragon_Advanced.Main.ServerOption.Money+ChatColor.GREEN+"에 사 들이겠습니다.");
 							s.SP((Player)talker, org.bukkit.Sound.CHEST_OPEN, 2.0F, 0.8F);
 						}
 						return;

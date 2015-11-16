@@ -13,7 +13,7 @@ public class configConfig
     	if(YM.contains("Version") == false)
     	{
 		  	YM.set("Version", "Advanced");
-		  	YM.set("Update", 20151101);
+		  	YM.set("Update", 20151116);
 		  	YM.set("Server.BroadCastSecond", 30);
 		  	YM.set("Server.EntitySpawn", true);
 		  	YM.set("Server.AttackDelay", false);
@@ -27,6 +27,13 @@ public class configConfig
 		  	YM.set("Server.ChattingDistance", -1);
 		  	YM.set("Server.DefaultJob", "초보자");
 		  	YM.set("Server.CustomWeaponBreak", true);
+		  	
+		  	YM.set("Server.STR", "체력");
+		  	YM.set("Server.DEX", "솜씨");
+		  	YM.set("Server.INT", "지력");
+		  	YM.set("Server.WILL", "의지");
+		  	YM.set("Server.LUK", "행운");
+		  	YM.set("Server.MoneyName", ChatColor.GOLD+""+ChatColor.BOLD+"Gold");
 		  	
 		  	YM.set("Death.PenaltyEXP", "10%");
 		  	YM.set("Death.PenaltyMoney", "2%");

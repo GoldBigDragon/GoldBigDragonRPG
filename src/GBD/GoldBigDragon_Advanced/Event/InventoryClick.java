@@ -249,6 +249,8 @@ public class InventoryClick
 	    	OPGUI.OPBoxGUI_SettingInventoryClick(event);
 	    else if(InventoryName.contains("공지사항"))
 	    	OPGUI.OPBoxGUI_BroadCastClick(event);
+	    else if(InventoryName.contains("스텟"))
+	    	OPGUI.OPBoxGUI_StatChangeClick(event);
 	    return;
 	}
 

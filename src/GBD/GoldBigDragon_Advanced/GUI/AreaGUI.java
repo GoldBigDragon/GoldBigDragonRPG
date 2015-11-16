@@ -382,15 +382,15 @@ public class AreaGUI extends GUIutil
 				Lore = Lore+ChatColor.RED+""+ChatColor.BOLD+" 생명력 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".HP")+"%enter%";
 				Lore = Lore+ChatColor.AQUA+""+ChatColor.BOLD+" 경험치 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".EXP")+"%enter%";
 				Lore = Lore+ChatColor.YELLOW+""+ChatColor.BOLD+" 드랍 금액 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".MIN_Money")+" ~ "+MobList.getInt(MonsterName+".MAX_Money")+"%enter%";
-				Lore = Lore+ChatColor.RED+""+ChatColor.BOLD+" 체력 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".STR")
+				Lore = Lore+ChatColor.RED+""+ChatColor.BOLD+" "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".STR")
 				+ChatColor.GRAY+ " [물공 : " + d.CombatMinDamageGet(0, MobList.getInt(MonsterName+".STR")) + " ~ " + d.CombatMaxDamageGet(0, MobList.getInt(MonsterName+".STR")) + "]%enter%";
-				Lore = Lore+ChatColor.GREEN+""+ChatColor.BOLD+" 솜씨 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".DEX")
+				Lore = Lore+ChatColor.GREEN+""+ChatColor.BOLD+" "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".DEX")
 				+ChatColor.GRAY+ " [활공 : " + d.RangeMinDamageGet(0, MobList.getInt(MonsterName+".DEX")) + " ~ " + d.RangeMaxDamageGet(0, MobList.getInt(MonsterName+".DEX")) + "]%enter%";
-				Lore = Lore+ChatColor.DARK_AQUA+""+ChatColor.BOLD+" 지력 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".INT")
+				Lore = Lore+ChatColor.DARK_AQUA+""+ChatColor.BOLD+" "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".INT")
 				+ChatColor.GRAY+ " [폭공 : " + (MobList.getInt(MonsterName+".INT")/4)+ " ~ "+(int)(MobList.getInt(MonsterName+".INT")/2.5)+"]%enter%";
-				Lore = Lore+ChatColor.GRAY+""+ChatColor.BOLD+" 의지 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".WILL")
+				Lore = Lore+ChatColor.GRAY+""+ChatColor.BOLD+" "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".WILL")
 				+ChatColor.GRAY+ " [크리 : " + d.getCritical(MobList.getInt(MonsterName+".LUK"), (int)MobList.getInt(MonsterName+".WILL")) + " %]%enter%";
-				Lore = Lore+ChatColor.YELLOW+""+ChatColor.BOLD+" 행운 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".LUK")
+				Lore = Lore+ChatColor.YELLOW+""+ChatColor.BOLD+" "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".LUK")
 				+ChatColor.GRAY+ " [크리 : " + d.getCritical(MobList.getInt(MonsterName+".LUK"), (int)MobList.getInt(MonsterName+".WILL")) + " %]%enter%";
 				Lore = Lore+ChatColor.GRAY+""+ChatColor.BOLD+" 방어 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".DEF")+"%enter%";
 				Lore = Lore+ChatColor.AQUA+""+ChatColor.BOLD+" 보호 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".Protect")+"%enter%";
@@ -474,15 +474,15 @@ public class AreaGUI extends GUIutil
 			Lore = Lore+ChatColor.RED+""+ChatColor.BOLD+" 생명력 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".HP")+"%enter%";
 			Lore = Lore+ChatColor.AQUA+""+ChatColor.BOLD+" 경험치 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".EXP")+"%enter%";
 			Lore = Lore+ChatColor.YELLOW+""+ChatColor.BOLD+" 드랍 금액 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".MIN_Money")+" ~ "+MobList.getInt(MonsterName+".MAX_Money")+"%enter%";
-			Lore = Lore+ChatColor.RED+""+ChatColor.BOLD+" 체력 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".STR")
+			Lore = Lore+ChatColor.RED+""+ChatColor.BOLD+" "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".STR")
 			+ChatColor.GRAY+ " [물공 : " + d.CombatMinDamageGet(0, MobList.getInt(MonsterName+".STR")) + " ~ " + d.CombatMaxDamageGet(0, MobList.getInt(MonsterName+".STR")) + "]%enter%";
-			Lore = Lore+ChatColor.GREEN+""+ChatColor.BOLD+" 솜씨 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".DEX")
+			Lore = Lore+ChatColor.GREEN+""+ChatColor.BOLD+" "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".DEX")
 			+ChatColor.GRAY+ " [활공 : " + d.RangeMinDamageGet(0, MobList.getInt(MonsterName+".DEX")) + " ~ " + d.RangeMaxDamageGet(0, MobList.getInt(MonsterName+".DEX")) + "]%enter%";
-			Lore = Lore+ChatColor.DARK_AQUA+""+ChatColor.BOLD+" 지력 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".INT")
+			Lore = Lore+ChatColor.DARK_AQUA+""+ChatColor.BOLD+" "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".INT")
 			+ChatColor.GRAY+ " [폭공 : " + (MobList.getInt(MonsterName+".INT")/4)+ " ~ "+(int)(MobList.getInt(MonsterName+".INT")/2.5)+"]%enter%";
-			Lore = Lore+ChatColor.GRAY+""+ChatColor.BOLD+" 의지 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".WILL")
+			Lore = Lore+ChatColor.GRAY+""+ChatColor.BOLD+" "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".WILL")
 			+ChatColor.GRAY+ " [크리 : " + d.getCritical(MobList.getInt(MonsterName+".LUK"), (int)MobList.getInt(MonsterName+".WILL")) + " %]%enter%";
-			Lore = Lore+ChatColor.YELLOW+""+ChatColor.BOLD+" 행운 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".LUK")
+			Lore = Lore+ChatColor.YELLOW+""+ChatColor.BOLD+" "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".LUK")
 			+ChatColor.GRAY+ " [크리 : " + d.getCritical(MobList.getInt(MonsterName+".LUK"), (int)MobList.getInt(MonsterName+".WILL")) + " %]%enter%";
 			Lore = Lore+ChatColor.GRAY+""+ChatColor.BOLD+" 방어 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".DEF")+"%enter%";
 			Lore = Lore+ChatColor.AQUA+""+ChatColor.BOLD+" 보호 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".Protect")+"%enter%";

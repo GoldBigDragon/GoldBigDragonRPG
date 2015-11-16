@@ -177,7 +177,8 @@ public class OPBoxGUI extends GUIutil
 		else
 		{{Stack2(ChatColor.RED +""+ ChatColor.BOLD + "커스텀 블록 설치", 166,0,1,Arrays.asList(ChatColor.RED+"[불가능]",ChatColor.GRAY +"아이템에 설명이 붙어 있거나",ChatColor.GRAY+"이름이 변경된 아이템이",ChatColor.GRAY+"설치되는 것을 막습니다."), 20, inv);}	}
 
-		
+		Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "스텟 이름 변경", 323,0,1,Arrays.asList(ChatColor.GRAY + "서버의 스텟 이름을",ChatColor.GRAY+"마음대로 변경합니다.","",ChatColor.YELLOW+"[좌 클릭시 스텟 이름 변경]","",ChatColor.RED+"[       주의       ]",ChatColor.RED+"스텟 이름 변경시 이전에 뿌려진",ChatColor.RED+"커스텀 아이템의 능력치가",ChatColor.RED+"무효 처리가 되며,",ChatColor.RED+"스킬별 스텟 영향 옵션을",ChatColor.RED+"재 설정 하여야 합니다."), 21, inv);
+
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
 		Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "작업 관리자 창을 닫습니다."), 53, inv);
 		
@@ -219,6 +220,23 @@ public class OPBoxGUI extends GUIutil
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 	}
+	
+	public void OPBoxGUI_StatChange(Player player)
+	{
+		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "관리자 스텟 설정");
+
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "체력", 267,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR), 0, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "솜씨", 261,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX), 1, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "지력", 369,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT), 2, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "의지", 370,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL), 3, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "행운", 322,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK), 4, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "화폐", 266,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GBD.GoldBigDragon_Advanced.Main.ServerOption.Money), 6, inv);
+		
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 53, inv);
+		player.openInventory(inv);
+	}
+	
 	
 	//각종 GUI창 속의 아이콘을 눌렸을 때, 해당 아이콘에 기능을 넣는 메소드1   -스텟 GUI, 오피박스, 커스텀 몬스터GUI-//
 	public void OPBoxGUIInventoryclick(InventoryClickEvent event)
@@ -503,6 +521,12 @@ public class OPBoxGUI extends GUIutil
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
 			OPBoxGUI_Setting(player);
 			return;
+		case 21: //스텟 이름 변경
+			{
+				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+				OPBoxGUI_StatChange(player);
+			}
+			return;
 		case 45://이전 목록
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.8F);
 			OPBoxGUI_Main(player, 1);
@@ -520,7 +544,7 @@ public class OPBoxGUI extends GUIutil
 	{
 		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "관리자 가이드");
 		
-		Stack2(ChatColor.YELLOW +""+ ChatColor.BOLD + "스텟 시스템", 340,0,1,Arrays.asList(ChatColor.GRAY+ "플러그인에는 5가지 스텟이 있습니다.",ChatColor.RED +"[체력]",ChatColor.GRAY+"체력은 플레이어의",ChatColor.GRAY+"물리적 데미지에 관여합니다.",ChatColor.GREEN +  "[솜씨]",ChatColor.GRAY+"솜씨는 플레이어의 밸런스 및",ChatColor.GRAY+"생산 성공률과 생산 품질,",ChatColor.GRAY+"원거리 데미지에 관여합니다.",ChatColor.BLUE+"[지력]",ChatColor.GRAY+"지력은 마법방어 및 마법보호,",ChatColor.GRAY+"마법 공격력에 관여합니다.",ChatColor.WHITE+"[의지]",ChatColor.GRAY + "의지는 플레이어의",ChatColor.GRAY + "크리티컬에 관여합니다.",ChatColor.YELLOW + "[행운]",ChatColor.GRAY + "행운은 크리티컬 및",ChatColor.GRAY +"럭키 피니시, 럭키 보너스 등",ChatColor.GRAY +"각종 '확률'에 관여합니다."), 0,inv);
+		Stack2(ChatColor.YELLOW +""+ ChatColor.BOLD + "스텟 시스템", 340,0,1,Arrays.asList(ChatColor.GRAY+ "플러그인에는 5가지 스텟이 있습니다.",ChatColor.RED +"["+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+"]",ChatColor.GRAY+""+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+"은 플레이어의",ChatColor.GRAY+"물리적 데미지에 관여합니다.",ChatColor.GREEN +  "["+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+"]",ChatColor.GRAY+""+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+"는 플레이어의 밸런스 및",ChatColor.GRAY+"생산 성공률과 생산 품질,",ChatColor.GRAY+"원거리 데미지에 관여합니다.",ChatColor.BLUE+"["+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+"]",ChatColor.GRAY+""+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+"은 마법방어 및 마법보호,",ChatColor.GRAY+"마법 공격력에 관여합니다.",ChatColor.WHITE+"["+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+"]",ChatColor.GRAY + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+"는 플레이어의",ChatColor.GRAY + "크리티컬에 관여합니다.",ChatColor.YELLOW + "["+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+"]",ChatColor.GRAY + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+"은 크리티컬 및",ChatColor.GRAY +"럭키 피니시, 럭키 보너스 등",ChatColor.GRAY +"각종 '확률'에 관여합니다."), 0,inv);
 		Stack2(ChatColor.YELLOW +""+ ChatColor.BOLD + "럭키 피니시", 340,0,1,Arrays.asList(ChatColor.GRAY+ "몬스터를 사냥하였을 경우",ChatColor.GRAY+"일정 확률로 돈이 더 나오게 됩니다."), 1,inv);
 		Stack2(ChatColor.YELLOW +""+ ChatColor.BOLD + "럭키 보너스", 340,0,1,Arrays.asList(ChatColor.GRAY+ "채집을 할 경우 일정 확률로",ChatColor.GRAY+"채집 품목이 더 나오게 됩니다."), 2,inv);
 		Stack2(ChatColor.YELLOW +""+ ChatColor.BOLD + "커스텀 아이템 [1]", 340,0,1,Arrays.asList(ChatColor.GRAY+ "각종 커스텀 아이템을",ChatColor.GRAY+"생성하거나 등록하여",ChatColor.GRAY+"언제든 불러올 수 있습니다.","",ChatColor.GOLD+"[명령어]",ChatColor.YELLOW+"/아이템"), 3,inv);
@@ -593,8 +617,7 @@ public class OPBoxGUI extends GUIutil
 		{
 		case 45://이전 목록
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI OGUI = new OPBoxGUI();
-			OGUI.OPBoxGUI_Setting(player);
+			OPBoxGUI_Setting(player);
 			return;
 		case 53://나가기
 			s.SP(player, Sound.PISTON_RETRACT, 0.8F, 1.8F);
@@ -644,6 +667,41 @@ public class OPBoxGUI extends GUIutil
 				BroadCast.saveConfig();
 				OPBoxGUI_BroadCast(player, page);
 			}
+			return;
+		}
+	}
+
+	public void OPBoxGUI_StatChangeClick(InventoryClickEvent event)
+	{
+		GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
+		event.setCancelled(true);
+		Player player = (Player) event.getWhoClicked();
+
+		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
+		YamlManager Config =GUI_YC.getNewConfig("config.yml");
+		switch (event.getSlot())
+		{
+		case 45://이전 목록
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			OPBoxGUI_Setting(player);
+			return;
+		case 53://나가기
+			s.SP(player, Sound.PISTON_RETRACT, 0.8F, 1.8F);
+			player.closeInventory();
+			return;
+		default:
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			player.closeInventory();
+			player.sendMessage(ChatColor.DARK_AQUA+"[System] : 새로운 "+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())+" 스텟 이름을 입력 해 주세요!");
+			player.sendMessage(ChatColor.GRAY+"(띄워 쓰기 및 기호 사용 불가)");
+			player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
+			ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
+					ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
+			ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
+					ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
+			Main.UserData.get(player).setType("System");
+			Main.UserData.get(player).setString((byte)1, "CSN");
+			Main.UserData.get(player).setString((byte)2, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 			return;
 		}
 	}

@@ -566,11 +566,11 @@ public class QuestGUI extends GUIutil
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "레벨 제한", 384,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한 레벨을 설정합니다.",ChatColor.GOLD+"마비노기"+ChatColor.WHITE+" 시스템일 경우 "+ChatColor.YELLOW+"누적레벨"+ChatColor.WHITE+" 기준이며,",ChatColor.RED+"메이플스토리"+ChatColor.WHITE+" 시스템일 경우 "+ChatColor.YELLOW+"레벨"+ChatColor.WHITE+" 기준입니다.","",ChatColor.AQUA + "[필요 레벨 : " + QuestList.getInt(QuestName+".Need.LV")+"]"), 11, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "NPC 호감도 제한", 38,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+"NPC와의 호감도를 설정합니다.","",ChatColor.AQUA + "[필요 호감도 : " + QuestList.getInt(QuestName+".Need.Love")+"]"), 13, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "스킬 랭크 제한", 403,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+"스킬 랭크를 설정합니다.",""/*,ChatColor.AQUA + "[필요 스킬 : " + QuestList.getString(QuestName+".Need.Skill.Name")+"]",ChatColor.AQUA+"[필요 랭크 : " + QuestList.getInt(QuestName+".Need.Skill.Rank")+"]"*/), 15, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "체력 제한", 267,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+"체력 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 체력 : " + QuestList.getInt(QuestName+".Need.STR")+"]"), 20, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "솜씨 제한", 261,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+"솜씨 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 솜씨 : " + QuestList.getInt(QuestName+".Need.DEX")+"]"), 21, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "지력 제한", 369,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+"지력 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 지력 : " + QuestList.getInt(QuestName+".Need.INT")+"]"), 22, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "의지 제한", 370,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+"의지 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 의지 : " + QuestList.getInt(QuestName+".Need.WILL")+"]"), 23, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "행운 제한", 322,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+"행운 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 행운 : " + QuestList.getInt(QuestName+".Need.LUK")+"]"), 24, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" 제한", 267,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+""+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : " + QuestList.getInt(QuestName+".Need.STR")+"]"), 20, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" 제한", 261,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+""+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : " + QuestList.getInt(QuestName+".Need.DEX")+"]"), 21, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" 제한", 369,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+""+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : " + QuestList.getInt(QuestName+".Need.INT")+"]"), 22, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" 제한", 370,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+""+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : " + QuestList.getInt(QuestName+".Need.WILL")+"]"), 23, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" 제한", 322,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+""+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : " + QuestList.getInt(QuestName+".Need.LUK")+"]"), 24, inv);
 		if(QuestList.getString(QuestName+".Need.PrevQuest").equalsIgnoreCase("null") == true)
 			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "필수 완료 퀘스트", 386,0,1,Arrays.asList(ChatColor.WHITE+"이전 퀘스트를 수행한 뒤",ChatColor.WHITE+"현재 퀘스트를 수행 하도록 합니다.","",ChatColor.AQUA + "[이전 퀘스트 : 없음]"),29, inv);
 		else
@@ -1496,45 +1496,45 @@ public class QuestGUI extends GUIutil
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.8F);
 			//스킬 선택 및 스킬 랭크 입력하기
 			return;
-		case 20://체력 제한
+		case 20://"+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" 제한
 			s.SP(player, Sound.PISTON_RETRACT, 0.8F, 1.8F);
 			Main.UserData.get(player).setType("Quest");
 			Main.UserData.get(player).setString((byte)1,"STR District");
 			Main.UserData.get(player).setString((byte)2,QuestName);
 			player.closeInventory();
-			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 체력이 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+"이 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
 			return;
-		case 21://솜씨 제한
+		case 21://"+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" 제한
 			s.SP(player, Sound.PISTON_RETRACT, 0.8F, 1.8F);
 			Main.UserData.get(player).setType("Quest");
 			Main.UserData.get(player).setString((byte)1,"DEX District");
 			Main.UserData.get(player).setString((byte)2,QuestName);
 			player.closeInventory();
-			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 솜씨가 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+"가 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
 			return;
-		case 22://지력 제한
+		case 22://"+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" 제한
 			s.SP(player, Sound.PISTON_RETRACT, 0.8F, 1.8F);
 			Main.UserData.get(player).setType("Quest");
 			Main.UserData.get(player).setString((byte)1,"INT District");
 			Main.UserData.get(player).setString((byte)2,QuestName);
 			player.closeInventory();
-			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 지력이 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+"이 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
 			return;
-		case 23://의지 제한
+		case 23://"+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" 제한
 			s.SP(player, Sound.PISTON_RETRACT, 0.8F, 1.8F);
 			Main.UserData.get(player).setType("Quest");
 			Main.UserData.get(player).setString((byte)1,"WILL District");
 			Main.UserData.get(player).setString((byte)2,QuestName);
 			player.closeInventory();
-			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 의지가 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+"가 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
 			return;
-		case 24://행운 제한
+		case 24://"+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" 제한
 			s.SP(player, Sound.PISTON_RETRACT, 0.8F, 1.8F);
 			Main.UserData.get(player).setType("Quest");
 			Main.UserData.get(player).setString((byte)1,"LUK District");
 			Main.UserData.get(player).setString((byte)2,QuestName);
 			player.closeInventory();
-			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 행운이 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+"이 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
 			return;
 		case 29://필수 완료 퀘스트
 			if(event.isLeftClick() == true && event.isShiftClick() == false)

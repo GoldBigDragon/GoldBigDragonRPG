@@ -64,10 +64,12 @@ public class NewBieConfig
 	  	YM.set("SupportMoney", 1000);
 	  	YM.set("FirstQuest", "null");
 
+	  	GBD.GoldBigDragon_Advanced.Main.ServerOption SO = new GBD.GoldBigDragon_Advanced.Main.ServerOption();
+	  	
 	  	Icon = new MaterialData(340, (byte) 0).toItemStack(1);
 	  	Icon_Meta = Icon.getItemMeta();
 	  	Icon_Meta.setDisplayName(ChatColor.YELLOW +""+ ChatColor.BOLD + "스텟 시스템");
-	  	Icon_Meta.setLore(Arrays.asList(ChatColor.GRAY+ "플러그인에는 5가지 스텟이 있습니다.",ChatColor.RED +"[체력]",ChatColor.GRAY+"체력은 플레이어의",ChatColor.GRAY+"물리적 데미지에 관여합니다.",ChatColor.GREEN +  "[솜씨]",ChatColor.GRAY+"솜씨는 플레이어의 밸런스 및",ChatColor.GRAY+"생산 성공률과 생산 품질,",ChatColor.GRAY+"원거리 데미지에 관여합니다.",ChatColor.BLUE+"[지력]",ChatColor.GRAY+"지력은 마법방어 및 마법보호,",ChatColor.GRAY+"마법 공격력에 관여합니다.",ChatColor.WHITE+"[의지]",ChatColor.GRAY + "의지는 플레이어의",ChatColor.GRAY + "크리티컬에 관여합니다.",ChatColor.YELLOW + "[행운]",ChatColor.GRAY + "행운은 크리티컬 및",ChatColor.GRAY +"럭키 피니시, 럭키 보너스 등",ChatColor.GRAY +"각종 '확률'에 관여합니다."));
+	  	Icon_Meta.setLore(Arrays.asList(ChatColor.GRAY+ "플러그인에는 5가지 스텟이 있습니다.",ChatColor.RED +"["+SO.STR+"]",ChatColor.GRAY+""+SO.STR+"은 플레이어의",ChatColor.GRAY+"물리적 데미지에 관여합니다.",ChatColor.GREEN +  "["+SO.DEX+"]",ChatColor.GRAY+""+SO.DEX+"는 플레이어의 밸런스 및",ChatColor.GRAY+"생산 성공률과 생산 품질,",ChatColor.GRAY+"원거리 데미지에 관여합니다.",ChatColor.BLUE+"["+SO.INT+"]",ChatColor.GRAY+""+SO.INT+"은 마법방어 및 마법보호,",ChatColor.GRAY+"마법 공격력에 관여합니다.",ChatColor.WHITE+"["+SO.WILL+"]",ChatColor.GRAY + ""+SO.WILL+"는 플레이어의",ChatColor.GRAY + "크리티컬에 관여합니다.",ChatColor.YELLOW + "["+SO.LUK+"]",ChatColor.GRAY + ""+SO.LUK+"은 크리티컬 및",ChatColor.GRAY +"럭키 피니시, 럭키 보너스 등",ChatColor.GRAY +"각종 '확률'에 관여합니다."));
 	  	Icon.setItemMeta(Icon_Meta);
 	  	YM.set("Guide.0", Icon);
 

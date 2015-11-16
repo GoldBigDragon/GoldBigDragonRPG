@@ -149,7 +149,7 @@ public class Main extends JavaPlugin implements Listener
 		
 		new GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain(this);
 		new GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleManager().loadCategoriFile();
-		
+		new GBD.GoldBigDragon_Advanced.Main.ServerOption().Initialize();
 	  	return;
 	}
 	public void onDisable()
@@ -914,7 +914,7 @@ public class Main extends JavaPlugin implements Listener
 		  		case "돈":
 				 	s.SP((Player)talker, org.bukkit.Sound.LAVA_POP, 0.8F, 1.8F);
 				 	YamlManager YM = Main_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
-				 	player.sendMessage(ChatColor.YELLOW + "[현재 소지 금액] " + ChatColor.YELLOW+ChatColor.BOLD +"" +YM.getInt("Stat.Money") + ""+ ChatColor.YELLOW+ " Gold");
+				 	player.sendMessage(ChatColor.YELLOW + "[현재 소지 금액] " + ChatColor.YELLOW+ChatColor.BOLD +"" +YM.getInt("Stat.Money") + " "+ServerOption.Money);
 					return true;
 		  		case "스텟":
 		  			GBD.GoldBigDragon_Advanced.GUI.StatsGUI sgui = new GBD.GoldBigDragon_Advanced.GUI.StatsGUI();

@@ -158,25 +158,25 @@ public class NPC_GUI extends GUIutil
 						else
 							lore = lore + ChatColor.AQUA+"필요 레벨 : "+NeedLV+"%enter%";
 						if(PStats.getInt("Stat.STR")<NeedSTR)
-							lore = lore + ChatColor.RED+"필요 체력 : "+NeedSTR+"%enter%";
+							lore = lore + ChatColor.RED+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : "+NeedSTR+"%enter%";
 						else
-							lore = lore + ChatColor.AQUA+"필요 체력 : "+NeedSTR+"%enter%";
+							lore = lore + ChatColor.AQUA+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : "+NeedSTR+"%enter%";
 						if(PStats.getInt("Stat.DEX")<NeedDEX)
-							lore = lore + ChatColor.RED+"필요 솜씨 : "+NeedDEX+"%enter%";
+							lore = lore + ChatColor.RED+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : "+NeedDEX+"%enter%";
 						else
-							lore = lore + ChatColor.AQUA+"필요 솜씨 : "+NeedDEX+"%enter%";
+							lore = lore + ChatColor.AQUA+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : "+NeedDEX+"%enter%";
 						if(PStats.getInt("Stat.INT")<NeedINT)
-							lore = lore + ChatColor.RED+"필요 지력 : "+NeedINT+"%enter%";
+							lore = lore + ChatColor.RED+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : "+NeedINT+"%enter%";
 						else
-							lore = lore + ChatColor.AQUA+"필요 지력 : "+NeedINT+"%enter%";
+							lore = lore + ChatColor.AQUA+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : "+NeedINT+"%enter%";
 						if(PStats.getInt("Stat.WILL")<NeedWILL)
-							lore = lore + ChatColor.RED+"필요 의지 : "+NeedWILL+"%enter%";
+							lore = lore + ChatColor.RED+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : "+NeedWILL+"%enter%";
 						else
-							lore = lore + ChatColor.AQUA+"필요 의지 : "+NeedWILL+"%enter%";
+							lore = lore + ChatColor.AQUA+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : "+NeedWILL+"%enter%";
 						if(PStats.getInt("Stat.LUK")<NeedLUK)
-							lore = lore + ChatColor.RED+"필요 행운 : "+NeedLUK+"%enter%";
+							lore = lore + ChatColor.RED+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : "+NeedLUK+"%enter%";
 						else
-							lore = lore + ChatColor.AQUA+"필요 행운 : "+NeedLUK+"%enter%";
+							lore = lore + ChatColor.AQUA+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : "+NeedLUK+"%enter%";
 						if(PrevJob.equalsIgnoreCase("null")==false)
 						{
 							if(PlayerJob.getString("Job.Type").equalsIgnoreCase(PrevJob)==false)
@@ -252,25 +252,25 @@ public class NPC_GUI extends GUIutil
 							else
 								lore = lore + ChatColor.AQUA+"필요 레벨 : "+NeedLV+"%enter%";
 							if(PStats.getInt("Stat.STR")<NeedSTR)
-								lore = lore + ChatColor.RED+"필요 체력 : "+NeedSTR+"%enter%";
+								lore = lore + ChatColor.RED+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : "+NeedSTR+"%enter%";
 							else
-								lore = lore + ChatColor.AQUA+"필요 체력 : "+NeedSTR+"%enter%";
+								lore = lore + ChatColor.AQUA+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : "+NeedSTR+"%enter%";
 							if(PStats.getInt("Stat.DEX")<NeedDEX)
-								lore = lore + ChatColor.RED+"필요 솜씨 : "+NeedDEX+"%enter%";
+								lore = lore + ChatColor.RED+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : "+NeedDEX+"%enter%";
 							else
-								lore = lore + ChatColor.AQUA+"필요 솜씨 : "+NeedDEX+"%enter%";
+								lore = lore + ChatColor.AQUA+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : "+NeedDEX+"%enter%";
 							if(PStats.getInt("Stat.INT")<NeedINT)
-								lore = lore + ChatColor.RED+"필요 지력 : "+NeedINT+"%enter%";
+								lore = lore + ChatColor.RED+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : "+NeedINT+"%enter%";
 							else
-								lore = lore + ChatColor.AQUA+"필요 지력 : "+NeedINT+"%enter%";
+								lore = lore + ChatColor.AQUA+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : "+NeedINT+"%enter%";
 							if(PStats.getInt("Stat.WILL")<NeedWILL)
-								lore = lore + ChatColor.RED+"필요 의지 : "+NeedWILL+"%enter%";
+								lore = lore + ChatColor.RED+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : "+NeedWILL+"%enter%";
 							else
-								lore = lore + ChatColor.AQUA+"필요 의지 : "+NeedWILL+"%enter%";
+								lore = lore + ChatColor.AQUA+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : "+NeedWILL+"%enter%";
 							if(PStats.getInt("Stat.LUK")<NeedLUK)
-								lore = lore + ChatColor.RED+"필요 행운 : "+NeedLUK+"%enter%";
+								lore = lore + ChatColor.RED+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : "+NeedLUK+"%enter%";
 							else
-								lore = lore + ChatColor.AQUA+"필요 행운 : "+NeedLUK+"%enter%";
+								lore = lore + ChatColor.AQUA+"필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : "+NeedLUK+"%enter%";
 
 							if(PrevJob.equalsIgnoreCase("null")==false)
 							{
@@ -383,14 +383,14 @@ public class NPC_GUI extends GUIutil
 						if(isEditMode == false)
 						{
 							if(price >= YM.getInt("Stat.Money"))
-								lore[lore.length-2] = ChatColor.RED+"[가격 : " + price + " Gold]";
+								lore[lore.length-2] = ChatColor.RED+"[가격 : " + price + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]";
 							else
-								lore[lore.length-2] = ChatColor.AQUA+"[가격 : " + price + " Gold]";
-							lore[lore.length-1] = ChatColor.WHITE+"[소지금 : " + YM.getLong("Stat.Money") + " Gold]";
+								lore[lore.length-2] = ChatColor.AQUA+"[가격 : " + price + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]";
+							lore[lore.length-1] = ChatColor.WHITE+"[소지금 : " + YM.getLong("Stat.Money") + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]";
 						}
 						else
 						{
-							lore[lore.length-2] = ChatColor.WHITE+"[가격 : " + price + " Gold]";
+							lore[lore.length-2] = ChatColor.WHITE+"[가격 : " + price + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]";
 							lore[lore.length-1] = ChatColor.BLACK +""+ count;
 						}
 						IM.setLore(Arrays.asList(lore));
@@ -402,14 +402,14 @@ public class NPC_GUI extends GUIutil
 						if(isEditMode == false)
 						{
 							if(price >= YM.getInt("Stat.Money"))
-								lore[1] = ChatColor.RED+"[가격 : " + price + " Gold]";
+								lore[1] = ChatColor.RED+"[가격 : " + price + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]";
 							else
-								lore[1] = ChatColor.AQUA+"[가격 : " + price + " Gold]";
-							lore[2] = ChatColor.WHITE+"[소지금 : " + YM.getLong("Stat.Money") + " Gold]";
+								lore[1] = ChatColor.AQUA+"[가격 : " + price + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]";
+							lore[2] = ChatColor.WHITE+"[소지금 : " + YM.getLong("Stat.Money") + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]";
 						}
 						else
 						{
-							lore[1] = ChatColor.WHITE+"[가격 : " + price + " Gold]";
+							lore[1] = ChatColor.WHITE+"[가격 : " + price + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]";
 							lore[2] = ChatColor.BLACK +""+ count;
 						}
 						IM.setLore(Arrays.asList(lore));
@@ -421,18 +421,18 @@ public class NPC_GUI extends GUIutil
 					{
 						if(price >= YM.getInt("Stat.Money"))
 						{
-							List<String> l = Arrays.asList("",ChatColor.RED+"[가격 : " + price + " Gold]",ChatColor.WHITE + "[소지금 : " + YM.getLong("Stat.Money") + " Gold]");
+							List<String> l = Arrays.asList("",ChatColor.RED+"[가격 : " + price + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]",ChatColor.WHITE + "[소지금 : " + YM.getLong("Stat.Money") + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]");
 							IM.setLore(l);
 						}
 						else
 						{
-							List<String> l = Arrays.asList("",ChatColor.AQUA+"[가격 : " + price + " Gold]",ChatColor.WHITE + "[소지금 : " + YM.getLong("Stat.Money") + " Gold]");
+							List<String> l = Arrays.asList("",ChatColor.AQUA+"[가격 : " + price + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]",ChatColor.WHITE + "[소지금 : " + YM.getLong("Stat.Money") + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]");
 							IM.setLore(l);
 						}
 					}
 					else
 					{
-						List<String> l = Arrays.asList("",ChatColor.WHITE+"[가격 : " + price + " Gold]",ChatColor.BLACK +""+ count);
+						List<String> l = Arrays.asList("",ChatColor.WHITE+"[가격 : " + price + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]",ChatColor.BLACK +""+ count);
 						IM.setLore(l);
 					}
 				}
@@ -504,12 +504,12 @@ public class NPC_GUI extends GUIutil
 
 						if(isEditMode == false)
 						{
-							lore[lore.length-2] = ChatColor.AQUA+"[가격 : " + price + " Gold]";
-							lore[lore.length-1] = ChatColor.WHITE+"[소지금 : " + YM.getLong("Stat.Money") + " Gold]";
+							lore[lore.length-2] = ChatColor.AQUA+"[가격 : " + price + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]";
+							lore[lore.length-1] = ChatColor.WHITE+"[소지금 : " + YM.getLong("Stat.Money") + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]";
 						}
 						else
 						{
-							lore[lore.length-2] = ChatColor.WHITE+"[가격 : " + price + " Gold]";
+							lore[lore.length-2] = ChatColor.WHITE+"[가격 : " + price + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]";
 							lore[lore.length-1] = ChatColor.BLACK +""+ count;
 						}
 						IM.setLore(Arrays.asList(lore));
@@ -521,12 +521,12 @@ public class NPC_GUI extends GUIutil
 						
 						if(isEditMode == false)
 						{
-							lore[1] = ChatColor.AQUA+"[가격 : " + price + " Gold]";
-							lore[2] = ChatColor.WHITE+"[소지금 : " + YM.getLong("Stat.Money") + " Gold]";
+							lore[1] = ChatColor.AQUA+"[가격 : " + price + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]";
+							lore[2] = ChatColor.WHITE+"[소지금 : " + YM.getLong("Stat.Money") + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]";
 						}
 						else
 						{
-							lore[1] = ChatColor.WHITE+"[가격 : " + price + " Gold]";
+							lore[1] = ChatColor.WHITE+"[가격 : " + price + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]";
 							lore[2] = ChatColor.BLACK +""+ count;
 						}
 						IM.setLore(Arrays.asList(lore));
@@ -536,9 +536,9 @@ public class NPC_GUI extends GUIutil
 				{
 					List<String> l =null;
 					if(isEditMode == false)
-						l = Arrays.asList("",ChatColor.AQUA+"[가격 : " + price + " Gold]",ChatColor.WHITE + "[소지금 : " + YM.getLong("Stat.Money") + " Gold]");
+						l = Arrays.asList("",ChatColor.AQUA+"[가격 : " + price + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]",ChatColor.WHITE + "[소지금 : " + YM.getLong("Stat.Money") + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]");
 					else
-						l = Arrays.asList("",ChatColor.WHITE+"[가격 : " + price + " Gold]",ChatColor.BLACK +""+ count);
+						l = Arrays.asList("",ChatColor.WHITE+"[가격 : " + price + " "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money)+"]",ChatColor.BLACK +""+ count);
 					IM.setLore(l);
 				}
 				item.setItemMeta(IM);
@@ -634,27 +634,27 @@ public class NPC_GUI extends GUIutil
 			}
 			if(QuestList.getInt(QuestName + ".Need.STR")!=0)
 			{
-				Temp[lorecount] = ChatColor.RED + "체력 제한 : " + QuestList.getInt(QuestName + ".Need.STR") + " 이상";
+				Temp[lorecount] = ChatColor.RED + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" 제한 : " + QuestList.getInt(QuestName + ".Need.STR") + " 이상";
 				lorecount = lorecount+1;
 			}
 			if(QuestList.getInt(QuestName + ".Need.DEX")!=0)
 			{
-				Temp[lorecount] = ChatColor.RED + "솜씨 제한 : " + QuestList.getInt(QuestName + ".Need.DEX") + " 이상";
+				Temp[lorecount] = ChatColor.RED + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" 제한 : " + QuestList.getInt(QuestName + ".Need.DEX") + " 이상";
 				lorecount = lorecount+1;
 			}
 			if(QuestList.getInt(QuestName + ".Need.INT")!=0)
 			{
-				Temp[lorecount] = ChatColor.RED + "지력 제한 : " + QuestList.getInt(QuestName + ".Need.INT") + " 이상";
+				Temp[lorecount] = ChatColor.RED + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" 제한 : " + QuestList.getInt(QuestName + ".Need.INT") + " 이상";
 				lorecount = lorecount+1;
 			}
 			if(QuestList.getInt(QuestName + ".Need.WILL")!=0)
 			{
-				Temp[lorecount] = ChatColor.RED + "의지 제한 : " + QuestList.getInt(QuestName + ".Need.WILL") + " 이상";
+				Temp[lorecount] = ChatColor.RED + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" 제한 : " + QuestList.getInt(QuestName + ".Need.WILL") + " 이상";
 				lorecount = lorecount+1;
 			}
 			if(QuestList.getInt(QuestName + ".Need.LUK")!=0)
 			{
-				Temp[lorecount] = ChatColor.RED + "행운 제한 : " + QuestList.getInt(QuestName + ".Need.LUK" )+ " 이상";
+				Temp[lorecount] = ChatColor.RED + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" 제한 : " + QuestList.getInt(QuestName + ".Need.LUK" )+ " 이상";
 				lorecount = lorecount+1;
 			}
 			if(QuestList.getInt(QuestName + ".Server.Limit")==-1)
@@ -847,41 +847,41 @@ public class NPC_GUI extends GUIutil
 					if(QuestList.getInt(QuestName + ".Need.STR")!=0)
 					{
 						if(YM.getInt("Stat.STR") >= QuestList.getInt(QuestName + ".Need.STR"))
-							Temp[lorecount] = ChatColor.GREEN + "체력 제한 : " + QuestList.getInt(QuestName + ".Need.STR") + " 이상";
+							Temp[lorecount] = ChatColor.GREEN + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" 제한 : " + QuestList.getInt(QuestName + ".Need.STR") + " 이상";
 						else
-							Temp[lorecount] = ChatColor.RED + "체력 제한 : " + QuestList.getInt(QuestName + ".Need.STR") + " 이상";
+							Temp[lorecount] = ChatColor.RED + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" 제한 : " + QuestList.getInt(QuestName + ".Need.STR") + " 이상";
 						lorecount = lorecount+1;
 					}
 					if(QuestList.getInt(QuestName + ".Need.DEX")!=0)
 					{
 						if(YM.getInt("Stat.DEX") >= QuestList.getInt(QuestName + ".Need.DEX"))
-							Temp[lorecount] = ChatColor.GREEN + "솜씨 제한 : " + QuestList.getInt(QuestName + ".Need.DEX") + " 이상";
+							Temp[lorecount] = ChatColor.GREEN + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" 제한 : " + QuestList.getInt(QuestName + ".Need.DEX") + " 이상";
 						else
-							Temp[lorecount] = ChatColor.RED + "솜씨 제한 : " + QuestList.getInt(QuestName + ".Need.DEX") + " 이상";
+							Temp[lorecount] = ChatColor.RED + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" 제한 : " + QuestList.getInt(QuestName + ".Need.DEX") + " 이상";
 						lorecount = lorecount+1;
 					}
 					if(QuestList.getInt(QuestName + ".Need.INT")!=0)
 					{
 						if(YM.getInt("Stat.INT") >= QuestList.getInt(QuestName + ".Need.INT"))
-							Temp[lorecount] = ChatColor.GREEN + "지력 제한 : " + QuestList.getInt(QuestName + ".Need.INT") + " 이상";
+							Temp[lorecount] = ChatColor.GREEN + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" 제한 : " + QuestList.getInt(QuestName + ".Need.INT") + " 이상";
 						else
-							Temp[lorecount] = ChatColor.RED + "지력 제한 : " + QuestList.getInt(QuestName + ".Need.INT") + " 이상";
+							Temp[lorecount] = ChatColor.RED + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" 제한 : " + QuestList.getInt(QuestName + ".Need.INT") + " 이상";
 						lorecount = lorecount+1;
 					}
 					if(QuestList.getInt(QuestName + ".Need.WILL")!=0)
 					{
 						if(YM.getInt("Stat.WILL") >= QuestList.getInt(QuestName + ".Need.WILL"))
-							Temp[lorecount] = ChatColor.GREEN + "의지 제한 : " + QuestList.getInt(QuestName + ".Need.WILL") + " 이상";
+							Temp[lorecount] = ChatColor.GREEN + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" 제한 : " + QuestList.getInt(QuestName + ".Need.WILL") + " 이상";
 						else
-							Temp[lorecount] = ChatColor.RED + "의지 제한 : " + QuestList.getInt(QuestName + ".Need.WILL") + " 이상";
+							Temp[lorecount] = ChatColor.RED + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" 제한 : " + QuestList.getInt(QuestName + ".Need.WILL") + " 이상";
 						lorecount = lorecount+1;
 					}
 					if(QuestList.getInt(QuestName + ".Need.LUK")!=0)
 					{
 						if(YM.getInt("Stat.LUK") >= QuestList.getInt(QuestName + ".Need.LUK"))
-							Temp[lorecount] = ChatColor.GREEN + "행운 제한 : " + QuestList.getInt(QuestName + ".Need.LUK" )+ " 이상";
+							Temp[lorecount] = ChatColor.GREEN + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" 제한 : " + QuestList.getInt(QuestName + ".Need.LUK" )+ " 이상";
 						else
-							Temp[lorecount] = ChatColor.RED + "행운 제한 : " + QuestList.getInt(QuestName + ".Need.LUK" )+ " 이상";
+							Temp[lorecount] = ChatColor.RED + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" 제한 : " + QuestList.getInt(QuestName + ".Need.LUK" )+ " 이상";
 						lorecount = lorecount+1;
 					}
 					if(QuestList.getInt(QuestName + ".Server.Limit")!=0)
@@ -2200,7 +2200,7 @@ public class NPC_GUI extends GUIutil
 												break;
 											case 6:
 												s.SP(player,Sound.ANVIL_LAND, 1.0F, 1.8F);
-												player.sendMessage(ChatColor.WHITE+""+ChatColor.BOLD+"[單刀直入] 흔들리지 않는 신념은 적의 살을 베어내고, 철근같은 의지는 적의 뼈를 바스러 뜨리리...");
+												player.sendMessage(ChatColor.WHITE+""+ChatColor.BOLD+"[單刀直入] 흔들리지 않는 신념은 적의 살을 베어내고, 철근같은 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+"는 적의 뼈를 바스러 뜨리리...");
 												P.givePotionEffect(player,PotionEffectType.INCREASE_DAMAGE, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")));
 												break;
 											case 7:
@@ -2521,7 +2521,7 @@ public class NPC_GUI extends GUIutil
 							  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
 							  	YamlManager YM = GUI_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 	
-								long price = Long.parseLong(ChatColor.stripColor(item.getItemMeta().getLore().get(item.getItemMeta().getLore().size()-2).split("가격 : ")[1].split(" Gold")[0]));
+								long price = Long.parseLong(ChatColor.stripColor(item.getItemMeta().getLore().get(item.getItemMeta().getLore().size()-2).split("가격 : ")[1].split(" "+ChatColor.stripColor(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money+"]"))[0]));
 								
 								if(isBuy == true)
 								{
@@ -3299,19 +3299,19 @@ public class NPC_GUI extends GUIutil
 			Option = "마나";
 			break;
 		case "STR":
-			Option = "체력";
+			Option = ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+"";
 			break;
 		case "DEX":
-			Option = "솜씨";
+			Option = ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+"";
 			break;
 		case "INT":
-			Option = "지력";
+			Option = ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+"";
 			break;
 		case "WILL":
-			Option = "의지";
+			Option = ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+"";
 			break;
 		case "LUK":
-			Option = "행운";
+			Option = ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+"";
 			break;
 		}
 		ItemMeta IM = item.getItemMeta();
@@ -3545,15 +3545,15 @@ public class NPC_GUI extends GUIutil
 															HP = Integer.parseInt(Rune.split(" : ")[1]);
 														else if(Rune.contains("마나"))
 															MP = Integer.parseInt(Rune.split(" : ")[1]);
-														else if(Rune.contains("체력"))
+														else if(Rune.contains(""+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+""))
 															STR = Integer.parseInt(Rune.split(" : ")[1]);
-														else if(Rune.contains("솜씨"))
+														else if(Rune.contains(""+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+""))
 															DEX = Integer.parseInt(Rune.split(" : ")[1]);
-														else if(Rune.contains("지력"))
+														else if(Rune.contains(""+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+""))
 															INT = Integer.parseInt(Rune.split(" : ")[1]);
-														else if(Rune.contains("의지"))
+														else if(Rune.contains(""+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+""))
 															WILL = Integer.parseInt(Rune.split(" : ")[1]);
-														else if(Rune.contains("행운"))
+														else if(Rune.contains(""+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+""))
 															LUK = Integer.parseInt(Rune.split(" : ")[1]);
 													}
 												}
