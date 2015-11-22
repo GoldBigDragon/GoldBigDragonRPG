@@ -131,6 +131,7 @@ public class StatsGUI extends GUIutil
 			CurrentStat = ChatColor.YELLOW +""+ChatColor.BOLD +""+ (YM.getInt("Stat.STR") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.STR")+")";
 		else
 			CurrentStat = ChatColor.RED +""+ChatColor.BOLD +""+(YM.getInt("Stat.STR") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.STR")+")";
+<<<<<<< HEAD
 		
 		String lore = GBD.GoldBigDragon_Advanced.Main.ServerOption.STR_Lore;
 		lore = LineUp(CurrentStat, GBD.GoldBigDragon_Advanced.Main.ServerOption.STR.length()+20)+"%enter%"+lore.replace("%stat%", GBD.GoldBigDragon_Advanced.Main.ServerOption.STR)
@@ -138,6 +139,13 @@ public class StatsGUI extends GUIutil
 		
 		Stack2(ChatColor.DARK_RED + LineUp(ChatColor.RED+"[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+""+ChatColor.DARK_RED + "]", 24), 267,0,1,
 				Arrays.asList(lore.split("%enter%")), 20, inv);
+=======
+		Stack2(ChatColor.DARK_RED + LineUp(ChatColor.RED+"[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+""+ChatColor.DARK_RED + "]", 24), 267,0,1,
+				Arrays.asList(LineUp(CurrentStat, GBD.GoldBigDragon_Advanced.Main.ServerOption.STR.length()+20),
+						ChatColor.GRAY + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+"은 플레이어의",ChatColor.GRAY + " 물리적 공격력을",
+						ChatColor.GRAY + " 상승시켜 줍니다.","",
+						ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 근접 공격력]",LineUp(Additional, 24)), 20, inv);
+>>>>>>> origin/GoldBigDragonRPG_Advanced
 		
 		
 		stat=dam.getPlayerEquipmentStat(player, "DEX")[0];
@@ -149,12 +157,20 @@ public class StatsGUI extends GUIutil
 		else
 			CurrentStat = ChatColor.RED +""+ChatColor.BOLD +""+(YM.getInt("Stat.DEX") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.DEX")+")";
 
+<<<<<<< HEAD
 		lore = GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX_Lore;
 		lore = LineUp(CurrentStat, GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX.length()+20)+"%enter%"+lore.replace("%stat%", GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX)
 					+"%enter%"+ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 원거리 공격력]%enter%"+LineUp(Additional, 24);
 			
 		Stack2(LineUp(ChatColor.GREEN+"[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+""+ChatColor.GREEN + "]", 24), 261,0,1,
 				Arrays.asList(lore.split("%enter%")), 21, inv);
+=======
+		Stack2(LineUp(ChatColor.GREEN+"[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+""+ChatColor.GREEN + "]", 24), 261,0,1,
+				Arrays.asList(LineUp(CurrentStat, GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX.length()+20),
+						ChatColor.GRAY + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+"는 플레이어의",ChatColor.GRAY + " 원거리 공격력을",
+						ChatColor.GRAY + " 상승시켜 줍니다.","",
+						ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 원거리 공격력]",LineUp(Additional, 24)), 21, inv);
+>>>>>>> origin/GoldBigDragonRPG_Advanced
 		
 		
 		stat=dam.getPlayerEquipmentStat(player, "INT")[0];
@@ -166,12 +182,20 @@ public class StatsGUI extends GUIutil
 		else
 			CurrentStat = ChatColor.RED +""+ChatColor.BOLD +""+(YM.getInt("Stat.INT") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.INT")+")";
 
+<<<<<<< HEAD
 		lore = GBD.GoldBigDragon_Advanced.Main.ServerOption.INT_Lore;
 		lore = LineUp(CurrentStat, GBD.GoldBigDragon_Advanced.Main.ServerOption.INT.length()+20)+"%enter%"+lore.replace("%stat%", GBD.GoldBigDragon_Advanced.Main.ServerOption.INT)
 					+"%enter%"+ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 스킬 공격력]%enter%"+LineUp(Additional, 24);
 			
 		Stack2(LineUp(ChatColor.AQUA + "[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+""+ChatColor.AQUA + "]",24), 369,0,1,
 				Arrays.asList(lore.split("%enter%")), 22, inv);
+=======
+		Stack2(LineUp(ChatColor.AQUA + "[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+""+ChatColor.AQUA + "]",24), 369,0,1,
+				Arrays.asList(LineUp(CurrentStat, GBD.GoldBigDragon_Advanced.Main.ServerOption.INT.length()+20),
+						ChatColor.GRAY + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+"은 플레이어가",ChatColor.GRAY + " 사용하는 스킬 중",ChatColor.GRAY + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" 영향을 받는",ChatColor.GRAY + " 스킬 공격력을",
+						ChatColor.GRAY + " 상승시켜 줍니다.","",
+						ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 스킬 공격력]",LineUp(Additional, 24)), 22, inv);
+>>>>>>> origin/GoldBigDragonRPG_Advanced
 		
 		stat=dam.getPlayerEquipmentStat(player, "WILL")[0];
 		Additional = ChatColor.RED + "" + ChatColor.BOLD + "" + ((YM.getInt("Stat.WILL")+dam.getPlayerEquipmentStat(player, "WILL")[0])*0.6+100) + " %";
@@ -181,6 +205,7 @@ public class StatsGUI extends GUIutil
 			CurrentStat = ChatColor.YELLOW +""+ChatColor.BOLD +""+ (YM.getInt("Stat.WILL") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.WILL")+")";
 		else
 			CurrentStat = ChatColor.RED +""+ChatColor.BOLD +""+(YM.getInt("Stat.WILL") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.WILL")+")";
+<<<<<<< HEAD
 
 		lore = GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL_Lore;
 		lore = LineUp(CurrentStat, GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL.length()+20)+"%enter%"+lore.replace("%stat%", GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL)
@@ -188,6 +213,13 @@ public class StatsGUI extends GUIutil
 			
 		Stack2(LineUp(ChatColor.GRAY + "[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+""+ChatColor.GRAY + "]",24), 370,0,1,
 				Arrays.asList(lore.split("%enter%")), 23, inv);
+=======
+		Stack2(LineUp(ChatColor.GRAY + "[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+""+ChatColor.GRAY + "]",24), 370,0,1,
+				Arrays.asList(LineUp(CurrentStat, GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL.length()+20),
+						ChatColor.GRAY + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+"는 플레이어의",ChatColor.GRAY + " 크리티컬 및 스킬 중",ChatColor.GRAY + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" 영향을 받는",ChatColor.GRAY + " 스킬 공격력을",
+						ChatColor.GRAY + " 상승시켜 줍니다.","",
+						ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 스킬 공격력]",LineUp(Additional, 24)), 23, inv);
+>>>>>>> origin/GoldBigDragonRPG_Advanced
 		
 		
 		stat=dam.getPlayerEquipmentStat(player, "LUK")[0];
@@ -197,6 +229,7 @@ public class StatsGUI extends GUIutil
 			CurrentStat = ChatColor.YELLOW +""+ChatColor.BOLD +""+ (YM.getInt("Stat.LUK") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.LUK")+")";
 		else
 			CurrentStat = ChatColor.RED +""+ChatColor.BOLD +""+(YM.getInt("Stat.LUK") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.LUK")+")";
+<<<<<<< HEAD
 
 		lore = GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK_Lore;
 		lore = LineUp(CurrentStat, GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK.length()+20)+"%enter%"+lore.replace("%stat%", GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK)
@@ -204,6 +237,13 @@ public class StatsGUI extends GUIutil
 			
 		Stack2(LineUp(ChatColor.YELLOW + "[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+""+ChatColor.YELLOW + "]",24), 322,0,1,
 				Arrays.asList(lore.split("%enter%")), 24, inv);
+=======
+		
+			Stack2(LineUp(ChatColor.YELLOW + "[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+""+ChatColor.YELLOW + "]",24), 322,0,1,
+					Arrays.asList(LineUp(CurrentStat, GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK.length()+20),
+							ChatColor.GRAY + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+"은 플레이어에게",ChatColor.GRAY + " 뜻하지 않은 일이 일어날",
+							ChatColor.GRAY + " 확률을 증가시킵니다.",""), 24, inv);
+>>>>>>> origin/GoldBigDragonRPG_Advanced
 
 
 		if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == false)

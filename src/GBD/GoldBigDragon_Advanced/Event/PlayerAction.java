@@ -2585,16 +2585,24 @@ public class PlayerAction
 			return;
 		case "CSN"://ChangeStatName
 			{
+<<<<<<< HEAD
 				message.replace(".", "");
 				message.replace(":", "");
 				message.replace(" ", "");
 				String Message = event.getMessage();
 				Message.replace(".", "");
 				Message.replace(":", "");
+=======
+				String Pa = event.getMessage();
+				Pa.replace(".", "");
+				Pa.replace(":", "");
+				Pa.replace(" ", "");
+>>>>>>> origin/GoldBigDragonRPG_Advanced
 				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
 				switch(Main.UserData.get(player).getString((byte)2))
 				{
 				case "Ã¼·Â":
+<<<<<<< HEAD
 					Config.set("Server.STR", message);
 					break;
 				case "Ã¼·Â ¼³¸í":
@@ -2629,6 +2637,23 @@ public class PlayerAction
 					Pa.replace(".", "");
 					Pa.replace(":", "");
 					Pa.replace(" ", "");
+=======
+					Config.set("Server.STR", Pa);
+					break;
+				case "¼Ø¾¾":
+					Config.set("Server.DEX", Pa);
+					break;
+				case "Áö·Â":
+					Config.set("Server.INT", Pa);
+					break;
+				case "ÀÇÁö":
+					Config.set("Server.WILL", Pa);
+					break;
+				case "Çà¿î":
+					Config.set("Server.LUK", Pa);
+					break;
+				case "È­Æó":
+>>>>>>> origin/GoldBigDragonRPG_Advanced
 					Config.set("Server.MoneyName", Pa);
 					break;
 				}

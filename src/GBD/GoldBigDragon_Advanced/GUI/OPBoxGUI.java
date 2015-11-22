@@ -230,6 +230,7 @@ public class OPBoxGUI extends GUIutil
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "지력", 369,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT), 2, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "의지", 370,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL), 3, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "행운", 322,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK), 4, inv);
+<<<<<<< HEAD
 		
 		String lore = GBD.GoldBigDragon_Advanced.Main.ServerOption.STR_Lore;
 		lore = lore.replace("%stat%", GBD.GoldBigDragon_Advanced.Main.ServerOption.STR);
@@ -246,6 +247,9 @@ public class OPBoxGUI extends GUIutil
 		lore = GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK_Lore;
 		lore = lore.replace("%stat%", GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "행운 설명", 323,0,1,Arrays.asList(lore.split("%enter%")), 13, inv);
+=======
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "화폐", 266,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GBD.GoldBigDragon_Advanced.Main.ServerOption.Money), 6, inv);
+>>>>>>> origin/GoldBigDragonRPG_Advanced
 		
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 53, inv);
@@ -707,6 +711,7 @@ public class OPBoxGUI extends GUIutil
 		default:
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
 			player.closeInventory();
+<<<<<<< HEAD
 
 			if(event.getSlot()>=9&&event.getSlot()<=13)
 			{
@@ -719,6 +724,15 @@ public class OPBoxGUI extends GUIutil
 				player.sendMessage(ChatColor.DARK_AQUA+"[System] : 새로운 "+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())+" 스텟 이름을 입력 해 주세요!");
 				player.sendMessage(ChatColor.GRAY+"(띄어 쓰기 및 기호 사용 불가)");
 			}
+=======
+			player.sendMessage(ChatColor.DARK_AQUA+"[System] : 새로운 "+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())+" 스텟 이름을 입력 해 주세요!");
+			player.sendMessage(ChatColor.GRAY+"(띄워 쓰기 및 기호 사용 불가)");
+			player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
+			ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
+					ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
+			ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
+					ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
+>>>>>>> origin/GoldBigDragonRPG_Advanced
 			Main.UserData.get(player).setType("System");
 			Main.UserData.get(player).setString((byte)1, "CSN");
 			Main.UserData.get(player).setString((byte)2, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
