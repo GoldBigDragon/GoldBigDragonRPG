@@ -81,8 +81,8 @@ public class ItemDrop
 		else
 		Item = new MaterialData(41, (byte) 0).toItemStack(1);
 		ItemMeta Item_Meta = Item.getItemMeta();
-		Item_Meta.setDisplayName(ChatColor.YELLOW + "[°ñµå] " + money);
-		Item_Meta.setLore(Arrays.asList(ChatColor.YELLOW +""+ money +" gold"));
+		Item_Meta.setDisplayName(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money+" ¡×f¡×f¡×f¡×l" + money);
+		Item_Meta.setLore(Arrays.asList(ChatColor.YELLOW +""+ money +" "+GBD.GoldBigDragon_Advanced.Main.ServerOption.Money));
 		Item_Meta.addEnchant(org.bukkit.enchantments.Enchantment.LUCK, 500, true);
 		Item.setItemMeta(Item_Meta);
 	    loc.getWorld().dropItemNaturally(loc, Item);

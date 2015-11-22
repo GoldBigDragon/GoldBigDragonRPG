@@ -323,6 +323,238 @@ public class PlayerAction
     	String message = ChatColor.stripColor(event.getMessage());
     	switch(Main.UserData.get(player).getString((byte)1))
     	{
+	    	case "Cal"://Caluclate
+	    	{
+				if(isIntMinMax(message, player, 1, 5))
+				{
+					sound.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+			    	Main.UserData.get(player).setString((byte)1, "CVS");
+			    	Main.UserData.get(player).setInt((byte)1, Integer.parseInt(message));
+			    	String Example=null;
+			    	switch(Integer.parseInt(message))
+			    	{
+			    	case 1:
+			    		Example = "플레이어 변수 ＋ B";
+			    		break;
+			    	case 2:
+			    		Example = "플레이어 변수 － B";
+			    		break;
+			    	case 3:
+			    		Example = "플레이어 변수 × B";
+			    		break;
+			    	case 4:
+			    		Example = "플레이어 변수 ÷ B";
+			    		break;
+			    	case 5:
+			    		Example = "플레이어 변수 ％ B";
+			    		break;
+			    	}
+					player.sendMessage(ChatColor.GREEN + "[퀘스트] : "+ChatColor.YELLOW+Example+ChatColor.GREEN+" 에서 "+ChatColor.YELLOW+"B"+ChatColor.GREEN+" 값에 들어갈 수는 몇 인가요?");
+			    	if(Integer.parseInt(message) <= 2)
+						player.sendMessage(ChatColor.GRAY + "(최소 -1000 ~ 최대 20000)");
+			    	else
+						player.sendMessage(ChatColor.GRAY + "(최소 1 ~ 최대 100)");
+					player.sendMessage(ChatColor.GRAY + "(계산 결과 -2000 이하거나 40000 이상일 경우 각각 -2000과 40000으로 고정)");
+					player.sendMessage(ChatColor.GRAY + "(저장 타입이  Integer이므로, 결과 값이 너무 크거나 작으면 이상한 값이 나올수도 있음)");
+				}
+	    	}
+	    	return;
+	    	case "CVS"://Calculate Value Set
+	    	{
+	    		if(Main.UserData.get(player).getInt((byte)1)<=2)
+	    		{
+	    			if(isIntMinMax(message, player, -1000, 20000))
+					{
+		    			int size = QuestConfig.getConfigurationSection(Main.UserData.get(player).getString((byte)2)+".FlowChart").getKeys(false).size();
+						sound.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+						QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Type", "Cal");
+		        		QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Comparison", Main.UserData.get(player).getInt((byte)1));
+			    		QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Value", Integer.parseInt(message));
+		    	    	QuestConfig.saveConfig();
+		    			player.sendMessage(ChatColor.GREEN+"[퀘스트] : 계산 공식 설정이 완료되었습니다!");
+		    			QGUI.FixQuestGUI(player, 0, Main.UserData.get(player).getString((byte)2));
+		    	    	Main.UserData.get(player).clearAll();
+					}
+	    		}
+	    		else
+	    		{
+	    			if(isIntMinMax(message, player, 1, 100))
+					{
+		    			int size = QuestConfig.getConfigurationSection(Main.UserData.get(player).getString((byte)2)+".FlowChart").getKeys(false).size();
+						sound.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+						QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Type", "Cal");
+		        		QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Comparison", Main.UserData.get(player).getInt((byte)1));
+			    		QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Value", Integer.parseInt(message));
+		    	    	QuestConfig.saveConfig();
+		    			player.sendMessage(ChatColor.GREEN+"[퀘스트] : 계산 공식 설정이 완료되었습니다!");
+		    			QGUI.FixQuestGUI(player, 0, Main.UserData.get(player).getString((byte)2));
+		    	    	Main.UserData.get(player).clearAll();
+					}
+	    		}
+	    	}
+	    	return;
+    	case "IFMVS"://IF Max Value Set
+    	{
+			if(isIntMinMax(message, player, Main.UserData.get(player).getInt((byte)2), 40000))
+			{
+    			int size = QuestConfig.getConfigurationSection(Main.UserData.get(player).getString((byte)2)+".FlowChart").getKeys(false).size();
+				sound.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+				QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Type", "IF");
+        		QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Comparison", Main.UserData.get(player).getInt((byte)1));
+	    		QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Min", Main.UserData.get(player).getInt((byte)2));
+	    		QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Max", Integer.parseInt(message));
+    	    	QuestConfig.saveConfig();
+    			player.sendMessage(ChatColor.GREEN+"[퀘스트] : IF문 설정이 완료되었습니다!");
+    			QGUI.FixQuestGUI(player, 0, Main.UserData.get(player).getString((byte)2));
+    	    	Main.UserData.get(player).clearAll();
+			}
+    	}
+    	return;
+    	case "IFVS"://IF Value Set
+    	{
+			if(isIntMinMax(message, player, -2000, 40000))
+			{
+    			int size = QuestConfig.getConfigurationSection(Main.UserData.get(player).getString((byte)2)+".FlowChart").getKeys(false).size();
+				sound.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+		    	if(Main.UserData.get(player).getInt((byte)1)!=7)
+		    	{
+	        		QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Type", "IF");
+	        		QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Comparison", Main.UserData.get(player).getInt((byte)1));
+		    		QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Value", Integer.parseInt(message));
+		    	}
+		    	else
+		    	{
+		    		Main.UserData.get(player).setInt((byte)2, Integer.parseInt(message));
+		    		QuestConfig.saveConfig();
+			    	Main.UserData.get(player).setString((byte)1, "IFMVS");
+					player.sendMessage(ChatColor.GREEN + "[퀘스트] : "+ChatColor.YELLOW+Integer.parseInt(message)+" <= 플레이어 변수 <= B"+ChatColor.GREEN+" 에서 "+ChatColor.YELLOW+"C"+ChatColor.GREEN+" 값에 들어갈 수는 몇 인가요?");
+					player.sendMessage(ChatColor.GRAY + "(최소 "+Integer.parseInt(message)+" ~ 최대 40000)");
+		    		return;
+		    	}
+    	    	QuestConfig.saveConfig();
+    			player.sendMessage(ChatColor.GREEN+"[퀘스트] : IF문 설정이 완료되었습니다!");
+    			QGUI.FixQuestGUI(player, 0, Main.UserData.get(player).getString((byte)2));
+    	    	Main.UserData.get(player).clearAll();
+			}
+    	}
+    	return;
+    	case "IFTS"://IF Type Select
+    	{
+			if(isIntMinMax(message, player, 1, 7))
+			{
+				sound.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+		    	Main.UserData.get(player).setString((byte)1, "IFVS");
+		    	Main.UserData.get(player).setInt((byte)1, Integer.parseInt(message));
+		    	String Example=null;
+		    	switch(Integer.parseInt(message))
+		    	{
+		    	case 1:
+		    		Example = "플레이어 변수 == B";
+		    		break;
+		    	case 2:
+		    		Example = "플레이어 변수 != B";
+		    		break;
+		    	case 3:
+		    		Example = "플레이어 변수 > B";
+		    		break;
+		    	case 4:
+		    		Example = "플레이어 변수 < B";
+		    		break;
+		    	case 5:
+		    		Example = "플레이어 변수 >= B";
+		    		break;
+		    	case 6:
+		    		Example = "플레이어 변수 <= B";
+		    		break;
+		    	case 7:
+		    		Example = "C <= 플레이어 변수 <= B";
+					player.sendMessage(ChatColor.GREEN + "[퀘스트] : "+ChatColor.YELLOW+Example+ChatColor.GREEN+" 에서 "+ChatColor.YELLOW+"C"+ChatColor.GREEN+" 값에 들어갈 수는 몇 인가요?");
+					player.sendMessage(ChatColor.GRAY + "(최소 -2000 ~ 최대 40000)");
+		    		return;
+		    	}
+				player.sendMessage(ChatColor.GREEN + "[퀘스트] : "+ChatColor.YELLOW+Example+ChatColor.GREEN+" 에서 "+ChatColor.YELLOW+"B"+ChatColor.GREEN+" 값에 들어갈 수는 몇 인가요?");
+				player.sendMessage(ChatColor.GRAY + "(최소 -2000 ~ 최대 40000)");
+			}
+    	}
+    	return;
+	    	case "CV"://ChangeVariable
+	    	{
+				if(isIntMinMax(message, player, -1000, 30000))
+				{
+					sound.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+	    			int size = QuestConfig.getConfigurationSection(Main.UserData.get(player).getString((byte)2)+".FlowChart").getKeys(false).size();
+	        		QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Type", "VarChange");
+	        		QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Value", Integer.parseInt(message));
+	    	    	QuestConfig.saveConfig();
+	    			player.sendMessage(ChatColor.GREEN+"[퀘스트] : 변수 변경 설정이 완료되었습니다!");
+	    			QGUI.FixQuestGUI(player, 0, Main.UserData.get(player).getString((byte)2));
+	    	    	Main.UserData.get(player).clearAll();
+				}
+	    	}
+	    	return;
+    	case "SCV"://SetChoiceVariable
+    	{
+			if(isIntMinMax(message, player, -1000, 30000))
+			{
+				sound.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+				Main.UserData.get(player).setInt((byte)(Main.UserData.get(player).getInt((byte)1)+2),Integer.parseInt(message));
+				Main.UserData.get(player).setInt((byte)1,Main.UserData.get(player).getInt((byte)1)+1);
+	    		if(Main.UserData.get(player).getInt((byte)0)==Main.UserData.get(player).getInt((byte)1))
+	    		{
+	    			int size = QuestConfig.getConfigurationSection(Main.UserData.get(player).getString((byte)2)+".FlowChart").getKeys(false).size();
+	        		QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Type", "Choice");
+	        		for(int count = 0; count <Main.UserData.get(player).getInt((byte)0);count++)
+	        		{
+	        			QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Choice."+count+".Lore", Main.UserData.get(player).getString((byte)(count+4)));
+	        			QuestConfig.set(Main.UserData.get(player).getString((byte)2)+".FlowChart."+size+".Choice."+count+".Var", Main.UserData.get(player).getInt((byte)(count+2)));
+	        		}
+	    	    	QuestConfig.saveConfig();
+	    			player.sendMessage(ChatColor.GREEN+"[퀘스트] : 선택지가 성공적으로 등록되었습니다!");
+	    			QGUI.FixQuestGUI(player, 0, Main.UserData.get(player).getString((byte)2));
+	    	    	Main.UserData.get(player).clearAll();
+	    		}
+	    		else
+	    		{
+			    	Main.UserData.get(player).setString((byte)1, "SCL");
+			    	player.sendMessage(ChatColor.GREEN + "[퀘스트] : "+(Main.UserData.get(player).getInt((byte)1)+1)+"번째 선택에 적힐 말을 입력 하세요!");
+					player.sendMessage(ChatColor.GOLD + "%enter%"+ChatColor.WHITE + " - 한줄 띄워 쓰기 -");
+					player.sendMessage(ChatColor.GOLD + "%player%"+ChatColor.WHITE + " - 플레이어 지칭하기 -");
+					player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
+					ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
+							ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
+					ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c" +
+							ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
+	    		}
+			}
+			
+    	}
+    	return;
+    	case "SCL"://SetChoiceLore
+    	{
+			sound.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+			Main.UserData.get(player).setString((byte)(Main.UserData.get(player).getInt((byte)1)+4), event.getMessage());
+	    	Main.UserData.get(player).setString((byte)1, "SCV");
+			player.sendMessage(ChatColor.GREEN + "[퀘스트] : "+(Main.UserData.get(player).getInt((byte)1)+1)+"번 선택지를 고를 경우, 플레이어 변수는 몇으로 변환시킬까요?");
+			player.sendMessage(ChatColor.GRAY + "(최소 -1000 ~ 최대 30000)");
+    	}
+    	return;
+    	case "CS"://ChoiceSize
+			if(isIntMinMax(message, player, 1, 4))
+			{
+				sound.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+				Main.UserData.get(player).setInt((byte)0, Integer.parseInt(message));
+				Main.UserData.get(player).setInt((byte)1, 0);
+		    	Main.UserData.get(player).setString((byte)1, "SCL");
+		    	player.sendMessage(ChatColor.GREEN + "[퀘스트] : 1번째 선택에 적힐 말을 입력 하세요!");
+				player.sendMessage(ChatColor.GOLD + "%enter%"+ChatColor.WHITE + " - 한줄 띄워 쓰기 -");
+				player.sendMessage(ChatColor.GOLD + "%player%"+ChatColor.WHITE + " - 플레이어 지칭하기 -");
+				player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
+				ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
+						ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
+				ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c" +
+						ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
+			}
+	    	return;
     	case "Whisper":
     	case "BroadCast":
     	case "PScript":
@@ -762,7 +994,7 @@ public class PlayerAction
 						{
 							Main.UserData.get(player).setType(Main.UserData.get(player).getType());
 							Main.UserData.get(player).setString((byte)1, "STR");
-							player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 체력을 입력해 주세요!");
+							player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+"을 입력해 주세요!");
 							player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
 							return;
 						}
@@ -771,7 +1003,7 @@ public class PlayerAction
 					{
 						Main.UserData.get(player).setType(Main.UserData.get(player).getType());
 						Main.UserData.get(player).setString((byte)1, "STR");
-						player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 체력을 입력해 주세요!");
+						player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+"을 입력해 주세요!");
 						player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
 						return;
 					}
@@ -784,7 +1016,7 @@ public class PlayerAction
 					ItemList.saveConfig();
 					Main.UserData.get(player).setType(Main.UserData.get(player).getType());
 					Main.UserData.get(player).setString((byte)1, "DEX");
-					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 솜씨를 입력해 주세요!");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+"를 입력해 주세요!");
 					player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
 				}
 				return;
@@ -795,7 +1027,7 @@ public class PlayerAction
 					ItemList.saveConfig();
 					Main.UserData.get(player).setType(Main.UserData.get(player).getType());
 					Main.UserData.get(player).setString((byte)1, "INT");
-					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 지력을 입력해 주세요!");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+"을 입력해 주세요!");
 					player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
 				}
 				return;
@@ -806,7 +1038,7 @@ public class PlayerAction
 					ItemList.saveConfig();
 					Main.UserData.get(player).setType(Main.UserData.get(player).getType());
 					Main.UserData.get(player).setString((byte)1, "WILL");
-					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 의지를 입력해 주세요!");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+"를 입력해 주세요!");
 					player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
 				}
 				return;
@@ -817,7 +1049,7 @@ public class PlayerAction
 					ItemList.saveConfig();
 					Main.UserData.get(player).setType(Main.UserData.get(player).getType());
 					Main.UserData.get(player).setString((byte)1, "LUK");
-					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 행운을 입력해 주세요!");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+"을 입력해 주세요!");
 					player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
 				}
 				return;
@@ -1684,7 +1916,7 @@ public class PlayerAction
 				Main.UserData.get(player).setType("Job");
 				Main.UserData.get(player).setString((byte)1, "JNS");
 				sound.SP(player, org.bukkit.Sound.ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick2+ChatColor.LIGHT_PURPLE +"의 승급 필요 체력을 설정하세요.");
+				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick2+ChatColor.LIGHT_PURPLE +"의 승급 필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+"을 설정하세요.");
 			}
 			return;
 		case "JNS" : 
@@ -1697,7 +1929,7 @@ public class PlayerAction
 				Main.UserData.get(player).setType("Job");
 				Main.UserData.get(player).setString((byte)1, "JND");
 				sound.SP(player, org.bukkit.Sound.ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick2+ChatColor.LIGHT_PURPLE +"의 승급 필요 솜씨를 설정하세요.");
+				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick2+ChatColor.LIGHT_PURPLE +"의 승급 필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+"를 설정하세요.");
 			}
 			return;
 		case "JND" : 
@@ -1710,7 +1942,7 @@ public class PlayerAction
 				Main.UserData.get(player).setType("Job");
 				Main.UserData.get(player).setString((byte)1, "JNI");
 				sound.SP(player, org.bukkit.Sound.ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick2+ChatColor.LIGHT_PURPLE +"의 승급 필요 지력을 설정하세요.");
+				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick2+ChatColor.LIGHT_PURPLE +"의 승급 필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+"을 설정하세요.");
 			}
 			return;
 		case "JNI" : 
@@ -1723,7 +1955,7 @@ public class PlayerAction
 				Main.UserData.get(player).setType("Job");
 				Main.UserData.get(player).setString((byte)1, "JNW");
 				sound.SP(player, org.bukkit.Sound.ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick2+ChatColor.LIGHT_PURPLE +"의 승급 필요 의지를 설정하세요.");
+				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick2+ChatColor.LIGHT_PURPLE +"의 승급 필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+"를 설정하세요.");
 			}
 			return;
 		case "JNW" : 
@@ -1736,7 +1968,7 @@ public class PlayerAction
 				Main.UserData.get(player).setType("Job");
 				Main.UserData.get(player).setString((byte)1, "JNLU");
 				sound.SP(player, org.bukkit.Sound.ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick2+ChatColor.LIGHT_PURPLE +"의 승급 필요 행운을 설정하세요.");
+				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick2+ChatColor.LIGHT_PURPLE +"의 승급 필요 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+"을 설정하세요.");
 			}
 			return;
 		case "JNLU" : 
@@ -1979,8 +2211,8 @@ public class PlayerAction
 				Monster.set(Main.UserData.get(player).getString((byte)2)+"."+Main.UserData.get(player).getString((byte)1), Integer.parseInt(message));
 				Monster.saveConfig();
 				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.GRAY+"(솜씨는 몬스터의 원거리 공격력을 상승시켜 줍니다.)");
-				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 솜씨를 설정해 주세요!");
+				player.sendMessage(ChatColor.GRAY+"("+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+"는 몬스터의 원거리 공격력을 상승시켜 줍니다.)");
+				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+"를 설정해 주세요!");
 				player.sendMessage(ChatColor.DARK_AQUA+"(1 ~ "+Integer.MAX_VALUE+")");
 				Main.UserData.get(player).setString((byte)1, "DEX");
 			}
@@ -1991,8 +2223,8 @@ public class PlayerAction
 				Monster.set(Main.UserData.get(player).getString((byte)2)+"."+Main.UserData.get(player).getString((byte)1), Integer.parseInt(message));
 				Monster.saveConfig();
 				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.GRAY+"(지력은 몬스터의 폭발 공격력을 상승시켜 줍니다.)");
-				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 지력을 설정해 주세요!");
+				player.sendMessage(ChatColor.GRAY+"("+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+"은 몬스터의 폭발 공격력을 상승시켜 줍니다.)");
+				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+"을 설정해 주세요!");
 				player.sendMessage(ChatColor.DARK_AQUA+"(1 ~ "+Integer.MAX_VALUE+")");
 				Main.UserData.get(player).setString((byte)1, "INT");
 			}
@@ -2003,8 +2235,8 @@ public class PlayerAction
 				Monster.set(Main.UserData.get(player).getString((byte)2)+"."+Main.UserData.get(player).getString((byte)1), Integer.parseInt(message));
 				Monster.saveConfig();
 				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.GRAY+"(의지는 몬스터의 크리티컬 확률을 상승시켜 줍니다.)");
-				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 의지를 설정해 주세요!");
+				player.sendMessage(ChatColor.GRAY+"("+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+"는 몬스터의 크리티컬 확률을 상승시켜 줍니다.)");
+				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+"를 설정해 주세요!");
 				player.sendMessage(ChatColor.DARK_AQUA+"(1 ~ "+Integer.MAX_VALUE+")");
 				Main.UserData.get(player).setString((byte)1, "WILL");
 			}
@@ -2015,8 +2247,8 @@ public class PlayerAction
 				Monster.set(Main.UserData.get(player).getString((byte)2)+"."+Main.UserData.get(player).getString((byte)1), Integer.parseInt(message));
 				Monster.saveConfig();
 				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.GRAY+"(행운은 몬스터의 크리티컬 확률을 크게 상승시켜 줍니다.)");
-				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 행운을 설정해 주세요!");
+				player.sendMessage(ChatColor.GRAY+"("+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+"은 몬스터의 크리티컬 확률을 크게 상승시켜 줍니다.)");
+				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+"을 설정해 주세요!");
 				player.sendMessage(ChatColor.DARK_AQUA+"(1 ~ "+Integer.MAX_VALUE+")");
 				Main.UserData.get(player).setString((byte)1, "LUK");
 			}
@@ -2350,6 +2582,61 @@ public class PlayerAction
 			Config.saveConfig();
 			Main.UserData.get(player).clearAll();
 			new GBD.GoldBigDragon_Advanced.GUI.OPBoxGUI().OPBoxGUI_Setting(player);
+			return;
+		case "CSN"://ChangeStatName
+			{
+				message.replace(".", "");
+				message.replace(":", "");
+				message.replace(" ", "");
+				String Message = event.getMessage();
+				Message.replace(".", "");
+				Message.replace(":", "");
+				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+				switch(Main.UserData.get(player).getString((byte)2))
+				{
+				case "체력":
+					Config.set("Server.STR", message);
+					break;
+				case "체력 설명":
+					Config.set("Server.STR_Lore", Message);
+					break;
+				case "솜씨":
+					Config.set("Server.DEX", message);
+					break;
+				case "솜씨 설명":
+					Config.set("Server.DEX_Lore", Message);
+					break;
+				case "지력":
+					Config.set("Server.INT", message);
+					break;
+				case "지력 설명":
+					Config.set("Server.INT_Lore", Message);
+					break;
+				case "의지":
+					Config.set("Server.WILL", message);
+					break;
+				case "의지 설명":
+					Config.set("Server.WILL_Lore", Message);
+					break;
+				case "행운":
+					Config.set("Server.LUK", message);
+					break;
+				case "행운 설명":
+					Config.set("Server.LUK_Lore", Message);
+					break;
+				case "화폐":
+					String Pa = event.getMessage();
+					Pa.replace(".", "");
+					Pa.replace(":", "");
+					Pa.replace(" ", "");
+					Config.set("Server.MoneyName", Pa);
+					break;
+				}
+				Config.saveConfig();
+				Main.UserData.get(player).clearAll();
+				player.sendMessage(ChatColor.GREEN + "[System] : 변경된 내용은 서버 안전을 위해, 서버 리로드 이후 일괄 적용됩니다.");
+				new GBD.GoldBigDragon_Advanced.GUI.OPBoxGUI().OPBoxGUI_StatChange(player);
+			}
 			return;
 		}
 		return;

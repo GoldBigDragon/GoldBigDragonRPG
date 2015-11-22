@@ -189,6 +189,13 @@ public class InventoryClick
 			QGUI.FixQuestListInventoryclick(event);
 		else if(InventoryName.contains("네비"))
 			QGUI.Quest_NavigationListGUIClick(event);
+		else if(InventoryName.contains("선택"))
+		{
+			if(InventoryName.contains("확인"))
+				QGUI.Quest_OPChoiceClick(event);
+			else
+				QGUI.Quest_UserChoiceClick(event);
+		}
 		else
 			QGUI.MyQuestListInventoryclick(event);
 		return;
@@ -249,6 +256,8 @@ public class InventoryClick
 	    	OPGUI.OPBoxGUI_SettingInventoryClick(event);
 	    else if(InventoryName.contains("공지사항"))
 	    	OPGUI.OPBoxGUI_BroadCastClick(event);
+	    else if(InventoryName.contains("스텟"))
+	    	OPGUI.OPBoxGUI_StatChangeClick(event);
 	    return;
 	}
 

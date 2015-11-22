@@ -126,29 +126,29 @@ public class OPBoxSkillGUI extends GUIutil
 				lore = lore + ChatColor.AQUA+"승급시 보너스 마나 : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusMP")+"%enter%";
 			
 			if(SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusSTR")<0)
-				lore = lore + ChatColor.RED+"승급시 보너스 체력 : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusSTR")+"%enter%";
+				lore = lore + ChatColor.RED+"승급시 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusSTR")+"%enter%";
 			else if(SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusSTR")>0)
-				lore = lore + ChatColor.AQUA+"승급시 보너스 체력 : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusSTR")+"%enter%";
+				lore = lore + ChatColor.AQUA+"승급시 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusSTR")+"%enter%";
 
 			if(SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusDEX")<0)
-				lore = lore + ChatColor.RED+"승급시 보너스 솜씨 : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusDEX")+"%enter%";
+				lore = lore + ChatColor.RED+"승급시 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusDEX")+"%enter%";
 			else if(SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusDEX")>0)
-				lore = lore + ChatColor.AQUA+"승급시 보너스 솜씨 : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusDEX")+"%enter%";
+				lore = lore + ChatColor.AQUA+"승급시 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusDEX")+"%enter%";
 				
 			if(SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusINT")<0)
-				lore = lore + ChatColor.RED+"승급시 보너스 지력 : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusINT")+"%enter%";
+				lore = lore + ChatColor.RED+"승급시 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusINT")+"%enter%";
 			else if(SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusINT")>0)
-				lore = lore + ChatColor.AQUA+"승급시 보너스 지력 : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusINT")+"%enter%";
+				lore = lore + ChatColor.AQUA+"승급시 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusINT")+"%enter%";
 
 			if(SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusWILL")<0)
-				lore = lore + ChatColor.RED+"승급시 보너스 의지 : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusWILL")+"%enter%";
+				lore = lore + ChatColor.RED+"승급시 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusWILL")+"%enter%";
 			else if(SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusWILL")>0)
-				lore = lore + ChatColor.AQUA+"승급시 보너스 의지 : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusWILL")+"%enter%";
+				lore = lore + ChatColor.AQUA+"승급시 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusWILL")+"%enter%";
 
 			if(SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusLUK")<0)
-				lore = lore + ChatColor.RED+"승급시 보너스 행운 : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusLUK")+"%enter%";
+				lore = lore + ChatColor.RED+"승급시 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusLUK")+"%enter%";
 			else if(SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusLUK")>0)
-				lore = lore + ChatColor.AQUA+"승급시 보너스 행운 : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusLUK")+"%enter%";
+				lore = lore + ChatColor.AQUA+"승급시 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusLUK")+"%enter%";
 
 			if(SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusBAL")<0)
 				lore = lore + ChatColor.RED+"승급시 보너스 밸런스 : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusBAL")+"%enter%";
@@ -242,33 +242,25 @@ public class OPBoxSkillGUI extends GUIutil
 					SkillList.saveConfig();
 				}
 				String IncreaseDamage = SkillList.getString(SkillName+".SkillRank."+SkillLevel+".AffectStat");
-				switch(IncreaseDamage)
-				{
-					case "없음":
-						Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[스킬 공격력 상승]", 166,0,1,Arrays.asList("",ChatColor.WHITE+"[  "+IncreaseDamage+"  ]",ChatColor.RED + "[스킬 고유 데미지로 사용]","",ChatColor.YELLOW + "[좌 클릭시 영향 주는 스텟 변경]"), 21, inv);
-						break;
-					case "생명력":
-						Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[스킬 공격력 상승]", 351,1,1,Arrays.asList("",ChatColor.WHITE+"[  "+IncreaseDamage+"  ]",ChatColor.RED + "[현재 생명력에 비례하여 대미지 상승]","",ChatColor.YELLOW + "[좌 클릭시 영향 주는 스텟 변경]"), 21, inv);
-						break;
-					case "마나":
-						Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[스킬 공격력 상승]", 351,12,1,Arrays.asList("",ChatColor.WHITE+"[  "+IncreaseDamage+"  ]",ChatColor.RED + "[현재 마나량에 비례하여 대미지 상승]","",ChatColor.YELLOW + "[좌 클릭시 영향 주는 스텟 변경]"), 21, inv);
-						break;
-					case "체력":
-						Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[스킬 공격력 상승]", 267,0,1,Arrays.asList("",ChatColor.WHITE+"[  "+IncreaseDamage+"  ]",ChatColor.RED + "[체력에 비례하여 대미지 상승]","",ChatColor.YELLOW + "[좌 클릭시 영향 주는 스텟 변경]"), 21, inv);
-						break;
-					case "솜씨":
-						Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[스킬 공격력 상승]", 261,0,1,Arrays.asList("",ChatColor.WHITE+"[  "+IncreaseDamage+"  ]",ChatColor.RED + "[솜씨에 비례하여 대미지 상승]","",ChatColor.YELLOW + "[좌 클릭시 영향 주는 스텟 변경]"), 21, inv);
-						break;
-					case "지력":
-						Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[스킬 공격력 상승]", 369,0,1,Arrays.asList("",ChatColor.WHITE+"[  "+IncreaseDamage+"  ]",ChatColor.RED + "[지력에 비례하여 대미지 상승]","",ChatColor.YELLOW + "[좌 클릭시 영향 주는 스텟 변경]"), 21, inv);
-						break;
-					case "의지":
-						Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[스킬 공격력 상승]", 370,0,1,Arrays.asList("",ChatColor.WHITE+"[  "+IncreaseDamage+"  ]",ChatColor.RED + "[의지에 비례하여 대미지 상승]","",ChatColor.YELLOW + "[좌 클릭시 영향 주는 스텟 변경]"), 21, inv);
-						break;
-					case "행운":
-						Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[스킬 공격력 상승]", 322,0,1,Arrays.asList("",ChatColor.WHITE+"[  "+IncreaseDamage+"  ]",ChatColor.RED + "[행운에 비례하여 대미지 상승]","",ChatColor.YELLOW + "[좌 클릭시 영향 주는 스텟 변경]"), 21, inv);
-						break;
-				}
+				
+				if(IncreaseDamage.compareTo("없음")==0)
+					Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[스킬 공격력 상승]", 166,0,1,Arrays.asList("",ChatColor.WHITE+"[  "+IncreaseDamage+"  ]",ChatColor.RED + "[스킬 고유 데미지로 사용]","",ChatColor.YELLOW + "[좌 클릭시 영향 주는 스텟 변경]"), 21, inv);
+				else if(IncreaseDamage.compareTo("생명력")==0)
+					Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[스킬 공격력 상승]", 351,1,1,Arrays.asList("",ChatColor.WHITE+"[  "+IncreaseDamage+"  ]",ChatColor.RED + "[현재 생명력에 비례하여 대미지 상승]","",ChatColor.YELLOW + "[좌 클릭시 영향 주는 스텟 변경]"), 21, inv);
+				else if(IncreaseDamage.compareTo("마나")==0)
+					Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[스킬 공격력 상승]", 351,12,1,Arrays.asList("",ChatColor.WHITE+"[  "+IncreaseDamage+"  ]",ChatColor.RED + "[현재 마나량에 비례하여 대미지 상승]","",ChatColor.YELLOW + "[좌 클릭시 영향 주는 스텟 변경]"), 21, inv);
+				else if(IncreaseDamage.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.STR)==0)
+					Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[스킬 공격력 상승]", 267,0,1,Arrays.asList("",ChatColor.WHITE+"[  "+IncreaseDamage+"  ]",ChatColor.RED + "["+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+"에 비례하여 대미지 상승]","",ChatColor.YELLOW + "[좌 클릭시 영향 주는 스텟 변경]"), 21, inv);
+				else if(IncreaseDamage.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX)==0)
+					Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[스킬 공격력 상승]", 261,0,1,Arrays.asList("",ChatColor.WHITE+"[  "+IncreaseDamage+"  ]",ChatColor.RED + "["+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+"에 비례하여 대미지 상승]","",ChatColor.YELLOW + "[좌 클릭시 영향 주는 스텟 변경]"), 21, inv);
+				else if(IncreaseDamage.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.INT)==0)
+					Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[스킬 공격력 상승]", 369,0,1,Arrays.asList("",ChatColor.WHITE+"[  "+IncreaseDamage+"  ]",ChatColor.RED + "["+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+"에 비례하여 대미지 상승]","",ChatColor.YELLOW + "[좌 클릭시 영향 주는 스텟 변경]"), 21, inv);
+				else if(IncreaseDamage.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL)==0)
+					Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[스킬 공격력 상승]", 370,0,1,Arrays.asList("",ChatColor.WHITE+"[  "+IncreaseDamage+"  ]",ChatColor.RED + "["+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+"에 비례하여 대미지 상승]","",ChatColor.YELLOW + "[좌 클릭시 영향 주는 스텟 변경]"), 21, inv);
+				else if(IncreaseDamage.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK)==0)
+					Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[스킬 공격력 상승]", 322,0,1,Arrays.asList("",ChatColor.WHITE+"[  "+IncreaseDamage+"  ]",ChatColor.RED + "["+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+"에 비례하여 대미지 상승]","",ChatColor.YELLOW + "[좌 클릭시 영향 주는 스텟 변경]"), 21, inv);
+				else
+					Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[스킬 공격력 상승]", 322,0,1,Arrays.asList("",ChatColor.RED+"[재 설정이 필요합니다!]","",ChatColor.YELLOW + "[좌 클릭시 영향 주는 스텟 변경]"), 21, inv);
 				
 			}
 			else
@@ -341,11 +333,11 @@ public class OPBoxSkillGUI extends GUIutil
 				Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[필요 스킬 포인트]", 399,0,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급하는데 필요한 스킬 포인트]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".SkillPoint") +"포인트","",ChatColor.YELLOW + "[좌 클릭시 스킬 포인트 변경]"), 4, inv);
 				Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[보너스 생명력]", 351,1,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급할 때 얻는 생명력]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".BonusHP") ,"",ChatColor.YELLOW + "[좌 클릭시 보너스 스텟 변경]"), 28, inv);
 				Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[보너스 마나]", 351,12,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급할 때 얻는 마나]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".BonusMP"),"",ChatColor.YELLOW + "[좌 클릭시 보너스 스텟 변경]"), 29, inv);
-				Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[보너스 체력]", 267,0,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급할 때 얻는 체력]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".BonusSTR"),"",ChatColor.YELLOW + "[좌 클릭시 보너스 스텟 변경]"), 30, inv);
-				Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[보너스 솜씨]", 261,0,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급할 때 얻는 솜씨]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".BonusDEX") ,"",ChatColor.YELLOW + "[좌 클릭시 보너스 스텟 변경]"), 31, inv);
-				Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[보너스 지력]", 369,0,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급할 때 얻는 지력]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".BonusINT"),"",ChatColor.YELLOW + "[좌 클릭시 보너스 스텟 변경]"), 32, inv);
-				Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[보너스 의지]", 370,0,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급할 때 얻는 의지]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".BonusWILL") ,"",ChatColor.YELLOW + "[좌 클릭시 보너스 스텟 변경]"), 33, inv);
-				Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[보너스 행운]", 322,0,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급할 때 얻는 행운]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".BonusLUK") ,"",ChatColor.YELLOW + "[좌 클릭시 보너스 스텟 변경]"), 34, inv);
+				Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+"]", 267,0,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급할 때 얻는 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+"]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".BonusSTR"),"",ChatColor.YELLOW + "[좌 클릭시 보너스 스텟 변경]"), 30, inv);
+				Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+"]", 261,0,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급할 때 얻는 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+"]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".BonusDEX") ,"",ChatColor.YELLOW + "[좌 클릭시 보너스 스텟 변경]"), 31, inv);
+				Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+"]", 369,0,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급할 때 얻는 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+"]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".BonusINT"),"",ChatColor.YELLOW + "[좌 클릭시 보너스 스텟 변경]"), 32, inv);
+				Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+"]", 370,0,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급할 때 얻는 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+"]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".BonusWILL") ,"",ChatColor.YELLOW + "[좌 클릭시 보너스 스텟 변경]"), 33, inv);
+				Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+"]", 322,0,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급할 때 얻는 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+"]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".BonusLUK") ,"",ChatColor.YELLOW + "[좌 클릭시 보너스 스텟 변경]"), 34, inv);
 				Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[보너스 밸런스]", 283,0,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급할 때 얻는 밸런스]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".BonusBAL") ,"",ChatColor.YELLOW + "[좌 클릭시 보너스 스텟 변경]"), 37, inv);
 				Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[보너스 크리티컬]", 262,0,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급할 때 얻는 크리티컬]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".BonusCRI") ,"",ChatColor.YELLOW + "[좌 클릭시 보너스 스텟 변경]"), 38, inv);
 				Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[보너스 방어]", 307,0,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급할 때 얻는 방어]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".BonusDEF") ,"",ChatColor.YELLOW + "[좌 클릭시 보너스 스텟 변경]"), 39, inv);
@@ -641,33 +633,24 @@ public class OPBoxSkillGUI extends GUIutil
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
 			if(Bukkit.getPluginManager().isPluginEnabled("MagicSpells") == true)
 			{
-				switch(SkillList.getString(SkillName+".SkillRank."+SkillLevel+".AffectStat") )
-				{
-					case "없음":
-						SkillList.set(SkillName+".SkillRank."+SkillLevel+".AffectStat", "생명력");
-						break;
-					case "생명력":
-						SkillList.set(SkillName+".SkillRank."+SkillLevel+".AffectStat", "마나");
-						break;
-					case "마나":
-						SkillList.set(SkillName+".SkillRank."+SkillLevel+".AffectStat", "체력");
-						break;
-					case "체력":
-						SkillList.set(SkillName+".SkillRank."+SkillLevel+".AffectStat", "솜씨");
-						break;
-					case "솜씨":
-						SkillList.set(SkillName+".SkillRank."+SkillLevel+".AffectStat", "지력");
-						break;
-					case "지력":
-						SkillList.set(SkillName+".SkillRank."+SkillLevel+".AffectStat", "의지");
-						break;
-					case "의지":
-						SkillList.set(SkillName+".SkillRank."+SkillLevel+".AffectStat", "행운");
-						break;
-					case "행운":
-						SkillList.set(SkillName+".SkillRank."+SkillLevel+".AffectStat", "없음");
-						break;
-				}
+				String switchNeed = SkillList.getString(SkillName+".SkillRank."+SkillLevel+".AffectStat");
+				if(switchNeed.compareTo("없음")==0)
+					SkillList.set(SkillName+".SkillRank."+SkillLevel+".AffectStat", "생명력");
+				else if(switchNeed.compareTo("생명력")==0)
+					SkillList.set(SkillName+".SkillRank."+SkillLevel+".AffectStat", "마나");
+				else if(switchNeed.compareTo("마나")==0)
+					SkillList.set(SkillName+".SkillRank."+SkillLevel+".AffectStat", GBD.GoldBigDragon_Advanced.Main.ServerOption.STR);
+				else if(switchNeed.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.STR)==0)
+					SkillList.set(SkillName+".SkillRank."+SkillLevel+".AffectStat", GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX);
+				else if(switchNeed.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX)==0)
+					SkillList.set(SkillName+".SkillRank."+SkillLevel+".AffectStat", GBD.GoldBigDragon_Advanced.Main.ServerOption.INT);
+				else if(switchNeed.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.INT)==0)
+					SkillList.set(SkillName+".SkillRank."+SkillLevel+".AffectStat", GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL);
+				else if(switchNeed.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL)==0)
+					SkillList.set(SkillName+".SkillRank."+SkillLevel+".AffectStat", GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK);
+				else
+					SkillList.set(SkillName+".SkillRank."+SkillLevel+".AffectStat", "없음");
+
 				SkillList.saveConfig();
 				SkillRankOptionGUI(player, SkillName, SkillLevel);
 			}
@@ -701,28 +684,28 @@ public class OPBoxSkillGUI extends GUIutil
 			Main.UserData.get(player).setType("Skill");
 			Main.UserData.get(player).setString((byte)1, "BM");
 			break;
-		case 30://보너스 체력
-			player.sendMessage(ChatColor.LIGHT_PURPLE+"[스킬] : 보너스 체력 수치를 입력해 주세요!");
+		case 30://보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+"
+			player.sendMessage(ChatColor.LIGHT_PURPLE+"[스킬] : 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" 수치를 입력해 주세요!");
 			Main.UserData.get(player).setType("Skill");
 			Main.UserData.get(player).setString((byte)1, "BSTR");
 			break;
-		case 31://보너스 솜씨
-			player.sendMessage(ChatColor.LIGHT_PURPLE+"[스킬] : 보너스 솜씨 수치를 입력해 주세요!");
+		case 31://보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+"
+			player.sendMessage(ChatColor.LIGHT_PURPLE+"[스킬] : 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" 수치를 입력해 주세요!");
 			Main.UserData.get(player).setType("Skill");
 			Main.UserData.get(player).setString((byte)1, "BDEX");
 			break;
-		case 32://보너스 지력
-			player.sendMessage(ChatColor.LIGHT_PURPLE+"[스킬] : 보너스 지력 수치를 입력해 주세요!");
+		case 32://보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+"
+			player.sendMessage(ChatColor.LIGHT_PURPLE+"[스킬] : 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" 수치를 입력해 주세요!");
 			Main.UserData.get(player).setType("Skill");
 			Main.UserData.get(player).setString((byte)1, "BINT");
 			break;
-		case 33://보너스 의지
-			player.sendMessage(ChatColor.LIGHT_PURPLE+"[스킬] : 보너스 의지 수치를 입력해 주세요!");
+		case 33://보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+"
+			player.sendMessage(ChatColor.LIGHT_PURPLE+"[스킬] : 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" 수치를 입력해 주세요!");
 			Main.UserData.get(player).setType("Skill");
 			Main.UserData.get(player).setString((byte)1, "BWILL");
 			break;
-		case 34://보너스 행운
-			player.sendMessage(ChatColor.LIGHT_PURPLE+"[스킬] : 보너스 행운 수치를 입력해 주세요!");
+		case 34://보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+"
+			player.sendMessage(ChatColor.LIGHT_PURPLE+"[스킬] : 보너스 "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" 수치를 입력해 주세요!");
 			Main.UserData.get(player).setType("Skill");
 			Main.UserData.get(player).setString((byte)1, "BLUK");
 			break;

@@ -18,8 +18,6 @@ public class PartyCommand extends HelpMessage
     {
 	    GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
 			Player player = (Player) talker;
-			YamlController Main_YC = Main.Main_YC;
-		  	YamlManager YM = Main_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 			if(args.length == 0)
 			{
 				s.SP((Player)talker, org.bukkit.Sound.HORSE_ARMOR, 0.8F, 1.8F);

@@ -65,19 +65,36 @@ public class BlockBreak
 				}
 			}
 		}
-		
 		Quest(event, player);
-		new GBD.GoldBigDragon_Advanced.Event.Damage().decreaseDurabilityWeapon(player);
-		if(player.getGameMode()!=GameMode.CREATIVE)
-			EXPadd(event);
-		LuckyBonus(event);
-
 		if(event.getBlock().getLocation().getWorld().getName().equalsIgnoreCase("Dungeon")==true
 				&&player.isOp()==false)
 		{
 			event.setCancelled(true);
 			return;
 		}
+		
+		int id = event.getBlock().getTypeId();
+		if((id >= 14&&id <= 17)||id==21||id==56||id==129||id==73||id==153)
+		{
+			YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
+			YamlManager EXPexceptionBlockList =GUI_YC.getNewConfig("EXPexceptionBlock.yml");
+			Location loc = event.getBlock().getLocation();
+			String Location = ((int)loc.getX()+"_"+(int)loc.getY()+"_"+(int)loc.getZ());
+			if(EXPexceptionBlockList.contains(loc.getWorld().getName()+"."+id+"."+Location))
+			{
+				EXPexceptionBlockList.removeKey(loc.getWorld().getName()+"."+id+"."+Location);
+				EXPexceptionBlockList.saveConfig();
+			}
+			else
+			{
+				if(player.getGameMode()!=GameMode.CREATIVE)
+				{
+					EXPadd(event);
+					LuckyBonus(event);
+				}
+			}
+		}
+		new GBD.GoldBigDragon_Advanced.Event.Damage().decreaseDurabilityWeapon(player);
 		return;
 	}
 
@@ -95,6 +112,7 @@ public class BlockBreak
 
 		if(Main.PartyJoiner.containsKey(player)==false)
 		{
+			if(PlayerQuestList.contains("Started"))
 			if(PlayerQuestList.getConfigurationSection("Started").getKeys(false).toArray().length >= 1)
 			{
 				Object[] a = PlayerQuestList.getConfigurationSection("Started").getKeys(false).toArray();

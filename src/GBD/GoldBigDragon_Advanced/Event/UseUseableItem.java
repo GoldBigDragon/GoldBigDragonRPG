@@ -115,15 +115,15 @@ public class UseUseableItem
 						HP = Integer.parseInt(nowlore.split(" : ")[1]);
 					if(nowlore.contains("¸¶³ª"))
 						MP = Integer.parseInt(nowlore.split(" : ")[1]);
-					if(nowlore.contains("Ã¼·Â"))
+					if(nowlore.contains(GBD.GoldBigDragon_Advanced.Main.ServerOption.STR))
 						STR = Integer.parseInt(nowlore.split(" : ")[1]);
-					if(nowlore.contains("¼Ø¾¾"))
+					if(nowlore.contains(GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX))
 						DEX = Integer.parseInt(nowlore.split(" : ")[1]);
-					if(nowlore.contains("Áö·Â"))
+					if(nowlore.contains(GBD.GoldBigDragon_Advanced.Main.ServerOption.INT))
 						INT = Integer.parseInt(nowlore.split(" : ")[1]);
-					if(nowlore.contains("ÀÇÁö"))
+					if(nowlore.contains(GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL))
 						WILL = Integer.parseInt(nowlore.split(" : ")[1]);
-					if(nowlore.contains("Çà¿î"))
+					if(nowlore.contains(GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK))
 						LUK = Integer.parseInt(nowlore.split(" : ")[1]);
 				}
 			}
@@ -202,7 +202,7 @@ public class UseUseableItem
 									if(nowlore.contains("È¹µæ]"))
 									{
 										nowlore=ChatColor.stripColor(item.getItemMeta().getLore().get(counter+1));
-										Skillname = nowlore.split(" +")[2];
+										Skillname = nowlore.replace(" + ", "");
 										break;
 									}
 					}

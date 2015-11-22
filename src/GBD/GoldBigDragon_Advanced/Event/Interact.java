@@ -1,7 +1,5 @@
 package GBD.GoldBigDragon_Advanced.Event;
 
-import java.util.Set;
-
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -351,14 +349,14 @@ public class Interact
 		if((event.getItem().getItemStack().hasItemMeta() == true && event.getItem().getItemStack().getItemMeta().hasDisplayName()))
 		{
 			ItemName = event.getItem().getItemStack().getItemMeta().getDisplayName();
-			if(ItemName.contains("¡×e[°ñµå]") == true && event.getItem().getItemStack().getEnchantmentLevel(Enchantment.LUCK) == 500)
+			if(ItemName.contains(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money) == true && event.getItem().getItemStack().getEnchantmentLevel(Enchantment.LUCK) == 500)
 			{
 			  	if(Event_YC.isExit("Stats/" + event.getPlayer().getUniqueId()+".yml") == false)
 			  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(event.getPlayer());
 
 				YM = Event_YC.getNewConfig("Stats/" + event.getPlayer().getUniqueId()+".yml");
 				
-				YM.set("Stat.Money", YM.getLong("Stat.Money") + Long.parseLong(ItemName.split(" ")[1]));
+				YM.set("Stat.Money", YM.getLong("Stat.Money") + Long.parseLong(ItemName.split("¡×f¡×f¡×f¡×l")[1]));
 				YM.saveConfig();
 				event.setCancelled(true);
 				event.getItem().remove();
@@ -371,7 +369,7 @@ public class Interact
 		}
 	  	if(YM.getBoolean("Alert.ItemPickUp") == true)
 		{
-			if(ItemName.contains(ChatColor.YELLOW + "[°ñµå]") == true)
+			if(ItemName.contains(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money) == true)
 				new GBD.GoldBigDragon_Advanced.Effect.PacketSender().sendActionBar(event.getPlayer(), ChatColor.GRAY+""+ChatColor.BOLD+""+""+ChatColor.BOLD+ChatColor.BOLD+""+ChatColor.BOLD+"("+""+ChatColor.BOLD+ItemName+""+ChatColor.GRAY+""+ChatColor.BOLD+")");
 			else
 				new GBD.GoldBigDragon_Advanced.Effect.PacketSender().sendActionBar(event.getPlayer(), ChatColor.GRAY+""+ChatColor.BOLD+""+""+ChatColor.BOLD+ChatColor.BOLD+""+ChatColor.BOLD+"("+""+ChatColor.BOLD+ItemName+""+" "+ChatColor.GRAY+""+ChatColor.BOLD+event.getItem().getItemStack().getAmount()+"°³)");

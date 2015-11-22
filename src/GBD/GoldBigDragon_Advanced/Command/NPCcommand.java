@@ -53,23 +53,29 @@ public class NPCcommand extends HelpMessage
 					{
 					case "판매":
 						{
-							directory = NPCscript.getConfigurationSection("Shop.Sell").getKeys(false).toArray().length;
-							NPCscript.set("Shop.Sell."+directory+".item", player.getItemInHand());
-							NPCscript.set("Shop.Sell."+directory+".price", Integer.parseInt(args[1]));
-							NPCscript.saveConfig();
-							talker.sendMessage(ChatColor.GREEN +"["+ NearbyEntity.get(count).getCustomName()+"] : 상점에 물품을 등록하였습니다.");
-							s.SP((Player)talker, org.bukkit.Sound.CHEST_CLOSE, 2.0F, 0.8F);
+							if(isIntMinMax(args[1], player, 0, Integer.MAX_VALUE))
+							{
+								directory = NPCscript.getConfigurationSection("Shop.Sell").getKeys(false).toArray().length;
+								NPCscript.set("Shop.Sell."+directory+".item", player.getItemInHand());
+								NPCscript.set("Shop.Sell."+directory+".price", Integer.parseInt(args[1]));
+								NPCscript.saveConfig();
+								talker.sendMessage(ChatColor.GREEN +"["+ NearbyEntity.get(count).getCustomName()+"] : 상점에 물품을 등록하였습니다.");
+								s.SP((Player)talker, org.bukkit.Sound.CHEST_CLOSE, 2.0F, 0.8F);
+							}
 						}
 						return;
 					case "구매":
 						{
-							directory = NPCscript.getConfigurationSection("Shop.Buy").getKeys(false).toArray().length;
-							directory = NPCscript.getConfigurationSection("Shop.Buy").getKeys(false).size();
-							NPCscript.set("Shop.Buy."+directory+".item", player.getItemInHand());
-							NPCscript.set("Shop.Buy."+directory+".price", Integer.parseInt(args[1]));
-							NPCscript.saveConfig();
-							talker.sendMessage(ChatColor.GREEN +"["+ NearbyEntity.get(count).getCustomName()+"] : 보여주신 물품을 "+args[1]+"원에 사 들이겠습니다.");
-							s.SP((Player)talker, org.bukkit.Sound.CHEST_OPEN, 2.0F, 0.8F);
+							if(isIntMinMax(args[1], player, 0, Integer.MAX_VALUE))
+							{
+								directory = NPCscript.getConfigurationSection("Shop.Buy").getKeys(false).toArray().length;
+								directory = NPCscript.getConfigurationSection("Shop.Buy").getKeys(false).size();
+								NPCscript.set("Shop.Buy."+directory+".item", player.getItemInHand());
+								NPCscript.set("Shop.Buy."+directory+".price", Integer.parseInt(args[1]));
+								NPCscript.saveConfig();
+								talker.sendMessage(ChatColor.GREEN +"["+ NearbyEntity.get(count).getCustomName()+"] : 보여주신 물품을 "+args[1]+GBD.GoldBigDragon_Advanced.Main.ServerOption.Money+ChatColor.GREEN+"에 사 들이겠습니다.");
+								s.SP((Player)talker, org.bukkit.Sound.CHEST_OPEN, 2.0F, 0.8F);
+							}
 						}
 						return;
 					}
@@ -79,5 +85,26 @@ public class NPCcommand extends HelpMessage
 		player.sendMessage(ChatColor.RED + "[SYSTEM] : NPC를 찾을 수 없습니다!");
 		s.SP((Player)talker, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 		return;
+	}
+	
+	private boolean isIntMinMax(String message,Player player, int Min, int Max)
+	{
+		GBD.GoldBigDragon_Advanced.Effect.Sound sound = new GBD.GoldBigDragon_Advanced.Effect.Sound();
+		try
+		{
+			if(message.split(" ").length <= 1 && Integer.parseInt(message) >= Min&& Integer.parseInt(message) <= Max)
+				return true;
+			else
+			{
+				player.sendMessage(ChatColor.RED + "[SYSTEM] : 최소 "+ChatColor.YELLOW +""+Min+ChatColor.RED+", 최대 "+ChatColor.YELLOW+""+Max+ChatColor.RED+" 이하의 숫자를 입력하세요!");
+				sound.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+			}
+		}
+		catch(NumberFormatException e)
+		{
+			player.sendMessage(ChatColor.RED + "[SYSTEM] : 정수 형태의 값(숫자)을 입력하세요. ("+ChatColor.YELLOW +""+Min+ChatColor.RED+" ~ "+ChatColor.YELLOW+""+Max+ChatColor.RED+")");
+				sound.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+		}
+		return false;
 	}
 }

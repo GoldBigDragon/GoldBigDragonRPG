@@ -123,159 +123,101 @@ public class StatsGUI extends GUIutil
 			}
 		}
 		int stat=dam.getPlayerEquipmentStat(player, "STR")[0];
+		String Additional = ChatColor.RED +""+ChatColor.BOLD+(dam.CombatMinDamageGet(player,DefaultDamage,YM.getInt("Stat.STR"))) + " ~ " + (dam.CombatMaxDamageGet(player,DefaultDamage, YM.getInt("Stat.STR")));
+		String CurrentStat;
 		if(stat == 0)
-		{
-			Stack2(ChatColor.DARK_RED + "       [" + ChatColor.WHITE +""+ChatColor.BOLD + "체력"+ChatColor.DARK_RED + "]", 267,0,1,
-					Arrays.asList(ChatColor.WHITE +""+ChatColor.BOLD +"      "+ YM.getInt("Stat.STR"),
-							ChatColor.GRAY + " 체력은 플레이어의",ChatColor.GRAY + " 물리적 공격력을",
-							ChatColor.GRAY + " 상승시켜 줍니다.","",
-							ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 근접 공격력]",
-							ChatColor.RED + "       " + ChatColor.BOLD + "" + (dam.CombatMinDamageGet(player,DefaultDamage,YM.getInt("Stat.STR"))) + " ~ " + (dam.CombatMaxDamageGet(player,DefaultDamage, YM.getInt("Stat.STR")))), 20, inv);
-		}
+			CurrentStat = ChatColor.WHITE +""+ChatColor.BOLD +""+ YM.getInt("Stat.STR");
 		else if(stat > 0)
-		{
-			Stack2(ChatColor.DARK_RED + "       [" + ChatColor.WHITE +""+ChatColor.BOLD + "체력"+ChatColor.DARK_RED + "]", 267,0,1,
-					Arrays.asList(ChatColor.YELLOW +""+ChatColor.BOLD +"    "+ (YM.getInt("Stat.STR") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.STR")+")",
-							ChatColor.GRAY + " 체력은 플레이어의",ChatColor.GRAY + " 물리적 공격력을",
-							ChatColor.GRAY + " 상승시켜 줍니다.","",
-							ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 근접 공격력]",
-							ChatColor.RED + "       " + ChatColor.BOLD + "" + (dam.CombatMinDamageGet(player,DefaultDamage,YM.getInt("Stat.STR"))) + " ~ " + (dam.CombatMaxDamageGet(player,DefaultDamage, YM.getInt("Stat.STR")))), 20, inv);
-		}
+			CurrentStat = ChatColor.YELLOW +""+ChatColor.BOLD +""+ (YM.getInt("Stat.STR") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.STR")+")";
 		else
-		{
-			Stack2(ChatColor.DARK_RED + "       [" + ChatColor.WHITE +""+ChatColor.BOLD + "체력"+ChatColor.DARK_RED + "]", 267,0,1,
-					Arrays.asList(ChatColor.RED +""+ChatColor.BOLD +"    "+ (YM.getInt("Stat.STR") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.STR")+")",
-							ChatColor.GRAY + " 체력은 플레이어의",ChatColor.GRAY + " 물리적 공격력을",
-							ChatColor.GRAY + " 상승시켜 줍니다.","",
-							ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 근접 공격력]",
-							ChatColor.RED + "       " + ChatColor.BOLD + "" + (dam.CombatMinDamageGet(player,DefaultDamage,YM.getInt("Stat.STR"))) + " ~ " + (dam.CombatMaxDamageGet(player,DefaultDamage, YM.getInt("Stat.STR")))), 20, inv);
-		}
+			CurrentStat = ChatColor.RED +""+ChatColor.BOLD +""+(YM.getInt("Stat.STR") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.STR")+")";
+		
+		String lore = GBD.GoldBigDragon_Advanced.Main.ServerOption.STR_Lore;
+		lore = LineUp(CurrentStat, GBD.GoldBigDragon_Advanced.Main.ServerOption.STR.length()+20)+"%enter%"+lore.replace("%stat%", GBD.GoldBigDragon_Advanced.Main.ServerOption.STR)
+				+"%enter%"+ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 근접 공격력]%enter%"+LineUp(Additional, 24);
+		
+		Stack2(ChatColor.DARK_RED + LineUp(ChatColor.RED+"[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+""+ChatColor.DARK_RED + "]", 24), 267,0,1,
+				Arrays.asList(lore.split("%enter%")), 20, inv);
+		
 		
 		stat=dam.getPlayerEquipmentStat(player, "DEX")[0];
+		Additional = ChatColor.RED + "" + ChatColor.BOLD + "" + dam.RangeMinDamageGet(player,0,YM.getInt("Stat.DEX")) + " ~ " + dam.RangeMaxDamageGet(player,0, YM.getInt("Stat.DEX"));
 		if(stat == 0)
-		{
-			Stack2(ChatColor.GREEN + "       [" + ChatColor.WHITE +""+ChatColor.BOLD + "솜씨"+ChatColor.GREEN + "]", 261,0,1,
-					Arrays.asList(ChatColor.WHITE +""+ChatColor.BOLD +"      "+ YM.getInt("Stat.DEX"),
-							ChatColor.GRAY + " 솜씨는 플레이어의",ChatColor.GRAY + " 원거리 공격력을",
-							ChatColor.GRAY + " 상승시켜 줍니다.","",
-							ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 원거리 공격력]",
-							ChatColor.RED + "       " + ChatColor.BOLD + "" + dam.RangeMinDamageGet(player,0,YM.getInt("Stat.DEX")) + " ~ " + dam.RangeMaxDamageGet(player,0, YM.getInt("Stat.DEX"))), 21, inv);
-		}
+			CurrentStat = ChatColor.WHITE +""+ChatColor.BOLD +""+ YM.getInt("Stat.DEX");
 		else if(stat > 0)
-		{
-			Stack2(ChatColor.GREEN + "       [" + ChatColor.WHITE +""+ChatColor.BOLD + "솜씨"+ChatColor.GREEN + "]", 261,0,1,
-					Arrays.asList(ChatColor.YELLOW +""+ChatColor.BOLD +"    "+ (YM.getInt("Stat.DEX") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.DEX")+")",
-							ChatColor.GRAY + " 솜씨는 플레이어의",ChatColor.GRAY + " 원거리 공격력을",
-							ChatColor.GRAY + " 상승시켜 줍니다.","",
-							ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 원거리 공격력]",
-							ChatColor.RED + "       " + ChatColor.BOLD + "" + dam.RangeMinDamageGet(player,0,YM.getInt("Stat.DEX")) + " ~ " + dam.RangeMaxDamageGet(player,0, YM.getInt("Stat.DEX"))), 21, inv);
-		}
+			CurrentStat = ChatColor.YELLOW +""+ChatColor.BOLD +""+ (YM.getInt("Stat.DEX") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.DEX")+")";
 		else
-		{
-			Stack2(ChatColor.GREEN + "       [" + ChatColor.WHITE +""+ChatColor.BOLD + "솜씨"+ChatColor.GREEN + "]", 261,0,1,
-					Arrays.asList(ChatColor.RED +""+ChatColor.BOLD +"    "+ (YM.getInt("Stat.DEX") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.DEX")+")",
-							ChatColor.GRAY + " 솜씨는 플레이어의",ChatColor.GRAY + " 원거리 공격력을",
-							ChatColor.GRAY + " 상승시켜 줍니다.","",
-							ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 원거리 공격력]",
-							ChatColor.RED + "       " + ChatColor.BOLD + "" + dam.RangeMinDamageGet(player,0,YM.getInt("Stat.DEX")) + " ~ " + dam.RangeMaxDamageGet(player,0, YM.getInt("Stat.DEX"))), 21, inv);
-		}
+			CurrentStat = ChatColor.RED +""+ChatColor.BOLD +""+(YM.getInt("Stat.DEX") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.DEX")+")";
+
+		lore = GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX_Lore;
+		lore = LineUp(CurrentStat, GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX.length()+20)+"%enter%"+lore.replace("%stat%", GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX)
+					+"%enter%"+ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 원거리 공격력]%enter%"+LineUp(Additional, 24);
+			
+		Stack2(LineUp(ChatColor.GREEN+"[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+""+ChatColor.GREEN + "]", 24), 261,0,1,
+				Arrays.asList(lore.split("%enter%")), 21, inv);
+		
 		
 		stat=dam.getPlayerEquipmentStat(player, "INT")[0];
+		Additional = ChatColor.RED + "" + ChatColor.BOLD + "" + ((YM.getInt("Stat.INT")+dam.getPlayerEquipmentStat(player, "INT")[0])*0.6+100) + " %";
 		if(stat == 0)
-		{
-			Stack2(ChatColor.AQUA + "       [" + ChatColor.WHITE +""+ChatColor.BOLD + "지력"+ChatColor.AQUA + "]", 369,0,1,
-					Arrays.asList(ChatColor.WHITE +""+ChatColor.BOLD +"      "+ YM.getInt("Stat.INT"),
-							ChatColor.GRAY + " 지력은 플레이어가",ChatColor.GRAY + " 사용하는 스킬 중",ChatColor.GRAY + " 지력 영향을 받는",ChatColor.GRAY + " 스킬 공격력을",
-							ChatColor.GRAY + " 상승시켜 줍니다.","",
-							ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 스킬 공격력]",
-							ChatColor.RED + "       " + ChatColor.BOLD + "" + ((YM.getInt("Stat.INT")+dam.getPlayerEquipmentStat(player, "INT")[0])*0.6+100) + " %"), 22, inv);
-		}
+			CurrentStat = ChatColor.WHITE +""+ChatColor.BOLD +""+ YM.getInt("Stat.INT");
 		else if(stat > 0)
-		{
-			Stack2(ChatColor.AQUA + "       [" + ChatColor.WHITE +""+ChatColor.BOLD + "지력"+ChatColor.AQUA + "]", 369,0,1,
-					Arrays.asList(ChatColor.YELLOW +""+ChatColor.BOLD +"    "+ (YM.getInt("Stat.INT") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.INT")+")",
-							ChatColor.GRAY + " 지력은 플레이어가",ChatColor.GRAY + " 사용하는 스킬 중",ChatColor.GRAY + " 지력 영향을 받는",ChatColor.GRAY + " 스킬 공격력을",
-							ChatColor.GRAY + " 상승시켜 줍니다.","",
-							ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 스킬 공격력]",
-							ChatColor.RED + "       " + ChatColor.BOLD + "" + ((YM.getInt("Stat.INT")+dam.getPlayerEquipmentStat(player, "INT")[0])*0.6+100) + " %"), 22, inv);
-		}
+			CurrentStat = ChatColor.YELLOW +""+ChatColor.BOLD +""+ (YM.getInt("Stat.INT") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.INT")+")";
 		else
-		{
-			Stack2(ChatColor.AQUA + "       [" + ChatColor.WHITE +""+ChatColor.BOLD + "지력"+ChatColor.AQUA + "]", 369,0,1,
-					Arrays.asList(ChatColor.RED +""+ChatColor.BOLD +"    "+ (YM.getInt("Stat.INT") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.INT")+")",
-							ChatColor.GRAY + " 지력은 플레이어가",ChatColor.GRAY + " 사용하는 스킬 중",ChatColor.GRAY + " 지력 영향을 받는",ChatColor.GRAY + " 스킬 공격력을",
-							ChatColor.GRAY + " 상승시켜 줍니다.","",
-							ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 스킬 공격력]",
-							ChatColor.RED + "       " + ChatColor.BOLD + "" + ((YM.getInt("Stat.INT")+dam.getPlayerEquipmentStat(player, "INT")[0])*0.6+100) + " %"), 22, inv);
-		}
+			CurrentStat = ChatColor.RED +""+ChatColor.BOLD +""+(YM.getInt("Stat.INT") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.INT")+")";
 
+		lore = GBD.GoldBigDragon_Advanced.Main.ServerOption.INT_Lore;
+		lore = LineUp(CurrentStat, GBD.GoldBigDragon_Advanced.Main.ServerOption.INT.length()+20)+"%enter%"+lore.replace("%stat%", GBD.GoldBigDragon_Advanced.Main.ServerOption.INT)
+					+"%enter%"+ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 스킬 공격력]%enter%"+LineUp(Additional, 24);
+			
+		Stack2(LineUp(ChatColor.AQUA + "[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+""+ChatColor.AQUA + "]",24), 369,0,1,
+				Arrays.asList(lore.split("%enter%")), 22, inv);
+		
 		stat=dam.getPlayerEquipmentStat(player, "WILL")[0];
+		Additional = ChatColor.RED + "" + ChatColor.BOLD + "" + ((YM.getInt("Stat.WILL")+dam.getPlayerEquipmentStat(player, "WILL")[0])*0.6+100) + " %";
 		if(stat == 0)
-		{
-			Stack2(ChatColor.GRAY + "       [" + ChatColor.WHITE +""+ChatColor.BOLD + "의지"+ChatColor.GRAY + "]", 370,0,1,
-					Arrays.asList(ChatColor.WHITE +""+ChatColor.BOLD +"      "+ YM.getInt("Stat.WILL"),
-							ChatColor.GRAY + " 의지는 플레이어의",ChatColor.GRAY + " 크리티컬 및 스킬 중",ChatColor.GRAY + " 의지 영향을 받는",ChatColor.GRAY + " 스킬 공격력을",
-							ChatColor.GRAY + " 상승시켜 줍니다.","",
-							ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 스킬 공격력]",
-							ChatColor.RED + "       " + ChatColor.BOLD + "" + ((YM.getInt("Stat.WILL")+dam.getPlayerEquipmentStat(player, "WILL")[0])*0.6+100) + " %"), 23, inv);
-		}
+			CurrentStat = ChatColor.WHITE +""+ChatColor.BOLD +""+ YM.getInt("Stat.WILL");
 		else if(stat > 0)
-		{
-			Stack2(ChatColor.GRAY + "       [" + ChatColor.WHITE +""+ChatColor.BOLD + "의지"+ChatColor.GRAY + "]", 370,0,1,
-					Arrays.asList(ChatColor.YELLOW +""+ChatColor.BOLD +"    "+ (YM.getInt("Stat.WILL") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.INT")+")",
-							ChatColor.GRAY + " 의지는 플레이어의",ChatColor.GRAY + " 크리티컬 및 스킬 중",ChatColor.GRAY + " 의지 영향을 받는",ChatColor.GRAY + " 스킬 공격력을",
-							ChatColor.GRAY + " 상승시켜 줍니다.","",
-							ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 스킬 공격력]",
-							ChatColor.RED + "       " + ChatColor.BOLD + "" + ((YM.getInt("Stat.WILL")+dam.getPlayerEquipmentStat(player, "WILL")[0])*0.6+100) + " %"), 23, inv);
-		}
+			CurrentStat = ChatColor.YELLOW +""+ChatColor.BOLD +""+ (YM.getInt("Stat.WILL") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.WILL")+")";
 		else
-		{
-			Stack2(ChatColor.GRAY + "       [" + ChatColor.WHITE +""+ChatColor.BOLD + "의지"+ChatColor.GRAY + "]", 370,0,1,
-					Arrays.asList(ChatColor.RED +""+ChatColor.BOLD +"    "+ (YM.getInt("Stat.WILL") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.INT")+")",
-							ChatColor.GRAY + " 의지는 플레이어의",ChatColor.GRAY + " 크리티컬 및 스킬 중",ChatColor.GRAY + " 의지 영향을 받는",ChatColor.GRAY + " 스킬 공격력을",
-							ChatColor.GRAY + " 상승시켜 줍니다.","",
-							ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 스킬 공격력]",
-							ChatColor.RED + "       " + ChatColor.BOLD + "" + ((YM.getInt("Stat.WILL")+dam.getPlayerEquipmentStat(player, "WILL")[0])*0.6+100) + " %"), 23, inv);
-		}
+			CurrentStat = ChatColor.RED +""+ChatColor.BOLD +""+(YM.getInt("Stat.WILL") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.WILL")+")";
 
+		lore = GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL_Lore;
+		lore = LineUp(CurrentStat, GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL.length()+20)+"%enter%"+lore.replace("%stat%", GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL)
+					+"%enter%"+ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 스킬 공격력]%enter%"+LineUp(Additional, 24);
+			
+		Stack2(LineUp(ChatColor.GRAY + "[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+""+ChatColor.GRAY + "]",24), 370,0,1,
+				Arrays.asList(lore.split("%enter%")), 23, inv);
+		
+		
 		stat=dam.getPlayerEquipmentStat(player, "LUK")[0];
 		if(stat == 0)
-		{
-
-			Stack2(ChatColor.YELLOW + "       [" + ChatColor.WHITE +""+ChatColor.BOLD + "행운"+ChatColor.YELLOW + "]", 322,0,1,
-					Arrays.asList(ChatColor.WHITE +""+ChatColor.BOLD +"      "+ YM.getInt("Stat.LUK"),
-							ChatColor.GRAY + " 행운은 플레이어에게",ChatColor.GRAY + " 뜻하지 않은 일이 일어날",
-							ChatColor.GRAY + " 확률을 증가시킵니다.",""), 24, inv);
-		}
+			CurrentStat = ChatColor.WHITE +""+ChatColor.BOLD +""+ YM.getInt("Stat.LUK");
 		else if(stat > 0)
-		{
-
-			Stack2(ChatColor.YELLOW + "       [" + ChatColor.WHITE +""+ChatColor.BOLD + "행운"+ChatColor.YELLOW + "]", 322,0,1,
-					Arrays.asList(ChatColor.YELLOW +""+ChatColor.BOLD +"    "+ (YM.getInt("Stat.LUK") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.LUK")+")",
-							ChatColor.GRAY + " 행운은 플레이어에게",ChatColor.GRAY + " 뜻하지 않은 일이 일어날",
-							ChatColor.GRAY + " 확률을 증가시킵니다.",""), 24, inv);
-		}
+			CurrentStat = ChatColor.YELLOW +""+ChatColor.BOLD +""+ (YM.getInt("Stat.LUK") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.LUK")+")";
 		else
-		{
+			CurrentStat = ChatColor.RED +""+ChatColor.BOLD +""+(YM.getInt("Stat.LUK") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.LUK")+")";
 
-			Stack2(ChatColor.YELLOW + "       [" + ChatColor.WHITE +""+ChatColor.BOLD + "행운"+ChatColor.YELLOW + "]", 322,0,1,
-					Arrays.asList(ChatColor.RED +""+ChatColor.BOLD +"    "+ (YM.getInt("Stat.LUK") + stat) +ChatColor.WHITE + "("+ YM.getInt("Stat.LUK")+")",
-							ChatColor.GRAY + " 행운은 플레이어에게",ChatColor.GRAY + " 뜻하지 않은 일이 일어날",
-							ChatColor.GRAY + " 확률을 증가시킵니다.",""), 24, inv);
-		}
+		lore = GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK_Lore;
+		lore = LineUp(CurrentStat, GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK.length()+20)+"%enter%"+lore.replace("%stat%", GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK)
+					+"%enter%";
+			
+		Stack2(LineUp(ChatColor.YELLOW + "[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+""+ChatColor.YELLOW + "]",24), 322,0,1,
+				Arrays.asList(lore.split("%enter%")), 24, inv);
+
 
 		if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == false)
 		{
-			Stack2(ChatColor.GOLD + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + "체력 상승"+ChatColor.GOLD + "]", 399,0,1,
-					Arrays.asList(ChatColor.GRAY + "체력 스텟을 한단계 상승 시킵니다.",ChatColor.GRAY + "남은 스텟 포인트 : "+YM.getInt("Stat.StatPoint")), 29, inv);
-			Stack2(ChatColor.GOLD + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + "솜씨 상승"+ChatColor.GOLD + "]", 399,0,1,
-					Arrays.asList(ChatColor.GRAY + "솜씨 스텟을 한단계 상승 시킵니다.",ChatColor.GRAY + "남은 스텟 포인트 : "+YM.getInt("Stat.StatPoint")), 30, inv);
-			Stack2(ChatColor.GOLD + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + "지력 상승"+ChatColor.GOLD + "]", 399,0,1,
-					Arrays.asList(ChatColor.GRAY + "지력 스텟을 한단계 상승 시킵니다.",ChatColor.GRAY + "남은 스텟 포인트 : "+YM.getInt("Stat.StatPoint")), 31, inv);
-			Stack2(ChatColor.GOLD + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + "의지 상승"+ChatColor.GOLD + "]", 399,0,1,
-					Arrays.asList(ChatColor.GRAY + "의지 스텟을 한단계 상승 시킵니다.",ChatColor.GRAY + "남은 스텟 포인트 : "+YM.getInt("Stat.StatPoint")), 32, inv);
-			Stack2(ChatColor.GOLD + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + "행운 상승"+ChatColor.GOLD + "]", 399,0,1,
-					Arrays.asList(ChatColor.GRAY + "행운 스텟을 한단계 상승 시킵니다.",ChatColor.GRAY + "남은 스텟 포인트 : "+YM.getInt("Stat.StatPoint")), 33, inv);
+			Stack2(ChatColor.GOLD + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" 상승"+ChatColor.GOLD + "]", 399,0,1,
+					Arrays.asList(ChatColor.GRAY + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" 스텟을 한단계 상승 시킵니다.",ChatColor.GRAY + "남은 스텟 포인트 : "+YM.getInt("Stat.StatPoint")), 29, inv);
+			Stack2(ChatColor.GOLD + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" 상승"+ChatColor.GOLD + "]", 399,0,1,
+					Arrays.asList(ChatColor.GRAY + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" 스텟을 한단계 상승 시킵니다.",ChatColor.GRAY + "남은 스텟 포인트 : "+YM.getInt("Stat.StatPoint")), 30, inv);
+			Stack2(ChatColor.GOLD + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" 상승"+ChatColor.GOLD + "]", 399,0,1,
+					Arrays.asList(ChatColor.GRAY + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" 스텟을 한단계 상승 시킵니다.",ChatColor.GRAY + "남은 스텟 포인트 : "+YM.getInt("Stat.StatPoint")), 31, inv);
+			Stack2(ChatColor.GOLD + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" 상승"+ChatColor.GOLD + "]", 399,0,1,
+					Arrays.asList(ChatColor.GRAY + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" 스텟을 한단계 상승 시킵니다.",ChatColor.GRAY + "남은 스텟 포인트 : "+YM.getInt("Stat.StatPoint")), 32, inv);
+			Stack2(ChatColor.GOLD + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" 상승"+ChatColor.GOLD + "]", 399,0,1,
+					Arrays.asList(ChatColor.GRAY + ""+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" 스텟을 한단계 상승 시킵니다.",ChatColor.GRAY + "남은 스텟 포인트 : "+YM.getInt("Stat.StatPoint")), 33, inv);
 		}
 		GBD.GoldBigDragon_Advanced.Event.Damage d = new GBD.GoldBigDragon_Advanced.Event.Damage();
 		Stack2(ChatColor.GRAY + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + "방어"+ChatColor.GRAY + "]", 307,0,1,
@@ -403,4 +345,21 @@ public class StatsGUI extends GUIutil
 		return;
 	}
 	
+	
+	public String LineUp(String RawString,int size)
+	{
+		if(RawString.length()>=size)
+			return RawString;
+		else
+		{
+			int spaceSize = size - RawString.length();
+			StringBuffer TempString = new StringBuffer();
+			for(int count = 0; count < spaceSize/2; count++)
+				TempString.append(" ");
+			TempString.append(RawString);
+			for(int count = 0; count < spaceSize/2; count++)
+				TempString.append(" ");
+			return TempString.toString();
+		}
+	}
 }

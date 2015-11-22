@@ -70,28 +70,23 @@ public class SpellMain implements Listener
 		if(Main.PlayerUseSpell.containsKey(player) == true)
 		{
 			Damageable p = player;
-			switch(Main.PlayerUseSpell.get(player))
-			{
-			case "없음":
-			break;
-			case "생명력":
+			String switchCheck = Main.PlayerUseSpell.get(player);
+			if(switchCheck.compareTo("생명력")==0)
 				bonuspower = dam.MagicSpellsDamageBonus((int) p.getHealth())+damage.getPlayerEquipmentStat(player, "HP")[0];
-				break;
-			case "마나":
-				OtherPlugins.SpellMain MS = new OtherPlugins.SpellMain();
-				bonuspower = dam.MagicSpellsDamageBonus(MS.getPlayerMana(player))+damage.getPlayerEquipmentStat(player, "MP")[0];
-				break;
-			case "체력":
-				bonuspower = PlayerStat.getInt("Stat.STR")+damage.getPlayerEquipmentStat(player, "STR")[0];break;
-			case "솜씨":
-				bonuspower = PlayerStat.getInt("Stat.DEX")+damage.getPlayerEquipmentStat(player, "DEX")[0];break;
-			case "지력":
-				bonuspower = PlayerStat.getInt("Stat.INT")+damage.getPlayerEquipmentStat(player, "INT")[0];break;
-			case "의지":
-				bonuspower = PlayerStat.getInt("Stat.WILL")+damage.getPlayerEquipmentStat(player, "WILL")[0];break;
-			case "행운":
-				bonuspower = PlayerStat.getInt("Stat.LUK")+damage.getPlayerEquipmentStat(player, "LUK")[0];break;
-			}
+			else if(switchCheck.compareTo("마나")==0)
+				bonuspower = dam.MagicSpellsDamageBonus(getPlayerMana(player))+damage.getPlayerEquipmentStat(player, "MP")[0];
+			else if(switchCheck.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.STR)==0)
+				bonuspower = PlayerStat.getInt("Stat.STR")+damage.getPlayerEquipmentStat(player, "STR")[0];
+			else if(switchCheck.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX)==0)
+				bonuspower = PlayerStat.getInt("Stat.DEX")+damage.getPlayerEquipmentStat(player, "DEX")[0];
+			else if(switchCheck.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.INT)==0)
+				bonuspower = PlayerStat.getInt("Stat.INT")+damage.getPlayerEquipmentStat(player, "INT")[0];
+			else if(switchCheck.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL)==0)
+				bonuspower = PlayerStat.getInt("Stat.WILL")+damage.getPlayerEquipmentStat(player, "WILL")[0];
+			else if(switchCheck.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK)==0)
+				bonuspower = PlayerStat.getInt("Stat.LUK")+damage.getPlayerEquipmentStat(player, "LUK")[0];
+			else
+				bonuspower = 0;
 		}
 		int[] WeaponPower = dam.getSlotChangedPlayerEquipmentStat(player, "MagicDamage", Main.PlayerlastItem.get(player));
 		int WeaponPowerFixed = new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(WeaponPower[0], WeaponPower[1]);
@@ -146,6 +141,7 @@ public class SpellMain implements Listener
 				}
 			}
 		}
+		Main.PlayerUseSpell.put(player, "us");
 		return (float) (bonuspower*0.006)-negativeBonus;
 	}
 	

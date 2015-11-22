@@ -55,12 +55,14 @@ public class QuestCommand extends HelpMessage
 				  			||args[1].equalsIgnoreCase("일주")||args[1].equalsIgnoreCase("한달"))
 				  			{
 				  				Object[] questList = QuestConfig.getConfigurationSection("").getKeys(false).toArray();
-							  	String QuestName = "";
-							  	
+							  	StringBuffer QN = new StringBuffer();
 							    for(int i =2; i<args.length-1;i++)
-							    	QuestName=QuestName+args[i]+" ";
-							    QuestName=QuestName+args[args.length-1];
-							    String QuestNameString = ChatColor.stripColor(QuestName.toString().replace(".",""));
+						    	{
+							    	QN.append(args[i]+" ");
+						    	}
+							    QN.append(args[args.length-1]);
+							    String QuestName = QN.toString().replace(".", "");
+							    String QuestNameString = ChatColor.stripColor(QuestName);
 								for(int count = 0; count < questList.length;count++)
 							    {
 									if(questList[count].toString().equalsIgnoreCase(QuestNameString) == true)

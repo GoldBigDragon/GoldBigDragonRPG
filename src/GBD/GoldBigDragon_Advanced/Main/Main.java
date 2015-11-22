@@ -55,11 +55,11 @@ public class Main extends JavaPlugin implements Listener
 {
 	public static YamlController Main_YC,GUI_YC,Party_YC,Config_YC,Event_YC,Monster_YC,Location_YC,Scheduler_YC;
 
-	public static long serverUpdate = 20151115;
+	public static String serverUpdate = "2015-11-22-14:24";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/";
 	
-	public static long currentServerUpdate = 20151115;
+	public static String currentServerUpdate = "2015-11-22-14:24";
 	public static String currentServerVersion = "Advanced";
 	
 	public static String SpawnMobName;
@@ -149,7 +149,7 @@ public class Main extends JavaPlugin implements Listener
 		
 		new GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain(this);
 		new GBD.GoldBigDragon_Advanced.ServerTick.ServerTickScheduleManager().loadCategoriFile();
-		
+		new GBD.GoldBigDragon_Advanced.Main.ServerOption().Initialize();
 	  	return;
 	}
 	public void onDisable()
@@ -187,7 +187,7 @@ public class Main extends JavaPlugin implements Listener
 			String[] Parsed = sb.toString().split("<br>");
 			
 			String Version = Parsed[1].split(": ")[1];
-			long Update = Long.parseLong(Parsed[2].split(": ")[1]);
+			String Update = Parsed[2].split(": ")[1];
 			
 		  	Bukkit.getConsoleSender().sendMessage(ChatColor.WHITE + "최신 버전 : "+Version);
 		  	Bukkit.getConsoleSender().sendMessage(ChatColor.GRAY + "현재 버전 : "+serverVersion);
@@ -196,7 +196,7 @@ public class Main extends JavaPlugin implements Listener
 
 			currentServerUpdate = Update;
 			currentServerVersion = Version;
-			if(serverVersion.equals(Version)&& serverUpdate >= Update)
+			if(serverVersion.compareTo(Version)==0&&serverUpdate.compareTo(Update)==0)
 			  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_AQUA + "현재 GoldBigDragonRPG는 최신 버전입니다!");
 			else
 			{
@@ -269,25 +269,37 @@ public class Main extends JavaPlugin implements Listener
 	  	    GBD.GoldBigDragon_Advanced.Config.QuestConfig quest = new GBD.GoldBigDragon_Advanced.Config.QuestConfig();
 	  	    quest.CreateNewPlayerConfig(player);
 	
-    	    YamlManager QuestConfig,QuestList;
 			YamlController Location_YC = GBD.GoldBigDragon_Advanced.Main.Main.Location_YC;
-			QuestConfig=Location_YC.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
-			QuestList=Location_YC.getNewConfig("Quest/QuestList.yml");
+			YamlManager QuestConfig=Location_YC.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
+			YamlManager QuestList=Location_YC.getNewConfig("Quest/QuestList.yml");
 			YamlManager NewBieYM = Location_YC.getNewConfig("ETC/NewBie.yml");
 			
 			QuestConfig.set("PlayerName", player.getName());
 			QuestConfig.set("PlayerUUID", player.getUniqueId().toString());
+			Object[] Quest = QuestList.getKeys().toArray();
 			String QuestName = NewBieYM.getString("FirstQuest");
 			if(QuestName.equals("null") ==false)
 			{
-				if(QuestList.contains(QuestName)==true)
+				for(int count = 0; count < Quest.length; count++)
 				{
-					if(QuestList.getConfigurationSection(QuestName+".FlowChart").getKeys(false).toArray().length != 0)
+					if(QuestName.compareTo(Quest[count].toString())==0)
 					{
-						QuestConfig.set("Started."+QuestName+".Flow", 0);
-						QuestConfig.set("Started."+QuestName+".Type", QuestList.getString(QuestName+".FlowChart."+0+".Type"));
-						player.sendMessage(ChatColor.YELLOW+"[퀘스트] : 새로운 퀘스트가 도착했습니다! " +ChatColor.GOLD+""+ChatColor.BOLD+"/퀘스트");
-						QuestConfig.saveConfig();
+						if(QuestList.getConfigurationSection(QuestName+".FlowChart").getKeys(false).toArray().length != 0)
+						{
+							QuestConfig.set("Started."+QuestName+".Flow", 0);
+							QuestConfig.set("Started."+QuestName+".Type", QuestList.getString(QuestName+".FlowChart."+0+".Type"));
+							QuestConfig.saveConfig();
+							player.sendMessage(ChatColor.YELLOW+"[퀘스트] : 새로운 퀘스트가 도착했습니다! " +ChatColor.GOLD+""+ChatColor.BOLD+"/퀘스트");
+							if(QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("Nevigation")==0||
+								QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("Whisper")==0||
+								QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("BroadCast")==0||
+								QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("BlockPlace")==0||
+								QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("VarChange")==0||
+								QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("TelePort")==0)
+								new GBD.GoldBigDragon_Advanced.GUI.QuestGUI().QuestTypeRouter(player, QuestName);
+							
+						}
+						break;
 					}
 				}
 			}
@@ -914,7 +926,7 @@ public class Main extends JavaPlugin implements Listener
 		  		case "돈":
 				 	s.SP((Player)talker, org.bukkit.Sound.LAVA_POP, 0.8F, 1.8F);
 				 	YamlManager YM = Main_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
-				 	player.sendMessage(ChatColor.YELLOW + "[현재 소지 금액] " + ChatColor.YELLOW+ChatColor.BOLD +"" +YM.getInt("Stat.Money") + ""+ ChatColor.YELLOW+ " Gold");
+				 	player.sendMessage(ChatColor.YELLOW + "[현재 소지 금액] " + ChatColor.YELLOW+ChatColor.BOLD +"" +YM.getInt("Stat.Money") + " "+ServerOption.Money);
 					return true;
 		  		case "스텟":
 		  			GBD.GoldBigDragon_Advanced.GUI.StatsGUI sgui = new GBD.GoldBigDragon_Advanced.GUI.StatsGUI();

@@ -744,25 +744,25 @@ public class UseableItemGUI extends GUIutil
 					else if(ItemList.getInt(ItemNumber+".MP") < 0)
 						lore = lore+ChatColor.RED + " - 마나 : " + ItemList.getInt(ItemNumber+".MP")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".STR") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 체력 : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".STR") < 0)
-						lore = lore+ChatColor.RED + " - 체력 : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".DEX") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 솜씨 : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".DEX") < 0)
-						lore = lore+ChatColor.RED + " - 솜씨 : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".INT") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 지력 : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".INT") < 0)
-						lore = lore+ChatColor.RED + " - 지력 : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".WILL") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 의지 : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".WILL") < 0)
-						lore = lore+ChatColor.RED + " - 의지 : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".LUK") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 행운 : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".LUK") < 0)
-						lore = lore+ChatColor.RED + " - 행운 : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
 				break;
 			case "[스킬북]":
 				if(ItemList.getString(ItemNumber+".Skill").equals("null"))
@@ -853,25 +853,25 @@ public class UseableItemGUI extends GUIutil
 					else if(ItemList.getInt(ItemNumber+".MP") < 0)
 						lore = lore+ChatColor.RED + " - 마나 : " + ItemList.getInt(ItemNumber+".MP")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".STR") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 체력 : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".STR") < 0)
-						lore = lore+ChatColor.RED + " - 체력 : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".DEX") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 솜씨 : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".DEX") < 0)
-						lore = lore+ChatColor.RED + " - 솜씨 : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".INT") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 지력 : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".INT") < 0)
-						lore = lore+ChatColor.RED + " - 지력 : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".WILL") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 의지 : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".WILL") < 0)
-						lore = lore+ChatColor.RED + " - 의지 : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".LUK") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 행운 : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".LUK") < 0)
-						lore = lore+ChatColor.RED + " - 행운 : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".MaxUpgrade") > 0)
 						lore = lore+ChatColor.DARK_PURPLE + " + 개조 : " +ItemList.getInt(ItemNumber+".MaxUpgrade")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".MaxUpgrade") < 0)
@@ -938,25 +938,25 @@ public class UseableItemGUI extends GUIutil
 					else if(ItemList.getInt(ItemNumber+".MP") < 0)
 						lore = lore+ChatColor.RED + " - 마나 : " + ItemList.getInt(ItemNumber+".MP")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".STR") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 체력 : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".STR") < 0)
-						lore = lore+ChatColor.RED + " - 체력 : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".DEX") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 솜씨 : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".DEX") < 0)
-						lore = lore+ChatColor.RED + " - 솜씨 : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".INT") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 지력 : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".INT") < 0)
-						lore = lore+ChatColor.RED + " - 지력 : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".WILL") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 의지 : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".WILL") < 0)
-						lore = lore+ChatColor.RED + " - 의지 : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".LUK") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 행운 : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".LUK") < 0)
-						lore = lore+ChatColor.RED + " - 행운 : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
 				break;
 			case "[스킬북]":
 				if(ItemList.getString(ItemNumber+".Skill").equals("null"))
@@ -1045,25 +1045,25 @@ public class UseableItemGUI extends GUIutil
 					else if(ItemList.getInt(ItemNumber+".MP") < 0)
 						lore = lore+ChatColor.RED + " - 마나 : " + ItemList.getInt(ItemNumber+".MP")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".STR") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 체력 : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".STR") < 0)
-						lore = lore+ChatColor.RED + " - 체력 : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".DEX") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 솜씨 : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".DEX") < 0)
-						lore = lore+ChatColor.RED + " - 솜씨 : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".INT") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 지력 : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".INT") < 0)
-						lore = lore+ChatColor.RED + " - 지력 : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".WILL") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 의지 : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".WILL") < 0)
-						lore = lore+ChatColor.RED + " - 의지 : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".LUK") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " + 행운 : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " + "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".LUK") < 0)
-						lore = lore+ChatColor.RED + " - 행운 : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
+						lore = lore+ChatColor.RED + " - "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".MaxUpgrade") > 0)
 						lore = lore+ChatColor.DARK_PURPLE + " + 개조 : " +ItemList.getInt(ItemNumber+".MaxUpgrade")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".MaxUpgrade") < 0)
@@ -1129,25 +1129,25 @@ public class UseableItemGUI extends GUIutil
 					else if(ItemList.getInt(ItemNumber+".MP") < 0)
 						lore = lore+ChatColor.RED + " 마나 : " + ItemList.getInt(ItemNumber+".MP")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".STR") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " 체력 : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".STR") < 0)
-						lore = lore+ChatColor.RED + " 체력 : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
+						lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".DEX") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " 솜씨 : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".DEX") < 0)
-						lore = lore+ChatColor.RED + " 솜씨 : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
+						lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".INT") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " 지력 : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".INT") < 0)
-						lore = lore+ChatColor.RED + " 지력 : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
+						lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".WILL") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " 의지 : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".WILL") < 0)
-						lore = lore+ChatColor.RED + " 의지 : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
+						lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".LUK") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " 행운 : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".LUK") < 0)
-						lore = lore+ChatColor.RED + " 행운 : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
+						lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
 				break;
 			case "[스킬북]":
 				if(ItemList.getString(ItemNumber+".Skill").equals("null"))
@@ -1233,25 +1233,25 @@ public class UseableItemGUI extends GUIutil
 					else if(ItemList.getInt(ItemNumber+".MP") < 0)
 						lore = lore+ChatColor.RED + " 마나 : " + ItemList.getInt(ItemNumber+".MP")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".STR") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " 체력 : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".STR") < 0)
-						lore = lore+ChatColor.RED + " 체력 : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
+						lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".DEX") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " 솜씨 : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".DEX") < 0)
-						lore = lore+ChatColor.RED + " 솜씨 : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
+						lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".INT") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " 지력 : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".INT") < 0)
-						lore = lore+ChatColor.RED + " 지력 : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
+						lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".WILL") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " 의지 : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".WILL") < 0)
-						lore = lore+ChatColor.RED + " 의지 : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
+						lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".LUK") > 0)
-						lore = lore+ChatColor.DARK_AQUA + " 행운 : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
+						lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
 					else if(ItemList.getInt(ItemNumber+".LUK") < 0)
-						lore = lore+ChatColor.RED + " 행운 : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
+						lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".MaxUpgrade") > 0)
 						lore = lore+ChatColor.DARK_PURPLE + " 개조 : " +ItemList.getInt(ItemNumber+".MaxUpgrade")+"%enter%";
 					if(ItemList.getInt(ItemNumber+".MaxUpgrade") < 0)
@@ -1318,25 +1318,25 @@ public class UseableItemGUI extends GUIutil
 						else if(ItemList.getInt(ItemNumber+".MP") < 0)
 							lore = lore+ChatColor.RED + " 마나 : " + ItemList.getInt(ItemNumber+".MP")+"%enter%";
 						if(ItemList.getInt(ItemNumber+".STR") > 0)
-							lore = lore+ChatColor.DARK_AQUA + " 체력 : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
+							lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
 						else if(ItemList.getInt(ItemNumber+".STR") < 0)
-							lore = lore+ChatColor.RED + " 체력 : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
+							lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
 						if(ItemList.getInt(ItemNumber+".DEX") > 0)
-							lore = lore+ChatColor.DARK_AQUA + " 솜씨 : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
+							lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
 						else if(ItemList.getInt(ItemNumber+".DEX") < 0)
-							lore = lore+ChatColor.RED + " 솜씨 : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
+							lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
 						if(ItemList.getInt(ItemNumber+".INT") > 0)
-							lore = lore+ChatColor.DARK_AQUA + " 지력 : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
+							lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
 						else if(ItemList.getInt(ItemNumber+".INT") < 0)
-							lore = lore+ChatColor.RED + " 지력 : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
+							lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
 						if(ItemList.getInt(ItemNumber+".WILL") > 0)
-							lore = lore+ChatColor.DARK_AQUA + " 의지 : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
+							lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
 						else if(ItemList.getInt(ItemNumber+".WILL") < 0)
-							lore = lore+ChatColor.RED + " 의지 : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
+							lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
 						if(ItemList.getInt(ItemNumber+".LUK") > 0)
-							lore = lore+ChatColor.DARK_AQUA + " 행운 : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
+							lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
 						else if(ItemList.getInt(ItemNumber+".LUK") < 0)
-							lore = lore+ChatColor.RED + " 행운 : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
+							lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
 					break;
 				case "[스킬북]":
 					if(ItemList.getString(ItemNumber+".Skill").equals("null"))
@@ -1422,25 +1422,25 @@ public class UseableItemGUI extends GUIutil
 						else if(ItemList.getInt(ItemNumber+".MP") < 0)
 							lore = lore+ChatColor.RED + " 마나 : " + ItemList.getInt(ItemNumber+".MP")+"%enter%";
 						if(ItemList.getInt(ItemNumber+".STR") > 0)
-							lore = lore+ChatColor.DARK_AQUA + " 체력 : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
+							lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
 						else if(ItemList.getInt(ItemNumber+".STR") < 0)
-							lore = lore+ChatColor.RED + " 체력 : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
+							lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".STR")+"%enter%";
 						if(ItemList.getInt(ItemNumber+".DEX") > 0)
-							lore = lore+ChatColor.DARK_AQUA + " 솜씨 : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
+							lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
 						else if(ItemList.getInt(ItemNumber+".DEX") < 0)
-							lore = lore+ChatColor.RED + " 솜씨 : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
+							lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".DEX")+"%enter%";
 						if(ItemList.getInt(ItemNumber+".INT") > 0)
-							lore = lore+ChatColor.DARK_AQUA + " 지력 : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
+							lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
 						else if(ItemList.getInt(ItemNumber+".INT") < 0)
-							lore = lore+ChatColor.RED + " 지력 : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
+							lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".INT")+"%enter%";
 						if(ItemList.getInt(ItemNumber+".WILL") > 0)
-							lore = lore+ChatColor.DARK_AQUA + " 의지 : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
+							lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
 						else if(ItemList.getInt(ItemNumber+".WILL") < 0)
-							lore = lore+ChatColor.RED + " 의지 : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
+							lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".WILL")+"%enter%";
 						if(ItemList.getInt(ItemNumber+".LUK") > 0)
-							lore = lore+ChatColor.DARK_AQUA + " 행운 : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
+							lore = lore+ChatColor.DARK_AQUA + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
 						else if(ItemList.getInt(ItemNumber+".LUK") < 0)
-							lore = lore+ChatColor.RED + " 행운 : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
+							lore = lore+ChatColor.RED + " "+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".LUK")+"%enter%";
 						if(ItemList.getInt(ItemNumber+".MaxUpgrade") > 0)
 							lore = lore+ChatColor.DARK_PURPLE + " 개조 : " +ItemList.getInt(ItemNumber+".MaxUpgrade")+"%enter%";
 						if(ItemList.getInt(ItemNumber+".MaxUpgrade") < 0)

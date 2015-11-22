@@ -6,7 +6,6 @@ import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 import GBD.GoldBigDragon_Advanced.Effect.PacketSender;
 import GBD.GoldBigDragon_Advanced.Main.Main;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Damageable;
@@ -165,7 +164,18 @@ public class Attack
 
 	    int Damage = (int) event.getDamage();
 	    if(Attacker.getType() == EntityType.PLAYER)
+	    {
 	    	Damage = Damage-1;
+	    	Player player = (Player)Attacker;
+	    	if(Main.PlayerUseSpell.containsKey(player))
+	    		if(Main.PlayerUseSpell.get(player).compareTo("us")==0)
+	    		{
+	    			if(player.isOnline())
+	    				Alert(player, event.getEntity(), (int)event.getDamage());
+	    			Main.PlayerUseSpell.remove(player);
+	    			return;
+	    		}
+	    }
 	    int Attacker_Stat[] = null;
 
 		if (AttackType == "R_A")//Range Arrow
