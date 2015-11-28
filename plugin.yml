@@ -1,6 +1,6 @@
 ﻿name: GoldBigDragonRPG
 main: GBD.GoldBigDragon_Advanced.Main.Main
-version: 20151108
+version: 20151129
 description: Mabinogi!!!
 commands:
   돈:
@@ -41,3 +41,7 @@ commands:
     description: 비활성화 시킨 NPC의 GUI창을 활성화 시킵니다.
   테스트:
     description: 테스트용 명령어 입니다.
+  수락:
+    description: 상대방 요청을 수락니다.
+  거절:
+    description: 상대방 요청을 거절합니다.

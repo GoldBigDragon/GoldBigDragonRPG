@@ -8,6 +8,8 @@ import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import GBD.GoldBigDragon_Advanced.Main.Main;
+import GBD.GoldBigDragon_Advanced.Main.ServerOption;
 import GBD.GoldBigDragon_Advanced.Util.YamlController;
 import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 
@@ -17,7 +19,7 @@ public class UseUseableItem
 	{
 		GBD.GoldBigDragon_Advanced.Effect.Sound sound = new GBD.GoldBigDragon_Advanced.Effect.Sound();
 		ItemStack item = player.getItemInHand();
-		if(type.equals("귀환서"))
+		if(type.compareTo("귀환서")==0)
 		{
 			YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
 			YamlManager YM = Event_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
@@ -64,7 +66,7 @@ public class UseUseableItem
 				player.getInventory().setItem(player.getInventory().getHeldItemSlot(), new ItemStack(0));
 			player.teleport(new Location(Bukkit.getWorld(world), X, Y, Z));
 		}
-		else if(type.equals("주문서"))
+		else if(type.compareTo("주문서")==0)
 		{
 			YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
 			YamlManager YM = Event_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
@@ -184,7 +186,7 @@ public class UseUseableItem
 				player.sendMessage(ChatColor.YELLOW+""+ChatColor.BOLD+"[      능력치에 변화가 생겼습니다!      ]");
 			}
 		}
-		else if(type.equals("스킬북"))
+		else if(type.compareTo("스킬북")==0)
 		{
 			YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
 			YamlManager Config = Event_YC.getNewConfig("config.yml");
@@ -259,7 +261,7 @@ public class UseUseableItem
 				return;
 			}
 		}
-		else if(type.equals("소비"))
+		else if(type.compareTo("소비")==0)
 		{
 			int Health = 0;
 			int Mana = 0;
@@ -302,7 +304,12 @@ public class UseUseableItem
 			}
 			if(Mana >0)
 			{
-				
+				if(Main.MagicSpellsCatched == true)
+				{
+					OtherPlugins.SpellMain MG = new OtherPlugins.SpellMain();
+					MG.DrinkManaPotion(player, Mana);
+					sound.SL(player.getLocation(), Sound.WATER, 2.0F, 1.9F);
+				}
 			}
 			if(Food > 0)
 			{
@@ -310,6 +317,36 @@ public class UseUseableItem
 				if(player.getFoodLevel()+Food > 20)
 					player.setFoodLevel(20);
 				player.setFoodLevel(player.getFoodLevel()+Food);
+			}
+		}
+		else if(type.compareTo("돈")==0)
+		{
+			int money=Integer.parseInt(ChatColor.stripColor(item.getItemMeta().getLore().get(1).split(" ")[0]));
+			YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
+			YamlManager YM = Event_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
+			
+			if(Event_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
+		  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(player);
+			YM = Event_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
+			if(YM.getLong("Stat.Money") + money <= 2000000000)
+			{
+				YM.set("Stat.Money", YM.getLong("Stat.Money") + money);
+				YM.saveConfig();
+				if(item.getAmount() != 1)
+				{
+					item.setAmount(item.getAmount()-1);
+					player.getInventory().setItem(player.getInventory().getHeldItemSlot(), item);
+				}
+				else
+					player.getInventory().setItem(player.getInventory().getHeldItemSlot(), new ItemStack(0));
+				sound.SP(player, Sound.LAVA_POP, 0.8F, 1.8F);
+				player.sendMessage(ChatColor.GREEN+"[System] : "+ChatColor.WHITE+""+ChatColor.BOLD+money+" "+ServerOption.Money+ChatColor.GREEN+" 입금 완료!");
+				player.sendMessage(ChatColor.GRAY+"(현재 "+YM.getLong("Stat.Money")+ChatColor.stripColor(ServerOption.Money)+" 보유중)");
+			}
+			else
+			{
+				sound.SP(player, Sound.ORB_PICKUP, 0.8F, 1.8F);
+				player.sendMessage(ChatColor.RED+"[System] : "+ServerOption.Money+ChatColor.RED+" 을(를) 2000000000(20억)이상 가질 수 없습니다!");
 			}
 		}
 		return;

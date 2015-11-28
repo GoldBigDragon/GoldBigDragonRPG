@@ -25,7 +25,7 @@ public class NewBieGUI extends GUIutil
 		YamlManager NewBieYM = GUI_YC.getNewConfig("ETC/NewBie.yml");
 		
 		Stack(ChatColor.WHITE + "" + ChatColor.BOLD + "기본 아이템", 54,0,1,Arrays.asList(ChatColor.GRAY + "첫 접속시 아이템을 지급합니다."), 2, inv);
-		Stack(ChatColor.WHITE + "" + ChatColor.BOLD + "기본 퀘스트", 386,0,1,Arrays.asList(ChatColor.GRAY + "접속 하자마자 퀘스트를 줍니다.",ChatColor.GRAY+"(일종의 튜토리얼 입니다.)","",ChatColor.DARK_AQUA+"[   기본 퀘스트   ]",ChatColor.WHITE+""+ChatColor.BOLD+NewBieYM.getString("FirstQuest"),"",ChatColor.YELLOW+"[클릭시 퀘스트를 변경합니다.]"), 3, inv);
+		Stack(ChatColor.WHITE + "" + ChatColor.BOLD + "기본 퀘스트", 386,0,1,Arrays.asList(ChatColor.GRAY + "접속 하자마자 퀘스트를 줍니다.",ChatColor.GRAY+"(일종의 튜토리얼 입니다.)","",ChatColor.DARK_AQUA+"[   기본 퀘스트   ]",ChatColor.WHITE+""+ChatColor.BOLD+NewBieYM.getString("FirstQuest"),"",ChatColor.YELLOW+"[클릭시 퀘스트를 변경합니다.]",ChatColor.RED+"[Shift + 우 클릭시 퀘스트를 삭제합니다.]"), 3, inv);
 		Stack(ChatColor.WHITE + "" + ChatColor.BOLD + "기본 시작 위치", 368,0,1,Arrays.asList(ChatColor.GRAY + "접속 하자마자 이동 시킵니다.","",ChatColor.DARK_AQUA+"[   시작 위치   ]",ChatColor.DARK_AQUA+" - 월드 : "+ChatColor.WHITE+""+ChatColor.BOLD+NewBieYM.getString("TelePort.World")
 		,ChatColor.DARK_AQUA+" - 좌표 : "+ChatColor.WHITE+""+ChatColor.BOLD+NewBieYM.getInt("TelePort.X")+","+NewBieYM.getInt("TelePort.Y")+","+NewBieYM.getInt("TelePort.Z"),"",ChatColor.YELLOW+"[클릭시 현재 위치로 등록 됩니다.]"), 4, inv);
 		Stack(ChatColor.WHITE + "" + ChatColor.BOLD + "가이드", 340,0,1,Arrays.asList(ChatColor.GRAY + "가이드창을 설정합니다.","",ChatColor.GRAY+"/기타",ChatColor.DARK_GRAY+"명령어를 통해 설정한",ChatColor.DARK_GRAY+"가이드를 확인하실 수 있습니다."), 5, inv);
@@ -169,8 +169,20 @@ public class NewBieGUI extends GUIutil
 			NewBieSupportItemGUI(player);
 			return;
 		case 3: //기본 퀘스트
-			s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
-			NewBieQuestGUI(player, 0);
+			if(event.isLeftClick())
+			{
+				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+				NewBieQuestGUI(player, 0);
+			}
+			else if(event.isRightClick()&&event.isShiftClick())
+			{
+				s.SP(player, Sound.LAVA_POP, 1.0F, 1.0F);
+				YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
+				YamlManager NewBieYM = GUI_YC.getNewConfig("ETC/NewBie.yml");
+				NewBieYM.set("FirstQuest", "null");
+				NewBieYM.saveConfig();
+				NewBieGUIMain(player);
+			}
 			return;
 		case 4: //기본 시작 위치
 			s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);

@@ -137,21 +137,19 @@ public class Attack
 			String TargetArea = A.getAreaName(target);
 			if(AttackerArea != null||TargetArea != null)
 			{
-				if(A.getAreaOption(TargetArea, (char) 0) == false)
+				if(A.getAreaOption(AttackerArea, (char) 0) == false)
 				{
 					sound.SP(player, Sound.ORB_PICKUP, 1.0F, 1.8F);
 					sound.SP(target, Sound.ORB_PICKUP, 1.0F, 1.8F);
 					player.sendMessage(ChatColor.RED+"[영역] : 이곳에서는 PVP가 금지되어 있습니다!");
-					target.sendMessage(ChatColor.RED+"[영역] : 이곳에서는 PVP가 금지되어 있습니다!");
 					event.setCancelled(true);
 					return;
 				}
-				else if(A.getAreaOption(AttackerArea, (char) 0) == false)
+				else if(A.getAreaOption(TargetArea, (char) 0) == false)
 				{
 					sound.SP(player, Sound.ORB_PICKUP, 1.0F, 1.8F);
 					sound.SP(target, Sound.ORB_PICKUP, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.RED+"[영역] : 이곳에서는 PVP가 금지되어 있습니다!");
-					target.sendMessage(ChatColor.RED+"[영역] : 이곳에서는 PVP가 금지되어 있습니다!");
+					player.sendMessage(ChatColor.RED+"[영역] : 저곳에서는 PVP가 금지되어 있습니다!");
 					event.setCancelled(true);
 					return;
 				}
@@ -173,6 +171,7 @@ public class Attack
 	    			if(player.isOnline())
 	    				Alert(player, event.getEntity(), (int)event.getDamage());
 	    			Main.PlayerUseSpell.remove(player);
+	    			event.setDamage(event.getDamage());
 	    			return;
 	    		}
 	    }
@@ -209,12 +208,13 @@ public class Attack
 			}
 		}
 		
+		
 		if(AttackType == "M")
 		{
 			Damage = damage.damagerand(Attacker, damage.CombatMinDamageGet(Attacker, (int)Damage, Attacker_Stat[0]),
 					damage.CombatMaxDamageGet(Attacker, (int)Damage, Attacker_Stat[0]),  Attacker_Stat[8]);
 		}
-		
+
 		if(AttackType == "E_E")
 		{
 			Damage = damage.damagerand(Attacker, damage.ExplosionMinDamageGet(Attacker, (int)Damage, Attacker_Stat[2]),
@@ -247,10 +247,11 @@ public class Attack
 		Damage = Damage-DamageMinus;
 		if(Defender_Stat[1] < 0)
 			Defender_Stat[1] = 0;
+
 		if(Damage >= 100)
-			Damage =(int)((Damage/100)*(100-Defender_Stat[1]));
+			Damage =(int)(Damage*(100-Defender_Stat[1])/100);
 		else if(Damage >= 10)
-			Damage =(int)((Damage/10)*((100-Defender_Stat[1])/10));
+			Damage =(int)(Damage*((100-Defender_Stat[1])/10)/10);
 		else
 			Damage =(int)(Damage-Defender_Stat[1]);
 		if(Damage <= 0 || (100-Defender_Stat[1])<=0/*보호가 100 이상일 경우*/)
@@ -313,14 +314,14 @@ public class Attack
 	    	{
 	    		if(entity.isCustomNameVisible() == true)
 	    		{
-	    			String name = ChatColor.stripColor(entity.getCustomName().toString());
+	    			String name = entity.getCustomName().toString();
 	    			attacker  = Event_YC.getNewConfig("Monster/MonsterList.yml");
 
 	    			Object[] monsterlist = attacker.getConfigurationSection("").getKeys(false).toArray();
 	    			
 	    			for(int count = 0; count < monsterlist.length; count ++)
 	    			{
-	    				if(attacker.getString(monsterlist[count].toString()+".Name").equals(name) == true)
+	    				if(attacker.getString(monsterlist[count].toString()+".Name").compareTo(name) == 0)
 	    				{
 	    					Attacker_Stat[0] = attacker.getInt(monsterlist[count].toString()+".STR");
 	    					Attacker_Stat[1] = attacker.getInt(monsterlist[count].toString()+".DEX");
@@ -340,14 +341,14 @@ public class Attack
 	    {
     		if(entity.isCustomNameVisible() == true)
     		{
-    			String name = ChatColor.stripColor(entity.getCustomName().toString());
+    			String name = entity.getCustomName().toString();
     			attacker  = Event_YC.getNewConfig("Monster/MonsterList.yml");
 
     			Object[] monsterlist = attacker.getConfigurationSection("").getKeys(false).toArray();
     			
     			for(int count = 0; count < monsterlist.length; count ++)
     			{
-    				if(attacker.getString(monsterlist[count].toString()+".Name").equals(name) == true)
+    				if(attacker.getString(monsterlist[count].toString()+".Name").compareTo(name) == 0)
     				{
     					Attacker_Stat[0] = attacker.getInt(monsterlist[count].toString()+".STR");
     					Attacker_Stat[1] = attacker.getInt(monsterlist[count].toString()+".DEX");
@@ -391,15 +392,15 @@ public class Attack
 	    	{
 				if(entity.isCustomNameVisible() == true)
 				{
-					String name = ChatColor.stripColor(entity.getCustomName().toString());
+					String name = entity.getCustomName().toString();
 					defenser  = Event_YC.getNewConfig("Monster/MonsterList.yml");
 		
 					Object[] monsterlist = defenser.getConfigurationSection("").getKeys(false).toArray();
 					
 					for(int count = 0; count < monsterlist.length; count ++)
 					{
-						if(defenser.getString(monsterlist[count].toString()+".Name").equals(name) == true)
-						{
+	    				if(defenser.getString(monsterlist[count].toString()+".Name").compareTo(name) == 0)
+	    				{
 						    Defender_Stat[0] = defenser.getInt(monsterlist[count].toString()+".DEF");
 						    Defender_Stat[1] = defenser.getInt(monsterlist[count].toString()+".Protect");
 						    Defender_Stat[2] = defenser.getInt("Stat.Magic_DEF");
@@ -414,15 +415,15 @@ public class Attack
 	    {
 			if(entity.isCustomNameVisible() == true)
 			{
-				String name = ChatColor.stripColor(entity.getCustomName().toString());
+				String name = entity.getCustomName().toString();
 				defenser  = Event_YC.getNewConfig("Monster/MonsterList.yml");
 	
 				Object[] monsterlist = defenser.getConfigurationSection("").getKeys(false).toArray();
 				
 				for(int count = 0; count < monsterlist.length; count ++)
 				{
-					if(defenser.getString(monsterlist[count].toString()+".Name").equals(name) == true)
-					{
+    				if(defenser.getString(monsterlist[count].toString()+".Name").compareTo(name) == 0)
+    				{
 					    Defender_Stat[0] = defenser.getInt(monsterlist[count].toString()+".DEF");
 					    Defender_Stat[1] = defenser.getInt(monsterlist[count].toString()+".Protect");
 					    Defender_Stat[2] = defenser.getInt("Stat.Magic_DEF");

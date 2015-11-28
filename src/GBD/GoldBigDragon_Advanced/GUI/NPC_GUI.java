@@ -2452,14 +2452,14 @@ public class NPC_GUI extends GUIutil
 							int showingPage = Integer.parseInt(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(1).split("페이지 : ")[1]));
 							if(event.getInventory().getItem(0).getItemMeta().hasLore() == false)
 							{
-								if(event.getCurrentItem().getData().getData() ==(byte)14)
+								if(event.getInventory().getItem(0).getData().getData() ==(byte)14)
 									ShopGUI(player, NPCname, showingPage-1 , false,false);
 								else
 									ShopGUI(player, NPCname, showingPage-1, true,false);
 							}
 							else
 							{
-								if(event.getCurrentItem().getData().getData() ==(byte)14)
+								if(event.getInventory().getItem(0).getData().getData() ==(byte)14)
 									ShopGUI(player, NPCname, showingPage-1 , false,true);
 								else
 									ShopGUI(player, NPCname, showingPage-1, true,true);
@@ -2487,14 +2487,14 @@ public class NPC_GUI extends GUIutil
 							int showingPage2 = Integer.parseInt(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(1).split("페이지 : ")[1]));
 							if(event.getInventory().getItem(0).getItemMeta().hasLore() == false)
 							{
-								if(event.getCurrentItem().getData().getData() ==(byte)14)
+								if(event.getInventory().getItem(0).getData().getData() ==(byte)14)
 									ShopGUI(player, NPCname, showingPage2-1, false,false);
 								else
 									ShopGUI(player, NPCname, showingPage2-1, true,false);
 							}
 							else
 							{
-								if(event.getCurrentItem().getData().getData() ==(byte)14)
+								if(event.getInventory().getItem(0).getData().getData() ==(byte)14)
 									ShopGUI(player, NPCname, showingPage2-1, false,true);
 								else
 									ShopGUI(player, NPCname, showingPage2-1, true,true);

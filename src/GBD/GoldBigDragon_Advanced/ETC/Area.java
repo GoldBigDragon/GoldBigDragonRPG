@@ -345,24 +345,50 @@ public class Area
 		
 		Object[] arealist = AreaList.getConfigurationSection("").getKeys(false).toArray();
 
+		String TouchedArea = "n";
 		for(int count =0; count <arealist.length;count++)
+			if(AreaList.getString(arealist[count] + ".World").compareTo((block.getLocation().getWorld().getName()))==0)
+				if(AreaList.getInt(arealist[count]+".X.Min") <= block.getLocation().getX() && AreaList.getInt(arealist[count]+".X.Max") >= block.getLocation().getX())
+					if(AreaList.getInt(arealist[count]+".Y.Min") <= block.getLocation().getY() && AreaList.getInt(arealist[count]+".Y.Max") >= block.getLocation().getY())
+						if(AreaList.getInt(arealist[count]+".Z.Min") <= block.getLocation().getZ() && AreaList.getInt(arealist[count]+".Z.Max") >= block.getLocation().getZ())
+							TouchedArea = TouchedArea+"%¡¿%"+arealist[count].toString();
+		
+		String[] AreaSet = TouchedArea.split("%¡¿%");
+		if(AreaSet.length == 2)
 		{
-			if(AreaList.getString(arealist[count] + ".World").equalsIgnoreCase((block.getLocation().getWorld().getName())))
-			if(AreaList.getInt(arealist[count]+".X.Min") <= block.getLocation().getX() && AreaList.getInt(arealist[count]+".X.Max") >= block.getLocation().getX())
+			String[] ret = new String[2];
+			ret[0] = AreaSet[1];
+			ret[1] = AreaList.getString(AreaSet[1]+".Name");
+			return ret;
+		}
+		else if(AreaSet.length > 2)
+		{
+			String[] ret = new String[2];
+			ret[0] = AreaSet[1];
+			ret[1] = AreaList.getString(AreaSet[1]+".Name");
+			for(int count =2; count <AreaSet.length;count++)
 			{
-				if(AreaList.getInt(arealist[count]+".Y.Min") <= block.getLocation().getY() && AreaList.getInt(arealist[count]+".Y.Max") >= block.getLocation().getY())
+				if(AreaList.contains(ret[0]+".Priority")==false)
 				{
-					if(AreaList.getInt(arealist[count]+".Z.Min") <= block.getLocation().getZ() && AreaList.getInt(arealist[count]+".Z.Max") >= block.getLocation().getZ())
-					{
-						String[] ret = new String[2];
-						ret[0] = arealist[count].toString();
-						ret[1] = AreaList.getString(arealist[count].toString()+".Name");
-						return ret;
-					}
+					AreaList.set(ret[0]+".Priority", 5);
+					AreaList.saveConfig();
+				}
+				if(AreaList.contains(AreaSet[count]+".Priority")==false)
+				{
+					AreaList.set(AreaSet[count]+".Priority", 5);
+					AreaList.saveConfig();
+				}
+				if(AreaList.getInt(AreaSet[count]+".Priority") >
+					AreaList.getInt(ret[0]+".Priority"))
+				{
+					ret[0] = AreaSet[count];
+					ret[1] = AreaList.getString(AreaSet[count]+".Name");
 				}
 			}
+			return ret;
 		}
 		return null;
+		
 	}
 
 	public void FishingSettingInventoryClose(InventoryCloseEvent event)

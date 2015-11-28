@@ -18,8 +18,6 @@ import org.bukkit.WorldCreator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -30,6 +28,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -55,11 +54,11 @@ public class Main extends JavaPlugin implements Listener
 {
 	public static YamlController Main_YC,GUI_YC,Party_YC,Config_YC,Event_YC,Monster_YC,Location_YC,Scheduler_YC;
 
-	public static String serverUpdate = "2015-11-22-14:24";
+	public static String serverUpdate = "2015-11-29-04:08";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/";
 	
-	public static String currentServerUpdate = "2015-11-22-14:24";
+	public static String currentServerUpdate = "2015-11-29-04:08";
 	public static String currentServerVersion = "Advanced";
 	
 	public static String SpawnMobName;
@@ -315,9 +314,7 @@ public class Main extends JavaPlugin implements Listener
 	  	  skill.CreateNewPlayerSkill(player);
 	  	}
 		GBD.GoldBigDragon_Advanced.ETC.Job J = new GBD.GoldBigDragon_Advanced.ETC.Job();
-		J.FixJobList();
-		J.FixPlayerJobList(player);
-		J.FixPlayerSkillList(player);
+		J.PlayerFixAllSkillAndJobYML(player);
 		
     	GBD.GoldBigDragon_Advanced.Util.ETC ETC = new GBD.GoldBigDragon_Advanced.Util.ETC();
     	ETC.UpdatePlayerHPMP(event.getPlayer());
@@ -435,18 +432,10 @@ public class Main extends JavaPlugin implements Listener
 	{
 		ItemStack IT = event.getItemDrop().getItemStack();
 		if(IT.hasItemMeta() == true)
-		{
 			if(IT.getItemMeta().hasLore() == true)
-			{
 				if(IT.getItemMeta().getLore().size() == 4)
-				{
 					if(IT.getItemMeta().getLore().get(3).equals(ChatColor.YELLOW+"[클릭시 퀵슬롯에서 삭제]")==true)
-					{
 						event.setCancelled(true);
-					}
-				}
-			}
-		}
 		return;
 	}
 	
@@ -652,8 +641,7 @@ public class Main extends JavaPlugin implements Listener
 	@EventHandler
 	private void BBreak(BlockBreakEvent event)
 	{
-	    GBD.GoldBigDragon_Advanced.Event.BlockBreak BB = new GBD.GoldBigDragon_Advanced.Event.BlockBreak();
-		BB.BlockBreaking(event);return;
+		new GBD.GoldBigDragon_Advanced.Event.BlockBreak().BlockBreaking(event);return;
 	}
 	@EventHandler
 	private void BlockPlace(BlockPlaceEvent event){GBD.GoldBigDragon_Advanced.Event.BlockPlace BP = new GBD.GoldBigDragon_Advanced.Event.BlockPlace();BP.BlockPlace(event);return;}
@@ -698,7 +686,11 @@ public class Main extends JavaPlugin implements Listener
 				}
 			}
 		}
-
+		if(ChatColor.stripColor(event.getWhoClicked().getOpenInventory().getTitle()).compareTo("교환")==0)
+		{
+			new GBD.GoldBigDragon_Advanced.GUI.EquipGUI().ExchangeInventoryclick(event);
+		}
+		
 		if(event.getInventory().getName().length() >= 3)
 		{
 			if(event.getInventory().getName().charAt(0)=='§'
@@ -713,7 +705,7 @@ public class Main extends JavaPlugin implements Listener
 					||InventoryName.equals("NPC 룬 장착")||InventoryName.equals("container.chest")
 					||InventoryName.equals("container.chestDouble")||InventoryName.equals("초심자 가이드")
 					||InventoryName.equals("container.minecart")||InventoryName.equals("이벤트 전체 지급")
-					||InventoryName.equals("이벤트 랜덤 지급") ))
+					||InventoryName.equals("이벤트 랜덤 지급")||InventoryName.equals("교환") ))
 					{
 						event.setCancelled(true);
 					}
@@ -731,7 +723,8 @@ public class Main extends JavaPlugin implements Listener
 				    ||InventoryName.contains("등록된")||InventoryName.contains("직업군")||InventoryName.contains("초심자")
 				    ||InventoryName.contains("카테고리")||InventoryName.equals("해당 블록을 캐면 나올 아이템")||InventoryName.contains("영역")
 				    ||InventoryName.contains("월드")||InventoryName.contains("워프")||InventoryName.contains("매직스펠")
-				    ||InventoryName.contains("이벤트")||InventoryName.contains("친구")||InventoryName.contains("네비"))
+				    ||InventoryName.contains("이벤트")||InventoryName.contains("친구")||InventoryName.contains("네비")
+				    ||InventoryName.equals("교환"))
 				{
 					GBD.GoldBigDragon_Advanced.Event.InventoryClick IC = new GBD.GoldBigDragon_Advanced.Event.InventoryClick();
 					IC.InventoryClickRouter(event, InventoryName);
@@ -744,7 +737,6 @@ public class Main extends JavaPlugin implements Listener
 	@EventHandler
 	private void InventoryClose(InventoryCloseEvent event)
 	{
-
 		if(Bukkit.getPluginManager().isPluginEnabled("MagicSpells") == true
 		&&MagicSpellsCatched==true)
 		{
@@ -793,30 +785,6 @@ public class Main extends JavaPlugin implements Listener
 			
 			switch(string)
 			{
-			case"테스트":
-				if(player.isOp() == true)
-				{
-					/*
-				    for(int count= 0; count < GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.size(); count++)
-				    	player.sendMessage(ChatColor.GREEN+"현재 몬스터 스폰 중인 영역 : "+GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.MobSpawningAreaList.get(count));
-				    for(int count= 0; count < GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.size(); count++)
-				    {
-				    	long UTC = Long.parseLong(GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.keySet().toArray()[count].toString());
-				    	player.sendMessage(ChatColor.GREEN+"["+UTC+"] : "+GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.get(UTC).getType());
-				    	player.sendMessage(ChatColor.GREEN+"["+UTC+"] : "+GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.get(UTC).getString((byte)0));
-				    	player.sendMessage(ChatColor.GREEN+"["+UTC+"] : "+GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.get(UTC).getString((byte)1));
-				    	player.sendMessage(ChatColor.GREEN+"["+UTC+"] : "+GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.get(UTC).getString((byte)2));
-				    	player.sendMessage(ChatColor.GREEN+"["+UTC+"] : "+GBD.GoldBigDragon_Advanced.ServerTick.ServerTickMain.Schedule.get(UTC).getString((byte)3));
-				    	player.sendMessage(ChatColor.BLUE+"────────────────────────────");
-				    }
-				    */
-				}
-				else
-				{
-					talker.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
-					s.SP((Player)talker, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
-				}
-				return true;
 				case"gui사용":
 					if(player.isOp() == true)
 					{
@@ -838,62 +806,6 @@ public class Main extends JavaPlugin implements Listener
 				 	s.SP((Player)talker, org.bukkit.Sound.HORSE_SADDLE, 1.0F, 1.8F);
 				    GBD.GoldBigDragon_Advanced.GUI.PlayerSkillGUI PSKGUI = new GBD.GoldBigDragon_Advanced.GUI.PlayerSkillGUI();
 					PSKGUI.MainSkillsListGUI(player, 0);
-					return true;
-				case "엔티티제거":
-					if(args.length != 1 ||Integer.parseInt(args[0]) > 10000)
-					{
-						talker.sendMessage(ChatColor.RED + "[SYSTEM] : /엔티티제거 [1~10000]");
-						s.SP((Player)talker, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
-						return true;
-					}
-					if(player.isOp() == true)
-					{
-					    List<Entity> entities = player.getNearbyEntities(Integer.parseInt(args[0]), Integer.parseInt(args[0]), Integer.parseInt(args[0]));
-					    int amount = 0;
-					    for(int count = 0; count < entities.size(); count++)
-					    {
-					    	if(entities.get(count).getType() != EntityType.PLAYER &&entities.get(count).getType() != EntityType.ITEM_FRAME)
-					    	{
-					    		entities.get(count).remove();
-					    		amount = amount+1;
-					    	}
-					    }
-					    player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 반경 "+args[0]+"블록 이내에 있던 "+amount+"마리의 엔티티를 삭제하였습니다!");
-					}
-					else
-					{
-						talker.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
-						s.SP((Player)talker, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
-						return true;
-					}
-					return true;
-				case "아이템제거":
-					if(args.length != 1 ||Integer.parseInt(args[0]) > 10000)
-					{
-						talker.sendMessage(ChatColor.RED + "[SYSTEM] : /아이템제거 [1~10000]");
-						s.SP((Player)talker, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
-						return true;
-					}
-					if(player.isOp() == true)
-					{
-					    List<Entity> entities = player.getNearbyEntities(Integer.parseInt(args[0]), Integer.parseInt(args[0]), Integer.parseInt(args[0]));
-					    int amount = 0;
-					    for(int count = 0; count < entities.size(); count++)
-					    {
-					    	if(entities.get(count).getType() == EntityType.DROPPED_ITEM)
-					    	{
-					    		entities.get(count).remove();
-					    		amount = amount+1;
-					    	}
-					    }
-					    player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 반경 "+args[0]+"블록 이내에 있던 "+amount+"개의 아이템을 삭제하였습니다!");
-					}
-					else
-					{
-						talker.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
-						s.SP((Player)talker, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
-						return true;
-					}
 					return true;
 		  		case "아이템" :
 		  			GBD.GoldBigDragon_Advanced.Command.ItemsCommand ItemC = new GBD.GoldBigDragon_Advanced.Command.ItemsCommand();
@@ -923,25 +835,25 @@ public class Main extends JavaPlugin implements Listener
 		  			GBD.GoldBigDragon_Advanced.Command.PartyCommand PartyC = new GBD.GoldBigDragon_Advanced.Command.PartyCommand();
 		  			PartyC.onCommand(talker, command, string, args);
 		  			return true;
+				case "테스트":
+				case "엔티티제거":
+				case "아이템제거":
+				case "수락":
+				case "거절":
 		  		case "돈":
-				 	s.SP((Player)talker, org.bukkit.Sound.LAVA_POP, 0.8F, 1.8F);
-				 	YamlManager YM = Main_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
-				 	player.sendMessage(ChatColor.YELLOW + "[현재 소지 금액] " + ChatColor.YELLOW+ChatColor.BOLD +"" +YM.getInt("Stat.Money") + " "+ServerOption.Money);
-					return true;
+		  			new GBD.GoldBigDragon_Advanced.Command.SystemCommand().onCommand(player, args, string);
+		  			return true;
 		  		case "스텟":
-		  			GBD.GoldBigDragon_Advanced.GUI.StatsGUI sgui = new GBD.GoldBigDragon_Advanced.GUI.StatsGUI();
 				 	s.SP((Player)talker, org.bukkit.Sound.HORSE_ARMOR, 0.8F, 1.8F);
-				 	sgui.StatusGUI((Player)talker);
+				 	new GBD.GoldBigDragon_Advanced.GUI.StatsGUI().StatusGUI((Player)talker);
 					return true;
 		  		case "옵션":
-		  			GBD.GoldBigDragon_Advanced.GUI.OptionGUI ogui = new GBD.GoldBigDragon_Advanced.GUI.OptionGUI();
 				 	s.SP((Player)talker, org.bukkit.Sound.HORSE_ARMOR, 0.8F, 1.8F);
-				 	ogui.optionGUI((Player)talker);
+				 	new GBD.GoldBigDragon_Advanced.GUI.OptionGUI().optionGUI((Player)talker);
 					return true;
 		  		case "기타":
-		  			GBD.GoldBigDragon_Advanced.GUI.ETCGUI egui = new GBD.GoldBigDragon_Advanced.GUI.ETCGUI();
 				 	s.SP((Player)talker, org.bukkit.Sound.HORSE_ARMOR, 0.8F, 1.8F);
-				 	egui.ETCGUI_Main((Player) talker);
+				 	new GBD.GoldBigDragon_Advanced.GUI.ETCGUI().ETCGUI_Main((Player) talker);
 					return true;
 		  		case "오피박스":
 					  if(talker.isOp() == true)

@@ -32,6 +32,8 @@ public class InventoryClose
 		{InventoryClose_Area(event, InventoryName);return;}
 		else if(InventoryName.contains("NPC")== true)
 		{InventoryClose_NPC(event, InventoryName);return;}
+		else if(ChatColor.stripColor(InventoryName).compareTo("교환")==0)
+		{new GBD.GoldBigDragon_Advanced.GUI.EquipGUI().InventoryClose_ExchangeGUI(event);return;}
 		else if(InventoryName.contains("초심자")== true)
 		{InventoryClose_NewBie(event, InventoryName);return;}
 		if(player.isOp())
@@ -108,5 +110,4 @@ public class InventoryClose
 			 NGUI.InventoryClose_NewBie(event);
 		return;
 	}
-	
 }

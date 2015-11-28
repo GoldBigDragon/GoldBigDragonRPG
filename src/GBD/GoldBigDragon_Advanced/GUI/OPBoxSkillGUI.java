@@ -8,9 +8,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.inventory.Inventory;
 
-import com.nisovin.magicspells.MagicSpells;
-import com.nisovin.magicspells.Spell;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -463,6 +460,9 @@ public class OPBoxSkillGUI extends GUIutil
 				{
 					s.SP(player, Sound.LAVA_POP, 0.8F, 1.0F);
 					YamlController Config_YC = GBD.GoldBigDragon_Advanced.Main.Main.Config_YC;
+					YamlManager Config  = Config_YC.getNewConfig("Config.yml");
+					Config.set("Time.LastSkillChanged", new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000)-new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000));
+					Config.saveConfig();
 					YamlManager SkillList  = Config_YC.getNewConfig("Skill/SkillList.yml");
 					SkillList.removeKey(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 					SkillList.saveConfig();
@@ -522,6 +522,9 @@ public class OPBoxSkillGUI extends GUIutil
 			}
 			else if(event.isShiftClick()==true&&event.isRightClick()==true&&(page*45)+event.getSlot()!=0&&(page*45)+event.getSlot()+1==size)
 			{
+				YamlManager Config  = GUI_YC.getNewConfig("Config.yml");
+				Config.set("Time.LastSkillChanged", new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000)-new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000));
+				Config.saveConfig();
 				s.SP(player, Sound.LAVA_POP, 0.8F, 1.0F);
 				SkillList.removeKey(SkillName+".SkillRank."+(size));
 				SkillList.saveConfig();

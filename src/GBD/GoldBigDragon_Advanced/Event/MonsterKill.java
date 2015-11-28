@@ -81,15 +81,15 @@ public class MonsterKill
 			amount = 0;
 		if(event.getEntity().isCustomNameVisible() == true)
 		{
-			String name = ChatColor.stripColor(event.getEntity().getCustomName());
-			String name2 = ChatColor.stripColor(event.getEntity().getName());
+			String name = event.getEntity().getCustomName();
+			String name2 = event.getEntity().getName();
 			YamlManager Monster  = Monster_YC.getNewConfig("Monster/MonsterList.yml");
 
 			Object[] monsterlist = Monster.getConfigurationSection("").getKeys(false).toArray();
 			for(int count = 0; count < monsterlist.length; count ++)
 			{
-				if(ChatColor.stripColor(Monster.getString(monsterlist[count].toString()+".Name")).equalsIgnoreCase(ChatColor.stripColor(name)) == true||
-						ChatColor.stripColor(Monster.getString(monsterlist[count].toString()+".Name")).equalsIgnoreCase(ChatColor.stripColor(name2)) == true)
+				if(Monster.getString(monsterlist[count].toString()+".Name").compareTo(name) == 0||
+				Monster.getString(monsterlist[count].toString()+".Name").compareTo(name2) == 0)
 				{
 					LV.EXPadd(player, Monster.getLong(monsterlist[count].toString()+".EXP"), event.getEntity().getLocation());
 					ID.MoneyDrop(event.getEntity().getLocation(),amount* N.RandomNum(Monster.getInt(monsterlist[count].toString()+".MIN_Money"), Monster.getInt(monsterlist[count].toString()+".MAX_Money")));

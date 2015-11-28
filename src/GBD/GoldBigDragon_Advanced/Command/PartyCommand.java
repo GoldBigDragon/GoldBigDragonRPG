@@ -9,8 +9,6 @@ import org.bukkit.entity.Player;
 import GBD.GoldBigDragon_Advanced.Main.Main;
 import GBD.GoldBigDragon_Advanced.Main.PartyDataObject;
 import GBD.GoldBigDragon_Advanced.Util.ETC;
-import GBD.GoldBigDragon_Advanced.Util.YamlController;
-import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 
 public class PartyCommand extends HelpMessage
 {

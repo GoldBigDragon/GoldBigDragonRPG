@@ -12,18 +12,53 @@ public class Job
 {	
 	public void AllPlayerFixAllSkillAndJobYML()
 	{
+		YamlController Config_YC = GBD.GoldBigDragon_Advanced.Main.Main.Config_YC;
+		YamlManager Config  = Config_YC.getNewConfig("config.yml");
+	  	if(Config.contains("Time.LastSkillChanged")==false)
+	  	{
+	  		Config.set("Time.LastSkillChanged", -1);
+	  		Config.saveConfig();
+	  	}
+	  	
     	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
     	Player[] players = new Player[playerlist.size()];
     	playerlist.toArray(players);
 		FixJobList();
 		for(int count = 0; count < players.length;count++)
 		{
-			FixPlayerJobList(players[count]);
-			FixPlayerSkillList(players[count]);
+			YamlManager PlayerList  = Config_YC.getNewConfig("Skill/PlayerData/"+players[count].getUniqueId().toString()+".yml");
+	  		if(Config.getInt("Time.LastSkillChanged")!=PlayerList.getInt("Update") || PlayerList.contains("Update")==false)
+	  		{
+	  			PlayerList.set("Update", Config.getInt("Time.LastSkillChanged"));
+	  			PlayerList.saveConfig();
+				FixPlayerJobList(players[count]);
+				FixPlayerSkillList(players[count]);
+	  		}
 		}
 		return;
 	}
 
+	public void PlayerFixAllSkillAndJobYML(Player player)
+	{
+		YamlController Config_YC = GBD.GoldBigDragon_Advanced.Main.Main.Config_YC;
+		YamlManager Config  = Config_YC.getNewConfig("config.yml");
+	  	if(Config.contains("Time.LastSkillChanged")==false)
+	  	{
+	  		Config.set("Time.LastSkillChanged", -1);
+	  		Config.saveConfig();
+	  	}
+		FixJobList();
+		YamlManager PlayerList  = Config_YC.getNewConfig("Skill/PlayerData/"+player.getUniqueId().toString()+".yml");
+  		if(Config.getInt("Time.LastSkillChanged")!=PlayerList.getInt("Update") || PlayerList.contains("Update")==false)
+  		{
+  			PlayerList.set("Update", Config.getInt("Time.LastSkillChanged"));
+  			PlayerList.saveConfig();
+			FixPlayerJobList(player);
+			FixPlayerSkillList(player);
+  		}
+		return;
+	}
+	
 	public void AllPlayerSkillRankFix()
 	{
     	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
@@ -40,7 +75,6 @@ public class Job
 	{
 		YamlController Config_YC = GBD.GoldBigDragon_Advanced.Main.Main.Config_YC;
 		YamlManager JobList  = Config_YC.getNewConfig("Skill/JobList.yml");
-		
 		YamlManager Config  = Config_YC.getNewConfig("config.yml");
 
 		if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == true)
@@ -96,7 +130,7 @@ public class Job
 
 	  	if(Config_YC.isExit("Skill/PlayerData/"+player.getUniqueId().toString()+".yml") == false)
 	  		new GBD.GoldBigDragon_Advanced.Config.SkillConfig().CreateNewPlayerSkill(player);
-	  	
+
 		YamlManager PlayerList  = Config_YC.getNewConfig("Skill/PlayerData/"+player.getUniqueId().toString()+".yml");
 		
 		if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == true)

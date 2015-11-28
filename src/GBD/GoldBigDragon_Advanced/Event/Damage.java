@@ -244,12 +244,15 @@ public class Damage
 			max = min;
 			min = temp;
 		}
-		if (num.RandomNum(1, 100) >= balance)
+		if (num.RandomNum(1, 100) <= balance)
 		{
-			return num.RandomNum(num.RandomNum(num.RandomNum(min, max), max), max);
+			return num.RandomNum(num.RandomNum(min, max), max);
 		}
 		else
 		{
+			max = (int) (max*0.6);
+			if(max <= min)
+				max=min;
 			return num.RandomNum(min, max);
 		}
 	}
@@ -263,12 +266,15 @@ public class Damage
 			min = temp;
 		}
 		int balance = getBalance(player, player_dex,player_balance);
-		if (num.RandomNum(1, 100) >= balance)
+		if (num.RandomNum(1, 100) <= balance)
 		{
-			return num.RandomNum(num.RandomNum(num.RandomNum(min, max), max), max);
+			return num.RandomNum(num.RandomNum(min, max), max);
 		}
 		else
 		{
+			max = (int) (max*0.6);
+			if(max <= min)
+				max=min;
 			return num.RandomNum(min, max);
 		}
 	}
@@ -318,7 +324,7 @@ public class Damage
 			player_dex = player_dex + getPlayerEquipmentStat((Player)entity, "DEX")[0];
 			balance = balance + getPlayerEquipmentStat((Player)entity, "Balance")[0];
 		}
-		 balance = balance + (int)player_dex/10;
+		 balance = balance + (int)player_dex/20;
 		if (balance > 80) balance = 80;
 		if (balance < 0) balance = 0;
 		return balance;
@@ -328,7 +334,7 @@ public class Damage
 		int balance = player_balance;
 		player_dex = player_dex + getPlayerEquipmentStat(player, "DEX")[0];
 		balance = balance + getPlayerEquipmentStat(player, "Balance")[0];
-		balance = balance + (int)player_dex/10;
+		balance = balance + (int)player_dex/20;
 		if (balance > 80) balance = 80;
 		if (balance < 0) balance = 0;
 		return balance;

@@ -61,10 +61,15 @@ public class PartyDataManager
 					
 					for(int counter = 0; counter < PM.length;counter++)
 						if(PM[counter] != null)
-							if(Bukkit.getServer().getOfflinePlayer(PM[counter]).isOnline()==false)
+							if(Bukkit.getServer().getPlayer(PM[counter])==null)
 								Main.Party.get(PCT).QuitParty((Player) Bukkit.getServer().getOfflinePlayer(PM[counter]));
 							else
-								Main.PartyJoiner.put((Player) Bukkit.getServer().getOfflinePlayer(PM[counter]), PCT);
+							{
+								if(Bukkit.getServer().getPlayer(PM[counter]).isOnline()==false)
+									Main.Party.get(PCT).QuitParty((Player) Bukkit.getServer().getOfflinePlayer(PM[counter]));
+								else
+									Main.PartyJoiner.put((Player) Bukkit.getServer().getPlayer(PM[counter]), PCT);
+							}
 
 					if(Bukkit.getServer().getOfflinePlayer(PL).isOnline() == false)
 						Main.Party.get(PCT).QuitParty((Player) Bukkit.getServer().getOfflinePlayer(PL));

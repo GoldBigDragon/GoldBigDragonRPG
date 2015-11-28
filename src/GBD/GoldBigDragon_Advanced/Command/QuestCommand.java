@@ -15,15 +15,14 @@ public class QuestCommand extends HelpMessage
 	{
 	    GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
 		Player player = (Player) talker;
+		if(args.length==0)
+		{
+			s.SP(player, Sound.HORSE_ARMOR, 1.0F, 0.8F);
+			new GBD.GoldBigDragon_Advanced.GUI.QuestGUI().MyQuestListGUI(player, 0);
+			return;
+		}
 		if(talker.isOp() == true)
 		{
-			if(args.length==0)
-			{
-				s.SP(player, Sound.HORSE_ARMOR, 1.0F, 0.8F);
-				new GBD.GoldBigDragon_Advanced.GUI.QuestGUI().MyQuestListGUI(player, 0);
-				return;
-			}
-			
 			if(player.isOp() == true)
 			{
 			    YamlManager QuestConfig;

@@ -66,7 +66,6 @@ public class NPCcommand extends HelpMessage
 						return;
 					case "구매":
 						{
-<<<<<<< HEAD
 							if(isIntMinMax(args[1], player, 0, Integer.MAX_VALUE))
 							{
 								directory = NPCscript.getConfigurationSection("Shop.Buy").getKeys(false).toArray().length;
@@ -77,15 +76,6 @@ public class NPCcommand extends HelpMessage
 								talker.sendMessage(ChatColor.GREEN +"["+ NearbyEntity.get(count).getCustomName()+"] : 보여주신 물품을 "+args[1]+GBD.GoldBigDragon_Advanced.Main.ServerOption.Money+ChatColor.GREEN+"에 사 들이겠습니다.");
 								s.SP((Player)talker, org.bukkit.Sound.CHEST_OPEN, 2.0F, 0.8F);
 							}
-=======
-							directory = NPCscript.getConfigurationSection("Shop.Buy").getKeys(false).toArray().length;
-							directory = NPCscript.getConfigurationSection("Shop.Buy").getKeys(false).size();
-							NPCscript.set("Shop.Buy."+directory+".item", player.getItemInHand());
-							NPCscript.set("Shop.Buy."+directory+".price", Integer.parseInt(args[1]));
-							NPCscript.saveConfig();
-							talker.sendMessage(ChatColor.GREEN +"["+ NearbyEntity.get(count).getCustomName()+"] : 보여주신 물품을 "+args[1]+GBD.GoldBigDragon_Advanced.Main.ServerOption.Money+ChatColor.GREEN+"에 사 들이겠습니다.");
-							s.SP((Player)talker, org.bukkit.Sound.CHEST_OPEN, 2.0F, 0.8F);
->>>>>>> origin/GoldBigDragonRPG_Advanced
 						}
 						return;
 					}

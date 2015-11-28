@@ -306,8 +306,9 @@ public class JobGUI extends GUIutil
 					SkillList.removeKey("MapleStory."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 					SkillList.saveConfig();
 					MapleStory_ChooseJob(player, Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1);
-					GBD.GoldBigDragon_Advanced.ETC.Job J = new GBD.GoldBigDragon_Advanced.ETC.Job();
-					J.AllPlayerFixAllSkillAndJobYML();
+					Config.set("Time.LastSkillChanged", new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000)-new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000));
+					Config.saveConfig();
+					new GBD.GoldBigDragon_Advanced.ETC.Job().AllPlayerFixAllSkillAndJobYML();
 				}
 			}
 			return;
@@ -394,8 +395,10 @@ public class JobGUI extends GUIutil
 					SkillList.removeKey("MapleStory."+JobName+"."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 					SkillList.saveConfig();
 					MapleStory_JobSetting(player, JobName);
-					GBD.GoldBigDragon_Advanced.ETC.Job J = new GBD.GoldBigDragon_Advanced.ETC.Job();
-					J.AllPlayerFixAllSkillAndJobYML();
+					YamlManager Config  = Config_YC.getNewConfig("config.yml");
+					Config.set("Time.LastSkillChanged", new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000)-new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000));
+					Config.saveConfig();
+					new GBD.GoldBigDragon_Advanced.ETC.Job().AllPlayerFixAllSkillAndJobYML();
 				}
 			}
 			return;
@@ -441,8 +444,10 @@ public class JobGUI extends GUIutil
 				JobList.removeKey("MapleStory."+JobName+"."+JobNick+".Skill."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 				JobList.saveConfig();
 				AddedSkillsListGUI(player, page, JobName, JobNick);
-				GBD.GoldBigDragon_Advanced.ETC.Job J = new GBD.GoldBigDragon_Advanced.ETC.Job();
-				J.AllPlayerFixAllSkillAndJobYML();
+				YamlManager Config  = GUI_YC.getNewConfig("config.yml");
+				Config.set("Time.LastSkillChanged", new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000)-new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000));
+				Config.saveConfig();
+				new GBD.GoldBigDragon_Advanced.ETC.Job().AllPlayerFixAllSkillAndJobYML();
 			}
 			return;
 		}
@@ -510,8 +515,10 @@ public class JobGUI extends GUIutil
 				SkillList.removeKey("Mabinogi."+CategoriName);
 				SkillList.saveConfig();
 				Mabinogi_ChooseCategory(player,page);
-				GBD.GoldBigDragon_Advanced.ETC.Job J = new GBD.GoldBigDragon_Advanced.ETC.Job();
-				J.AllPlayerFixAllSkillAndJobYML();
+				YamlManager Config  = Config_YC.getNewConfig("config.yml");
+				Config.set("Time.LastSkillChanged", new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000)-new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000));
+				Config.saveConfig();
+				new GBD.GoldBigDragon_Advanced.ETC.Job().AllPlayerFixAllSkillAndJobYML();
 			}
 			return;
 		}
@@ -563,8 +570,10 @@ public class JobGUI extends GUIutil
 					SkillList.set("Mabinogi."+CategoriName+"."+SkillName, true);
 					SkillList.saveConfig();
 					Mabinogi_SkillSetting(player,page,CategoriName);
-					GBD.GoldBigDragon_Advanced.ETC.Job J = new GBD.GoldBigDragon_Advanced.ETC.Job();
-					J.AllPlayerFixAllSkillAndJobYML();
+					YamlManager Config  = Config_YC.getNewConfig("config.yml");
+					Config.set("Time.LastSkillChanged", new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000)-new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000));
+					Config.saveConfig();
+					new GBD.GoldBigDragon_Advanced.ETC.Job().AllPlayerFixAllSkillAndJobYML();
 				}
 			}
 			else if(event.isShiftClick()==true&&event.isRightClick()==true)
@@ -574,8 +583,10 @@ public class JobGUI extends GUIutil
 				SkillList.removeKey("Mabinogi."+CategoriName+"."+SkillName);
 				SkillList.saveConfig();
 				Mabinogi_SkillSetting(player, page, CategoriName);
-				GBD.GoldBigDragon_Advanced.ETC.Job J = new GBD.GoldBigDragon_Advanced.ETC.Job();
-				J.AllPlayerFixAllSkillAndJobYML();
+				YamlManager Config  = Config_YC.getNewConfig("config.yml");
+				Config.set("Time.LastSkillChanged", new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000)-new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000));
+				Config.saveConfig();
+				new GBD.GoldBigDragon_Advanced.ETC.Job().AllPlayerFixAllSkillAndJobYML();
 			}
 			return;
 		}

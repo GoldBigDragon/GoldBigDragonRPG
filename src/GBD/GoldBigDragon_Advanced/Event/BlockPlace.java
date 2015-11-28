@@ -21,7 +21,7 @@ public class BlockPlace
 				event.setCancelled(true);
 			return;
 		}
-		if(event.getBlock().getLocation().getWorld().getName().equalsIgnoreCase("Dungeon")==true
+		if(event.getBlock().getLocation().getWorld().getName().compareTo("Dungeon")==0
 				&&event.getPlayer().isOp()==false)
 		{
 			event.setCancelled(true);

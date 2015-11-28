@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
 import GBD.GoldBigDragon_Advanced.Main.Main;
+import GBD.GoldBigDragon_Advanced.Main.ServerOption;
 import GBD.GoldBigDragon_Advanced.Util.YamlController;
 import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 
@@ -177,7 +178,9 @@ public class OPBoxGUI extends GUIutil
 		else
 		{{Stack2(ChatColor.RED +""+ ChatColor.BOLD + "커스텀 블록 설치", 166,0,1,Arrays.asList(ChatColor.RED+"[불가능]",ChatColor.GRAY +"아이템에 설명이 붙어 있거나",ChatColor.GRAY+"이름이 변경된 아이템이",ChatColor.GRAY+"설치되는 것을 막습니다."), 20, inv);}	}
 
-		Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "스텟 이름 변경", 323,0,1,Arrays.asList(ChatColor.GRAY + "서버의 스텟 이름을",ChatColor.GRAY+"마음대로 변경합니다.","",ChatColor.YELLOW+"[좌 클릭시 스텟 이름 변경]","",ChatColor.RED+"[       주의       ]",ChatColor.RED+"스텟 이름 변경시 이전에 뿌려진",ChatColor.RED+"커스텀 아이템의 능력치가",ChatColor.RED+"무효 처리가 되며,",ChatColor.RED+"스킬별 스텟 영향 옵션을",ChatColor.RED+"재 설정 하여야 합니다."), 21, inv);
+		Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "스텟 이름 변경", 340,0,1,Arrays.asList(ChatColor.GRAY + "서버의 스텟 이름을",ChatColor.GRAY+"마음대로 변경합니다.","",ChatColor.YELLOW+"[좌 클릭시 스텟 이름 변경]","",ChatColor.RED+"[       주의       ]",ChatColor.RED+"스텟 이름 변경시 이전에 뿌려진",ChatColor.RED+"커스텀 아이템의 능력치가",ChatColor.RED+"무효 처리가 되며,",ChatColor.RED+"스킬별 스텟 영향 옵션을",ChatColor.RED+"재 설정 하여야 합니다."), 21, inv);
+
+		Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "금전 시스템 변경", 266,0,1,Arrays.asList(ChatColor.GRAY + "화폐에 관련된 시스템을",ChatColor.GRAY+"변경합니다.","",ChatColor.YELLOW+"[좌 클릭시 화폐 시스템GUI 이동]"), 22, inv);
 
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
 		Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "작업 관리자 창을 닫습니다."), 53, inv);
@@ -197,9 +200,7 @@ public class OPBoxGUI extends GUIutil
 			Object[] BroadCastList= BroadCast.getConfigurationSection("").getKeys(false).toArray();
 			int loc=0;
 			for(int count = page*45; count < BroadCastList.length;count++)
-			{
-				String AreaName = BroadCastList[count].toString();
-				
+			{				
 				Stack2(ChatColor.BLACK + "" + ChatColor.BOLD + count, 340,0,1,Arrays.asList(BroadCast.getString(count+"")
 						,"",ChatColor.RED+"[Shift + 우클릭시 알림 삭제]"), loc, inv);
 				
@@ -230,8 +231,7 @@ public class OPBoxGUI extends GUIutil
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "지력", 369,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GBD.GoldBigDragon_Advanced.Main.ServerOption.INT), 2, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "의지", 370,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL), 3, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "행운", 322,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK), 4, inv);
-<<<<<<< HEAD
-		
+
 		String lore = GBD.GoldBigDragon_Advanced.Main.ServerOption.STR_Lore;
 		lore = lore.replace("%stat%", GBD.GoldBigDragon_Advanced.Main.ServerOption.STR);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "체력 설명", 323,0,1,Arrays.asList(lore.split("%enter%")), 9, inv);
@@ -247,15 +247,35 @@ public class OPBoxGUI extends GUIutil
 		lore = GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK_Lore;
 		lore = lore.replace("%stat%", GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "행운 설명", 323,0,1,Arrays.asList(lore.split("%enter%")), 13, inv);
-=======
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "화폐", 266,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GBD.GoldBigDragon_Advanced.Main.ServerOption.Money), 6, inv);
->>>>>>> origin/GoldBigDragonRPG_Advanced
 		
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 	}
 	
+	public void OPBoxGUI_Money(Player player)
+	{
+		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "관리자 화폐 설정");
+
+		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
+		YamlManager Config =GUI_YC.getNewConfig("config.yml");
+		
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "드랍 최대 액수 제한", 166,0,1,Arrays.asList(ChatColor.GRAY + "드랍 가능한 최대 금액을",ChatColor.GRAY+"설정합니다.","",ChatColor.YELLOW + "[     현재 최대 드랍     ]",ChatColor.GRAY +" "+Config.getInt("Server.Max_Drop_Money")), 11, inv);
+		
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "화폐", 421,0,1,Arrays.asList("",ChatColor.GRAY + "[     현재 이름     ]"," "+ChatColor.WHITE+GBD.GoldBigDragon_Advanced.Main.ServerOption.Money), 13, inv);
+	
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "화폐 모양 변경", ServerOption.Money1ID,ServerOption.Money1DATA,1,Arrays.asList(ChatColor.GRAY + "   [  50원 이하  ]  ",""), 28, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "화폐 모양 변경", ServerOption.Money2ID,ServerOption.Money2DATA,1,Arrays.asList(ChatColor.GRAY + "   [ 100원 이하 ]  ",""), 29, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "화폐 모양 변경", ServerOption.Money3ID,ServerOption.Money3DATA,1,Arrays.asList(ChatColor.GRAY + "   [1000원 이하]  ",""), 30, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "화폐 모양 변경", ServerOption.Money4ID,ServerOption.Money4DATA,1,Arrays.asList(ChatColor.GRAY + "   [10000원 이하]  ",""), 31, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "화폐 모양 변경", ServerOption.Money5ID,ServerOption.Money5DATA,1,Arrays.asList(ChatColor.GRAY + "   [50000원 이하]  ",""), 32, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "화폐 모양 변경", ServerOption.Money6ID,ServerOption.Money6DATA,1,Arrays.asList(ChatColor.GRAY + "   [50000원 초과]  ",""), 33, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "화폐 모양 초기화", 325,0,1,Arrays.asList(ChatColor.GRAY + "   [ 초기화 시킵니다 ]  ",""), 34, inv);
+		
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 53, inv);
+		player.openInventory(inv);
+	}
 	
 	//각종 GUI창 속의 아이콘을 눌렸을 때, 해당 아이콘에 기능을 넣는 메소드1   -스텟 GUI, 오피박스, 커스텀 몬스터GUI-//
 	public void OPBoxGUIInventoryclick(InventoryClickEvent event)
@@ -316,8 +336,8 @@ public class OPBoxGUI extends GUIutil
 			new NavigationGUI().NavigationListGUI(player,0);
 			break;
 		case"GoldBigDragonRPG":
-			if(Main.serverVersion.equals(Main.currentServerVersion)&&
-				Main.serverUpdate == Main.currentServerUpdate)
+			if(Main.serverVersion.compareTo(Main.currentServerVersion)==0&&
+				Main.serverUpdate.compareTo(Main.currentServerUpdate)==0)
 			{
 				s.SP(player,Sound.ANVIL_USE, 0.8F, 1.0F);
 				player.sendMessage(ChatColor.YELLOW + "[버전 체크] : 현재 GoldBigDragonRPG는 최신 버전입니다!");
@@ -356,32 +376,18 @@ public class OPBoxGUI extends GUIutil
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
 			new UpGradeGUI().UpgradeRecipeGUI(player,0);
 			return;
-		case "엔티티 스폰":
-			if(Config.getBoolean("Server.EntitySpawn") == true) {Config.set("Server.EntitySpawn", false);}
-			else{Config.set("Server.EntitySpawn", true);}
-			Config.saveConfig();
-			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_Main(player,1);
-			return;
-		case "공격 딜레이":
-			if(Config.getBoolean("Server.AttackDelay")==true) {Config.set("Server.AttackDelay", false);}
-			else{Config.set("Server.AttackDelay", true);}
-			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
-			Config.saveConfig();
-			OPBoxGUI_Main(player,1);
-			return;
 		case "이벤트":
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
 			new EventGUI().EventGUI_Main(player);
 			return;
 		case "게임 성향":
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			Config.set("Time.LastSkillChanged", new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000)-new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000));
 			if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System")==true) {Config.set("Server.Like_The_Mabinogi_Online_Stat_System", false);}
 			else{Config.set("Server.Like_The_Mabinogi_Online_Stat_System", true);}
 			Config.saveConfig();
 			OPBoxGUI_Main(player,1);
-			GBD.GoldBigDragon_Advanced.ETC.Job J = new GBD.GoldBigDragon_Advanced.ETC.Job();
-			J.AllPlayerFixAllSkillAndJobYML();
+			new GBD.GoldBigDragon_Advanced.ETC.Job().AllPlayerFixAllSkillAndJobYML();
 			return;
 		case "커스텀 아이템":
 			ItemGUI IGUI = new ItemGUI();
@@ -546,6 +552,12 @@ public class OPBoxGUI extends GUIutil
 				OPBoxGUI_StatChange(player);
 			}
 			return;
+		case 22: //금전 시스템 변경
+			{
+				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+				OPBoxGUI_Money(player);
+			}
+			return;
 		case 45://이전 목록
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.8F);
 			OPBoxGUI_Main(player, 1);
@@ -696,8 +708,6 @@ public class OPBoxGUI extends GUIutil
 		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 
-		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
-		YamlManager Config =GUI_YC.getNewConfig("config.yml");
 		switch (event.getSlot())
 		{
 		case 45://이전 목록
@@ -711,7 +721,6 @@ public class OPBoxGUI extends GUIutil
 		default:
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
 			player.closeInventory();
-<<<<<<< HEAD
 
 			if(event.getSlot()>=9&&event.getSlot()<=13)
 			{
@@ -724,18 +733,110 @@ public class OPBoxGUI extends GUIutil
 				player.sendMessage(ChatColor.DARK_AQUA+"[System] : 새로운 "+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())+" 스텟 이름을 입력 해 주세요!");
 				player.sendMessage(ChatColor.GRAY+"(띄어 쓰기 및 기호 사용 불가)");
 			}
-=======
-			player.sendMessage(ChatColor.DARK_AQUA+"[System] : 새로운 "+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())+" 스텟 이름을 입력 해 주세요!");
-			player.sendMessage(ChatColor.GRAY+"(띄워 쓰기 및 기호 사용 불가)");
-			player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
-			ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
-					ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
-			ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
-					ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
->>>>>>> origin/GoldBigDragonRPG_Advanced
 			Main.UserData.get(player).setType("System");
 			Main.UserData.get(player).setString((byte)1, "CSN");
 			Main.UserData.get(player).setString((byte)2, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+			return;
+		}
+	}
+
+	public void OPBoxGUI_MoneyClick(InventoryClickEvent event)
+	{
+		GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
+		event.setCancelled(true);
+		Player player = (Player) event.getWhoClicked();
+
+		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
+		YamlManager Config =GUI_YC.getNewConfig("config.yml");
+		if(event.getSlot()>=28&&event.getSlot()<=33)
+		{
+			switch(event.getSlot())
+			{
+				case 28:
+				{Main.UserData.get(player).setInt((byte)1,50); break;}
+				case 29:
+				{Main.UserData.get(player).setInt((byte)1,100); break;}
+				case 30:
+				{Main.UserData.get(player).setInt((byte)1,1000); break;}
+				case 31:
+				{Main.UserData.get(player).setInt((byte)1,10000); break;}
+				case 32:
+				{Main.UserData.get(player).setInt((byte)1,50000); break;}
+				case 33:
+				{Main.UserData.get(player).setInt((byte)1,-1);}
+			}
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			player.closeInventory();
+			player.sendMessage(ChatColor.DARK_AQUA+"[System] : 화폐 모양으로 설정할 아이템 ID를 입력 해 주세요!");
+			Main.UserData.get(player).setType("System");
+			Main.UserData.get(player).setString((byte)1, "CMID");
+		}
+		
+		switch (event.getSlot())
+		{
+			case 11:
+			{
+				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+				player.closeInventory();
+				player.sendMessage(ChatColor.DARK_AQUA+"[System] : 최대 얼마까지만 드랍 가능하도록 할까요?");
+				player.sendMessage(ChatColor.GRAY + "(최소 1000(1천)원 이상, 최대 1000000000(1억)원 이하)");
+				Main.UserData.get(player).setType("System");
+				Main.UserData.get(player).setString((byte)1, "CDML");
+			}
+			return;
+			case 13:
+			{
+				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+				player.closeInventory();
+				player.sendMessage(ChatColor.DARK_AQUA+"[System] : 새로운 화폐 단위를 입력 해 주세요!");
+				player.sendMessage(ChatColor.GRAY+"(띄어 쓰기 및 기호 사용 불가)");
+				Main.UserData.get(player).setType("System");
+				Main.UserData.get(player).setString((byte)1, "CSN");
+				Main.UserData.get(player).setString((byte)2, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+			}
+			return;
+
+			case 34: //화폐 모양 초기화
+			{
+				s.SP(player, Sound.IRONGOLEM_THROW, 0.8F, 1.0F);
+				player.sendMessage(ChatColor.DARK_AQUA+"[System] : 화폐 모양이 초기화 되었습니다!");
+
+				Config.set("Server.Money.1.ID",348);
+				GBD.GoldBigDragon_Advanced.Main.ServerOption.Money1ID = 348;
+				Config.set("Server.Money.2.ID",371);
+				GBD.GoldBigDragon_Advanced.Main.ServerOption.Money2ID = 371;
+				Config.set("Server.Money.3.ID",147);
+				GBD.GoldBigDragon_Advanced.Main.ServerOption.Money3ID = 147;
+				Config.set("Server.Money.4.ID",266);
+				GBD.GoldBigDragon_Advanced.Main.ServerOption.Money4ID = 266;
+				Config.set("Server.Money.5.ID",41);
+				GBD.GoldBigDragon_Advanced.Main.ServerOption.Money5ID = 41;
+				Config.set("Server.Money.6.ID",41);
+				GBD.GoldBigDragon_Advanced.Main.ServerOption.Money6ID = 41;
+				Config.set("Server.Money.1.DATA",0);
+				GBD.GoldBigDragon_Advanced.Main.ServerOption.Money1DATA = 0;
+				Config.set("Server.Money.2.DATA",0);
+				GBD.GoldBigDragon_Advanced.Main.ServerOption.Money2DATA = 0;
+				Config.set("Server.Money.3.DATA",0);
+				GBD.GoldBigDragon_Advanced.Main.ServerOption.Money3DATA = 0;
+				Config.set("Server.Money.4.DATA",0);
+				GBD.GoldBigDragon_Advanced.Main.ServerOption.Money4DATA = 0;
+				Config.set("Server.Money.5.DATA",0);
+				GBD.GoldBigDragon_Advanced.Main.ServerOption.Money5DATA = 0;
+				Config.set("Server.Money.6.DATA",0);
+				GBD.GoldBigDragon_Advanced.Main.ServerOption.Money6DATA = 0;
+
+				Config.saveConfig();
+				OPBoxGUI_Money(player);
+			}
+			return;
+		case 45://이전 목록
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			OPBoxGUI_Setting(player);
+			return;
+		case 53://나가기
+			s.SP(player, Sound.PISTON_RETRACT, 0.8F, 1.8F);
+			player.closeInventory();
 			return;
 		}
 	}

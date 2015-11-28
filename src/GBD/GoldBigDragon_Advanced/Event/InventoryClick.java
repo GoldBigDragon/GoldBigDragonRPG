@@ -13,10 +13,14 @@ public class InventoryClick
 			return;
 		if(event.getClickedInventory().getTitle().equalsIgnoreCase("container.inventory") == true)
 			return;
+		if(InventoryName.compareTo("교환")==0)
+		{
+			new GBD.GoldBigDragon_Advanced.GUI.EquipGUI().ExchangeGUIclick(event);return;
+	    }
 		if (event.getCurrentItem() == null||event.getCurrentItem().getType() == Material.AIR||event.getCurrentItem().getAmount() == 0)
 		{return;}
 		
-		if(InventoryName.equals("스텟"))
+		if(InventoryName.compareTo("스텟")==0)
 		{
 		    if(event.getClickedInventory().getType() != InventoryType.CHEST)
 		    {
@@ -27,22 +31,22 @@ public class InventoryClick
 			SGUI.StatusInventoryclick(event); 
 			return;
 		}
-		else if(InventoryName.equals("몬스터 장비 설정"))
+		else if(InventoryName.compareTo("몬스터 장비 설정")==0)
 		{
 	    	GBD.GoldBigDragon_Advanced.ETC.Monster MC = new GBD.GoldBigDragon_Advanced.ETC.Monster();
 			MC.ArmorGUIClick(event);return;
 	    }
-		else if(InventoryName.equals("장비 구경"))
+		else if(InventoryName.compareTo("장비 구경")==0)
 	    {
 		    GBD.GoldBigDragon_Advanced.GUI.EquipGUI EqGUI = new GBD.GoldBigDragon_Advanced.GUI.EquipGUI();
 			EqGUI.optionInventoryclick(event);return;
 	    }
-		else if(InventoryName.equals("옵션"))
+		else if(InventoryName.compareTo("옵션")==0)
 	    {
 		    GBD.GoldBigDragon_Advanced.GUI.OptionGUI OGUI = new GBD.GoldBigDragon_Advanced.GUI.OptionGUI();
 			OGUI.optionInventoryclick(event);return;
 	    }
-		else if(InventoryName.equals("해당 블록을 캐면 나올 아이템"))
+		else if(InventoryName.compareTo("해당 블록을 캐면 나올 아이템")==0)
 	    {
 		    GBD.GoldBigDragon_Advanced.GUI.AreaGUI AGUI = new GBD.GoldBigDragon_Advanced.GUI.AreaGUI();
 		    AGUI.AreaBlockItemSettingGUIClick(event);return;
@@ -127,7 +131,7 @@ public class InventoryClick
 	private void IC_NPC(InventoryClickEvent event, String InventoryName)
 	{
 	    GBD.GoldBigDragon_Advanced.GUI.NPC_GUI NPGUI = new GBD.GoldBigDragon_Advanced.GUI.NPC_GUI();
-    	if(InventoryName.equals("NPC 직업 선택"))
+    	if(InventoryName.compareTo("NPC 직업 선택")==0)
     		NPGUI.NPCJobClick(event, ChatColor.stripColor(event.getInventory().getItem(18).getItemMeta().getLore().get(1)));
     	else if(InventoryName.contains("NPC"))
 	    {
@@ -175,9 +179,9 @@ public class InventoryClick
 	    GBD.GoldBigDragon_Advanced.GUI.NPC_GUI NPGUI = new GBD.GoldBigDragon_Advanced.GUI.NPC_GUI();
 	    GBD.GoldBigDragon_Advanced.GUI.QuestGUI QGUI = new GBD.GoldBigDragon_Advanced.GUI.QuestGUI();
 
-		if(InventoryName.equals("퀘스트 옵션"))
+		if(InventoryName.compareTo("퀘스트 옵션")==0)
 			QGUI.QuestOptionClick(event);
-		else if(InventoryName.equals("[퀘스트]"))
+		else if(InventoryName.compareTo("[퀘스트]")==0)
 			QGUI.QuestScriptTypeGUIClick(event);
 		else if(InventoryName.contains("진행"))
 			NPGUI.QuestAcceptclickMain(event);
@@ -258,6 +262,8 @@ public class InventoryClick
 	    	OPGUI.OPBoxGUI_BroadCastClick(event);
 	    else if(InventoryName.contains("스텟"))
 	    	OPGUI.OPBoxGUI_StatChangeClick(event);
+	    else if(InventoryName.contains("화폐"))
+	    	OPGUI.OPBoxGUI_MoneyClick(event);
 	    return;
 	}
 
@@ -265,7 +271,7 @@ public class InventoryClick
 	{
 	    GBD.GoldBigDragon_Advanced.GUI.PartyGUI PGUI = new GBD.GoldBigDragon_Advanced.GUI.PartyGUI();
 
-	    if(InventoryName.equals("파티"))
+	    if(InventoryName.compareTo("파티")==0)
 	    	PGUI.partyInventoryclick(event);
 		else if(InventoryName.contains("목록"))
 			PGUI.PartyListInventoryclick(event);
@@ -291,16 +297,16 @@ public class InventoryClick
 	    }
 	    else
 	    {
-		    if(InventoryName.equals("모아야 할 아이템 등록")||InventoryName.equals("수집할 아이템 등록"))
+		    if(InventoryName.compareTo("모아야 할 아이템 등록")==0||InventoryName.compareTo("수집할 아이템 등록")==0)
 		    {
 				if(event.getSlot() == 8)
 					event.getWhoClicked().closeInventory();
 		    }
-		    else  if(InventoryName.equals("보상 아이템 등록"))
+		    else  if(InventoryName.compareTo("보상 아이템 등록")==0)
 				QGUI.SettingPresentClick(event);
 		    else  if(InventoryName.contains("상세"))
 				IGUI.NewItemGUIclick(event);
-		    else  if(InventoryName.equals("모아야 할 아이템 목록"))
+		    else  if(InventoryName.compareTo("모아야 할 아이템 목록")==0)
 				QGUI.ShowItemGUIInventoryClick(event);
 			else if(InventoryName.contains("목록"))
 				IGUI.ItemListInventoryclick(event);

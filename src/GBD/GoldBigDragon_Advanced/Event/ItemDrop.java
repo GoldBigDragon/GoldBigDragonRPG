@@ -17,6 +17,7 @@ import GBD.GoldBigDragon_Advanced.Util.YamlManager;
 
 public class ItemDrop
 {
+	public static int passmoney;
 	public void PureItemNaturalDrop(Location loc, int Id,int Data,int Stack)
 	{
 		ItemStack Item = new MaterialData(Id, (byte) Data).toItemStack(Stack);
@@ -65,27 +66,42 @@ public class ItemDrop
 	{
 		YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
 	    YamlManager Config =  Event_YC.getNewConfig("config.yml");
-		if(money >= Config.getInt("Server.Max_Drop_Money"))
-			money = Config.getInt("Server.Max_Drop_Money");
 		if(money <= 0)
 		return;
-		ItemStack Item;
-		if(money<=50)
-		Item = new MaterialData(348, (byte) 0).toItemStack(1);
-		else if(money<=100)
-		Item = new MaterialData(371, (byte) 0).toItemStack(1);
-		else if(money<=1000)
-		Item = new MaterialData(147, (byte) 0).toItemStack(1);
-		else if(money<=10000)
-		Item = new MaterialData(266, (byte) 0).toItemStack(1);
-		else
-		Item = new MaterialData(41, (byte) 0).toItemStack(1);
-		ItemMeta Item_Meta = Item.getItemMeta();
-		Item_Meta.setDisplayName(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money+" 」f」f」f」l" + money);
-		Item_Meta.setLore(Arrays.asList(ChatColor.YELLOW +""+ money +" "+GBD.GoldBigDragon_Advanced.Main.ServerOption.Money));
-		Item_Meta.addEnchant(org.bukkit.enchantments.Enchantment.LUCK, 500, true);
-		Item.setItemMeta(Item_Meta);
-	    loc.getWorld().dropItemNaturally(loc, Item);
+	    int mok = money/Config.getInt("Server.Max_Drop_Money");
+	    //if(mok >= 20)
+	    //	mok = 20;
+	    for(int count = 0; count < mok; count++)
+		    loc.getWorld().dropItemNaturally(loc, MoneyShape(Config.getInt("Server.Max_Drop_Money")));
+
+	    int na = money%Config.getInt("Server.Max_Drop_Money");
+	    if(na >= 1)
+	    	loc.getWorld().dropItemNaturally(loc, MoneyShape(na));
 		return;
 	}
+	public ItemStack MoneyShape(int money)
+	{
+		GBD.GoldBigDragon_Advanced.Main.ServerOption SO = new GBD.GoldBigDragon_Advanced.Main.ServerOption();
+		ItemStack Item;
+		if(money<=50)
+		Item = new MaterialData(SO.Money1ID, (byte) SO.Money1DATA).toItemStack(1);
+		else if(money<=100)
+		Item = new MaterialData(SO.Money2ID, (byte) SO.Money2DATA).toItemStack(1);
+		else if(money<=1000)
+		Item = new MaterialData(SO.Money3ID, (byte) SO.Money3DATA).toItemStack(1);
+		else if(money<=10000)
+		Item = new MaterialData(SO.Money4ID, (byte) SO.Money4DATA).toItemStack(1);
+		else if(money<=50000)
+		Item = new MaterialData(SO.Money5ID, (byte) SO.Money5DATA).toItemStack(1);
+		else
+		Item = new MaterialData(SO.Money6ID, (byte) SO.Money6DATA).toItemStack(1);
+		ItemMeta Item_Meta = Item.getItemMeta();
+		Item_Meta.setDisplayName(GBD.GoldBigDragon_Advanced.Main.ServerOption.Money+" 」f」f」f」l" + money);
+		Item_Meta.setLore(Arrays.asList(ChatColor.YELLOW +""+ money +" "+GBD.GoldBigDragon_Advanced.Main.ServerOption.Money,passmoney+""));
+		Item_Meta.addEnchant(org.bukkit.enchantments.Enchantment.LUCK, 500, true);
+		Item.setItemMeta(Item_Meta);
+		passmoney++;
+		return Item;
+	}
+	
 }

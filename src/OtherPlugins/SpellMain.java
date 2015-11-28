@@ -413,9 +413,9 @@ public class SpellMain implements Listener
 	
 	public void DrinkManaPotion(Player player, int mana)
 	{
-		if(mana <= MagicSpells.getManaHandler().getMaxMana(player))
-			MagicSpells.getManaHandler().setMana(player, MagicSpells.getManaHandler().getMana(player)+mana, ManaChangeReason.OTHER);
-		else
-			MagicSpells.getManaHandler().setMana(player, MagicSpells.getManaHandler().getMaxMana(player), ManaChangeReason.OTHER);
+		int m = MagicSpells.getManaHandler().getMana(player)+mana;
+		if(MagicSpells.getManaHandler().getMana(player)+mana >= MagicSpells.getManaHandler().getMaxMana(player))
+			m = MagicSpells.getManaHandler().getMaxMana(player);
+		MagicSpells.getManaHandler().setMana(player, m, ManaChangeReason.POTION);
 	}
 }

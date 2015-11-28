@@ -18,14 +18,14 @@ public class BlockBreak
 	public void BlockBreaking(BlockBreakEvent event)
 	{
 		Player player = (Player) event.getPlayer();
-		
+
 		GBD.GoldBigDragon_Advanced.ETC.Area A = new GBD.GoldBigDragon_Advanced.ETC.Area();
 		String[] Area = A.getAreaName(event.getBlock());
 		if(Area != null)
 		{
 			YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
 			YamlManager AreaConfig =GUI_YC.getNewConfig("Area/AreaList.yml");
-			
+
 			if(A.getAreaOption(Area[0], (char) 1) == false && event.getPlayer().isOp() == false)
 			{
 				event.setCancelled(true);
@@ -66,7 +66,7 @@ public class BlockBreak
 			}
 		}
 		Quest(event, player);
-		if(event.getBlock().getLocation().getWorld().getName().equalsIgnoreCase("Dungeon")==true
+		if(event.getBlock().getLocation().getWorld().getName().compareTo("Dungeon")==0
 				&&player.isOp()==false)
 		{
 			event.setCancelled(true);

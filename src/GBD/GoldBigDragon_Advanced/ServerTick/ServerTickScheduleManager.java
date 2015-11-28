@@ -30,6 +30,12 @@ public class ServerTickScheduleManager
 				PHSF.set("Schedule."+count+".Bool."+counter, ServerTickMain.Schedule.get(UTC).getBoolean((byte)counter));
 			PHSF.saveConfig();
 		}
+		for(int count = 0; count < ServerTickMain.PlayerTaskList.size(); count++)
+		{
+			PHSF.set("PlayerTaskList."+count+".Name", ServerTickMain.PlayerTaskList.keySet().toArray()[count].toString());
+			PHSF.set("PlayerTaskList."+count+".TaskUTC", ServerTickMain.PlayerTaskList.get(ServerTickMain.PlayerTaskList.keySet().toArray()[count].toString()));
+			PHSF.saveConfig();
+		}
 		for(int counter=0; counter<ServerTickMain.NaviUsingList.size();counter++)
 			PHSF.set("NaviUsingList."+counter, ServerTickMain.NaviUsingList.get(counter));
 		PHSF.saveConfig();
@@ -64,6 +70,14 @@ public class ServerTickScheduleManager
 				ServerTickMain.Schedule.put(UTC, STSO);
 			}
 		}
+		if(PHSF.contains("PlayerTaskList"))
+		{
+			for(int count = 0; count < PHSF.getConfigurationSection("PlayerTaskList").getKeys(false).size(); count++)
+			{
+				if(Bukkit.getServer().getPlayer(PHSF.getString("PlayerTaskList."+count+".Name")) != null)
+					ServerTickMain.PlayerTaskList.put(PHSF.getString("PlayerTaskList."+count+".Name"), PHSF.getString("PlayerTaskList."+count+".TaskUTC"));
+			}
+		}
 		if(PHSF.contains("NaviUsingList"))
 		{
 			for(int count = 0; count < PHSF.getConfigurationSection("NaviUsingList").getKeys(false).size(); count++)
@@ -76,6 +90,7 @@ public class ServerTickScheduleManager
 		PHSF.removeKey("MonbSpawningAreaList");
 		PHSF.removeKey("Schedule");
 		PHSF.removeKey("NaviUsingList");
+		PHSF.removeKey("PlayerTaskList");
 		PHSF.saveConfig();
 	}
 }

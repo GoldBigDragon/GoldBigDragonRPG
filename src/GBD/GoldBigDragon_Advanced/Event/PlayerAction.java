@@ -1861,6 +1861,11 @@ public class PlayerAction
 				JobList.saveConfig();
 				sound.SP(player, org.bukkit.Sound.HORSE_SADDLE, 1.0F, 0.5F);
 				JGUI.Mabinogi_ChooseCategory(player,0);
+
+				YamlManager Config  = GUI_YC.getNewConfig("config.yml");
+				Config.set("Time.LastSkillChanged", new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000)-new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(0, 100000));
+				Config.saveConfig();
+				
 				new GBD.GoldBigDragon_Advanced.ETC.Job().AllPlayerFixAllSkillAndJobYML();
 				Main.UserData.get(player).clearAll();
 			}
@@ -2585,24 +2590,16 @@ public class PlayerAction
 			return;
 		case "CSN"://ChangeStatName
 			{
-<<<<<<< HEAD
 				message.replace(".", "");
 				message.replace(":", "");
 				message.replace(" ", "");
 				String Message = event.getMessage();
 				Message.replace(".", "");
 				Message.replace(":", "");
-=======
-				String Pa = event.getMessage();
-				Pa.replace(".", "");
-				Pa.replace(":", "");
-				Pa.replace(" ", "");
->>>>>>> origin/GoldBigDragonRPG_Advanced
 				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
 				switch(Main.UserData.get(player).getString((byte)2))
 				{
 				case "체력":
-<<<<<<< HEAD
 					Config.set("Server.STR", message);
 					break;
 				case "체력 설명":
@@ -2637,30 +2634,112 @@ public class PlayerAction
 					Pa.replace(".", "");
 					Pa.replace(":", "");
 					Pa.replace(" ", "");
-=======
-					Config.set("Server.STR", Pa);
-					break;
-				case "솜씨":
-					Config.set("Server.DEX", Pa);
-					break;
-				case "지력":
-					Config.set("Server.INT", Pa);
-					break;
-				case "의지":
-					Config.set("Server.WILL", Pa);
-					break;
-				case "행운":
-					Config.set("Server.LUK", Pa);
-					break;
-				case "화폐":
->>>>>>> origin/GoldBigDragonRPG_Advanced
 					Config.set("Server.MoneyName", Pa);
-					break;
+					Config.saveConfig();
+					Main.UserData.get(player).clearAll();
+					GBD.GoldBigDragon_Advanced.Main.ServerOption.Money = Pa;
+					new GBD.GoldBigDragon_Advanced.GUI.OPBoxGUI().OPBoxGUI_Money(player);
+					return;
 				}
 				Config.saveConfig();
 				Main.UserData.get(player).clearAll();
 				player.sendMessage(ChatColor.GREEN + "[System] : 변경된 내용은 서버 안전을 위해, 서버 리로드 이후 일괄 적용됩니다.");
 				new GBD.GoldBigDragon_Advanced.GUI.OPBoxGUI().OPBoxGUI_StatChange(player);
+			}
+			return;
+	
+			case "CDML": //Change Drop Money Limit
+			{
+				if(isIntMinMax(message, player, 1000, 100000000))
+				{
+					int value = Integer.parseInt(message);
+					Config.set("Server.Max_Drop_Money",value);
+					Config.saveConfig();
+					Main.UserData.get(player).clearAll();
+					new GBD.GoldBigDragon_Advanced.GUI.OPBoxGUI().OPBoxGUI_Money(player);
+				}
+			}
+			return;
+			case "CMID": //Change Money ID
+			{
+				if(isIntMinMax(message, player, 1, Integer.MAX_VALUE))
+				{
+					if(new GBD.GoldBigDragon_Advanced.Event.Interact().SetItemDefaultName(Integer.parseInt(message),(byte)0).compareTo("지정되지 않은 아이템")==0)
+					{
+						player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 아이템은 존재하지 않습니다!");
+		  				s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+		  				return;
+					}
+					int value = Integer.parseInt(message);
+					switch(Main.UserData.get(player).getInt((byte)1))
+					{
+					case 50:
+						Config.set("Server.Money.1.ID",value);
+						GBD.GoldBigDragon_Advanced.Main.ServerOption.Money1ID = value;
+						break;
+					case 100:
+						Config.set("Server.Money.2.ID",value);
+						GBD.GoldBigDragon_Advanced.Main.ServerOption.Money2ID = value;
+						break;
+					case 1000:
+						Config.set("Server.Money.3.ID",value);
+						GBD.GoldBigDragon_Advanced.Main.ServerOption.Money3ID = value;
+						break;
+					case 10000:
+						Config.set("Server.Money.4.ID",value);
+						GBD.GoldBigDragon_Advanced.Main.ServerOption.Money4ID = value;
+						break;
+					case 50000:
+						Config.set("Server.Money.5.ID",value);
+						GBD.GoldBigDragon_Advanced.Main.ServerOption.Money5ID = value;
+						break;
+					case -1:
+						Config.set("Server.Money.6.ID",value);
+						GBD.GoldBigDragon_Advanced.Main.ServerOption.Money6ID = value;
+						break;
+					}
+					Config.saveConfig();
+					player.sendMessage(ChatColor.DARK_AQUA+"[System] : 화폐 모양으로 설정할 아이템 DATA를 입력 해 주세요!");
+					Main.UserData.get(player).setString((byte)1, "CMDATA");
+				}
+			}
+			return;
+			case "CMDATA": //Change Money DATA
+			{
+				if(isIntMinMax(message, player, 0, Integer.MAX_VALUE))
+				{
+					int value = Integer.parseInt(message);
+					switch(Main.UserData.get(player).getInt((byte)1))
+					{
+					case 50:
+						Config.set("Server.Money.1.DATA",value);
+						GBD.GoldBigDragon_Advanced.Main.ServerOption.Money1DATA = value;
+						break;
+					case 100:
+						Config.set("Server.Money.2.DATA",value);
+						GBD.GoldBigDragon_Advanced.Main.ServerOption.Money2DATA = value;
+						break;
+					case 1000:
+						Config.set("Server.Money.3.DATA",value);
+						GBD.GoldBigDragon_Advanced.Main.ServerOption.Money3DATA = value;
+						break;
+					case 10000:
+						Config.set("Server.Money.4.DATA",value);
+						GBD.GoldBigDragon_Advanced.Main.ServerOption.Money4DATA = value;
+						break;
+					case 50000:
+						Config.set("Server.Money.5.DATA",value);
+						GBD.GoldBigDragon_Advanced.Main.ServerOption.Money5DATA = value;
+						break;
+					case -1:
+						Config.set("Server.Money.6.DATA",value);
+						GBD.GoldBigDragon_Advanced.Main.ServerOption.Money6DATA = value;
+						break;
+					}
+					Config.saveConfig();
+					Main.UserData.get(player).clearAll();
+					new GBD.GoldBigDragon_Advanced.GUI.OPBoxGUI().OPBoxGUI_Money(player);
+				}
 			}
 			return;
 		}

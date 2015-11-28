@@ -99,28 +99,23 @@ public class Interact
 										return;
 									}
 					}
-					String LoreString = player.getItemInHand().getItemMeta().getLore().toString();
-					if(LoreString.contains("귀환서")||LoreString.contains("주문서")||LoreString.contains("스킬북")||LoreString.contains("소비"))
+					String LoreString = player.getItemInHand().getItemMeta().getLore().get(0).toString();
+					if(LoreString.contains("[귀환서]")||LoreString.contains("[주문서]")||
+					   LoreString.contains("[스킬북]")||LoreString.contains("[소비]")||
+					   LoreString.contains("[돈]"))
 					{
-						String type = null;
-						for(int counter = 0; counter < player.getItemInHand().getItemMeta().getLore().size(); counter++)
-						{
-							if(type != null)
-							{
-								event.setCancelled(true);
-								UseUseableItem UU = new UseUseableItem();
-								UU.UseAbleItemUse(player, type);
-								return;
-							}
-							if(player.getItemInHand().getItemMeta().getLore().get(counter).contains("귀환서"))
-								type = "귀환서";
-							else if(player.getItemInHand().getItemMeta().getLore().get(counter).contains("주문서"))
-								type = "주문서";
-							else if(player.getItemInHand().getItemMeta().getLore().get(counter).contains("스킬북"))
-								type = "스킬북";
-							else if(player.getItemInHand().getItemMeta().getLore().get(counter).contains("소비"))
-								type = "소비";
-						}
+						event.setCancelled(true);
+						if(LoreString.contains("[소비]"))
+							new UseUseableItem().UseAbleItemUse(player, "소비");
+						else if(LoreString.contains("[귀환서]"))
+							new UseUseableItem().UseAbleItemUse(player, "귀환서");
+						else if(LoreString.contains("[주문서]"))
+							new UseUseableItem().UseAbleItemUse(player, "주문서");
+						else if(LoreString.contains("[스킬북]"))
+							new UseUseableItem().UseAbleItemUse(player, "스킬북");
+						else if(LoreString.contains("[돈]"))
+							new UseUseableItem().UseAbleItemUse(player, "돈");
+						return;
 					}
 				}
 			}
@@ -353,10 +348,14 @@ public class Interact
 			{
 			  	if(Event_YC.isExit("Stats/" + event.getPlayer().getUniqueId()+".yml") == false)
 			  		new GBD.GoldBigDragon_Advanced.Config.StatConfig().CreateNewStats(event.getPlayer());
-
 				YM = Event_YC.getNewConfig("Stats/" + event.getPlayer().getUniqueId()+".yml");
-				
-				YM.set("Stat.Money", YM.getLong("Stat.Money") + Long.parseLong(ItemName.split("§f§f§f§l")[1]));
+				if(YM.getLong("Stat.Money") + Long.parseLong(ItemName.split("§f§f§f§l")[1]) <= 2000000000)
+					YM.set("Stat.Money", YM.getLong("Stat.Money") + Long.parseLong(ItemName.split("§f§f§f§l")[1]));
+				else
+				{
+					event.getPlayer().sendMessage(ChatColor.RED+"[System] : "+ServerOption.Money+ChatColor.RED+" 을(를) 2000000000(20억)이상 가질 수 없습니다!");
+					YM.set("Stat.Money", 2000000000);
+				}
 				YM.saveConfig();
 				event.setCancelled(true);
 				event.getItem().remove();

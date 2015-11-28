@@ -14,14 +14,17 @@ public class ServerTickMain
 {
 	public static ArrayList<String> MobSpawningAreaList = new ArrayList<String>();
 	public static ArrayList<String> NaviUsingList = new ArrayList<String>();
+	public static HashMap<String, String> PlayerTaskList = new HashMap<String, String>();
 	public static HashMap<Long, ServerTickScheduleObject> Schedule = new HashMap<Long, ServerTickScheduleObject>();
 	public static long nowUTC = 0;
 	int BroadCastMessageTime =0;
   	int BroadCastMessageCool = 0;
-  	public static int SafeLine = 30;
+  	public static int SafeLine = 100;
   	//초당 최대 실행 스케줄 갯수 설정
   	//(값이 클수록 초당 많은 작업을 하지만, 그만큼 서버에 부담이 된다.)
-  	
+
+	public ServerTickMain()
+	{}
 	public ServerTickMain(Main plugin)
 	{
 		nowUTC = new GBD.GoldBigDragon_Advanced.Util.ETC().getNowUTC();
@@ -92,6 +95,9 @@ public class ServerTickMain
 			return;
 		case "NV"://Navigation
 			new ServerTask_Navigation().Navigation(UTC);
+			return;
+		case "P_EC"://Player_Exchange
+			new ServerTask_Player().ExChangeTimer(UTC);
 			return;
 		default:
 			return;
