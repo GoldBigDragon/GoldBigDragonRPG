@@ -128,6 +128,14 @@ public class Attack
 			Player player = (Player) Attacker;
 			Player target = (Player) event.getEntity();
 			
+			if(Main.PartyJoiner.containsKey(player)&&Main.PartyJoiner.containsKey(target))
+				if(Main.PartyJoiner.get(player)==Main.PartyJoiner.get(target))
+				{
+					player.sendMessage(ChatColor.RED+"[파티] : 파티원은 공격할 수 없습니다!");
+					event.setCancelled(true);
+					return;
+				}
+			
 			GBD.GoldBigDragon_Advanced.ETC.Area A = new GBD.GoldBigDragon_Advanced.ETC.Area();
 			if(Main.PlayerCurrentArea.get(player)==null)
 				Main.PlayerCurrentArea.put(player, "null");
@@ -194,7 +202,7 @@ public class Attack
 		}
 		
 	    int Defender_Stat[] = getDefenderStats(event.getEntity());
-
+			
 		if (AttackType == "R_A")
 		{
 			Damage = damage.damagerand(Attacker, damage.RangeMinDamageGet(Attacker, (int)Damage, Attacker_Stat[1]),
@@ -220,6 +228,7 @@ public class Attack
 			Damage = damage.damagerand(Attacker, damage.ExplosionMinDamageGet(Attacker, (int)Damage, Attacker_Stat[2]),
 					damage.ExplosionMaxDamageGet(Attacker, (int)Damage, Attacker_Stat[2]),  Attacker_Stat[8]);
 		}
+		
 		
 		int critdamage = damage.criticalrend(Attacker_Stat[4], Attacker_Stat[1],Damage, Defender_Stat[1],Attacker_Stat[7]);
 
@@ -262,7 +271,7 @@ public class Attack
 				if(player.isOnline())
 					DamageCancellMessage(player, event.getEntity());
 			}
-			event.setCancelled(true);
+			event.setDamage(0.5);
 			return;
 		}
 		event.setDamage(Damage);
@@ -289,6 +298,8 @@ public class Attack
 	public int[] getAttackerStats(Entity entity)
 	{
 		int Attacker_Stat[] = new int[9];
+		for(int count=0;count<9;count++)
+			Attacker_Stat[count] = 0;
 	    YamlManager attacker;
 		YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;
 	    Damage damage = new Damage();
@@ -369,6 +380,8 @@ public class Attack
 	public int[] getDefenderStats(Entity entity)
 	{
 		int Defender_Stat[] = new int[4];
+		for(int count=0;count<4;count++)
+			Defender_Stat[count] = 0;
 		GBD.GoldBigDragon_Advanced.Config.StatConfig stat = new GBD.GoldBigDragon_Advanced.Config.StatConfig();
 	    YamlManager defenser;
 		YamlController Event_YC = GBD.GoldBigDragon_Advanced.Main.Main.Event_YC;

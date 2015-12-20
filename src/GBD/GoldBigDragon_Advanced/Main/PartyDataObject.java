@@ -192,6 +192,35 @@ public class PartyDataObject
 		}
 	}
 	
+	public void QuitPartyOfflinePlayer(String playerName)
+	{
+		if(getPartyMembers() == 1)
+		{
+			Main.Party.remove(this.CreateTime);
+			return;
+		}
+		for(int count = 0; count < this.PartyCapacity; count++)
+			if(this.PartyMember[count]!=null)
+				if(this.PartyMember[count].compareTo(playerName) == 0)
+				{
+					PartyBroadCastMessage(ChatColor.RED+"[ÆÄÆ¼] : "+ChatColor.YELLOW+""+ChatColor.BOLD+playerName+ChatColor.RED+"´Ô²²¼­ ÆÄÆ¼¸¦ Å»ÅðÇÏ¼Ì½À´Ï´Ù!",null);
+					PartyBroadCastSound(Sound.DOOR_CLOSE, 1.1F, 1.0F,null);
+					for(int counter = count; counter < this.PartyCapacity-1; counter++)
+						this.PartyMember[counter] = this.PartyMember[counter+1];
+					this.PartyMember[this.PartyMember.length-1] = null;
+					break;
+				}
+		if(playerName.equals(this.Leader))
+		{
+			for(int count = 0; count < this.PartyCapacity; count++)
+				if(this.PartyMember[count] != null)
+				{
+					ChangeLeader(Bukkit.getServer().getPlayer(this.PartyMember[count]));
+					break;
+				}
+		}
+	}
+	
 	public void ChangeLeader(Player player)
 	{
 		this.Leader = player.getName();

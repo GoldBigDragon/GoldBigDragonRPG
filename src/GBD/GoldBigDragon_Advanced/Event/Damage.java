@@ -776,6 +776,7 @@ public class Damage
 						{
 							if(item.getItemMeta().getLore().get(count).contains("³»±¸µµ") == true)
 							{
+								item.setDurability((short) (item.getDurability()-1));
 								Lore = nowlore.split(" : ");
 								durability = Integer.parseInt(Lore[0].split(" / ")[0]);
 							}
@@ -917,8 +918,6 @@ public class Damage
 									List<String> PLore = Meta.getLore();
 									if((Integer.parseInt(SubLore[0])-1) <= 0)
 									{
-										
-
 										YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
 										YamlManager Config =GUI_YC.getNewConfig("config.yml");
 										if(Config.getBoolean("Server.CustomWeaponBreak"))

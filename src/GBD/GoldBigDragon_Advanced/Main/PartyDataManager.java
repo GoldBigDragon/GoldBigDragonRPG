@@ -62,7 +62,7 @@ public class PartyDataManager
 					for(int counter = 0; counter < PM.length;counter++)
 						if(PM[counter] != null)
 							if(Bukkit.getServer().getPlayer(PM[counter])==null)
-								Main.Party.get(PCT).QuitParty((Player) Bukkit.getServer().getOfflinePlayer(PM[counter]));
+								Main.Party.get(PCT).QuitPartyOfflinePlayer(PM[counter]);
 							else
 							{
 								if(Bukkit.getServer().getPlayer(PM[counter]).isOnline()==false)
@@ -72,7 +72,10 @@ public class PartyDataManager
 							}
 
 					if(Bukkit.getServer().getOfflinePlayer(PL).isOnline() == false)
-						Main.Party.get(PCT).QuitParty((Player) Bukkit.getServer().getOfflinePlayer(PL));
+						Main.Party.get(PCT).QuitPartyOfflinePlayer(PL);
+					
+					if(Main.Party.get(PCT).getPartyMembers()==0)
+						Main.Party.remove(PCT);
 				}
 			}
 		}

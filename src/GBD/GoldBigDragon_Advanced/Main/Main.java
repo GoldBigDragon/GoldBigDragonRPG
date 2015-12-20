@@ -31,6 +31,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -54,11 +55,11 @@ public class Main extends JavaPlugin implements Listener
 {
 	public static YamlController Main_YC,GUI_YC,Party_YC,Config_YC,Event_YC,Monster_YC,Location_YC,Scheduler_YC;
 
-	public static String serverUpdate = "2015-11-29-04:08";
+	public static String serverUpdate = "2015-12-20-17:01";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/";
 	
-	public static String currentServerUpdate = "2015-11-29-04:08";
+	public static String currentServerUpdate = "2015-12-20-17:01";
 	public static String currentServerVersion = "Advanced";
 	
 	public static String SpawnMobName;
@@ -75,6 +76,8 @@ public class Main extends JavaPlugin implements Listener
 	public static HashMap<Player, ItemStack> PlayerlastItem = new HashMap<Player, ItemStack>();
 	public static HashMap<Player, String> PlayerClickedNPCuuid = new HashMap<Player, String>();
 	public static HashMap<Player, String> PlayerCurrentArea = new HashMap<Player, String>();
+	
+	public static HashMap<Player, ItemStack[]> GUIswapItem = new HashMap<Player, ItemStack[]>();
 	
 	public static boolean MagicSpellsCatched = false;
 	public static boolean CitizensCatched = false;

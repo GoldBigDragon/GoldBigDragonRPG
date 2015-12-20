@@ -407,7 +407,16 @@ public class SpellMain implements Listener
 		int MaxMana = PlayerStats.getInt("Stat.MAXMP")+BonusMana;
 
 		if(MaxMana > 0)
-			MagicSpells.getManaHandler().setMaxMana(player, MaxMana);
+		{
+			try
+			{
+				MagicSpells.getManaHandler().setMaxMana(player, MaxMana);
+			}
+			catch(NoClassDefFoundError e)
+			{
+				System.out.println("매직 스펠의 com/nisovin/magicspells/MagicSpells 클래스를 찾을 수 없습니다!");
+			}
+		}
 		return;
 	}
 	

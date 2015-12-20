@@ -65,7 +65,7 @@ public class PlayerAction
 					YamlManager QuestList  = GUI_YC.getNewConfig("Quest/QuestList.yml");
 					YamlManager PlayerQuestList  = GUI_YC.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
 					
-					Object[] b = PlayerQuestList.getConfigurationSection("Started.").getKeys(false).toArray();
+					Object[] b = PlayerQuestList.getConfigurationSection("Started").getKeys(false).toArray();
 					for(int count = 0; count < b.length; count++)
 					{
 						String QuestName = (String) b[count];
@@ -1093,6 +1093,12 @@ public class PlayerAction
 				return;
 			case "NUR"://NewUpgradeRecipe
 				Message = Message.replace(".", "");
+				if(RecipeList.contains(Message)==true)
+				{
+					player.sendMessage(ChatColor.RED+"[개조] : 해당 이름의 개조식은 이미 존재합니다!");
+					s.SP(player, Sound.ORB_PICKUP, 1.0F, 1.8F);
+					return;
+				}
 				RecipeList.set(Message+".Lore", ChatColor.WHITE+"무기의 날을 다듬는 개조식이다.%enter%"+ChatColor.WHITE+"날을 다듬은 무기는 내구성이%enter%"+ChatColor.WHITE+"떨어지지만, 위협적이다.");
 				RecipeList.set(Message+".Only",ChatColor.RED+ "[근접 무기]");
 				RecipeList.set(Message+".MaxDurability", -50);

@@ -18,7 +18,7 @@ public class BlockBreak
 	public void BlockBreaking(BlockBreakEvent event)
 	{
 		Player player = (Player) event.getPlayer();
-
+		new Damage().decreaseDurabilityWeapon(player);
 		GBD.GoldBigDragon_Advanced.ETC.Area A = new GBD.GoldBigDragon_Advanced.ETC.Area();
 		String[] Area = A.getAreaName(event.getBlock());
 		if(Area != null)
@@ -94,7 +94,6 @@ public class BlockBreak
 				}
 			}
 		}
-		new GBD.GoldBigDragon_Advanced.Event.Damage().decreaseDurabilityWeapon(player);
 		return;
 	}
 

@@ -721,7 +721,7 @@ public class EquipGUI extends GUIutil
 					Object[] SideFriend = SideFriendsList.getConfigurationSection("Friends").getKeys(false).toArray();
 					for(int count= 0; count < SideFriend.length;count++)
 					{
-						if(SideFriend[counter].toString().compareTo(player.getName())==0)
+						if(SideFriend[count].toString().compareTo(player.getName())==0)
 						{
 							if(isJoinMessage)
 							{
