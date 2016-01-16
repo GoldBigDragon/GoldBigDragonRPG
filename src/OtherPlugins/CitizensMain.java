@@ -9,9 +9,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-import GBD.GoldBigDragon_Advanced.Main.Main;
-import GBD.GoldBigDragon_Advanced.Util.YamlController;
-import GBD.GoldBigDragon_Advanced.Util.YamlManager;
+import GoldBigDragon_RPG.Main.Main;
+import GoldBigDragon_RPG.Main.UserDataObject;
+import GoldBigDragon_RPG.Util.YamlController;
+import GoldBigDragon_RPG.Util.YamlManager;
 import net.citizensnpcs.api.event.NPCCreateEvent;
 import net.citizensnpcs.api.event.NPCRemoveEvent;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
@@ -27,14 +28,14 @@ public class CitizensMain implements Listener
 	
 	public void NPCquest(NPCRightClickEvent event)
 	{
-		GBD.GoldBigDragon_Advanced.Config.StatConfig stat = new GBD.GoldBigDragon_Advanced.Config.StatConfig();
-		GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
+		GoldBigDragon_RPG.Config.StatConfig stat = new GoldBigDragon_RPG.Config.StatConfig();
+		GoldBigDragon_RPG.Effect.Sound s = new GoldBigDragon_RPG.Effect.Sound();
 
 	    YamlManager YM;
 	    
 	    Player player = event.getClicker();
 	    net.citizensnpcs.api.npc.NPC target = event.getNPC();
-		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
+		YamlController GUI_YC = GoldBigDragon_RPG.Main.Main.YC_2;
 		YamlManager QuestList  = GUI_YC.getNewConfig("Quest/QuestList.yml");
 		YamlManager PlayerQuestList  = GUI_YC.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
 		
@@ -46,7 +47,7 @@ public class CitizensMain implements Listener
 			{
 				String QuestName = a[count].toString();
 				int QuestFlow = PlayerQuestList.getInt("Started."+QuestName+".Flow");
-				GBD.GoldBigDragon_Advanced.GUI.QuestGUI QGUI = new GBD.GoldBigDragon_Advanced.GUI.QuestGUI();
+				GoldBigDragon_RPG.GUI.QuestGUI QGUI = new GoldBigDragon_RPG.GUI.QuestGUI();
 				boolean isThatTarget = false;
 				switch(QuestList.getString(QuestName+".FlowChart."+QuestFlow+".Type"))
 				{
@@ -234,7 +235,7 @@ public class CitizensMain implements Listener
 						    	}
 					    		if(QuestList.getInt(QuestName + ".FlowChart."+QuestFlow+".EXP") != 0)
 					    		{
-									GBD.GoldBigDragon_Advanced.Event.Level LV = new GBD.GoldBigDragon_Advanced.Event.Level();
+									GoldBigDragon_RPG.Event.Level LV = new GoldBigDragon_RPG.Event.Level();
 									LV.EXPadd(player, QuestList.getLong(QuestName + ".FlowChart."+QuestFlow+".EXP"), player.getLocation());
 					    		}
 								
@@ -260,24 +261,25 @@ public class CitizensMain implements Listener
 	public void NPCRightClick(NPCRightClickEvent event)
 	{
 		Player player = event.getClicker();
-		Main.PlayerClickedNPCuuid.put(player, event.getNPC().getUniqueId().toString());
-		YamlController GUI_YC2 = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
+		UserDataObject u = new UserDataObject();
+		u.setNPCuuid(player, event.getNPC().getUniqueId().toString());
+		YamlController GUI_YC2 = GoldBigDragon_RPG.Main.Main.YC_2;
 		YamlManager DNPC = GUI_YC2.getNewConfig("NPC/DistrictNPC.yml");
 		if(player.isOp()==true)
 		{
-			if(Main.UserData.get(player).getInt((byte)4)==114)
+			if(new UserDataObject().getInt(player, (byte)4)==114)
 			{
 				DNPC.removeKey(event.getNPC().getUniqueId().toString());
 				DNPC.saveConfig();
 				player.sendMessage(ChatColor.GREEN+"[NPC] : 해당 NPC의 GUI창이 활성화 되었습니다!");
-				new GBD.GoldBigDragon_Advanced.Effect.Sound().SP(player, Sound.VILLAGER_YES, 1.0F, 1.0F);
-				Main.UserData.get(player).setInt((byte)4, -1);
+				new GoldBigDragon_RPG.Effect.Sound().SP(player, Sound.VILLAGER_YES, 1.0F, 1.0F);
+				new UserDataObject().setInt(player, (byte)4, -1);
 			}
 		}
 		
 		if(DNPC.contains(event.getNPC().getUniqueId().toString())==false)
 		{
-			GBD.GoldBigDragon_Advanced.GUI.NPC_GUI NPGUI = new GBD.GoldBigDragon_Advanced.GUI.NPC_GUI();
+			GoldBigDragon_RPG.GUI.NPC_GUI NPGUI = new GoldBigDragon_RPG.GUI.NPC_GUI();
 			NPGUI.MainGUI(event.getClicker(), event.getNPC().getName(), event.getClicker().isOp());
 		}
 
@@ -287,7 +289,7 @@ public class CitizensMain implements Listener
 	@EventHandler
 	public void NPCCreating(NPCCreateEvent event)
 	{
-		GBD.GoldBigDragon_Advanced.Config.NPCconfig NPCC = new GBD.GoldBigDragon_Advanced.Config.NPCconfig();
+		GoldBigDragon_RPG.Config.NPCconfig NPCC = new GoldBigDragon_RPG.Config.NPCconfig();
 		NPCC.NPCNPCconfig(event.getNPC().getUniqueId().toString());
 	}
 	@EventHandler

@@ -17,9 +17,9 @@ import com.xxmicloxx.NoteBlockAPI.Song;
 import com.xxmicloxx.NoteBlockAPI.SongEndEvent;
 import com.xxmicloxx.NoteBlockAPI.SongPlayer;
 
-import GBD.GoldBigDragon_Advanced.Main.Main;
-import GBD.GoldBigDragon_Advanced.Util.YamlController;
-import GBD.GoldBigDragon_Advanced.Util.YamlManager;
+import GoldBigDragon_RPG.Main.Main;
+import GoldBigDragon_RPG.Util.YamlController;
+import GoldBigDragon_RPG.Util.YamlManager;
 
 public class NoteBlockAPIMain implements Listener
 {
@@ -186,7 +186,7 @@ public class NoteBlockAPIMain implements Listener
 			player = Bukkit.getPlayer(event.getSongPlayer().getPlayerList().get(count));
 			if(Main.PlayerCurrentArea.get(player) != "null")
 			{
-				GBD.GoldBigDragon_Advanced.ETC.Area A = new GBD.GoldBigDragon_Advanced.ETC.Area();
+				GoldBigDragon_RPG.ETC.Area A = new GoldBigDragon_RPG.ETC.Area();
 				String Area;
 				Area = A.getAreaName(player);
 				if(Area != null)
@@ -197,7 +197,7 @@ public class NoteBlockAPIMain implements Listener
 						{
 							if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
 							{
-								YamlController Location_YC = GBD.GoldBigDragon_Advanced.Main.Main.Location_YC;
+								YamlController Location_YC = GoldBigDragon_RPG.Main.Main.YC_2;
 								YamlManager AreaList = Location_YC.getNewConfig("Area/AreaList.yml");
 								Play(player, AreaList.getInt(Area+".BGM"));
 							}

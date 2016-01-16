@@ -29,10 +29,10 @@ import com.nisovin.magicspells.events.SpellTargetLocationEvent;
 import com.nisovin.magicspells.mana.ManaChangeReason;
 import com.nisovin.magicspells.spells.passive.KillListener;
 
-import GBD.GoldBigDragon_Advanced.Event.Damage;
-import GBD.GoldBigDragon_Advanced.Main.Main;
-import GBD.GoldBigDragon_Advanced.Util.YamlController;
-import GBD.GoldBigDragon_Advanced.Util.YamlManager;
+import GoldBigDragon_RPG.Main.Main;
+import GoldBigDragon_RPG.Util.YamlController;
+import GoldBigDragon_RPG.Util.YamlManager;
+import GoldBigDragon_RPG.Event.Damage;
 
 public class SpellMain implements Listener
 {
@@ -59,8 +59,8 @@ public class SpellMain implements Listener
 	public float BonusPowerCalculator (Player player, LivingEntity target)
 	{
 	    Damage damage = new Damage();
-		GBD.GoldBigDragon_Advanced.Config.StatConfig stat = new GBD.GoldBigDragon_Advanced.Config.StatConfig();
-		YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
+		GoldBigDragon_RPG.Config.StatConfig stat = new GoldBigDragon_RPG.Config.StatConfig();
+		YamlController GUI_YC = GoldBigDragon_RPG.Main.Main.YC_2;
 		YamlManager PlayerStat;
 	  	if(GUI_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
 	  		stat.CreateNewStats(player);
@@ -75,21 +75,21 @@ public class SpellMain implements Listener
 				bonuspower = dam.MagicSpellsDamageBonus((int) p.getHealth())+damage.getPlayerEquipmentStat(player, "HP")[0];
 			else if(switchCheck.compareTo("마나")==0)
 				bonuspower = dam.MagicSpellsDamageBonus(getPlayerMana(player))+damage.getPlayerEquipmentStat(player, "MP")[0];
-			else if(switchCheck.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.STR)==0)
+			else if(switchCheck.compareTo(GoldBigDragon_RPG.Main.ServerOption.STR)==0)
 				bonuspower = PlayerStat.getInt("Stat.STR")+damage.getPlayerEquipmentStat(player, "STR")[0];
-			else if(switchCheck.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.DEX)==0)
+			else if(switchCheck.compareTo(GoldBigDragon_RPG.Main.ServerOption.DEX)==0)
 				bonuspower = PlayerStat.getInt("Stat.DEX")+damage.getPlayerEquipmentStat(player, "DEX")[0];
-			else if(switchCheck.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.INT)==0)
+			else if(switchCheck.compareTo(GoldBigDragon_RPG.Main.ServerOption.INT)==0)
 				bonuspower = PlayerStat.getInt("Stat.INT")+damage.getPlayerEquipmentStat(player, "INT")[0];
-			else if(switchCheck.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.WILL)==0)
+			else if(switchCheck.compareTo(GoldBigDragon_RPG.Main.ServerOption.WILL)==0)
 				bonuspower = PlayerStat.getInt("Stat.WILL")+damage.getPlayerEquipmentStat(player, "WILL")[0];
-			else if(switchCheck.compareTo(GBD.GoldBigDragon_Advanced.Main.ServerOption.LUK)==0)
+			else if(switchCheck.compareTo(GoldBigDragon_RPG.Main.ServerOption.LUK)==0)
 				bonuspower = PlayerStat.getInt("Stat.LUK")+damage.getPlayerEquipmentStat(player, "LUK")[0];
 			else
 				bonuspower = 0;
 		}
 		int[] WeaponPower = dam.getSlotChangedPlayerEquipmentStat(player, "MagicDamage", Main.PlayerlastItem.get(player));
-		int WeaponPowerFixed = new GBD.GoldBigDragon_Advanced.Util.Number().RandomNum(WeaponPower[0], WeaponPower[1]);
+		int WeaponPowerFixed = new GoldBigDragon_RPG.Util.Number().RandomNum(WeaponPower[0], WeaponPower[1]);
 		bonuspower = bonuspower+WeaponPowerFixed;
 		int negativeBonus = 0;
 		if(target!=null)
@@ -308,14 +308,14 @@ public class SpellMain implements Listener
 		int sort = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(49).getItemMeta().getLore().get(1)));
 		
 		Player player = (Player) event.getWhoClicked();
-		GBD.GoldBigDragon_Advanced.Effect.Sound s = new GBD.GoldBigDragon_Advanced.Effect.Sound();
+		GoldBigDragon_RPG.Effect.Sound s = new GoldBigDragon_RPG.Effect.Sound();
 
 		event.setCancelled(true);
 		switch (event.getSlot())
 		{
 			case 45://이전 목록으로
 				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 0.8F);
-				new GBD.GoldBigDragon_Advanced.GUI.OPBoxSkillGUI().SkillRankOptionGUI(player, SkillName, SkillLevel);
+				new GoldBigDragon_RPG.GUI.OPBoxSkillGUI().SkillRankOptionGUI(player, SkillName, SkillLevel);
 				break;
 			case 48://이전 페이지
 				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 0.8F);
@@ -339,11 +339,11 @@ public class SpellMain implements Listener
 				return;
 			default:
 				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 0.8F);
-				YamlController GUI_YC = GBD.GoldBigDragon_Advanced.Main.Main.GUI_YC;
+				YamlController GUI_YC = GoldBigDragon_RPG.Main.Main.YC_2;
 				YamlManager SkillList  = GUI_YC.getNewConfig("Skill/SkillList.yml");
 				SkillList.set(SkillName+".SkillRank."+SkillLevel+".MagicSpells", ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 				SkillList.saveConfig();
-				new GBD.GoldBigDragon_Advanced.GUI.OPBoxSkillGUI().SkillRankOptionGUI(player, SkillName, SkillLevel);
+				new GoldBigDragon_RPG.GUI.OPBoxSkillGUI().SkillRankOptionGUI(player, SkillName, SkillLevel);
 				return;
 		}
 	}
@@ -382,31 +382,38 @@ public class SpellMain implements Listener
 
 	public void setPlayerMaxAndNowMana(Player player)
 	{
-		YamlController Config_YC = GBD.GoldBigDragon_Advanced.Main.Main.Config_YC;
+		YamlController Config_YC = GoldBigDragon_RPG.Main.Main.YC_2;
 		YamlManager PlayerStats  = Config_YC.getNewConfig("Stats/"+player.getUniqueId().toString()+".yml");
 
-		GBD.GoldBigDragon_Advanced.Event.Damage d = new GBD.GoldBigDragon_Advanced.Event.Damage();
+		GoldBigDragon_RPG.Event.Damage d = new GoldBigDragon_RPG.Event.Damage();
 		
 		int BonusMana = d.getPlayerEquipmentStat(player, "마나")[0];
 		int MaxMana = PlayerStats.getInt("Stat.MAXMP")+BonusMana;
 		int Mana = PlayerStats.getInt("Stat.MP")+BonusMana;
-		
 		if(MaxMana > 0)
-			MagicSpells.getManaHandler().setMaxMana(player, MaxMana);
+		{
+			try
+			{
+				MagicSpells.getManaHandler().setMaxMana(player, MaxMana);
+			}
+			catch(NullPointerException e)
+			{				
+			}
+		}
 		return;
 	}
 
 	public void setSlotChangePlayerMaxAndNowMana(Player player, ItemStack newSlot)
 	{
-		YamlController Config_YC = GBD.GoldBigDragon_Advanced.Main.Main.Config_YC;
+		YamlController Config_YC = GoldBigDragon_RPG.Main.Main.YC_2;
 		YamlManager PlayerStats  = Config_YC.getNewConfig("Stats/"+player.getUniqueId().toString()+".yml");
 
-		GBD.GoldBigDragon_Advanced.Event.Damage d = new GBD.GoldBigDragon_Advanced.Event.Damage();
+		GoldBigDragon_RPG.Event.Damage d = new GoldBigDragon_RPG.Event.Damage();
 		
 		int BonusMana = d.getSlotChangedPlayerEquipmentStat(player, "마나",newSlot)[0];
 		int MaxMana = PlayerStats.getInt("Stat.MAXMP")+BonusMana;
 
-		if(MaxMana > 0)
+		if(MaxMana > 0 && Main.MagicSpellsEnable == true)
 		{
 			try
 			{
@@ -415,6 +422,9 @@ public class SpellMain implements Listener
 			catch(NoClassDefFoundError e)
 			{
 				System.out.println("매직 스펠의 com/nisovin/magicspells/MagicSpells 클래스를 찾을 수 없습니다!");
+			}
+			catch(NullPointerException e)
+			{
 			}
 		}
 		return;
