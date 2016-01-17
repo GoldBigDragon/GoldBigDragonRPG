@@ -54,10 +54,10 @@ public class Main extends JavaPlugin implements Listener
 {
 	public static YamlController YC_1,YC_2,YC_3;
 
-	public static String serverUpdate = "2016-01-17-21:03";
+	public static String serverUpdate = "2016-01-18-02:10";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/";
-	public static String currentServerUpdate = "2016-01-17-21:03";
+	public static String currentServerUpdate = "2016-01-18-02:10";
 	public static String currentServerVersion = "Advanced";
 	
 	public static String SpawnMobName;

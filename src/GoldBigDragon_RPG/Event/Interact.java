@@ -56,6 +56,7 @@ public class Interact
 					}
 				}
 			}
+			if(event.getItem()!=null)
 			if(event.getItem().getTypeId()>=325&&event.getItem().getTypeId()<=327)
 			{
 				GoldBigDragon_RPG.ETC.Area A = new GoldBigDragon_RPG.ETC.Area();
