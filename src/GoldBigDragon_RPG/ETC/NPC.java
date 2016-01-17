@@ -112,8 +112,9 @@ public class NPC
 
 	public void InventoryClose_NPC(InventoryCloseEvent event)
 	{
-		if(event.getInventory().getItem(13)!=null)
-			event.getPlayer().getInventory().addItem(event.getInventory().getItem(13));
+		if(event.getInventory().getSize() > 9)
+			if(event.getInventory().getItem(13)!=null)
+				event.getPlayer().getInventory().addItem(event.getInventory().getItem(13));
 		return;
 	}
 }

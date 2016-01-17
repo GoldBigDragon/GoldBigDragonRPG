@@ -36,6 +36,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -53,10 +54,10 @@ public class Main extends JavaPlugin implements Listener
 {
 	public static YamlController YC_1,YC_2,YC_3;
 
-	public static String serverUpdate = "2016-01-17-02:07";
+	public static String serverUpdate = "2016-01-17-21:03";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/";
-	public static String currentServerUpdate = "2016-01-17-02:07";
+	public static String currentServerUpdate = "2016-01-17-21:03";
 	public static String currentServerVersion = "Advanced";
 	
 	public static String SpawnMobName;
@@ -437,7 +438,16 @@ public class Main extends JavaPlugin implements Listener
 		return;
 	}
 	
-	
+	@EventHandler
+	private void KeepItemDurability(PlayerItemDamageEvent event)
+	{
+		ItemStack item = event.getItem();
+		if(item.hasItemMeta())
+			if(item.getItemMeta().hasLore() == true)
+				if(item.getItemMeta().getLore().toString().contains("³»±¸µµ"))
+					event.setCancelled(true);
+		return;
+	}
 	
 	public void MagicSpellCatch()
 	{

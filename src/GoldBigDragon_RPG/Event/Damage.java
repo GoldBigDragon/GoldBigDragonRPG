@@ -812,7 +812,6 @@ public class Damage
 									{
 										if(Meta.getLore().get(count).contains("내구도") == true)
 										{
-											item[counter].setDurability((short) (item[counter].getDurability()-1));
 											String[] Lore = ChatColor.stripColor(Meta.getLore().get(count)).split(" : ");
 											String[] SubLore = Lore[1].split(" / ");
 											List<String> PLore = Meta.getLore();
@@ -912,7 +911,6 @@ public class Damage
 								ItemMeta Meta = item.getItemMeta();
 								if(Meta.getLore().get(count).contains("내구도") == true)
 								{
-									item.setDurability((short) (item.getDurability()-1));
 									String[] Lore = ChatColor.stripColor(Meta.getLore().get(count)).split(" : ");
 									String[] SubLore = Lore[1].split(" / ");
 									List<String> PLore = Meta.getLore();

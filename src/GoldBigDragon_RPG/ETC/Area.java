@@ -79,6 +79,7 @@ public class Area
 		AreaList.set(name+".PVP", false);
 		AreaList.set(name+".BlockPlace", false);
 		AreaList.set(name+".BlockBreak", false);
+		AreaList.set(name+".BlockUse", false);
 		AreaList.set(name+".SpawnPoint", true);
 		AreaList.set(name+".MobSpawn", false);
 		AreaList.set(name+".Alert", true);
@@ -321,6 +322,8 @@ public class Area
 			return AreaList.getBoolean(AreaName + ".BlockPlace");
 		case 6:
 			return AreaList.getBoolean(AreaName + ".Music");
+		case 7:
+			return AreaList.getBoolean(AreaName + ".BlockUse");
 		}
 		return false;
 	}

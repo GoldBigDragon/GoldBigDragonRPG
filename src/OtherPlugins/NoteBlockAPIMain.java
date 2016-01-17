@@ -50,7 +50,10 @@ public class NoteBlockAPIMain implements Listener
 				if(MusicFolder.listFiles().length >= 0)
 				{
 					for (File child : MusicFolder.listFiles())
-					  Musics.add(new Song(NBSDecoder.parse(child)));
+					{
+						if(child.getName().contains("nbs"))
+						Musics.add(new Song(NBSDecoder.parse(child)));
+					}
 				}
 				else
 					MusicAdded = false;
@@ -78,7 +81,7 @@ public class NoteBlockAPIMain implements Listener
 	
 	public String getTitle(int MusicNumber)
 	{
-		if(MusicAdded==false||Musics.size()==0)
+		if(MusicAdded==false||Musics.size()==0||Musics.size() < MusicNumber)
 		{
 			MusicAdded = true;
 			NoteBlockAPIAddMusic();
@@ -97,7 +100,7 @@ public class NoteBlockAPIMain implements Listener
 
 	public String getAuthor(int MusicNumber)
 	{
-		if(MusicAdded==false||Musics.size()==0)
+		if(MusicAdded==false||Musics.size()==0||Musics.size() < MusicNumber)
 		{
 			MusicAdded = true;
 			NoteBlockAPIAddMusic();
@@ -116,7 +119,7 @@ public class NoteBlockAPIMain implements Listener
 
 	public String getDescription(int MusicNumber)
 	{
-		if(MusicAdded==false||Musics.size()==0)
+		if(MusicAdded==false||Musics.size()==0||Musics.size() < MusicNumber)
 		{
 			MusicAdded = true;
 			NoteBlockAPIAddMusic();

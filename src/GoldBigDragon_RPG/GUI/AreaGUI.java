@@ -78,6 +78,11 @@ public class AreaGUI extends GUIutil
 		YamlManager AreaConfig =YC_2.getNewConfig("Area/AreaList.yml");
 		Inventory inv = Bukkit.createInventory(null, 45, ChatColor.BLACK + "영역 설정");
 
+		if(AreaConfig.getBoolean(AreaName+".BlockUse") == false)
+			Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[블록 사용]", 166,0,1,Arrays.asList("",ChatColor.RED + ""+ChatColor.BOLD+"[   거부   ]",""), 9, inv);
+		else
+			Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[블록 사용]", 116,0,1,Arrays.asList("",ChatColor.GREEN + ""+ChatColor.BOLD+ "[   허용   ]",""), 9, inv);
+
 		if(AreaConfig.getBoolean(AreaName+".BlockPlace") == false)
 			Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[블록 설치]", 166,0,1,Arrays.asList("",ChatColor.RED + ""+ChatColor.BOLD+"[   거부   ]",""), 10, inv);
 		else
@@ -673,6 +678,12 @@ public class AreaGUI extends GUIutil
 		
 		switch (event.getSlot())
 		{
+		case 9://블록 사용
+			if(AreaConfig.getBoolean(AreaName+".BlockUse") == false)
+				AreaConfig.set(AreaName+".BlockUse", true);
+			else
+				AreaConfig.set(AreaName+".BlockUse", false);
+			break;
 		case 10://블록 설치
 			if(AreaConfig.getBoolean(AreaName+".BlockPlace") == false)
 				AreaConfig.set(AreaName+".BlockPlace", true);
