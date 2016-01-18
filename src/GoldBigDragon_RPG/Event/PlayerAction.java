@@ -871,7 +871,7 @@ public class PlayerAction
 		YamlController YC_2 = GoldBigDragon_RPG.Main.Main.YC_2;
 		YamlManager RecipeList = YC_2.getNewConfig("Item/Upgrade.yml");
 		YamlManager ItemList = YC_2.getNewConfig("Item/ItemList.yml");
-		if(u.getType(player)=="UseableItem"||u.getType(player).equals("UseableItem"))
+		if(u.getType(player).compareTo("UseableItem")==0||u.getType(player).equals("UseableItem"))
 			ItemList = YC_2.getNewConfig("Item/Consume.yml");
 		event.setCancelled(true);
 		int number = 0;

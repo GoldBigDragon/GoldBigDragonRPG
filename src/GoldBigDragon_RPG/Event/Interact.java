@@ -33,7 +33,10 @@ public class Interact
 			if(event.getClickedBlock().getLocation().getWorld().getName().equals("Dungeon"))
 				Dungeon(event);
 		}
-		
+
+		if(event.getPlayer().isOp())
+		{OPwork(event);}
+
 		if(event.getClickedBlock()!=null)
 		{
 			int id = event.getClickedBlock().getTypeId();
@@ -74,9 +77,6 @@ public class Interact
 			}
 		}
 		
-		if(event.getPlayer().isOp())
-		{OPwork(event);}
-		
 		return;
 	}
 	
@@ -86,17 +86,6 @@ public class Interact
 		Entity target = event.getRightClicked();
 		Player player = event.getPlayer();
 
-		String[] Area = new GoldBigDragon_RPG.ETC.Area().getAreaName(target);
-		if(Area != null)
-		{
-			if(new GoldBigDragon_RPG.ETC.Area().getAreaOption(Area[0], (char) 7) == false && event.getPlayer().isOp() == false)
-			{
-				event.setCancelled(true);
-				new GoldBigDragon_RPG.Effect.Sound().SP(event.getPlayer(), org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
-				event.getPlayer().sendMessage(ChatColor.RED + "[SYSTEM] : " + ChatColor.YELLOW + Area[1] + ChatColor.RED + " 지역에 있는 엔티티는 손 댈 수없습니다!");
-				return;
-			}
-		}
 		if(target.getType() == EntityType.PLAYER)
 		{
 			Player t = (Player)target;
@@ -109,10 +98,22 @@ public class Interact
 	    if(player.isOp())
 		{
 			UserDataObject u = new UserDataObject();
-		    if(u.getType(player)=="Quest")
+		    if(u.getType(player).compareTo("Quest")==0)
 			{
 		    	GoldBigDragon_RPG.ETC.Quest Q = new GoldBigDragon_RPG.ETC.Quest();
 		    	Q.EntityInteract(event);
+			}
+		}
+
+		String[] Area = new GoldBigDragon_RPG.ETC.Area().getAreaName(target);
+		if(Area != null)
+		{
+			if(new GoldBigDragon_RPG.ETC.Area().getAreaOption(Area[0], (char) 7) == false && event.getPlayer().isOp() == false)
+			{
+				event.setCancelled(true);
+				new GoldBigDragon_RPG.Effect.Sound().SP(event.getPlayer(), org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+				event.getPlayer().sendMessage(ChatColor.RED + "[SYSTEM] : " + ChatColor.YELLOW + Area[1] + ChatColor.RED + " 지역에 있는 엔티티는 손 댈 수없습니다!");
+				return;
 			}
 		}
 	    return;
@@ -121,13 +122,11 @@ public class Interact
 	private void OPwork(PlayerInteractEvent event)
 	{
 		Player player = event.getPlayer();
-		Block block = event.getClickedBlock();
-
 		UserDataObject u = new UserDataObject();
-		
-		if(u.getType(player)=="Quest")
+
+		if(u.getType(player).compareTo("Quest")==0)
 			OPwork_Quest(event);
-		if(u.getType(player)=="Area")
+		if(u.getType(player).compareTo("Area")==0)
 			OPwork_Area(event);
 		return;
 	}
@@ -261,7 +260,7 @@ public class Interact
 		event.setCancelled(true);
 		if(event.getAction()==Action.LEFT_CLICK_BLOCK)
 		{
-			if(u.getString(player, (byte)1)=="TelePort")
+			if(u.getString(player, (byte)1).compareTo("TelePort")==0)
 			{
 				String QuestName = u.getString(player, (byte)3);
 		    	GoldBigDragon_RPG.GUI.QuestGUI QGUI = new GoldBigDragon_RPG.GUI.QuestGUI();
@@ -289,7 +288,7 @@ public class Interact
 			if(u.getString(player, (byte)1)!=null&&
 				u.getString(player, (byte)3)!=null)
 			{
-				if(u.getString(player, (byte)1)=="Harvest")
+				if(u.getString(player, (byte)1).compareTo("Harvest")==0)
 				{
 					u.setInt(player, (byte)1, block.getTypeId());
 					u.setInt(player, (byte)2,(int)block.getData());
@@ -297,7 +296,7 @@ public class Interact
 			    	player.closeInventory();
 			    	return;
 				}
-				else if(u.getString(player, (byte)1)=="BlockPlace")
+				else if(u.getString(player, (byte)1).compareTo("BlockPlace")==0)
 				{
 					String QuestName = u.getString(player, (byte)2);
 					YamlController Config_YC = GoldBigDragon_RPG.Main.Main.YC_1;
@@ -333,11 +332,11 @@ public class Interact
 		YamlManager AreaConfig =YC_2.getNewConfig("Area/AreaList.yml");
 		
 		UserDataObject u = new UserDataObject();
-		
+
 		String AreaName = u.getString(player, (byte)2);
 		if(event.getAction()==Action.LEFT_CLICK_BLOCK)
 		{
-			if(u.getString(player, (byte)3)=="ANBI")
+			if(u.getString(player, (byte)3).compareTo("ANBI") == 0)
 			{
 				String BlockData = block.getTypeId()+":"+block.getData();
 				ItemStack item = new MaterialData(block.getTypeId(), (byte) block.getData()).toItemStack(1);
@@ -351,7 +350,7 @@ public class Interact
 		}
 		else if(event.getAction()==Action.RIGHT_CLICK_BLOCK)
 		{
-			if(u.getString(player, (byte)3)=="MLS")//MonsterLocationSetting
+			if(u.getString(player, (byte)3).compareTo("MLS")==0)//MonsterLocationSetting
 			{
 				String count = u.getString(player, (byte)1);
 				AreaConfig.set(AreaName+".MonsterSpawnRule."+count+".loc.world", block.getLocation().getWorld().getName());

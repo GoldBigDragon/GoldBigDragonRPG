@@ -2,6 +2,7 @@ package GoldBigDragon_RPG.ServerTick;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -68,6 +69,7 @@ public class ServerTask_Area
 	public int getEntitiesNearby(Location loc, double range)
 	{
         Collection<Entity> entities = loc.getWorld().getNearbyEntities(loc, range, range, range);
+        //List<Entity> entities = loc.getWorld().getEntities();
         for(Iterator<Entity> it = entities.iterator(); it.hasNext();)
         {
         	Entity entity = it.next();

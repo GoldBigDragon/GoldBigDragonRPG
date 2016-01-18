@@ -21,17 +21,17 @@ public class Quest
 		Player player = event.getPlayer();
     	event.setCancelled(true);
     	UserDataObject u = new UserDataObject();
-    	if(u.getType(player)=="Quest")
+    	if(u.getType(player).compareTo("Quest")==0)
     	{
         	GoldBigDragon_RPG.GUI.QuestGUI QGUI = new GoldBigDragon_RPG.GUI.QuestGUI();
     		YamlController Config_YC = GoldBigDragon_RPG.Main.Main.YC_1;
     		YamlManager QuestConfig=Config_YC.getNewConfig("Quest/QuestList.yml");
-    		if((u.getString(player,(byte)1).equalsIgnoreCase("Give")||u.getString(player,(byte)1).equalsIgnoreCase("Present")
-    				||u.getString(player,(byte)1).equalsIgnoreCase("Hunt"))
+    		if((u.getString(player,(byte)1).compareTo("Give")==0||u.getString(player,(byte)1).compareTo("Present")==0)
+    				||u.getString(player,(byte)1).compareTo("Hunt")==0
     				&&u.getString(player,(byte)3)!=null)
     		{
     			u.setType(player,"Quest");
-    			if(u.getString(player,(byte)1)=="Hunt")
+    			if(u.getString(player,(byte)1).compareTo("Hunt")==0)
     			{
     				if(target.getType() == EntityType.PLAYER)
     					u.setString(player, (byte)3, target.getName());
@@ -57,14 +57,14 @@ public class Quest
     					u.setString(player, (byte)2, target.getCustomName());
     			}
     			new GoldBigDragon_RPG.Effect.Sound().SP(event.getPlayer(), org.bukkit.Sound.HORSE_ARMOR, 1.0F,1.2F);
-    			if(u.getString(player,(byte)1)=="Give")
+    			if(u.getString(player,(byte)1).compareTo("Give")==0)
     			{
     		    	player.sendMessage(ChatColor.GREEN + "[SYSTEM] : NPC가 유저에게 받을 물건을 설정하세요!");
     		    	player.closeInventory();
     		    	u.setBoolean(player, (byte)1, true);
     	    		QGUI.GetItemGUI(player, u.getString(player,(byte)3));
     			}
-    			else if(u.getString(player,(byte)1)=="Present")
+    			else if(u.getString(player,(byte)1).compareTo("Present")==0)
     			{
     		    	player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 보상으로 줄 물건을 설정하세요!");
     		    	player.closeInventory();

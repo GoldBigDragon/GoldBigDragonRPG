@@ -1852,7 +1852,7 @@ public class NPC_GUI extends GUIutil
 												}
 												QuestList.saveConfig();
 											}
-											
+											player.closeInventory();
 											s.SP(player, Sound.ORB_PICKUP, 1.0F, 0.8F);
 											String message = Config.getString("Quest.AcceptMessage").replace("%QuestName%", QuestName);
 											player.sendMessage(message);

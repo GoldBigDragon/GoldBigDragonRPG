@@ -2,6 +2,7 @@ package OtherPlugins;
 
 import java.io.File;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -78,16 +79,9 @@ public class CitizensMain implements Listener
 					if(isThatTarget == true)
 					{
 						event.setCancelled(true);
-						if(PlayerQuestList.getInt("Started."+QuestName+".Flow") == 0)
-						{
-							QGUI.QuestTypeRouter(player, QuestName);
-						}
-						else
-						{
-							PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
-							PlayerQuestList.saveConfig();
-							QGUI.QuestTypeRouter(player, QuestName);
-						}
+						PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
+						PlayerQuestList.saveConfig();
+						QGUI.QuestTypeRouter(player, QuestName);
 						return;
 					}
 					break;
