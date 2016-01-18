@@ -54,10 +54,10 @@ public class Main extends JavaPlugin implements Listener
 {
 	public static YamlController YC_1,YC_2,YC_3;
 
-	public static String serverUpdate = "2016-01-19-00:12";
+	public static String serverUpdate = "2016-01-19-02:36";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/";
-	public static String currentServerUpdate = "2016-01-19-00:12";
+	public static String currentServerUpdate = "2016-01-19-02:36";
 	public static String currentServerVersion = "Advanced";
 	
 	public static String SpawnMobName;
@@ -218,14 +218,9 @@ public class Main extends JavaPlugin implements Listener
 		new UserDataObject().UserDataInit(player);
 		
 		if(player.isOp() == true)
-		{
-			GoldBigDragon_RPG.Effect.PacketSender PS = new GoldBigDragon_RPG.Effect.PacketSender();
-			PS.sendTitleSubTitle(player,"\'§e/오피박스\'", "\'§eGoldBigDragonAdvanced 가이드 및 서버 설정이 가능합니다.\'", 1,10, 1);
-		}
+			new GoldBigDragon_RPG.Effect.PacketSender().sendTitleSubTitle(player,"\'§e/오피박스\'", "\'§eGoldBigDragonAdvanced 가이드 및 서버 설정이 가능합니다.\'", 1,10, 1);
 	  	if(YC_1.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-	  	{
 	  	    new GoldBigDragon_RPG.Config.StatConfig().CreateNewStats(player);
-	  	}
 	  	if(YC_1.isExit("Quest/PlayerData/" + player.getUniqueId()+".yml") == false)
 	  	{
 	  	    new GoldBigDragon_RPG.Config.QuestConfig().CreateNewPlayerConfig(player);
@@ -284,6 +279,7 @@ public class Main extends JavaPlugin implements Listener
 		else
 			event.setJoinMessage(null);
 	}
+	
 	@EventHandler
 	private void PlayerQuit(PlayerQuitEvent event)
 	{
@@ -292,10 +288,7 @@ public class Main extends JavaPlugin implements Listener
 			Party.get(PartyJoiner.get(player)).QuitParty(player);
 		
 		if(NoteBlockAPIAble == true)
-		{
-			OtherPlugins.NoteBlockAPIMain NBAPIM = new OtherPlugins.NoteBlockAPIMain();
-			NBAPIM.Stop(event.getPlayer());
-		}
+			new OtherPlugins.NoteBlockAPIMain().Stop(event.getPlayer());
 		
 		YamlManager UserData = YC_1.getNewConfig("UserData/"+ player.getUniqueId()+".yml");
 		UserData.removeKey("Data");

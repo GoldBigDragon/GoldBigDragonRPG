@@ -292,27 +292,27 @@ public class EquipGUI extends GUIutil
 					break;
 				case 6 :
 					player.getOpenInventory().setItem(28, event.getCurrentItem());
-					target.getOpenInventory().setItem(31, event.getCurrentItem());
+					target.getOpenInventory().setItem(32, event.getCurrentItem());
 					break;
 				case 7 :
 					player.getOpenInventory().setItem(29, event.getCurrentItem());
-					target.getOpenInventory().setItem(32, event.getCurrentItem());
+					target.getOpenInventory().setItem(33, event.getCurrentItem());
 					break;
 				case 8 :
 					player.getOpenInventory().setItem(30, event.getCurrentItem());
-					target.getOpenInventory().setItem(33, event.getCurrentItem());
+					target.getOpenInventory().setItem(34, event.getCurrentItem());
 					break;
 				case 9 :
 					player.getOpenInventory().setItem(37, event.getCurrentItem());
-					target.getOpenInventory().setItem(40, event.getCurrentItem());
+					target.getOpenInventory().setItem(41, event.getCurrentItem());
 					break;
 				case 10 :
 					player.getOpenInventory().setItem(38, event.getCurrentItem());
-					target.getOpenInventory().setItem(41, event.getCurrentItem());
+					target.getOpenInventory().setItem(42, event.getCurrentItem());
 					break;
 				case 11 :
 					player.getOpenInventory().setItem(39, event.getCurrentItem());
-					target.getOpenInventory().setItem(42, event.getCurrentItem());
+					target.getOpenInventory().setItem(43, event.getCurrentItem());
 					break;
 				}
 				event.getClickedInventory().setItem(event.getSlot(), new ItemStack(0));
@@ -718,23 +718,19 @@ public class EquipGUI extends GUIutil
 				SideFriendsList  = YC_2.getNewConfig("Friend/"+target.getUniqueId().toString()+".yml");
 				if(SideFriendsList.contains("Name"))
 				{
-					Object[] SideFriend = SideFriendsList.getConfigurationSection("Friends").getKeys(false).toArray();
-					for(int count= 0; count < SideFriend.length;count++)
+					if(SideFriendsList.contains("Friends."+player.getName()))
 					{
-						if(SideFriend[count].toString().compareTo(player.getName())==0)
+						if(isJoinMessage)
 						{
-							if(isJoinMessage)
-							{
-								s.SP(target, Sound.DOOR_OPEN, 0.5F, 1.0F);
-								target.sendMessage(ChatColor.GREEN+""+ChatColor.BOLD+"[立加] "+ChatColor.WHITE+""+ChatColor.BOLD+player.getName());
-							}
-							else
-							{
-								s.SP(target, Sound.DOOR_CLOSE, 0.5F, 1.0F);
-								target.sendMessage(ChatColor.RED+""+ChatColor.BOLD+"[硼厘] "+ChatColor.GRAY+""+ChatColor.BOLD+player.getName());
-							}
-							break;
+							s.SP(target, Sound.DOOR_OPEN, 0.5F, 1.0F);
+							target.sendMessage(ChatColor.GREEN+""+ChatColor.BOLD+"[立加] "+ChatColor.WHITE+""+ChatColor.BOLD+player.getName());
 						}
+						else
+						{
+							s.SP(target, Sound.DOOR_CLOSE, 0.5F, 1.0F);
+							target.sendMessage(ChatColor.RED+""+ChatColor.BOLD+"[硼厘] "+ChatColor.GRAY+""+ChatColor.BOLD+player.getName());
+						}
+						break;
 					}
 				}
 			}
