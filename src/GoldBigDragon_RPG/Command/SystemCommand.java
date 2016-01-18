@@ -94,6 +94,8 @@ public class SystemCommand
 				 	YamlManager YM = Main_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 				 	player.sendMessage(ChatColor.YELLOW + "[현재 소지 금액] " + ChatColor.WHITE+ChatColor.BOLD +"" +YM.getInt("Stat.Money") + " "+ServerOption.Money);
 				 	player.sendMessage(ChatColor.GOLD + "/돈 꺼내기 [금액]"+ChatColor.WHITE+" 해당 금액 만큼 돈을 아이템으로 꺼냅니다.");
+	  				if(player.isOp()==true)
+		  				player.sendMessage(ChatColor.AQUA + "/돈 주기 [금액] [플레이어]"+ChatColor.WHITE+" 해당 금액 만큼 플레이어에게 돈을 줍니니다."+ChatColor.AQUA+""+ChatColor.BOLD+"(관리자)");
 	  			}
 	  			else if(args.length == 2&&args[0].compareTo("꺼내기")==0)
 	  			{
@@ -251,11 +253,177 @@ public class SystemCommand
 						s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 					}
 	  			}
+	  			else if(args.length == 3&&args[0].compareTo("주기")==0&&player.isOp())
+	  			{
+	  				if(Bukkit.getServer().getPlayer(args[2]) != null)
+	  				{
+		  				if(Bukkit.getServer().getPlayer(args[2]).isOnline())
+		  				{
+		  					Player target = Bukkit.getServer().getPlayer(args[2]);
+							try
+							{
+								if(args[1].length() >= 1 && Integer.parseInt(args[1]) >= 1&& Integer.parseInt(args[1]) <= 100000000)
+								{
+									for(int count = 0; count < 36;count++)
+									{
+										if(target.getInventory().getItem(count)==null)
+										{
+											int money = Integer.parseInt(args[1]);
+											ItemStack Icon;
+											if(money <= 50)
+												Icon = new MaterialData(ServerOption.Money1ID, (byte) ServerOption.Money1DATA).toItemStack();
+											else if(money <= 100)
+												Icon = new MaterialData(ServerOption.Money2ID, (byte) ServerOption.Money2DATA).toItemStack();
+											else if(money <= 1000)
+												Icon = new MaterialData(ServerOption.Money3ID, (byte) ServerOption.Money3DATA).toItemStack();
+											else if(money <= 10000)
+												Icon = new MaterialData(ServerOption.Money4ID, (byte) ServerOption.Money4DATA).toItemStack();
+											else if(money <= 50000)
+												Icon = new MaterialData(ServerOption.Money5ID, (byte) ServerOption.Money5DATA).toItemStack();
+											else
+												Icon = new MaterialData(ServerOption.Money6ID, (byte) ServerOption.Money6DATA).toItemStack();
+											Icon.setAmount(1);
+											ItemMeta Icon_Meta = Icon.getItemMeta();
+											Icon_Meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+											Icon_Meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+											Icon_Meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+											Icon_Meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+											Icon_Meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+											Icon_Meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
+											Icon_Meta.setDisplayName(ServerOption.Money);
+											StringBuffer MoneyString = new StringBuffer();
+											int Mok = 0;
+											if(money==100000000||money==10000000||money==1000000||
+												money==100000||money==10000||money==1000||money==100||
+												money==10)
+											{
+												switch(money)
+												{
+													case 100000000:
+														MoneyString.append("1억");
+														break;
+													case 10000000:
+														MoneyString.append("1천만");
+														break;
+													case 1000000:
+														MoneyString.append("1백만");
+														break;
+													case 100000:
+														MoneyString.append("1십만");
+														break;
+													case 10000:
+														MoneyString.append("1만");
+														break;
+													case 1000:
+														MoneyString.append("1천");
+														break;
+													case 100:
+														MoneyString.append("1백");
+														break;
+													case 10:
+														MoneyString.append("1십");
+														break;
+												}
+											}
+											else
+											{
+												if(money >= 10000000)
+												{
+													Mok = money / 10000000;
+													MoneyString.append(Mok+"천");
+													money = money-(Mok*10000000);
+												}
+												if(money >= 1000000)
+												{
+													Mok = money / 1000000;
+													MoneyString.append(Mok+"백");
+													money = money-(Mok*1000000);
+												}
+												if(money >= 100000)
+												{
+													Mok = money / 100000;
+													MoneyString.append(Mok+"십");
+													money = money-(Mok*100000);
+												}
+												if(money >= 10000)
+												{
+													Mok = money / 10000;
+													MoneyString.append(Mok+"만 ");
+													money = money-(Mok*10000);
+												}
+												else if(Integer.parseInt(args[1]) >= 10000)
+												{
+													MoneyString.append("만 ");
+												}
+												if(money >= 1000)
+												{
+													Mok = money / 1000;
+													MoneyString.append(Mok+"천");
+													money = money-(Mok*1000);
+												}
+												if(money >= 100)
+												{
+													Mok = money / 100;
+													MoneyString.append(Mok+"백");
+													money = money-(Mok*100);
+												}
+												if(money >= 10)
+												{
+													Mok = money / 10;
+													MoneyString.append(Mok+"십");
+													money = money-(Mok*10);
+												}
+												if(money >= 1)
+												{
+													Mok = money / 1;
+													MoneyString.append(Mok);
+												}
+											}
+											Icon_Meta.setLore(Arrays.asList(ChatColor.YELLOW+"[돈]             "+ChatColor.WHITE+"[일반]",ChatColor.WHITE+""+ChatColor.BOLD+args[1]+" "+ServerOption.Money,ChatColor.GRAY+"("+MoneyString.toString()+" "+ChatColor.stripColor(ServerOption.Money)+")","",ChatColor.GRAY+"우 클릭시 내 계좌로",ChatColor.GRAY+"입금됩니다."));
+											Icon.setItemMeta(Icon_Meta);
+											target.getInventory().addItem(Icon);
+											s.SP(target, org.bukkit.Sound.LAVA_POP, 2.0F, 1.7F);
+											target.sendMessage(ChatColor.GREEN + "[System] : 관리자로 부터 "+ChatColor.WHITE+""+ChatColor.BOLD+args[1]+" "+ServerOption.Money+ChatColor.GREEN+" 을(를) 받았습니다!");
+											s.SP(player, org.bukkit.Sound.LAVA_POP, 2.0F, 1.7F);
+											player.sendMessage(ChatColor.GREEN + "[System] : "+target.getName()+"에게 "+ChatColor.WHITE+""+ChatColor.BOLD+args[1]+" "+ServerOption.Money+ChatColor.GREEN+" 을(를) 주었습니다!");
+											return;
+										}
+									}
+									s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+									player.sendMessage(ChatColor.RED + "[System] : 인벤토리 공간이 부족합니다!");
+									return;
+								}
+								else
+								{
+									player.sendMessage(ChatColor.RED + "[SYSTEM] : 최소 "+ChatColor.YELLOW +""+1+ChatColor.RED+", 최대 "+ChatColor.YELLOW+""+100000000+ChatColor.RED+" 이하의 숫자를 입력하세요!");
+									s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+								}
+							}
+							catch(NumberFormatException e)
+							{
+								player.sendMessage(ChatColor.RED + "[SYSTEM] : 정수 형태의 값(숫자)을 입력하세요. ("+ChatColor.YELLOW +""+1+ChatColor.RED+" ~ "+ChatColor.YELLOW+""+100000000+ChatColor.RED+")");
+								s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+							}
+		  				}
+		  				else
+		  				{
+							player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 플레이어는 접속중이 아닙니다!");
+							s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+		  				}
+	  				}
+	  				else
+	  				{
+						player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 플레이어는 접속중이 아닙니다!");
+						s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+	  				}
+	  			}
 	  			else
 	  			{
 	  				s.SP(player, org.bukkit.Sound.ORB_PICKUP, 0.8F, 1.8F);
 	  				player.sendMessage(ChatColor.GOLD + "/돈"+ChatColor.WHITE+" 현재 자신이 보유한 금액을 확인합니다.");
 	  				player.sendMessage(ChatColor.GOLD + "/돈 꺼내기 [금액]"+ChatColor.WHITE+" 해당 금액 만큼 돈을 아이템으로 꺼냅니다.");
+	  				if(player.isOp()==true)
+		  				player.sendMessage(ChatColor.AQUA + "/돈 주기 [금액] [플레이어]"+ChatColor.WHITE+" 해당 금액 만큼 플레이어에게 돈을 줍니니다."+ChatColor.AQUA+""+ChatColor.BOLD+"(관리자)");
 	  			}
 	  		}
 	  		return;

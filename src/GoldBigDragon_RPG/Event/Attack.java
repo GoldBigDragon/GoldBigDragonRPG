@@ -6,7 +6,9 @@ import GoldBigDragon_RPG.Util.YamlManager;
 import GoldBigDragon_RPG.Effect.PacketSender;
 import GoldBigDragon_RPG.Main.Main;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
@@ -225,6 +227,13 @@ public class Attack
 		{
 			Damage = damage.damagerand(Attacker, damage.CombatMinDamageGet(Attacker, (int)Damage, Attacker_Stat[0]),
 					damage.CombatMaxDamageGet(Attacker, (int)Damage, Attacker_Stat[0]),  Attacker_Stat[8]);
+
+			if(Attacker.getType() == EntityType.PLAYER)
+			{
+				Player player = (Player)Attacker;
+				if(player.getItemInHand().getType()==Material.BOW)
+					Damage=Damage/10;
+			}
 		}
 
 		if(AttackType == "E_E")
