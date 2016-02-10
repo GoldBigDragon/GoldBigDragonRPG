@@ -372,7 +372,7 @@ public class NavigationGUI extends GUIutil
 				player.closeInventory();
 				s.SP(player, Sound.NOTE_PLING, 1.0F, 1.0F);
 				
-				GoldBigDragon_RPG.ServerTick.ServerTickScheduleObject STSO = new GoldBigDragon_RPG.ServerTick.ServerTickScheduleObject(Long.parseLong(UTC), "NV");
+				GoldBigDragon_RPG.ServerTick.ServerTickScheduleObject STSO = new GoldBigDragon_RPG.ServerTick.ServerTickScheduleObject(GoldBigDragon_RPG.ServerTick.ServerTickMain.nowUTC, "NV");
 				STSO.setCount(0);//횟 수 초기화
 				STSO.setMaxCount(NavigationConfig.getInt(UTC+".time"));//N초간 네비게이션
 				//-1초 설정시, N초간이 아닌, 찾아 갈 때 까지 네비게이션 지원
@@ -385,7 +385,7 @@ public class NavigationGUI extends GUIutil
 				STSO.setInt((byte)3, NavigationConfig.getInt(UTC+".sensitive"));//판정 범위 저장
 				STSO.setInt((byte)4, NavigationConfig.getInt(UTC+".ShowArrow"));//파티클 설정
 				
-				GoldBigDragon_RPG.ServerTick.ServerTickMain.Schedule.put(Long.parseLong(UTC), STSO);
+				GoldBigDragon_RPG.ServerTick.ServerTickMain.Schedule.put(GoldBigDragon_RPG.ServerTick.ServerTickMain.nowUTC, STSO);
 				player.sendMessage(ChatColor.YELLOW+"[네비게이션] : 길찾기 시스템이 가동됩니다!");
 				player.sendMessage(ChatColor.YELLOW+"(화살표가 보이지 않을 경우, [ESC] → [설정] → [비디오 설정] 속의 [입자]를 [모두]로 변경해 주세요!)");
 			}

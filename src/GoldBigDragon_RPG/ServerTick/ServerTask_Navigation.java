@@ -36,9 +36,11 @@ public class ServerTask_Navigation
 	{
 		if(Bukkit.getServer().getPlayer(STSO.getString((byte)2))!=null)
 		{
-
 			if(Bukkit.getServer().getPlayer(STSO.getString((byte)2)).isOnline())
 			{
+				int Tick = 2500;
+				if(STSO.getInt((byte)4)==0)//일반 화살표
+					Tick = 2500;
 				Player player = Bukkit.getServer().getPlayer(STSO.getString((byte)2));
 
 				Location DestinationLoc = new Location(Bukkit.getServer().getWorld(STSO.getString((byte)1)), STSO.getInt((byte)0), STSO.getInt((byte)1), STSO.getInt((byte)2));
@@ -52,8 +54,8 @@ public class ServerTask_Navigation
 						PS.sendTitleSubTitle(player, "\'"+ChatColor.YELLOW+""+"\'", "\'"+ChatColor.YELLOW+"["+ChatColor.GRAY+"엔더 월드"+ChatColor.YELLOW+"로 이동하세요.]"+"\'", 1, 1, 1);
 					else
 						PS.sendTitleSubTitle(player, "\'"+ChatColor.YELLOW+""+"\'", "\'"+ChatColor.YELLOW+"["+ChatColor.WHITE+DestinationLoc.getWorld().getName()+ChatColor.YELLOW+" 월드로 이동하세요.]"+"\'", 1, 1, 1);
-					STSO.setTick(STSO.getTick()+1000);
-					ServerTickMain.Schedule.put(STSO.getTick()+1000, STSO);
+					STSO.setTick(STSO.getTick()+Tick);
+					ServerTickMain.Schedule.put(STSO.getTick()+Tick, STSO);
 					return;
 				}
 				int sensitive = STSO.getInt((byte)3);
@@ -107,8 +109,8 @@ public class ServerTask_Navigation
 				else
 				{
 					ShowWay(player,Way,neary,STSO.getInt((byte)4));
-					STSO.setTick(STSO.getTick()+1000);
-					ServerTickMain.Schedule.put(STSO.getTick()+1000, STSO);
+					STSO.setTick(STSO.getTick()+Tick);
+					ServerTickMain.Schedule.put(STSO.getTick()+Tick, STSO);
 				}
 			}
 			else

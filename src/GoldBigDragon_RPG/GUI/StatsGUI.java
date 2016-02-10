@@ -80,7 +80,7 @@ public class StatsGUI extends GUIutil
 		{
 			if(player.getItemInHand().getItemMeta().hasLore() == true)
 			{
-				if(player.getItemInHand().getItemMeta().getLore().toString().contains("대미지 : ") == true)
+				if(player.getItemInHand().getItemMeta().getLore().toString().contains(GoldBigDragon_RPG.Main.ServerOption.Damage+" : ") == true)
 				{
 					switch(player.getItemInHand().getType())
 					{
@@ -141,7 +141,7 @@ public class StatsGUI extends GUIutil
 		
 		
 		stat=dam.getPlayerEquipmentStat(player, "DEX")[0];
-		Additional = ChatColor.RED + "" + ChatColor.BOLD + "" + dam.RangeMinDamageGet(player,0,YM.getInt("Stat.DEX")) + " ~ " + dam.RangeMaxDamageGet(player,0, YM.getInt("Stat.DEX"));
+		Additional = ChatColor.RED + "" + ChatColor.BOLD + "" + dam.returnRangeDamageValue(player, YM.getInt("Stat.DEX"), 0, true) + " ~ " + dam.returnRangeDamageValue(player, YM.getInt("Stat.DEX"), 0, false);
 		if(stat == 0)
 			CurrentStat = ChatColor.WHITE +""+ChatColor.BOLD +""+ YM.getInt("Stat.DEX");
 		else if(stat > 0)
@@ -232,7 +232,7 @@ public class StatsGUI extends GUIutil
 		
 		Stack2(ChatColor.GREEN + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + "기회"+ChatColor.GREEN + "]", 377,0,1,
 				Arrays.asList(ChatColor.GREEN + "추가 밸런스 : "+ChatColor.WHITE + d.getBalance(player, YM.getInt("Stat.DEX"), YM.getInt("Stat.Balance"))+"%",
-						ChatColor.YELLOW + "추가 크리티컬 : "+ChatColor.WHITE + d.getCritical(YM.getInt("Stat.LUK"), YM.getInt("Stat.WILL"), YM.getInt("Stat.Protect"))+"%"), 42, inv);
+						ChatColor.YELLOW + "추가 크리티컬 : "+ChatColor.WHITE + d.getCritical(player,YM.getInt("Stat.LUK"), YM.getInt("Stat.WILL"),YM.getInt("Stat.Critical"))+"%"), 42, inv);
 		
 		player.openInventory(inv);
 	}

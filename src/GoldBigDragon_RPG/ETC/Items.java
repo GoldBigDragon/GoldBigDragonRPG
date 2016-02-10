@@ -124,4 +124,15 @@ public class Items
 		}
 		return;
 	}
+
+	public boolean GiveItem(Player player, ItemStack item)
+	{
+		if(player.getInventory().firstEmpty() == -1)
+			return false;	
+		else
+		{
+			player.getInventory().addItem(item);
+			return true;
+		}
+	}
 }

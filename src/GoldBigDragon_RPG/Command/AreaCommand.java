@@ -35,26 +35,17 @@ public class AreaCommand extends HelpMessage
 				YamlController Event_YC = GoldBigDragon_RPG.Main.Main.YC_2;
 				YamlManager AreaList = Event_YC.getNewConfig("Area/AreaList.yml");
 				
-				Object[] arealist = AreaList.getConfigurationSection("").getKeys(false).toArray();
-
-				if(arealist.length <= 0)
+				if(AreaList.contains(args[0]))
+				{
+					s.SP(player, Sound.HORSE_SADDLE, 1.0F, 1.8F);
+					GoldBigDragon_RPG.GUI.AreaGUI AGUI = new GoldBigDragon_RPG.GUI.AreaGUI();
+					AGUI.AreaGUI_Main(player, args[0]);
+				}
+				else
 				{
 					s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 					player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 이름의 영역이 없습니다!");
-					return;
 				}
-				for(int count =0; count <arealist.length;count++)
-				{
-					if(arealist[count].toString().equals(args[0]))
-					{
-						s.SP(player, Sound.HORSE_SADDLE, 1.0F, 1.8F);
-						GoldBigDragon_RPG.GUI.AreaGUI AGUI = new GoldBigDragon_RPG.GUI.AreaGUI();
-						AGUI.AreaGUI_Main(player, args[0]);
-						return;
-					}
-				}
-				s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
-				player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 이름의 영역이 없습니다!");
 				return;
 			}
 		}

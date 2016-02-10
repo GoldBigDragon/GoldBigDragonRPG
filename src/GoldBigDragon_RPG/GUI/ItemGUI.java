@@ -83,8 +83,8 @@ public class ItemGUI extends GUIutil
 		Stack2(ChatColor.DARK_AQUA + "[    등급 변경    ]", 266,0,1,Arrays.asList(ChatColor.WHITE+"아이템의 등급을",ChatColor.WHITE+"변경합니다.","",ChatColor.WHITE+"[    현재 등급    ]","       "+Grade,""), 16, inv);
 		Stack2(ChatColor.DARK_AQUA + "[        ID        ]", 405,0,1,Arrays.asList(ChatColor.WHITE+"아이템의 ID값을",ChatColor.WHITE+"변경합니다.",""), 22, inv);
 		Stack2(ChatColor.DARK_AQUA + "[       DATA       ]", 336,0,1,Arrays.asList(ChatColor.WHITE+"아이템의 DATA값을",ChatColor.WHITE+"변경합니다.",""), 23, inv);
-		Stack2(ChatColor.DARK_AQUA + "[       대미지       ]", 267,0,1,Arrays.asList(ChatColor.WHITE+"아이템의 대미지를",ChatColor.WHITE+"변경합니다.",""), 24, inv);
-		Stack2(ChatColor.DARK_AQUA + "[     마법 대미지     ]", 403,0,1,Arrays.asList(ChatColor.WHITE+"아이템의 마법 대미지를",ChatColor.WHITE+"변경합니다.",""), 25, inv);
+		Stack2(ChatColor.DARK_AQUA + "[       "+GoldBigDragon_RPG.Main.ServerOption.Damage+"       ]", 267,0,1,Arrays.asList(ChatColor.WHITE+"아이템의 "+GoldBigDragon_RPG.Main.ServerOption.Damage+"를",ChatColor.WHITE+"변경합니다.",""), 24, inv);
+		Stack2(ChatColor.DARK_AQUA + "[     "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+"     ]", 403,0,1,Arrays.asList(ChatColor.WHITE+"아이템의 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+"를",ChatColor.WHITE+"변경합니다.",""), 25, inv);
 		Stack2(ChatColor.DARK_AQUA + "[        방어        ]", 307,0,1,Arrays.asList(ChatColor.WHITE+"아이템의 방어력을",ChatColor.WHITE+"변경합니다.",""), 31, inv);
 		Stack2(ChatColor.DARK_AQUA + "[        보호        ]", 306,0,1,Arrays.asList(ChatColor.WHITE+"아이템의 보호를",ChatColor.WHITE+"변경합니다.",""), 32, inv);
 		Stack2(ChatColor.DARK_AQUA + "[      마법 방어      ]", 311,0,1,Arrays.asList(ChatColor.WHITE+"아이템의 마법 방어를",ChatColor.WHITE+"변경합니다.",""), 33, inv);
@@ -318,7 +318,7 @@ public class ItemGUI extends GUIutil
 			case 24://대미지 변경
 				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
 				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최소 대미지를 입력해 주세요!");
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최소 "+GoldBigDragon_RPG.Main.ServerOption.Damage+"를 입력해 주세요!");
 				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
 
 				u.setType(player, "Item");
@@ -328,7 +328,7 @@ public class ItemGUI extends GUIutil
 			case 25://마법 대미지 변경
 				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
 				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최소 마법 대미지를 입력해 주세요!");
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최소 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+"를 입력해 주세요!");
 				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
 
 				u.setType(player, "Item");
@@ -439,9 +439,9 @@ public class ItemGUI extends GUIutil
 				lore = lore+" ";
 			lore = lore+ItemList.getString(ItemNumber+".Grade")+"%enter%%enter%";
 			if(ItemList.getInt(ItemNumber+".MinDamage") != 0||ItemList.getInt(ItemNumber+".MaxDamage") != 0)
-				lore = lore+ChatColor.RED + " ▩ 대미지 : " +ChatColor.WHITE + ItemList.getInt(ItemNumber+".MinDamage") + " ~ " + ItemList.getInt(ItemNumber+".MaxDamage")+"%enter%";
+				lore = lore+ChatColor.RED + " ▩ "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : " +ChatColor.WHITE + ItemList.getInt(ItemNumber+".MinDamage") + " ~ " + ItemList.getInt(ItemNumber+".MaxDamage")+"%enter%";
 			if(ItemList.getInt(ItemNumber+".MinMaDamage") != 0||ItemList.getInt(ItemNumber+".MaxMaDamage") != 0)
-				lore = lore+ChatColor.DARK_AQUA + " ▦ 마법 대미지 : " +ChatColor.WHITE + ItemList.getInt(ItemNumber+".MinMaDamage") + " ~ " + ItemList.getInt(ItemNumber+".MaxMaDamage")+"%enter%";
+				lore = lore+ChatColor.DARK_AQUA + " ▦ "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : " +ChatColor.WHITE + ItemList.getInt(ItemNumber+".MinMaDamage") + " ~ " + ItemList.getInt(ItemNumber+".MaxMaDamage")+"%enter%";
 			if(ItemList.getInt(ItemNumber+".DEF") != 0)
 				lore = lore+ChatColor.GRAY + " ▧ 방어 : " +ChatColor.WHITE + ItemList.getInt(ItemNumber+".DEF")+"%enter%";
 			if(ItemList.getInt(ItemNumber+".Protect") != 0)
@@ -523,9 +523,9 @@ public class ItemGUI extends GUIutil
 				lore = lore+" ";
 			lore = lore+ItemList.getString(ItemNumber+".Grade")+"%enter%%enter%";
 			if(ItemList.getInt(ItemNumber+".MinDamage") != 0||ItemList.getInt(ItemNumber+".MaxDamage") != 0)
-				lore = lore+ChatColor.RED + " ▩ 대미지 : " +ChatColor.WHITE + ItemList.getInt(ItemNumber+".MinDamage") + " ~ " + ItemList.getInt(ItemNumber+".MaxDamage")+"%enter%";
+				lore = lore+ChatColor.RED + " ▩ "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : " +ChatColor.WHITE + ItemList.getInt(ItemNumber+".MinDamage") + " ~ " + ItemList.getInt(ItemNumber+".MaxDamage")+"%enter%";
 			if(ItemList.getInt(ItemNumber+".MinMaDamage") != 0||ItemList.getInt(ItemNumber+".MaxMaDamage") != 0)
-				lore = lore+ChatColor.DARK_AQUA + " ▦ 마법 대미지 : " +ChatColor.WHITE + ItemList.getInt(ItemNumber+".MinMaDamage") + " ~ " + ItemList.getInt(ItemNumber+".MaxMaDamage")+"%enter%";
+				lore = lore+ChatColor.DARK_AQUA + " ▦ "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : " +ChatColor.WHITE + ItemList.getInt(ItemNumber+".MinMaDamage") + " ~ " + ItemList.getInt(ItemNumber+".MaxMaDamage")+"%enter%";
 			if(ItemList.getInt(ItemNumber+".DEF") != 0)
 				lore = lore+ChatColor.GRAY + " ▧ 방어 : " +ChatColor.WHITE + ItemList.getInt(ItemNumber+".DEF")+"%enter%";
 			if(ItemList.getInt(ItemNumber+".Protect") != 0)
@@ -593,9 +593,9 @@ public class ItemGUI extends GUIutil
 				lore = lore+" ";
 			lore = lore+ItemList.getString(ItemNumber+".Grade")+"%enter%%enter%";
 			if(ItemList.getInt(ItemNumber+".MinDamage") != 0||ItemList.getInt(ItemNumber+".MaxDamage") != 0)
-				lore = lore+ChatColor.RED + "대미지 : " +ChatColor.WHITE + ItemList.getInt(ItemNumber+".MinDamage") + " ~ " + ItemList.getInt(ItemNumber+".MaxDamage")+"%enter%";
+				lore = lore+ChatColor.RED + GoldBigDragon_RPG.Main.ServerOption.Damage+" : " +ChatColor.WHITE + ItemList.getInt(ItemNumber+".MinDamage") + " ~ " + ItemList.getInt(ItemNumber+".MaxDamage")+"%enter%";
 			if(ItemList.getInt(ItemNumber+".MinMaDamage") != 0||ItemList.getInt(ItemNumber+".MaxMaDamage") != 0)
-				lore = lore+ChatColor.DARK_AQUA + "마법 대미지 : " +ChatColor.WHITE + ItemList.getInt(ItemNumber+".MinMaDamage") + " ~ " + ItemList.getInt(ItemNumber+".MaxMaDamage")+"%enter%";
+				lore = lore+ChatColor.DARK_AQUA +GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : " +ChatColor.WHITE + ItemList.getInt(ItemNumber+".MinMaDamage") + " ~ " + ItemList.getInt(ItemNumber+".MaxMaDamage")+"%enter%";
 			if(ItemList.getInt(ItemNumber+".DEF") != 0)
 				lore = lore+ChatColor.GRAY + "방어 : " +ChatColor.WHITE + ItemList.getInt(ItemNumber+".DEF")+"%enter%";
 			if(ItemList.getInt(ItemNumber+".Protect") != 0)
@@ -663,9 +663,9 @@ public class ItemGUI extends GUIutil
 					lore = lore+" ";
 				lore = lore+ItemList.getString(ItemNumber+".Grade")+"%enter%%enter%";
 				if(ItemList.getInt(ItemNumber+".MinDamage") != 0||ItemList.getInt(ItemNumber+".MaxDamage") != 0)
-					lore = lore+ChatColor.WHITE + "대미지 : " + ItemList.getInt(ItemNumber+".MinDamage") + " ~ " + ItemList.getInt(ItemNumber+".MaxDamage")+"%enter%";
+					lore = lore+ChatColor.WHITE +GoldBigDragon_RPG.Main.ServerOption.Damage+" : " + ItemList.getInt(ItemNumber+".MinDamage") + " ~ " + ItemList.getInt(ItemNumber+".MaxDamage")+"%enter%";
 				if(ItemList.getInt(ItemNumber+".MinMaDamage") != 0||ItemList.getInt(ItemNumber+".MaxMaDamage") != 0)
-					lore = lore+ChatColor.WHITE + "마법 대미지 : " + ItemList.getInt(ItemNumber+".MinMaDamage") + " ~ " + ItemList.getInt(ItemNumber+".MaxMaDamage")+"%enter%";
+					lore = lore+ChatColor.WHITE +GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : " + ItemList.getInt(ItemNumber+".MinMaDamage") + " ~ " + ItemList.getInt(ItemNumber+".MaxMaDamage")+"%enter%";
 				if(ItemList.getInt(ItemNumber+".DEF") != 0)
 					lore = lore+ChatColor.WHITE + "방어 : " + ItemList.getInt(ItemNumber+".DEF")+"%enter%";
 				if(ItemList.getInt(ItemNumber+".Protect") != 0)

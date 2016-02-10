@@ -20,13 +20,14 @@ public class Damage
 	//플레이어의 근접최소 공격력을 따 오는 메소드//
 	public int CombatMinDamageGet(Entity entity, int DefaultDamage, int STR)
 	{
+		if(entity != null)
 		if(entity.getType() == EntityType.PLAYER)
 		{
 			Player player = (Player) entity;
 			if(player.getItemInHand().hasItemMeta() == true)
 			{
 				if(player.getItemInHand().getItemMeta().hasLore() == true)
-				if(player.getItemInHand().getItemMeta().getLore().toString().contains("대미지 : ") == true)
+				if(player.getItemInHand().getItemMeta().getLore().toString().contains(GoldBigDragon_RPG.Main.ServerOption.Damage+" : ") == true)
 				{
 					switch(player.getItemInHand().getType())
 					{
@@ -70,32 +71,20 @@ public class Damage
 			STR = STR + getPlayerEquipmentStat((Player)entity, "STR")[0];
 			DefaultDamage = DefaultDamage + getPlayerEquipmentStat((Player)entity, "Damage")[0];
 		}
-
-		int dam=((STR/5) + DefaultDamage);
-		if(dam <= 0)
-			return 0;
-		else
-			return dam;
+		return returnCombatValue(STR, DefaultDamage, true);
 	}
 
-	public int CombatMinDamageGet(int DefaultDamage, int STR)
-	{
-		int dam=((STR/5) + DefaultDamage);
-		if(dam <= 0)
-			return 0;
-		else
-			return dam;
-	}
 	//플레이어의 근접최대 공격력을 따 오는 메소드//
 	public int CombatMaxDamageGet(Entity entity, int DefaultDamage, int STR)
 	{
+		if(entity != null)
 		if(entity.getType() == EntityType.PLAYER)
 		{
 			Player player = (Player) entity;
 			if(player.getItemInHand().hasItemMeta() == true)
 			{
 				if(player.getItemInHand().getItemMeta().hasLore() == true)
-				if(player.getItemInHand().getItemMeta().getLore().toString().contains("대미지 : ") == true)
+				if(player.getItemInHand().getItemMeta().getLore().toString().contains(GoldBigDragon_RPG.Main.ServerOption.Damage+" : ") == true)
 				{
 					switch(player.getItemInHand().getType())
 					{
@@ -139,93 +128,61 @@ public class Damage
 			STR =  STR + getPlayerEquipmentStat((Player)entity, "STR")[0];
 			DefaultDamage = DefaultDamage + getPlayerEquipmentStat((Player)entity, "Damage")[1];
 		}
-		int dam=((STR/3) + DefaultDamage);
+		return returnCombatValue(STR, DefaultDamage, false);
+	}
+	
+	//근접 공격력을 따 오는 메소드//
+	public int returnCombatValue(int Stat, int DefaultDamage, boolean isMin)
+	{
+		int dam=0;
+		if(isMin)
+			dam = ((Stat/5) + DefaultDamage);
+		else
+			dam=((Stat/3) + DefaultDamage);
 		if(dam <= 0)
 			return 0;
 		else
 			return dam;
 	}
-	public int CombatMaxDamageGet(int DefaultDamage, int STR)
+
+	//폭발 공격력을 따 오는 메소드//
+	public int returnExplosionDamageValue(int Stat, int DefaultDamage, boolean isMin)
 	{
-		int dam=((STR/3) + DefaultDamage);
+		int dam=0;
+		if(isMin)
+			dam = (Stat/4)+DefaultDamage;
+		else
+			dam = (int) ((Stat/2.5)+DefaultDamage);
 		if(dam <= 0)
-			return 0;
+			return 1;
 		else
 			return dam;
 	}
 	
-	public int ExplosionMinDamageGet(Entity entity, int DefaultDamage, int INT)
+	//원거리 공격력을 따 오는 메소드//
+	public int returnRangeDamageValue(Entity entity, int Stat, int DefaultDamage, boolean isMin)
 	{
-		return (int)(INT/4)+DefaultDamage;
-	}
-	public int ExplosionMaxDamageGet(Entity entity, int DefaultDamage, int INT)
-	{
-		return (int)(INT/2.5)+DefaultDamage;
+		if(entity != null)
+			if(entity.getType() == EntityType.PLAYER)
+			{
+				Stat = Stat + getPlayerEquipmentStat((Player)entity, "DEX")[0];
+				if(isMin)
+					DefaultDamage = DefaultDamage + getPlayerEquipmentStat((Player)entity, "Damage")[0];
+				else
+					DefaultDamage = DefaultDamage + getPlayerEquipmentStat((Player)entity, "Damage")[1];
+			}
+		int dam=0;
+		if(isMin)
+			dam = ((Stat/5) + DefaultDamage);
+		else
+			dam = ((Stat/3)+DefaultDamage);
+		if(dam <= 0)
+			return 1;
+		else
+			return dam;
 	}
 	
-	
-	//플레이어의 원거리최소 공격력을 따 오는 메소드//
-	public int RangeMinDamageGet(Entity entity, int DefaultDamage, int DEX)
-	{
-		if(entity.getType() == EntityType.PLAYER)
-		{
-			DEX = DEX + getPlayerEquipmentStat((Player)entity, "DEX")[0];
-			DefaultDamage = DefaultDamage + getPlayerEquipmentStat((Player)entity, "Damage")[0];
-		}
-		int dam=((DEX/5) + DefaultDamage);
-		if(dam <= 0)
-			return 0;
-		else
-			return dam;
-	}
-	public int RangeMinDamageGet(int DefaultDamage, int DEX)
-	{
-		int dam=((DEX/5) + DefaultDamage);
-		if(dam <= 0)
-			return 0;
-		else
-			return dam;
-	}
-	//플레이어의 원거리최대 공격력을 따 오는 메소드//
-	public int RangeMaxDamageGet(Entity entity, int DefaultDamage, int DEX)
-	{
-		if(entity.getType() == EntityType.PLAYER)
-		{
-			DEX = DEX + getPlayerEquipmentStat((Player)entity, "DEX")[0];
-			DefaultDamage = DefaultDamage + getPlayerEquipmentStat((Player)entity, "Damage")[1];
-		}
-		int dam=((DEX/3) + DefaultDamage);
-		if(dam <= 0)
-			return 0;
-		else
-			return dam;
-	}
-	public int RangeMaxDamageGet(int DefaultDamage, int DEX)
-	{
-		int dam=((DEX/3) + DefaultDamage);
-		if(dam <= 0)
-			return 0;
-		else
-			return dam;
-	}
-	//플레이어의 마법 공격력을 따 오는 메소드//
-	public int MagicDamageGet(int DefaultDamage, int INT)
-	{
-		int dam=((INT/21) + DefaultDamage);
-		if(dam <= 0)
-			return 0;
-		else
-			return dam;
-	}
-	public int MagicMaxDamageGet(int DefaultDamage, int INT)
-	{
-		int dam=((INT/21) + DefaultDamage);
-		if(dam <= 0)
-			return 0;
-		else
-			return dam;
-	}
-	//매직스펠 대미지 보너스
+	//매직스펠 MP/HP 스텟에 따른 대미지 보너스
 	public int MagicSpellsDamageBonus(int Stat)
 	{
 		int dam=Stat/25;
@@ -234,8 +191,9 @@ public class Damage
 		else
 			return dam;
 	}
+	
     //플레이어의 밸런스를 구하고, 랜덤하게 데미지를 설정 해 주는 메소드//
-	public int damagerand(Entity entity, int min, int max, int balance)
+	public int damagerand(Entity entity, int min, int max, int player_balance)
 	{
 		Number num = new Number();
 		if(min > max)
@@ -244,122 +202,64 @@ public class Damage
 			max = min;
 			min = temp;
 		}
-		if (num.RandomNum(1, 100) <= balance)
-		{
+		if (num.RandomNum(1, 100) <= player_balance)
 			return num.RandomNum(num.RandomNum(min, max), max);
-		}
 		else
 		{
-			max = (int) (max*0.6);
+			max = (int) (max/2);
 			if(max <= min)
 				max=min;
 			return num.RandomNum(min, max);
 		}
 	}
-	public int damagerand(Player player, int min, int max, int player_dex,int player_balance)
-	{
-		Number num = new Number();
-		if(min > max)
-		{
-			int temp = max;
-			max = min;
-			min = temp;
-		}
-		int balance = getBalance(player, player_dex,player_balance);
-		if (num.RandomNum(1, 100) <= balance)
-		{
-			return num.RandomNum(num.RandomNum(min, max), max);
-		}
-		else
-		{
-			max = (int) (max*0.6);
-			if(max <= min)
-				max=min;
-			return num.RandomNum(min, max);
-		}
-	}
+
 	//플레이어의 크리티컬 확률을 계산하고, 크리티컬 여부를 설정하는 메소드//
-	public int criticalrend(Entity entity, int attacker_luk, int attacker_will, int attacker_damage, int defenser_protect)
+	public int criticalrend(Entity entity, int attacker_luk, int attacker_will, int attacker_damage, int defenser_protect, int attacker_critical)
 	{
 		Number num = new Number();
-		 int critical;
+		int critical;
 		if((int)defenser_protect/2 <= 1) 
-			critical= getCritical(entity, attacker_luk, attacker_will);
+			critical= getCritical(entity, attacker_luk, attacker_will,attacker_critical);
 		else
-			critical= (int)(getCritical(entity, attacker_luk, attacker_will)/100)*(100-(defenser_protect/2));
-	  if (critical > 90) critical = 90;
-	  if (critical < 2) critical = 2;
-	  int getcritical = (int) num.RandomNum(0, 100);
+			critical= (int)(getCritical(entity, attacker_luk, attacker_will,attacker_critical)/100)*(100-(defenser_protect/2));
+		if (critical > 90)
+			critical = 90;
+		if (critical < 2)
+			critical = 2;
+		int getcritical = (int) num.RandomNum(0, 100);
 		if (getcritical <= critical)
-		{
-		return (int)(attacker_damage*1.5);
-		}
+			return (int)(attacker_damage/2);
 		else
-		{
-		return 0;
-		}
+			return 0;
 	}
-	public int criticalrend(int attacker_luk, int attacker_will, int attacker_damage, int defenser_protect, int attacker_critical)
-	{
-		Number num = new Number();
-		 int critical;
-		if((int)defenser_protect/2 <= 1) 
-			critical= getCritical(attacker_luk, attacker_will,attacker_critical);
-		else
-			critical= (int)(getCritical(attacker_luk, attacker_will,attacker_critical)/100)*(100-(defenser_protect/2));
-	  if (critical > 90) critical = 90;
-	  if (critical < 2) critical = 2;
-	  int getcritical = (int) num.RandomNum(0, 100);
-		if (getcritical <= critical)
-			return (int)(attacker_damage*1.5);
-		else
-		return 0;
-	}
+
 	//밸런스 계산기//
-	public int getBalance(Entity entity,int player_dex)
-	{
-		int balance = 0;
-		if(entity.getType() == EntityType.PLAYER)
-		{
-			player_dex = player_dex + getPlayerEquipmentStat((Player)entity, "DEX")[0];
-			balance = balance + getPlayerEquipmentStat((Player)entity, "Balance")[0];
-		}
-		 balance = balance + (int)player_dex/20;
-		if (balance > 80) balance = 80;
-		if (balance < 0) balance = 0;
-		return balance;
-	}
-	public int getBalance(Player player, int player_dex, int player_balance)
+	public int getBalance(Entity entity, int DEX, int player_balance)
 	{
 		int balance = player_balance;
-		player_dex = player_dex + getPlayerEquipmentStat(player, "DEX")[0];
-		balance = balance + getPlayerEquipmentStat(player, "Balance")[0];
-		balance = balance + (int)player_dex/20;
-		if (balance > 80) balance = 80;
-		if (balance < 0) balance = 0;
-		return balance;
-	}
-	//크리티컬율 계산기//
-	public int getCritical(Entity entity, int player_luk, int player_will)
-	{
-		int critical = 0;
+		if(entity!=null)
 		if(entity.getType() == EntityType.PLAYER)
 		{
-			player_luk = player_luk + getPlayerEquipmentStat((Player)entity, "LUK")[0];
-			player_will = player_will + getPlayerEquipmentStat((Player)entity, "WILL")[0];
-			critical = critical + getPlayerEquipmentStat((Player)entity, "Critical")[0];
+			DEX = DEX + getPlayerEquipmentStat((Player)entity, "DEX")[0];
+			balance = balance + getPlayerEquipmentStat((Player)entity, "Balance")[0];
 		}
+		balance = balance + (int)DEX/20;
+		if (balance > 80) balance = 80;
+		if (balance < 0) balance = 1;
+		return balance;
+	}
+	
+	//크리티컬율 계산기//
+	public int getCritical(Entity entity, int player_luk, int player_will, int defaultCritical)
+	{
+		int critical = defaultCritical;
+		if(entity!=null)
+		if(entity.getType() == EntityType.PLAYER)
+			critical = critical + getPlayerEquipmentStat((Player)entity, "Critical")[0];
 		critical = critical + (int)(player_luk/5 + player_will/10);
 		return critical;
 	}
-	public int getCritical(int player_luk, int player_will)
-	{
-		return (int)(player_luk/5 + player_will/10);
-	}
-	public int getCritical(int player_luk, int player_will, int playerCritical)
-	{
-		return (int)(player_luk/5 + player_will/10)+playerCritical;
-	}
+	
 	//마방 계산기//
 	public int getMagicDEF(Entity entity, int player_int)
 	{
@@ -372,6 +272,7 @@ public class Damage
 		Magic_DEF = Magic_DEF + (int)(player_int/20);
 		return Magic_DEF;
 	}
+
 	//마보 계산기//
 	public int getMagicProtect(Entity entity, int player_int)
 	{
@@ -384,6 +285,7 @@ public class Damage
 		Magic_Protect = Magic_Protect + (int)(player_int/100);
 		return Magic_Protect;
 	}
+
 	//방어 관통 계산기//
 	public int getDEFcrash(Entity entity, int player_dex)
 	{
@@ -396,6 +298,7 @@ public class Damage
 		DEFcrash = DEFcrash + (int)(player_dex/40);
 		return DEFcrash;
 	}
+
 	//마방 관통 계산기//
 	public int getMagicDEFcrash(Entity entity, int player_int)
 	{
@@ -415,11 +318,11 @@ public class Damage
 		String Lore[];
 		switch(type)
 		{
-			case "Damage":type = "대미지";break;
+			case "Damage":type = GoldBigDragon_RPG.Main.ServerOption.Damage;break;
 			case "DEF":type = "방어";break;
 			case "DEFcrash":type = "방어관통";break;
 			case "Protect":type = "보호";break;
-			case "MagicDamage":type = "마법 대미지";break;
+			case "MagicDamage":type = GoldBigDragon_RPG.Main.ServerOption.MagicDamage;break;
 			case "Magic_DEF":type = "마법 방어";break;
 			case "MagicDEFcrash":type = "마법 방어관통";break;
 			case "Magic_Protect":type = "마법 보호";break;
@@ -475,15 +378,15 @@ public class Damage
 											if(ExitDurability == true)
 											{
 												Lore = ChatColor.stripColor(item[counter].getItemMeta().getLore().get(count)).split(" : ");
-												if(type.equalsIgnoreCase("대미지")||type.equalsIgnoreCase("마법 대미지")||type.equalsIgnoreCase("업그레이드"))
+												if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0||type.equalsIgnoreCase(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)||type.equalsIgnoreCase("업그레이드"))
 												{
-													if(type.equals("대미지")&&ChatColor.stripColor(item[counter].getItemMeta().getLore().get(count)).contains("마법")==false)
+													if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0)
 													{
 														String[] SubLore = Lore[1].split(" ~ ");
 														bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
 														bonus[1] = bonus[1] + Integer.parseInt(SubLore[1]);
 													}
-													else if(type.equalsIgnoreCase("마법 대미지")||type.equalsIgnoreCase("업그레이드"))
+													else if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.equalsIgnoreCase("업그레이드"))
 													{
 														String[] SubLore = Lore[1].split(" ~ ");
 														bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
@@ -544,15 +447,15 @@ public class Damage
 											if(item[0].getItemMeta().getLore().get(count).contains(":") == true||item[0].getItemMeta().getLore().get(count).contains("/") == true)
 											{
 												Lore = ChatColor.stripColor(item[0].getItemMeta().getLore().get(count)).split(" : ");
-												if(type.equalsIgnoreCase("대미지")||type.equalsIgnoreCase("마법 대미지")||type.equalsIgnoreCase("업그레이드"))
+												if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0||type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.equalsIgnoreCase("업그레이드"))
 												{
-													if(type.equals("대미지")&&ChatColor.stripColor(item[0].getItemMeta().getLore().get(count)).contains("마법")==false)
+													if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0)
 													{
 														String[] SubLore = Lore[1].split(" ~ ");
 														bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
 														bonus[1] = bonus[1] + Integer.parseInt(SubLore[1]);
 													}
-													else if(type.equalsIgnoreCase("마법 대미지")||type.equalsIgnoreCase("업그레이드"))
+													else if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.equalsIgnoreCase("업그레이드"))
 													{
 														String[] SubLore = Lore[1].split(" ~ ");
 														bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
@@ -585,11 +488,11 @@ public class Damage
 		String Lore[];
 		switch(type)
 		{
-			case "Damage":type = "대미지";break;
+			case "Damage":type = GoldBigDragon_RPG.Main.ServerOption.Damage;break;
 			case "DEF":type = "방어";break;
 			case "DEFcrash":type = "방어관통";break;
 			case "Protect":type = "보호";break;
-			case "MagicDamage":type = "마법 대미지";break;
+			case "MagicDamage":type = GoldBigDragon_RPG.Main.ServerOption.MagicDamage;break;
 			case "Magic_DEF":type = "마법 방어";break;
 			case "MagicDEFcrash":type = "마법 방어관통";break;
 			case "Magic_Protect":type = "마법 보호";break;
@@ -646,15 +549,15 @@ public class Damage
 											{
 												Lore = ChatColor.stripColor(item[counter].getItemMeta().getLore().get(count)).split(" : ");
 												if(Lore[0].contains(type))
-												if(type.equalsIgnoreCase("대미지")||type.equalsIgnoreCase("마법 대미지")||type.equalsIgnoreCase("업그레이드"))
+												if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0||type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.equalsIgnoreCase("업그레이드"))
 												{
-													if(type.equals("대미지")&&ChatColor.stripColor(item[counter].getItemMeta().getLore().get(count)).contains("마법")==false)
+													if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0)
 													{
 														String[] SubLore = Lore[1].split(" ~ ");
 														bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
 														bonus[1] = bonus[1] + Integer.parseInt(SubLore[1]);
 													}
-													else if(type.equalsIgnoreCase("마법 대미지")||type.equalsIgnoreCase("업그레이드"))
+													else if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.equalsIgnoreCase("업그레이드"))
 													{
 														String[] SubLore = Lore[1].split(" ~ ");
 														bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
@@ -715,15 +618,15 @@ public class Damage
 											if(item[0].getItemMeta().getLore().get(count).contains(":") == true||item[0].getItemMeta().getLore().get(count).contains("/") == true)
 											{
 												Lore = ChatColor.stripColor(item[0].getItemMeta().getLore().get(count)).split(" : ");
-												if(type.equalsIgnoreCase("대미지")||type.equalsIgnoreCase("마법 대미지")||type.equalsIgnoreCase("업그레이드"))
+												if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0||type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.equalsIgnoreCase("업그레이드"))
 												{
-													if(type.equals("대미지")&&ChatColor.stripColor(item[0].getItemMeta().getLore().get(count)).contains("마법")==false)
+													if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0)
 													{
 														String[] SubLore = Lore[1].split(" ~ ");
 														bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
 														bonus[1] = bonus[1] + Integer.parseInt(SubLore[1]);
 													}
-													else if(type.equalsIgnoreCase("마법 대미지")||type.equalsIgnoreCase("업그레이드"))
+													else if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.equalsIgnoreCase("업그레이드"))
 													{
 														String[] SubLore = Lore[1].split(" ~ ");
 														bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);

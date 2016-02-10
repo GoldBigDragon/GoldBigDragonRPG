@@ -37,6 +37,12 @@ public class InventoryClose
 		{new GoldBigDragon_RPG.GUI.EquipGUI().InventoryClose_ExchangeGUI(event);return;}
 		else if(InventoryName.contains("초심자")== true)
 		{InventoryClose_NewBie(event, InventoryName);return;}
+		else if(InventoryName.contains("도박 상품 정보")== true)
+		{new GoldBigDragon_RPG.GUI.GambleGUI().GambleDetailViewPackageGUI_Close(event);return;}
+		else if(InventoryName.contains("도박 기계 코인")== true)
+		{new GoldBigDragon_RPG.GUI.GambleGUI().SlotMachineCoinGUI_Close(event);return;}
+		else if(ChatColor.stripColor(InventoryName).equals("부활 아이템")||ChatColor.stripColor(InventoryName).equals("구조 아이템"))
+		{new GoldBigDragon_RPG.GUI.OPBoxGUI().OPBoxGUI_RescueOrReviveClose(event); return;}
 		if(player.isOp())
 			if(player.isOp()==false)
 				u.UserDataInit(player);

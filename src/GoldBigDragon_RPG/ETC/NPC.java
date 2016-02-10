@@ -39,9 +39,9 @@ public class NPC
 	  	if(ScriptType == 6)
 	  		TalkSubject = "AboutSkills";
 
-	  	Object[] arealist = NPCscript.getConfigurationSection(TalkSubject).getKeys(false).toArray();
+	  	int Size = NPCscript.getConfigurationSection(TalkSubject).getKeys(false).toArray().length;
 		
-		if(arealist.length <= 0)
+		if(Size <= 0)
 		{
 			String[] script = new String[1];
 			randomScript  = (char) new GoldBigDragon_RPG.Util.Number().RandomNum(0, 2);
@@ -59,7 +59,7 @@ public class NPC
 		
 		for(int counter = 1; counter < 125; counter++)
 		{
-			randomScript  = new GoldBigDragon_RPG.Util.Number().RandomNum(1, arealist.length);
+			randomScript  = new GoldBigDragon_RPG.Util.Number().RandomNum(1, Size);
 			if(PlayerNPC.getInt(u.getNPCuuid(player)+".love") >= NPCscript.getInt(TalkSubject + "."+randomScript+".love"))
 			{
 				scriptString = NPCscript.getString(TalkSubject + "."+randomScript+".Script");

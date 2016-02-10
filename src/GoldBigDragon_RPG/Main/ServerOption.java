@@ -14,7 +14,9 @@ public class ServerOption
 	public static String WILL = "의지";
 	public static String LUK = "행운";
 	public static String Money = ChatColor.YELLOW+""+ChatColor.BOLD+"Gold";
-
+	public static String Damage = "대미지";
+	public static String MagicDamage = "마법 대미지";
+	
 	public static String STR_Lore = "%enter%"+ChatColor.GRAY+" "+GoldBigDragon_RPG.Main.ServerOption.STR+"은 플레이어의%enter%"+ChatColor.GRAY + " 물리적 공격력을%enter%"+ChatColor.GRAY + " 상승시켜 줍니다.%enter%";
 	public static String DEX_Lore = "%enter%"+ChatColor.GRAY+" "+GoldBigDragon_RPG.Main.ServerOption.DEX+"는 플레이어의%enter%"+ChatColor.GRAY + " 원거리 공격력을%enter%"+ChatColor.GRAY + " 상승시켜 줍니다.%enter%";
 	public static String INT_Lore = "%enter%"+ChatColor.GRAY+" "+GoldBigDragon_RPG.Main.ServerOption.INT+"은 플레이어가%enter%"+ChatColor.GRAY + " 사용하는 스킬 중%enter%"+ChatColor.GRAY+" "+GoldBigDragon_RPG.Main.ServerOption.INT+" 영향을 받는%enter%"+ChatColor.GRAY+" 스킬 공격력을%enter%"+ChatColor.GRAY + " 상승시켜 줍니다.%enter%";
@@ -87,6 +89,10 @@ public class ServerOption
 			Money5DATA = Config.getInt("Server.Money.5.DATA");
 		if(Config.contains("Server.Money.6.DATA"))
 			Money6DATA = Config.getInt("Server.Money.6.DATA");
+		if(Config.contains("Server.Damage"))
+			Damage = Config.getString("Server.Damage");
+		if(Config.contains("Server.MagicDamage"))
+			MagicDamage = Config.getString("Server.MagicDamage");
 		return;
 	}
 }

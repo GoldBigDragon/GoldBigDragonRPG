@@ -18,23 +18,21 @@ public class Area
 		YamlController Event_YC = GoldBigDragon_RPG.Main.Main.YC_1;
 		YamlManager AreaList = Event_YC.getNewConfig("Area/AreaList.yml");
 		
-		Object[] arealist = AreaList.getConfigurationSection("").getKeys(false).toArray();
-
-		for(int count =0; count <arealist.length;count++)
+		if(AreaList.contains(name) == true)
 		{
-			if(arealist[count].toString().equalsIgnoreCase(name) == true)
-			{
-				new GoldBigDragon_RPG.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
-				player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 이름은 이미 등록되어 있습니다!");
-				return;
-			}
+			new GoldBigDragon_RPG.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+			player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 이름은 이미 등록되어 있습니다!");
+			return;
 		}
+		
 		if(loc1.getWorld().equals(loc2.getWorld()) == false)
 		{
 			new GoldBigDragon_RPG.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 			player.sendMessage(ChatColor.RED + "[SYSTEM] : 서로 다른 월드간은 영역 지정을 할 수 없습니다!");
 			return;
 		}
+		loc1.add(1, 0, 0);
+		loc2.add(0, 0, 1);
 		AreaList.set(name+".World", loc1.getWorld().getName());
 		if(loc1.getX() > loc2.getX())
 		{
@@ -107,65 +105,38 @@ public class Area
 	{
 		YamlController Event_YC = GoldBigDragon_RPG.Main.Main.YC_1;
 		YamlManager AreaList = Event_YC.getNewConfig("Area/AreaList.yml");
-		
-		Object[] arealist = AreaList.getConfigurationSection("").getKeys(false).toArray();
-
-		for(int count =0; count <arealist.length;count++)
+		if(AreaList.contains(name))
 		{
-			if(arealist[count].toString().equalsIgnoreCase(name) == true)
-			{
-				AreaList.removeKey(name+".World");
-				AreaList.removeKey(name+".X.Min");
-				AreaList.removeKey(name+".X.Max");
-				AreaList.removeKey(name+".Y.Min");
-				AreaList.removeKey(name+".Y.Max");
-				AreaList.removeKey(name+".Z.Min");
-				AreaList.removeKey(name+".Z.Max");
-				AreaList.removeKey(name+".Name");
-				AreaList.removeKey(name+".SpawnLocation.X");
-				AreaList.removeKey(name+".SpawnLocation.Y");
-				AreaList.removeKey(name+".SpawnLocation.Z");
-				AreaList.removeKey(name+".SpawnLocation.Pitch");
-				AreaList.removeKey(name+".SpawnLocation.Yaw");
-				AreaList.removeKey(name+".Description");
-				AreaList.removeKey(name+".PVP");
-				AreaList.removeKey(name+".BlockBreak");
-				AreaList.removeKey(name+".BlockPlace");
-				AreaList.removeKey(name+".SpawnPoint");
-				AreaList.removeKey(name+".MobSpawn");
-				AreaList.removeKey(name+".Alert");
-				AreaList.removeKey(name);
-				AreaList.saveConfig();
-				new GoldBigDragon_RPG.Effect.Sound().SP(player, org.bukkit.Sound.CHICKEN_EGG_POP, 2.0F, 1.7F);
-				player.sendMessage(ChatColor.RED + "[SYSTEM] : 지정 구역 삭제 성공!");
-				return;
-			}
+			AreaList.removeKey(name+".World");
+			AreaList.removeKey(name+".X.Min");
+			AreaList.removeKey(name+".X.Max");
+			AreaList.removeKey(name+".Y.Min");
+			AreaList.removeKey(name+".Y.Max");
+			AreaList.removeKey(name+".Z.Min");
+			AreaList.removeKey(name+".Z.Max");
+			AreaList.removeKey(name+".Name");
+			AreaList.removeKey(name+".SpawnLocation.X");
+			AreaList.removeKey(name+".SpawnLocation.Y");
+			AreaList.removeKey(name+".SpawnLocation.Z");
+			AreaList.removeKey(name+".SpawnLocation.Pitch");
+			AreaList.removeKey(name+".SpawnLocation.Yaw");
+			AreaList.removeKey(name+".Description");
+			AreaList.removeKey(name+".PVP");
+			AreaList.removeKey(name+".BlockBreak");
+			AreaList.removeKey(name+".BlockPlace");
+			AreaList.removeKey(name+".SpawnPoint");
+			AreaList.removeKey(name+".MobSpawn");
+			AreaList.removeKey(name+".Alert");
+			AreaList.removeKey(name);
+			AreaList.saveConfig();
+			new GoldBigDragon_RPG.Effect.Sound().SP(player, org.bukkit.Sound.CHICKEN_EGG_POP, 2.0F, 1.7F);
+			player.sendMessage(ChatColor.RED + "[SYSTEM] : 지정 구역 삭제 성공!");
 		}
-		new GoldBigDragon_RPG.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
-		player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 이름의 구역은 존재하지 않습니다!");
-		return;
-	}
-
-	public void AreaListPrint(Player player)
-	{
-		YamlController Event_YC = GoldBigDragon_RPG.Main.Main.YC_1;
-		YamlManager AreaList = Event_YC.getNewConfig("Area/AreaList.yml");
-		
-		Object[] arealist = AreaList.getConfigurationSection("").getKeys(false).toArray();
-
-		if(arealist.length <= 0)
+		else
 		{
 			new GoldBigDragon_RPG.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
-			player.sendMessage(ChatColor.RED + "[SYSTEM] : 생성된 영역이 없습니다!");
-			return;
+			player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 이름의 구역은 존재하지 않습니다!");
 		}
-		player.sendMessage(ChatColor.GREEN + "┌────────영역 목록────────┐");
-		for(int count =0; count <arealist.length;count++)
-		{
-			player.sendMessage(ChatColor.GREEN +"  "+ arealist[count].toString());
-		}
-		player.sendMessage(ChatColor.GREEN + "└────────영역 목록────────┘");
-		new GoldBigDragon_RPG.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 		return;
 	}
 	
@@ -174,33 +145,30 @@ public class Area
 		YamlController Event_YC = GoldBigDragon_RPG.Main.Main.YC_1;
 		YamlManager AreaList = Event_YC.getNewConfig("Area/AreaList.yml");
 		
-		Object[] arealist = AreaList.getConfigurationSection("").getKeys(false).toArray();
-
-		for(int count =0; count <arealist.length;count++)
+		if(AreaList.contains(AreaName))
 		{
-			if(arealist[count].toString().equalsIgnoreCase(AreaName) == true)
+			switch(type)
 			{
-				switch(type)
+			case 0:
 				{
-				case 0:
-					{
-						AreaList.set(AreaName+".Name", string);
-						player.sendMessage(ChatColor.GREEN + "[SYSTEM] : " + ChatColor.YELLOW + AreaName+ChatColor.GREEN+" 영역의 이름이 "+ChatColor.YELLOW + string+ChatColor.GREEN+ " 으로 변경 되었습니다!");
-					}
-					break;
-				case 1:
-					{
-						AreaList.set(AreaName+".Description", string);
-						player.sendMessage(ChatColor.GREEN + "[SYSTEM] : " + ChatColor.YELLOW + AreaName+ChatColor.GREEN+" 영역의 설명이 "+ChatColor.YELLOW + string+ChatColor.GREEN+ " 으로 변경 되었습니다!");
-					}
-					break;
+					AreaList.set(AreaName+".Name", string);
+					player.sendMessage(ChatColor.GREEN + "[SYSTEM] : " + ChatColor.YELLOW + AreaName+ChatColor.GREEN+" 영역의 이름이 "+ChatColor.YELLOW + string+ChatColor.GREEN+ " 으로 변경 되었습니다!");
 				}
-				AreaList.saveConfig();
-				return;
+				break;
+			case 1:
+				{
+					AreaList.set(AreaName+".Description", string);
+					player.sendMessage(ChatColor.GREEN + "[SYSTEM] : " + ChatColor.YELLOW + AreaName+ChatColor.GREEN+" 영역의 설명이 "+ChatColor.YELLOW + string+ChatColor.GREEN+ " 으로 변경 되었습니다!");
+				}
+				break;
 			}
+			AreaList.saveConfig();
 		}
-		new GoldBigDragon_RPG.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
-		player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 이름의 구역은 존재하지 않습니다!");
+		else
+		{
+			new GoldBigDragon_RPG.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+			player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 이름의 구역은 존재하지 않습니다!");
+		}
 		return;
 	}
 	
@@ -213,7 +181,7 @@ public class Area
 
 		String TouchedArea = "n";
 		for(int count =0; count <arealist.length;count++)
-			if(AreaList.getString(arealist[count] + ".World").equalsIgnoreCase((player.getLocation().getWorld().getName())))
+			if(AreaList.getString(arealist[count] + ".World").compareTo(player.getLocation().getWorld().getName())==0)
 				if(AreaList.getInt(arealist[count]+".X.Min") <= player.getLocation().getX() && AreaList.getInt(arealist[count]+".X.Max") >= player.getLocation().getX())
 					if(AreaList.getInt(arealist[count]+".Y.Min") <= player.getLocation().getY() && AreaList.getInt(arealist[count]+".Y.Max") >= player.getLocation().getY())
 						if(AreaList.getInt(arealist[count]+".Z.Min") <= player.getLocation().getZ() && AreaList.getInt(arealist[count]+".Z.Max") >= player.getLocation().getZ())

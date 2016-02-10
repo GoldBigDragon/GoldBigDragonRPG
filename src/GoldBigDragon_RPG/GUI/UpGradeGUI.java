@@ -41,21 +41,21 @@ public class UpGradeGUI extends GUIutil
 			else if(RecipeList.getInt(ItemName+".MaxDurability") < 0)
 				Lore = Lore+ChatColor.RED+" ▼ 최대 내구도 : "+RecipeList.getInt(ItemName+".MaxDurability")+"%enter%";
 			if(RecipeList.getInt(ItemName+".MinDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 대미지 : "+RecipeList.getInt(ItemName+".MinDamage")+"%enter%";
+				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : "+RecipeList.getInt(ItemName+".MinDamage")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".MinDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최소 대미지 : "+RecipeList.getInt(ItemName+".MinDamage")+"%enter%";
+				Lore = Lore+ChatColor.RED+" ▼ 최소 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : "+RecipeList.getInt(ItemName+".MinDamage")+"%enter%";
 			if(RecipeList.getInt(ItemName+".MaxDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 대미지 : "+RecipeList.getInt(ItemName+".MaxDamage")+"%enter%";
+				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : "+RecipeList.getInt(ItemName+".MaxDamage")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".MaxDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최대 대미지 : "+RecipeList.getInt(ItemName+".MaxDamage")+"%enter%";
+				Lore = Lore+ChatColor.RED+" ▼ 최대 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : "+RecipeList.getInt(ItemName+".MaxDamage")+"%enter%";
 			if(RecipeList.getInt(ItemName+".MinMaDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 마법 대미지 : "+RecipeList.getInt(ItemName+".MinMaDamage")+"%enter%";
+				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : "+RecipeList.getInt(ItemName+".MinMaDamage")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".MinMaDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최소 마법 대미지 : "+RecipeList.getInt(ItemName+".MinMaDamage")+"%enter%";
+				Lore = Lore+ChatColor.RED+" ▼ 최소 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : "+RecipeList.getInt(ItemName+".MinMaDamage")+"%enter%";
 			if(RecipeList.getInt(ItemName+".MaxMaDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 마법 대미지 : "+RecipeList.getInt(ItemName+".MaxMaDamage")+"%enter%";
+				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : "+RecipeList.getInt(ItemName+".MaxMaDamage")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".MaxMaDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최대 마법 대미지 : "+RecipeList.getInt(ItemName+".MaxMaDamage")+"%enter%";
+				Lore = Lore+ChatColor.RED+" ▼ 최대 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : "+RecipeList.getInt(ItemName+".MaxMaDamage")+"%enter%";
 			if(RecipeList.getInt(ItemName+".DEF") > 0)
 				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 방어 : "+RecipeList.getInt(ItemName+".DEF")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".DEF") < 0)
@@ -126,21 +126,21 @@ public class UpGradeGUI extends GUIutil
 		else if(RecipeList.getInt(RecipeName+".MaxDurability") < 0)
 			Lore = Lore+ChatColor.RED+" ▼ 최대 내구도 : "+RecipeList.getInt(RecipeName+".MaxDurability")+"%enter%";
 		if(RecipeList.getInt(RecipeName+".MinDamage") > 0)
-			Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 대미지 : "+RecipeList.getInt(RecipeName+".MinDamage")+"%enter%";
+			Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : "+RecipeList.getInt(RecipeName+".MinDamage")+"%enter%";
 		else if(RecipeList.getInt(RecipeName+".MinDamage") < 0)
-			Lore = Lore+ChatColor.RED+" ▼ 최소 대미지 : "+RecipeList.getInt(RecipeName+".MinDamage")+"%enter%";
+			Lore = Lore+ChatColor.RED+" ▼ 최소 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : "+RecipeList.getInt(RecipeName+".MinDamage")+"%enter%";
 		if(RecipeList.getInt(RecipeName+".MaxDamage") > 0)
-			Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 대미지 : "+RecipeList.getInt(RecipeName+".MaxDamage")+"%enter%";
+			Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : "+RecipeList.getInt(RecipeName+".MaxDamage")+"%enter%";
 		else if(RecipeList.getInt(RecipeName+".MaxDamage") < 0)
-			Lore = Lore+ChatColor.RED+" ▼ 최대 대미지 : "+RecipeList.getInt(RecipeName+".MaxDamage")+"%enter%";
+			Lore = Lore+ChatColor.RED+" ▼ 최대 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : "+RecipeList.getInt(RecipeName+".MaxDamage")+"%enter%";
 		if(RecipeList.getInt(RecipeName+".MinMaDamage") > 0)
-			Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 마법 대미지 : "+RecipeList.getInt(RecipeName+".MinMaDamage")+"%enter%";
+			Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : "+RecipeList.getInt(RecipeName+".MinMaDamage")+"%enter%";
 		else if(RecipeList.getInt(RecipeName+".MinMaDamage") < 0)
-			Lore = Lore+ChatColor.RED+" ▼ 최소 마법 대미지 : "+RecipeList.getInt(RecipeName+".MinMaDamage")+"%enter%";
+			Lore = Lore+ChatColor.RED+" ▼ 최소 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : "+RecipeList.getInt(RecipeName+".MinMaDamage")+"%enter%";
 		if(RecipeList.getInt(RecipeName+".MaxMaDamage") > 0)
-			Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 마법 대미지 : "+RecipeList.getInt(RecipeName+".MaxMaDamage")+"%enter%";
+			Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : "+RecipeList.getInt(RecipeName+".MaxMaDamage")+"%enter%";
 		else if(RecipeList.getInt(RecipeName+".MaxMaDamage") < 0)
-			Lore = Lore+ChatColor.RED+" ▼ 최대 마법 대미지 : "+RecipeList.getInt(RecipeName+".MaxMaDamage")+"%enter%";
+			Lore = Lore+ChatColor.RED+" ▼ 최대 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : "+RecipeList.getInt(RecipeName+".MaxMaDamage")+"%enter%";
 		if(RecipeList.getInt(RecipeName+".DEF") > 0)
 			Lore = Lore+ChatColor.DARK_AQUA+" ▲ 방어 : "+RecipeList.getInt(RecipeName+".DEF")+"%enter%";
 		else if(RecipeList.getInt(RecipeName+".DEF") < 0)
@@ -189,8 +189,8 @@ public class UpGradeGUI extends GUIutil
 		Stack2(ChatColor.WHITE+"[   설명 변경   ]", 421, 0, 1,Arrays.asList(ChatColor.WHITE+"개조식의 설명을 변경합니다."), 37, inv);
 		
 		Stack2(ChatColor.DARK_AQUA + "[    타입 변경    ]", 61,0,1,Arrays.asList(ChatColor.WHITE+"개조 가능한 타입을",ChatColor.WHITE+"변경합니다.","",ChatColor.WHITE+"[    현재 타입    ]",RecipeList.getString(RecipeName+".Only"),""), 13, inv);
-		Stack2(ChatColor.DARK_AQUA + "[       대미지       ]", 267,0,1,Arrays.asList(ChatColor.WHITE+"개조시 대미지를",ChatColor.WHITE+"상승 시킵니다.",""), 14, inv);
-		Stack2(ChatColor.DARK_AQUA + "[     마법 대미지     ]", 403,0,1,Arrays.asList(ChatColor.WHITE+"개조시 마법 대미지를",ChatColor.WHITE+"상승 시킵니다.",""), 15, inv);
+		Stack2(ChatColor.DARK_AQUA + "[       "+GoldBigDragon_RPG.Main.ServerOption.Damage+"       ]", 267,0,1,Arrays.asList(ChatColor.WHITE+"개조시 "+GoldBigDragon_RPG.Main.ServerOption.Damage+"를",ChatColor.WHITE+"상승 시킵니다.",""), 14, inv);
+		Stack2(ChatColor.DARK_AQUA + "[     "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+"     ]", 403,0,1,Arrays.asList(ChatColor.WHITE+"개조시 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+"를",ChatColor.WHITE+"상승 시킵니다.",""), 15, inv);
 		Stack2(ChatColor.DARK_AQUA + "[       밸런스       ]", 262,0,1,Arrays.asList(ChatColor.WHITE+"개조시 밸런스를",ChatColor.WHITE+"상승 시킵니다.",""), 16, inv);
 		Stack2(ChatColor.DARK_AQUA + "[        방어        ]", 307,0,1,Arrays.asList(ChatColor.WHITE+"개조시 방어력을",ChatColor.WHITE+"상승 시킵니다.",""), 22, inv);
 		Stack2(ChatColor.DARK_AQUA + "[        보호        ]", 306,0,1,Arrays.asList(ChatColor.WHITE+"개조시 보호를",ChatColor.WHITE+"상승 시킵니다.",""), 23, inv);

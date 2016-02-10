@@ -2,7 +2,6 @@ package OtherPlugins;
 
 import java.io.File;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -29,7 +28,6 @@ public class CitizensMain implements Listener
 	
 	public void NPCquest(NPCRightClickEvent event)
 	{
-		GoldBigDragon_RPG.Config.StatConfig stat = new GoldBigDragon_RPG.Config.StatConfig();
 		GoldBigDragon_RPG.Effect.Sound s = new GoldBigDragon_RPG.Effect.Sound();
 
 	    YamlManager YM;
@@ -195,18 +193,12 @@ public class CitizensMain implements Listener
 							
 							if(emptySlot >= item.length)
 							{
-							  	if(GUI_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-							  		stat.CreateNewStats(player);
-								YM = GUI_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
-								
 								for(int counter = 0;counter < p.length; counter++)
 									player.getInventory().addItem(item[counter]);
 
 								PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 								PlayerQuestList.saveConfig();
 								
-							  	if(GUI_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-							  		stat.CreateNewStats(player);
 								YM = GUI_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 								YM.set("Stat.Money", YM.getLong("Stat.Money") + QuestList.getLong(QuestName + ".FlowChart."+QuestFlow+".Money"));
 								YM.saveConfig();

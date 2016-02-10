@@ -20,6 +20,7 @@ public class ServerTickMain
 	int BroadCastMessageTime =0;
   	int BroadCastMessageCool = 0;
   	public static int SafeLine = 100;
+  	public static byte oneSec = 0;
   	//초당 최대 실행 스케줄 갯수 설정
   	//(값이 클수록 초당 많은 작업을 하지만, 그만큼 서버에 부담이 된다.)
 
@@ -29,17 +30,23 @@ public class ServerTickMain
 	{
 		nowUTC = new GoldBigDragon_RPG.Util.ETC().getNowUTC();
 	  	BukkitScheduler scheduler1 = Bukkit.getServer().getScheduler();
-	  	scheduler1.scheduleSyncRepeatingTask(plugin,  new Runnable()
+	  	scheduler1.scheduleSyncRepeatingTask(plugin, new Runnable()
         {
             @Override
             public void run() 
             {
-        		BroadCastMessage();
+            	if(oneSec==10)
+            	{
+            		BroadCastMessage();
+            		oneSec=0;
+            	}
+            	else
+            		oneSec++;
             	CheckShcedule();
-            	nowUTC = nowUTC +980;
+            	nowUTC = nowUTC +110;
         	  	//Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA +"1"+"초 경과");
             }
-        }, 10, 20);
+        }, 10, 2);
     	return;
 	}
 	
@@ -98,6 +105,9 @@ public class ServerTickMain
 			return;
 		case "P_EC"://Player_Exchange
 			new ServerTask_Player().ExChangeTimer(UTC);
+			return;
+		case "G_SM"://Gamble_SlotMachine
+			new ServerTask_Player().Gamble_SlotMachine_Rolling(UTC);
 			return;
 		default:
 			return;

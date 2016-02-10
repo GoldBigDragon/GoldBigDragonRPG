@@ -20,6 +20,9 @@ public class ChangeHotBar
 	public void HotBarMove(PlayerItemHeldEvent event)
 	{
 		Player player = event.getPlayer();
+		if(new GoldBigDragon_RPG.Effect.Corpse().DeathCapture(player,false))
+			return;
+			
 		short NewSlot = (short)event.getNewSlot();
 		if(player.getInventory().getItem(NewSlot) != null)
 		{

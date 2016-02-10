@@ -1284,21 +1284,21 @@ public class NPC_GUI extends GUIutil
 			else if(UpgradeRecipe.getInt(RecipeName+".MaxDurability") < 0)
 				Lore = Lore+ChatColor.RED+" ▼ 최대 내구도 : "+UpgradeRecipe.getInt(RecipeName+".MaxDurability")+"%enter%";
 			if(UpgradeRecipe.getInt(RecipeName+".MinDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 대미지 : "+UpgradeRecipe.getInt(RecipeName+".MinDamage")+"%enter%";
+				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : "+UpgradeRecipe.getInt(RecipeName+".MinDamage")+"%enter%";
 			else if(UpgradeRecipe.getInt(RecipeName+".MinDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최소 대미지 : "+UpgradeRecipe.getInt(RecipeName+".MinDamage")+"%enter%";
+				Lore = Lore+ChatColor.RED+" ▼ 최소 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : "+UpgradeRecipe.getInt(RecipeName+".MinDamage")+"%enter%";
 			if(UpgradeRecipe.getInt(RecipeName+".MaxDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 대미지 : "+UpgradeRecipe.getInt(RecipeName+".MaxDamage")+"%enter%";
+				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : "+UpgradeRecipe.getInt(RecipeName+".MaxDamage")+"%enter%";
 			else if(UpgradeRecipe.getInt(RecipeName+".MaxDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최대 대미지 : "+UpgradeRecipe.getInt(RecipeName+".MaxDamage")+"%enter%";
+				Lore = Lore+ChatColor.RED+" ▼ 최대 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : "+UpgradeRecipe.getInt(RecipeName+".MaxDamage")+"%enter%";
 			if(UpgradeRecipe.getInt(RecipeName+".MinMaDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 마법 대미지 : "+UpgradeRecipe.getInt(RecipeName+".MinMaDamage")+"%enter%";
+				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : "+UpgradeRecipe.getInt(RecipeName+".MinMaDamage")+"%enter%";
 			else if(UpgradeRecipe.getInt(RecipeName+".MinMaDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최소 마법 대미지 : "+UpgradeRecipe.getInt(RecipeName+".MinMaDamage")+"%enter%";
+				Lore = Lore+ChatColor.RED+" ▼ 최소 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : "+UpgradeRecipe.getInt(RecipeName+".MinMaDamage")+"%enter%";
 			if(UpgradeRecipe.getInt(RecipeName+".MaxMaDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 마법 대미지 : "+UpgradeRecipe.getInt(RecipeName+".MaxMaDamage")+"%enter%";
+				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : "+UpgradeRecipe.getInt(RecipeName+".MaxMaDamage")+"%enter%";
 			else if(UpgradeRecipe.getInt(RecipeName+".MaxMaDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최대 마법 대미지 : "+UpgradeRecipe.getInt(RecipeName+".MaxMaDamage")+"%enter%";
+				Lore = Lore+ChatColor.RED+" ▼ 최대 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : "+UpgradeRecipe.getInt(RecipeName+".MaxMaDamage")+"%enter%";
 			if(UpgradeRecipe.getInt(RecipeName+".DEF") > 0)
 				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 방어 : "+UpgradeRecipe.getInt(RecipeName+".DEF")+"%enter%";
 			else if(UpgradeRecipe.getInt(RecipeName+".DEF") < 0)
@@ -1389,21 +1389,21 @@ public class NPC_GUI extends GUIutil
 			else if(RecipeList.getInt(ItemName+".MaxDurability") < 0)
 				Lore = Lore+ChatColor.RED+" ▼ 최대 내구도 : "+RecipeList.getInt(ItemName+".MaxDurability")+"%enter%";
 			if(RecipeList.getInt(ItemName+".MinDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 대미지 : "+RecipeList.getInt(ItemName+".MinDamage")+"%enter%";
+				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : "+RecipeList.getInt(ItemName+".MinDamage")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".MinDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최소 대미지 : "+RecipeList.getInt(ItemName+".MinDamage")+"%enter%";
+				Lore = Lore+ChatColor.RED+" ▼ 최소 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : "+RecipeList.getInt(ItemName+".MinDamage")+"%enter%";
 			if(RecipeList.getInt(ItemName+".MaxDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 대미지 : "+RecipeList.getInt(ItemName+".MaxDamage")+"%enter%";
+				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : "+RecipeList.getInt(ItemName+".MaxDamage")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".MaxDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최대 대미지 : "+RecipeList.getInt(ItemName+".MaxDamage")+"%enter%";
+				Lore = Lore+ChatColor.RED+" ▼ 최대 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : "+RecipeList.getInt(ItemName+".MaxDamage")+"%enter%";
 			if(RecipeList.getInt(ItemName+".MinMaDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 마법 대미지 : "+RecipeList.getInt(ItemName+".MinMaDamage")+"%enter%";
+				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : "+RecipeList.getInt(ItemName+".MinMaDamage")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".MinMaDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최소 마법 대미지 : "+RecipeList.getInt(ItemName+".MinMaDamage")+"%enter%";
+				Lore = Lore+ChatColor.RED+" ▼ 최소 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : "+RecipeList.getInt(ItemName+".MinMaDamage")+"%enter%";
 			if(RecipeList.getInt(ItemName+".MaxMaDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 마법 대미지 : "+RecipeList.getInt(ItemName+".MaxMaDamage")+"%enter%";
+				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : "+RecipeList.getInt(ItemName+".MaxMaDamage")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".MaxMaDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최대 마법 대미지 : "+RecipeList.getInt(ItemName+".MaxMaDamage")+"%enter%";
+				Lore = Lore+ChatColor.RED+" ▼ 최대 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : "+RecipeList.getInt(ItemName+".MaxMaDamage")+"%enter%";
 			if(RecipeList.getInt(ItemName+".DEF") > 0)
 				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 방어 : "+RecipeList.getInt(ItemName+".DEF")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".DEF") < 0)
@@ -2337,7 +2337,7 @@ public class NPC_GUI extends GUIutil
 										Object[] q = JobList.getConfigurationSection("MapleStory."+Job[count].toString()).getKeys(false).toArray();
 										for(int counter=0;counter<q.length;counter++)
 										{
-											if(q[counter].toString().equalsIgnoreCase(NPCscript.getString("Job.Job"))==true)
+											if(q[counter].toString().compareTo(NPCscript.getString("Job.Job"))==0)
 											{
 												YamlManager PStats  = YC_2.getNewConfig("Stats/"+player.getUniqueId().toString()+".yml");
 												YamlManager PlayerJob  = YC_2.getNewConfig("Skill/PlayerData/"+player.getUniqueId().toString()+".yml");
@@ -2352,16 +2352,16 @@ public class NPC_GUI extends GUIutil
 												if((PStats.getInt("Stat.Level")>=NeedLV)&&(PStats.getInt("Stat.STR")>=NeedSTR)&&(PStats.getInt("Stat.DEX")>=NeedDEX)
 												&&(PStats.getInt("Stat.INT")>=NeedINT)&&(PStats.getInt("Stat.WILL")>=NeedWILL)&&(PStats.getInt("Stat.LUK")>=NeedLUK))
 												{
-													if(PrevJob.equalsIgnoreCase("null")==false)
+													if(PrevJob.compareTo("null")!=0)
 													{
-														if(PlayerJob.getString("Job.Type").equalsIgnoreCase(PrevJob)==false)
+														if(PlayerJob.getString("Job.Type").compareTo(PrevJob)!=0)
 														{
 															player.sendMessage(ChatColor.RED + "[전직] : 당신의 직업으로는 전직 할 수 없는 대상입니다.");
 															s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 															return;	
 														}
 													}
-													if(NPCscript.getString("Job.Job").equalsIgnoreCase(PlayerJob.getString("Job.Type"))==false)
+													if(NPCscript.getString("Job.Job").compareTo(PlayerJob.getString("Job.Type"))!=0)
 													{
 														//플레이어 전직함
 														PlayerJob.set("Job.Type",NPCscript.getString("Job.Job"));
@@ -3346,9 +3346,9 @@ public class NPC_GUI extends GUIutil
 		for(int count = 0; count < Lore.size(); count++)
 		{
 			String SliceOfLore = Lore.get(count);
-			if(SliceOfLore.contains(Option) == true||(SliceOfLore.contains("대미지")&&!(SliceOfLore.contains("마법"))&&(Option.equals("소댐")))||
-					(SliceOfLore.contains("대미지")&&!(SliceOfLore.contains("마법"))&&(Option.equals("맥댐")))||(SliceOfLore.contains("대미지")&&SliceOfLore.contains("마법")&&(Option.equals("마소댐")))||
-					(SliceOfLore.contains("대미지")&&SliceOfLore.contains("마법")&&(Option.equals("마맥댐")))
+			if(SliceOfLore.contains(Option) == true||(SliceOfLore.contains(GoldBigDragon_RPG.Main.ServerOption.Damage)&&!(SliceOfLore.contains("마법"))&&(Option.equals("소댐")))||
+					(SliceOfLore.contains(GoldBigDragon_RPG.Main.ServerOption.Damage)&&!(SliceOfLore.contains("마법"))&&(Option.equals("맥댐")))||(SliceOfLore.contains(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)&&(Option.equals("마소댐")))||
+					(SliceOfLore.contains(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)&&(Option.equals("마맥댐")))
 					||(Option.equals("현재내구도")&&SliceOfLore.contains("내구도")))
 			{
 				String WillBeLore=" ";
@@ -3357,7 +3357,7 @@ public class NPC_GUI extends GUIutil
 					switch(Option)
 					{
 					case "현재내구도":
-						if(SliceOfLore.contains("내구도")&&!SliceOfLore.contains("대미지"))
+						if(SliceOfLore.contains("내구도")&&!SliceOfLore.contains(GoldBigDragon_RPG.Main.ServerOption.Damage))
 						{
 							int low = Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[0]));
 							int max = Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[1]));
@@ -3368,7 +3368,7 @@ public class NPC_GUI extends GUIutil
 						}
 						break;
 					case "내구도":
-						if(SliceOfLore.contains("내구도")&&!SliceOfLore.contains("대미지"))
+						if(SliceOfLore.contains("내구도")&&!SliceOfLore.contains(GoldBigDragon_RPG.Main.ServerOption.Damage))
 						{
 							if(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[0])) <= (Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[1])) + PlusOption))
 								WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ChatColor.WHITE+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[0])) + " / "+ (Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[1])) + PlusOption);
@@ -3379,7 +3379,7 @@ public class NPC_GUI extends GUIutil
 						}
 						break;
 					case "소댐":
-						if(SliceOfLore.contains("대미지"))
+						if(SliceOfLore.contains(GoldBigDragon_RPG.Main.ServerOption.Damage))
 						{
 							if(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0])) + PlusOption > 0)
 								WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ChatColor.WHITE+(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0]))+ PlusOption)+ " ~ "+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1]));
@@ -3388,7 +3388,7 @@ public class NPC_GUI extends GUIutil
 						}
 						break;
 					case "마소댐":
-						if(SliceOfLore.contains("대미지")&&SliceOfLore.contains("마법"))
+						if(SliceOfLore.contains(GoldBigDragon_RPG.Main.ServerOption.MagicDamage))
 						{
 							if(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0])) + PlusOption > 0)
 								WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ChatColor.WHITE+(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0]))+ PlusOption)+ " ~ "+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1]));
@@ -3397,7 +3397,7 @@ public class NPC_GUI extends GUIutil
 						}
 						break;
 					case "맥댐":
-						if(SliceOfLore.contains("대미지"))
+						if(SliceOfLore.contains(GoldBigDragon_RPG.Main.ServerOption.Damage))
 						{
 							if(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1])) + PlusOption > 0)
 								WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ChatColor.WHITE+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0])) + " ~ "+ (Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1])) + PlusOption);
@@ -3406,7 +3406,7 @@ public class NPC_GUI extends GUIutil
 						}
 						break;
 					case "마맥댐":
-						if(SliceOfLore.contains("대미지")&&SliceOfLore.contains("마법"))
+						if(SliceOfLore.contains(GoldBigDragon_RPG.Main.ServerOption.MagicDamage))
 						{
 							if(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1])) + PlusOption > 0)
 								WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ChatColor.WHITE+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0])) + " ~ "+ (Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1])) + PlusOption);
@@ -3441,16 +3441,16 @@ public class NPC_GUI extends GUIutil
 		switch(Option)
 		{
 		case "소댐":
-			Lore.add(2, ChatColor.WHITE+" 대미지 : " + PlusOption + " ~ 0");
+			Lore.add(2, ChatColor.WHITE+" "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : " + PlusOption + " ~ 0");
 			break;
 		case "마소댐":
-			Lore.add(3, ChatColor.WHITE+" 마법 대미지 : " + PlusOption + " ~ 0");
+			Lore.add(3, ChatColor.WHITE+" "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : " + PlusOption + " ~ 0");
 			break;
 		case "맥댐":
-			Lore.add(2, ChatColor.WHITE+" 대미지 : 0 ~ "+PlusOption);
+			Lore.add(2, ChatColor.WHITE+" "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : 0 ~ "+PlusOption);
 			break;
 		case "마맥댐":
-			Lore.add(3, ChatColor.WHITE+" 마법 대미지 : 0 ~ "+PlusOption);
+			Lore.add(3, ChatColor.WHITE+" "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : 0 ~ "+PlusOption);
 			break;
 		default:
 			Lore.add(4, " " +ChatColor.WHITE+ Option + " : " + PlusOption);

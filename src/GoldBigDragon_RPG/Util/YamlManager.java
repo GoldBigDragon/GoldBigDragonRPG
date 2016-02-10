@@ -15,7 +15,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin; 
  
-public class YamlManager 
+public class YamlManager
 {
     private int comments;
     private YamlController manager;

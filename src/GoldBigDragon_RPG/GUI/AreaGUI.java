@@ -389,15 +389,15 @@ public class AreaGUI extends GUIutil
 				Lore = Lore+ChatColor.AQUA+""+ChatColor.BOLD+" 경험치 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".EXP")+"%enter%";
 				Lore = Lore+ChatColor.YELLOW+""+ChatColor.BOLD+" 드랍 금액 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".MIN_Money")+" ~ "+MobList.getInt(MonsterName+".MAX_Money")+"%enter%";
 				Lore = Lore+ChatColor.RED+""+ChatColor.BOLD+" "+GoldBigDragon_RPG.Main.ServerOption.STR+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".STR")
-				+ChatColor.GRAY+ " [물공 : " + d.CombatMinDamageGet(0, MobList.getInt(MonsterName+".STR")) + " ~ " + d.CombatMaxDamageGet(0, MobList.getInt(MonsterName+".STR")) + "]%enter%";
+				+ChatColor.GRAY+ " [물공 : " + d.CombatMinDamageGet(null, 0, MobList.getInt(MonsterName+".STR")) + " ~ " + d.CombatMaxDamageGet(null, 0, MobList.getInt(MonsterName+".STR")) + "]%enter%";
 				Lore = Lore+ChatColor.GREEN+""+ChatColor.BOLD+" "+GoldBigDragon_RPG.Main.ServerOption.DEX+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".DEX")
-				+ChatColor.GRAY+ " [활공 : " + d.RangeMinDamageGet(0, MobList.getInt(MonsterName+".DEX")) + " ~ " + d.RangeMaxDamageGet(0, MobList.getInt(MonsterName+".DEX")) + "]%enter%";
+				+ChatColor.GRAY+ " [활공 : " + d.returnRangeDamageValue(null, MobList.getInt(MonsterName+".DEX"), 0, true) + " ~ " + d.returnRangeDamageValue(null, MobList.getInt(MonsterName+".DEX"), 0, false) + "]%enter%";
 				Lore = Lore+ChatColor.DARK_AQUA+""+ChatColor.BOLD+" "+GoldBigDragon_RPG.Main.ServerOption.INT+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".INT")
 				+ChatColor.GRAY+ " [폭공 : " + (MobList.getInt(MonsterName+".INT")/4)+ " ~ "+(int)(MobList.getInt(MonsterName+".INT")/2.5)+"]%enter%";
 				Lore = Lore+ChatColor.GRAY+""+ChatColor.BOLD+" "+GoldBigDragon_RPG.Main.ServerOption.WILL+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".WILL")
-				+ChatColor.GRAY+ " [크리 : " + d.getCritical(MobList.getInt(MonsterName+".LUK"), (int)MobList.getInt(MonsterName+".WILL")) + " %]%enter%";
+				+ChatColor.GRAY+ " [크리 : " + d.getCritical(null,MobList.getInt(MonsterName+".LUK"), (int)MobList.getInt(MonsterName+".WILL"),0) + " %]%enter%";
 				Lore = Lore+ChatColor.YELLOW+""+ChatColor.BOLD+" "+GoldBigDragon_RPG.Main.ServerOption.LUK+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".LUK")
-				+ChatColor.GRAY+ " [크리 : " + d.getCritical(MobList.getInt(MonsterName+".LUK"), (int)MobList.getInt(MonsterName+".WILL")) + " %]%enter%";
+				+ChatColor.GRAY+ " [크리 : " + d.getCritical(null,MobList.getInt(MonsterName+".LUK"), (int)MobList.getInt(MonsterName+".WILL"),0) + " %]%enter%";
 				Lore = Lore+ChatColor.GRAY+""+ChatColor.BOLD+" 방어 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".DEF")+"%enter%";
 				Lore = Lore+ChatColor.AQUA+""+ChatColor.BOLD+" 보호 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".Protect")+"%enter%";
 				Lore = Lore+ChatColor.BLUE+""+ChatColor.BOLD+" 마법 방어 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".Magic_DEF")+"%enter%";
@@ -481,15 +481,15 @@ public class AreaGUI extends GUIutil
 			Lore = Lore+ChatColor.AQUA+""+ChatColor.BOLD+" 경험치 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".EXP")+"%enter%";
 			Lore = Lore+ChatColor.YELLOW+""+ChatColor.BOLD+" 드랍 금액 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".MIN_Money")+" ~ "+MobList.getInt(MonsterName+".MAX_Money")+"%enter%";
 			Lore = Lore+ChatColor.RED+""+ChatColor.BOLD+" "+GoldBigDragon_RPG.Main.ServerOption.STR+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".STR")
-			+ChatColor.GRAY+ " [물공 : " + d.CombatMinDamageGet(0, MobList.getInt(MonsterName+".STR")) + " ~ " + d.CombatMaxDamageGet(0, MobList.getInt(MonsterName+".STR")) + "]%enter%";
+			+ChatColor.GRAY+ " [물공 : " + d.CombatMinDamageGet(null, 0, MobList.getInt(MonsterName+".STR")) + " ~ " + d.CombatMaxDamageGet(null, 0, MobList.getInt(MonsterName+".STR")) + "]%enter%";
 			Lore = Lore+ChatColor.GREEN+""+ChatColor.BOLD+" "+GoldBigDragon_RPG.Main.ServerOption.DEX+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".DEX")
-			+ChatColor.GRAY+ " [활공 : " + d.RangeMinDamageGet(0, MobList.getInt(MonsterName+".DEX")) + " ~ " + d.RangeMaxDamageGet(0, MobList.getInt(MonsterName+".DEX")) + "]%enter%";
+			+ChatColor.GRAY+ " [활공 : " + d.returnRangeDamageValue(null, MobList.getInt(MonsterName+".DEX"), 0, true) + " ~ " + d.returnRangeDamageValue(null, MobList.getInt(MonsterName+".DEX"), 0, false) + "]%enter%";
 			Lore = Lore+ChatColor.DARK_AQUA+""+ChatColor.BOLD+" "+GoldBigDragon_RPG.Main.ServerOption.INT+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".INT")
 			+ChatColor.GRAY+ " [폭공 : " + (MobList.getInt(MonsterName+".INT")/4)+ " ~ "+(int)(MobList.getInt(MonsterName+".INT")/2.5)+"]%enter%";
 			Lore = Lore+ChatColor.GRAY+""+ChatColor.BOLD+" "+GoldBigDragon_RPG.Main.ServerOption.WILL+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".WILL")
-			+ChatColor.GRAY+ " [크리 : " + d.getCritical(MobList.getInt(MonsterName+".LUK"), (int)MobList.getInt(MonsterName+".WILL")) + " %]%enter%";
+			+ChatColor.GRAY+ " [크리 : " + d.getCritical(null,MobList.getInt(MonsterName+".LUK"), (int)MobList.getInt(MonsterName+".WILL"),0) + " %]%enter%";
 			Lore = Lore+ChatColor.YELLOW+""+ChatColor.BOLD+" "+GoldBigDragon_RPG.Main.ServerOption.LUK+" : "+ChatColor.WHITE+MobList.getInt(MonsterName+".LUK")
-			+ChatColor.GRAY+ " [크리 : " + d.getCritical(MobList.getInt(MonsterName+".LUK"), (int)MobList.getInt(MonsterName+".WILL")) + " %]%enter%";
+			+ChatColor.GRAY+ " [크리 : " + d.getCritical(null,MobList.getInt(MonsterName+".LUK"), (int)MobList.getInt(MonsterName+".WILL"),0) + " %]%enter%";
 			Lore = Lore+ChatColor.GRAY+""+ChatColor.BOLD+" 방어 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".DEF")+"%enter%";
 			Lore = Lore+ChatColor.AQUA+""+ChatColor.BOLD+" 보호 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".Protect")+"%enter%";
 			Lore = Lore+ChatColor.BLUE+""+ChatColor.BOLD+" 마법 방어 : "+ChatColor.WHITE+MobList.getInt(MonsterName+".Magic_DEF")+"%enter%";
@@ -1135,6 +1135,39 @@ public class AreaGUI extends GUIutil
 		String AreaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
 
 		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
+		
+		if(AreaName.compareTo("DeathBGM¡")==0)
+		{
+			switch (event.getSlot())
+			{
+			case 45://이전 목록
+				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+				new GoldBigDragon_RPG.GUI.OPBoxGUI().OPBoxGUI_Death(player);
+				return;
+			case 53://나가기
+				s.SP(player, Sound.PISTON_RETRACT, 0.8F, 1.8F);
+				player.closeInventory();
+				return;
+			case 48://이전 페이지
+				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+				AreaMusicSettingGUI(player, page-1,AreaName);
+				return;
+			case 50://다음 페이지
+				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+				AreaMusicSettingGUI(player, page+1,AreaName);
+				return;
+			default :
+				if(event.isLeftClick())
+				{
+					YamlController YC_2 = GoldBigDragon_RPG.Main.Main.YC_2;
+					YamlManager Config =YC_2.getNewConfig("config.yml");
+					Config.set("Death.Track", Integer.parseInt(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())));
+					Config.saveConfig();
+					new GoldBigDragon_RPG.GUI.OPBoxGUI().OPBoxGUI_Death(player);
+				}
+				return;
+			}
+		}
 		
 		switch (event.getSlot())
 		{

@@ -10,7 +10,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-import GoldBigDragon_RPG.Main.Main;
 import GoldBigDragon_RPG.Main.UserDataObject;
 import GoldBigDragon_RPG.Util.YamlController;
 import GoldBigDragon_RPG.Util.YamlManager;

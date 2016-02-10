@@ -59,7 +59,7 @@ public class NPCconfig
     	  	NPCscript.saveConfig();
     	}
 		NPCscript=Config_YC.getNewConfig("NPC/PlayerData/"+player.getUniqueId()+".yml");
-    	if(NPCscript.getConfigurationSection("").getKeys(false).toString().contains(NPCuuid) == false)
+    	if(NPCscript.contains(NPCuuid) == false)
     	{
     		NPCscript=Config_YC.getNewConfig("NPC/PlayerData/"+player.getUniqueId()+".yml");
     	  	NPCscript.set(NPCuuid+".love", 0);

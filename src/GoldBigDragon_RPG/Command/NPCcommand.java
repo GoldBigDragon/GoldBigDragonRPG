@@ -69,7 +69,6 @@ public class NPCcommand extends HelpMessage
 							if(isIntMinMax(args[1], player, 0, Integer.MAX_VALUE))
 							{
 								directory = NPCscript.getConfigurationSection("Shop.Buy").getKeys(false).toArray().length;
-								directory = NPCscript.getConfigurationSection("Shop.Buy").getKeys(false).size();
 								NPCscript.set("Shop.Buy."+directory+".item", player.getItemInHand());
 								NPCscript.set("Shop.Buy."+directory+".price", Integer.parseInt(args[1]));
 								NPCscript.saveConfig();

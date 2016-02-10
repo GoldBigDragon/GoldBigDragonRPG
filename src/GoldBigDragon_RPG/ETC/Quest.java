@@ -78,24 +78,24 @@ public class Quest
         	{
 	        	case "Script" :
 	        	{
-	    			Set<String> b = QuestConfig.getConfigurationSection(u.getString(player,(byte)2)+".FlowChart").getKeys(false);
+	    			int b = QuestConfig.getConfigurationSection(u.getString(player,(byte)2)+".FlowChart").getKeys(false).size();
 	        		if(u.getString(player,(byte)3)!=null)
 	        		{
-	    				QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+b.size()+".Type", "Script");
-	    				QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+b.size()+".Script", u.getString(player,(byte)3));
+	    				QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+b+".Type", "Script");
+	    				QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+b+".Script", u.getString(player,(byte)3));
 	    				
 	    				if(target.getType() == EntityType.PLAYER)
 	    				{
-	    					QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+b.size()+".NPCname", target.getName());
-	    					QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+b.size()+".NPCuuid", ((Player)target).getUniqueId().toString());
+	    					QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+b+".NPCname", target.getName());
+	    					QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+b+".NPCuuid", ((Player)target).getUniqueId().toString());
 	    				}
 	    				else
 	    				{
 	    					if(target.isCustomNameVisible() == true)
-	    						QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+b.size()+".NPCname", target.getCustomName());
+	    						QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+b+".NPCname", target.getCustomName());
 	    					else
-	    						QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+b.size()+".NPCname", target.getName());
-	    					QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+b.size()+".NPCuuid", target.getUniqueId().toString());
+	    						QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+b+".NPCname", target.getName());
+	    					QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+b+".NPCuuid", target.getUniqueId().toString());
 	    				}
 	    				new GoldBigDragon_RPG.Effect.Sound().SP(event.getPlayer(), org.bukkit.Sound.ITEM_PICKUP, 0.5F,1.2F);
 	    		    	player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 성공적으로 등록되었습니다!");
@@ -107,20 +107,20 @@ public class Quest
 	        	break;
         	case "Talk" :
 	        	{
-	    			Set<String> c = QuestConfig.getConfigurationSection(u.getString(player,(byte)2)+".FlowChart").getKeys(false);
-	    			QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+c.size()+".Type", "Talk");
+	    			int c = QuestConfig.getConfigurationSection(u.getString(player,(byte)2)+".FlowChart").getKeys(false).size();
+	    			QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+c+".Type", "Talk");
 	    			if(target.getType() == EntityType.PLAYER)
 	    			{
-	    				QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+c.size()+".TargetNPCuuid", ((Player)target).getUniqueId().toString());
-	    				QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+c.size()+".TargetNPCname", target.getName());
+	    				QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+c+".TargetNPCuuid", ((Player)target).getUniqueId().toString());
+	    				QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+c+".TargetNPCname", target.getName());
 	    			}
 	    			else
 	    			{
 	    				if(target.isCustomNameVisible() == true)
-	    					QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+c.size()+".TargetNPCname", target.getCustomName());
+	    					QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+c+".TargetNPCname", target.getCustomName());
 	    				else
-	    					QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+c.size()+".TargetNPCname", target.getName());
-	    				QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+c.size()+".TargetNPCuuid", target.getUniqueId().toString());
+	    					QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+c+".TargetNPCname", target.getName());
+	    				QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+c+".TargetNPCuuid", target.getUniqueId().toString());
 	    			}
 	    			new GoldBigDragon_RPG.Effect.Sound().SP(event.getPlayer(), org.bukkit.Sound.ITEM_PICKUP, 0.5F,1.2F);
 	    	    	player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 성공적으로 등록되었습니다!");

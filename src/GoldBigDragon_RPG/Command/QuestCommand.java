@@ -53,7 +53,6 @@ public class QuestCommand extends HelpMessage
 				  			if(args[1].equalsIgnoreCase("일반")||args[1].equalsIgnoreCase("반복")||args[1].equalsIgnoreCase("일일")
 				  			||args[1].equalsIgnoreCase("일주")||args[1].equalsIgnoreCase("한달"))
 				  			{
-				  				Object[] questList = QuestConfig.getConfigurationSection("").getKeys(false).toArray();
 							  	StringBuffer QN = new StringBuffer();
 							    for(int i =2; i<args.length-1;i++)
 						    	{
@@ -62,15 +61,12 @@ public class QuestCommand extends HelpMessage
 							    QN.append(args[args.length-1]);
 							    String QuestName = QN.toString().replace(".", "");
 							    String QuestNameString = ChatColor.stripColor(QuestName);
-								for(int count = 0; count < questList.length;count++)
-							    {
-									if(questList[count].toString().equalsIgnoreCase(QuestNameString) == true)
-							    	{
-									  	s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
-								    	player.sendMessage(ChatColor.RED+"[SYSTEM] : 해당 이름의 퀘스트가 이미 존재합니다!");
-									    return;
-							    	}
-							    }
+								if(QuestConfig.contains(QuestNameString))
+						    	{
+								  	s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+							    	player.sendMessage(ChatColor.RED+"[SYSTEM] : 해당 이름의 퀘스트가 이미 존재합니다!");
+								    return;
+						    	}
 								String QuestType = null;
 								switch(args[1])
 								{

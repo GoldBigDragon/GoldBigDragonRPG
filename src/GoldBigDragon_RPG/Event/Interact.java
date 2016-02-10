@@ -1,6 +1,12 @@
 package GoldBigDragon_RPG.Event;
 
-import org.bukkit.*;
+import java.util.List;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Effect;
+import org.bukkit.GameMode;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -16,28 +22,24 @@ import org.bukkit.material.*;
 import GoldBigDragon_RPG.Main.*;
 import GoldBigDragon_RPG.Util.YamlController;
 import GoldBigDragon_RPG.Util.YamlManager;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
 
 public class Interact
 {
 	//블럭 우클/좌클 할 때//
 	public void PlayerInteract(PlayerInteractEvent event)
 	{
-		UserDataObject u = new UserDataObject();
+		if(new GoldBigDragon_RPG.Effect.Corpse().DeathCapture(event.getPlayer(),false))
+			return;
 		if(event.getAction()==Action.RIGHT_CLICK_AIR||event.getAction()==Action.RIGHT_CLICK_BLOCK)
-		{ItemUse(event);}
-		if(event.getPlayer().isOp())
+			ClickTrigger(event);
+		if(event.getPlayer().getItemInHand()!=null&&event.getPlayer().isOp())
 			AreaChecker(event);
-		if(event.getAction() == Action.RIGHT_CLICK_BLOCK)
-		{
-			CustomMonsterSpawnEggUse(event);
-			if(event.getClickedBlock().getLocation().getWorld().getName().equals("Dungeon"))
-				Dungeon(event);
-		}
 
 		if(event.getPlayer().isOp())
-		{OPwork(event);}
+			OPwork(event);
 
-		if(event.getClickedBlock()!=null)
+		if(event.getAction()==Action.RIGHT_CLICK_BLOCK&&event.getClickedBlock()!=null)
 		{
 			int id = event.getClickedBlock().getTypeId();
 			if(id==54||id==58||id==61||id==84||id==116||id==120||id==130||id==145||id==146
@@ -76,16 +78,18 @@ public class Interact
 				}
 			}
 		}
-		
 		return;
 	}
 	
 	//NPC 및 액자
 	public void PlayerInteractEntity (PlayerInteractEntityEvent event)
 	{
+		if(new GoldBigDragon_RPG.Effect.Corpse().DeathCapture(event.getPlayer(),false))
+			return;
+
 		Entity target = event.getRightClicked();
 		Player player = event.getPlayer();
-
+		
 		if(target.getType() == EntityType.PLAYER)
 		{
 			Player t = (Player)target;
@@ -96,14 +100,8 @@ public class Interact
 			}
 		}
 	    if(player.isOp())
-		{
-			UserDataObject u = new UserDataObject();
-		    if(u.getType(player).compareTo("Quest")==0)
-			{
-		    	GoldBigDragon_RPG.ETC.Quest Q = new GoldBigDragon_RPG.ETC.Quest();
-		    	Q.EntityInteract(event);
-			}
-		}
+		    if(new UserDataObject().getType(player).compareTo("Quest")==0)
+		    	new GoldBigDragon_RPG.ETC.Quest().EntityInteract(event);
 
 		String[] Area = new GoldBigDragon_RPG.ETC.Area().getAreaName(target);
 		if(Area != null)
@@ -119,6 +117,18 @@ public class Interact
 	    return;
 	}
 	
+	
+	public void ClickTrigger(PlayerInteractEvent event)
+	{
+		if(event.getPlayer().getItemInHand()!=null)
+			ItemUse(event);
+		if(event.getClickedBlock()!=null)
+			SlotMachine(event);
+		
+	}
+	
+	
+	
 	private void OPwork(PlayerInteractEvent event)
 	{
 		Player player = event.getPlayer();
@@ -126,8 +136,10 @@ public class Interact
 
 		if(u.getType(player).compareTo("Quest")==0)
 			OPwork_Quest(event);
-		if(u.getType(player).compareTo("Area")==0)
-			OPwork_Area(event);
+		else if(u.getType(player).compareTo("Area")==0)
+		    OPwork_Area(event);
+		else if(u.getType(player).compareTo("Gamble")==0)
+		    OPwork_Gamble(event);
 		return;
 	}
 	
@@ -135,81 +147,131 @@ public class Interact
 	{
 		Player player = event.getPlayer();
 		//아이템 사용
-		if(player.getItemInHand() != null)
+		YamlController Event_YC = GoldBigDragon_RPG.Main.Main.YC_1;
+		YamlManager Config =Event_YC.getNewConfig("config.yml");
+		ItemStack item = Config.getItemStack("Death.RescueItem");
+		ItemStack Pitem = player.getItemInHand();
+		if(item.getTypeId()==Pitem.getTypeId())
 		{
-			if(player.getItemInHand().hasItemMeta() == true)
+			if(item.getAmount()<=Pitem.getAmount())
 			{
-				if(player.getItemInHand().getItemMeta().hasLore()==true)
+				if(Pitem.isSimilar(item))
 				{
-					if(player.getItemInHand().getTypeId() == 395
-						|| player.getItemInHand().getTypeId() == 358)
-					{
-						Object[] lore = player.getItemInHand().getItemMeta().getLore().toArray();
-							for(int counter = 0; counter < lore.length; counter ++)
-								if(lore[counter].toString().contains("내용") == true)
+					GoldBigDragon_RPG.Effect.Sound s = new GoldBigDragon_RPG.Effect.Sound();
+					List<Entity> entities = player.getNearbyEntities(3, 3, 3);
+				    for(int countta = 0; countta < entities.size(); countta++)
+				    {
+				    	if(entities.get(countta).getType() == EntityType.PLAYER)
+				    	{
+				    		Player entityPlayer = (Player)entities.get(countta);
+				    		if(entityPlayer.isOnline())
+				    		{
+								if(player.getItemInHand()!=null)
 								{
-									UserDataObject u = new UserDataObject();
-									//지도에 이미지 넣는 작업
-									if(player.isOp())
+									if(item.getTypeId()==Pitem.getTypeId())
 									{
-										u.setType(player, "Map");
-										u.setString(player, (byte)1, ChatColor.stripColor(lore[counter].toString()).split(" : ")[1]);
-										Main.Mapping = true;
-										return;
+										if(item.getAmount()<=Pitem.getAmount())
+										{
+											if(Pitem.isSimilar(item))
+											{
+												if(entityPlayer.getGameMode()==GameMode.SPECTATOR)
+												{
+													YamlController YC_1 = GoldBigDragon_RPG.Main.Main.YC_1;
+												  	YamlManager YM = YC_1.getNewConfig("Stats/" + entityPlayer.getUniqueId()+".yml");
+												  	if(YM.getBoolean("Death")==true)
+												  	{
+														if(item.getAmount()<Pitem.getAmount())
+															player.getItemInHand().setAmount(player.getItemInHand().getAmount()-item.getAmount());
+														else
+															player.setItemInHand(new ItemStack(0));
+														new GoldBigDragon_RPG.Effect.Corpse().RemoveCorpse(entityPlayer.getName());
+														player.updateInventory();
+														player.sendMessage(ChatColor.LIGHT_PURPLE+"[구조] : "+ChatColor.YELLOW+entityPlayer.getName()+ChatColor.LIGHT_PURPLE+"님을 부활시켰습니다!");
+														entityPlayer.sendMessage(ChatColor.LIGHT_PURPLE+"[부활] : "+ChatColor.YELLOW+player.getName()+ChatColor.LIGHT_PURPLE+"님에 의해 부활하였습니다!");
+														entityPlayer.setGameMode(GameMode.SURVIVAL);
+														entityPlayer.closeInventory();
+														for(int count2=0;count2<210;count2++)
+															new GoldBigDragon_RPG.Effect.Particle().PL(entityPlayer.getLocation(), Effect.SMOKE, new GoldBigDragon_RPG.Util.Number().RandomNum(0, 14));
+														s.SL(entityPlayer.getLocation(), Sound.BLAZE_BREATH, 0.5F, 1.8F);
+												    	if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
+												    		new OtherPlugins.NoteBlockAPIMain().Stop(entityPlayer);
+												    	new GoldBigDragon_RPG.GUI.DeathGUI().Penalty(entityPlayer, Config.getString("Death.Spawn_Help.SetHealth"), Config.getString("Death.Spawn_Help.PenaltyEXP"), Config.getString("Death.Spawn_Help.PenaltyMoney"));
+														return;
+												  	}
+												}
+											}
+										}
 									}
 								}
-					}
-					String LoreString = player.getItemInHand().getItemMeta().getLore().get(0).toString();
-					if(LoreString.contains("[귀환서]")||LoreString.contains("[주문서]")||
-					   LoreString.contains("[스킬북]")||LoreString.contains("[소비]")||
-					   LoreString.contains("[돈]"))
-					{
-						event.setCancelled(true);
-						if(LoreString.contains("[소비]"))
-							new UseUseableItem().UseAbleItemUse(player, "소비");
-						else if(LoreString.contains("[귀환서]"))
-							new UseUseableItem().UseAbleItemUse(player, "귀환서");
-						else if(LoreString.contains("[주문서]"))
-							new UseUseableItem().UseAbleItemUse(player, "주문서");
-						else if(LoreString.contains("[스킬북]"))
-							new UseUseableItem().UseAbleItemUse(player, "스킬북");
-						else if(LoreString.contains("[돈]"))
-							new UseUseableItem().UseAbleItemUse(player, "돈");
-						return;
-					}
+				    		}
+				    	}
+				    }
+					s.SP(player, Sound.ORB_PICKUP, 1.0F, 1.8F);
+				    player.sendMessage(ChatColor.RED + "[SYSTEM] : 근처에 도움이 필요한 플레이어가 없습니다!");
+				}
+			}
+		}
+		if(player.getItemInHand().hasItemMeta() == true)
+		{
+			//몬스터 에그 사용
+			if(event.getItem().getTypeId() == 383 && event.getItem().getData().getData() == 0
+				&&event.getAction() == Action.RIGHT_CLICK_BLOCK)
+			{
+				YamlManager Monster  = Event_YC.getNewConfig("Monster/MonsterList.yml");
+				if(Monster.contains(ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName())))
+					new GoldBigDragon_RPG.ETC.Monster().SpawnMob(event.getClickedBlock().getLocation(), ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName()));
+				else
+				{
+					new GoldBigDragon_RPG.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+			    	player.sendMessage(ChatColor.RED+"[SYSTEM] : 해당 이름의 몬스터가 존재하지 않습니다!");
+				}
+		    	return;
+			}
+			
+			if(player.getItemInHand().getItemMeta().hasLore()==true)
+			{
+				//지도 사용
+				if(player.getItemInHand().getTypeId() == 395
+					|| player.getItemInHand().getTypeId() == 358)
+				{
+					Object[] lore = player.getItemInHand().getItemMeta().getLore().toArray();
+						for(int counter = 0; counter < lore.length; counter ++)
+							if(lore[counter].toString().contains("내용") == true)
+							{
+								UserDataObject u = new UserDataObject();
+								//지도에 이미지 넣는 작업
+								if(player.isOp())
+								{
+									u.setType(player, "Map");
+									u.setString(player, (byte)1, ChatColor.stripColor(lore[counter].toString()).split(" : ")[1]);
+									Main.Mapping = true;
+									return;
+								}
+							}
+				}
+				String LoreString = player.getItemInHand().getItemMeta().getLore().get(0).toString();
+				if(LoreString.contains("[귀환서]")||LoreString.contains("[주문서]")||
+				   LoreString.contains("[스킬북]")||LoreString.contains("[소비]")||
+				   LoreString.contains("[돈]"))
+				{
+					event.setCancelled(true);
+					if(LoreString.contains("[소비]"))
+						new UseUseableItem().UseAbleItemUse(player, "소비");
+					else if(LoreString.contains("[귀환서]"))
+						new UseUseableItem().UseAbleItemUse(player, "귀환서");
+					else if(LoreString.contains("[주문서]"))
+						new UseUseableItem().UseAbleItemUse(player, "주문서");
+					else if(LoreString.contains("[스킬북]"))
+						new UseUseableItem().UseAbleItemUse(player, "스킬북");
+					else if(LoreString.contains("[돈]"))
+						new UseUseableItem().UseAbleItemUse(player, "돈");
+					return;
 				}
 			}
 		}
 		return;
 	}
 	
-	private void CustomMonsterSpawnEggUse(PlayerInteractEvent event)
-	{
-		YamlController Event_YC = GoldBigDragon_RPG.Main.Main.YC_1;
-		Player player = event.getPlayer();
-		if(player.getItemInHand() != null && player.getItemInHand().hasItemMeta() == true)
-		{
-			if(event.getItem().getTypeId() == 383 && event.getItem().getData().getData() == 0)
-			{
-				YamlManager Monster  = Event_YC.getNewConfig("Monster/MonsterList.yml");
-
-				Object[] monsterlist = Monster.getConfigurationSection("").getKeys(false).toArray();
-				
-				for(int count = 0; count < monsterlist.length;count++)
-		    	{
-		    		if(monsterlist[count].toString().equalsIgnoreCase(ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName())) == true)
-		    		{
-		    			new GoldBigDragon_RPG.ETC.Monster().SpawnMob(event.getClickedBlock().getLocation(), ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName()));
-						return;
-		    		}
-		    	}
-				new GoldBigDragon_RPG.Effect.Sound().SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
-		    	player.sendMessage(ChatColor.RED+"[SYSTEM] : 해당 이름의 몬스터가 존재하지 않습니다!");
-		    	return;
-			}
-		}
-		return;
-	}
 	
 	private void Dungeon(PlayerInteractEvent event)
 	{
@@ -249,6 +311,22 @@ public class Interact
 		}
 		return;
 	}
+	
+	private void SlotMachine(PlayerInteractEvent event)
+	{
+		Block block = event.getClickedBlock();
+		YamlController YC_2 = GoldBigDragon_RPG.Main.Main.YC_2;
+		YamlManager GambleConfig =YC_2.getNewConfig("ETC/SlotMachine.yml");
+		String BlockLocation = block.getLocation().getWorld().getName()+"_"+(int)block.getLocation().getX()+","+(int)block.getLocation().getY()+","+(int)block.getLocation().getZ();
+		if(GambleConfig.contains(BlockLocation))
+		{
+			event.setCancelled(true);
+			new GoldBigDragon_RPG.GUI.GambleGUI().SlotMachine_PlayGUI(event.getPlayer(), BlockLocation);
+		}
+		return;
+	}
+	
+	
 	
 	private void OPwork_Quest(PlayerInteractEvent event)
 	{
@@ -371,6 +449,70 @@ public class Interact
 		return;
 	}
 	
+	private void OPwork_Gamble(PlayerInteractEvent event)
+	{
+		event.setCancelled(true);
+		Player player = event.getPlayer();
+		Block block = event.getClickedBlock();
+		YamlController YC_2 = GoldBigDragon_RPG.Main.Main.YC_2;
+		YamlManager GambleConfig =YC_2.getNewConfig("ETC/SlotMachine.yml");
+		
+		UserDataObject u = new UserDataObject();
+
+		String AreaName = u.getString(player, (byte)2);
+		if(event.getAction()==Action.LEFT_CLICK_BLOCK)
+		{
+			/*
+			if(u.getString(player, (byte)3).compareTo("ANBI") == 0)
+			{
+				String BlockData = block.getTypeId()+":"+block.getData();
+				ItemStack item = new MaterialData(block.getTypeId(), (byte) block.getData()).toItemStack(1);
+				AreaConfig.set(AreaName+".Mining."+BlockData,item);
+				AreaConfig.saveConfig();
+				GoldBigDragon_RPG.GUI.AreaGUI AGUI = new GoldBigDragon_RPG.GUI.AreaGUI();
+				new GoldBigDragon_RPG.Effect.Sound().SP(player, Sound.HORSE_SADDLE, 1.0F, 1.8F);
+				AGUI.AreaBlockItemSettingGUI(player, AreaName, BlockData);
+		    	u.clearAll(player);
+			}
+			*/
+		}
+		else if(event.getAction()==Action.RIGHT_CLICK_BLOCK)
+		{
+			if(u.getString(player, (byte)0).compareTo("NSM")==0)//NewSlotMachine
+			{
+				
+				String Name = block.getLocation().getWorld().getName()+"_"+(int)block.getLocation().getX()+","+(int)block.getLocation().getY()+","+(int)block.getLocation().getZ();
+				if(GambleConfig.contains(Name))
+				{
+					new GoldBigDragon_RPG.Effect.Sound().SP(player, Sound.ORB_PICKUP, 1.0F, 1.8F);
+					player.sendMessage(ChatColor.RED+"[도박] : 해당 블록에는 이미 다른 도박 기기가 설치되어 있습니다!");
+					return;
+				}
+				GambleConfig.set(Name+".0", "null");
+				GambleConfig.set(Name+".1", "null");
+				GambleConfig.set(Name+".2", "null");
+				GambleConfig.set(Name+".3", "null");
+				GambleConfig.set(Name+".4", "null");
+				GambleConfig.set(Name+".5", "null");
+				GambleConfig.set(Name+".6", "null");
+				GambleConfig.set(Name+".8", null);
+				GambleConfig.set(Name+".9", "null");
+				GambleConfig.set(Name+".10", "null");
+				GambleConfig.set(Name+".11", "null");
+				GambleConfig.set(Name+".12", "null");
+				GambleConfig.set(Name+".13", "null");
+				GambleConfig.set(Name+".14", "null");
+				GambleConfig.set(Name+".15", "null");
+				GambleConfig.saveConfig();
+				new GoldBigDragon_RPG.Effect.Sound().SP(player, Sound.IRONGOLEM_DEATH, 1.0F, 1.8F);
+		    	u.clearAll(player);
+				player.sendMessage(ChatColor.GREEN+"[도박] : 기계가 설치 되었습니다!");
+				new GoldBigDragon_RPG.GUI.GambleGUI().SlotMachine_DetailGUI(player, Name);
+			}
+		}
+		return;
+	}
+	
 	private void AreaChecker(PlayerInteractEvent event)
 	{
 		Player player = event.getPlayer();
@@ -379,9 +521,9 @@ public class Interact
 		YamlManager Config = Event_YC.getNewConfig("config.yml");
 		if(player.getInventory().getItemInHand().getTypeId() == Config.getInt("Server.AreaSettingWand"))
 		{
+			event.setCancelled(true);
 			if(event.getAction()==Action.LEFT_CLICK_BLOCK)
 			{
-				event.setCancelled(true);
 				Main.catchedLocation1.put(player, block.getLocation());
 				player.sendMessage(ChatColor.YELLOW + "[SYSTEM] : 첫 번째 지점 설정 완료! (" + block.getLocation().getBlockX() + ","
 						+block.getLocation().getBlockY()+","+block.getLocation().getBlockZ()+")");
@@ -389,7 +531,6 @@ public class Interact
 			}
 			else if(event.getAction()==Action.RIGHT_CLICK_BLOCK)
 			{
-				event.setCancelled(true);
 				Main.catchedLocation2.put(player, event.getClickedBlock().getLocation());
 				player.sendMessage(ChatColor.YELLOW + "[SYSTEM] : 두 번째 지점 설정 완료! (" + event.getClickedBlock().getLocation().getBlockX() + ","
 						+event.getClickedBlock().getLocation().getBlockY()+","+event.getClickedBlock().getLocation().getBlockZ()+")");

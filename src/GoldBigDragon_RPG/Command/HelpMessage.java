@@ -26,11 +26,11 @@ public class HelpMessage
 				player.sendMessage(ChatColor.GOLD + "/아이템 설명추가 <문자열>" + ChatColor.YELLOW + " - 해당 아이템의 로어 한 줄을 추가합니다.");
 				player.sendMessage(ChatColor.GOLD + "/아이템 설명제거" + ChatColor.YELLOW + " - 해당 아이템의 모든 로어를 삭제합니다.");
 				player.sendMessage(ChatColor.GREEN + "[아래와 같은 설명을 추가할 시, 아이템에 효과가 생깁니다.]");
-				player.sendMessage(ChatColor.AQUA + "/아이템 설명추가 대미지 : 3 ~ 6" + ChatColor.RED +" (아이템 장착시 대미지 3 ~ 6 상승)");
+				player.sendMessage(ChatColor.AQUA + "/아이템 설명추가 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" : 3 ~ 6" + ChatColor.RED +" (아이템 장착시 "+GoldBigDragon_RPG.Main.ServerOption.Damage+" 3 ~ 6 상승)");
 				player.sendMessage(ChatColor.AQUA + "/아이템 설명추가 방어 : 3" + ChatColor.RED +" (아이템 장착시 방어 3상승)");
 				player.sendMessage(ChatColor.GREEN + "[추가 가능한 옵션 태그]");
-				player.sendMessage(ChatColor.AQUA + "[대미지 : <숫자> ~ <숫자>] [방어 : <숫자>] [보호 : <숫자>]\n"
-						+ "[마법 대미지 : <숫자> ~ <숫자>] [마법 방어 : <숫자>] [마법 보호 : <숫자>]\n"
+				player.sendMessage(ChatColor.AQUA + "["+GoldBigDragon_RPG.Main.ServerOption.Damage+" : <숫자> ~ <숫자>] [방어 : <숫자>] [보호 : <숫자>]\n"
+						+ "["+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+" : <숫자> ~ <숫자>] [마법 방어 : <숫자>] [마법 보호 : <숫자>]\n"
 						+ "["+GoldBigDragon_RPG.Main.ServerOption.STR+" : <숫자>] ["+GoldBigDragon_RPG.Main.ServerOption.DEX+" : <숫자>] ["+GoldBigDragon_RPG.Main.ServerOption.INT+" : <숫자>] ["+GoldBigDragon_RPG.Main.ServerOption.WILL+" : <숫자>] ["+GoldBigDragon_RPG.Main.ServerOption.LUK+" : <숫자>]\n"
 						+ "[크리티컬 : <숫자>] [밸런스 : <숫자>] [내구도 : <숫자> / <숫자>] \n"
 						+ "[업그레이드 : <숫자> / <숫자>] [생명력 : <숫자>] [마나 : <숫자>]\n"+ChatColor.GREEN+"[아이템 타입 태그] - 퀵슬롯 등록된 스킬의 무기 제한 옵션에 관여"+ChatColor.AQUA+"\n[소비] [근접 무기] [한손 검] [양손 검] [원거리 무기] [활] [석궁] [도끼] [낫] [마법 무기] [원드] [스태프]");

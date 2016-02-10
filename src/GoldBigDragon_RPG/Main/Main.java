@@ -13,10 +13,12 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.WorldCreator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -49,15 +51,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import GoldBigDragon_RPG.Util.YamlController;
 import GoldBigDragon_RPG.Util.YamlManager;
+import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand;
 
 public class Main extends JavaPlugin implements Listener
 {
 	public static YamlController YC_1,YC_2,YC_3;
 
-	public static String serverUpdate = "2016-01-19-03:19";
+	public static String serverUpdate = "2016-02-11-00:52";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/";
-	public static String currentServerUpdate = "2016-01-19-03:19";
+	public static String currentServerUpdate = "2016-02-11-00:52";
 	public static String currentServerVersion = "Advanced";
 	
 	public static String SpawnMobName;
@@ -83,6 +86,7 @@ public class Main extends JavaPlugin implements Listener
 	
 	public void onEnable()
 	{
+		new GoldBigDragon_RPG.Effect.Corpse().setJavaPlugin(this);
 		getServer().getPluginManager().registerEvents(this, this);
 		YC_1 = new YamlController(this);
 		YC_2 = new YamlController(this);
@@ -121,6 +125,7 @@ public class Main extends JavaPlugin implements Listener
 	}
 	public void onDisable()
 	{
+		new GoldBigDragon_RPG.Effect.Corpse().RemoveAllCorpse();
 		if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI"))
 		{
 	    	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
@@ -191,74 +196,48 @@ public class Main extends JavaPlugin implements Listener
 	private void PlayerJoin(PlayerJoinEvent event)
 	{
 		Player player = event.getPlayer();
+		if(new GoldBigDragon_RPG.Effect.Corpse().DeathCapture(player,true))
+			new GoldBigDragon_RPG.Effect.Corpse().CreateCorpse(player);
+		new GoldBigDragon_RPG.Effect.Corpse().ShowCorpse(player);
 		MagicSpellCatch();
 		CitizensCatch();
-		YamlManager Config = YC_2.getNewConfig("config.yml");
-		if(Config.getInt("Event.DropChance")>=2||Config.getInt("Event.Multiple_EXP_Get")>=2||Config.getInt("Event.Multiple_Level_Up_StatPoint")>=2||Config.getInt("Event.Multiple_Level_Up_SkillPoint")>=2)
-		{
-			String alert = "[";
-			if(Config.getInt("Event.DropChance")>=2)
-				alert =alert+ "드롭률 증가 "+Config.getInt("Event.DropChance")+"배";
-			if(Config.getInt("Event.DropChance")>=2)
-				alert = alert+", ";
-			if(Config.getInt("Event.Multiple_EXP_Get")>=2)
-				alert = alert + "경험치 " + Config.getInt("Event.Multiple_EXP_Get")+"배 획득";
-			if(Config.getInt("Event.Multiple_EXP_Get")>=2)
-				alert = alert+", ";
-			if(Config.getInt("Event.Multiple_Level_Up_StatPoint")>=2)
-				alert = alert +"스텟 포인트 "+Config.getInt("Event.Multiple_Level_Up_StatPoint")+"배 획득";
-			if(Config.getInt("Event.Multiple_Level_Up_StatPoint")>=2)
-				alert = alert+", ";
-			if(Config.getInt("Event.Multiple_Level_Up_SkillPoint")>=2)
-				alert = alert +"스킬 포인트 " +Config.getInt("Event.Multiple_Level_Up_SkillPoint")+"배 획득";
-			alert = alert+"]";
-			new GoldBigDragon_RPG.Effect.PacketSender().sendTitleSubTitle(player, "\'현재 이벤트가 진행중입니다.\'", "\'"+alert+"\'", 1, 10, 1);
-		}
 
 		new UserDataObject().UserDataInit(player);
 		
 		if(player.isOp() == true)
 			new GoldBigDragon_RPG.Effect.PacketSender().sendTitleSubTitle(player,"\'§e/오피박스\'", "\'§eGoldBigDragonAdvanced 가이드 및 서버 설정이 가능합니다.\'", 1,10, 1);
+		else
+		{
+			YamlManager Config = YC_2.getNewConfig("config.yml");
+			if(Config.getInt("Event.DropChance")>=2||Config.getInt("Event.Multiple_EXP_Get")>=2||Config.getInt("Event.Multiple_Level_Up_StatPoint")>=2||Config.getInt("Event.Multiple_Level_Up_SkillPoint")>=2)
+			{
+				String alert = "[";
+				if(Config.getInt("Event.DropChance")>=2)
+					alert =alert+ "드롭률 증가 "+Config.getInt("Event.DropChance")+"배";
+				if(Config.getInt("Event.DropChance")>=2)
+					alert = alert+", ";
+				if(Config.getInt("Event.Multiple_EXP_Get")>=2)
+					alert = alert + "경험치 " + Config.getInt("Event.Multiple_EXP_Get")+"배 획득";
+				if(Config.getInt("Event.Multiple_EXP_Get")>=2)
+					alert = alert+", ";
+				if(Config.getInt("Event.Multiple_Level_Up_StatPoint")>=2)
+					alert = alert +"스텟 포인트 "+Config.getInt("Event.Multiple_Level_Up_StatPoint")+"배 획득";
+				if(Config.getInt("Event.Multiple_Level_Up_StatPoint")>=2)
+					alert = alert+", ";
+				if(Config.getInt("Event.Multiple_Level_Up_SkillPoint")>=2)
+					alert = alert +"스킬 포인트 " +Config.getInt("Event.Multiple_Level_Up_SkillPoint")+"배 획득";
+				alert = alert+"]";
+				new GoldBigDragon_RPG.Effect.PacketSender().sendTitleSubTitle(player, "\'현재 이벤트가 진행중입니다.\'", "\'"+alert+"\'", 1, 10, 1);
+			}
+		}
 	  	if(YC_1.isExit("Stats/" + player.getUniqueId()+".yml") == false)
 	  	    new GoldBigDragon_RPG.Config.StatConfig().CreateNewStats(player);
 	  	if(YC_1.isExit("Quest/PlayerData/" + player.getUniqueId()+".yml") == false)
 	  	{
 	  	    new GoldBigDragon_RPG.Config.QuestConfig().CreateNewPlayerConfig(player);
 
-			YamlManager QuestConfig=YC_1.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
-			YamlManager QuestList=YC_1.getNewConfig("Quest/QuestList.yml");
 			YamlManager NewBieYM = YC_1.getNewConfig("ETC/NewBie.yml");
-			
-			QuestConfig.set("PlayerName", player.getName());
-			QuestConfig.set("PlayerUUID", player.getUniqueId().toString());
-			Object[] Quest = QuestList.getKeys().toArray();
-			String QuestName = NewBieYM.getString("FirstQuest");
-			if(QuestName.equals("null") ==false)
-			{
-				for(int count = 0; count < Quest.length; count++)
-				{
-					if(QuestName.compareTo(Quest[count].toString())==0)
-					{
-						if(QuestList.getConfigurationSection(QuestName+".FlowChart").getKeys(false).toArray().length != 0)
-						{
-							QuestConfig.set("Started."+QuestName+".Flow", 0);
-							QuestConfig.set("Started."+QuestName+".Type", QuestList.getString(QuestName+".FlowChart."+0+".Type"));
-							QuestConfig.saveConfig();
-							player.sendMessage(ChatColor.YELLOW+"[퀘스트] : 새로운 퀘스트가 도착했습니다! " +ChatColor.GOLD+""+ChatColor.BOLD+"/퀘스트");
-							if(QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("Nevigation")==0||
-								QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("Whisper")==0||
-								QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("BroadCast")==0||
-								QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("BlockPlace")==0||
-								QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("VarChange")==0||
-								QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("TelePort")==0)
-								new GoldBigDragon_RPG.GUI.QuestGUI().QuestTypeRouter(player, QuestName);
-						}
-						break;
-					}
-				}
-			}
-			Object[] a= NewBieYM.getConfigurationSection("SupportItem").getKeys(false).toArray();
-			for(int count = 0; count < a.length;count++)
+			for(int count = 0; count < YC_1.getNewConfig("ETC/NewBie.yml").getConfigurationSection("SupportItem").getKeys(false).toArray().length;count++)
 				if(NewBieYM.getItemStack("SupportItem."+count) != null)
 					player.getInventory().addItem(NewBieYM.getItemStack("SupportItem."+count));
 			player.teleport(new Location(Bukkit.getWorld(NewBieYM.getString("TelePort.World")), NewBieYM.getInt("TelePort.X"), NewBieYM.getInt("TelePort.Y"), NewBieYM.getInt("TelePort.Z"), NewBieYM.getInt("TelePort.Yaw"), NewBieYM.getInt("TelePort.Pitch")));
@@ -267,15 +246,11 @@ public class Main extends JavaPlugin implements Listener
 	  		new GoldBigDragon_RPG.Config.SkillConfig().CreateNewPlayerSkill(player);
 	  	
 	  	new GoldBigDragon_RPG.ETC.Job().PlayerFixAllSkillAndJobYML(player);
-		
 		new GoldBigDragon_RPG.Util.ETC().UpdatePlayerHPMP(event.getPlayer());
     	new GoldBigDragon_RPG.GUI.EquipGUI().FriendJoinQuitMessage(player, true);
 
-		if(Config.getString("Server.JoinMessage") != null)
-		{
-			String message = Config.getString("Server.JoinMessage").replace("%player%",event.getPlayer().getName());
-			event.setJoinMessage(message);
-		}
+		if(YC_2.getNewConfig("config.yml").getString("Server.JoinMessage") != null)
+			event.setJoinMessage(YC_2.getNewConfig("config.yml").getString("Server.JoinMessage").replace("%player%",event.getPlayer().getName()));
 		else
 			event.setJoinMessage(null);
 	}
@@ -284,6 +259,9 @@ public class Main extends JavaPlugin implements Listener
 	private void PlayerQuit(PlayerQuitEvent event)
 	{
 		Player player = event.getPlayer();
+		if(new GoldBigDragon_RPG.Effect.Corpse().DeathCapture(player,false))
+			new GoldBigDragon_RPG.Effect.Corpse().RemoveCorpse(player.getName());
+		
 		if(PartyJoiner.containsKey(player))
 			Party.get(PartyJoiner.get(player)).QuitParty(player);
 		
@@ -310,36 +288,26 @@ public class Main extends JavaPlugin implements Listener
 	private void PlayerRespawn(PlayerRespawnEvent event)
 	{
 		Player player = event.getPlayer();
-
-		GoldBigDragon_RPG.Util.ETC ETC = new GoldBigDragon_RPG.Util.ETC();
-    	ETC.UpdatePlayerHPMP(event.getPlayer());
-
-	  	if(YC_1.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-	  		new GoldBigDragon_RPG.Config.StatConfig().CreateNewStats(player);
 	  	YamlManager YM = YC_1.getNewConfig("Stats/" + player.getUniqueId()+".yml");
-		
-		YamlManager AreaList = YC_1.getNewConfig("Area/AreaList.yml");
-		if(YM.getString("ETC.LastVisited")!="null")
-		{
-			String respawnCity = YM.getString("ETC.LastVisited");
-			Object[] arealist = AreaList.getConfigurationSection("").getKeys(false).toArray();
-			for(int count =0; count <arealist.length;count++)
-			{
-				if(arealist[count].toString().equalsIgnoreCase(respawnCity) == true)
-				{
-					if(AreaList.getBoolean(arealist[count].toString()+".SpawnPoint") == true)
-					{
-						double X = AreaList.getDouble(arealist[count].toString()+".SpawnLocation.X");
-						double Y = AreaList.getDouble(arealist[count].toString()+".SpawnLocation.Y");
-						double Z = AreaList.getDouble(arealist[count].toString()+".SpawnLocation.Z");
-				    	event.setRespawnLocation(new Location(Bukkit.getServer().getWorld(AreaList.getString(arealist[count].toString()+".World")), X, Y, Z, (float)AreaList.getDouble(arealist[count].toString()+".SpawnLocation.Yaw"), (float)AreaList.getDouble(arealist[count].toString()+".SpawnLocation.Pitch")));
-					}
-				}
-			}
-			return;
-		}
+		double X = YM.getDouble("LastDeathPoint.X");
+		double Y = YM.getDouble("LastDeathPoint.Y");
+		double Z = YM.getDouble("LastDeathPoint.Z");
+		double Pitch = YM.getDouble("LastDeathPoint.Pitch");
+		double Yaw = YM.getDouble("LastDeathPoint.Yaw");
+    	event.setRespawnLocation(new Location(Bukkit.getServer().getWorld(YM.getString("LastDeathPoint.World")), X, Y, Z, (float)Yaw, (float)Pitch));
+    	player.setGameMode(GameMode.SPECTATOR);
+    	if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
+    	{
+    		new OtherPlugins.NoteBlockAPIMain().Stop(player);
+			YamlManager Config = YC_1.getNewConfig("config.yml");
+			if(Config.contains("Death.Track"))
+				if(Config.getInt("Death.Track")!=-1)
+					new OtherPlugins.NoteBlockAPIMain().Play(player, Config.getInt("Death.Track"));
+    	}
+    	new GoldBigDragon_RPG.GUI.DeathGUI().OpenReviveSelectGUI(player);
 		return;
 	}
+	
 	@EventHandler
 	private void Move(PlayerMoveEvent event){GoldBigDragon_RPG.Event.PlayerAction PA = new GoldBigDragon_RPG.Event.PlayerAction();PA.PlayerMove(event);return;}
 
@@ -407,9 +375,21 @@ public class Main extends JavaPlugin implements Listener
 		return;
 	}
 	
+	
 	@EventHandler
 	private void PlayerDeath(PlayerDeathEvent event)
 	{
+		final Player player = event.getEntity();
+	  	YamlManager YM = YC_1.getNewConfig("Stats/" + player.getUniqueId()+".yml");
+	  	YM.set("Death",true);
+	  	YM.set("LastDeathPoint.World",event.getEntity().getLocation().getWorld().getName());
+	  	YM.set("LastDeathPoint.X",event.getEntity().getLocation().getX());
+	  	YM.set("LastDeathPoint.Y",event.getEntity().getLocation().getY());
+	  	YM.set("LastDeathPoint.Z",event.getEntity().getLocation().getZ());
+	  	YM.set("LastDeathPoint.Pitch",event.getEntity().getLocation().getPitch());
+	  	YM.set("LastDeathPoint.Yaw",event.getEntity().getLocation().getYaw());
+	  	YM.saveConfig();
+		//스킬 단축키 아이템 드랍 방지//
 		List<ItemStack> Ilist = event.getDrops();
 		for(int count = 0; count < Ilist.size(); count++)
 		{
@@ -428,6 +408,15 @@ public class Main extends JavaPlugin implements Listener
 				}
 			}
 		}
+	    Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable()
+	    {
+	      public void run()
+	      {
+	        PacketPlayInClientCommand packet = new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN);
+	        ((CraftPlayer)player).getHandle().playerConnection.a(packet);
+	      }
+	    }, 1L);
+	  	
 		return;
 	}
 	
@@ -586,9 +575,7 @@ public class Main extends JavaPlugin implements Listener
 			}
 		}
 		if(ChatColor.stripColor(event.getWhoClicked().getOpenInventory().getTitle()).compareTo("교환")==0)
-		{
 			new GoldBigDragon_RPG.GUI.EquipGUI().ExchangeInventoryclick(event);
-		}
 		
 		if(event.getInventory().getName().length() >= 3)
 		{
@@ -604,7 +591,9 @@ public class Main extends JavaPlugin implements Listener
 					||InventoryName.equals("NPC 룬 장착")||InventoryName.equals("container.chest")
 					||InventoryName.equals("container.chestDouble")||InventoryName.equals("초심자 가이드")
 					||InventoryName.equals("container.minecart")||InventoryName.equals("이벤트 전체 지급")
-					||InventoryName.equals("이벤트 랜덤 지급")||InventoryName.equals("교환") ))
+					||InventoryName.equals("이벤트 랜덤 지급")||InventoryName.equals("교환")||InventoryName.equals("부활 아이템")
+					||InventoryName.equals("구조 아이템")||InventoryName.equals("도박 상품 정보")||InventoryName.equals("도박 기계 코인")
+					))
 					{
 						event.setCancelled(true);
 					}
@@ -623,10 +612,11 @@ public class Main extends JavaPlugin implements Listener
 				    ||InventoryName.contains("카테고리")||InventoryName.equals("해당 블록을 캐면 나올 아이템")||InventoryName.contains("영역")
 				    ||InventoryName.contains("월드")||InventoryName.contains("워프")||InventoryName.contains("매직스펠")
 				    ||InventoryName.contains("이벤트")||InventoryName.contains("친구")||InventoryName.contains("네비")
-				    ||InventoryName.equals("교환"))
+				    ||InventoryName.equals("교환")||InventoryName.contains("부활")||InventoryName.contains("도박")
+				    ||InventoryName.compareTo("슬롯 머신")==0
+				    )
 				{
-					GoldBigDragon_RPG.Event.InventoryClick IC = new GoldBigDragon_RPG.Event.InventoryClick();
-					IC.InventoryClickRouter(event, InventoryName);
+					new GoldBigDragon_RPG.Event.InventoryClick().InventoryClickRouter(event, InventoryName);
 				}
 			}
 		}
@@ -732,6 +722,7 @@ public class Main extends JavaPlugin implements Listener
 		  			PartyC.onCommand(talker, command, string, args);
 		  			return true;
 				case "테스트":
+				case "테스트2":
 				case "엔티티제거":
 				case "아이템제거":
 				case "수락":

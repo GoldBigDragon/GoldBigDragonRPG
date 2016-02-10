@@ -128,8 +128,8 @@ public class UseableItemGUI extends GUIutil
 			Stack(ChatColor.DARK_AQUA + "[        환생        ]", 399,0,1,Arrays.asList(ChatColor.WHITE+"아이템 사용시 플레이어의",ChatColor.WHITE+"레벨을 초기화 시켜 줍니다.","",ChatColor.RED+"[서버 시스템이 마비노기일 경우만 사용 가능합니다.]",""), 34, inv);
 			break;
 		case "[룬]":
-			Stack(ChatColor.DARK_AQUA + "[       대미지       ]", 267,0,1,Arrays.asList(ChatColor.WHITE+"룬 장착시 대미지를",ChatColor.WHITE+"증가 시켜 줍니다.",""), 24, inv);
-			Stack(ChatColor.DARK_AQUA + "[     마법 대미지     ]", 403,0,1,Arrays.asList(ChatColor.WHITE+"룬 장착시 마법 대미지를",ChatColor.WHITE+"증가 시켜 줍니다.",""), 25, inv);
+			Stack(ChatColor.DARK_AQUA + "[       대미지       ]", 267,0,1,Arrays.asList(ChatColor.WHITE+"룬 장착시 "+GoldBigDragon_RPG.Main.ServerOption.Damage+"를",ChatColor.WHITE+"증가 시켜 줍니다.",""), 24, inv);
+			Stack(ChatColor.DARK_AQUA + "[     마법 대미지     ]", 403,0,1,Arrays.asList(ChatColor.WHITE+"룬 장착시 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+"를",ChatColor.WHITE+"증가 시켜 줍니다.",""), 25, inv);
 			Stack(ChatColor.DARK_AQUA + "[        방어        ]", 307,0,1,Arrays.asList(ChatColor.WHITE+"룬 장착시 방어력을",ChatColor.WHITE+"증가 시켜 줍니다.",""), 31, inv);
 			Stack(ChatColor.DARK_AQUA + "[        보호        ]", 306,0,1,Arrays.asList(ChatColor.WHITE+"룬 장착시 보호를",ChatColor.WHITE+"증가 시켜 줍니다.",""), 32, inv);
 			Stack(ChatColor.DARK_AQUA + "[      마법 방어      ]", 311,0,1,Arrays.asList(ChatColor.WHITE+"룬 장착시 마법 방어를",ChatColor.WHITE+"증가 시켜 줍니다.",""), 33, inv);
@@ -554,7 +554,7 @@ public class UseableItemGUI extends GUIutil
 			case "[       대미지       ]":
 				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
 				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최소 대미지를 입력해 주세요!");
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최소 "+GoldBigDragon_RPG.Main.ServerOption.Damage+"를 입력해 주세요!");
 				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
 				u.setType(player, "UseableItem");
 				u.setString(player, (byte)1, "MinDamage");
@@ -564,7 +564,7 @@ public class UseableItemGUI extends GUIutil
 			case "[     마법 대미지     ]":
 				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
 				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최소 마법 대미지를 입력해 주세요!");
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최소 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+"를 입력해 주세요!");
 				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
 				u.setType(player, "UseableItem");
 				u.setString(player, (byte)1, "MinMaDamage");

@@ -1,18 +1,27 @@
 package GoldBigDragon_RPG.Effect;
 
+import java.lang.reflect.Field;
 import java.util.Collection;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import net.md_5.bungee.api.ChatColor;
+import net.minecraft.server.v1_8_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.Blocks;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityHuman;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent.ChatSerializer;
+import net.minecraft.server.v1_8_R3.Item;
 import net.minecraft.server.v1_8_R3.Packet;
+import net.minecraft.server.v1_8_R3.PacketPlayOutBed;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import net.minecraft.server.v1_8_R3.PacketPlayOutHeldItemSlot;
+import net.minecraft.server.v1_8_R3.PacketPlayOutNamedEntitySpawn;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle.EnumTitleAction;
 import net.minecraft.server.v1_8_R3.PlayerConnection;
@@ -93,4 +102,11 @@ public class PacketSender
 	    ((CraftPlayer)p).getHandle().playerConnection.sendPacket(slotChange);
 	  }
 	  
+	
+	public void SpawnHallucinations(Player player, Player Hallucination)
+	{
+		PacketPlayOutNamedEntitySpawn spawn = new PacketPlayOutNamedEntitySpawn(((CraftPlayer)Hallucination).getHandle());
+        ((CraftPlayer)player).getHandle().playerConnection.sendPacket(spawn);
+	}
+	
 }

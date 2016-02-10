@@ -34,9 +34,20 @@ public class configConfig
 		  	YM.set("Server.WILL", "의지");
 		  	YM.set("Server.LUK", "행운");
 		  	YM.set("Server.MoneyName", ChatColor.GOLD+""+ChatColor.BOLD+"Gold");
-		  	
-		  	YM.set("Death.PenaltyEXP", "10%");
-		  	YM.set("Death.PenaltyMoney", "2%");
+
+		  	YM.set("Death.Spawn_Home.SetHealth", "100%");
+		  	YM.set("Death.Spawn_Home.PenaltyEXP", "10%");
+		  	YM.set("Death.Spawn_Home.PenaltyMoney", "0%");
+		  	YM.set("Death.Spawn_Here.SetHealth", "1%");
+		  	YM.set("Death.Spawn_Here.PenaltyEXP", "15%");
+		  	YM.set("Death.Spawn_Here.PenaltyMoney", "10%");
+		  	YM.set("Death.Spawn_Help.SetHealth", "1%");
+		  	YM.set("Death.Spawn_Help.PenaltyEXP", "5%");
+		  	YM.set("Death.Spawn_Help.PenaltyMoney", "0%");
+		  	YM.set("Death.Spawn_Item.SetHealth", "100%");
+		  	YM.set("Death.Spawn_Item.PenaltyEXP", "0%");
+		  	YM.set("Death.Spawn_Item.PenaltyMoney", "0%");
+		  	YM.set("Death.Track", -1);
 		  	
 
 		  	YM.set("Quest.AcceptMessage", ChatColor.GREEN+"[퀘스트] : " + ChatColor.YELLOW+"%QuestName%"+ChatColor.GREEN+" 퀘스트를 받았습니다!");

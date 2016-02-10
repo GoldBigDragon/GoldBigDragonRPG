@@ -6,7 +6,6 @@ import GoldBigDragon_RPG.Util.YamlManager;
 import GoldBigDragon_RPG.Effect.PacketSender;
 import GoldBigDragon_RPG.Main.Main;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -69,8 +68,6 @@ public class Attack
 		{
 			Player player = (Player) event.getEntity();
 		  	attacker = Event_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
-		  	if(attacker.contains("Player.Name") == false)
-		  		new GoldBigDragon_RPG.Config.StatConfig().CreateNewStats(player);
 			attacker.set("Stat.BowPull", (int)(event.getForce()*100));
 			attacker.saveConfig();
 			Main.PlayerUseSpell.remove(player);
@@ -211,8 +208,8 @@ public class Attack
 			
 		if (AttackType == "R_A")
 		{
-			Damage = damage.damagerand(Attacker, damage.RangeMinDamageGet(Attacker, (int)Damage, Attacker_Stat[1]),
-					damage.RangeMaxDamageGet(Attacker, (int)Damage, Attacker_Stat[1]), Attacker_Stat[8]);
+			Damage = damage.damagerand(Attacker, damage.returnRangeDamageValue(Attacker, Attacker_Stat[1], Damage, true),
+					damage.returnRangeDamageValue(Attacker, Attacker_Stat[1], Damage, false), Attacker_Stat[8]);
 			if(Attacker instanceof Player)
 			{
 				Player player = (Player)Attacker;
@@ -238,12 +235,11 @@ public class Attack
 
 		if(AttackType == "E_E")
 		{
-			Damage = damage.damagerand(Attacker, damage.ExplosionMinDamageGet(Attacker, (int)Damage, Attacker_Stat[2]),
-					damage.ExplosionMaxDamageGet(Attacker, (int)Damage, Attacker_Stat[2]),  Attacker_Stat[8]);
+			Damage = damage.damagerand(Attacker, damage.returnExplosionDamageValue(Attacker_Stat[2], Damage, true),
+					damage.returnExplosionDamageValue(Attacker_Stat[2], Damage, false),  Attacker_Stat[8]);
 		}
 		
-		
-		int critdamage = damage.criticalrend(Attacker_Stat[4], Attacker_Stat[1],Damage, Defender_Stat[1],Attacker_Stat[7]);
+		int critdamage = damage.criticalrend(Attacker, Attacker_Stat[4], Attacker_Stat[1],Damage, Defender_Stat[1],Attacker_Stat[7]);
 
 		if(critdamage != 0)
 		{
@@ -354,7 +350,7 @@ public class Attack
 	    					Attacker_Stat[4] = attacker.getInt(monsterlist[count].toString()+".LUK");
 	    					Attacker_Stat[5] = attacker.getInt(monsterlist[count].toString()+".DEFcrash");
 	    					Attacker_Stat[6] = attacker.getInt(monsterlist[count].toString()+".MagicDEFcrash");
-	    		    	  	Attacker_Stat[8] = damage.getBalance(entity, Attacker_Stat[1]);
+	    		    	  	Attacker_Stat[8] = damage.getBalance(entity, Attacker_Stat[1],0);
 	    		    	  	break;
 	    				}
 	    			}
@@ -381,7 +377,7 @@ public class Attack
     					Attacker_Stat[4] = attacker.getInt(monsterlist[count].toString()+".LUK");
     					Attacker_Stat[5] = attacker.getInt(monsterlist[count].toString()+".DEFcrash");
     					Attacker_Stat[6] = attacker.getInt(monsterlist[count].toString()+".MagicDEFcrash");
-    		    	  	Attacker_Stat[8] = damage.getBalance(entity, Attacker_Stat[1]);
+    		    	  	Attacker_Stat[8] = damage.getBalance(entity, Attacker_Stat[1],0);
     		    	  	break;
     				}
     			}
@@ -395,7 +391,6 @@ public class Attack
 		int Defender_Stat[] = new int[4];
 		for(int count=0;count<4;count++)
 			Defender_Stat[count] = 0;
-		GoldBigDragon_RPG.Config.StatConfig stat = new GoldBigDragon_RPG.Config.StatConfig();
 	    YamlManager defenser;
 		YamlController Event_YC = GoldBigDragon_RPG.Main.Main.YC_1;
 	    Damage damage = new Damage();
@@ -405,8 +400,6 @@ public class Attack
 	    	Player player = (Player)entity;
 	    	if(player.isOnline())
 	    	{
-	    	  	if(Event_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-	    	  		stat.CreateNewStats(player);
 	    	  	defenser = Event_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 	    	  	damage.decreaseDurabilityArmor(player);
 	    	  	Defender_Stat[0] = defenser.getInt("Stat.DEF") + damage.getPlayerEquipmentStat(player, "DEF")[0];
@@ -481,11 +474,8 @@ public class Attack
 	{
 	    YamlManager attacker;
 		YamlController Event_YC = GoldBigDragon_RPG.Main.Main.YC_1;
-		GoldBigDragon_RPG.Config.StatConfig stat = new GoldBigDragon_RPG.Config.StatConfig();
 	    PacketSender t = new PacketSender();
 
-	  	if(Event_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
-	  		stat.CreateNewStats(player);
 	  	attacker = Event_YC.getNewConfig("Stats/" + player.getUniqueId()+".yml");
 	  	
 		if(attacker.getBoolean("Alert.Damage") == true)

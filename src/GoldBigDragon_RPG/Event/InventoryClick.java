@@ -27,29 +27,36 @@ public class InventoryClick
 		    	event.setCancelled(true);
 		    	return;
 		    }
-		    GoldBigDragon_RPG.GUI.StatsGUI SGUI = new GoldBigDragon_RPG.GUI.StatsGUI();
-			SGUI.StatusInventoryclick(event); 
+		    new GoldBigDragon_RPG.GUI.StatsGUI().StatusInventoryclick(event); 
 			return;
 		}
 		else if(InventoryName.compareTo("몬스터 장비 설정")==0)
 		{
-	    	GoldBigDragon_RPG.ETC.Monster MC = new GoldBigDragon_RPG.ETC.Monster();
-			MC.ArmorGUIClick(event);return;
+			new GoldBigDragon_RPG.ETC.Monster().ArmorGUIClick(event);return;
 	    }
 		else if(InventoryName.compareTo("장비 구경")==0)
 	    {
-		    GoldBigDragon_RPG.GUI.EquipGUI EqGUI = new GoldBigDragon_RPG.GUI.EquipGUI();
-			EqGUI.optionInventoryclick(event);return;
+		    new GoldBigDragon_RPG.GUI.EquipGUI().optionInventoryclick(event);return;
 	    }
 		else if(InventoryName.compareTo("옵션")==0)
 	    {
-		    GoldBigDragon_RPG.GUI.OptionGUI OGUI = new GoldBigDragon_RPG.GUI.OptionGUI();
-			OGUI.optionInventoryclick(event);return;
+			new GoldBigDragon_RPG.GUI.OptionGUI().optionInventoryclick(event);return;
 	    }
 		else if(InventoryName.compareTo("해당 블록을 캐면 나올 아이템")==0)
 	    {
-		    GoldBigDragon_RPG.GUI.AreaGUI AGUI = new GoldBigDragon_RPG.GUI.AreaGUI();
-		    AGUI.AreaBlockItemSettingGUIClick(event);return;
+		    new GoldBigDragon_RPG.GUI.AreaGUI().AreaBlockItemSettingGUIClick(event);return;
+	    }
+		else if(InventoryName.compareTo("구조 아이템")==0||InventoryName.compareTo("부활 아이템")==0)
+	    {
+		    new GoldBigDragon_RPG.GUI.OPBoxGUI().OPBoxGUI_RescueOrReviveClick(event);return;
+	    }
+		else if(InventoryName.contains("부활"))
+	    {
+			new GoldBigDragon_RPG.GUI.DeathGUI().ReviveSelectClick(event);return;
+	    }
+		else if(InventoryName.compareTo("슬롯 머신")==0)
+	    {
+			new GoldBigDragon_RPG.GUI.GambleGUI().SlotMachine_PlayGUI_Click(event);return;
 	    }
 
 	    GoldBigDragon_RPG.GUI.ETCGUI EGUI = new GoldBigDragon_RPG.GUI.ETCGUI();
@@ -123,6 +130,8 @@ public class InventoryClick
 				{IC_Friend(event, InventoryName);return;}
 				else if(InventoryName.contains("네비"))
 				{IC_Navi(event, InventoryName);return;}
+				else if(InventoryName.contains("도박"))
+				{IC_Gamble(event, InventoryName);return;}
 				return;
 		}
 		return;
@@ -264,6 +273,8 @@ public class InventoryClick
 	    	OPGUI.OPBoxGUI_StatChangeClick(event);
 	    else if(InventoryName.contains("화폐"))
 	    	OPGUI.OPBoxGUI_MoneyClick(event);
+	    else if(InventoryName.contains("사망"))
+	    	OPGUI.OPBoxGUI_DeathClick(event);
 	    return;
 	}
 
@@ -420,6 +431,30 @@ public class InventoryClick
 	    	NGUI.NavigationOptionGUIClick(event);
 	    else if(InventoryName.contains("사용"))
 	    	NGUI.UseNavigationGUIClick(event);
+		return;
+	}
+
+	private void IC_Gamble(InventoryClickEvent event, String InventoryName)
+	{
+	    GoldBigDragon_RPG.GUI.GambleGUI GGUI = new GoldBigDragon_RPG.GUI.GambleGUI();
+	    if(InventoryName.contains("메인"))
+	    	GGUI.GambleMainGUI_Click(event);
+	    else if(InventoryName.contains("상품"))
+	    {
+	    	if(InventoryName.contains("목록"))
+	    		GGUI.GamblePresentGUI_Click(event);
+	    	else if(InventoryName.contains("정보"))
+	    		GGUI.GambleDetailViewPackageGUI_Click(event);
+	    }
+	    else if(InventoryName.contains("기계"))
+	    {
+	    	if(InventoryName.contains("목록"))
+	    		GGUI.SlotMachine_MainGUI_Click(event);
+	    	else if(InventoryName.contains("설정"))
+	    		GGUI.SlotMachine_DetailGUI_Click(event);
+	    	else if(InventoryName.contains("코인"))
+	    		GGUI.SlotMachineCoinGUI_Click(event);
+	    }
 		return;
 	}
 }

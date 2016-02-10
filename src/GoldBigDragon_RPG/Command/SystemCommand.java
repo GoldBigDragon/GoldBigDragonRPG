@@ -86,6 +86,16 @@ public class SystemCommand
 				s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
 			}
 			return;
+			case"테스트2":
+			if(player.isOp() == true)
+			{
+			}
+			else
+			{
+				player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
+				s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+			}
+			return;
 			case "돈":
 	  		{
 	  			if(args.length == 0)
@@ -455,7 +465,6 @@ public class SystemCommand
 					return;
 				}
 				return;
-
 			case "아이템제거":
 				if(args.length != 1 ||Integer.parseInt(args[0]) > 10000)
 				{

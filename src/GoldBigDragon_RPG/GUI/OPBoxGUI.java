@@ -7,7 +7,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import GoldBigDragon_RPG.Main.Main;
 import GoldBigDragon_RPG.Main.ServerOption;
@@ -21,7 +23,7 @@ public class OPBoxGUI extends GUIutil
 	{
 		YamlController YC_2 = GoldBigDragon_RPG.Main.Main.YC_2;
 		YamlManager Config =YC_2.getNewConfig("config.yml");
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "관리자 도구 : "+page+" / 2");
+		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "관리자 도구 : "+page+" / 3");
 		
 		Stack2(ChatColor.BLACK +""+page, 160,11,1,null, 0, inv);
 		Stack2(" ", 160,11,1,null, 1, inv);
@@ -78,6 +80,12 @@ public class OPBoxGUI extends GUIutil
 				Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "초심자", 54,0,1,Arrays.asList(ChatColor.GRAY +"서버에 처음 들어온 플레이어에",ChatColor.GRAY+"대하여 설정을 합니다."), 30, inv);
 				Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "월드 생성", 2,0,1,Arrays.asList(ChatColor.GRAY +"새로운 월드를 생성합니다."), 32, inv);
 				Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "워프", 345,0,1,Arrays.asList(ChatColor.GRAY +"워프 지점을 생성하거나, 이동합니다."), 34, inv);
+
+				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+				break;
+			case 3:
+				Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "도박", 266,0,1,Arrays.asList(ChatColor.GRAY +"도박 관련 기능을 봅니다."), 10, inv);
 
 				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
 				break;
@@ -179,9 +187,11 @@ public class OPBoxGUI extends GUIutil
 		else
 		{{Stack2(ChatColor.RED +""+ ChatColor.BOLD + "커스텀 블록 설치", 166,0,1,Arrays.asList(ChatColor.RED+"[불가능]",ChatColor.GRAY +"아이템에 설명이 붙어 있거나",ChatColor.GRAY+"이름이 변경된 아이템이",ChatColor.GRAY+"설치되는 것을 막습니다."), 20, inv);}	}
 
-		Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "스텟 이름 변경", 340,0,1,Arrays.asList(ChatColor.GRAY + "서버의 스텟 이름을",ChatColor.GRAY+"마음대로 변경합니다.","",ChatColor.YELLOW+"[좌 클릭시 스텟 이름 변경]","",ChatColor.RED+"[       주의       ]",ChatColor.RED+"스텟 이름 변경시 이전에 뿌려진",ChatColor.RED+"커스텀 아이템의 능력치가",ChatColor.RED+"무효 처리가 되며,",ChatColor.RED+"스킬별 스텟 영향 옵션을",ChatColor.RED+"재 설정 하여야 합니다."), 21, inv);
+		Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "스텟 이름 변경", 340,0,1,Arrays.asList(ChatColor.GRAY + "서버의 스텟 이름을",ChatColor.GRAY+"마음대로 변경합니다.","",ChatColor.YELLOW+"[좌 클릭시 스텟 이름 변경]","",ChatColor.RED+"[       주의       ]",ChatColor.RED+"스텟 이름 변경시 이전에 뿌려진",ChatColor.RED+"커스텀 아이템의 능력치는",ChatColor.RED+"모두 무효 처리가 되며,",ChatColor.RED+"스킬별 스텟 영향 옵션을",ChatColor.RED+"재 설정 하여야 합니다."), 21, inv);
 
 		Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "금전 시스템 변경", 266,0,1,Arrays.asList(ChatColor.GRAY + "화폐에 관련된 시스템을",ChatColor.GRAY+"변경합니다.","",ChatColor.YELLOW+"[좌 클릭시 화폐 시스템GUI 이동]"), 22, inv);
+
+		Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "사망 시스템 변경", 397,0,1,Arrays.asList(ChatColor.GRAY + "사망과 관련된 시스템을",ChatColor.GRAY+"변경합니다.","",ChatColor.YELLOW+"[좌 클릭시 사망 시스템GUI 이동]"), 23, inv);
 
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
 		Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "작업 관리자 창을 닫습니다."), 53, inv);
@@ -233,6 +243,10 @@ public class OPBoxGUI extends GUIutil
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "의지", 370,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GoldBigDragon_RPG.Main.ServerOption.WILL), 3, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "행운", 322,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GoldBigDragon_RPG.Main.ServerOption.LUK), 4, inv);
 
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "대미지", 276,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GoldBigDragon_RPG.Main.ServerOption.Damage), 5, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "마법 대미지", 403,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+GoldBigDragon_RPG.Main.ServerOption.MagicDamage), 6, inv);
+		
+		
 		String lore = GoldBigDragon_RPG.Main.ServerOption.STR_Lore;
 		lore = lore.replace("%stat%", GoldBigDragon_RPG.Main.ServerOption.STR);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "체력 설명", 323,0,1,Arrays.asList(lore.split("%enter%")), 9, inv);
@@ -277,6 +291,86 @@ public class OPBoxGUI extends GUIutil
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 	}
+
+	public void OPBoxGUI_Death(Player player)
+	{
+		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "관리자 사망 설정");
+
+		YamlController YC_1 = GoldBigDragon_RPG.Main.Main.YC_1;
+	  	YamlManager Config = YC_1.getNewConfig("config.yml");
+
+		Stack2(ChatColor.GOLD + "" + ChatColor.BOLD + "[가까운 마을에서 부활]", 345,0,1,Arrays.asList("",ChatColor.GRAY +"[현재 설정 상태]","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Home.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Home.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Home.PenaltyMoney")+" 감소","",ChatColor.YELLOW+"[좌 클릭시 변경]"), 10, inv);
+		Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[다시 일어선다]", 2266,0,1,Arrays.asList("",ChatColor.GRAY +"[현재 설정 상태]","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Here.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Here.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Here.PenaltyMoney")+" 감소","",ChatColor.YELLOW+"[좌 클릭시 변경]"), 12, inv);
+		Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[구조를 기다린다]", 397,3,1,Arrays.asList("",ChatColor.GRAY +"[현재 설정 상태]","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Help.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Help.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Help.PenaltyMoney")+" 감소","",ChatColor.YELLOW+"[좌 클릭시 변경]"), 14, inv);
+		Stack2(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "[부활석 사용]", 399,0,1,Arrays.asList("",ChatColor.GRAY +"[현재 설정 상태]","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Item.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Item.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Item.PenaltyMoney")+" 감소","",ChatColor.YELLOW+"[좌 클릭시 변경]"), 16, inv);
+
+		if(Config.getInt("Death.Track")==-1||Config.contains("Death.Track")==false)
+			Stack2(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "[사망 BGM]", 166,0,1,Arrays.asList(ChatColor.RED +"[없음]",ChatColor.GRAY +"사망 BGM을 설정하지 않았습니다."), 19, inv);
+		else
+			Stack2(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "[사망 BGM]", 2264,0,1,Arrays.asList(ChatColor.GREEN +""+Config.getInt("Death.Track")+"번 트랙 재생"), 19, inv);
+		
+		if(Config.getBoolean("Death.DistrictDirectRevive"))
+			Stack2(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "[다시 일어서기]", 166,0,1,Arrays.asList(ChatColor.RED +"[불가능]",ChatColor.GRAY +"제자리 부활 옵션을 사용하지 않습니다."), 21, inv);
+		else
+			Stack2(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "[다시 일어서기]", 2264,0,1,Arrays.asList(ChatColor.GREEN +"[가능]",ChatColor.GRAY +"제자리 부활 옵션을 사용합니다."), 21, inv);
+		Stack2(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "[구조 아이템]", 288,0,1,Arrays.asList(ChatColor.GRAY +"행동 불능된 플레이어를",ChatColor.GRAY +"다시 일으켜 세워주는",ChatColor.GRAY +"치료 아이템을 설정합니다.","",ChatColor.YELLOW+"[좌 클릭시 확인 및 변경]"), 23, inv);
+		Stack2(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "[부활 아이템]", 399,0,1,Arrays.asList(ChatColor.GRAY +"행동 불능이 되었을 경우",ChatColor.GRAY +"제자리에서 부활 할 수 있는",ChatColor.GRAY +"제자리 부활 아이템을 설정합니다.","",ChatColor.YELLOW+"[좌 클릭시 확인 및 변경]"), 25, inv);
+		
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 53, inv);
+		player.openInventory(inv);
+	}
+	
+	public void OPBoxGUI_SettingReviveItem(Player player)
+	{
+		YamlController YC_2 = GoldBigDragon_RPG.Main.Main.YC_2;
+		YamlManager Config =YC_2.getNewConfig("config.yml");
+		
+		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.BLACK + "부활 아이템");
+
+		ItemStack item = Config.getItemStack("Death.ReviveItem");
+		
+		if(item != null)
+			ItemStackStack(item, 4, inv);
+		
+		Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[아이템 넣기>", 166,0,1,null, 1, inv);	
+		Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[아이템 넣기>", 166,0,1,null, 2, inv);
+		Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[아이템 넣기>", 166,0,1,null, 3, inv);	
+		Stack2(ChatColor.RED + "" + ChatColor.BOLD + "<아이템 넣기]", 166,0,1,null, 5, inv);
+		Stack2(ChatColor.RED + "" + ChatColor.BOLD + "<아이템 넣기]", 166,0,1,null, 6, inv);	
+		Stack2(ChatColor.RED + "" + ChatColor.BOLD + "<아이템 넣기]", 166,0,1,null, 7, inv);
+		
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 0, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 8, inv);
+		player.openInventory(inv);
+		return;
+	}
+
+	public void OPBoxGUI_SettingRescueItem(Player player)
+	{
+		YamlController YC_2 = GoldBigDragon_RPG.Main.Main.YC_2;
+		YamlManager Config =YC_2.getNewConfig("config.yml");
+		
+		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.BLACK + "구조 아이템");
+
+		ItemStack item = Config.getItemStack("Death.RescueItem");
+		
+		if(item != null)
+			ItemStackStack(item, 4, inv);
+		
+		Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[아이템 넣기>", 166,0,1,null, 1, inv);	
+		Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[아이템 넣기>", 166,0,1,null, 2, inv);
+		Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[아이템 넣기>", 166,0,1,null, 3, inv);	
+		Stack2(ChatColor.RED + "" + ChatColor.BOLD + "<아이템 넣기]", 166,0,1,null, 5, inv);
+		Stack2(ChatColor.RED + "" + ChatColor.BOLD + "<아이템 넣기]", 166,0,1,null, 6, inv);	
+		Stack2(ChatColor.RED + "" + ChatColor.BOLD + "<아이템 넣기]", 166,0,1,null, 7, inv);
+		
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 0, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 8, inv);
+		player.openInventory(inv);
+		return;
+	}
+	
 	
 	//각종 GUI창 속의 아이콘을 눌렸을 때, 해당 아이콘에 기능을 넣는 메소드1   -스텟 GUI, 오피박스, 커스텀 몬스터GUI-//
 	public void OPBoxGUIInventoryclick(InventoryClickEvent event)
@@ -330,8 +424,13 @@ public class OPBoxGUI extends GUIutil
 		}
 		YamlController YC_2 = GoldBigDragon_RPG.Main.Main.YC_2;
 		YamlManager Config =YC_2.getNewConfig("config.yml");
+		int page = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(0).getItemMeta().getDisplayName()));
 		switch ((ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())))
 		{
+		case"도박":
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			new GambleGUI().GambleMainGUI(player);
+			break;
 		case"네비게이션":
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
 			new NavigationGUI().NavigationListGUI(player,0);
@@ -428,11 +527,11 @@ public class OPBoxGUI extends GUIutil
 			return;
 		case "이전 페이지":
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_Main(player,Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(0).getItemMeta().getDisplayName()))-1);
+			OPBoxGUI_Main(player,page-1);
 			return;
 		case "다음 페이지":
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_Main(player,Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(0).getItemMeta().getDisplayName()))+1);
+			OPBoxGUI_Main(player,page+1);
 			return;
 		case "닫기":
 			s.SP(player, Sound.PISTON_RETRACT, 0.8F, 1.8F);
@@ -566,6 +665,12 @@ public class OPBoxGUI extends GUIutil
 				OPBoxGUI_Money(player);
 			}
 			return;
+		case 23: //사망 시스템 변경
+			{
+				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+				OPBoxGUI_Death(player);
+			}
+			return;
 		case 45://이전 목록
 			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.8F);
 			OPBoxGUI_Main(player, 1);
@@ -587,7 +692,7 @@ public class OPBoxGUI extends GUIutil
 		Stack2(ChatColor.YELLOW +""+ ChatColor.BOLD + "럭키 피니시", 340,0,1,Arrays.asList(ChatColor.GRAY+ "몬스터를 사냥하였을 경우",ChatColor.GRAY+"일정 확률로 돈이 더 나오게 됩니다."), 1,inv);
 		Stack2(ChatColor.YELLOW +""+ ChatColor.BOLD + "럭키 보너스", 340,0,1,Arrays.asList(ChatColor.GRAY+ "채집을 할 경우 일정 확률로",ChatColor.GRAY+"채집 품목이 더 나오게 됩니다."), 2,inv);
 		Stack2(ChatColor.YELLOW +""+ ChatColor.BOLD + "커스텀 아이템 [1]", 340,0,1,Arrays.asList(ChatColor.GRAY+ "각종 커스텀 아이템을",ChatColor.GRAY+"생성하거나 등록하여",ChatColor.GRAY+"언제든 불러올 수 있습니다.","",ChatColor.GOLD+"[명령어]",ChatColor.YELLOW+"/아이템"), 3,inv);
-		Stack2(ChatColor.YELLOW +""+ ChatColor.BOLD + "커스텀 아이템 [2]", 340,0,1,Arrays.asList(ChatColor.GRAY+ "대미지, 방어, 보호 등의",ChatColor.GRAY+"특수 옵션이 붙은 아이템은",ChatColor.GRAY+"내구도가 0이 될 시 효과가",ChatColor.GRAY+"적용되지 않습니다.",ChatColor.GRAY+"그럴 경우, 직접 수리하거나",ChatColor.GRAY+"대장장이 NPC를 통해",ChatColor.GRAY+"수리 받아야 합니다.","",ChatColor.GOLD+"[명령어]",ChatColor.YELLOW+"/아이템 수리"), 4,inv);
+		Stack2(ChatColor.YELLOW +""+ ChatColor.BOLD + "커스텀 아이템 [2]", 340,0,1,Arrays.asList(ChatColor.GRAY+ GoldBigDragon_RPG.Main.ServerOption.Damage+", 방어, 보호 등의",ChatColor.GRAY+"특수 옵션이 붙은 아이템은",ChatColor.GRAY+"내구도가 0이 될 시 효과가",ChatColor.GRAY+"적용되지 않습니다.",ChatColor.GRAY+"그럴 경우, 직접 수리하거나",ChatColor.GRAY+"대장장이 NPC를 통해",ChatColor.GRAY+"수리 받아야 합니다.","",ChatColor.GOLD+"[명령어]",ChatColor.YELLOW+"/아이템 수리"), 4,inv);
 		Stack2(ChatColor.YELLOW +""+ ChatColor.BOLD + "영역 설정", 340,0,1,Arrays.asList(ChatColor.GRAY+ "영역을 지정하여 마을 혹은",ChatColor.GRAY+"PVP장, 던전 등등의 가상 공간을",ChatColor.GRAY+"형성할 수 있습니다.",ChatColor.GRAY+"영역 설정에 따라 최근 방문한",ChatColor.GRAY+"영역에서 부활 하거나,",ChatColor.GRAY+"영역 입장시 특수 메시지를",ChatColor.GRAY+"보낼 수 있습니다.","",ChatColor.GOLD+"[명령어]",ChatColor.YELLOW+"/영역"), 5,inv);
 		Stack2(ChatColor.YELLOW +""+ ChatColor.BOLD + "NPC", 340,0,1,Arrays.asList(ChatColor.GRAY+ "NPC 생성은 "+ChatColor.YELLOW+ "Citizens2 "+ChatColor.GRAY+ "플러그인을",ChatColor.GRAY+ "사용하시는 것을 권장합니다.",ChatColor.GRAY+ "NPC 생성 후, 해당 NPC를 우클릭 하여",ChatColor.GRAY+ "NPC에 관한 각종 설정을 할 수 있습니다."), 6,inv);
 		Stack2(ChatColor.YELLOW +""+ ChatColor.BOLD + "퀘스트", 340,0,1,Arrays.asList(ChatColor.GRAY+ "오피박스에서 서버 내의 퀘스트를",ChatColor.GRAY+"쉽고 빠르게 제작하실 수 있습니다.","",ChatColor.GOLD+"[명령어]",ChatColor.YELLOW+"/오피박스",ChatColor.YELLOW+"/퀘스트 생성"+ChatColor.DARK_AQUA+" [타입]"+ChatColor.YELLOW+" [퀘스트 이름]","",ChatColor.DARK_AQUA+"[일반/반복/일일/일주/한달]"), 7,inv);
@@ -857,5 +962,149 @@ public class OPBoxGUI extends GUIutil
 			player.closeInventory();
 			return;
 		}
+	}
+
+	public void OPBoxGUI_DeathClick(InventoryClickEvent event)
+	{
+		GoldBigDragon_RPG.Effect.Sound s = new GoldBigDragon_RPG.Effect.Sound();
+		event.setCancelled(true);
+		Player player = (Player) event.getWhoClicked();
+
+		UserDataObject u = new UserDataObject();
+		switch(event.getSlot())
+		{
+		case 10://가까운 마을에서 부활
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			u.setType(player, "System");
+			u.setString(player, (byte)1, "RO_S_H");
+			player.sendMessage(ChatColor.GREEN+"[부활] : 마지막 마을에서 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"생명력"+ChatColor.GREEN+"을 가지고 부활 하도록 하겠습니까?");
+			player.sendMessage(ChatColor.GRAY + "(최소 1 ~ 최대 100)");
+			player.closeInventory();
+			return;
+		case 12://제자리에서 부활
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			u.setType(player, "System");
+			u.setString(player, (byte)1, "RO_T_H");
+			player.sendMessage(ChatColor.GREEN+"[부활] : 제자리에서 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"생명력"+ChatColor.GREEN+"을 가지고 부활 하도록 하겠습니까?");
+			player.sendMessage(ChatColor.GRAY + "(최소 1 ~ 최대 100)");
+			player.closeInventory();
+			return;
+		case 14://도움 요청
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			u.setType(player, "System");
+			u.setString(player, (byte)1, "RO_H_H");
+			player.sendMessage(ChatColor.GREEN+"[부활] : 도움을 받아 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"생명력"+ChatColor.GREEN+"을 가지고 부활 하도록 하겠습니까?");
+			player.sendMessage(ChatColor.GRAY + "(최소 1 ~ 최대 100)");
+			player.closeInventory();
+			return;
+		case 16://아이템 사용
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			u.setType(player, "System");
+			u.setString(player, (byte)1, "RO_I_H");
+			player.sendMessage(ChatColor.GREEN+"[부활] : 아이템을 사용하여 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"생명력"+ChatColor.GREEN+"을 가지고 부활 하도록 하겠습니까?");
+			player.sendMessage(ChatColor.GRAY + "(최소 1 ~ 최대 100)");
+			player.closeInventory();
+			return;
+		case 19://사망 BGM
+			{
+				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+				YamlController YC_1 = GoldBigDragon_RPG.Main.Main.YC_1;
+			  	YamlManager Config = YC_1.getNewConfig("config.yml");
+				if(Config.getInt("Death.Track")==-1||Config.contains("Death.Track")==false)
+					new GoldBigDragon_RPG.GUI.AreaGUI().AreaMusicSettingGUI(player, 0, "DeathBGM¡");
+				else
+				{
+					Config.set("Death.Track", -1);
+					Config.saveConfig();
+					OPBoxGUI_Death(player);
+				}
+				return;
+			}
+		case 21://제자리 부활 옵션 켜기/끄기
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			YamlController YC_1 = GoldBigDragon_RPG.Main.Main.YC_1;
+		  	YamlManager Config = YC_1.getNewConfig("config.yml");
+			if(Config.getBoolean("Death.DistrictDirectRevive"))
+				Config.set("Death.DistrictDirectRevive",false);
+			else
+				Config.set("Death.DistrictDirectRevive",true);
+			Config.saveConfig();
+			OPBoxGUI_Death(player);
+			return;
+		case 23://구조 아이템 설정
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			OPBoxGUI_SettingRescueItem(player);
+			return;
+		case 25://부활 아이템 설정
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			OPBoxGUI_SettingReviveItem(player);
+			return;
+		case 45://이전 목록
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			OPBoxGUI_Setting(player);
+			return;
+		case 53://나가기
+			s.SP(player, Sound.PISTON_RETRACT, 0.8F, 1.8F);
+			player.closeInventory();
+			return;
+		}
+	}
+
+	public void OPBoxGUI_RescueOrReviveClick(InventoryClickEvent event)
+	{
+		GoldBigDragon_RPG.Effect.Sound s = new GoldBigDragon_RPG.Effect.Sound();
+		Player player = (Player) event.getWhoClicked();
+		
+		switch(event.getSlot())
+		{
+		case 1:
+		case 2:
+		case 3:
+		case 5:
+		case 6:
+		case 7:
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			event.setCancelled(true);
+			return;
+		case 0://이전 목록
+			event.setCancelled(true);
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			OPBoxGUI_Death(player);
+			return;
+		case 8://나가기
+			event.setCancelled(true);
+			s.SP(player, Sound.PISTON_RETRACT, 0.8F, 1.8F);
+			player.closeInventory();
+			return;
+		}
+	}
+	
+	
+	
+	public void OPBoxGUI_RescueOrReviveClose(InventoryCloseEvent event)
+	{
+		YamlController YC_2 = GoldBigDragon_RPG.Main.Main.YC_2;
+		YamlManager Config =YC_2.getNewConfig("config.yml");
+		if(event.getInventory().getItem(4) != null)
+		{
+			if(event.getInventory().getTitle().contains("부활")==true)
+				Config.set("Death.ReviveItem", event.getInventory().getItem(4));
+			else
+				Config.set("Death.RescueItem", event.getInventory().getItem(4));
+		}
+		else
+		{
+			if(event.getInventory().getTitle().contains("부활")==true)
+				Config.set("Death.ReviveItem", null);
+			else
+				Config.set("Death.RescueItem", null);
+		}
+		if(event.getInventory().getTitle().contains("부활")==true)
+			event.getPlayer().sendMessage(ChatColor.GREEN+"[SYSTEM] : 부활 아이템 설정이 완료되었습니다!");
+		else
+			event.getPlayer().sendMessage(ChatColor.GREEN+"[SYSTEM] : 구조 아이템 설정이 완료되었습니다!");
+		Config.saveConfig();
+		new GoldBigDragon_RPG.Effect.Sound().SP((Player)event.getPlayer(), Sound.ANVIL_USE, 1.0F, 1.0F);
+		return;
 	}
 }

@@ -24,7 +24,8 @@ public class PlayerAction
 	public void PlayerMove(PlayerMoveEvent event)
 	{
 		Player player = event.getPlayer();
-		
+		if(new GoldBigDragon_RPG.Effect.Corpse().DeathCapture(player,false))
+			return;
 		//플레이어 움직이지 못하게 하기
 		//player.teleport(event.getPlayer().getLocation());
 		
@@ -151,6 +152,8 @@ public class PlayerAction
 		    	{SystemTypeChatting(event);return;}
 			    else if(u.getType(player).equals("Navi"))
 		    	{NaviTypeChatting(event);return;}
+			    else if(u.getType(player).equals("Gamble"))
+		    	{GambleChatting(event);return;}
 		YamlController Main_YC = GoldBigDragon_RPG.Main.Main.YC_1;
 	  	if(Main_YC.isExit("Stats/" + player.getUniqueId()+".yml") == false)
 	  		stat.CreateNewStats(player);
@@ -920,7 +923,7 @@ public class PlayerAction
 					ItemList.saveConfig();
 					u.setType(player, u.getType(player));
 					u.setString(player, (byte)1, "MaxDamage");
-					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최대 대미지를 입력해 주세요!");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최대 "+GoldBigDragon_RPG.Main.ServerOption.Damage+"를 입력해 주세요!");
 					player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
 				}
 				return;
@@ -931,7 +934,7 @@ public class PlayerAction
 					ItemList.saveConfig();
 					u.setType(player, u.getType(player));
 					u.setString(player, (byte)1, "MaxMaDamage");
-					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최대 마법 대미지를 입력해 주세요!");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최대 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+"를 입력해 주세요!");
 					player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
 				}
 				return;
@@ -2560,6 +2563,107 @@ public class PlayerAction
 	    String message = ChatColor.stripColor(event.getMessage());
 		switch(u.getString(player, (byte)1))
 		{
+		case "RO_S_H"://RespawnOption_SpawnPoint_Health
+		case "RO_T_H"://RespawnOption_There_Health
+		case "RO_H_H"://RespawnOption_Help_Health
+		case "RO_I_H"://RespawnOption_Item_Health
+			if(isIntMinMax(message, player, 1, 100))
+			{
+				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+				switch(u.getString(player, (byte)1))
+				{
+					case "RO_S_H":
+						Config.set("Death.Spawn_Home.SetHealth", message+"%");
+						u.setString(player, (byte)1, "RO_S_E");
+						player.sendMessage(ChatColor.GREEN+"[부활] : 마지막 마을에서 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"경험치"+ChatColor.GREEN+"를 잃어버리도록 하겠습니까?");
+						player.sendMessage(ChatColor.GRAY + "(최소 0 ~ 최대 100)");
+						break;
+					case "RO_T_H":
+						Config.set("Death.Spawn_Here.SetHealth", message+"%");
+						u.setString(player, (byte)1, "RO_T_E");
+						player.sendMessage(ChatColor.GREEN+"[부활] : 제자리에서 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"경험치"+ChatColor.GREEN+"를 잃어버리도록 하겠습니까?");
+						player.sendMessage(ChatColor.GRAY + "(최소 0 ~ 최대 100)");
+						break;
+					case "RO_H_H":
+						Config.set("Death.Spawn_Help.SetHealth", message+"%");
+						u.setString(player, (byte)1, "RO_H_E");
+						player.sendMessage(ChatColor.GREEN+"[부활] : 도움을 받아 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"경험치"+ChatColor.GREEN+"를 잃어버리도록 하겠습니까?");
+						player.sendMessage(ChatColor.GRAY + "(최소 0 ~ 최대 100)");
+						break;
+					case "RO_I_H":
+						Config.set("Death.Spawn_Item.SetHealth", message+"%");
+						u.setString(player, (byte)1, "RO_I_E");
+						player.sendMessage(ChatColor.GREEN+"[부활] : 아이템을 사용하여 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"경험치"+ChatColor.GREEN+"를 잃어버리도록 하겠습니까?");
+						player.sendMessage(ChatColor.GRAY + "(최소 0 ~ 최대 100)");
+						break;
+				}
+				Config.saveConfig();
+			}
+			return;
+		case "RO_S_E"://RespawnOption_SpawnPoint_EXP
+		case "RO_T_E"://RespawnOption_There_EXP
+		case "RO_H_E"://RespawnOption_Help_EXP
+		case "RO_I_E"://RespawnOption_Item_EXP
+			if(isIntMinMax(message, player, 0, 100))
+			{
+				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+				switch(u.getString(player, (byte)1))
+				{
+					case "RO_S_E":
+						Config.set("Death.Spawn_Home.PenaltyEXP", message+"%");
+						u.setString(player, (byte)1, "RO_S_M");
+						player.sendMessage(ChatColor.GREEN+"[부활] : 마지막 마을에서 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"돈"+ChatColor.GREEN+"을 잃어버리도록 하겠습니까?");
+						player.sendMessage(ChatColor.GRAY + "(최소 0 ~ 최대 100)");
+						break;
+					case "RO_T_E":
+						Config.set("Death.Spawn_Here.PenaltyEXP", message+"%");
+						u.setString(player, (byte)1, "RO_T_M");
+						player.sendMessage(ChatColor.GREEN+"[부활] : 제자리에서 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"돈"+ChatColor.GREEN+"을 잃어버리도록 하겠습니까?");
+						player.sendMessage(ChatColor.GRAY + "(최소 0 ~ 최대 100)");
+						break;
+					case "RO_H_E":
+						Config.set("Death.Spawn_Help.PenaltyEXP", message+"%");
+						u.setString(player, (byte)1, "RO_H_M");
+						player.sendMessage(ChatColor.GREEN+"[부활] : 도움을 받아 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"돈"+ChatColor.GREEN+"을 잃어버리도록 하겠습니까?");
+						player.sendMessage(ChatColor.GRAY + "(최소 0 ~ 최대 100)");
+						break;
+					case "RO_I_E":
+						Config.set("Death.Spawn_Item.PenaltyEXP", message+"%");
+						u.setString(player, (byte)1, "RO_I_M");
+						player.sendMessage(ChatColor.GREEN+"[부활] : 아이템을 사용하여 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"돈"+ChatColor.GREEN+"을 잃어버리도록 하겠습니까?");
+						player.sendMessage(ChatColor.GRAY + "(최소 0 ~ 최대 100)");
+						break;
+				}
+				Config.saveConfig();
+			}
+			return;
+		case "RO_S_M"://RespawnOption_SpawnPoint_Money
+		case "RO_T_M"://RespawnOption_There_Money
+		case "RO_H_M"://RespawnOption_Help_Money
+		case "RO_I_M"://RespawnOption_Item_Money
+			if(isIntMinMax(message, player, 0, 100))
+			{
+				s.SP(player, Sound.ANVIL_USE, 1.0F, 1.0F);
+				switch(u.getString(player, (byte)1))
+				{
+					case "RO_S_M":
+						Config.set("Death.Spawn_Home.PenaltyMoney", message+"%");
+						break;
+					case "RO_T_M":
+						Config.set("Death.Spawn_Here.PenaltyMoney", message+"%");
+						break;
+					case "RO_H_M":
+						Config.set("Death.Spawn_Help.PenaltyMoney", message+"%");
+						break;
+					case "RO_I_M":
+						Config.set("Death.Spawn_Item.PenaltyMoney", message+"%");
+						break;
+				}
+				Config.saveConfig();
+				u.clearAll(player);
+				new GoldBigDragon_RPG.GUI.OPBoxGUI().OPBoxGUI_Death(player);
+			}
+			return;
 		case "CCP"://ChangeChatPrefix
 			s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
 			Config.set("Server.ChatPrefix", event.getMessage());
@@ -2645,6 +2749,12 @@ public class PlayerAction
 					break;
 				case "행운 설명":
 					Config.set("Server.LUK_Lore", Message);
+					break;
+				case "대미지":
+					Config.set("Server.Damage", message);
+					break;
+				case "마법 대미지":
+					Config.set("Server.MagicDamage", message);
 					break;
 				case "화폐":
 					String Pa = event.getMessage();
@@ -2831,6 +2941,38 @@ public class PlayerAction
 			return;
 		}
 		return;
+	}
+	
+	private void GambleChatting(PlayerChatEvent event)
+	{
+		UserDataObject u = new UserDataObject();
+		Player player = event.getPlayer();
+
+		YamlController YC_1 = GoldBigDragon_RPG.Main.Main.YC_1;
+		YamlManager GambleYML =YC_1.getNewConfig("Item/GamblePresent.yml");
+
+	    GoldBigDragon_RPG.Effect.Sound s = new GoldBigDragon_RPG.Effect.Sound();
+	    event.setCancelled(true);
+	    String message = ChatColor.stripColor(event.getMessage());
+		switch(u.getString(player, (byte)0))
+		{
+		case "NP"://New Package
+			{
+				if(GambleYML.contains(message))
+				{
+					s.SP(player, Sound.ORB_PICKUP, 1.0F, 1.8F);
+					player.sendMessage(ChatColor.RED+"[도박] : 해당 이름의 상품은 이미 존재합니다!");
+					return;
+				}
+				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+				GambleYML.set(message+".Grade", ChatColor.WHITE+"[일반]");
+				GambleYML.set(message+".Present.1", null);
+				GambleYML.saveConfig();
+				u.clearAll(player);
+				new GoldBigDragon_RPG.GUI.GambleGUI().GamblePresentGUI(player, 0, 0, -1, null);
+			}
+			return;
+		}
 	}
 	
 	private boolean isIntMinMax(String message,Player player, int Min, int Max)

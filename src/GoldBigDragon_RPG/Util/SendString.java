@@ -31,6 +31,8 @@ public class SendString
 			  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "﹛﹛﹛﹣﹛﹛﹛﹛﹛﹛﹛﹛﹛﹣");
 			  	Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "﹛GoldBigDragon Advanced");
 			  	Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "http://cafe.naver.com/goldbigdragon");
+			  	Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "Using caliog's npclib (Thankyou!)");
+			  	Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "https://github.com/caliog/NPCLib");
 			  	Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "﹛﹛﹛﹛");
 			  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "式式式式式式式式式式式式式式式式式式式式式式");
 			}
