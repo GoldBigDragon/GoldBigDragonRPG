@@ -17,6 +17,8 @@ public class BlockBreak
 {
 	public void BlockBreaking(BlockBreakEvent event)
 	{
+		if(event.isCancelled())
+			return;
 		Player player = (Player) event.getPlayer();
 		new Damage().decreaseDurabilityWeapon(player);
 		GoldBigDragon_RPG.ETC.Area A = new GoldBigDragon_RPG.ETC.Area();
@@ -57,11 +59,40 @@ public class BlockBreak
 					event.getBlock().setType(Material.AIR);
 					GoldBigDragon_RPG.Event.ItemDrop ItemDrop = new GoldBigDragon_RPG.Event.ItemDrop();
 					Location loc = event.getBlock().getLocation();
-					loc.setY(loc.getY()+1);
+					loc.setY(loc.getY()+0.4);
 					loc.setX(loc.getX()+0.5);
 					loc.setZ(loc.getZ()+0.5);
-					if(AreaConfig.getString(Area[0]+".Mining."+BlockData).equals("0:0") == false)
-						ItemDrop.CustomItemDrop(event.getBlock().getLocation(), AreaConfig.getItemStack(Area[0]+".Mining."+BlockData));
+					if(AreaConfig.contains(Area[0]+".Mining."+BlockData+".100"))
+					{
+						if(AreaConfig.getString(Area[0]+".Mining."+BlockData+".100").equals("0:0") == false)
+							ItemDrop.CustomItemDrop(loc, AreaConfig.getItemStack(Area[0]+".Mining."+BlockData+".100"));
+						int random = new GoldBigDragon_RPG.Util.Number().RandomNum(1, 1000);
+						if(random<=1)
+						{
+							if(AreaConfig.getString(Area[0]+".Mining."+BlockData+".0").equals("0:0") == false)
+								ItemDrop.CustomItemDrop(loc, AreaConfig.getItemStack(Area[0]+".Mining."+BlockData+".0"));
+						}
+						else if(random<=10)
+						{
+							if(AreaConfig.getString(Area[0]+".Mining."+BlockData+".1").equals("0:0") == false)
+								ItemDrop.CustomItemDrop(loc, AreaConfig.getItemStack(Area[0]+".Mining."+BlockData+".1"));
+						}
+						else if(random<=100)
+						{
+							if(AreaConfig.getString(Area[0]+".Mining."+BlockData+".10").equals("0:0") == false)
+								ItemDrop.CustomItemDrop(loc, AreaConfig.getItemStack(Area[0]+".Mining."+BlockData+".10"));
+						}
+						else if(random<=500)
+						{
+							if(AreaConfig.getString(Area[0]+".Mining."+BlockData+".50").equals("0:0") == false)
+								ItemDrop.CustomItemDrop(loc, AreaConfig.getItemStack(Area[0]+".Mining."+BlockData+".50"));
+						}
+						else if(random<=900)
+						{
+							if(AreaConfig.getString(Area[0]+".Mining."+BlockData+".90").equals("0:0") == false)
+								ItemDrop.CustomItemDrop(loc, AreaConfig.getItemStack(Area[0]+".Mining."+BlockData+".90"));
+						}
+					}
 				}
 			}
 		}

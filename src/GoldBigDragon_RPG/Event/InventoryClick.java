@@ -132,6 +132,8 @@ public class InventoryClick
 				{IC_Navi(event, InventoryName);return;}
 				else if(InventoryName.contains("도박"))
 				{IC_Gamble(event, InventoryName);return;}
+				else if(InventoryName.contains("개체"))
+				{IC_Structure(event, InventoryName);return;}
 				return;
 		}
 		return;
@@ -455,6 +457,18 @@ public class InventoryClick
 	    	else if(InventoryName.contains("코인"))
 	    		GGUI.SlotMachineCoinGUI_Click(event);
 	    }
+		return;
+	}
+	
+	private void IC_Structure(InventoryClickEvent event, String InventoryName)
+	{
+	    GoldBigDragon_RPG.Structure.GUI SGUI = new GoldBigDragon_RPG.Structure.GUI();
+	    if(InventoryName.contains("전체"))
+	    	SGUI.StructureListGUIClick(event);
+	    else if(InventoryName.contains("타입"))
+	    	SGUI.SelectStructureTypeGUIClick(event);
+	    else if(InventoryName.contains("방향"))
+	    	SGUI.SelectStructureDirectionGUIClick(event);
 		return;
 	}
 }

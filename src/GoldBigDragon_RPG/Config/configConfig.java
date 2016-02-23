@@ -35,6 +35,7 @@ public class configConfig
 		  	YM.set("Server.LUK", "Заїо");
 		  	YM.set("Server.MoneyName", ChatColor.GOLD+""+ChatColor.BOLD+"Gold");
 
+		  	YM.set("Death.SystemOn", true);
 		  	YM.set("Death.Spawn_Home.SetHealth", "100%");
 		  	YM.set("Death.Spawn_Home.PenaltyEXP", "10%");
 		  	YM.set("Death.Spawn_Home.PenaltyMoney", "0%");

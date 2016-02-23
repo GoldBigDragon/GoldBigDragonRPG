@@ -2,10 +2,14 @@ package GoldBigDragon_RPG.Command;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -14,9 +18,19 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
+import com.mojang.authlib.GameProfile;
+
 import GoldBigDragon_RPG.Main.ServerOption;
 import GoldBigDragon_RPG.Util.YamlController;
 import GoldBigDragon_RPG.Util.YamlManager;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
+import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
+import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
+import net.minecraft.server.v1_8_R3.PlayerConnection;
+import net.minecraft.server.v1_8_R3.PlayerInteractManager;
+import net.minecraft.server.v1_8_R3.WorldServer;
+import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo.EnumPlayerInfoAction;
 import GoldBigDragon_RPG.ServerTick.ServerTickMain;
 
 public class SystemCommand
@@ -79,6 +93,16 @@ public class SystemCommand
 			case"Å×½ºÆ®":
 			if(player.isOp() == true)
 			{
+			    List<Entity> entities = player.getNearbyEntities(Integer.parseInt(args[0]), Integer.parseInt(args[0]), Integer.parseInt(args[0]));
+			    int amount = 0;
+			    for(int count = 0; count < entities.size(); count++)
+			    {
+			    	if(entities.get(count).getType() != EntityType.PLAYER)
+			    	{
+			    		entities.get(count).remove();
+			    		amount = amount+1;
+			    	}
+			    }
 			}
 			else
 			{
@@ -450,7 +474,7 @@ public class SystemCommand
 				    int amount = 0;
 				    for(int count = 0; count < entities.size(); count++)
 				    {
-				    	if(entities.get(count).getType() != EntityType.PLAYER &&entities.get(count).getType() != EntityType.ITEM_FRAME)
+				    	if(entities.get(count).getType() != EntityType.PLAYER &&entities.get(count).getType() != EntityType.ITEM_FRAME&&entities.get(count).getType()!= EntityType.ARMOR_STAND)
 				    	{
 				    		entities.get(count).remove();
 				    		amount = amount+1;

@@ -21,7 +21,8 @@ public class InventoryClose
 			&&u.getString(player, (byte)3)==null&&u.getString(player, (byte)4)==null))
 			u.clearAll(player);
 		if(InventoryName.contains("전체") &&InventoryName.contains("지급")==false&&InventoryName.contains("[MapleStory]")==false&&InventoryName.contains("[Mabinogi]")==false
-				&&InventoryName.contains("스킬")==false&&InventoryName.contains("영역")==false)
+				&&InventoryName.contains("스킬")==false&&InventoryName.contains("영역")==false
+				&&InventoryName.contains("개체")==false)
 		{
 			boolean ChooseQuestGUI = Boolean.parseBoolean(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
 			if(ChooseQuestGUI==true)

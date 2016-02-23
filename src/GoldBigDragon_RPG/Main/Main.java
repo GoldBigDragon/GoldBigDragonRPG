@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -19,6 +20,8 @@ import org.bukkit.WorldCreator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,6 +36,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerFishEvent;
@@ -55,12 +59,12 @@ import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand;
 
 public class Main extends JavaPlugin implements Listener
 {
-	public static YamlController YC_1,YC_2,YC_3;
+	public static YamlController YC_1,YC_2,YC_3,YC_4;
 
-	public static String serverUpdate = "2016-02-11-00:52";
+	public static String serverUpdate = "2016-02-22-01:54";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/";
-	public static String currentServerUpdate = "2016-02-11-00:52";
+	public static String currentServerUpdate = "2016-02-22-01:54";
 	public static String currentServerVersion = "Advanced";
 	
 	public static String SpawnMobName;
@@ -91,6 +95,7 @@ public class Main extends JavaPlugin implements Listener
 		YC_1 = new YamlController(this);
 		YC_2 = new YamlController(this);
 		YC_3 = new YamlController(this);
+		YC_4 = new YamlController(this);
 	  	File MusicFolder = new File(this.getDataFolder().getAbsolutePath() + "/NoteBlockSound/");
 		if(!MusicFolder.exists())
 			MusicFolder.mkdirs();
@@ -287,24 +292,27 @@ public class Main extends JavaPlugin implements Listener
 	@EventHandler
 	private void PlayerRespawn(PlayerRespawnEvent event)
 	{
-		Player player = event.getPlayer();
-	  	YamlManager YM = YC_1.getNewConfig("Stats/" + player.getUniqueId()+".yml");
-		double X = YM.getDouble("LastDeathPoint.X");
-		double Y = YM.getDouble("LastDeathPoint.Y");
-		double Z = YM.getDouble("LastDeathPoint.Z");
-		double Pitch = YM.getDouble("LastDeathPoint.Pitch");
-		double Yaw = YM.getDouble("LastDeathPoint.Yaw");
-    	event.setRespawnLocation(new Location(Bukkit.getServer().getWorld(YM.getString("LastDeathPoint.World")), X, Y, Z, (float)Yaw, (float)Pitch));
-    	player.setGameMode(GameMode.SPECTATOR);
-    	if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
-    	{
-    		new OtherPlugins.NoteBlockAPIMain().Stop(player);
-			YamlManager Config = YC_1.getNewConfig("config.yml");
-			if(Config.contains("Death.Track"))
-				if(Config.getInt("Death.Track")!=-1)
-					new OtherPlugins.NoteBlockAPIMain().Play(player, Config.getInt("Death.Track"));
-    	}
-    	new GoldBigDragon_RPG.GUI.DeathGUI().OpenReviveSelectGUI(player);
+	  	YamlManager Config = YC_1.getNewConfig("config.yml");
+		if(Config.getBoolean("Death.SystemOn"))
+		{
+			Player player = event.getPlayer();
+		  	YamlManager YM = YC_1.getNewConfig("Stats/" + player.getUniqueId()+".yml");
+			double X = YM.getDouble("LastDeathPoint.X");
+			double Y = YM.getDouble("LastDeathPoint.Y");
+			double Z = YM.getDouble("LastDeathPoint.Z");
+			double Pitch = YM.getDouble("LastDeathPoint.Pitch");
+			double Yaw = YM.getDouble("LastDeathPoint.Yaw");
+	    	event.setRespawnLocation(new Location(Bukkit.getServer().getWorld(YM.getString("LastDeathPoint.World")), X, Y, Z, (float)Yaw, (float)Pitch));
+	    	player.setGameMode(GameMode.SPECTATOR);
+	    	if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
+	    	{
+	    		new OtherPlugins.NoteBlockAPIMain().Stop(player);
+				if(Config.contains("Death.Track"))
+					if(Config.getInt("Death.Track")!=-1)
+						new OtherPlugins.NoteBlockAPIMain().Play(player, Config.getInt("Death.Track"));
+	    	}
+	    	new GoldBigDragon_RPG.GUI.DeathGUI().OpenReviveSelectGUI(player);
+		}
 		return;
 	}
 	
@@ -375,13 +383,41 @@ public class Main extends JavaPlugin implements Listener
 		return;
 	}
 	
+	@EventHandler
+	private void AmorStand(PlayerArmorStandManipulateEvent event)
+	{
+		Player player = event.getPlayer();
+		Entity AS = (Entity) event.getRightClicked();
+		if(AS.getCustomName()!=null)
+			if(AS.getCustomName().contains(ChatColor.BLACK+""+ChatColor.BOLD))
+			{
+				event.setCancelled(true);
+				new GoldBigDragon_RPG.Structure.StructureMain().StructureUse(player,AS.getCustomName());
+				return;
+			}
+	}
+	
+	
 	
 	@EventHandler
 	private void PlayerDeath(PlayerDeathEvent event)
 	{
 		final Player player = event.getEntity();
 	  	YamlManager YM = YC_1.getNewConfig("Stats/" + player.getUniqueId()+".yml");
-	  	YM.set("Death",true);
+
+	  	YamlManager Config = YC_1.getNewConfig("config.yml");
+		if(Config.getBoolean("Death.SystemOn"))
+		{
+			YM.set("Death",true);
+		    Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable()
+		    {
+		      public void run()
+		      {
+		        PacketPlayInClientCommand packet = new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN);
+		        ((CraftPlayer)player).getHandle().playerConnection.a(packet);
+		      }
+		    }, 1L);
+		}
 	  	YM.set("LastDeathPoint.World",event.getEntity().getLocation().getWorld().getName());
 	  	YM.set("LastDeathPoint.X",event.getEntity().getLocation().getX());
 	  	YM.set("LastDeathPoint.Y",event.getEntity().getLocation().getY());
@@ -408,14 +444,6 @@ public class Main extends JavaPlugin implements Listener
 				}
 			}
 		}
-	    Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable()
-	    {
-	      public void run()
-	      {
-	        PacketPlayInClientCommand packet = new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN);
-	        ((CraftPlayer)player).getHandle().playerConnection.a(packet);
-	      }
-	    }, 1L);
 	  	
 		return;
 	}
@@ -580,6 +608,12 @@ public class Main extends JavaPlugin implements Listener
 		if(event.getInventory().getName().length() >= 3)
 		{
 			if(event.getInventory().getName().charAt(0)=='§'
+			&&event.getInventory().getName().charAt(1)=='c')
+			{
+				new GoldBigDragon_RPG.Structure.StructureMain().InventoryClickRouter(event, ChatColor.stripColor(event.getInventory().getName().toString()));
+				return;
+			}
+			if(event.getInventory().getName().charAt(0)=='§'
 			&&event.getInventory().getName().charAt(1)=='0')
 			{
 				String InventoryName = ChatColor.stripColor(event.getInventory().getName().toString());
@@ -593,6 +627,7 @@ public class Main extends JavaPlugin implements Listener
 					||InventoryName.equals("container.minecart")||InventoryName.equals("이벤트 전체 지급")
 					||InventoryName.equals("이벤트 랜덤 지급")||InventoryName.equals("교환")||InventoryName.equals("부활 아이템")
 					||InventoryName.equals("구조 아이템")||InventoryName.equals("도박 상품 정보")||InventoryName.equals("도박 기계 코인")
+					
 					))
 					{
 						event.setCancelled(true);
@@ -613,7 +648,7 @@ public class Main extends JavaPlugin implements Listener
 				    ||InventoryName.contains("월드")||InventoryName.contains("워프")||InventoryName.contains("매직스펠")
 				    ||InventoryName.contains("이벤트")||InventoryName.contains("친구")||InventoryName.contains("네비")
 				    ||InventoryName.equals("교환")||InventoryName.contains("부활")||InventoryName.contains("도박")
-				    ||InventoryName.compareTo("슬롯 머신")==0
+				    ||InventoryName.compareTo("슬롯 머신")==0||InventoryName.contains("개체")
 				    )
 				{
 					new GoldBigDragon_RPG.Event.InventoryClick().InventoryClickRouter(event, InventoryName);
@@ -631,6 +666,13 @@ public class Main extends JavaPlugin implements Listener
 		{
 			GoldBigDragon_RPG.Util.ETC ETC = new GoldBigDragon_RPG.Util.ETC();
 			ETC.UpdatePlayerHPMP((Player)event.getPlayer());
+		}
+
+		if(event.getInventory().getName().charAt(0)=='§'
+		&&event.getInventory().getName().charAt(1)=='c')
+		{
+			new GoldBigDragon_RPG.Structure.StructureMain().InventoryCloseRouter(event, ChatColor.stripColor(event.getInventory().getName().toString()));
+			return;
 		}
 		new GoldBigDragon_RPG.Event.InventoryClose().InventoryCloseRouter(event);
 		return;

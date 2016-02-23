@@ -136,6 +136,7 @@ public class DeathGUI extends GUIutil
 			else
 			{
 				s.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+				new GoldBigDragon_RPG.Effect.Corpse().RemoveCorpse(player.getName());
 				ReviveAtDeadPoint(player);
 		    	if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
 		    		new OtherPlugins.NoteBlockAPIMain().Stop(player);
@@ -246,12 +247,12 @@ public class DeathGUI extends GUIutil
 	
 	public void ReviveAtDeadPoint(Player player)
 	{
-		new GoldBigDragon_RPG.Effect.Corpse().RemoveCorpse(player.getName());
 		player.setGameMode(GameMode.SURVIVAL);
 		YamlController YC_1 = GoldBigDragon_RPG.Main.Main.YC_1;
 		new GoldBigDragon_RPG.Util.ETC().UpdatePlayerHPMP(player);
 	  	YamlManager Config = YC_1.getNewConfig("config.yml");
 		Penalty(player, Config.getString("Death.Spawn_Here.SetHealth"), Config.getString("Death.Spawn_Here.PenaltyEXP"), Config.getString("Death.Spawn_Here.PenaltyMoney"));
+		
 	}
 	
 	public void Penalty(Player player, String Health, String EXP, String Money)

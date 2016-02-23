@@ -15,6 +15,7 @@ public class ServerTickMain
 	public static ArrayList<String> MobSpawningAreaList = new ArrayList<String>();
 	public static ArrayList<String> NaviUsingList = new ArrayList<String>();
 	public static HashMap<String, String> PlayerTaskList = new HashMap<String, String>();
+	public static String ServerTask = "null";
 	public static HashMap<Long, ServerTickScheduleObject> Schedule = new HashMap<Long, ServerTickScheduleObject>();
 	public static long nowUTC = 0;
 	int BroadCastMessageTime =0;
@@ -109,6 +110,9 @@ public class ServerTickMain
 		case "G_SM"://Gamble_SlotMachine
 			new ServerTask_Player().Gamble_SlotMachine_Rolling(UTC);
 			return;
+		case "C_S"://Create_Structure
+			new ServerTask_Server().CreateStructureMain(UTC);
+			return;
 		default:
 			return;
 		}
@@ -118,4 +122,5 @@ public class ServerTickMain
 	{
 		return nowUTC;
 	}
+	
 }

@@ -30,6 +30,7 @@ public class Job
 			YamlManager PlayerList  = Config_YC.getNewConfig("Skill/PlayerData/"+players[count].getUniqueId().toString()+".yml");
 	  		if(Config.getInt("Time.LastSkillChanged")!=PlayerList.getInt("Update") || PlayerList.contains("Update")==false)
 	  		{
+				players[count].sendMessage("나는 수리 되었다.");
 	  			PlayerList.set("Update", Config.getInt("Time.LastSkillChanged"));
 	  			PlayerList.saveConfig();
 				FixPlayerJobList(players[count]);
@@ -41,7 +42,7 @@ public class Job
 
 	public void PlayerFixAllSkillAndJobYML(Player player)
 	{
-		YamlController Config_YC = GoldBigDragon_RPG.Main.Main.YC_1;
+		YamlController Config_YC = GoldBigDragon_RPG.Main.Main.YC_2;
 		YamlManager Config  = Config_YC.getNewConfig("config.yml");
 	  	if(Config.contains("Time.LastSkillChanged")==false)
 	  	{
@@ -74,7 +75,7 @@ public class Job
 	public void FixJobList()
 	//직업 스킬에서 스킬 목록에 등록되지 않은 스킬을 삭제 해 주는 메소드
 	{
-		YamlController Config_YC = GoldBigDragon_RPG.Main.Main.YC_1;
+		YamlController Config_YC = GoldBigDragon_RPG.Main.Main.YC_3;
 		YamlManager JobList = Config_YC.getNewConfig("Skill/JobList.yml");
 		YamlManager SkillList  = Config_YC.getNewConfig("Skill/SkillList.yml");
 		
@@ -121,7 +122,7 @@ public class Job
 	//직업 중에서 직업 목록에 등록되지 않은 직업을 가진 플레이어를 변경 해 주는 메소드
 	//마비노기 버전에서는 삭제된 카테고리를 플레이어 스킬 목록에서 제거해 주며, 새로 나온 카테고리를 플레이어에게 등록해 준다.
 	{
-		YamlController Config_YC = GoldBigDragon_RPG.Main.Main.YC_1;
+		YamlController Config_YC = GoldBigDragon_RPG.Main.Main.YC_4;
 		YamlManager JobList  = Config_YC.getNewConfig("Skill/JobList.yml");
 
 	  	if(Config_YC.isExit("Skill/PlayerData/"+player.getUniqueId().toString()+".yml") == false)
@@ -153,20 +154,21 @@ public class Job
 		{
 			Object[] Job = JobList.getConfigurationSection("MapleStory").getKeys(false).toArray();
 			for(int counter = 0; counter < Job.length; counter++)
-				for(int count =0; count < JobList.getConfigurationSection("MapleStory."+Job[count].toString()).getKeys(false).size(); count++)
+				for(int count =0; count < JobList.getConfigurationSection("MapleStory."+Job[counter].toString()).getKeys(false).size(); count++)
 					if(JobList.getConfigurationSection("MapleStory."+Job[counter].toString()).getKeys(false).toArray()[count].toString().compareTo(PlayerList.getString("Job.Type"))==0)
 						return;
 			YamlManager Config  = Config_YC.getNewConfig("config.yml");
-			PlayerList.removeKey("MapleStory."+PlayerList.getString("Job.Type"));
-			PlayerList.set("Job.Type", Config.getString("Server.DefaultJob"));
-			PlayerList.set("MapleStory."+Config.getString("Server.DefaultJob")+".Skill.(%@$#",null);
-			Object[] Skills = JobList.getConfigurationSection("MapleStory."+Config.getString("Server.DefaultJob")+"."+Config.getString("Server.DefaultJob")+".Skill").getKeys(false).toArray();
+			String ServerDefaultJob = Config.getString("Server.DefaultJob");
+			//플레이어 콘피그 수정이 안됨
+			PlayerList = Config_YC.getNewConfig("Skill/PlayerData/"+player.getUniqueId().toString()+".yml");
+			PlayerList.set("Job.Type", ServerDefaultJob);
+			PlayerList.set("Job.LV", 1);
+			Object[] Skills = JobList.getConfigurationSection("MapleStory."+ServerDefaultJob+"."+ServerDefaultJob+".Skill").getKeys(false).toArray();
 			for(int count = 0; count < Skills.length;count++)
-			{
-				if(PlayerList.contains("MapleStory."+Config.getString("Server.DefaultJob")+".Skill."+Skills[count].toString())==false)
-					PlayerList.set("MapleStory."+Config.getString("Server.DefaultJob")+".Skill."+Skills[count].toString(),1);
-			}
+				if(PlayerList.contains("MapleStory."+ServerDefaultJob+".Skill."+Skills[count].toString())==false)
+					PlayerList.set("MapleStory."+ServerDefaultJob+".Skill."+Skills[count].toString(),1);
 			PlayerList.saveConfig();
+			return;
 		}
 	}
 	
@@ -273,7 +275,17 @@ public class Job
 							{
 								for(int countia = 0; countia < PlayerJobSkills.length; countia++)
 								{
-									if(JobList.getConfigurationSection("MapleStory."+Jobs[counter]+"."+SubJobs[countta]+".Skill").getKeys(false).contains(PlayerJobSkills[countia].toString())==false)
+									boolean isExit = false;
+									Object[] JobSkills = JobList.getConfigurationSection("MapleStory."+Jobs[counter]+"."+SubJobs[countta]+".Skill").getKeys(false).toArray();
+									for(int cc=0;cc<JobSkills.length;cc++)
+									{
+										if(JobSkills[cc].toString().compareTo(PlayerJobSkills[countia].toString())==0)
+										{
+											isExit=true;
+											break;
+										}
+									}
+									if(isExit==false)
 									{
 										PlayerList.removeKey("MapleStory."+PlayerJob[count].toString()+".Skill."+PlayerJobSkills[countia].toString());
 										PlayerList.saveConfig();
@@ -289,7 +301,7 @@ public class Job
 	
 	public void SkillRankFix(Player player)
 	{
-		YamlController Config_YC = GoldBigDragon_RPG.Main.Main.YC_1;
+		YamlController Config_YC = GoldBigDragon_RPG.Main.Main.YC_2;
 		YamlManager Config  = Config_YC.getNewConfig("config.yml");
 		YamlManager SkillList  = Config_YC.getNewConfig("Skill/SkillList.yml");
 		YamlManager PlayerList  = Config_YC.getNewConfig("Skill/PlayerData/"+player.getUniqueId().toString()+".yml");

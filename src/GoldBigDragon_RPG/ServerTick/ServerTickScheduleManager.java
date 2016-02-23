@@ -12,6 +12,7 @@ public class ServerTickScheduleManager
 		YamlController Config_YC = GoldBigDragon_RPG.Main.Main.YC_2;
 		YamlManager PHSF=Config_YC.getNewConfig("PlayerHashMapSaveFile.yml");
 
+		PHSF.set("ServerTask", ServerTickMain.ServerTask);
 		for(int count = 0; count < ServerTickMain.MobSpawningAreaList.size(); count++)
 			PHSF.set("MonbSpawningAreaList."+count, ServerTickMain.MobSpawningAreaList.get(count));
 		PHSF.saveConfig();
@@ -48,6 +49,8 @@ public class ServerTickScheduleManager
 		YamlController Config_YC = GoldBigDragon_RPG.Main.Main.YC_2;
 		YamlManager PHSF=Config_YC.getNewConfig("PlayerHashMapSaveFile.yml");
 
+		if(PHSF.contains("ServerTask"))
+			ServerTickMain.ServerTask = PHSF.getString("ServerTask");
 		if(PHSF.contains("MonbSpawningAreaList"))
 		{
 			for(int count = 0; count < PHSF.getConfigurationSection("MonbSpawningAreaList").getKeys(false).size(); count++)

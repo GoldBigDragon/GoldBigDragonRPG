@@ -20,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.*;
 
 import GoldBigDragon_RPG.Main.*;
+import GoldBigDragon_RPG.Structure.Structure_PostBox;
 import GoldBigDragon_RPG.Util.YamlController;
 import GoldBigDragon_RPG.Util.YamlManager;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
@@ -151,63 +152,66 @@ public class Interact
 		YamlManager Config =Event_YC.getNewConfig("config.yml");
 		ItemStack item = Config.getItemStack("Death.RescueItem");
 		ItemStack Pitem = player.getItemInHand();
-		if(item.getTypeId()==Pitem.getTypeId())
+		if(item!=null)
 		{
-			if(item.getAmount()<=Pitem.getAmount())
+			if(item.getTypeId()==Pitem.getTypeId())
 			{
-				if(Pitem.isSimilar(item))
+				if(item.getAmount()<=Pitem.getAmount())
 				{
-					GoldBigDragon_RPG.Effect.Sound s = new GoldBigDragon_RPG.Effect.Sound();
-					List<Entity> entities = player.getNearbyEntities(3, 3, 3);
-				    for(int countta = 0; countta < entities.size(); countta++)
-				    {
-				    	if(entities.get(countta).getType() == EntityType.PLAYER)
-				    	{
-				    		Player entityPlayer = (Player)entities.get(countta);
-				    		if(entityPlayer.isOnline())
-				    		{
-								if(player.getItemInHand()!=null)
-								{
-									if(item.getTypeId()==Pitem.getTypeId())
+					if(Pitem.isSimilar(item))
+					{
+						GoldBigDragon_RPG.Effect.Sound s = new GoldBigDragon_RPG.Effect.Sound();
+						List<Entity> entities = player.getNearbyEntities(3, 3, 3);
+					    for(int countta = 0; countta < entities.size(); countta++)
+					    {
+					    	if(entities.get(countta).getType() == EntityType.PLAYER)
+					    	{
+					    		Player entityPlayer = (Player)entities.get(countta);
+					    		if(entityPlayer.isOnline())
+					    		{
+									if(player.getItemInHand()!=null)
 									{
-										if(item.getAmount()<=Pitem.getAmount())
+										if(item.getTypeId()==Pitem.getTypeId())
 										{
-											if(Pitem.isSimilar(item))
+											if(item.getAmount()<=Pitem.getAmount())
 											{
-												if(entityPlayer.getGameMode()==GameMode.SPECTATOR)
+												if(Pitem.isSimilar(item))
 												{
-													YamlController YC_1 = GoldBigDragon_RPG.Main.Main.YC_1;
-												  	YamlManager YM = YC_1.getNewConfig("Stats/" + entityPlayer.getUniqueId()+".yml");
-												  	if(YM.getBoolean("Death")==true)
-												  	{
-														if(item.getAmount()<Pitem.getAmount())
-															player.getItemInHand().setAmount(player.getItemInHand().getAmount()-item.getAmount());
-														else
-															player.setItemInHand(new ItemStack(0));
-														new GoldBigDragon_RPG.Effect.Corpse().RemoveCorpse(entityPlayer.getName());
-														player.updateInventory();
-														player.sendMessage(ChatColor.LIGHT_PURPLE+"[구조] : "+ChatColor.YELLOW+entityPlayer.getName()+ChatColor.LIGHT_PURPLE+"님을 부활시켰습니다!");
-														entityPlayer.sendMessage(ChatColor.LIGHT_PURPLE+"[부활] : "+ChatColor.YELLOW+player.getName()+ChatColor.LIGHT_PURPLE+"님에 의해 부활하였습니다!");
-														entityPlayer.setGameMode(GameMode.SURVIVAL);
-														entityPlayer.closeInventory();
-														for(int count2=0;count2<210;count2++)
-															new GoldBigDragon_RPG.Effect.Particle().PL(entityPlayer.getLocation(), Effect.SMOKE, new GoldBigDragon_RPG.Util.Number().RandomNum(0, 14));
-														s.SL(entityPlayer.getLocation(), Sound.BLAZE_BREATH, 0.5F, 1.8F);
-												    	if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
-												    		new OtherPlugins.NoteBlockAPIMain().Stop(entityPlayer);
-												    	new GoldBigDragon_RPG.GUI.DeathGUI().Penalty(entityPlayer, Config.getString("Death.Spawn_Help.SetHealth"), Config.getString("Death.Spawn_Help.PenaltyEXP"), Config.getString("Death.Spawn_Help.PenaltyMoney"));
-														return;
-												  	}
+													if(entityPlayer.getGameMode()==GameMode.SPECTATOR)
+													{
+														YamlController YC_1 = GoldBigDragon_RPG.Main.Main.YC_1;
+													  	YamlManager YM = YC_1.getNewConfig("Stats/" + entityPlayer.getUniqueId()+".yml");
+													  	if(YM.getBoolean("Death")==true)
+													  	{
+															if(item.getAmount()<Pitem.getAmount())
+																player.getItemInHand().setAmount(player.getItemInHand().getAmount()-item.getAmount());
+															else
+																player.setItemInHand(new ItemStack(0));
+															new GoldBigDragon_RPG.Effect.Corpse().RemoveCorpse(entityPlayer.getName());
+															player.updateInventory();
+															player.sendMessage(ChatColor.LIGHT_PURPLE+"[구조] : "+ChatColor.YELLOW+entityPlayer.getName()+ChatColor.LIGHT_PURPLE+"님을 부활시켰습니다!");
+															entityPlayer.sendMessage(ChatColor.LIGHT_PURPLE+"[부활] : "+ChatColor.YELLOW+player.getName()+ChatColor.LIGHT_PURPLE+"님에 의해 부활하였습니다!");
+															entityPlayer.setGameMode(GameMode.SURVIVAL);
+															entityPlayer.closeInventory();
+															for(int count2=0;count2<210;count2++)
+																new GoldBigDragon_RPG.Effect.Particle().PL(entityPlayer.getLocation(), Effect.SMOKE, new GoldBigDragon_RPG.Util.Number().RandomNum(0, 14));
+															s.SL(entityPlayer.getLocation(), Sound.BLAZE_BREATH, 0.5F, 1.8F);
+													    	if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
+													    		new OtherPlugins.NoteBlockAPIMain().Stop(entityPlayer);
+													    	new GoldBigDragon_RPG.GUI.DeathGUI().Penalty(entityPlayer, Config.getString("Death.Spawn_Help.SetHealth"), Config.getString("Death.Spawn_Help.PenaltyEXP"), Config.getString("Death.Spawn_Help.PenaltyMoney"));
+															return;
+													  	}
+													}
 												}
 											}
 										}
 									}
-								}
-				    		}
-				    	}
-				    }
-					s.SP(player, Sound.ORB_PICKUP, 1.0F, 1.8F);
-				    player.sendMessage(ChatColor.RED + "[SYSTEM] : 근처에 도움이 필요한 플레이어가 없습니다!");
+					    		}
+					    	}
+					    }
+						s.SP(player, Sound.ORB_PICKUP, 1.0F, 1.8F);
+					    player.sendMessage(ChatColor.RED + "[SYSTEM] : 근처에 도움이 필요한 플레이어가 없습니다!");
+					}
 				}
 			}
 		}
@@ -326,8 +330,6 @@ public class Interact
 		return;
 	}
 	
-	
-	
 	private void OPwork_Quest(PlayerInteractEvent event)
 	{
 		Player player = event.getPlayer();
@@ -418,7 +420,7 @@ public class Interact
 			{
 				String BlockData = block.getTypeId()+":"+block.getData();
 				ItemStack item = new MaterialData(block.getTypeId(), (byte) block.getData()).toItemStack(1);
-				AreaConfig.set(AreaName+".Mining."+BlockData,item);
+				AreaConfig.set(AreaName+".Mining."+BlockData+".100",item);
 				AreaConfig.saveConfig();
 				GoldBigDragon_RPG.GUI.AreaGUI AGUI = new GoldBigDragon_RPG.GUI.AreaGUI();
 				new GoldBigDragon_RPG.Effect.Sound().SP(player, Sound.HORSE_SADDLE, 1.0F, 1.8F);

@@ -532,14 +532,50 @@ public class Area
 	{
 		YamlController YC_2 = GoldBigDragon_RPG.Main.Main.YC_2;
 		YamlManager AreaConfig =YC_2.getNewConfig("Area/AreaList.yml");
-		String ItemData = ChatColor.stripColor(event.getInventory().getItem(0).getItemMeta().getLore().get(1));
-		String AreaName = ChatColor.stripColor(event.getInventory().getItem(8).getItemMeta().getLore().get(1));
+		String ItemData = ChatColor.stripColor(event.getInventory().getItem(45).getItemMeta().getLore().get(1));
+		String AreaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+
 		if(event.getInventory().getItem(4) != null)
-			AreaConfig.set(AreaName+".Mining."+ItemData, event.getInventory().getItem(4));
+			AreaConfig.set(AreaName+".Mining."+ItemData+".100", event.getInventory().getItem(4));
 		else
 		{
-			AreaConfig.removeKey(AreaName+".Mining."+ItemData);
+			AreaConfig.removeKey(AreaName+".Mining."+ItemData+".100");
 			AreaConfig.set(AreaName+".Mining."+ItemData,"0:0");
+		}
+		if(event.getInventory().getItem(13) != null)
+			AreaConfig.set(AreaName+".Mining."+ItemData+".90", event.getInventory().getItem(13));
+		else
+		{
+			AreaConfig.removeKey(AreaName+".Mining."+ItemData+".90");
+			AreaConfig.set(AreaName+".Mining."+ItemData+".90","0:0");
+		}
+		if(event.getInventory().getItem(22) != null)
+			AreaConfig.set(AreaName+".Mining."+ItemData+".50", event.getInventory().getItem(22));
+		else
+		{
+			AreaConfig.removeKey(AreaName+".Mining."+ItemData+".50");
+			AreaConfig.set(AreaName+".Mining."+ItemData+".50","0:0");
+		}
+		if(event.getInventory().getItem(31) != null)
+			AreaConfig.set(AreaName+".Mining."+ItemData+".10", event.getInventory().getItem(31));
+		else
+		{
+			AreaConfig.removeKey(AreaName+".Mining."+ItemData+".10");
+			AreaConfig.set(AreaName+".Mining."+ItemData+".10","0:0");
+		}
+		if(event.getInventory().getItem(40) != null)
+			AreaConfig.set(AreaName+".Mining."+ItemData+".1", event.getInventory().getItem(40));
+		else
+		{
+			AreaConfig.removeKey(AreaName+".Mining."+ItemData+".1");
+			AreaConfig.set(AreaName+".Mining."+ItemData+".1","0:0");
+		}
+		if(event.getInventory().getItem(49) != null)
+			AreaConfig.set(AreaName+".Mining."+ItemData+".0", event.getInventory().getItem(49));
+		else
+		{
+			AreaConfig.removeKey(AreaName+".Mining."+ItemData+".0");
+			AreaConfig.set(AreaName+".Mining."+ItemData+".0","0:0");
 		}
 		AreaConfig.saveConfig();
 		return;

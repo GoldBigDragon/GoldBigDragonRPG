@@ -427,8 +427,10 @@ public class OPBoxSkillGUI extends GUIutil
 					GoldBigDragon_RPG.GUI.JobGUI JGUI = new GoldBigDragon_RPG.GUI.JobGUI();
 					JGUI.MapleStory_JobSetting(player, u.getString(player, (byte)3));
 					u.clearAll(player);
-					GoldBigDragon_RPG.ETC.Job J = new GoldBigDragon_RPG.ETC.Job();
-					J.AllPlayerFixAllSkillAndJobYML();
+					YamlManager Config  = Config_YC.getNewConfig("Config.yml");
+					Config.set("Time.LastSkillChanged", new GoldBigDragon_RPG.Util.Number().RandomNum(0, 100000)-new GoldBigDragon_RPG.Util.Number().RandomNum(0, 100000));
+					Config.saveConfig();
+					new GoldBigDragon_RPG.ETC.Job().AllPlayerFixAllSkillAndJobYML();
 				}
 				else
 				{

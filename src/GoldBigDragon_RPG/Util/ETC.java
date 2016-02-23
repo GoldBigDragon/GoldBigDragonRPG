@@ -16,6 +16,59 @@ public class ETC
 {
 	public Date date = new Date();
 	//날짜 함수를 호출하여 date란 새 이름으로 지정하는 단락
+
+	public String getFrom(long nowUTC, long PrevUTC)
+	{
+		if(nowUTC-PrevUTC<0)
+			return "알 수 없음";
+		else
+		{
+			long WaitingTime = (nowUTC-PrevUTC)/1000;
+			int year = 0;
+			int month = 0;
+			int day = 0;
+			int hour = 0;
+			int min = 0;
+			String pastedTime="";
+			if(WaitingTime >= 31536000)
+			{
+				year = (int) (WaitingTime/31536000);
+				WaitingTime = WaitingTime-(31536000*year);
+			}
+			if(WaitingTime >= 2678400)
+			{
+				month = (int) (WaitingTime/2678400);
+				WaitingTime = WaitingTime-(2678400*month);
+			}
+			if(WaitingTime >= 86400)
+			{
+				day = (int) (WaitingTime/86400);
+				WaitingTime = WaitingTime-(86400*day);
+			}
+			if(WaitingTime >= 3600)
+			{
+				hour = (int) (WaitingTime/3600);
+				WaitingTime = WaitingTime-(3600*hour);
+			}
+			if(WaitingTime >= 60)
+			{
+				min = (int) (WaitingTime/60);
+				WaitingTime = WaitingTime-(60*min);
+			}
+			if(year!=0)
+				pastedTime = year+"년";
+			if(month!=0)
+				pastedTime = pastedTime+month+"개월";
+			if(day!=0)
+				pastedTime = pastedTime+day+"일";
+			if(hour!=0)
+				pastedTime = pastedTime+hour+"시간";
+			if(min!=0)
+				pastedTime = pastedTime+min+"분";
+			pastedTime = pastedTime+WaitingTime+"초";
+			return pastedTime;
+		}
+	}
 	
 	public long getNowUTC()
 	{

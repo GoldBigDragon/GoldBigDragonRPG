@@ -6,6 +6,7 @@ import GoldBigDragon_RPG.Util.YamlManager;
 import GoldBigDragon_RPG.Effect.PacketSender;
 import GoldBigDragon_RPG.Main.Main;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -124,6 +125,20 @@ public class Attack
 	
 	public void DamageSetter(EntityDamageByEntityEvent event,String AttackType,Entity Attacker)
 	{
+		if(Attacker==null||event.getEntity()==null)
+			return;
+		if(event.getEntity().getType()==EntityType.ARMOR_STAND)
+		{
+			if(event.getEntity().getCustomName()!=null)
+				if(event.getEntity().getCustomName().charAt(0)=='¡×'&&event.getEntity().getCustomName().charAt(1)=='0'
+				&&event.getEntity().getCustomName().charAt(2)=='¡×'&&event.getEntity().getCustomName().charAt(3)=='l')
+				{
+					event.setCancelled(true);
+					return;
+				}
+			return;
+		}
+		
 	    GoldBigDragon_RPG.Effect.Sound sound = new GoldBigDragon_RPG.Effect.Sound();
 		if(Attacker.getType()==EntityType.PLAYER&&
 				event.getEntity().getType()==EntityType.PLAYER)

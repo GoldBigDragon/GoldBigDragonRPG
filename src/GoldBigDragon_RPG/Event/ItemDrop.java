@@ -58,6 +58,7 @@ public class ItemDrop
 	public void CustomItemDrop(Location loc, ItemStack m)
 	{
         Item item = loc.getWorld().dropItem(loc, new ItemStack(m));
+        item.setVelocity(new Vector(0, 0, 0));
 		return;
 	}
 	

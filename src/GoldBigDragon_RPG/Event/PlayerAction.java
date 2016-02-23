@@ -281,7 +281,6 @@ public class PlayerAction
 	  	}
 	}
 
-
 	private void TEMProuter(PlayerChatEvent event)
 	{
 		UserDataObject u = new UserDataObject();
@@ -289,7 +288,7 @@ public class PlayerAction
 		Player player = event.getPlayer();
 		GoldBigDragon_RPG.Effect.Sound s = new GoldBigDragon_RPG.Effect.Sound();
 		String Message = ChatColor.stripColor(event.getMessage());
-		if(u.getTemp(player).equals("FA"))
+		if(u.getTemp(player).compareTo("FA")==0)
 		{
 			if(Message.equals(player.getName()))
 			{
@@ -308,8 +307,10 @@ public class PlayerAction
 				}
 			}
 			new GoldBigDragon_RPG.GUI.ETCGUI().FriendsGUI(player, 0);
+			u.initTemp(player);
 		}
-		u.initTemp(player);
+		else if(u.getTemp(player).compareTo("Structure")==0)
+			new GoldBigDragon_RPG.Structure.Action().PlayerChatrouter(event);
 		return;
 	}
 	
@@ -3001,9 +3002,9 @@ public class PlayerAction
 		GoldBigDragon_RPG.Effect.Sound sound = new GoldBigDragon_RPG.Effect.Sound();
 		if(message.split(" ").length <= 1)
 		{
-			if(message.equals("x")||message.equals("X"))
+			if(message.compareTo("x")==0||message.compareTo("X")==0||message.compareTo("아니오")==0)
 				return 0;
-			else if(message.equals("o")||message.equals("O"))
+			else if(message.compareTo("o")==0||message.compareTo("O")==0||message.compareTo("네")==0)
 				return 1;
 			else
 			{

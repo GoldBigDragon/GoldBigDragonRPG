@@ -1,5 +1,6 @@
 package GoldBigDragon_RPG.Event;
 
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
@@ -10,6 +11,8 @@ public class MonsterSpawn
 {
 	public void EntitySpawn(CreatureSpawnEvent event)
 	{
+		if(event.getEntity().getType()==EntityType.ARMOR_STAND)
+			return;
 	    YamlController Monster_YC=GoldBigDragon_RPG.Main.Main.YC_1;
 	    YamlManager Config = Monster_YC.getNewConfig("config.yml");
 		if(Config.getString("Server.EntitySpawn") == "false")

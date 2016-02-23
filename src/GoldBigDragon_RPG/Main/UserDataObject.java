@@ -1,6 +1,7 @@
 package GoldBigDragon_RPG.Main;
 
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import GoldBigDragon_RPG.Util.YamlManager;
 
@@ -60,6 +61,12 @@ public class UserDataObject
 		YamlManager UserData = Main.YC_3.getNewConfig("UserData/"+ player.getUniqueId()+".yml");
 		return UserData.getString("Data.NPCuuid");
 	}
+
+	public ItemStack getItemStack(Player player)
+	{
+		YamlManager UserData = Main.YC_3.getNewConfig("UserData/"+ player.getUniqueId()+".yml");
+		return UserData.getItemStack("Data.Item");
+	}
 	
 	public void setNPCuuid(Player player, String Value)
 	{
@@ -102,6 +109,13 @@ public class UserDataObject
 		UserData.saveConfig();
 	}
 	
+	public void setItemStack(Player player, ItemStack item)
+	{
+		YamlManager UserData = Main.YC_3.getNewConfig("UserData/"+ player.getUniqueId()+".yml");
+		UserData.set("Data.Item",item);
+		UserData.saveConfig();
+	}
+	
 	public void setBoolean(Player player, byte BooleanNumber,boolean Value)
 	{
 		YamlManager UserData = Main.YC_3.getNewConfig("UserData/"+ player.getUniqueId()+".yml");
@@ -124,6 +138,7 @@ public class UserDataObject
 		UserData.saveConfig();
 		UserData.createSection("Data.Type");
 		UserData.set("Data.Temp",null);
+		UserData.set("Data.Item",null);
 		UserData.set("Data.NPCuuid",NPCuuid);
 		for(int count = 0; count < 9; count++)
 			UserData.createSection("Data.String."+count);
