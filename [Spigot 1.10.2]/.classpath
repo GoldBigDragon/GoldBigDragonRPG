@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="GoldBigDragonRPG_Source"/>
+	<classpathentry kind="src" path="OtherPlugins"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/[1.8.8 Spigot] 서버팩/plugins/Citizens.jar"/>
+	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/[1.8.8] GBD 서버/plugins/MagicSpells.jar"/>
+	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/[1.10] GoldBigDragon Server/spigot-latest.jar"/>
+	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/[1.10] GoldBigDragon Server/plugins/[1.10]NoteBlockAPI.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
