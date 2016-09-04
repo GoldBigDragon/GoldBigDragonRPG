@@ -75,10 +75,10 @@ public class ServerOption
 	public static short Money6ID = 41;
 	public static byte Money6DATA = 0;
 	
-	public static String serverUpdate = "2016-09-04-17:13";
+	public static String serverUpdate = "2016-09-04-21:22";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/";
-	public static String currentServerUpdate = "2016-09-04-17:13";
+	public static String currentServerUpdate = "2016-09-04-21:22";
 	public static String currentServerVersion = "Advanced";
 	
 	public static java.util.Map<Long, PartyDataObject> Party = new LinkedHashMap<Long, PartyDataObject>();
@@ -344,7 +344,7 @@ public class ServerOption
 			else
 			{
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[ ! ] GoldBigDragonRPG가 최신 버전이 아닙니다! 아래 주소에서 다운로드 받으세요!");
-				Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[ ! ] http://cafe.naver.com/goldbigdragon/40109");
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[ ! ] http://cafe.naver.com/goldbigdragon/57885");
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[ ! ] 패치가 필요한 이유 : " + Parsed[3].split(": ")[1]);
 			}
 			

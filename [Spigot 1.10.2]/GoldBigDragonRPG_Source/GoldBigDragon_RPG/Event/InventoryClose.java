@@ -13,11 +13,12 @@ public class InventoryClose
 		Object_UserData u = new Object_UserData();
 		Player player = (Player) event.getPlayer();
 		String InventoryName = event.getInventory().getTitle();
-		if(InventoryName.contains("전체")&&InventoryName.contains("스킬")&&InventoryName.contains("목록")&&InventoryName.contains(" : ")&&
+		if(InventoryName.contains(" : "))
+			if(InventoryName.split(" : ")[0].compareTo("전체 스킬 목록") == 0&&
 			((u.getType(player).compareTo("Job")==0&&u.getString(player, (byte)2) != null&&u.getString(player, (byte)3) != null)||
-			u.getType(player).compareTo("Skill")==0&&u.getString(player, (byte)1)==null&&u.getString(player, (byte)2)==null
-			&&u.getString(player, (byte)3)==null&&u.getString(player, (byte)4)==null))
-			u.clearAll(player);
+				u.getType(player).compareTo("Skill")==0&&u.getString(player, (byte)1)==null&&u.getString(player, (byte)2)==null
+				&&u.getString(player, (byte)3)==null&&u.getString(player, (byte)4)==null))
+				u.clearAll(player);
 		if(InventoryName.contains("전체") &&InventoryName.contains("지급")==false&&InventoryName.contains("[MapleStory]")==false&&InventoryName.contains("[Mabinogi]")==false
 				&&InventoryName.contains("스킬")==false&&InventoryName.contains("영역")==false
 				&&InventoryName.contains("개체")==false)
