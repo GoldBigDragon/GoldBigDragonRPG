@@ -2331,7 +2331,7 @@ public class NPC_GUI extends GUIutil
 							ShopGUI(player,NPCname,(short) 0,true,true);
 						else if(Case.compareTo("퀘스트 수정")==0)
 							AllOfQuestListGUI(player, (short) 0);
-						else if(Case.compareTo("퀘스트 수정")==0)
+						else if(Case.compareTo("직업 설정")==0)
 							NPCjobGUI(player,NPCname);
 					}
 				}
