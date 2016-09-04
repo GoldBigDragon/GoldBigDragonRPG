@@ -338,20 +338,17 @@ public class DungeonWork
 		
 		if(block.getType().getId()==146)//덫 상자
 		{
-			event.setCancelled(true);
-			TrapChestOpen(block);
-
-			byte howMuch = (byte) new GoldBigDragon_RPG.Util.Number().RandomNum(0, 8);
-			for(byte count = 0; count < howMuch; count++)
-				new GoldBigDragon_RPG.Util.PlayerUtil().addMoneyAndEXP(event.getPlayer() , new GoldBigDragon_RPG.Util.Number().RandomNum(0, 500), 0, block.getLocation(), true, false);
+			if(TrapChestOpen(block))
+			{
+				event.setCancelled(true);
+				byte howMuch = (byte) new GoldBigDragon_RPG.Util.Number().RandomNum(0, 8);
+				for(byte count = 0; count < howMuch; count++)
+					new GoldBigDragon_RPG.Util.PlayerUtil().addMoneyAndEXP(event.getPlayer() , new GoldBigDragon_RPG.Util.Number().RandomNum(0, 500), 0, block.getLocation(), true, false);
+			}
 		}
 		
 		else if(block.getType().getId()==95) //구슬방 구슬
-		{
-			event.setCancelled(true);
 			TrapGlassTouch(block, event.getPlayer());
-		}
-		
 		else if(block.getType().getId()==138)//던전 탈출용 신호기
 		{
 			event.setCancelled(true);
@@ -360,6 +357,9 @@ public class DungeonWork
 		
 		else if(block.getType().getId()==23) //던전 문 열쇠구멍
 		{
+			Block SB = new Location(block.getWorld(),block.getX(),block.getY()+10,block.getZ()).getBlock();
+			if(SB.getType()!=Material.SIGN_POST)
+				return;
 			event.setCancelled(true);
 			if(event.getClickedBlock().getLocation().add(0, 10, 0).getBlock() !=null)
 			{
@@ -481,6 +481,9 @@ public class DungeonWork
 		}
 		else if(block.getType().getId() == 130) //보상 상자
 		{
+			Block SB = new Location(block.getWorld(),block.getX(),block.getY()+12,block.getZ()).getBlock();
+			if(SB.getType()!=Material.SIGN_POST)
+				return;
 			event.setCancelled(true);
 	        Player player = event.getPlayer();
 			ItemStack item = new ItemStack(292);
@@ -493,7 +496,6 @@ public class DungeonWork
 			{
 				event.getClickedBlock().setType(Material.AIR, true);
 				s.SL(event.getClickedBlock().getLocation(), Sound.BLOCK_CHEST_OPEN, 1.0F, 1.0F);
-				Block SB = new Location(block.getWorld(),block.getX(),block.getY()+12,block.getZ()).getBlock();
 		        Sign SignBlock = (Sign) SB.getState();
 		        String DungeonName = SignBlock.getLine(2);
 			  	YamlController YC = new YamlController(GoldBigDragon_RPG.Main.Main.plugin);
@@ -575,11 +577,14 @@ public class DungeonWork
 		return;
 	}
 	
-	public void TrapChestOpen(Block block)
+	public boolean TrapChestOpen(Block block)
 	{
+		Block SB = new Location(block.getWorld(),block.getX(),block.getY()+12,block.getZ()).getBlock();
+		if(SB.getType()!=Material.SIGN_POST)
+			return false;
 		GoldBigDragon_RPG.Monster.MonsterSpawn MC = new GoldBigDragon_RPG.Monster.MonsterSpawn();
 		GoldBigDragon_RPG.Effect.Sound s = new GoldBigDragon_RPG.Effect.Sound();
-		Block SB = new Location(block.getWorld(),block.getX(),block.getY()+12,block.getZ()).getBlock();
+		
         Sign SignBlock = (Sign) SB.getState();
         String GridImage = SignBlock.getLine(1);
         String DungeonName = SignBlock.getLine(2);
@@ -767,11 +772,14 @@ public class DungeonWork
 		}
 		s.SL(block.getLocation(), org.bukkit.Sound.BLOCK_CHEST_OPEN, 1.0F, 0.5F);
         block.setTypeIdAndData(0, (byte)0, true);
-        return;
+        return true;
 	}
 	
 	public void TrapGlassTouch(Block block, Player player)
 	{
+		Block SB = new Location(block.getWorld(),block.getX(),block.getY()+11,block.getZ()).getBlock();
+		if(SB.getType()!=Material.SIGN_POST)
+			return;
 		GoldBigDragon_RPG.Monster.MonsterSpawn MC = new GoldBigDragon_RPG.Monster.MonsterSpawn();
 		GoldBigDragon_RPG.Effect.Sound s = new GoldBigDragon_RPG.Effect.Sound();
 		GoldBigDragon_RPG.Effect.Particle p = new GoldBigDragon_RPG.Effect.Particle();

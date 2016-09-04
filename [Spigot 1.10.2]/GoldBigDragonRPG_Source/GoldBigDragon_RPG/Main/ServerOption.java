@@ -75,10 +75,10 @@ public class ServerOption
 	public static short Money6ID = 41;
 	public static byte Money6DATA = 0;
 	
-	public static String serverUpdate = "2016-09-02-21:56";
+	public static String serverUpdate = "2016-09-04-14:50";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/";
-	public static String currentServerUpdate = "2016-09-02-21:56";
+	public static String currentServerUpdate = "2016-09-04-14:50";
 	public static String currentServerVersion = "Advanced";
 	
 	public static java.util.Map<Long, PartyDataObject> Party = new LinkedHashMap<Long, PartyDataObject>();

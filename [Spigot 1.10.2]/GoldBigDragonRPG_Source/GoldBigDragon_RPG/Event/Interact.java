@@ -10,6 +10,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.*;
 
@@ -355,7 +356,7 @@ public class Interact
 						+block.getLocation().getBlockY()+","+block.getLocation().getBlockZ()+")");
 				return;
 			}
-			else if(event.getAction()==Action.RIGHT_CLICK_BLOCK)
+			else if(event.getAction()==Action.RIGHT_CLICK_BLOCK&&event.getHand()==EquipmentSlot.HAND)
 			{
 				GoldBigDragon_RPG.Main.ServerOption.catchedLocation2.put(player, event.getClickedBlock().getLocation());
 				player.sendMessage(ChatColor.YELLOW + "[SYSTEM] : 두 번째 지점 설정 완료! (" + event.getClickedBlock().getLocation().getBlockX() + ","
