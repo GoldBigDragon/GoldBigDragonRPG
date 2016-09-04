@@ -75,10 +75,10 @@ public class ServerOption
 	public static short Money6ID = 41;
 	public static byte Money6DATA = 0;
 
-	public static String serverUpdate = "2016-09-04-14:50";
+	public static String serverUpdate = "2016-09-04-17:13";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/";
-	public static String currentServerUpdate = "2016-09-04-14:50";
+	public static String currentServerUpdate = "2016-09-04-17:13";
 	public static String currentServerVersion = "Advanced";
 	
 	public static String SpawnMobName;
@@ -311,9 +311,8 @@ public class ServerOption
 		
 		
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" 던전 정보 로드");
-		
-		
-		
+		new GoldBigDragon_RPG.Util.SendString().SendForBukkit((byte) 0);
+	  	VersionCheck();
 		return;
 	}
 	
@@ -345,11 +344,12 @@ public class ServerOption
 			currentServerUpdate = Update;
 			currentServerVersion = Version;
 			if(serverVersion.compareTo(Version)==0&&serverUpdate.compareTo(Update)==0)
-			  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_AQUA + "현재 GoldBigDragonRPG는 최신 버전입니다!");
+				Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_AQUA + "[ ! ] 현재 GoldBigDragonRPG는 최신 버전입니다!");
 			else
 			{
-				Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "최신 버전이 아닙니다! 아래 주소에서 다운로드 받으세요!");
-		  		Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "http://cafe.naver.com/goldbigdragon/40109");
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[ ! ] GoldBigDragonRPG가 최신 버전이 아닙니다! 아래 주소에서 다운로드 받으세요!");
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[ ! ] http://cafe.naver.com/goldbigdragon/40109");
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[ ! ] 패치가 필요한 이유 : " + Parsed[3].split(": ")[1]);
 			}
 			
 		}

@@ -67,7 +67,6 @@ public class Main extends JavaPlugin implements Listener
 		getServer().getPluginManager().registerEvents(this, this);
 		plugin = this;
 		new ServerOption().Initialize();
-		new GoldBigDragon_RPG.Util.SendString().SendForBukkit((byte) 0);
 	  	return;
 	}
 	
