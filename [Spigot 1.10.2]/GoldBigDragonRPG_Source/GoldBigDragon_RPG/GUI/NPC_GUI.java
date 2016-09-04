@@ -2430,28 +2430,93 @@ public class NPC_GUI extends GUIutil
 						default:
 						{
 							ItemStack item = event.getCurrentItem();
-							int value = Integer.parseInt(item.getItemMeta().getLore().get(item.getItemMeta().getLore().size()-2).split(" ")[2]);
-							if(item.getItemMeta().getLore().size() < 4)
-							{
-								ItemMeta Icon_Meta = item.getItemMeta();
-								Icon_Meta.setLore(null);
-								item.setItemMeta(Icon_Meta);
-							}
-							else
-							{
-								ItemMeta Icon_Meta = item.getItemMeta();
-								String[] l = new String[item.getItemMeta().getLore().size()-3];
-								for(int count =0;count <l.length;count++)
-									l[count] = (item.getItemMeta().getLore().get(count));
-								Icon_Meta.setLore(Arrays.asList(l));
-								item.setItemMeta(Icon_Meta);
-							}
-
-							s.SP(player, Sound.BLOCK_IRON_TRAPDOOR_OPEN, 0.8F, 0.5F);
+							boolean isBuy = true;
 							if(event.getInventory().getItem(0).getData().getData() == (byte)14)
-								ItemBuy(player, item, value, NPCname, false, 0);
+								isBuy=false;
+							if(event.getInventory().getItem(0).getItemMeta().hasLore())
+							{
+								if(event.getClick().isRightClick() == true)
+								{
+									Object_UserData u = new Object_UserData();
+									String Type=null;
+									if(isBuy == true)
+										Type = "Sell";
+									else
+										Type = "Buy";
+									
+									byte num = Byte.parseByte(ChatColor.stripColor(item.getItemMeta().getLore().get(item.getItemMeta().getLore().size()-1)));
+									YamlController YC = new YamlController(GoldBigDragon_RPG.Main.Main.plugin);
+									YamlManager NPCscript = YC.getNewConfig("NPC/NPCData/"+ u.getNPCuuid(player) +".yml");
+
+									Set<String> a = NPCscript.getConfigurationSection("Shop."+Type).getKeys(false);
+									
+									for(short count = 0; count < a.size(); count++)
+									{
+										if(count == num)
+										{
+											for(short counter =count; counter < a.size()-1; counter++)
+											{
+												NPCscript.set("Shop."+Type+"."+counter + ".item", NPCscript.getItemStack("Shop."+Type+"."+(counter+1) + ".item"));
+												NPCscript.set("Shop."+Type+"."+counter + ".price", NPCscript.getLong("Shop."+Type+"."+(counter+1) + ".price"));
+											}
+											NPCscript.removeKey("Shop."+Type+"."+(a.size()-1) + ".item");
+											NPCscript.removeKey("Shop."+Type+"."+(a.size()-1) + ".price");
+											NPCscript.removeKey("Shop."+Type+"."+(a.size()-1));
+											NPCscript.saveConfig();
+										}
+									}
+								}
+								else
+								{
+									if(item.getItemMeta().getLore().size() < 4)
+									{
+										ItemMeta Icon_Meta = item.getItemMeta();
+										Icon_Meta.setLore(null);
+										item.setItemMeta(Icon_Meta);
+										player.getInventory().addItem(item);
+									}
+									else
+									{
+										ItemMeta Icon_Meta = item.getItemMeta();
+										String[] l = new String[item.getItemMeta().getLore().size()-3];
+										for(byte count =0;count <l.length;count++)
+											l[count] = (item.getItemMeta().getLore().get(count));
+										Icon_Meta.setLore(Arrays.asList(l));
+										item.setItemMeta(Icon_Meta);
+										player.getInventory().addItem(item);
+									}
+								}
+								s.SP(player, org.bukkit.Sound.BLOCK_LAVA_POP, 2.0F, 1.7F);
+								int showingPage3 = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(8).getItemMeta().getLore().get(0)));
+								if(isBuy == true)
+									ShopGUI(player, NPCname, (short) showingPage3, true,true);
+								else
+									ShopGUI(player, NPCname, (short) showingPage3, false,true);
+							}
 							else
-								ItemBuy(player, item, value, NPCname, true, 0);
+							{
+								int value = Integer.parseInt(item.getItemMeta().getLore().get(item.getItemMeta().getLore().size()-2).split(" ")[2]);
+								if(item.getItemMeta().getLore().size() < 4)
+								{
+									ItemMeta Icon_Meta = item.getItemMeta();
+									Icon_Meta.setLore(null);
+									item.setItemMeta(Icon_Meta);
+								}
+								else
+								{
+									ItemMeta Icon_Meta = item.getItemMeta();
+									String[] l = new String[item.getItemMeta().getLore().size()-3];
+									for(int count =0;count <l.length;count++)
+										l[count] = (item.getItemMeta().getLore().get(count));
+									Icon_Meta.setLore(Arrays.asList(l));
+									item.setItemMeta(Icon_Meta);
+								}
+								s.SP(player, Sound.BLOCK_IRON_TRAPDOOR_OPEN, 0.8F, 0.5F);
+								if(event.getInventory().getItem(0).getData().getData() == (byte)14)
+									ItemBuy(player, item, value, NPCname, isBuy, 0);
+								else
+									ItemBuy(player, item, value, NPCname, isBuy, 0);
+							}
 						}
 					}
 				}

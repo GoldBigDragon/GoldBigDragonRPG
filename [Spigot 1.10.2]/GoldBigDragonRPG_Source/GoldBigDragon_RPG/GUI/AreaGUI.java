@@ -39,11 +39,6 @@ public class AreaGUI extends GUIutil
 			int MaxXLoc = AreaConfig.getInt(AreaName+".X.Max");
 			byte MaxYLoc = (byte) AreaConfig.getInt(AreaName+".Y.Max");
 			int MaxZLoc = AreaConfig.getInt(AreaName+".Z.Max");
-			if(AreaConfig.contains(AreaName+".Priority")==false)
-			{
-				AreaConfig.set(AreaName+".Priority", 5);
-				AreaConfig.saveConfig();
-			}
 			
 			byte Priority = (byte) AreaConfig.getInt(AreaName+".Priority");
 			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + AreaName, 395,0,1,Arrays.asList(
@@ -699,6 +694,9 @@ public class AreaGUI extends GUIutil
 				s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
 			  	YamlController YC = new YamlController(GoldBigDragon_RPG.Main.Main.plugin);
 				YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
+				for(int count = 0; count < ServerOption.AreaList.get(AreaConfig.getString(AreaName+".World")).size(); count++)
+					if(ServerOption.AreaList.get(AreaConfig.getString(AreaName+".World")).get(count).getAreaName().compareTo(AreaName)==0)
+						ServerOption.AreaList.get(AreaConfig.getString(AreaName+".World")).remove(count);
 				AreaConfig.removeKey(AreaName);
 				AreaConfig.saveConfig();
 				AreaListGUI(player, page);
