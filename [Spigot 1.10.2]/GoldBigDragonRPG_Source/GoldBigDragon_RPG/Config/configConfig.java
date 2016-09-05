@@ -12,7 +12,7 @@ public class configConfig
     	if(Config.contains("Version")==false)
     	{
 		  	Config.set("Version", "Advanced");
-		  	Config.set("Update", 20160902);
+		  	Config.set("Update", 20160905);
 		  	Config.set("Server.BroadCastSecond", 30);
 		  	Config.set("Server.EntitySpawn", true);
 		  	Config.set("Server.PVP", true);
@@ -230,9 +230,9 @@ public class configConfig
 		  	Config.set("Normal_Monster.POLAR_BEAR.MAX_MONEY", 45);
 		  	Config.saveConfig();
     	}
-    	else if(Config.getLong("Update") < 20160816)
+    	if(Config.getLong("Update") < 20160816)
     	{
-    		Config.set("Update", 20160808);
+    		Config.set("Update", 20160816);
 		  	Config.set("MaxStat.Level", 100);
 		  	Config.set("MaxStat.Stats", 1500);
 			Config.set("Server.AntiExplode", true);
@@ -241,6 +241,30 @@ public class configConfig
 		  	Config.set("Server.PVP", true);
 			Config.saveConfig();
     	}
+    	if(Config.getLong("Update") < 20160905)
+    	{
+    		Config.set("Update", 20160905);
+			Config.saveConfig();
+    		YamlManager ItemList = YC.getNewConfig("Item/ItemList.yml");
+    		int ItemAmount = ItemList.getConfigurationSection("").getKeys(false).size();
+    		for(int count= 0; count < ItemAmount; count++)
+    		{
+    			if(ItemList.contains(count+".JOB")==false)
+    			{
+    				ItemList.set(count+".JOB","°ø¿ë");
+    				ItemList.set(count+".MinLV",0);
+    				ItemList.set(count+".MinRLV",0);
+    				ItemList.set(count+".MinSTR",0);
+    				ItemList.set(count+".MinDEX",0);
+    				ItemList.set(count+".MinINT",0);
+    				ItemList.set(count+".MinWILL",0);
+    				ItemList.set(count+".MinLUK",0);
+    			}
+    		}
+    		ItemList.saveConfig();
+    	}
+    	
+    	
 		if(Config.contains("Server.MabinogiMoneySystem"))
 			GoldBigDragon_RPG.Main.ServerOption.MoneySystem = Config.getBoolean("Server.MabinogiMoneySystem");
 		if(Config.contains("Server.STR"))

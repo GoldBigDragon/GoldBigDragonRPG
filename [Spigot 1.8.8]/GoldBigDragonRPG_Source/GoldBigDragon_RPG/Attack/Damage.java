@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import GoldBigDragon_RPG.Main.ServerOption;
 import GoldBigDragon_RPG.Util.Number;
 import GoldBigDragon_RPG.Util.YamlController;
 import GoldBigDragon_RPG.Util.YamlManager;
@@ -68,8 +70,8 @@ public class Damage
 					}
 				}
 			}
-			STR = STR + getPlayerEquipmentStat((Player)entity, "STR")[0];
-			DefaultDamage = DefaultDamage + getPlayerEquipmentStat((Player)entity, "Damage")[0];
+			STR = STR + getPlayerEquipmentStat((Player)entity, "STR", null, false)[0];
+			DefaultDamage = DefaultDamage + getPlayerEquipmentStat((Player)entity, "Damage", null, false)[0];
 		}
 		return returnCombatValue(STR, DefaultDamage, true);
 	}
@@ -125,8 +127,8 @@ public class Damage
 					}
 				}
 			}
-			STR =  STR + getPlayerEquipmentStat((Player)entity, "STR")[0];
-			DefaultDamage = DefaultDamage + getPlayerEquipmentStat((Player)entity, "Damage")[1];
+			STR =  STR + getPlayerEquipmentStat((Player)entity, "STR", null, false)[0];
+			DefaultDamage = DefaultDamage + getPlayerEquipmentStat((Player)entity, "Damage", null, false)[1];
 		}
 		return returnCombatValue(STR, DefaultDamage, false);
 	}
@@ -165,11 +167,11 @@ public class Damage
 		if(entity != null)
 			if(entity.getType() == EntityType.PLAYER)
 			{
-				Stat = Stat + getPlayerEquipmentStat((Player)entity, "DEX")[0];
+				Stat = Stat + getPlayerEquipmentStat((Player)entity, "DEX", null, false)[0];
 				if(isMin)
-					DefaultDamage = DefaultDamage + getPlayerEquipmentStat((Player)entity, "Damage")[0];
+					DefaultDamage = DefaultDamage + getPlayerEquipmentStat((Player)entity, "Damage", null, false)[0];
 				else
-					DefaultDamage = DefaultDamage + getPlayerEquipmentStat((Player)entity, "Damage")[1];
+					DefaultDamage = DefaultDamage + getPlayerEquipmentStat((Player)entity, "Damage", null, false)[1];
 			}
 		int dam=0;
 		if(isMin)
@@ -240,8 +242,8 @@ public class Damage
 		if(entity!=null)
 		if(entity.getType() == EntityType.PLAYER)
 		{
-			DEX = DEX + getPlayerEquipmentStat((Player)entity, "DEX")[0];
-			balance = balance + getPlayerEquipmentStat((Player)entity, "Balance")[0];
+			DEX = DEX + getPlayerEquipmentStat((Player)entity, "DEX", null, false)[0];
+			balance = balance + getPlayerEquipmentStat((Player)entity, "Balance", null, false)[0];
 		}
 		balance = balance + (int)DEX/20;
 		if (balance > 80) balance = 80;
@@ -255,7 +257,7 @@ public class Damage
 		int critical = defaultCritical;
 		if(entity!=null)
 		if(entity.getType() == EntityType.PLAYER)
-			critical = critical + getPlayerEquipmentStat((Player)entity, "Critical")[0];
+			critical = critical + getPlayerEquipmentStat((Player)entity, "Critical", null, false)[0];
 		critical = critical + (int)(player_luk/5 + player_will/10);
 		return critical;
 	}
@@ -266,8 +268,8 @@ public class Damage
 		int Magic_DEF = 0;
 		if(entity.getType() == EntityType.PLAYER)
 		{
-			player_int = player_int + getPlayerEquipmentStat((Player)entity, "INT")[0];
-			Magic_DEF = Magic_DEF + getPlayerEquipmentStat((Player)entity, "Magic_DEF")[0];
+			player_int = player_int + getPlayerEquipmentStat((Player)entity, "INT", null, false)[0];
+			Magic_DEF = Magic_DEF + getPlayerEquipmentStat((Player)entity, "Magic_DEF", null, false)[0];
 		}
 		Magic_DEF = Magic_DEF + (int)(player_int/20);
 		return Magic_DEF;
@@ -279,8 +281,8 @@ public class Damage
 		int Magic_Protect = 0;
 		if(entity.getType() == EntityType.PLAYER)
 		{
-			player_int = player_int + getPlayerEquipmentStat((Player)entity, "INT")[0];
-			Magic_Protect = Magic_Protect + getPlayerEquipmentStat((Player)entity, "Magic_Protect")[0];
+			player_int = player_int + getPlayerEquipmentStat((Player)entity, "INT", null, false)[0];
+			Magic_Protect = Magic_Protect + getPlayerEquipmentStat((Player)entity, "Magic_Protect", null, false)[0];
 		}
 		Magic_Protect = Magic_Protect + (int)(player_int/100);
 		return Magic_Protect;
@@ -292,8 +294,8 @@ public class Damage
 		int DEFcrash = 0;
 		if(entity.getType() == EntityType.PLAYER)
 		{
-			player_dex = player_dex + getPlayerEquipmentStat((Player)entity, "DEX")[0];
-			DEFcrash = DEFcrash + getPlayerEquipmentStat((Player)entity, "DEFcrash")[0];
+			player_dex = player_dex + getPlayerEquipmentStat((Player)entity, "DEX", null, false)[0];
+			DEFcrash = DEFcrash + getPlayerEquipmentStat((Player)entity, "DEFcrash", null, false)[0];
 		}
 		DEFcrash = DEFcrash + (int)(player_dex/40);
 		return DEFcrash;
@@ -305,14 +307,14 @@ public class Damage
 		int MagicDEFcrash = 0;
 		if(entity.getType() == EntityType.PLAYER)
 		{
-			player_int = player_int + getPlayerEquipmentStat((Player)entity, "INT")[0];
-			MagicDEFcrash = MagicDEFcrash + getPlayerEquipmentStat((Player)entity, "MagicDEFcrash")[0];
+			player_int = player_int + getPlayerEquipmentStat((Player)entity, "INT", null, false)[0];
+			MagicDEFcrash = MagicDEFcrash + getPlayerEquipmentStat((Player)entity, "MagicDEFcrash", null, false)[0];
 		}
 		MagicDEFcrash = MagicDEFcrash + (int)(player_int/40);
 		return MagicDEFcrash;
 	}
 
-	public int[] getPlayerEquipmentStat(Player player, String type)
+	public int[] getPlayerEquipmentStat(Player player, String type ,ItemStack newSlot, boolean isHotBarChange)
 	{
 		int bonus[] = new int[2];
 		String Lore[];
@@ -339,6 +341,7 @@ public class Damage
 			default : break;
 		}
 		ItemStack item[] = player.getInventory().getArmorContents();
+		boolean Totaluseable = true;
 		for(byte counter = 0; counter < item.length; counter++)
 		{
 			boolean ExitDurability = true;
@@ -352,11 +355,38 @@ public class Damage
 						{
 							if(!(item[counter].getItemMeta().getLore().toString().contains("[주문서]")||item[counter].getItemMeta().getLore().toString().contains("[룬]")||item[counter].getItemMeta().getLore().toString().contains("[소비]")))
 							{
+								boolean useable = true;
 								for(byte count = 0; count < item[counter].getItemMeta().getLore().size(); count++)
 								{
 									String nowlore=ChatColor.stripColor(item[counter].getItemMeta().getLore().get(count));
 									if(nowlore.contains(" : "))
 									{
+										if(nowlore.contains("직업") == true)
+											if(nowlore.split(" : ")[1].compareTo(ServerOption.PlayerList.get(player.getUniqueId().toString()).getPlayerRootJob())!=0)
+												useable = false;
+										if(nowlore.contains("최소") == true)
+										{
+											String[] Resist = nowlore.split(" ");
+											if(Resist[Resist.length-3].compareTo("레벨")==0)
+												useable = Integer.parseInt(Resist[Resist.length-1]) <= ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level();
+											else if(Resist[Resist.length-3].compareTo("누적레벨")==0)
+												useable = Integer.parseInt(Resist[Resist.length-1]) <= ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel();
+											else if(Resist[Resist.length-3].compareTo(GoldBigDragon_RPG.Main.ServerOption.STR)==0)
+												useable = Integer.parseInt(Resist[Resist.length-1]) <= ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR();
+											else if(Resist[Resist.length-3].compareTo(GoldBigDragon_RPG.Main.ServerOption.DEX)==0)
+												useable = Integer.parseInt(Resist[Resist.length-1]) <= ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX();
+											else if(Resist[Resist.length-3].compareTo(GoldBigDragon_RPG.Main.ServerOption.INT)==0)
+												useable = Integer.parseInt(Resist[Resist.length-1]) <= ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT();
+											else if(Resist[Resist.length-3].compareTo(GoldBigDragon_RPG.Main.ServerOption.WILL)==0)
+												useable = Integer.parseInt(Resist[Resist.length-1]) <= ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL();
+											else if(Resist[Resist.length-3].compareTo(GoldBigDragon_RPG.Main.ServerOption.LUK)==0)
+												useable = Integer.parseInt(Resist[Resist.length-1]) <= ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK();
+										}
+										if(useable==false)
+										{
+											Totaluseable = false;
+											break;
+										}
 										if(nowlore.contains("내구도") == true)
 										{
 											String[] Lore2 = nowlore.split(" : ");
@@ -369,33 +399,44 @@ public class Damage
 										}
 									}
 								}
-								for(byte count = 0; count < item[counter].getItemMeta().getLore().size(); count++)
+								if(useable)
 								{
-									if(item[counter].getItemMeta().getLore().get(count).contains(type) == true)
+									for(byte count = 0; count < item[counter].getItemMeta().getLore().size(); count++)
 									{
-										if(item[counter].getItemMeta().getLore().get(count).contains(" : "))
+										if(item[counter].getItemMeta().getLore().get(count).contains(type) == true)
 										{
-											if(ExitDurability == true)
+											if(item[counter].getItemMeta().getLore().get(count).contains(" : ")||item[counter].getItemMeta().getLore().get(count).contains("/"))
 											{
-												Lore = ChatColor.stripColor(item[counter].getItemMeta().getLore().get(count)).split(" : ");
-												if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0||type.equalsIgnoreCase(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)||type.equalsIgnoreCase("업그레이드"))
+												if(ExitDurability == true)
 												{
-													if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0)
+													Lore = ChatColor.stripColor(item[counter].getItemMeta().getLore().get(count)).split(" : ");
+													if(Lore[0].contains(type))
 													{
-														String[] SubLore = Lore[1].split(" ~ ");
-														bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
-														bonus[1] = bonus[1] + Integer.parseInt(SubLore[1]);
+														if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.STR)==0||type.compareTo(GoldBigDragon_RPG.Main.ServerOption.DEX)==0||
+															type.compareTo(GoldBigDragon_RPG.Main.ServerOption.INT)==0||type.compareTo(GoldBigDragon_RPG.Main.ServerOption.WILL)==0||
+															type.compareTo(GoldBigDragon_RPG.Main.ServerOption.LUK)==0)
+														{
+															if(item[counter].getItemMeta().getLore().get(count).contains("최소") == false)
+																bonus[0] = bonus[0] + Integer.parseInt(Lore[1]);
+														}
+														else if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0||type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.compareTo("업그레이드")==0)
+														{
+															if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0)
+															{
+																String[] SubLore = Lore[1].split(" ~ ");
+																bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
+																bonus[1] = bonus[1] + Integer.parseInt(SubLore[1]);
+															}
+															else if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.compareTo("업그레이드")==0)
+															{
+																String[] SubLore = Lore[1].split(" ~ ");
+																bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
+																bonus[1] = bonus[1] + Integer.parseInt(SubLore[1]);
+															}
+														}
+														else
+															bonus[0] = bonus[0] + Integer.parseInt(Lore[1]);
 													}
-													else if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.equalsIgnoreCase("업그레이드"))
-													{
-														String[] SubLore = Lore[1].split(" ~ ");
-														bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
-														bonus[1] = bonus[1] + Integer.parseInt(SubLore[1]);
-													}
-												}
-												else
-												{
-													bonus[0] = bonus[0] + Integer.parseInt(Lore[1]);
 												}
 											}
 										}
@@ -407,9 +448,17 @@ public class Damage
 				}
 			}
 		}
-		item[0] = player.getItemInHand();
+		if(newSlot == null)
+		{
+			if(isHotBarChange)
+				item[0] = null;
+			else
+				item[0] = player.getItemInHand();
+		}
+		else
+			item[0] = newSlot;
 		boolean ExitDurability = true;
-		if(item[0] !=null)
+		if(item[0] !=null &&item[0].getType()!=Material.AIR)
 		{
 			if(item[0].hasItemMeta() == true)
 			{
@@ -419,12 +468,39 @@ public class Damage
 					{
 						if(!(item[0].getItemMeta().getLore().toString().contains("[주문서]")||item[0].getItemMeta().getLore().toString().contains("[룬]")||item[0].getItemMeta().getLore().toString().contains("[소비]")))
 						{
+							boolean useable = true;
 							for(byte count = 0; count < item[0].getItemMeta().getLore().size(); count++)
 							{
 								String nowlore=ChatColor.stripColor(item[0].getItemMeta().getLore().get(count));
 								if(nowlore.contains(" : "))
 								{
-									if(item[0].getItemMeta().getLore().get(count).contains("내구도") == true)
+									if(nowlore.contains("직업") == true)
+										if(nowlore.split(" : ")[1].compareTo(ServerOption.PlayerList.get(player.getUniqueId().toString()).getPlayerRootJob())!=0)
+											useable = false;
+									if(nowlore.contains("최소") == true)
+									{
+										String[] Resist = nowlore.split(" ");
+										if(Resist[Resist.length-3].compareTo("레벨")==0)
+											useable = Integer.parseInt(Resist[Resist.length-1]) <= ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level();
+										else if(Resist[Resist.length-3].compareTo("누적레벨")==0)
+											useable = Integer.parseInt(Resist[Resist.length-1]) <= ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel();
+										else if(Resist[Resist.length-3].compareTo(GoldBigDragon_RPG.Main.ServerOption.STR)==0)
+											useable = Integer.parseInt(Resist[Resist.length-1]) <= ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR();
+										else if(Resist[Resist.length-3].compareTo(GoldBigDragon_RPG.Main.ServerOption.DEX)==0)
+											useable = Integer.parseInt(Resist[Resist.length-1]) <= ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX();
+										else if(Resist[Resist.length-3].compareTo(GoldBigDragon_RPG.Main.ServerOption.INT)==0)
+											useable = Integer.parseInt(Resist[Resist.length-1]) <= ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT();
+										else if(Resist[Resist.length-3].compareTo(GoldBigDragon_RPG.Main.ServerOption.WILL)==0)
+											useable = Integer.parseInt(Resist[Resist.length-1]) <= ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL();
+										else if(Resist[Resist.length-3].compareTo(GoldBigDragon_RPG.Main.ServerOption.LUK)==0)
+											useable = Integer.parseInt(Resist[Resist.length-1]) <= ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK();
+									}
+									if(useable==false)
+									{
+										Totaluseable = false;
+										break;
+									}
+									if(nowlore.contains("내구도") == true)
 									{
 										String[] Lore2 = nowlore.split(" : ");
 										String[] SubLore = Lore2[1].split(" / ");
@@ -436,208 +512,43 @@ public class Damage
 									}
 								}
 							}
-							for(byte count = 0; count < item[0].getItemMeta().getLore().size(); count++)
+							if(useable)
 							{
-								if(item[0].getItemMeta().getLore().get(count).contains(type) == true)
+								for(byte count = 0; count < item[0].getItemMeta().getLore().size(); count++)
 								{
-									if(item[0].getItemMeta().getLore().get(count).contains(" : "))
+									if(item[0].getItemMeta().getLore().get(count).contains(type) == true)
 									{
-										if(ExitDurability == true)
-										{
-											if(item[0].getItemMeta().getLore().get(count).contains(":") == true||item[0].getItemMeta().getLore().get(count).contains("/") == true)
-											{
-												Lore = ChatColor.stripColor(item[0].getItemMeta().getLore().get(count)).split(" : ");
-												if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0||type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.equalsIgnoreCase("업그레이드"))
-												{
-													if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0)
-													{
-														String[] SubLore = Lore[1].split(" ~ ");
-														bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
-														bonus[1] = bonus[1] + Integer.parseInt(SubLore[1]);
-													}
-													else if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.equalsIgnoreCase("업그레이드"))
-													{
-														String[] SubLore = Lore[1].split(" ~ ");
-														bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
-														bonus[1] = bonus[1] + Integer.parseInt(SubLore[1]);
-													}
-													return bonus;
-												}
-												else
-												{
-													bonus[0] = bonus[0] + Integer.parseInt(Lore[1]);
-													return bonus;
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		return bonus;
-	}
-
-
-	public int[] getSlotChangedPlayerEquipmentStat(Player player, String type,ItemStack newSlot)
-	{
-		int bonus[] = new int[2];
-		String Lore[];
-		switch(type)
-		{
-			case "Damage":type = GoldBigDragon_RPG.Main.ServerOption.Damage;break;
-			case "DEF":type = "방어";break;
-			case "DEFcrash":type = "방어관통";break;
-			case "Protect":type = "보호";break;
-			case "MagicDamage":type = GoldBigDragon_RPG.Main.ServerOption.MagicDamage;break;
-			case "Magic_DEF":type = "마법 방어";break;
-			case "MagicDEFcrash":type = "마법 방어관통";break;
-			case "Magic_Protect":type = "마법 보호";break;
-			case "STR":type = GoldBigDragon_RPG.Main.ServerOption.STR;break;
-			case "DEX":type = GoldBigDragon_RPG.Main.ServerOption.DEX;break;
-			case "INT":type = GoldBigDragon_RPG.Main.ServerOption.INT;break;
-			case "WILL":type = GoldBigDragon_RPG.Main.ServerOption.WILL;break;
-			case "LUK":type = GoldBigDragon_RPG.Main.ServerOption.LUK;break;
-			case "HP":type = "생명력";break;
-			case "MP":type = "마나";break;
-			case "Critical":type = "크리티컬";break;
-			case "Balance":type = "밸런스";break;
-			case "Upgrade":type = "업그레이드";break;
-			default : break;
-		}
-		ItemStack item[] = player.getInventory().getArmorContents();
-		for(byte counter = 0; counter < item.length; counter++)
-		{
-			boolean ExitDurability = true;
-			if(item[counter] != null)
-			{
-				if(item[counter].hasItemMeta() == true)
-				{
-					if(item[counter].getItemMeta().hasLore() == true)
-					{
-						if(item[counter].getItemMeta().getLore().toString().contains(type) == true)
-						{
-							if(!(item[counter].getItemMeta().getLore().toString().contains("[주문서]")||item[counter].getItemMeta().getLore().toString().contains("[룬]")||item[counter].getItemMeta().getLore().toString().contains("[소비]")))
-							{
-								for(byte count = 0; count < item[counter].getItemMeta().getLore().size(); count++)
-								{
-									String nowlore=ChatColor.stripColor(item[counter].getItemMeta().getLore().get(count));
-									if(nowlore.contains(" : "))
-									{
-										if(nowlore.contains("내구도") == true)
-										{
-											String[] Lore2 = nowlore.split(" : ");
-											String[] SubLore = Lore2[1].split(" / ");
-											if(Integer.parseInt(SubLore[0]) <= 0)
-											{
-												ExitDurability = false;
-												break;
-											}
-										}
-									}
-								}
-								for(byte count = 0; count < item[counter].getItemMeta().getLore().size(); count++)
-								{
-									if(item[counter].getItemMeta().getLore().get(count).contains(type) == true)
-									{
-										if(item[counter].getItemMeta().getLore().get(count).contains(" : "))
+										if(item[0].getItemMeta().getLore().get(count).contains(" : ")||item[0].getItemMeta().getLore().get(count).contains("/"))
 										{
 											if(ExitDurability == true)
 											{
-												Lore = ChatColor.stripColor(item[counter].getItemMeta().getLore().get(count)).split(" : ");
+												Lore = ChatColor.stripColor(item[0].getItemMeta().getLore().get(count)).split(" : ");
 												if(Lore[0].contains(type))
-												if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0||type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.equalsIgnoreCase("업그레이드"))
 												{
-													if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0)
+													if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.STR)==0||type.compareTo(GoldBigDragon_RPG.Main.ServerOption.DEX)==0||
+														type.compareTo(GoldBigDragon_RPG.Main.ServerOption.INT)==0||type.compareTo(GoldBigDragon_RPG.Main.ServerOption.WILL)==0||
+														type.compareTo(GoldBigDragon_RPG.Main.ServerOption.LUK)==0)
 													{
-														String[] SubLore = Lore[1].split(" ~ ");
-														bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
-														bonus[1] = bonus[1] + Integer.parseInt(SubLore[1]);
+														if(item[0].getItemMeta().getLore().get(count).contains("최소") == false)
+															bonus[0] = bonus[0] + Integer.parseInt(Lore[1]);
 													}
-													else if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.equalsIgnoreCase("업그레이드"))
+													else if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0||type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.compareTo("업그레이드")==0)
 													{
-														String[] SubLore = Lore[1].split(" ~ ");
-														bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
-														bonus[1] = bonus[1] + Integer.parseInt(SubLore[1]);
+														if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0)
+														{
+															String[] SubLore = Lore[1].split(" ~ ");
+															bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
+															bonus[1] = bonus[1] + Integer.parseInt(SubLore[1]);
+														}
+														else if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.compareTo("업그레이드")==0)
+														{
+															String[] SubLore = Lore[1].split(" ~ ");
+															bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
+															bonus[1] = bonus[1] + Integer.parseInt(SubLore[1]);
+														}
 													}
-												}
-												else
-												{
-													bonus[0] = bonus[0] + Integer.parseInt(Lore[1]);
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		item[0] = newSlot;
-		boolean ExitDurability = true;
-		if(item[0] !=null)
-		{
-			if(item[0].hasItemMeta() == true)
-			{
-				if(item[0].getItemMeta().hasLore() == true)
-				{
-					if(item[0].getItemMeta().getLore().toString().contains(type) == true)
-					{
-						if(!(item[0].getItemMeta().getLore().toString().contains("[주문서]")||item[0].getItemMeta().getLore().toString().contains("[룬]")||item[0].getItemMeta().getLore().toString().contains("[소비]")))
-						{
-							for(byte count = 0; count < item[0].getItemMeta().getLore().size(); count++)
-							{
-								String nowlore=ChatColor.stripColor(item[0].getItemMeta().getLore().get(count));
-								if(nowlore.contains(" : "))
-								{
-									if(item[0].getItemMeta().getLore().get(count).contains("내구도") == true)
-									{
-										String[] Lore2 = nowlore.split(" : ");
-										String[] SubLore = Lore2[1].split(" / ");
-										if(Integer.parseInt(SubLore[0]) <= 0)
-										{
-											ExitDurability = false;
-											break;
-										}
-									}
-								}
-							}
-							for(byte count = 0; count < item[0].getItemMeta().getLore().size(); count++)
-							{
-								if(item[0].getItemMeta().getLore().get(count).contains(type) == true)
-								{
-									if(item[0].getItemMeta().getLore().get(count).contains(" : "))
-									{
-										if(ExitDurability == true)
-										{
-											if(item[0].getItemMeta().getLore().get(count).contains(":") == true||item[0].getItemMeta().getLore().get(count).contains("/") == true)
-											{
-												Lore = ChatColor.stripColor(item[0].getItemMeta().getLore().get(count)).split(" : ");
-												if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0||type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.equalsIgnoreCase("업그레이드"))
-												{
-													if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.Damage)==0)
-													{
-														String[] SubLore = Lore[1].split(" ~ ");
-														bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
-														bonus[1] = bonus[1] + Integer.parseInt(SubLore[1]);
-													}
-													else if(type.compareTo(GoldBigDragon_RPG.Main.ServerOption.MagicDamage)==0||type.equalsIgnoreCase("업그레이드"))
-													{
-														String[] SubLore = Lore[1].split(" ~ ");
-														bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
-														bonus[1] = bonus[1] + Integer.parseInt(SubLore[1]);
-													}
-													return bonus;
-												}
-												else
-												{
-													bonus[0] = bonus[0] + Integer.parseInt(Lore[1]);
-													return bonus;
+													else
+														bonus[0] = bonus[0] + Integer.parseInt(Lore[1]);
 												}
 											}
 										}
@@ -649,9 +560,11 @@ public class Damage
 				}
 			}
 		}
+		if(Totaluseable==false)
+			new GoldBigDragon_RPG.Effect.PacketSender().sendTitleSubTitle(player,"\'§e\'", "\'§c(장비가 제 성능을 하지 못하고 있다!)\'", (byte)1,(byte)1, (byte)1);
 		return bonus;
 	}
-	
+
 	public int getPlayerEquipmentDurability(Player player, String part)
 	{
 		int durability = -1;

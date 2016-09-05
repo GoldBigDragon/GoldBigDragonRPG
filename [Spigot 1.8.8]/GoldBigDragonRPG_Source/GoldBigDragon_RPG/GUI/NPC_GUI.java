@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.Set;
 
 import org.bukkit.entity.Player;
+import org.apache.logging.log4j.core.jmx.Server;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -2274,9 +2275,11 @@ public class NPC_GUI extends GUIutil
 												if(NPCscript.getString("Job.Job").compareTo(PlayerJob.getString("Job.Type"))!=0)
 												{
 													//플레이어 전직함
-													PlayerJob.set("Job.Type",NPCscript.getString("Job.Job"));
+													PlayerJob.set("Job.Root", Job[count].toString());
+													PlayerJob.set("Job.Type", NPCscript.getString("Job.Job"));
 													PlayerJob.createSection("MapleStory."+NPCscript.getString("Job.Job")+".Skill");
 													PlayerJob.saveConfig();
+													ServerOption.PlayerList.get(player.getUniqueId().toString()).setPlayerRootJob(Job[count].toString());
 													GoldBigDragon_RPG.ETC.Job J = new GoldBigDragon_RPG.ETC.Job();
 													J.FixPlayerJobList(player);
 													J.FixPlayerSkillList(player);

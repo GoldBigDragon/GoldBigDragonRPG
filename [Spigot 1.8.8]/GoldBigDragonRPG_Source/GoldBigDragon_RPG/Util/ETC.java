@@ -198,24 +198,24 @@ public class ETC
 		}
 		GoldBigDragon_RPG.Attack.Damage d = new GoldBigDragon_RPG.Attack.Damage();
 		Damageable p = player;
-		int BonusHealth = d.getPlayerEquipmentStat(player, "생명력")[0];
+		int BonusHealth = d.getPlayerEquipmentStat(player, "생명력", null, false)[0];
 		int MaxHealth = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxHP()+BonusHealth;
 		if(MaxHealth > 0)
 			p.setMaxHealth(MaxHealth);
 		return;
     }
     
-    public void SlotChangedUpdatePlayerHPMP(Player player, ItemStack newSlot)
+    public void SlotChangedUpdatePlayerHPMP(Player player, ItemStack newSlot, boolean isHotbarChange)
     {
 		if(GoldBigDragon_RPG.Main.ServerOption.MagicSpellsCatched == true)
 		{
 			OtherPlugins.SpellMain MS = new OtherPlugins.SpellMain();
-			MS.setSlotChangePlayerMaxAndNowMana(player,newSlot);
+			MS.setSlotChangePlayerMaxAndNowMana(player, newSlot, isHotbarChange);
 		}
 		GoldBigDragon_RPG.Attack.Damage d = new GoldBigDragon_RPG.Attack.Damage();
 		Damageable p = player;
-		
-		int BonusHealth = d.getSlotChangedPlayerEquipmentStat(player, "생명력",newSlot)[0];
+
+		int BonusHealth = d.getPlayerEquipmentStat(player, "생명력", newSlot, isHotbarChange)[0];
 		int MaxHealth = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxHP()+BonusHealth;
 
 		if(MaxHealth > 0)

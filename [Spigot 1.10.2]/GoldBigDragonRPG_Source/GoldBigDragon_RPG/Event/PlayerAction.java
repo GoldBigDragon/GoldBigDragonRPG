@@ -25,16 +25,9 @@ public class PlayerAction
 		Player player = event.getPlayer();
 		if(new GoldBigDragon_RPG.Effect.Corpse().DeathCapture(player,false))
 			return;
-		//플레이어 움직이지 못하게 하기
-		//player.teleport(event.getPlayer().getLocation());
 
 		if(player.getLocation().getWorld().getName().compareTo("Dungeon")!=0)
 		{
-			if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getETC_CurrentArea()==null)
-			{
-				GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setETC_CurrentArea("null");
-				//new GoldBigDragon_RPG.Dungeon.DungeonWork().EraseAllDungeonKey(player, false);
-			}
 			if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getDungeon_Enter() != null)
 			{
 				if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI"))
@@ -44,6 +37,8 @@ public class PlayerAction
 			}
 			if(new GoldBigDragon_RPG.ETC.Area().getAreaName(event.getPlayer()) != null)
 			{
+				if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getETC_CurrentArea()==null)
+					GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setETC_CurrentArea("null");
 				GoldBigDragon_RPG.ETC.Area A = new GoldBigDragon_RPG.ETC.Area();
 				String Area = A.getAreaName(event.getPlayer())[0];
 				if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getETC_CurrentArea().compareTo(Area) != 0)
@@ -98,7 +93,6 @@ public class PlayerAction
 			}
 			else
 			{
-				//String PrevArea = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getETC_CurrentArea();
 				GoldBigDragon_RPG.Main.ServerOption.PlayerCurrentArea.put(player, "null");
 				GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setETC_CurrentArea("null");
 				if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
@@ -106,14 +100,6 @@ public class PlayerAction
 			}
 			return;
 		}
-		/*
-		else//플레이어가 던전일 경우
-		{
-			if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getDungeon_Enter() != null)
-			{
-			}
-		}
-		*/
 	}
 
 	public void PlayerChatting(PlayerChatEvent event)
@@ -877,101 +863,81 @@ public class PlayerAction
 		String Message = ChatColor.stripColor(event.getMessage());
 		if(u.getInt(player, (byte)3)!=-1)
 			number = u.getInt(player, (byte)3);
-		String Type = u.getString(player, (byte)1);
 		if(ItemList.getString(number+"")==null)
 		{
 			player.sendMessage(ChatColor.RED+"[SYSTEM] : 다른 OP가 아이템을 삭제하여 반영되지 않았습니다!");
 			return;
 		}
-		switch(u.getString(player, (byte)1))
+		String SayType = u.getString(player, (byte)1);
+		if(SayType.compareTo("DisplayName")==0 || SayType.compareTo("Lore")==0)
+			ItemList.set(number+"."+SayType,event.getMessage());
+		else if(SayType.compareTo("ID")==0)
 		{
-			case "DisplayName":
-			case "Lore":
-				ItemList.set(number+"."+Type,event.getMessage());
-				break;
-			case "ID":
-				if(isIntMinMax(Message, player, 1, Integer.MAX_VALUE))
+			if(isIntMinMax(Message, player, 1, Integer.MAX_VALUE))
+			{
+				GoldBigDragon_RPG.Event.Interact I = new GoldBigDragon_RPG.Event.Interact();
+				if(I.SetItemDefaultName(Short.parseShort(Message),(byte)0).compareTo("지정되지 않은 아이템")==0)
 				{
-					GoldBigDragon_RPG.Event.Interact I = new GoldBigDragon_RPG.Event.Interact();
-					if(I.SetItemDefaultName(Short.parseShort(Message),(byte)0).compareTo("지정되지 않은 아이템")==0)
-					{
-						player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 아이템은 존재하지 않습니다!");
-		  				sound.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-		  				return;
-					}
-					ItemList.set(number+"."+Type,Integer.parseInt(Message));
+					player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 아이템은 존재하지 않습니다!");
+	  				sound.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+	  				return;
 				}
-				break;
-			case "Saturation":
-			case "SkillPoint":
-			case "StatPoint":
-			case "Data":
-			case "DEF":
-			case "Protect":
-			case "MaDEF":
-			case "MaProtect":
-			case "MaxUpgrade":
-			case "MaxDamage":
-			case "MaxMaDamage":
-			case "Durability":
+				ItemList.set(number+"."+SayType,Integer.parseInt(Message));
+			}
+		}
+		else if(SayType.compareTo("MinDamage")==0)
+		{
 			if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
-				ItemList.set(number+"."+Type,Integer.parseInt(Message));
-			break;
-			case "MinDamage":
-				if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
+			{
+				ItemList.set(number+"."+SayType,Integer.parseInt(Message));
+				ItemList.saveConfig();
+				u.setType(player, u.getType(player));
+				u.setString(player, (byte)1, "MaxDamage");
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최대 "+GoldBigDragon_RPG.Main.ServerOption.Damage+"를 입력해 주세요!");
+				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+			}
+			return;
+		}
+		else if(SayType.compareTo("MinMaDamage")==0)
+		{
+			if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
+			{
+				ItemList.set(number+"."+SayType,Integer.parseInt(Message));
+				ItemList.saveConfig();
+				u.setType(player, u.getType(player));
+				u.setString(player, (byte)1, "MaxMaDamage");
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최대 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+"를 입력해 주세요!");
+				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+			}
+			return;
+		}
+		else if(SayType.compareTo("MaxDurability")==0)
+		{
+			if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
+			{
+				ItemList.set(number+"."+SayType,Integer.parseInt(Message));
+				ItemList.saveConfig();
+				u.setType(player, u.getType(player));
+				u.setString(player, (byte)1, "Durability");
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 현재 내구도를 입력해 주세요!");
+				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+ItemList.getInt(number+".MaxDurability")+")");
+			}
+			return;
+		}
+		else if(SayType.compareTo("HP")==0)
+		{
+			if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
+			{
+				ItemList.set(number+"."+SayType,Integer.parseInt(Message));
+				ItemList.saveConfig();
+				if(u.getInt(player, (byte)4) != -1)
 				{
-					ItemList.set(number+"."+Type,Integer.parseInt(Message));
-					ItemList.saveConfig();
-					u.setType(player, u.getType(player));
-					u.setString(player, (byte)1, "MaxDamage");
-					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최대 "+GoldBigDragon_RPG.Main.ServerOption.Damage+"를 입력해 주세요!");
-					player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-				}
-				return;
-			case "MinMaDamage":
-				if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
-				{
-					ItemList.set(number+"."+Type,Integer.parseInt(Message));
-					ItemList.saveConfig();
-					u.setType(player, u.getType(player));
-					u.setString(player, (byte)1, "MaxMaDamage");
-					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최대 "+GoldBigDragon_RPG.Main.ServerOption.MagicDamage+"를 입력해 주세요!");
-					player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-				}
-				return;
-			case "MaxDurability":
-				if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
-				{
-					ItemList.set(number+"."+Type,Integer.parseInt(Message));
-					ItemList.saveConfig();
-					u.setType(player, u.getType(player));
-					u.setString(player, (byte)1, "Durability");
-					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 현재 내구도를 입력해 주세요!");
-					player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+ItemList.getInt(number+".MaxDurability")+")");
-				}
-				return;
-			case "HP":
-				if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
-				{
-					ItemList.set(number+"."+Type,Integer.parseInt(Message));
-					ItemList.saveConfig();
-					if(u.getInt(player, (byte)4) != -1)
+					if(u.getInt(player, (byte)4) == -8)
 					{
-						if(u.getInt(player, (byte)4) == -8)
-						{
-							GoldBigDragon_RPG.CustomItem.UseableItemGUI UGUI = new GoldBigDragon_RPG.CustomItem.UseableItemGUI();
-							UGUI.NewUseableItemGUI(player, number);
-							u.clearAll(player);
-							return;
-						}
-						else
-						{
-							u.setType(player, u.getType(player));
-							u.setString(player, (byte)1, "MP");
-							player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 마나를 입력해 주세요!");
-							player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
-							return;
-						}
+						GoldBigDragon_RPG.CustomItem.UseableItemGUI UGUI = new GoldBigDragon_RPG.CustomItem.UseableItemGUI();
+						UGUI.NewUseableItemGUI(player, number);
+						u.clearAll(player);
+						return;
 					}
 					else
 					{
@@ -979,31 +945,33 @@ public class PlayerAction
 						u.setString(player, (byte)1, "MP");
 						player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 마나를 입력해 주세요!");
 						player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
+						return;
 					}
 				}
-				return;
-			case "MP":
-				if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
+				else
 				{
-					ItemList.set(number+"."+Type,Integer.parseInt(Message));
-					ItemList.saveConfig();
-					if(u.getInt(player, (byte)4) != -1)
+					u.setType(player, u.getType(player));
+					u.setString(player, (byte)1, "MP");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 마나를 입력해 주세요!");
+					player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
+				}
+			}
+			return;
+		}
+		else if(SayType.compareTo("MP")==0)
+		{
+			if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
+			{
+				ItemList.set(number+"."+SayType,Integer.parseInt(Message));
+				ItemList.saveConfig();
+				if(u.getInt(player, (byte)4) != -1)
+				{
+					if(u.getInt(player, (byte)4) == -8)
 					{
-						if(u.getInt(player, (byte)4) == -8)
-						{
-							GoldBigDragon_RPG.CustomItem.UseableItemGUI UGUI = new GoldBigDragon_RPG.CustomItem.UseableItemGUI();
-							UGUI.NewUseableItemGUI(player, number);
-							u.clearAll(player);
-							return;
-						}
-						else
-						{
-							u.setType(player, u.getType(player));
-							u.setString(player, (byte)1, "STR");
-							player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 "+GoldBigDragon_RPG.Main.ServerOption.STR+"을 입력해 주세요!");
-							player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
-							return;
-						}
+						GoldBigDragon_RPG.CustomItem.UseableItemGUI UGUI = new GoldBigDragon_RPG.CustomItem.UseableItemGUI();
+						UGUI.NewUseableItemGUI(player, number);
+						u.clearAll(player);
+						return;
 					}
 					else
 					{
@@ -1014,258 +982,335 @@ public class PlayerAction
 						return;
 					}
 				}
-				return;
-			case "STR":
-				if(isIntMinMax(Message, player, -127, 127))
+				else
 				{
-					ItemList.set(number+"."+Type,Integer.parseInt(Message));
-					ItemList.saveConfig();
 					u.setType(player, u.getType(player));
-					u.setString(player, (byte)1, "DEX");
-					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 "+GoldBigDragon_RPG.Main.ServerOption.DEX+"를 입력해 주세요!");
+					u.setString(player, (byte)1, "STR");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 "+GoldBigDragon_RPG.Main.ServerOption.STR+"을 입력해 주세요!");
 					player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
-				}
-				return;
-			case "DEX":
-				if(isIntMinMax(Message, player, -127, 127))
-				{
-					ItemList.set(number+"."+Type,Integer.parseInt(Message));
-					ItemList.saveConfig();
-					u.setType(player, u.getType(player));
-					u.setString(player, (byte)1, "INT");
-					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 "+GoldBigDragon_RPG.Main.ServerOption.INT+"을 입력해 주세요!");
-					player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
-				}
-				return;
-			case "INT":
-				if(isIntMinMax(Message, player, -127, 127))
-				{
-					ItemList.set(number+"."+Type,Integer.parseInt(Message));
-					ItemList.saveConfig();
-					u.setType(player, u.getType(player));
-					u.setString(player, (byte)1, "WILL");
-					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 "+GoldBigDragon_RPG.Main.ServerOption.WILL+"를 입력해 주세요!");
-					player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
-				}
-				return;
-			case "WILL":
-				if(isIntMinMax(Message, player, -127, 127))
-				{
-					ItemList.set(number+"."+Type,Integer.parseInt(Message));
-					ItemList.saveConfig();
-					u.setType(player, u.getType(player));
-					u.setString(player, (byte)1, "LUK");
-					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 "+GoldBigDragon_RPG.Main.ServerOption.LUK+"을 입력해 주세요!");
-					player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
-				}
-				return;
-			case "LUK":
-				if(isIntMinMax(Message, player, -127, 127))
-				{
-					ItemList.set(number+"."+Type,Integer.parseInt(Message));
-					ItemList.saveConfig();
-					u.setType(player, u.getType(player));
-					u.setString(player, (byte)1, "Balance");
-					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 밸런스를 입력해 주세요!");
-					player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
-				}
-				return;
-			case "Balance":
-				if(isIntMinMax(Message, player, -127, 127))
-				{
-					ItemList.set(number+"."+Type,Integer.parseInt(Message));
-					ItemList.saveConfig();
-					u.setType(player, u.getType(player));
-					u.setString(player, (byte)1, "Critical");
-					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 크리티컬을 입력해 주세요!");
-					player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
-				}
-				return;
-			case "Critical":
-				if(isIntMinMax(Message, player, -127, 127))
-				{
-					ItemList.set(number+"."+Type,Integer.parseInt(Message));
-					ItemList.saveConfig();
-					s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-					if(u.getType(player).compareTo("UseableItem")==0)
-					{
-						GoldBigDragon_RPG.CustomItem.UseableItemGUI UGUI = new GoldBigDragon_RPG.CustomItem.UseableItemGUI();
-						UGUI.NewUseableItemGUI(player, number);
-					}
-					else
-						IGUI.NewItemGUI(player, number);
-					u.clearAll(player);
-				}
-				return;
-			case "NUR"://NewUpgradeRecipe
-				Message = Message.replace(".", "");
-				if(RecipeList.contains(Message)==true)
-				{
-					player.sendMessage(ChatColor.RED+"[개조] : 해당 이름의 개조식은 이미 존재합니다!");
-					s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 					return;
 				}
-				RecipeList.set(Message+".Lore", ChatColor.WHITE+"무기의 날을 다듬는 개조식이다.%enter%"+ChatColor.WHITE+"날을 다듬은 무기는 내구성이%enter%"+ChatColor.WHITE+"떨어지지만, 위협적이다.");
-				RecipeList.set(Message+".Only",ChatColor.RED+ "[근접 무기]");
-				RecipeList.set(Message+".MaxDurability", -50);
-				RecipeList.set(Message+".MinDamage", 1);
-				RecipeList.set(Message+".MaxDamage", 8);
-				RecipeList.set(Message+".MinMaDamage", 0);
-				RecipeList.set(Message+".MaxMaDamage", 0);
-				RecipeList.set(Message+".DEF", 0);
-				RecipeList.set(Message+".Protect", 0);
-				RecipeList.set(Message+".MaDEF", 0);
-				RecipeList.set(Message+".MaProtect", 0);
-				RecipeList.set(Message+".Critical", 2);
-				RecipeList.set(Message+".Balance", 0);
-				RecipeList.set(Message+".UpgradeAbleLevel", 0);
-				RecipeList.set(Message+".DecreaseProficiency",30);
-				RecipeList.saveConfig();
-				s.SP(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.8F);
-				UpGUI.UpgradeRecipeSettingGUI(player, Message);
+			}
+			return;
+		}
+		else if(SayType.compareTo("STR")==0||SayType.compareTo("DEX")==0||SayType.compareTo("INT")==0||SayType.compareTo("WILL")==0||
+				SayType.compareTo("LUK")==0||SayType.compareTo("Balance")==0)
+		{
+			if(isIntMinMax(Message, player, -127, 127))
+			{
+				ItemList.set(number+"."+SayType,Integer.parseInt(Message));
+				ItemList.saveConfig();
+				u.setType(player, u.getType(player));
+				if(SayType.compareTo("STR")==0)
+				{
+					u.setString(player, (byte)1, "DEX");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 "+GoldBigDragon_RPG.Main.ServerOption.DEX+"를 입력해 주세요!");
+				}
+				else if(SayType.compareTo("DEX")==0)
+				{
+					u.setString(player, (byte)1, "INT");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 "+GoldBigDragon_RPG.Main.ServerOption.INT+"을 입력해 주세요!");
+				}
+				else if(SayType.compareTo("INT")==0)
+				{
+					u.setString(player, (byte)1, "WILL");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 "+GoldBigDragon_RPG.Main.ServerOption.WILL+"를 입력해 주세요!");
+				}
+				else if(SayType.compareTo("WILL")==0)
+				{
+					u.setString(player, (byte)1, "LUK");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보너스 "+GoldBigDragon_RPG.Main.ServerOption.LUK+"을 입력해 주세요!");
+				}
+				else if(SayType.compareTo("LUK")==0)
+				{
+					u.setString(player, (byte)1, "Balance");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 밸런스를 입력해 주세요!");
+				}
+				else if(SayType.compareTo("Balance")==0)
+				{
+					u.setString(player, (byte)1, "Critical");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 크리티컬을 입력해 주세요!");
+				}
+				player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
+			}
+			return;
+		}
+		else if(SayType.compareTo("Critical")==0)
+		{
+			if(isIntMinMax(Message, player, -127, 127))
+			{
+				ItemList.set(number+"."+SayType,Integer.parseInt(Message));
+				ItemList.saveConfig();
+				s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				if(u.getType(player).compareTo("UseableItem")==0)
+				{
+					GoldBigDragon_RPG.CustomItem.UseableItemGUI UGUI = new GoldBigDragon_RPG.CustomItem.UseableItemGUI();
+					UGUI.NewUseableItemGUI(player, number);
+				}
+				else
+					IGUI.NewItemGUI(player, number);
 				u.clearAll(player);
+			}
+			return;
+		}
+		else if(SayType.compareTo("Saturation")==0 ||SayType.compareTo("SkillPoint")==0 ||SayType.compareTo("StatPoint")==0 ||
+				SayType.compareTo("Data")==0 ||SayType.compareTo("DEF")==0 ||SayType.compareTo("Protect")==0 ||SayType.compareTo("MaDEF")==0 ||
+				SayType.compareTo("MaProtect")==0 ||SayType.compareTo("MaxUpgrade")==0 ||SayType.compareTo("MaxDamage")==0 ||SayType.compareTo("MaxMaDamage")==0 ||
+				SayType.compareTo("Durability")==0)
+		{
+			if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
+				ItemList.set(number+"."+SayType,Integer.parseInt(Message));
+		}
+		else if(SayType.compareTo("NUR")==0)//NewUpgradeRecipe
+		{
+			Message = Message.replace(".", "");
+			if(RecipeList.contains(Message)==true)
+			{
+				player.sendMessage(ChatColor.RED+"[개조] : 해당 이름의 개조식은 이미 존재합니다!");
+				s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				return;
-			case "UMinD"://UpgradeMinDamage
-				if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
-				{
-					RecipeList.set(u.getString(player, (byte)6)+".MinDamage", Integer.parseInt(Message));
-					RecipeList.saveConfig();
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					u.setType(player, u.getType(player));
-					u.setString(player, (byte)1, "UMaxD");
-					player.sendMessage(ChatColor.DARK_AQUA+"[개조] : 변화될 최대 공격력 수치를 입력하세요!");
-					player.sendMessage(ChatColor.GREEN + "("+ChatColor.YELLOW + Integer.MIN_VALUE+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
-				}
-				return;
-			case "UMaxD"://UpgradeMaxDamage
-				if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
-				{
-					RecipeList.set(u.getString(player, (byte)6)+".MaxDamage", Integer.parseInt(Message));
-					RecipeList.saveConfig();
-					UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
-					u.clearAll(player);
-					s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-				}
-				return;
-			case "UMMinD"://UpgradeMagicMinDamage
-				if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
-				{
-					RecipeList.set(u.getString(player, (byte)6)+".MinMaDamage", Integer.parseInt(Message));
-					RecipeList.saveConfig();
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					u.setType(player, u.getType(player));
-					u.setString(player, (byte)1, "UMMaxD");
-					player.sendMessage(ChatColor.DARK_AQUA+"[개조] : 변화될 최대 마법 공격력 수치를 입력하세요!");
-					player.sendMessage(ChatColor.GREEN + "("+ChatColor.YELLOW + Integer.MIN_VALUE+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
-				}
-				return;
-			case "UMMaxD"://UpgradeMagicMaxDamage
-				if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
-				{
-					RecipeList.set(u.getString(player, (byte)6)+".MaxMaDamage", Integer.parseInt(Message));
-					RecipeList.saveConfig();
-					UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
-					u.clearAll(player);
-					s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-				}
-				return;
-			case "UB"://UpgradeBalance
-				if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
-				{
-					RecipeList.set(u.getString(player, (byte)6)+".Balance", Integer.parseInt(Message));
-					RecipeList.saveConfig();
-					UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
-					u.clearAll(player);
-					s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-				}
-				return;
-			case "UDEF"://UpgradeDefense
-				if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
-				{
-					RecipeList.set(u.getString(player, (byte)6)+".DEF", Integer.parseInt(Message));
-					RecipeList.saveConfig();
-					UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
-					u.clearAll(player);
-					s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-				}
-				return;
-			case "UP"://UpgradeProtect
-				if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
-				{
-					RecipeList.set(u.getString(player, (byte)6)+".Protect", Integer.parseInt(Message));
-					RecipeList.saveConfig();
-					UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
-					u.clearAll(player);
-					s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-				}
-				return;
-			case "UMDEF"://UpgradeMagicDefense
-				if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
-				{
-					RecipeList.set(u.getString(player, (byte)6)+".MaDEF", Integer.parseInt(Message));
-					RecipeList.saveConfig();
-					UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
-					u.clearAll(player);
-					s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-				}
-				return;
-			case "UMP"://UpgradeMagicProtect
-				if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
-				{
-					RecipeList.set(u.getString(player, (byte)6)+".MaProtect", Integer.parseInt(Message));
-					RecipeList.saveConfig();
-					UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
-					u.clearAll(player);
-					s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-				}
-				return;
-			case "UC"://UpgradeCritical
-				if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
-				{
-					RecipeList.set(u.getString(player, (byte)6)+".Critical", Integer.parseInt(Message));
-					RecipeList.saveConfig();
-					UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
-					u.clearAll(player);
-					s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-				}
-				return;
-			case "UMD"://UpgradeMaxDurability
-				if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
-				{
-					RecipeList.set(u.getString(player, (byte)6)+".MaxDurability", Integer.parseInt(Message));
-					RecipeList.saveConfig();
-					UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
-					u.clearAll(player);
-					s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-				}
-				return;
-			case "UUL"://UpgradeUpgradeLevel
-				if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
-				{
-					RecipeList.set(u.getString(player, (byte)6)+".UpgradeAbleLevel", Integer.parseInt(Message));
-					RecipeList.saveConfig();
-					UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
-					u.clearAll(player);
-					s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-				}
-				return;
-			case "UDP"://UpgradeDecreaseProficiency
-				if(isIntMinMax(Message, player, 0, 100))
-				{
-					RecipeList.set(u.getString(player, (byte)6)+".DecreaseProficiency", Integer.parseInt(Message));
-					RecipeList.saveConfig();
-					UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
-					u.clearAll(player);
-					s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-				}
-				return;
-			case "ULC"://Upgrade Lore Change
-				RecipeList.set(u.getString(player, (byte)6)+".Lore", event.getMessage());
+			}
+			RecipeList.set(Message+".Lore", ChatColor.WHITE+"무기의 날을 다듬는 개조식이다.%enter%"+ChatColor.WHITE+"날을 다듬은 무기는 내구성이%enter%"+ChatColor.WHITE+"떨어지지만, 위협적이다.");
+			RecipeList.set(Message+".Only",ChatColor.RED+ "[근접 무기]");
+			RecipeList.set(Message+".MaxDurability", -50);
+			RecipeList.set(Message+".MinDamage", 1);
+			RecipeList.set(Message+".MaxDamage", 8);
+			RecipeList.set(Message+".MinMaDamage", 0);
+			RecipeList.set(Message+".MaxMaDamage", 0);
+			RecipeList.set(Message+".DEF", 0);
+			RecipeList.set(Message+".Protect", 0);
+			RecipeList.set(Message+".MaDEF", 0);
+			RecipeList.set(Message+".MaProtect", 0);
+			RecipeList.set(Message+".Critical", 2);
+			RecipeList.set(Message+".Balance", 0);
+			RecipeList.set(Message+".UpgradeAbleLevel", 0);
+			RecipeList.set(Message+".DecreaseProficiency",30);
+			RecipeList.saveConfig();
+			s.SP(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.8F);
+			UpGUI.UpgradeRecipeSettingGUI(player, Message);
+			u.clearAll(player);
+			return;
+		}
+		else if(SayType.compareTo("UMinD")==0)//UpgradeMinDamage
+		{
+			if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
+			{
+				RecipeList.set(u.getString(player, (byte)6)+".MinDamage", Integer.parseInt(Message));
+				RecipeList.saveConfig();
+				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				u.setType(player, u.getType(player));
+				u.setString(player, (byte)1, "UMaxD");
+				player.sendMessage(ChatColor.DARK_AQUA+"[개조] : 변화될 최대 공격력 수치를 입력하세요!");
+				player.sendMessage(ChatColor.GREEN + "("+ChatColor.YELLOW + Integer.MIN_VALUE+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+			}
+			return;
+		}
+		else if(SayType.compareTo("UMaxD")==0)//UpgradeMaxDamage
+		{
+			if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
+			{
+				RecipeList.set(u.getString(player, (byte)6)+".MaxDamage", Integer.parseInt(Message));
 				RecipeList.saveConfig();
 				UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
 				u.clearAll(player);
 				s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-				return;
+			}
+			return;
+		}
+		else if(SayType.compareTo("UMMinD")==0)//UpgradeMagicMinDamage
+		{
+			if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
+			{
+				RecipeList.set(u.getString(player, (byte)6)+".MinMaDamage", Integer.parseInt(Message));
+				RecipeList.saveConfig();
+				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				u.setType(player, u.getType(player));
+				u.setString(player, (byte)1, "UMMaxD");
+				player.sendMessage(ChatColor.DARK_AQUA+"[개조] : 변화될 최대 마법 공격력 수치를 입력하세요!");
+				player.sendMessage(ChatColor.GREEN + "("+ChatColor.YELLOW + Integer.MIN_VALUE+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+			}
+			return;
+		}
+		else if(SayType.compareTo("UMMaxD")==0)//UpgradeMagicMaxDamage
+		{
+			if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
+			{
+				RecipeList.set(u.getString(player, (byte)6)+".MaxMaDamage", Integer.parseInt(Message));
+				RecipeList.saveConfig();
+				UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
+				u.clearAll(player);
+				s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+			}
+			return;
+		}
+		else if(SayType.compareTo("UB")==0)//UpgradeBalance
+		{
+			if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
+			{
+				RecipeList.set(u.getString(player, (byte)6)+".Balance", Integer.parseInt(Message));
+				RecipeList.saveConfig();
+				UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
+				u.clearAll(player);
+				s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+			}
+			return;
+		}
+		else if(SayType.compareTo("UDEF")==0)//UpgradeDefense
+		{
+			if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
+			{
+				RecipeList.set(u.getString(player, (byte)6)+".DEF", Integer.parseInt(Message));
+				RecipeList.saveConfig();
+				UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
+				u.clearAll(player);
+				s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+			}
+			return;
+		}
+		else if(SayType.compareTo("UP")==0)//UpgradeProtect
+		{
+			if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
+			{
+				RecipeList.set(u.getString(player, (byte)6)+".Protect", Integer.parseInt(Message));
+				RecipeList.saveConfig();
+				UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
+				u.clearAll(player);
+				s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+			}
+			return;
+		}
+		else if(SayType.compareTo("UMDEF")==0)//UpgradeMagicDefense
+		{
+			if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
+			{
+				RecipeList.set(u.getString(player, (byte)6)+".MaDEF", Integer.parseInt(Message));
+				RecipeList.saveConfig();
+				UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
+				u.clearAll(player);
+				s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+			}
+			return;
+		}
+		else if(SayType.compareTo("UMP")==0)//UpgradeMagicProtect
+		{
+			if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
+			{
+				RecipeList.set(u.getString(player, (byte)6)+".MaProtect", Integer.parseInt(Message));
+				RecipeList.saveConfig();
+				UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
+				u.clearAll(player);
+				s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+			}
+			return;
+		}
+		else if(SayType.compareTo("UC")==0)//UpgradeCritical
+		{
+			if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
+			{
+				RecipeList.set(u.getString(player, (byte)6)+".Critical", Integer.parseInt(Message));
+				RecipeList.saveConfig();
+				UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
+				u.clearAll(player);
+				s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+			}
+			return;
+		}
+		else if(SayType.compareTo("UMD")==0)//UpgradeMaxDurability
+		{
+			if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
+			{
+				RecipeList.set(u.getString(player, (byte)6)+".MaxDurability", Integer.parseInt(Message));
+				RecipeList.saveConfig();
+				UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
+				u.clearAll(player);
+				s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+			}
+			return;
+		}
+		else if(SayType.compareTo("UUL")==0)//UpgradeUpgradeLevel
+		{
+			if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
+			{
+				RecipeList.set(u.getString(player, (byte)6)+".UpgradeAbleLevel", Integer.parseInt(Message));
+				RecipeList.saveConfig();
+				UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
+				u.clearAll(player);
+				s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+			}
+			return;
+		}
+		else if(SayType.compareTo("UDP")==0)//UpgradeDecreaseProficiency
+		{
+			if(isIntMinMax(Message, player, 0, 100))
+			{
+				RecipeList.set(u.getString(player, (byte)6)+".DecreaseProficiency", Integer.parseInt(Message));
+				RecipeList.saveConfig();
+				UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
+				u.clearAll(player);
+				s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+			}
+			return;
+		}
+		else if(SayType.compareTo("ULC")==0)//Upgrade Lore Change
+		{
+			RecipeList.set(u.getString(player, (byte)6)+".Lore", event.getMessage());
+			RecipeList.saveConfig();
+			UpGUI.UpgradeRecipeSettingGUI(player, u.getString(player, (byte)6));
+			u.clearAll(player);
+			s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+			return;
+		}
+		else if(SayType.compareTo("MinSTR")==0||SayType.compareTo("MinDEX")==0||SayType.compareTo("MinINT")==0||SayType.compareTo("MinWILL")==0||
+				SayType.compareTo("MinLV")==0||SayType.compareTo("MinRLV")==0||SayType.compareTo("MinLUK")==0)
+		{
+			if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
+			{
+				ItemList.set(number+"."+SayType, Integer.parseInt(Message));
+				ItemList.saveConfig();
+				u.setType(player, u.getType(player));
+				if(SayType.compareTo("MinLV")==0)
+				{
+					u.setString(player, (byte)1, "MinRLV");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 누적레벨 제한을 입력 해 주세요!");
+				}
+				else if(SayType.compareTo("MinRLV")==0)
+				{
+					u.setString(player, (byte)1, "MinSTR");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 "+GoldBigDragon_RPG.Main.ServerOption.STR+" 제한을 입력 해 주세요!");
+				}
+				else if(SayType.compareTo("MinSTR")==0)
+				{
+					u.setString(player, (byte)1, "MinDEX");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 "+GoldBigDragon_RPG.Main.ServerOption.DEX+" 제한을 입력 해 주세요!");
+				}
+				else if(SayType.compareTo("MinDEX")==0)
+				{
+					u.setString(player, (byte)1, "MinINT");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 "+GoldBigDragon_RPG.Main.ServerOption.INT+" 제한을 입력 해 주세요!");
+				}
+				else if(SayType.compareTo("MinINT")==0)
+				{
+					u.setString(player, (byte)1, "MinWILL");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 "+GoldBigDragon_RPG.Main.ServerOption.WILL+" 제한을 입력 해 주세요!");
+				}
+				else if(SayType.compareTo("MinWILL")==0)
+				{
+					u.setString(player, (byte)1, "MinLUK");
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 "+GoldBigDragon_RPG.Main.ServerOption.LUK+" 제한을 입력 해 주세요!");
+				}
+				if(SayType.compareTo("MinLUK")==0)
+				{
+					s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+					IGUI.NewItemGUI(player, number);
+					u.clearAll(player);
+				}
+				else
+				{
+					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
+					player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+				}
+			}
+			return;
 		}
 		ItemList.saveConfig();
 		s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);

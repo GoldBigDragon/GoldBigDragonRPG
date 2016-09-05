@@ -220,6 +220,8 @@ public class StructureMain
 			new Structure_TradeBoard().SelectExchangeItem_YouGUIClick(event);
 		else if(InventoryName.compareTo("내가 줄 아이템을 고르세요")==0)
 			new Structure_TradeBoard().SelectExchangeItem_MyGUIClick(event);
+		else if(InventoryName.compareTo("모닥불")==0)
+			new Structure_CampFire().CampFireGUIClick(event);
 	}
 	
 	

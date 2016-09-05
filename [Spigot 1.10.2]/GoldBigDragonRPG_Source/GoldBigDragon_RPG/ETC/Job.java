@@ -224,38 +224,7 @@ public class Job
 		}
 		else
 		{
-			PlayerList.createSection("MapleStory."+PlayerList.getString("Job.Type")+".Skill");
-			PlayerList.saveConfig();
-			Object[] Job = JobList.getConfigurationSection("MapleStory").getKeys(false).toArray();
-			for(short counter = 0; counter < Job.length; counter++)
-			{
-				Object[] SubJob = JobList.getConfigurationSection("MapleStory."+Job[counter].toString()).getKeys(false).toArray();
-				for(short count = 0; count < SubJob.length; count++)
-				{
-					Object[] SubJobSkills = JobList.getConfigurationSection("MapleStory."+Job[counter].toString()+"."+SubJob[count]+".Skill").getKeys(false).toArray();
-					for(short countta = 0; countta < SubJobSkills.length; countta++)
-					{
-						if(PlayerList.contains("MapleStory."+SubJob[count])==true)
-						{
-							PlayerList.createSection("MapleStory."+SubJob[count]+".Skill");
-							PlayerList.saveConfig();
-							if(PlayerList.getConfigurationSection("MapleStory."+SubJob[count]+".Skill").getKeys(false).size() == 0)
-							{
-								PlayerList.set("MapleStory."+SubJob[count]+".Skill."+SubJobSkills[countta].toString(),1);
-								PlayerList.saveConfig();
-							}
-							else
-							{
-								if(PlayerList.getConfigurationSection("MapleStory."+SubJob[count]+".Skill").getKeys(false).contains(SubJobSkills[countta].toString())==false)
-								{
-									PlayerList.set("MapleStory."+SubJob[count]+".Skill."+SubJobSkills[countta].toString(),1);
-									PlayerList.saveConfig();
-								}
-							}
-						}
-					}
-				}
-			}
+
 			Object[] PlayerJob = PlayerList.getConfigurationSection("MapleStory").getKeys(false).toArray();
 			Object[] Jobs = JobList.getConfigurationSection("MapleStory").getKeys(false).toArray();
 			for(short counter = 0; counter < Jobs.length; counter++)
@@ -270,7 +239,7 @@ public class Job
 						Object[] PlayerJobSkills = PlayerList.getConfigurationSection("MapleStory."+PlayerJob[count].toString()+".Skill").getKeys(false).toArray();
 						for(short countta = 0; countta < SubJobs.length; countta++)
 						{
-							if(SubJobs[countta].equals(PlayerJob[count].toString()))
+							if(SubJobs[countta].toString().compareTo(PlayerJob[count].toString())==0)
 							{
 								for(short countia = 0; countia < PlayerJobSkills.length; countia++)
 								{
@@ -295,6 +264,40 @@ public class Job
 					}
 				}
 			}
+			
+			Object[] Job = JobList.getConfigurationSection("MapleStory").getKeys(false).toArray();
+			for(short counter = 0; counter < Job.length; counter++)
+			{
+				Object[] SubJob = JobList.getConfigurationSection("MapleStory."+Job[counter].toString()).getKeys(false).toArray();
+				for(short count = 0; count < SubJob.length; count++)
+				{
+					Object[] SubJobSkills = JobList.getConfigurationSection("MapleStory."+Job[counter].toString()+"."+SubJob[count]+".Skill").getKeys(false).toArray();
+					for(short countta = 0; countta < SubJobSkills.length; countta++)
+					{
+						if(PlayerList.contains("MapleStory."+SubJob[count])==true)
+						{
+							PlayerList.createSection("MapleStory."+SubJob[count]+".Skill");
+							PlayerList.saveConfig();
+							if(PlayerList.getConfigurationSection("MapleStory."+SubJob[count]+".Skill").getKeys(false).size() == 0)
+							{
+								PlayerList.createSection("MapleStory."+SubJob[count]+".Skill."+SubJobSkills[countta].toString());
+								PlayerList.set("MapleStory."+SubJob[count]+".Skill."+SubJobSkills[countta].toString(),1);
+								PlayerList.saveConfig();
+							}
+							else
+							{
+								if(PlayerList.getConfigurationSection("MapleStory."+SubJob[count]+".Skill").getKeys(false).contains(SubJobSkills[countta].toString())==false)
+								{
+									PlayerList.createSection("MapleStory."+SubJob[count]+".Skill."+SubJobSkills[countta].toString());
+									PlayerList.set("MapleStory."+SubJob[count]+".Skill."+SubJobSkills[countta].toString(),1);
+									PlayerList.saveConfig();
+								}
+							}
+						}
+					}
+				}
+			}
+			
 		}
 	}
 	

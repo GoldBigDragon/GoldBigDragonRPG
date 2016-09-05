@@ -1,7 +1,6 @@
 package GoldBigDragon_RPG.Attack;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Damageable;
@@ -30,8 +29,7 @@ public class Attack
 		  	if(player.isOnline())
 		  	{
 		  		boolean isExitFire = false;
-		  		Location loc = player.getLocation();
-		  		Object[] EntitiList = loc.getWorld().getNearbyEntities(loc, 3, 3, 3).toArray();
+		  		Object[] EntitiList = player.getLocation().getWorld().getNearbyEntities(player.getLocation(), 2, 2, 2).toArray();
 		  		for(short count=0; count<EntitiList.length;count++)
 		  		{
 		  			if(((Entity)EntitiList[count]).getFireTicks()!=0)
@@ -335,13 +333,13 @@ public class Attack
 	    		int Balance = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Balance();
 	    		
 	    	  	damage.decreaseDurabilityWeapon(player);
-	    	  	Attacker_Stat[0] = STR + damage.getPlayerEquipmentStat(player, "STR")[0];
-	    	  	Attacker_Stat[1] = DEX + damage.getPlayerEquipmentStat(player, "DEX")[0];
-	    	  	Attacker_Stat[2] = INT + damage.getPlayerEquipmentStat(player, "INT")[0];
-	    	  	Attacker_Stat[3] = WILL + damage.getPlayerEquipmentStat(player, "WILL")[0];
-	    	  	Attacker_Stat[4] = LUK + damage.getPlayerEquipmentStat(player, "LUK")[0];
-	    	  	Attacker_Stat[5] = DEFcrash + damage.getPlayerEquipmentStat(player, "DEFcrash")[0] + damage.getDEFcrash(player,Attacker_Stat[1]);
-	    	  	Attacker_Stat[6] = MagicDEFcrash + damage.getPlayerEquipmentStat(player, "MagicDEFcrash")[0];
+	    	  	Attacker_Stat[0] = STR + damage.getPlayerEquipmentStat(player, "STR", null, false)[0];
+	    	  	Attacker_Stat[1] = DEX + damage.getPlayerEquipmentStat(player, "DEX", null, false)[0];
+	    	  	Attacker_Stat[2] = INT + damage.getPlayerEquipmentStat(player, "INT", null, false)[0];
+	    	  	Attacker_Stat[3] = WILL + damage.getPlayerEquipmentStat(player, "WILL", null, false)[0];
+	    	  	Attacker_Stat[4] = LUK + damage.getPlayerEquipmentStat(player, "LUK", null, false)[0];
+	    	  	Attacker_Stat[5] = DEFcrash + damage.getPlayerEquipmentStat(player, "DEFcrash", null, false)[0] + damage.getDEFcrash(player,Attacker_Stat[1]);
+	    	  	Attacker_Stat[6] = MagicDEFcrash + damage.getPlayerEquipmentStat(player, "MagicDEFcrash", null, false)[0];
 	    	  	Attacker_Stat[7] = Critical;
 	    	  	Attacker_Stat[8] = damage.getBalance(player, Attacker_Stat[1], Balance);
 	    	}
@@ -405,10 +403,10 @@ public class Attack
 	    	  	int Magic_DEF = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Magic_DEF();
 	    	  	int Magic_Protect = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Magic_Protect();
 	    	  	
-	    	  	Defender_Stat[0] = DEF + damage.getPlayerEquipmentStat(player, "DEF")[0];
-	    	  	Defender_Stat[1] = Protect + damage.getPlayerEquipmentStat(player, "Protect")[0];
-	    	  	Defender_Stat[2] = Magic_DEF + damage.getPlayerEquipmentStat(player, "Magic_DEF")[0];
-	    	  	Defender_Stat[3] = Magic_Protect + damage.getPlayerEquipmentStat(player, "Magic_Protect")[0];
+	    	  	Defender_Stat[0] = DEF + damage.getPlayerEquipmentStat(player, "DEF", null, false)[0];
+	    	  	Defender_Stat[1] = Protect + damage.getPlayerEquipmentStat(player, "Protect", null, false)[0];
+	    	  	Defender_Stat[2] = Magic_DEF + damage.getPlayerEquipmentStat(player, "Magic_DEF", null, false)[0];
+	    	  	Defender_Stat[3] = Magic_Protect + damage.getPlayerEquipmentStat(player, "Magic_Protect", null, false)[0];
 	    	}
 	    	else
 	    	{

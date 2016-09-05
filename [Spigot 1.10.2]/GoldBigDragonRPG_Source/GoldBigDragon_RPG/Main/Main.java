@@ -97,6 +97,11 @@ public class Main extends JavaPlugin implements Listener
 	private void PlayerJoin(PlayerJoinEvent event)
 	{
 		Player player = event.getPlayer();
+	  	YamlController YC = new YamlController(this);
+	  	if(YC.isExit("Skill/PlayerData/" + player.getUniqueId()+".yml") == false)
+	  		new GoldBigDragon_RPG.Skill.SkillConfig().CreateNewPlayerSkill(player);
+	  	else
+	  		new GoldBigDragon_RPG.ETC.Job().PlayerFixAllSkillAndJobYML(player);
 		Object_Player PO = new Object_Player(player);
 		ServerOption.PlayerList.put(player.getUniqueId().toString(), PO);
 		if(player.getLocation().getWorld().getName().compareTo("Dungeon")==0)
@@ -118,7 +123,6 @@ public class Main extends JavaPlugin implements Listener
 			new GoldBigDragon_RPG.Effect.PacketSender().sendTitleSubTitle(player,"\'§e/오피박스\'", "\'§eGoldBigDragonAdvanced 가이드 및 서버 설정이 가능합니다.\'", (byte)1,(byte)10, (byte)1);
 		else
 		{
-		  	YamlController YC = new YamlController(this);
 			YamlManager Config = YC.getNewConfig("config.yml");
 			if(Config.getInt("Event.DropChance")>=2||Config.getInt("Event.Multiple_EXP_Get")>=2||Config.getInt("Event.Multiple_Level_Up_StatPoint")>=2||Config.getInt("Event.Multiple_Level_Up_SkillPoint")>=2)
 			{
@@ -141,7 +145,6 @@ public class Main extends JavaPlugin implements Listener
 				new GoldBigDragon_RPG.Effect.PacketSender().sendTitleSubTitle(player, "\'현재 이벤트가 진행중입니다.\'", "\'"+alert+"\'", (byte)1, (byte)10, (byte)1);
 			}
 		}
-	  	YamlController YC = new YamlController(this);
 	  	if(YC.isExit("Quest/PlayerData/" + player.getUniqueId()+".yml") == false)
 	  	{
 	  	    new GoldBigDragon_RPG.Quest.QuestConfig().CreateNewPlayerConfig(player);
@@ -152,10 +155,6 @@ public class Main extends JavaPlugin implements Listener
 					player.getInventory().addItem(NewBieYM.getItemStack("SupportItem."+count));
 			player.teleport(new Location(Bukkit.getWorld(NewBieYM.getString("TelePort.World")), NewBieYM.getInt("TelePort.X"), NewBieYM.getInt("TelePort.Y"), NewBieYM.getInt("TelePort.Z"), NewBieYM.getInt("TelePort.Yaw"), NewBieYM.getInt("TelePort.Pitch")));
 	  	}
-	  	if(YC.isExit("Skill/PlayerData/" + player.getUniqueId()+".yml") == false)
-	  		new GoldBigDragon_RPG.Skill.SkillConfig().CreateNewPlayerSkill(player);
-	  	else
-	  		new GoldBigDragon_RPG.ETC.Job().PlayerFixAllSkillAndJobYML(player);
 		new GoldBigDragon_RPG.Util.ETC().UpdatePlayerHPMP(event.getPlayer());
     	new GoldBigDragon_RPG.GUI.EquipGUI().FriendJoinQuitMessage(player, true);
 

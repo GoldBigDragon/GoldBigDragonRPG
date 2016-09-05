@@ -121,7 +121,7 @@ public class StatsGUI extends GUIutil
 				}
 			}
 		}
-		int EquipmentStat = dam.getPlayerEquipmentStat(player, "STR", false)[0];
+		int EquipmentStat = dam.getPlayerEquipmentStat(player, "STR", false, null)[0];
 		int PlayerStat = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR();
 		if(PlayerStat > MaxStats)
 			PlayerStat = MaxStats;
@@ -141,7 +141,7 @@ public class StatsGUI extends GUIutil
 				Arrays.asList(lore.split("%enter%")), 20, inv);
 
 		int DEX = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX();
-		EquipmentStat=dam.getPlayerEquipmentStat(player, "DEX", false)[0];
+		EquipmentStat=dam.getPlayerEquipmentStat(player, "DEX", false, null)[0];
 		if(DEX > MaxStats)
 			DEX = MaxStats;
 		Additional = ChatColor.RED + "" + ChatColor.BOLD + "" + dam.returnRangeDamageValue(player, DEX, 0, true) + " ~ " + dam.returnRangeDamageValue(player, DEX, 0, false);
@@ -162,8 +162,8 @@ public class StatsGUI extends GUIutil
 		int INT = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT();
 		if(INT > MaxStats)
 			INT = MaxStats;
-		EquipmentStat=dam.getPlayerEquipmentStat(player, "INT", false)[0];
-		Additional = ChatColor.RED + "" + ChatColor.BOLD + "" + ((INT+dam.getPlayerEquipmentStat(player, "INT", false)[0])*0.6+100) + " %";
+		EquipmentStat=dam.getPlayerEquipmentStat(player, "INT", false, null)[0];
+		Additional = ChatColor.RED + "" + ChatColor.BOLD + "" + ((INT+dam.getPlayerEquipmentStat(player, "INT", false, null)[0])*0.6+100) + " %";
 		if(EquipmentStat == 0)
 			CurrentStat = ChatColor.WHITE +""+ChatColor.BOLD +""+ INT;
 		else if(EquipmentStat > 0)
@@ -181,8 +181,8 @@ public class StatsGUI extends GUIutil
 		int WILL = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL();
 		if(WILL > MaxStats)
 			WILL = MaxStats;
-		EquipmentStat=dam.getPlayerEquipmentStat(player, "WILL", false)[0];
-		Additional = ChatColor.RED + "" + ChatColor.BOLD + "" + ((WILL+dam.getPlayerEquipmentStat(player, "WILL", false)[0])*0.6+100) + " %";
+		EquipmentStat=dam.getPlayerEquipmentStat(player, "WILL", false, null)[0];
+		Additional = ChatColor.RED + "" + ChatColor.BOLD + "" + ((WILL+dam.getPlayerEquipmentStat(player, "WILL", false, null)[0])*0.6+100) + " %";
 		if(EquipmentStat == 0)
 			CurrentStat = ChatColor.WHITE +""+ChatColor.BOLD +""+ WILL;
 		else if(EquipmentStat > 0)
@@ -200,7 +200,7 @@ public class StatsGUI extends GUIutil
 		int LUK = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK();
 		if(LUK > MaxStats)
 			LUK = MaxStats;
-		EquipmentStat=dam.getPlayerEquipmentStat(player, "LUK", false)[0];
+		EquipmentStat=dam.getPlayerEquipmentStat(player, "LUK", false, null)[0];
 		if(EquipmentStat == 0)
 			CurrentStat = ChatColor.WHITE +""+ChatColor.BOLD +""+ LUK;
 		else if(EquipmentStat > 0)
@@ -231,8 +231,8 @@ public class StatsGUI extends GUIutil
 		}
 		GoldBigDragon_RPG.Attack.Damage d = new GoldBigDragon_RPG.Attack.Damage();
 		Stack2(ChatColor.GRAY + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + "방어"+ChatColor.GRAY + "]", 307,0,1,
-				Arrays.asList(ChatColor.WHITE + "물리 방어 : "+ChatColor.WHITE +(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEF()+d.getPlayerEquipmentStat(player, "방어", false)[0]),
-						ChatColor.GRAY + "추가 물리 보호 : "+ChatColor.WHITE + (GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Protect()+d.getPlayerEquipmentStat(player, "보호", false)[0]),
+				Arrays.asList(ChatColor.WHITE + "물리 방어 : "+ChatColor.WHITE +(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEF()+d.getPlayerEquipmentStat(player, "방어", false, null)[0]),
+						ChatColor.GRAY + "추가 물리 보호 : "+ChatColor.WHITE + (GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Protect()+d.getPlayerEquipmentStat(player, "보호", false, null)[0]),
 						ChatColor.AQUA + "추가 마법 방어 : "+ChatColor.WHITE + (GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Magic_DEF()+d.getMagicDEF(player,INT)),
 						ChatColor.DARK_AQUA + "추가 마법 보호 : "+ChatColor.WHITE + (GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Magic_Protect()+d.getMagicProtect(player, INT))), 38, inv);
 

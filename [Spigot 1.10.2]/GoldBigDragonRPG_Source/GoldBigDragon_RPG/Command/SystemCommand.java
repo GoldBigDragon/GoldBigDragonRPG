@@ -30,6 +30,7 @@ public class SystemCommand
 			case"Å×½ºÆ®":
 			if(player.isOp() == true)
 			{
+				player.sendMessage(""+ServerOption.PlayerList.get(player.getUniqueId().toString()).getPlayerRootJob());
 			}
 			else
 			{

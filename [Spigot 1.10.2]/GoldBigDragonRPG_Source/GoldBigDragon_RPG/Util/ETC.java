@@ -198,7 +198,7 @@ public class ETC
 		}
 		GoldBigDragon_RPG.Attack.Damage d = new GoldBigDragon_RPG.Attack.Damage();
 		Damageable p = player;
-		int BonusHealth = d.getPlayerEquipmentStat(player, "생명력", false)[0];
+		int BonusHealth = d.getPlayerEquipmentStat(player, "생명력", false, null)[0];
 		int MaxHealth = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxHP()+BonusHealth;
 		if(MaxHealth > 0)
 			p.setMaxHealth(MaxHealth);
@@ -216,7 +216,7 @@ public class ETC
 		}
 		Damageable p = player;
 		
-		int BonusHealth = new GoldBigDragon_RPG.Attack.Damage().getSlotChangedPlayerEquipmentStat(player, "생명력", newSlot)[0];
+		int BonusHealth = new GoldBigDragon_RPG.Attack.Damage().getPlayerEquipmentStat(player, "생명력",  false, newSlot)[0];
 		int MaxHealth = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxHP()+BonusHealth;
 
 		if(MaxHealth > 0)

@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Damageable;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import com.nisovin.magicspells.MagicSpells;
 import com.nisovin.magicspells.Spell;
@@ -366,7 +367,9 @@ public class ChangeHotBar
 		else
 		{
 			GoldBigDragon_RPG.Util.ETC ETC = new GoldBigDragon_RPG.Util.ETC();
-			ETC.SlotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()));
+			ItemStack item = new ItemStack(3);
+			item.setItemMeta(null);
+			ETC.SlotChangedUpdatePlayerHPMP(player, item);
 			HotBarSound(player, (short) -1);
 		}
 		return;

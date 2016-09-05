@@ -341,35 +341,35 @@ public class ChangeHotBar
 						else
 						{
 							GoldBigDragon_RPG.Util.ETC ETC = new GoldBigDragon_RPG.Util.ETC();
-							ETC.SlotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()));
+							ETC.SlotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()), true);
 							HotBarSound(player, (short) player.getInventory().getItem(event.getNewSlot()).getTypeId());
 						}
 					}
 					else
 					{
 						GoldBigDragon_RPG.Util.ETC ETC = new GoldBigDragon_RPG.Util.ETC();
-						ETC.SlotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()));
+						ETC.SlotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()), true);
 						HotBarSound(player, (short) player.getInventory().getItem(event.getNewSlot()).getTypeId());
 					}
 				}
 				else
 				{
 					GoldBigDragon_RPG.Util.ETC ETC = new GoldBigDragon_RPG.Util.ETC();
-					ETC.SlotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()));
+					ETC.SlotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()), true);
 					HotBarSound(player, (short) player.getInventory().getItem(event.getNewSlot()).getTypeId());
 				}
 			}
 			else
 			{
 				GoldBigDragon_RPG.Util.ETC ETC = new GoldBigDragon_RPG.Util.ETC();
-				ETC.SlotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()));
+				ETC.SlotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()), true);
 				HotBarSound(player, (short) player.getInventory().getItem(event.getNewSlot()).getTypeId());
 			}
 		}
 		else
 		{
 			GoldBigDragon_RPG.Util.ETC ETC = new GoldBigDragon_RPG.Util.ETC();
-			ETC.SlotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()));
+			ETC.SlotChangedUpdatePlayerHPMP(player,  player.getInventory().getItem(NewSlot), true);
 			HotBarSound(player, (short) -1);
 		}
 		return;

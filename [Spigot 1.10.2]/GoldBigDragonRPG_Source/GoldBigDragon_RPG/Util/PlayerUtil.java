@@ -53,7 +53,9 @@ public class PlayerUtil
 	
 	public boolean giveItem(Player player, ItemStack item)
 	{
-		if(player.getInventory().firstEmpty() == -1)
+		if(item == null)
+			return true;
+		else if(player.getInventory().firstEmpty() == -1)
 		{
 			return false;
 		}

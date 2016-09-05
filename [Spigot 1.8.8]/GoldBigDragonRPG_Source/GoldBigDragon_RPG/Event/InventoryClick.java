@@ -283,6 +283,8 @@ public class InventoryClick
 				QGUI.ShowItemGUIInventoryClick(event);
 			else if(InventoryName.contains("목록"))
 				IGUI.ItemListInventoryclick(event);
+			else if(InventoryName.contains("제한"))
+				new GoldBigDragon_RPG.CustomItem.ItemGUI().JobGUIClick(event);
 	    }
 		return;
 	}

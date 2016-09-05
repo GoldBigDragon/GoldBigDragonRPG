@@ -6,6 +6,8 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.CommandBlock;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 
 public class ServerTask_Server
 {
@@ -27,16 +29,15 @@ public class ServerTask_Server
 				OriginalBlock.setTypeId(STSO.getInt((byte)6));
 				OriginalBlock.setData((byte) STSO.getInt((byte)7));
 				SetBlock(CommandLoc, OriginalBlock);
-				
+
 				if(STSO.getString((byte)0).compareTo("CF")==0)
 				{
-					OriginalBlock.setTypeId(10);
-					OriginalBlock.setData((byte)0);
-					CommandLoc.setY(CommandLoc.getY()+2);
-					OriginalBlock = CommandLoc.getBlock();
-					OriginalBlock.setTypeId(50);
-					OriginalBlock.setData((byte)0);
-					SetBlock(CommandLoc, OriginalBlock);
+					Object[] e = OriginalBlock.getLocation().getWorld().getNearbyEntities(OriginalBlock.getLocation(), 2, 2, 2).toArray();
+					for(int count = 0; count < e.length; count++)
+						if(((Entity)e[count]).getType()==EntityType.ARMOR_STAND)
+							if(((Entity)e[count]).getCustomName()!=null)
+								if(((Entity)e[count]).getCustomName().compareTo(STSO.getString((byte)2))==0)
+									((Entity)e[count]).setFireTicks(25565);
 				}
 				
 				

@@ -14,7 +14,8 @@ public class SkillConfig
 		YamlManager PlayerSkillYML = YC.getNewConfig("Skill/PlayerData/"+player.getUniqueId()+".yml");
 		YamlManager Config = YC.getNewConfig("config.yml");
 		YamlManager JobList  = YC.getNewConfig("Skill/JobList.yml");
-		
+
+		PlayerSkillYML.set("Job.Root",Config.getString("Server.DefaultJob"));
 		PlayerSkillYML.set("Job.Type",Config.getString("Server.DefaultJob"));
 		PlayerSkillYML.set("Job.LV",1);
 		PlayerSkillYML.set("MapleStory.LV",null);

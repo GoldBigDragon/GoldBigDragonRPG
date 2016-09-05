@@ -12,6 +12,7 @@ public class Object_Player
 {
 	private String PlayerName;
 	private String PlayerUUID;
+	private String PlayerRootJob;
 	
 	private Player player;
 	private int Stat_Level;
@@ -701,6 +702,45 @@ public class Object_Player
 			saveAll();
 			return;
 		}
+		YamlManager PlayerJob  = YC.getNewConfig("Skill/PlayerData/"+player.getUniqueId().toString()+".yml");
+		if(PlayerJob.contains("Job.Root"))
+			PlayerRootJob =  PlayerJob.getString("Job.Root");
+		else
+		{
+	    	YamlManager Config = YC.getNewConfig("config.yml");
+			if(PlayerJob.getString("Job.Type").compareTo(Config.getString("Server.DefaultJob"))==0)
+				PlayerJob.set("Job.Root", Config.getString("Server.DefaultJob"));
+			else
+			{
+				boolean getIt = false;
+				YamlManager JobList  = YC.getNewConfig("Skill/JobList.yml");
+				Object[] Job = JobList.getConfigurationSection("MapleStory").getKeys(false).toArray();
+				for(short count = 0; count < Job.length; count++)
+				{
+					Object[] q = JobList.getConfigurationSection("MapleStory."+Job[count].toString()).getKeys(false).toArray();
+					for(short counter=0;counter<q.length;counter++)
+					{
+						if(q[counter].toString().compareTo(PlayerJob.getString("Job.Type"))==0)
+						{
+							PlayerJob.set("Job.Root", Job[count].toString());
+							PlayerRootJob =  Job[count].toString();
+							getIt = true;
+							break;
+						}
+					}
+					if(getIt)
+						break;
+				}
+				if(getIt==false)
+				{
+					PlayerJob.set("Job.Type", Config.getString("Server.DefaultJob"));
+					PlayerJob.set("Job.Root", Config.getString("Server.DefaultJob"));
+					PlayerRootJob = Config.getString("Server.DefaultJob");
+				}
+			}
+			PlayerJob.saveConfig();
+		}
+		
 		Stat_Level = PlayerConfig.getInt("Stat.Level");
 		Stat_RealLevel = PlayerConfig.getInt("Stat.RealLevel");
 		Stat_SkillPoint = PlayerConfig.getInt("Stat.SkillPoint");
@@ -870,5 +910,14 @@ public class Object_Player
 			else
 				return BaseNumber = Long.MAX_VALUE;
 		}
+	}
+	public String getPlayerRootJob()
+	{
+		return PlayerRootJob;
+	}
+
+	public void setPlayerRootJob(String playerRootJob)
+	{
+		PlayerRootJob = playerRootJob;
 	}
 }

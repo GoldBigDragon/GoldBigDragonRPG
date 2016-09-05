@@ -38,29 +38,18 @@ public class StructureGUI extends GUIutil
 			String StructureName = "null";
 			int ID = 1;
 			byte DATA = 0;
-			switch(StructureType)
-			{
-			case 0 :
-				StructureName = ChatColor.RED+"[우편함]";
+			
+			if(StructureType==0)//우편함
 				ID=386;
-				break;
-			case 1 :
-				StructureName = ChatColor.GREEN+"[게시판]";
+			else if(StructureType==1)//게시판
 				ID=323;
-				break;
-			case 2 :
-				StructureName = ChatColor.BLUE+"[거래 게시판]";
+			else if(StructureType==2)//거래 게시판
 				ID=389;
-				break;
-			case 3 :
-				StructureName = ChatColor.RED+"[모닥불]";
+			else if(StructureType==3)//모닥불
 				ID=17;
-				break;
-			case 101 :
-				StructureName = ChatColor.WHITE+"[제단]";
+			else if(StructureType==101)//제단
 				ID=120;
-				break;
-			}
+			
 			if(StructureType==0)
 				Stack2(ChatColor.BLACK+StructureCode, ID,DATA,1,Arrays.asList("",ChatColor.DARK_AQUA+"월드 : "+ChatColor.WHITE+StructureConfig.getString(StructureCode+".World"),ChatColor.DARK_AQUA+"좌표 : "+ChatColor.WHITE+StructureConfig.getInt(StructureCode+".X")+","+StructureConfig.getInt(StructureCode+".Y")+","+StructureConfig.getInt(StructureCode+".Z"),"",ChatColor.RED+"[Shift + 우클릭시 개체 삭제]"), loc, inv);
 			else
