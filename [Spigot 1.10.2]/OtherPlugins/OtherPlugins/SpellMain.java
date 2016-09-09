@@ -65,23 +65,23 @@ public class SpellMain implements Listener
 			Damageable p = player;
 			String switchCheck = GoldBigDragon_RPG.Main.ServerOption.PlayerUseSpell.get(player);
 			if(switchCheck.compareTo("생명력")==0)
-				bonuspower = dam.MagicSpellsDamageBonus((int) p.getHealth())+damage.getPlayerEquipmentStat(player, "HP", false)[0];
+				bonuspower = dam.MagicSpellsDamageBonus((int) p.getHealth())+damage.getPlayerEquipmentStat(player, "HP", false, null)[0];
 			else if(switchCheck.compareTo("마나")==0)
-				bonuspower = dam.MagicSpellsDamageBonus(getPlayerMana(player))+damage.getPlayerEquipmentStat(player, "MP", false)[0];
+				bonuspower = dam.MagicSpellsDamageBonus(getPlayerMana(player))+damage.getPlayerEquipmentStat(player, "MP", false, null)[0];
 			else if(switchCheck.compareTo(ServerOption.STR)==0)
-				bonuspower = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR()+damage.getPlayerEquipmentStat(player, "STR", false)[0];
+				bonuspower = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR()+damage.getPlayerEquipmentStat(player, "STR", false, null)[0];
 			else if(switchCheck.compareTo(ServerOption.DEX)==0)
-				bonuspower = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX()+damage.getPlayerEquipmentStat(player, "DEX", false)[0];
+				bonuspower = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX()+damage.getPlayerEquipmentStat(player, "DEX", false, null)[0];
 			else if(switchCheck.compareTo(ServerOption.INT)==0)
-				bonuspower = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT()+damage.getPlayerEquipmentStat(player, "INT", false)[0];
+				bonuspower = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT()+damage.getPlayerEquipmentStat(player, "INT", false, null)[0];
 			else if(switchCheck.compareTo(ServerOption.WILL)==0)
-				bonuspower = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL()+damage.getPlayerEquipmentStat(player, "WILL", false)[0];
+				bonuspower = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL()+damage.getPlayerEquipmentStat(player, "WILL", false, null)[0];
 			else if(switchCheck.compareTo(ServerOption.LUK)==0)
-				bonuspower = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK()+damage.getPlayerEquipmentStat(player, "LUK", false)[0];
+				bonuspower = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK()+damage.getPlayerEquipmentStat(player, "LUK", false, null)[0];
 			else
 				bonuspower = 0;
 		}
-		int[] WeaponPower = dam.getSlotChangedPlayerEquipmentStat(player, "MagicDamage", GoldBigDragon_RPG.Main.ServerOption.PlayerlastItem.get(player));
+		int[] WeaponPower = dam.getPlayerEquipmentStat(player, "MagicDamage",  false, GoldBigDragon_RPG.Main.ServerOption.PlayerlastItem.get(player));
 		int WeaponPowerFixed = new GoldBigDragon_RPG.Util.Number().RandomNum(WeaponPower[0], WeaponPower[1]);
 		bonuspower = bonuspower+WeaponPowerFixed;
 		int negativeBonus = 0;
@@ -129,7 +129,7 @@ public class SpellMain implements Listener
 	public void ShowAllMaigcGUI(Player player, short page,String SkillName, short SkillLevel,byte sort)
 	{
 		Object[] spells = new Object[46];
-		byte temp = 0;
+		int temp = 0;
 		byte counter=0;
 		switch(sort)
 		{
@@ -190,7 +190,7 @@ public class SpellMain implements Listener
 				if(counter+(page*45) < MagicSpells.spells().toArray().length&&
 					temp+(page*45) < MagicSpells.spells().toArray().length)
 				{
-					if(MagicSpells.spells().toArray()[temp+(page*45)].getClass().getSimpleName().compareTo("ParticleProjectileSpell")!=0)
+					if(MagicSpells.spells().toArray()[temp+(page*45)].getClass().getSimpleName().compareTo("PainSpell")==0)
 					{
 						spells[counter] = MagicSpells.spells().toArray()[temp+(page*45)];
 						counter++;
@@ -205,7 +205,7 @@ public class SpellMain implements Listener
 				if(counter+(page*45) < MagicSpells.spells().toArray().length&&
 					temp+(page*45) < MagicSpells.spells().toArray().length)
 				{
-					if(MagicSpells.spells().toArray()[temp+(page*45)].getClass().getSimpleName().compareTo("PainSpell")==0)
+					if(MagicSpells.spells().toArray()[temp+(page*45)].getClass().getSimpleName().compareTo("ParticleProjectileSpell")!=0)
 					{
 						spells[counter] = MagicSpells.spells().toArray()[temp+(page*45)];
 						counter++;
@@ -227,7 +227,30 @@ public class SpellMain implements Listener
 			if(spell!=null)
 			{
 				String SpellName = spell.getName();
-				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + SpellName, 403,(byte)0,1,Arrays.asList(ChatColor.WHITE+spell.getClass().getSimpleName()+"",ChatColor.YELLOW+"[좌 클릭시 스킬 등록]"), (byte)count, inv);
+				short ID = 403;
+				if(spell.getClass().getSimpleName().compareTo("PainSpell")==0)
+					ID= 370;
+				else if(spell.getClass().getSimpleName().compareTo("DummySpell")==0)
+					ID= 416;
+				else if(spell.getClass().getSimpleName().compareTo("AreaEffectSpell")==0)
+					ID= 438;
+				else if(spell.getClass().getSimpleName().compareTo("MultiSpell")==0)
+					ID= 345;
+				else if(spell.getClass().getSimpleName().compareTo("ParticleProjectileSpell")==0)
+					ID= 401;
+				else if(spell.getClass().getSimpleName().compareTo("ArmorSpell")==0)
+					ID= 315;
+				else if(spell.getClass().getSimpleName().compareTo("EmpowerSpell")==0)
+					ID= 373;
+				else if(spell.getClass().getSimpleName().compareTo("ForcetossSpell")==0)
+					ID= 33;
+				else if(spell.getClass().getSimpleName().compareTo("ExplodeSpell")==0)
+					ID= 46;
+				else if(spell.getClass().getSimpleName().compareTo("ThrowBlockSpell")==0)
+					ID= 145;
+				else if(spell.getClass().getSimpleName().compareTo("VolleySpell")==0)
+					ID= 262;
+				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + SpellName, ID, (byte)0,1,Arrays.asList(ChatColor.WHITE+spell.getClass().getSimpleName()+"",ChatColor.YELLOW+"[좌 클릭시 스킬 등록]"), (byte)count, inv);
 			}
 		}
 		
@@ -246,9 +269,9 @@ public class SpellMain implements Listener
 		case 3:
 			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "클래스별 정렬", 154,(byte)0,1,Arrays.asList(ChatColor.GRAY + "[멀티 스펠 보기]",ChatColor.BLACK+""+sort), (byte)49, inv);break;
 		case 4:
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "클래스별 정렬", 154,(byte)0,1,Arrays.asList(ChatColor.GRAY + "[P.P 제외 보기]",ChatColor.BLACK+""+sort), (byte)49, inv);break;
-		case 5:
 			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "클래스별 정렬", 154,(byte)0,1,Arrays.asList(ChatColor.GRAY + "[pain 스펠 보기]",ChatColor.BLACK+""+sort), (byte)49, inv);break;
+		case 5:
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "클래스별 정렬", 154,(byte)0,1,Arrays.asList(ChatColor.GRAY + "[P.P 제외 보기]",ChatColor.BLACK+""+sort), (byte)49, inv);break;
 		}
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,(byte)0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK+""+SkillLevel), (byte)45, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,(byte)0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+SkillName), (byte)53, inv);
@@ -294,7 +317,7 @@ public class SpellMain implements Listener
 				break;
 			case 49://정렬 방식 변경
 				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 0.8F);
-				if(sort < 4)
+				if(sort <= 4)
 					sort = sort +1;
 				else
 					sort = 0;
@@ -353,10 +376,10 @@ public class SpellMain implements Listener
 	{
 		GoldBigDragon_RPG.Attack.Damage d = new GoldBigDragon_RPG.Attack.Damage();
 		
-		int BonusMana = d.getPlayerEquipmentStat(player, "마나", false)[0];
+		int BonusMana = d.getPlayerEquipmentStat(player, "마나", false, null)[0];
 		int MaxMana = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxMP()+BonusMana;
 		int Mana = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MP()+BonusMana;
-		if(MaxMana > 0)
+		if(MaxMana > 0 && ServerOption.MagicSpellsEnable)
 		{
 			try
 			{
@@ -373,7 +396,7 @@ public class SpellMain implements Listener
 	{
 		GoldBigDragon_RPG.Attack.Damage d = new GoldBigDragon_RPG.Attack.Damage();
 		
-		int BonusMana = d.getSlotChangedPlayerEquipmentStat(player, "마나", newSlot)[0];
+		int BonusMana = d.getPlayerEquipmentStat(player, "마나", false, newSlot)[0];
 		int MaxMana = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxMP()+BonusMana;
 
 		if(MaxMana > 0 && GoldBigDragon_RPG.Main.ServerOption.MagicSpellsEnable == true)

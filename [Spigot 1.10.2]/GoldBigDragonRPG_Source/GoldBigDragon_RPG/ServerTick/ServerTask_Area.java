@@ -48,9 +48,7 @@ public class ServerTask_Area
 						{
 							GoldBigDragon_RPG.Monster.MonsterSpawn MC = new GoldBigDragon_RPG.Monster.MonsterSpawn();
 							for(short mobspawn=0;mobspawn<ServerTickMain.Schedule.get(UTC).getInt((byte)4);mobspawn++)
-							{
 								MC.SpawnMob(loc.add(-0.5, -1,-0.5), mob, (byte) -1, null, (char) -1, false);
-							}
 						}
 					}
 				}

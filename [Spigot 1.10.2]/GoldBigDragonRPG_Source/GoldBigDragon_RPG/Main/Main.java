@@ -622,9 +622,8 @@ public class Main extends JavaPlugin implements Listener
 					if(event.getCurrentItem().getItemMeta().getLore().get(3).equals((ChatColor.YELLOW+"[Å¬¸¯½Ã Äü½½·Ô¿¡¼­ »èÁ¦]")))
 					{
 						event.setCancelled(true);
-						event.getWhoClicked().getInventory().setItem(event.getSlot(), new ItemStack(0));
-						GoldBigDragon_RPG.Effect.Sound s = new GoldBigDragon_RPG.Effect.Sound();
-						s.SP((Player)event.getWhoClicked(), Sound.BLOCK_ANVIL_LAND, 1.0F, 1.9F);
+						event.getWhoClicked().getInventory().setItem(event.getSlot(), null);
+						new GoldBigDragon_RPG.Effect.Sound().SP((Player)event.getWhoClicked(), Sound.BLOCK_ANVIL_LAND, 1.0F, 1.9F);
 					}
 				}
 			}

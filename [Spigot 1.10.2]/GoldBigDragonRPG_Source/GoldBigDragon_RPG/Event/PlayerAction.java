@@ -643,10 +643,12 @@ public class PlayerAction
 					Flownumber = (short) (b.size()-1);
 				else
 					Flownumber = (short) b.size();
-				QuestConfig.set(u.getString(player, (byte)2)+".FlowChart."+Flownumber+".Type","Hunt");
-				QuestConfig.set(u.getString(player, (byte)2)+".FlowChart."+Flownumber+".Monster."+(-1)+".MonsterName", null);
-				QuestConfig.removeKey(u.getString(player, (byte)2)+".FlowChart."+Flownumber+".Monster."+(-1));
-				QuestConfig.saveConfig();
+				if(QuestConfig.contains(u.getString(player, (byte)2)+".FlowChart."+Flownumber+".Monster")==false)
+				{
+					QuestConfig.set(u.getString(player, (byte)2)+".FlowChart."+Flownumber+".Type","Hunt");
+					QuestConfig.createSection(u.getString(player, (byte)2)+".FlowChart."+Flownumber+".Monster");
+					QuestConfig.saveConfig();
+				}
 				Set<String> c = QuestConfig.getConfigurationSection(u.getString(player, (byte)2)+".FlowChart."+Flownumber+".Monster").getKeys(false);
 				if(u.getInt(player, (byte)2) != -1)
 					Monsternumber = (short) u.getInt(player, (byte)2);
@@ -695,10 +697,12 @@ public class PlayerAction
     					Flownumber = (short) (b.size()-1);
     				else
     					Flownumber = (short) b.size();
-    				QuestConfig.set(u.getString(player, (byte)2)+".FlowChart."+Flownumber+".Type","Harvest");
-    				QuestConfig.set(u.getString(player, (byte)2)+".FlowChart."+Flownumber+".Block."+(-1)+".BlockID", null);
-    				QuestConfig.removeKey(u.getString(player, (byte)2)+".FlowChart."+Flownumber+".Block."+(-1));
-    				QuestConfig.saveConfig();
+    				if(QuestConfig.contains(u.getString(player, (byte)2)+".FlowChart."+Flownumber+".Block")==false)
+    				{
+        				QuestConfig.set(u.getString(player, (byte)2)+".FlowChart."+Flownumber+".Type","Harvest");
+        				QuestConfig.createSection(u.getString(player, (byte)2)+".FlowChart."+Flownumber+".Block");
+        				QuestConfig.saveConfig();
+    				}
     				Set<String> c = QuestConfig.getConfigurationSection(u.getString(player, (byte)2)+".FlowChart."+Flownumber+".Block").getKeys(false);
     				if(u.getInt(player, (byte)4) != -1)
     					BlockNumber = (short) u.getInt(player, (byte)4);
@@ -1767,6 +1771,30 @@ public class PlayerAction
 				u.clearAll(player);
 			}
 			return;
+		case "NeedLV"://NeedLevel
+			if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
+			{
+				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".NeedLevel",Integer.parseInt(Message));
+				SkillList.saveConfig();
+				sound.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				player.sendMessage(ChatColor.LIGHT_PURPLE+"[스킬] : 스킬을 배울 수 있는 누적 레벨을 설정해 주세요!");
+				player.sendMessage(ChatColor.LIGHT_PURPLE+"[제한 없음 : 0] [최대 : "+Integer.MAX_VALUE+"]");
+				u.setType(player, "Skill");
+				u.setString(player, (byte)1, "NeedRealLV");
+				u.setString(player, (byte)2, u.getString(player, (byte)2));
+				u.setInt(player, (byte)4, u.getInt(player, (byte)4));
+			}
+			return;
+		case "NeedRealLV"://SkillPoint
+			if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
+			{
+				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".NeedRealLevel",Integer.parseInt(Message));
+				SkillList.saveConfig();
+				sound.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
+				u.clearAll(player);
+			}
+			return;
 		case "BH"://BonusHealth
 			if(isIntMinMax(Message, player, Integer.MIN_VALUE, Integer.MAX_VALUE))
 			{
@@ -1918,7 +1946,7 @@ public class PlayerAction
 		case "CC"://CreateCategory
 			if(JobList.getConfigurationSection("Mabinogi").getKeys(false).toString().contains(Message) == false)
 			{
-				JobList.set("Mabinogi."+Message+".LV",null);
+				JobList.createSection("Mabinogi."+Message);
 				JobList.saveConfig();
 				sound.SP(player, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 0.5F);
 				JGUI.Mabinogi_ChooseCategory(player,(short) 0);

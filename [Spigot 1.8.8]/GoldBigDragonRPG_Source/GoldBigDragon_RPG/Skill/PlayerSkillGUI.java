@@ -78,7 +78,6 @@ public class PlayerSkillGUI extends GUIutil
 		YamlManager PlayerSkillList  = YC.getNewConfig("Skill/PlayerData/"+player.getUniqueId().toString()+".yml");
 		YamlManager AllSkillList  = YC.getNewConfig("Skill/SkillList.yml");
 		Inventory inv = null;
-		int MySkillPoint = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint();
 		if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == false)
 		{
 			inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "보유 스킬 목록 : " + (page+1));
@@ -89,9 +88,6 @@ public class PlayerSkillGUI extends GUIutil
 			{
 				short SkillRank= (short) PlayerSkillList.getInt("MapleStory."+CategoriName+".Skill."+a[count]);
 				short SkillMaxRank = (short) AllSkillList.getConfigurationSection(a[count]+".SkillRank").getKeys(false).size();
-				int NeedSkillPoint = 0;
-				if(SkillRank < SkillMaxRank)
-					NeedSkillPoint = AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint");
 				int IConID = AllSkillList.getInt(a[count]+".ID");
 				byte IConDATA = (byte) AllSkillList.getInt(a[count]+".DATA");
 				byte IConAmount = (byte) AllSkillList.getInt(a[count]+".Amount");
@@ -103,16 +99,38 @@ public class PlayerSkillGUI extends GUIutil
 				if(SkillRank<SkillMaxRank)
 				{
 					Skilllore = Skilllore +"%enter%"+ ChatColor.YELLOW + "[Shift + 좌 클릭시 랭크 업]%enter%";
-					if(MySkillPoint < NeedSkillPoint)
+					if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint() < AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint"))
 					{
-						Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "필요 스킬 포인트 : "+NeedSkillPoint;
-						Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "현재 스킬 포인트 : "+MySkillPoint;
+						Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "필요 스킬 포인트 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint");
+						Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "현재 스킬 포인트 : "+GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint();
 					}
 					else
 					{
-						Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "필요 스킬 포인트 : "+NeedSkillPoint;
-						Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "현재 스킬 포인트 : "+MySkillPoint;
+						Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "필요 스킬 포인트 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint");
+						Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "현재 스킬 포인트 : "+GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint();
 					}
+					if(AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel") > 0)
+						if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level() < AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel"))
+						{
+							Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "최소 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel");
+							Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "현재 레벨 : "+GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level();
+						}
+						else
+						{
+							Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "최소 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel");
+							Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "현재 레벨 : "+GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level();
+						}
+					if(AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel") > 0)
+						if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel() < AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel"))
+						{
+							Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "최소 누적 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel");
+							Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "현재 누적 레벨 : "+GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel();
+						}
+						else
+						{
+							Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "최소 누적 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel");
+							Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "현재 누적 레벨 : "+GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel();
+						}
 				}
 				
 				String[] scriptA = Skilllore.split("%enter%");
@@ -141,9 +159,6 @@ public class PlayerSkillGUI extends GUIutil
 				int IConID = AllSkillList.getInt(a[count]+".ID");
 				byte IConDATA = (byte) AllSkillList.getInt(a[count]+".DATA");
 				byte IConAmount = (byte) AllSkillList.getInt(a[count]+".Amount");
-				int NeedSkillPoint = 0;
-				if(SkillRank < SkillMaxRank)
-					NeedSkillPoint = AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint");
 				if(count > a.length || loc >= 45) break;
 			
 				String Skilllore = ChatColor.DARK_AQUA+"스킬 랭크 : " +SkillRank +" / "+SkillMaxRank+"%enter%"+AllSkillList.getString(a[count]+".SkillRank."+SkillRank+".Lore");
@@ -152,16 +167,38 @@ public class PlayerSkillGUI extends GUIutil
 				if(SkillRank<SkillMaxRank)
 				{
 					Skilllore = Skilllore +"%enter%"+ ChatColor.YELLOW + "[Shift + 좌 클릭시 랭크 업]%enter%";
-					if(MySkillPoint < NeedSkillPoint)
+					if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint() < AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint"))
 					{
-						Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "필요 스킬 포인트 : "+NeedSkillPoint;
-						Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "현재 스킬 포인트 : "+MySkillPoint;
+						Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "필요 스킬 포인트 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint");
+						Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "현재 스킬 포인트 : "+GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint();
 					}
 					else
 					{
-						Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "필요 스킬 포인트 : "+NeedSkillPoint;
-						Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "현재 스킬 포인트 : "+MySkillPoint;
+						Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "필요 스킬 포인트 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint");
+						Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "현재 스킬 포인트 : "+GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint();
 					}
+					if(AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel") > 0)
+						if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level() < AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel"))
+						{
+							Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "최소 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel");
+							Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "현재 레벨 : "+GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level();
+						}
+						else
+						{
+							Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "최소 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel");
+							Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "현재 레벨 : "+GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level();
+						}
+					if(AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel") > 0)
+						if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel() < AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel"))
+						{
+							Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "최소 누적 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel");
+							Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "현재 누적 레벨 : "+GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel();
+						}
+						else
+						{
+							Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "최소 누적 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel");
+							Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "현재 누적 레벨 : "+GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel();
+						}
 				}
 				String[] scriptA = Skilllore.split("%enter%");
 				for(byte counter = 0; counter < scriptA.length; counter++)
@@ -311,7 +348,19 @@ public class PlayerSkillGUI extends GUIutil
 					SkillRank= (short) PlayerSkillList.getInt("Mabinogi."+CategoriName+"."+SkillName);
 				if(SkillRank<SkillMaxRank)
 				{
-					if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint() >= AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".SkillPoint"))
+					if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level() < AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".NeedLevel"))
+					{
+						s.SP(player, Sound.ORB_PICKUP, 1.0F, 1.8F);
+						player.sendMessage(ChatColor.RED + "[스킬] : 레벨이 부족합니다!");
+						return;
+					}
+					else if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel() < AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".NeedRealLevel"))
+					{
+						s.SP(player, Sound.ORB_PICKUP, 1.0F, 1.8F);
+						player.sendMessage(ChatColor.RED + "[스킬] : 누적 레벨이 부족합니다!");
+						return;
+					}
+					else if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint() >= AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".SkillPoint"))
 					{
 						if(isMabinogi == false)
 							PlayerSkillList.set("MapleStory."+CategoriName+".Skill."+SkillName, SkillRank+1);

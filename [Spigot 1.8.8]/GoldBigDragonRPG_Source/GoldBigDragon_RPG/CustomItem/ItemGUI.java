@@ -96,7 +96,7 @@ public class ItemGUI extends GUIutil
 		Stack2(ChatColor.DARK_AQUA + "[        개조        ]", 145,0,1,Arrays.asList(ChatColor.WHITE+"아이템의 최대 개조 횟수를",ChatColor.WHITE+"조절합니다.","",ChatColor.RED+"[0 설정시 개조 불가능]",""), 42, inv);
 		Stack2(ChatColor.DARK_AQUA + "[         룬         ]", 381,0,1,Arrays.asList(ChatColor.WHITE+"아이템의 최대 슬롯을",ChatColor.WHITE+"조절합니다.","",ChatColor.WHITE+"최대 "+ItemList.getInt(number+".MaxSocket")+" 개","",ChatColor.RED+"[0 설정시 룬 장착 불가능]",""), 43, inv);
 		Stack2(ChatColor.DARK_AQUA + "[      스텟 제한      ]", 166,0,1,Arrays.asList(ChatColor.WHITE+"아이템 장착에 제한을",ChatColor.WHITE+"걸어둡니다.",""), 49, inv);
-		Stack2(ChatColor.DARK_AQUA + "[      직업 제한      ]", 397,3,1,Arrays.asList(ChatColor.WHITE+"아이템 장착에 제한을",ChatColor.WHITE+"걸어둡니다.",""), 50, inv);
+		Stack2(ChatColor.DARK_AQUA + "[      직업 제한      ]", 397,3,1,Arrays.asList(ChatColor.WHITE+"아이템 장착에 제한을",ChatColor.WHITE+"걸어둡니다.",ChatColor.RED+"[우 클릭시 해제]",""), 50, inv);
 		
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+""+number), 53, inv);
@@ -531,8 +531,18 @@ public class ItemGUI extends GUIutil
 				u.setInt(player, (byte)3, itemnumber);
 				return;
 			case 50://직업 제한
-				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
-				JobListGUI(player, (short)0, itemnumber);
+				if(event.isLeftClick())
+				{
+					s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+					JobListGUI(player, (short)0, itemnumber);
+				}
+				else if(event.isRightClick())
+				{
+					s.SP(player, Sound.ITEM_BREAK, 0.8F, 1.0F);
+					ItemList.set(itemnumber+".JOB", "공용");
+					ItemList.saveConfig();
+					NewItemGUI(player, itemnumber);
+				}
 				return;
 			case 45://이전 목록
 				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
@@ -873,19 +883,19 @@ public class ItemGUI extends GUIutil
 					ItemList.getInt(ItemNumber+".MinLUK")!=0)
 				lore = lore+"%enter%";
 			if(ItemList.getInt(ItemNumber+".MinLV") > 0)
-				lore = lore+ChatColor.DARK_RED + "%enter% 최소 레벨 : " + ItemList.getInt(ItemNumber+".MinLV");
+				lore = lore+"%enter%"+ChatColor.DARK_RED +"최소 레벨 : " + ItemList.getInt(ItemNumber+".MinLV");
 			if(ItemList.getInt(ItemNumber+".MinRLV") > 0)
-				lore = lore+ChatColor.DARK_RED + "%enter% 최소 누적레벨 : " + ItemList.getInt(ItemNumber+".MinRLV");
+				lore = lore+"%enter%"+ChatColor.DARK_RED +"최소 누적레벨 : " + ItemList.getInt(ItemNumber+".MinRLV");
 			if(ItemList.getInt(ItemNumber+".MinSTR") > 0)
-				lore = lore+ChatColor.DARK_RED + "%enter% 최소 "+GoldBigDragon_RPG.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".MinSTR");
+				lore = lore+"%enter%"+ChatColor.DARK_RED +"최소 "+GoldBigDragon_RPG.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".MinSTR");
 			if(ItemList.getInt(ItemNumber+".MinDEX") > 0)
-				lore = lore+ChatColor.DARK_RED + "%enter% 최소 "+GoldBigDragon_RPG.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".MinDEX");
+				lore = lore+"%enter%"+ChatColor.DARK_RED +"최소 "+GoldBigDragon_RPG.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".MinDEX");
 			if(ItemList.getInt(ItemNumber+".MinINT") > 0)
-				lore = lore+ChatColor.DARK_RED + "%enter% 최소 "+GoldBigDragon_RPG.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".MinINT");
+				lore = lore+"%enter%"+ChatColor.DARK_RED +"최소 "+GoldBigDragon_RPG.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".MinINT");
 			if(ItemList.getInt(ItemNumber+".MinWILL") > 0)
-				lore = lore+ChatColor.DARK_RED + "%enter% 최소 "+GoldBigDragon_RPG.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".MinWILL");
+				lore = lore+"%enter%"+ChatColor.DARK_RED +"최소 "+GoldBigDragon_RPG.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".MinWILL");
 			if(ItemList.getInt(ItemNumber+".MinLUK") > 0)
-				lore = lore+ChatColor.DARK_RED + "%enter% 최소 "+GoldBigDragon_RPG.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".MinLUK");
+				lore = lore+"%enter%"+ChatColor.DARK_RED +"최소 "+GoldBigDragon_RPG.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".MinLUK");
 		}
 		else
 		{
@@ -964,19 +974,19 @@ public class ItemGUI extends GUIutil
 					ItemList.getInt(ItemNumber+".MinLUK")!=0)
 				lore = lore+"%enter%";
 			if(ItemList.getInt(ItemNumber+".MinLV") > 0)
-				lore = lore+ChatColor.WHITE + "%enter% 최소 레벨 : " + ItemList.getInt(ItemNumber+".MinLV");
+				lore = lore+"%enter%"+ChatColor.WHITE +"최소 레벨 : " + ItemList.getInt(ItemNumber+".MinLV");
 			if(ItemList.getInt(ItemNumber+".MinRLV") > 0)
-				lore = lore+ChatColor.WHITE + "%enter% 최소 누적레벨 : " + ItemList.getInt(ItemNumber+".MinRLV");
+				lore = lore+"%enter%"+ChatColor.WHITE +"최소 누적레벨 : " + ItemList.getInt(ItemNumber+".MinRLV");
 			if(ItemList.getInt(ItemNumber+".MinSTR") > 0)
-				lore = lore+ChatColor.WHITE + "%enter% 최소 "+GoldBigDragon_RPG.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".MinSTR");
+				lore = lore+"%enter%"+ChatColor.WHITE +"최소 "+GoldBigDragon_RPG.Main.ServerOption.STR+" : " + ItemList.getInt(ItemNumber+".MinSTR");
 			if(ItemList.getInt(ItemNumber+".MinDEX") > 0)
-				lore = lore+ChatColor.WHITE + "%enter% 최소 "+GoldBigDragon_RPG.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".MinDEX");
+				lore = lore+"%enter%"+ChatColor.WHITE +"최소 "+GoldBigDragon_RPG.Main.ServerOption.DEX+" : " + ItemList.getInt(ItemNumber+".MinDEX");
 			if(ItemList.getInt(ItemNumber+".MinINT") > 0)
-				lore = lore+ChatColor.WHITE + "%enter% 최소 "+GoldBigDragon_RPG.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".MinINT");
+				lore = lore+"%enter%"+ChatColor.WHITE +"최소 "+GoldBigDragon_RPG.Main.ServerOption.INT+" : " + ItemList.getInt(ItemNumber+".MinINT");
 			if(ItemList.getInt(ItemNumber+".MinWILL") > 0)
-				lore = lore+ChatColor.WHITE + "%enter% 최소 "+GoldBigDragon_RPG.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".MinWILL");
+				lore = lore+"%enter%"+ChatColor.WHITE +"최소 "+GoldBigDragon_RPG.Main.ServerOption.WILL+" : " + ItemList.getInt(ItemNumber+".MinWILL");
 			if(ItemList.getInt(ItemNumber+".MinLUK") > 0)
-				lore = lore+ChatColor.WHITE + "%enter% 최소 "+GoldBigDragon_RPG.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".MinLUK");
+				lore = lore+"%enter%"+ChatColor.WHITE +"최소 "+GoldBigDragon_RPG.Main.ServerOption.LUK+" : " + ItemList.getInt(ItemNumber+".MinLUK");
 		}
 		String[] scriptA = lore.split("%enter%");
 		for(byte counter = 0; counter < scriptA.length; counter++)

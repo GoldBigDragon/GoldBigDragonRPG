@@ -24,101 +24,107 @@ public class Interact
 	//블럭 우클/좌클 할 때//
 	public void PlayerInteract(PlayerInteractEvent event)
 	{
-		if(new GoldBigDragon_RPG.Effect.Corpse().DeathCapture(event.getPlayer(),false))
-			return;
-		if(event.getAction()==Action.RIGHT_CLICK_AIR||event.getAction()==Action.RIGHT_CLICK_BLOCK)
-			ClickTrigger(event);
-		if(event.getPlayer().getInventory().getItemInMainHand()!=null&&event.getPlayer().isOp())
-			AreaChecker(event);
-
-		if(event.getPlayer().isOp())
-			OPwork(event);
-
-
-		if(event.getPlayer().getWorld().getName().compareTo("Dungeon")==0)
+		if(event.getHand()==EquipmentSlot.HAND)
 		{
-			new GoldBigDragon_RPG.Dungeon.DungeonWork().DungeonInteract(event);
-			return;
-		}
-		
-		if(event.getAction()==Action.RIGHT_CLICK_BLOCK&&event.getClickedBlock()!=null)
-		{
-			short id = (short) event.getClickedBlock().getTypeId();
-			if(id==54||id==58||id==61||id==84||id==116||id==120||id==130||id==145||id==146
-				||id==321||id==355||id==389||id==416||id==23||id==25||id==84||id==69||id==84
-				||id==46||id==77||id==84||id==96||id==107||id==143||id==151||id==154||id==158
-				||id==167||id==84||(id>=183&&id<=187)||id==324||id==330||id==356||id==404||(id>=427&&id<=431)
-				||id==138)
+			if(new GoldBigDragon_RPG.Effect.Corpse().DeathCapture(event.getPlayer(),false))
+				return;
+			if(event.getAction()==Action.RIGHT_CLICK_AIR||event.getAction()==Action.RIGHT_CLICK_BLOCK)
+				ClickTrigger(event);
+			if(event.getPlayer().getInventory().getItemInMainHand()!=null&&event.getPlayer().isOp())
+				AreaChecker(event);
+
+			if(event.getPlayer().isOp())
+				OPwork(event);
+
+
+			if(event.getPlayer().getWorld().getName().compareTo("Dungeon")==0)
 			{
-				GoldBigDragon_RPG.ETC.Area A = new GoldBigDragon_RPG.ETC.Area();
-				String[] Area = A.getAreaName(event.getClickedBlock());
-				if(Area != null)
+				new GoldBigDragon_RPG.Dungeon.DungeonWork().DungeonInteract(event);
+				return;
+			}
+			
+			if(event.getAction()==Action.RIGHT_CLICK_BLOCK&&event.getClickedBlock()!=null)
+			{
+				short id = (short) event.getClickedBlock().getTypeId();
+				if(id==54||id==58||id==61||id==84||id==116||id==120||id==130||id==145||id==146
+					||id==321||id==355||id==389||id==416||id==23||id==25||id==84||id==69||id==84
+					||id==46||id==77||id==84||id==96||id==107||id==143||id==151||id==154||id==158
+					||id==167||id==84||(id>=183&&id<=187)||id==324||id==330||id==356||id==404||(id>=427&&id<=431)
+					||id==138)
 				{
-					if(A.getAreaOption(Area[0], (char) 7) == false && event.getPlayer().isOp() == false)
+					GoldBigDragon_RPG.ETC.Area A = new GoldBigDragon_RPG.ETC.Area();
+					String[] Area = A.getAreaName(event.getClickedBlock());
+					if(Area != null)
 					{
-						event.setCancelled(true);
-						new GoldBigDragon_RPG.Effect.Sound().SP(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-						event.getPlayer().sendMessage(ChatColor.RED + "[SYSTEM] : " + ChatColor.YELLOW + Area[1] + ChatColor.RED + " 지역에 있는 블록은 손 댈 수없습니다!");
-						return;
+						if(A.getAreaOption(Area[0], (char) 7) == false && event.getPlayer().isOp() == false)
+						{
+							event.setCancelled(true);
+							new GoldBigDragon_RPG.Effect.Sound().SP(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+							event.getPlayer().sendMessage(ChatColor.RED + "[SYSTEM] : " + ChatColor.YELLOW + Area[1] + ChatColor.RED + " 지역에 있는 블록은 손 댈 수없습니다!");
+							return;
+						}
+					}
+				}
+				if(event.getItem()!=null)
+				if(event.getItem().getTypeId()>=325&&event.getItem().getTypeId()<=327)
+				{
+					GoldBigDragon_RPG.ETC.Area A = new GoldBigDragon_RPG.ETC.Area();
+					String[] Area = A.getAreaName(event.getClickedBlock());
+					if(Area != null)
+					{
+						if(A.getAreaOption(Area[0], (char) 7) == false && event.getPlayer().isOp() == false)
+						{
+							event.setCancelled(true);
+							new GoldBigDragon_RPG.Effect.Sound().SP(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+							event.getPlayer().sendMessage(ChatColor.RED + "[SYSTEM] : " + ChatColor.YELLOW + Area[1] + ChatColor.RED + " 지역에서는 양동이를 사용할 수없습니다!");
+							return;
+						}
 					}
 				}
 			}
-			if(event.getItem()!=null)
-			if(event.getItem().getTypeId()>=325&&event.getItem().getTypeId()<=327)
-			{
-				GoldBigDragon_RPG.ETC.Area A = new GoldBigDragon_RPG.ETC.Area();
-				String[] Area = A.getAreaName(event.getClickedBlock());
-				if(Area != null)
-				{
-					if(A.getAreaOption(Area[0], (char) 7) == false && event.getPlayer().isOp() == false)
-					{
-						event.setCancelled(true);
-						new GoldBigDragon_RPG.Effect.Sound().SP(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-						event.getPlayer().sendMessage(ChatColor.RED + "[SYSTEM] : " + ChatColor.YELLOW + Area[1] + ChatColor.RED + " 지역에서는 양동이를 사용할 수없습니다!");
-						return;
-					}
-				}
-			}
+			return;
 		}
-		return;
 	}
 	
 	//NPC 및 액자
 	public void PlayerInteractEntity (PlayerInteractEntityEvent event)
 	{
-		Entity target = event.getRightClicked();
-		Player player = event.getPlayer();
-
-		if(target.getType() == EntityType.PLAYER)
+		if(event.getHand()==EquipmentSlot.HAND)
 		{
-			Player t = (Player)target;
-			if(t.isOnline()==true)
-			{
-				GoldBigDragon_RPG.GUI.EquipGUI EGUI = new GoldBigDragon_RPG.GUI.EquipGUI();
-				EGUI.EquipWatchGUI(player, t);
-				return;
-			}
-		}
-	    if(player.isOp())
-	    {
-	    	String Type = new Object_UserData().getType(player);
-	    	if(Type!=null)
-	    		if(new Object_UserData().getType(player).compareTo("Quest")==0)
-	    			new GoldBigDragon_RPG.Quest.QuestInteractEvent().EntityInteract(event, Type);
-	    }
+			Entity target = event.getRightClicked();
+			Player player = event.getPlayer();
 
-		String[] Area = new GoldBigDragon_RPG.ETC.Area().getAreaName(target);
-		if(Area != null)
-		{
-			if(new GoldBigDragon_RPG.ETC.Area().getAreaOption(Area[0], (char) 7) == false && event.getPlayer().isOp() == false)
+			if(target.getType() == EntityType.PLAYER)
 			{
-				event.setCancelled(true);
-				new GoldBigDragon_RPG.Effect.Sound().SP(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-				event.getPlayer().sendMessage(ChatColor.RED + "[SYSTEM] : " + ChatColor.YELLOW + Area[1] + ChatColor.RED + " 지역에 있는 엔티티는 손 댈 수없습니다!");
-				return;
+				Player t = (Player)target;
+				if(t.isOnline()==true)
+				{
+					GoldBigDragon_RPG.GUI.EquipGUI EGUI = new GoldBigDragon_RPG.GUI.EquipGUI();
+					EGUI.EquipWatchGUI(player, t);
+					return;
+				}
 			}
+		    if(player.isOp())
+		    {
+		    	String Type = new Object_UserData().getType(player);
+		    	if(Type!=null)
+		    		if(new Object_UserData().getType(player).compareTo("Quest")==0)
+		    			new GoldBigDragon_RPG.Quest.QuestInteractEvent().EntityInteract(event, Type);
+		    }
+
+			String[] Area = new GoldBigDragon_RPG.ETC.Area().getAreaName(target);
+			if(Area != null)
+			{
+				if(new GoldBigDragon_RPG.ETC.Area().getAreaOption(Area[0], (char) 7) == false && event.getPlayer().isOp() == false)
+				{
+					event.setCancelled(true);
+					new GoldBigDragon_RPG.Effect.Sound().SP(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+					event.getPlayer().sendMessage(ChatColor.RED + "[SYSTEM] : " + ChatColor.YELLOW + Area[1] + ChatColor.RED + " 지역에 있는 엔티티는 손 댈 수없습니다!");
+					return;
+				}
+			}
+		    return;
 		}
-	    return;
 	}
 	
 	public void ClickTrigger(PlayerInteractEvent event)
@@ -356,7 +362,7 @@ public class Interact
 						+block.getLocation().getBlockY()+","+block.getLocation().getBlockZ()+")");
 				return;
 			}
-			else if(event.getAction()==Action.RIGHT_CLICK_BLOCK&&event.getHand()==EquipmentSlot.HAND)
+			else if(event.getAction()==Action.RIGHT_CLICK_BLOCK)
 			{
 				GoldBigDragon_RPG.Main.ServerOption.catchedLocation2.put(player, event.getClickedBlock().getLocation());
 				player.sendMessage(ChatColor.YELLOW + "[SYSTEM] : 두 번째 지점 설정 완료! (" + event.getClickedBlock().getLocation().getBlockX() + ","

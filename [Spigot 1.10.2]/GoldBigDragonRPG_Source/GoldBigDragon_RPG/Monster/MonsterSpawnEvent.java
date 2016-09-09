@@ -1,5 +1,6 @@
 package GoldBigDragon_RPG.Monster;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
@@ -37,30 +38,31 @@ public class MonsterSpawnEvent
 				event.setCancelled(true);
 				return;
 			}
-			YamlManager AreaList = YC.getNewConfig("Area/AreaList.yml");
-			String AreaName = A.getAreaName(event.getEntity())[0];
-			Object[] MobNameList = AreaList.getConfigurationSection(AreaName+".Monster").getKeys(false).toArray();
-			boolean isExit = false;
-			for(byte count = 0;count<10;count++)
+			else if(A.getAreaOption(Area[0], (char) 8) == false)
 			{
-				if(isExit==true) break;
-				if(MobNameList.length != 0)
+				YamlManager AreaList = YC.getNewConfig("Area/AreaList.yml");
+				String AreaName = A.getAreaName(event.getEntity())[0];
+				Object[] MobNameList = AreaList.getConfigurationSection(AreaName+".Monster").getKeys(false).toArray();
+				boolean isExit = false;
+				for(byte count = 0;count<10;count++)
 				{
-					short RandomMob = (short) new GoldBigDragon_RPG.Util.Number().RandomNum(0, MobNameList.length-1);
-					if(GoldBigDragon_RPG.Main.ServerOption.MonsterList.containsKey(MobNameList[RandomMob].toString()))
+					if(isExit==true) break;
+					if(MobNameList.length != 0)
 					{
-						new GoldBigDragon_RPG.Monster.MonsterSpawn().SpawnMob(event.getLocation(), MobNameList[RandomMob].toString(), (byte) -1, null,(char) -1, false);
-						isExit = true;
+						short RandomMob = (short) new GoldBigDragon_RPG.Util.Number().RandomNum(0, MobNameList.length-1);
+						if(GoldBigDragon_RPG.Main.ServerOption.MonsterList.containsKey(MobNameList[RandomMob].toString()))
+						{
+							new GoldBigDragon_RPG.Monster.MonsterSpawn().SpawnMob(event.getLocation(), MobNameList[RandomMob].toString(), (byte) -1, null,(char) -1, false);
+							isExit = true;
+						}
+						else
+						{
+							AreaList.removeKey(AreaName+".Monster."+MobNameList[RandomMob]);
+							AreaList.saveConfig();
+						}
 					}
 					else
-					{
-						AreaList.removeKey(AreaName+".Monster."+MobNameList[RandomMob]);
-						AreaList.saveConfig();
-					}
-				}
-				else
-				{
-					break;
+						break;
 				}
 			}
 		}

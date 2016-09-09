@@ -109,6 +109,11 @@ public class OPBoxSkillGUI extends GUIutil
 
 			if((page*45)+count != 0)
 			{
+				if(SkillList.getInt(SkillName+".SkillRank."+(count+1)+".NeedLevel") >= 1)
+					lore = lore + ChatColor.AQUA+"승급시 필요 레벨 : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".NeedLevel")+"%enter%";
+				if(SkillList.getInt(SkillName+".SkillRank."+(count+1)+".NeedRealLevel") >= 1)
+					lore = lore + ChatColor.AQUA+"승급시 필요 누적 레벨 : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".NeedRealLevel")+"%enter%";
+
 				lore = lore + ChatColor.AQUA+"승급시 필요 스킬 포인트 : "+SkillList.getInt(SkillName+".SkillRank."+(count+1)+".SkillPoint")+"%enter%";
 
 			if(SkillList.getInt(SkillName+".SkillRank."+(count+1)+".BonusHP")<0)
@@ -321,6 +326,7 @@ public class OPBoxSkillGUI extends GUIutil
 		
 		if(SkillLevel != 1)
 		{
+			Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[필요 레벨]", 384,0,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급하는데 필요한 레벨]",ChatColor.WHITE +""+ChatColor.BOLD +" 레벨 "+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".NeedLevel")+" 이상",ChatColor.WHITE +""+ChatColor.BOLD +" 누적 레벨 "+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".NeedRealLevel") + " 이상","",ChatColor.YELLOW + "[좌 클릭시 레벨 변경]"), 3, inv);
 			Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[필요 스킬 포인트]", 399,0,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급하는데 필요한 스킬 포인트]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".SkillPoint") +"포인트","",ChatColor.YELLOW + "[좌 클릭시 스킬 포인트 변경]"), 4, inv);
 			Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[보너스 생명력]", 351,1,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급할 때 얻는 생명력]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".BonusHP") ,"",ChatColor.YELLOW + "[좌 클릭시 보너스 스텟 변경]"), 28, inv);
 			Stack2(ChatColor.WHITE+""+ChatColor.BOLD + "[보너스 마나]", 351,12,1,Arrays.asList("",ChatColor.AQUA + "["+SkillName+" "+(SkillLevel-1)+" 레벨에서",ChatColor.AQUA +"현재 레벨로 승급할 때 얻는 마나]",ChatColor.WHITE +"     "+ChatColor.BOLD+SkillList.getInt(SkillName+".SkillRank."+SkillLevel+".BonusMP"),"",ChatColor.YELLOW + "[좌 클릭시 보너스 스텟 변경]"), 29, inv);
@@ -545,6 +551,18 @@ public class OPBoxSkillGUI extends GUIutil
 		Player player = (Player) event.getWhoClicked();
 		switch (event.getSlot())
 		{
+		case 3://필요 레벨
+		{
+			s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);
+			player.closeInventory();
+			player.sendMessage(ChatColor.LIGHT_PURPLE+"[스킬] : 스킬을 배울 수 있는 레벨을 설정해 주세요!");
+			player.sendMessage(ChatColor.LIGHT_PURPLE+"[제한 없음 : 0] [최대 : "+Integer.MAX_VALUE+"]");
+			u.setType(player, "Skill");
+			u.setString(player, (byte)1, "NeedLV");
+			u.setString(player, (byte)2, SkillName);
+			u.setInt(player, (byte)4,SkillLevel);
+		}
+		return;
 		case 4://필요 스킬 포인트
 			{
 				s.SP(player, Sound.ITEM_PICKUP, 0.8F, 1.0F);

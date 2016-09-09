@@ -20,7 +20,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionEffectType;
 
-import GoldBigDragon_RPG.Main.ServerOption;
 import GoldBigDragon_RPG.Monster.AI.NMSUtils;
 import GoldBigDragon_RPG.Monster.AI.Creature.CreatureBlaze;
 import GoldBigDragon_RPG.Monster.AI.Creature.CreatureCaveSpider;

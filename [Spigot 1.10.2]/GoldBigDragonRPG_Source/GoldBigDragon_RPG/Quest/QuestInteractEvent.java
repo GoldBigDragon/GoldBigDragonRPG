@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import GoldBigDragon_RPG.Main.Object_UserData;
 import GoldBigDragon_RPG.Util.YamlController;

@@ -329,6 +329,18 @@ public class Area
 			return AreaList.getBoolean(AreaName + ".Music");
 		case 7:
 			return AreaList.getBoolean(AreaName + ".BlockUse");
+		case 8:
+		{
+			if(AreaList.contains(AreaName + ".MonsterSpawnRule"))
+			{
+				if(AreaList.getConfigurationSection(AreaName + ".MonsterSpawnRule").getKeys(false).size() <= 0)
+					return false;
+				else
+					return true;
+			}
+			else
+				return false;
+		}
 		}
 		return false;
 	}
