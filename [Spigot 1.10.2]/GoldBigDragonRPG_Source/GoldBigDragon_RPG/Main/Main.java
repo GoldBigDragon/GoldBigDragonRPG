@@ -652,7 +652,7 @@ public class Main extends JavaPlugin implements Listener
 						||InventoryName.compareTo("container.minecart")==0||InventoryName.compareTo("이벤트 전체 지급")==0
 						||InventoryName.compareTo("이벤트 랜덤 지급")==0||InventoryName.compareTo("교환")==0||InventoryName.compareTo("부활 아이템")==0
 						||InventoryName.compareTo("구조 아이템")==0||InventoryName.compareTo("도박 상품 정보")==0||InventoryName.compareTo("도박 기계 코인")==0
-						
+						||InventoryName.compareTo("[NPC] 선물 아이템을 올려 주세요")==0
 						))
 						{
 							event.setCancelled(true);

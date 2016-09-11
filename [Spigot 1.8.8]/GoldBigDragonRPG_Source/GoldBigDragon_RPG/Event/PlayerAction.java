@@ -1451,6 +1451,39 @@ public class PlayerAction
 		String Message = ChatColor.stripColor(event.getMessage());
 		switch(u.getString(player, (byte)4))
 		{
+		case "SaleSetting1":
+			if(isIntMinMax(Message, player, -1000, 1000))
+			{
+				u.setInt(player, (byte)0, Integer.parseInt(Message));
+				sound.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.8F);
+				u.setString(player, (byte)4,"SaleSetting2");
+				player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 몇 % 세일을 하실건가요? (0 ~ 100 사이 값)");
+			}
+			return;
+		case "SaleSetting2":
+			if(isIntMinMax(Message, player, 0, 100))
+			{
+				YamlManager NPCConfig =YC.getNewConfig("NPC/NPCData/"+u.getNPCuuid(player)+".yml");
+				NPCConfig.set("Sale.Enable", true);
+				NPCConfig.set("Sale.Minlove", u.getInt(player, (byte)0));
+				NPCConfig.set("Sale.discount", Integer.parseInt(Message));
+				NPCConfig.saveConfig();
+				new GoldBigDragon_RPG.GUI.NPC_GUI().MainGUI(player, u.getString(player, (byte)2), player.isOp());
+				sound.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.8F);
+				u.clearAll(player);
+			}
+			return;
+		case "PresentLove":
+			if(isIntMinMax(Message, player, -1000, 1000))
+			{
+				YamlManager NPCConfig =YC.getNewConfig("NPC/NPCData/"+u.getNPCuuid(player)+".yml");
+				NPCConfig.set("Present."+u.getInt(player, (byte)0)+".love", Integer.parseInt(Message));
+				NPCConfig.saveConfig();
+				new GoldBigDragon_RPG.GUI.NPC_GUI().PresentSettingGUI(player, u.getString(player, (byte)2));
+				sound.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.8F);
+				u.clearAll(player);
+			}
+			return;
 		case "NUC"://NPC'sUpgradeCost
 			if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
 			{
@@ -1479,6 +1512,31 @@ public class PlayerAction
 					break;
 				}
 				NPCscript.saveConfig();
+				sound.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
+				player.closeInventory();
+				player.sendMessage(ChatColor.DARK_AQUA+"[대사] : 그렇다면 최대 몇의 호감도가 필요한가요?");
+				player.sendMessage(ChatColor.GREEN + "("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+				u.setType(player, "NPC");
+				u.setString(player, (byte)4,"NPC_TNL2");
+			}
+			return;
+		case "NPC_TNL2"://NPC_TalkNeedLove
+			if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
+			{
+				switch(u.getString(player, (byte)5))
+				{
+				case "NT":
+					NPCscript.set("NatureTalk."+u.getString(player, (byte)6)+".loveMax", Integer.parseInt(Message));
+					break;
+				case "NN":
+					NPCscript.set("NearByNEWS."+u.getString(player, (byte)6)+".loveMax", Integer.parseInt(Message));
+					break;
+				case "AS":
+					NPCscript.set("AboutSkills."+u.getString(player, (byte)6)+".loveMax", Integer.parseInt(Message));
+					break;
+				}
+				NPCscript.saveConfig();
+				sound.SP(player, Sound.ITEM_PICKUP, 1.0F, 1.0F);
 				NPGUI.TalkSettingGUI(player, u.getString(player, (byte)2), u.getString(player, (byte)5), (short) Integer.parseInt(u.getString(player, (byte)6)));
 				u.clearAll(player);
 			}

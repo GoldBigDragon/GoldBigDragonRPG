@@ -656,6 +656,7 @@ public class Main extends JavaPlugin implements Listener
 						||InventoryName.equals("container.minecart")||InventoryName.equals("이벤트 전체 지급")
 						||InventoryName.equals("이벤트 랜덤 지급")||InventoryName.equals("교환")||InventoryName.equals("부활 아이템")
 						||InventoryName.equals("구조 아이템")||InventoryName.equals("도박 상품 정보")||InventoryName.equals("도박 기계 코인")
+						||InventoryName.compareTo("[NPC] 선물 아이템을 올려 주세요")==0
 						
 						))
 						{

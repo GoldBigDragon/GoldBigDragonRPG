@@ -210,19 +210,22 @@ public class PlayerUtil
 		Object[] WorldList = GoldBigDragon_RPG.Main.ServerOption.AreaList.keySet().toArray();
 		for(int count = 0; count < WorldList.length; count++)
 		{
-			if(GoldBigDragon_RPG.Main.ServerOption.AreaList.get(WorldList[count].toString()) != null)
+			if(GoldBigDragon_RPG.Main.ServerOption.AreaList.containsKey(WorldList[count].toString()))
 			{
-				String CurrentArea = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_CurrentArea();
-				for(int count2 = 0; count2 < GoldBigDragon_RPG.Main.ServerOption.AreaList.get(WorldList[count].toString()).size(); count2++)
+				if(GoldBigDragon_RPG.Main.ServerOption.AreaList.get(WorldList[count].toString()) != null)
 				{
-					Object[] WorldList2 = GoldBigDragon_RPG.Main.ServerOption.AreaList.get(WorldList[count].toString()).toArray();
-					if(WorldList2[count2].toString().compareTo(CurrentArea)==0)
+					String CurrentArea = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_CurrentArea();
+					for(int count2 = 0; count2 < GoldBigDragon_RPG.Main.ServerOption.AreaList.get(WorldList[count].toString()).size(); count2++)
 					{
-					  	YamlController YC = new YamlController(GoldBigDragon_RPG.Main.Main.plugin);
-						YamlManager PlayerConfig = YC.getNewConfig("Area/AreaList.yml");
-						Location loc = new Location(Bukkit.getServer().getWorld(PlayerConfig.getString(CurrentArea+".World")), PlayerConfig.getInt(CurrentArea+".SpawnLocation.X"), PlayerConfig.getInt(CurrentArea+".SpawnLocation.Y"), PlayerConfig.getInt(CurrentArea+".SpawnLocation.Z"),PlayerConfig.getInt(CurrentArea+".SpawnLocation.Yaw"),PlayerConfig.getInt(CurrentArea+".SpawnLocation.Pitch"));
-						player.teleport(loc);
-						return true;
+						Object[] WorldList2 = GoldBigDragon_RPG.Main.ServerOption.AreaList.get(WorldList[count].toString()).toArray();
+						if(WorldList2[count2].toString().compareTo(CurrentArea)==0)
+						{
+						  	YamlController YC = new YamlController(GoldBigDragon_RPG.Main.Main.plugin);
+							YamlManager PlayerConfig = YC.getNewConfig("Area/AreaList.yml");
+							Location loc = new Location(Bukkit.getServer().getWorld(PlayerConfig.getString(CurrentArea+".World")), PlayerConfig.getInt(CurrentArea+".SpawnLocation.X"), PlayerConfig.getInt(CurrentArea+".SpawnLocation.Y"), PlayerConfig.getInt(CurrentArea+".SpawnLocation.Z"),PlayerConfig.getInt(CurrentArea+".SpawnLocation.Yaw"),PlayerConfig.getInt(CurrentArea+".SpawnLocation.Pitch"));
+							player.teleport(loc);
+							return true;
+						}
 					}
 				}
 			}

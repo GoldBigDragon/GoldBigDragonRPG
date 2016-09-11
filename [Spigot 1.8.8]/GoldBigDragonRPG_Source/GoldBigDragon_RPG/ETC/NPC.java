@@ -55,42 +55,52 @@ public class NPC
 		boolean scriptget = false;
 		String scriptString = "";
 		
+		boolean textOK = false;
+		byte randomScript = 0;
 		for(int counter = 1; counter < 125; counter++)
 		{
-			byte randomScript = (byte) new GoldBigDragon_RPG.Util.Number().RandomNum(1, Size);
+			randomScript = (byte) new GoldBigDragon_RPG.Util.Number().RandomNum(1, Size);
 			if(PlayerNPC.getInt(u.getNPCuuid(player)+".love") >= NPCscript.getInt(TalkSubject + "."+randomScript+".love"))
 			{
-				scriptString = NPCscript.getString(TalkSubject + "."+randomScript+".Script");
-				scriptget = true;
-				YamlManager SkillList = YC.getNewConfig("Skill/SkillList.yml");
-				String Skillname = NPCscript.getString(TalkSubject + "."+randomScript+".giveSkill");
-				if(ScriptType == 6&&SkillList.contains(NPCscript.getString(TalkSubject + "."+randomScript+".giveSkill"))==true)
+				if(NPCscript.getInt(TalkSubject + "."+randomScript+".loveMax") != 0)
 				{
-					YamlManager JobList = YC.getNewConfig("Skill/JobList.yml");
-					YamlManager PlayerSkill = YC.getNewConfig("Skill/PlayerData/" + player.getUniqueId() +".yml");
-					String Categori = JobList.getString("Mabinogi.Added."+NPCscript.getString(TalkSubject + "."+randomScript+".giveSkill"));
-					if(PlayerSkill.contains("Mabinogi."+Categori+"."+NPCscript.getString(TalkSubject + "."+randomScript+".giveSkill"))==false)
-					{
-						GoldBigDragon_RPG.Effect.Sound s = new GoldBigDragon_RPG.Effect.Sound();
-						PlayerSkill.set("Mabinogi."+Categori+"."+Skillname, 1);
-						PlayerSkill.saveConfig();
-						s.SP(player, Sound.LEVEL_UP, 1.0F, 1.8F);
-						player.sendMessage(ChatColor.LIGHT_PURPLE+""+ChatColor.BOLD+"[새로운 스킬을 획득 하였습니다!] "+ChatColor.YELLOW+""+ChatColor.BOLD+""+ChatColor.UNDERLINE+Skillname);
-						break;
-					}
-					else
-					{
-						scriptString = NPCscript.getString(TalkSubject + "."+randomScript+".AlreadyGetScript");
-						break;
-					}
+					if(PlayerNPC.getInt(u.getNPCuuid(player)+".love") <= NPCscript.getInt(TalkSubject + "."+randomScript+".loveMax"))
+						textOK = true;
 				}
+				else
+					textOK = true;
 				break;
+			}
+		}
+		if(textOK)
+		{
+			scriptString = NPCscript.getString(TalkSubject + "."+randomScript+".Script");
+			scriptget = true;
+			YamlManager SkillList = YC.getNewConfig("Skill/SkillList.yml");
+			String Skillname = NPCscript.getString(TalkSubject + "."+randomScript+".giveSkill");
+			if(ScriptType == 6&&SkillList.contains(NPCscript.getString(TalkSubject + "."+randomScript+".giveSkill"))==true)
+			{
+				YamlManager JobList = YC.getNewConfig("Skill/JobList.yml");
+				YamlManager PlayerSkill = YC.getNewConfig("Skill/PlayerData/" + player.getUniqueId() +".yml");
+				String Categori = JobList.getString("Mabinogi.Added."+NPCscript.getString(TalkSubject + "."+randomScript+".giveSkill"));
+				if(PlayerSkill.contains("Mabinogi."+Categori+"."+NPCscript.getString(TalkSubject + "."+randomScript+".giveSkill"))==false)
+				{
+					GoldBigDragon_RPG.Effect.Sound s = new GoldBigDragon_RPG.Effect.Sound();
+					PlayerSkill.set("Mabinogi."+Categori+"."+Skillname, 1);
+					PlayerSkill.saveConfig();
+					s.SP(player, Sound.LEVEL_UP, 1.0F, 1.8F);
+					player.sendMessage(ChatColor.LIGHT_PURPLE+""+ChatColor.BOLD+"[새로운 스킬을 획득 하였습니다!] "+ChatColor.YELLOW+""+ChatColor.BOLD+""+ChatColor.UNDERLINE+Skillname);
+				}
+				else
+				{
+					scriptString = NPCscript.getString(TalkSubject + "."+randomScript+".AlreadyGetScript");
+				}
 			}
 		}
 		if(scriptget == false)
 		{
 			String[] script = new String[1];
-			byte randomScript = (byte) new GoldBigDragon_RPG.Util.Number().RandomNum(0, 2);
+			randomScript = (byte) new GoldBigDragon_RPG.Util.Number().RandomNum(0, 2);
 			if(randomScript == 0)
 				script[0] = ChatColor.GRAY + "....";
 			if(randomScript == 1)

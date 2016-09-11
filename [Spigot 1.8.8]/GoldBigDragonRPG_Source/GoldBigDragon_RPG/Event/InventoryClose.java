@@ -107,9 +107,9 @@ public class InventoryClose
 	    GoldBigDragon_RPG.ETC.NPC NP = new GoldBigDragon_RPG.ETC.NPC();
 		 if(InventoryName.contains(ChatColor.stripColor("룬")) == true &&
 				 InventoryName.contains(ChatColor.stripColor("장착")) == true)
-		 {
-			 NP.InventoryClose_NPC(event);
-		 }
+			 new GoldBigDragon_RPG.ETC.NPC().InventoryClose_NPC(event);
+		 else if(ChatColor.stripColor(InventoryName).compareTo("[NPC] 선물 아이템을 올려 주세요")==0)
+			 new GoldBigDragon_RPG.GUI.NPC_GUI().PresentInventoryClose(event);
 		return;
 	}
 

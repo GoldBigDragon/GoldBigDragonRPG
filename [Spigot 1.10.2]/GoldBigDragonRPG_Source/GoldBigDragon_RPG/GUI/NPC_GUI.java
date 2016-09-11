@@ -1,6 +1,7 @@
 package GoldBigDragon_RPG.GUI;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -14,6 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Damageable;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -37,13 +39,24 @@ public class NPC_GUI extends GUIutil
 		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "대화를 한다", 340,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"에게",ChatColor.GRAY + "대화를 합니다."), 10, inv);
 		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "거래를 한다", 371,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"에게",ChatColor.GRAY + "거래를 요청합니다."), 12, inv);
 		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "퀘스트", 386,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"에게",ChatColor.GRAY + "도울 일이 없는지",ChatColor.GRAY + "물어봅니다."), 14, inv);
+
+		YamlController YC = new YamlController(GoldBigDragon_RPG.Main.Main.plugin);
+	  	YamlManager PlayerNPC = null;
+    	if(YC.isExit("NPC/PlayerData/"+player.getUniqueId()+".yml")==false)
+    	{
+    		PlayerNPC=YC.getNewConfig("NPC/PlayerData/"+player.getUniqueId()+".yml");
+    		PlayerNPC.set(u.getNPCuuid(player)+".love", 0);
+    		PlayerNPC.set(u.getNPCuuid(player)+".Career", 0);
+    		PlayerNPC.saveConfig();
+    	}
+    	else
+    		PlayerNPC=YC.getNewConfig("NPC/PlayerData/"+player.getUniqueId()+".yml");
 		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "선물하기", 54,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"에게",ChatColor.GRAY + "자신이 가지고 있는",ChatColor.GRAY + "아이템을 선물합니다.",ChatColor.GRAY + "(NPC와의 호감도 상승)","",
-				ChatColor.RED+"[GoldBigDragonRPG 버전 업데이트 필요]",ChatColor.RED+"현재 버전 : 프로토타입 1.0"), 16, inv);
+				ChatColor.LIGHT_PURPLE+"[현재 호감도]",ChatColor.RED+""+ChatColor.BOLD+" ♥ "+ChatColor.WHITE+""+ChatColor.BOLD+PlayerNPC.getInt(u.getNPCuuid(player)+".love") + " / 1000"), 16, inv);
 		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "나가기", 324,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"와의",ChatColor.GRAY + "대화를 종료합니다.",ChatColor.BLACK + u.getNPCuuid(player)), 26, inv);
 		if(player.isOp())
 			Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "GUI 비 활성화", 166,0,1,Arrays.asList(ChatColor.GRAY +"이 NPC는 GoldBigDragonRPG의",ChatColor.GRAY + "NPC GUI 화면을 사용하지 않게 합니다.",""), 8, inv);
 
-		YamlController YC = new YamlController(GoldBigDragon_RPG.Main.Main.plugin);
 		YamlManager NPCscript = YC.getNewConfig("NPC/NPCData/"+ u.getNPCuuid(player)  +".yml");
 		if(NPCscript.contains("Job") == false)
 		{
@@ -305,6 +318,11 @@ public class NPC_GUI extends GUIutil
 			Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "거래 수정", 403,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"의",ChatColor.GRAY + "거래 품목을 좌클릭시",ChatColor.GRAY + "해당 아이템을 지급 받으며,",ChatColor.GRAY + "거래 품목을 우클릭시",ChatColor.GRAY + "해당 아이템은 구입/판매 중지됩니다.","",ChatColor.WHITE + "[구매/판매할 아이템 등록 명령어]",ChatColor.GOLD+""+ChatColor.BOLD + "/상점 [구매/판매] [가격]"), 21, inv);
 			Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "퀘스트 수정", 403,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"의",ChatColor.GRAY + "퀘스트 내용을 수정합니다."), 23, inv);
 			Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "선물 수정", 403,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"에게 플레이어가",ChatColor.GRAY + "주는 선물에 따라 상승하는",ChatColor.GRAY+"호감도 상승 수치를 수정합니다."), 25, inv);
+			if(NPCscript.getBoolean("Sale.Enable"))
+				Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "세일 설정", 38,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"와의 친밀도가 높을 경우",ChatColor.GRAY + "상점 판매 물품을 세일 해 줍니다.","",ChatColor.GREEN + "호감도 "+NPCscript.getInt("Sale.Minlove") + "이상시 " +NPCscript.getInt("Sale.discount")+"% 세일","", ChatColor.RED+"[Shift + 우 클릭시 제거]"), 7, inv);
+			else
+				Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "세일 설정", 38,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"와의 친밀도가 높을 경우",ChatColor.GRAY + "상점 판매 물품을 세일 해 줍니다.","",ChatColor.YELLOW + "[좌 클릭시 설정]"), 7, inv);
+				
 		}
 		
 		player.openInventory(inv);
@@ -360,12 +378,33 @@ public class NPC_GUI extends GUIutil
 			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 44, inv);
 			Stack2(ChatColor.RED +"   [물품 판매]   ", 160,14,1,null, 49, inv);
 			byte loc=0;
+			boolean Sale = NPCscript.getBoolean("Sale.Enable");
+			int discount = 0;
+			if(Sale)
+			{
+			  	YamlManager PlayerNPC = null;
+		    	if(YC.isExit("NPC/PlayerData/"+player.getUniqueId()+".yml")==false)
+		    	{
+		    		PlayerNPC=YC.getNewConfig("NPC/PlayerData/"+player.getUniqueId()+".yml");
+		    		PlayerNPC.set(u.getNPCuuid(player)+".love", 0);
+		    		PlayerNPC.set(u.getNPCuuid(player)+".Career", 0);
+		    		PlayerNPC.saveConfig();
+		    	}
+		    	else
+		    		PlayerNPC=YC.getNewConfig("NPC/PlayerData/"+player.getUniqueId()+".yml");
+		    	if(PlayerNPC.getInt(u.getNPCuuid(player)+".love") >= NPCscript.getInt("Sale.Minlove"))
+					discount = NPCscript.getInt("Sale.discount");
+		    	else
+		    		Sale = false;
+			}
 			for(int count = page*21; count < a; count++)
 			{
 				if(count > a || loc >= 21) break;
 				item = NPCscript.getItemStack("Shop.Sell."+count + ".item");
 				IM = item.getItemMeta();
 				long price = NPCscript.getLong("Shop.Sell."+count+".price");
+				if(Sale)
+					price = price - ((price/100) * discount);
 				if(item.hasItemMeta() == true)
 				{
 					if(item.getItemMeta().hasLore() == true)
@@ -1516,13 +1555,13 @@ public class NPC_GUI extends GUIutil
 			switch(TalkType)
 			{
 			case "NT"://NatureTalk
-				Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("NatureTalk."+(count+1)+".love")+"%enter%%enter%"+ChatColor.YELLOW+"[등록된 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("NatureTalk."+(count+1)+".Script");
+				Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("NatureTalk."+(count+1)+".love")+" ~ "+NPCConfig.getInt("NatureTalk."+(count+1)+".loveMax")+"%enter%%enter%"+ChatColor.YELLOW+"[등록된 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("NatureTalk."+(count+1)+".Script");
 				break;
 			case "NN"://NearbyNews
-				Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("NearByNEWS."+(count+1)+".love")+"%enter%%enter%"+ChatColor.YELLOW+"[등록된 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("NearByNEWS."+(count+1)+".Script");
+				Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("NearByNEWS."+(count+1)+".love")+" ~ "+NPCConfig.getInt("NearByNEWS."+(count+1)+".loveMax")+"%enter%%enter%"+ChatColor.YELLOW+"[등록된 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("NearByNEWS."+(count+1)+".Script");
 				break;
 			case "AS"://AboutSkill
-				Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("AboutSkills."+(count+1)+".love")+"%enter%%enter%"+ChatColor.YELLOW+"[스킬 전수 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+(count+1)+".Script")+"%enter%%enter%"+ChatColor.YELLOW+"[전수 이후 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+(count+1)+".AlreadyGetScript")+"%enter%%enter%"+ChatColor.YELLOW+"[배울 수 있는 스킬]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+(count+1)+".giveSkill")+"%enter%"+ChatColor.RED+"[서버 시스템이 마비노기 일 경우만 습득 합니다.]";
+				Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("AboutSkills."+(count+1)+".love")+" ~ "+NPCConfig.getInt("AboutSkills."+(count+1)+".loveMax")+"%enter%%enter%"+ChatColor.YELLOW+"[스킬 전수 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+(count+1)+".Script")+"%enter%%enter%"+ChatColor.YELLOW+"[전수 이후 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+(count+1)+".AlreadyGetScript")+"%enter%%enter%"+ChatColor.YELLOW+"[배울 수 있는 스킬]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+(count+1)+".giveSkill")+"%enter%"+ChatColor.RED+"[서버 시스템이 마비노기 일 경우만 습득 합니다.]";
 				break;
 			}
 			
@@ -1572,13 +1611,13 @@ public class NPC_GUI extends GUIutil
 		switch(TalkType)
 		{
 		case "NT"://NatureTalk
-			Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("NatureTalk."+TalkNumber+".love")+"%enter%%enter%"+ChatColor.YELLOW+"[등록된 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("NatureTalk."+TalkNumber+".Script");
+			Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("NatureTalk."+TalkNumber+".love")+" ~ "+NPCConfig.getInt("NatureTalk."+TalkNumber+".loveMax")+"%enter%%enter%"+ChatColor.YELLOW+"[등록된 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("NatureTalk."+TalkNumber+".Script");
 			break;
 		case "NN"://NearbyNews
-			Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("NearByNEWS."+TalkNumber+".love")+"%enter%%enter%"+ChatColor.YELLOW+"[등록된 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("NearByNEWS."+TalkNumber+".Script");
+			Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("NearByNEWS."+TalkNumber+".love")+" ~ "+NPCConfig.getInt("NearByNEWS."+TalkNumber+".loveMax")+"%enter%%enter%"+ChatColor.YELLOW+"[등록된 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("NearByNEWS."+TalkNumber+".Script");
 			break;
 		case "AS"://AboutSkill
-			Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("AboutSkills."+TalkNumber+".love")+"%enter%%enter%"+ChatColor.YELLOW+"[스킬 전수 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+TalkNumber+".Script")+"%enter%%enter%"+ChatColor.YELLOW+"[전수 이후 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+TalkNumber+".AlreadyGetScript")+"%enter%%enter%"+ChatColor.YELLOW+"[배울 수 있는 스킬]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+TalkNumber+".giveSkill")+"%enter%"+ChatColor.RED+"[서버 시스템이 마비노기 일 경우만 습득 합니다.]";
+			Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("AboutSkills."+TalkNumber+".love")+" ~ "+NPCConfig.getInt("AboutSkills."+TalkNumber+".loveMax")+"%enter%%enter%"+ChatColor.YELLOW+"[스킬 전수 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+TalkNumber+".Script")+"%enter%%enter%"+ChatColor.YELLOW+"[전수 이후 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+TalkNumber+".AlreadyGetScript")+"%enter%%enter%"+ChatColor.YELLOW+"[배울 수 있는 스킬]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+TalkNumber+".giveSkill")+"%enter%"+ChatColor.RED+"[서버 시스템이 마비노기 일 경우만 습득 합니다.]";
 			break;
 		}
 			
@@ -1764,6 +1803,70 @@ public class NPC_GUI extends GUIutil
 		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 265,0,1,null, 7, inv);
 		player.openInventory(inv);
 	}
+	
+	public void PresentGiveGUI(Player player, String NPCname, boolean isSettingMode, int number)
+	{
+		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.BLACK + "[NPC] 선물 아이템을 올려 주세요");
+		if(isSettingMode)
+		{
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "선물 등록"+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 389,0,1,Arrays.asList(ChatColor.GRAY + "이 아이템으로 설정합니다.",ChatColor.BLACK+""+isSettingMode), 0, inv);
+
+			YamlController YC = new YamlController(GoldBigDragon_RPG.Main.Main.plugin);
+			YamlManager NPCConfig =YC.getNewConfig("NPC/NPCData/"+new Object_UserData().getNPCuuid(player)+".yml");
+			ItemStack item = NPCConfig.getItemStack("Present."+number+".item");
+			if(item != null)
+				ItemStackStack(item, 4, inv);
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기"+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+NPCname), 8, inv);
+		}
+		else
+		{
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록"+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK+""+isSettingMode), 0, inv);
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "선물 주기"+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 54,0,1,Arrays.asList(ChatColor.GRAY + "올려둔 아이템을 선물합니다.",ChatColor.BLACK+NPCname), 8, inv);
+		}
+		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 160,5,1,Arrays.asList(ChatColor.BLACK + ""+number), 1, inv);
+		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 160,5,1,null, 2, inv);
+		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 160,5,1,null, 3, inv);
+		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 160,5,1,null, 5, inv);
+		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 160,5,1,null, 6, inv);
+		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 160,5,1,null, 7, inv);
+		player.openInventory(inv);
+	}
+
+	public void PresentSettingGUI(Player player, String NPCname)
+	{
+		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.BLACK + "[NPC] 선물 가능 아이템 목록");
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록"+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 0, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기"+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+NPCname), 8, inv);
+
+		YamlController YC = new YamlController(GoldBigDragon_RPG.Main.Main.plugin);
+		YamlManager NPCConfig =YC.getNewConfig("NPC/NPCData/"+new Object_UserData().getNPCuuid(player)+".yml");
+		
+		Stack2(ChatColor.WHITE+"기타 아이템", 138,0,1,Arrays.asList(ChatColor.GRAY + "정해진 아이템 외의 다른",ChatColor.GRAY+"아이템을 주었을 때의",ChatColor.GRAY+"호감도 상승량을 설정합니다.","",ChatColor.GREEN+"호감도 : " + NPCConfig.getInt("Present.1.love")), 1, inv);
+
+		for(int count = 2; count < 8; count++)
+		{
+			if(NPCConfig.getItemStack("Present."+count+".item") == null)
+				Stack2(ChatColor.RED+"[정해지지 않은 선물]", 166,0,1,Arrays.asList(ChatColor.YELLOW +""+ChatColor.BOLD+ "[클릭시 선물 지정]"), count, inv);
+			else
+			{
+				ItemStack item = NPCConfig.getItemStack("Present."+count+".item");
+				ItemMeta im = item.getItemMeta();
+				if(im.hasLore() == false)
+					im.setLore(Arrays.asList("",ChatColor.GREEN+"호감도 : " + NPCConfig.getInt("Present."+count+".love")));
+				else
+				{
+					List<String> lore = item.getItemMeta().getLore();
+					lore.add(lore.size(), "");
+					lore.add(lore.size(),ChatColor.GREEN+"호감도 : " + NPCConfig.getInt("Present."+count+".love"));
+					im.setLore(lore);
+				}
+				item.setItemMeta(im);
+				ItemStackStack(item, count, inv);
+			}
+		}
+		player.openInventory(inv);
+	}
+	
 	
 	
 	
@@ -1991,12 +2094,20 @@ public class NPC_GUI extends GUIutil
 	
 	public void NPCclickMain(InventoryClickEvent event, String NPCname)
 	{
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		event.setCancelled(true);
 		if(event.getClickedInventory().getTitle().equalsIgnoreCase("container.inventory") == true)
 			return;
 			if (event.getCurrentItem() == null ||event.getCurrentItem().getType() == Material.AIR ||!event.getCurrentItem().hasItemMeta())
+			{
+				if(event.getInventory().getName().compareTo(ChatColor.BLACK + "[NPC] 선물 아이템을 올려 주세요")==0||
+						event.getInventory().getName().compareTo(ChatColor.BLACK + "[NPC] 선물 가능 아이템 목록")==0)
+				{
+					event.setCancelled(false);
+					PresentGuiClick(event);
+				}
 				return;
+			}
 			else
 			{
 				if(event.getInventory().getName().compareTo(ChatColor.BLACK + "[NPC]"+ChatColor.BLUE+ChatColor.BOLD+" 물품 구매")==0
@@ -2011,6 +2122,13 @@ public class NPC_GUI extends GUIutil
 					if(event.getInventory().getName().compareTo(ChatColor.BLACK + "[NPC]"+ChatColor.BLACK+ChatColor.BOLD+" 수리할 장비를 선택 하세요.")==0)
 					{
 						ItemFixGuiClick(event);
+						return;
+					}
+					else if(event.getInventory().getName().compareTo(ChatColor.BLACK + "[NPC] 선물 아이템을 올려 주세요")==0||
+							event.getInventory().getName().compareTo(ChatColor.BLACK + "[NPC] 선물 가능 아이템 목록")==0)
+					{
+						event.setCancelled(false);
+						PresentGuiClick(event);
 						return;
 					}
 					int slot = event.getSlot();
@@ -2335,6 +2453,33 @@ public class NPC_GUI extends GUIutil
 							AllOfQuestListGUI(player, (short) 0);
 						else if(Case.compareTo("직업 설정")==0)
 							NPCjobGUI(player,NPCname);
+						else if(Case.compareTo("선물하기")==0)
+							PresentGiveGUI(player, NPCname, false, -1);
+						else if(Case.compareTo("선물 수정")==0)
+							PresentSettingGUI(player, NPCname);
+						else if(Case.compareTo("세일 설정")==0)
+						{
+							Object_UserData u = new Object_UserData();
+							YamlController YC = new YamlController(GoldBigDragon_RPG.Main.Main.plugin);
+							YamlManager NPCConfig = YC.getNewConfig("NPC/NPCData/"+ u.getNPCuuid(player) +".yml");
+							if(event.isShiftClick()&&event.isRightClick())
+							{
+								NPCConfig.set("Sale.Enable", false);
+								NPCConfig.saveConfig();
+								s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+								MainGUI(player, NPCname, player.isOp());
+							}
+							else
+							{
+								s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+								u.setType(player, "NPC");
+								u.setString(player, (byte)2,NPCname);
+								u.setString(player, (byte)3,u.getNPCuuid(player));
+								u.setString(player, (byte)4,"SaleSetting1");
+								player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 세일을 시작 할 최소 호감도를 입력 해 주세요! (-1000 ~ 1000 사이 값)");
+								player.closeInventory();
+							}
+						}
 					}
 				}
 				else //상점 GUI
@@ -4272,5 +4417,221 @@ public class NPC_GUI extends GUIutil
 			s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.8F, 1.0F);
 			player.sendMessage(ChatColor.RED + "[SYSTEM] : 수리 할 수 없는 물건입니다!");
 		}
+	}
+	
+	public void PresentGuiClick(InventoryClickEvent event)
+	{
+		Player player = (Player) event.getWhoClicked();
+		if(event.getCurrentItem().getType()==Material.AIR)
+			return;
+		int number = -1;
+		boolean isSettingMode = false;
+		String NPCname = ChatColor.stripColor(event.getInventory().getItem(8).getItemMeta().getLore().get(1)); 
+		if(ChatColor.stripColor(event.getInventory().getName()).compareTo("[NPC] 선물 아이템을 올려 주세요")==0)
+		{
+			number = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(1).getItemMeta().getLore().get(0)));
+			isSettingMode = Boolean.parseBoolean(ChatColor.stripColor(event.getInventory().getItem(0).getItemMeta().getLore().get(1)));
+
+			if(event.getSlot()==4)
+			{
+				event.setCancelled(false);
+				return;
+			}
+			String DisplayName = null;
+			if(event.getCurrentItem().hasItemMeta() && event.getCurrentItem().getItemMeta().hasDisplayName())
+			{
+				DisplayName = event.getCurrentItem().getItemMeta().getDisplayName();
+				byte size = (byte) DisplayName.length();
+				if(size >= 6 && DisplayName.charAt(size-1)=='c'&&DisplayName.charAt(size-2)=='§'&&DisplayName.charAt(size-3)=='e'&&DisplayName.charAt(size-4)=='§'&& DisplayName.charAt(size-5)=='0'&&DisplayName.charAt(size-6)=='§')
+				{
+					event.setCancelled(true);
+					YamlController YC = new YamlController(GoldBigDragon_RPG.Main.Main.plugin);
+					YamlManager NPCConfig =YC.getNewConfig("NPC/NPCData/"+new Object_UserData().getNPCuuid(player)+".yml");
+					if(event.getSlot()==0)//선물 설정
+					{
+						if(isSettingMode)
+						{
+							ItemStack item = NPCConfig.getItemStack("Present."+number+".item");
+							if(event.getInventory().getItem(4) != null)
+								NPCConfig.set("Present."+number+".item", event.getInventory().getItem(4));
+							else
+							{
+								NPCConfig.set("Present."+number+".item", null);
+								NPCConfig.saveConfig();
+								s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+								PresentSettingGUI(player, NPCname);
+								return;
+							}
+							NPCConfig.set("Present."+number+".love", 0);
+							NPCConfig.saveConfig();
+							s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+							Object_UserData u = new Object_UserData();
+							u.setType(player, "NPC");
+							u.setString(player, (byte)2,NPCname);
+							u.setString(player, (byte)3,u.getNPCuuid(player));
+							u.setString(player, (byte)4,"PresentLove");
+							u.setInt(player, (byte)0, number);
+							player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 해당 아이템을 줄 때 상승하는 호감도 수치를 입력 해 주세요! (-1000 ~ 1000 사이 값)");
+							player.closeInventory();
+						}
+						else
+						{
+							s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+							MainGUI(player, NPCname, player.isOp());
+						}
+					}
+					else if(event.getSlot() == 8)//닫닫(선물 주기)
+					{
+						if(isSettingMode)
+						{
+							s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+							player.closeInventory();
+							return;
+						}
+					  	YamlManager PlayerNPC = null;
+				    	if(YC.isExit("NPC/PlayerData/"+player.getUniqueId()+".yml")==false)
+				    	{
+							Object_UserData u = new Object_UserData();
+				    		PlayerNPC=YC.getNewConfig("NPC/PlayerData/"+player.getUniqueId()+".yml");
+				    		PlayerNPC.set(u.getNPCuuid(player)+".love", 0);
+				    		PlayerNPC.set(u.getNPCuuid(player)+".Career", 0);
+				    		PlayerNPC.saveConfig();
+				    	}
+				    	else
+				    		PlayerNPC=YC.getNewConfig("NPC/PlayerData/"+player.getUniqueId()+".yml");
+						if(event.getInventory().getItem(4) != null)
+						{
+					    	ItemStack Present = new ItemStack(event.getInventory().getItem(4));
+					    	int Amount = Present.getAmount();
+					    	Present.setAmount(1);
+
+							Object_UserData u = new Object_UserData();
+							for(int count = 2; count < 8; count++)
+							{
+								if(NPCConfig.getItemStack("Present."+count+".item") != null)
+								{
+									ItemStack LoveItem = new ItemStack(NPCConfig.getItemStack("Present."+count+".item"));
+									int LoveItemAmount = LoveItem.getAmount();
+									LoveItem.setAmount(1);
+									if(LoveItem.equals(Present))
+									{
+										event.getInventory().setItem(4, null);
+										int LoveValue = NPCConfig.getInt("Present."+count+".love");
+										int love = 0;
+										if(LoveValue >= 0)
+										{
+											if(Amount / LoveItemAmount == 0)
+												love = 1;
+											else
+												love = LoveValue * (Amount/LoveItemAmount);
+										}
+										else
+											love = LoveValue;
+										if(PlayerNPC.getInt(u.getNPCuuid(player)+".love") + love >= 1000)
+											PlayerNPC.set(u.getNPCuuid(player)+".love", 1000);
+										else if(PlayerNPC.getInt(u.getNPCuuid(player)+".love") + love <= -1000)
+											PlayerNPC.set(u.getNPCuuid(player)+".love", -1000);
+										else
+											PlayerNPC.set(u.getNPCuuid(player)+".love", PlayerNPC.getInt(u.getNPCuuid(player)+".love") + love);
+										PlayerNPC.saveConfig();
+										if(love >= 0)
+										{
+											s.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
+											player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+ChatColor.YELLOW+NPCname+ChatColor.GREEN+"의 호감도가 "+ChatColor.YELLOW+love+ChatColor.GREEN+" 상승하였습니다!");
+										}
+										else
+										{
+											s.SP(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.8F);
+											player.sendMessage(ChatColor.RED + "[SYSTEM] : "+ChatColor.YELLOW+NPCname+ChatColor.RED+"의 호감도가 "+ChatColor.YELLOW+(love*-1)+ChatColor.RED+" 하락 하였습니다!");
+										}
+										return;
+									}
+								}
+							}
+							if(NPCConfig.getInt("Present.1.love")!=0)
+							{
+								event.getInventory().setItem(4, null);
+								int LoveValue = NPCConfig.getInt("Present.1.love");
+								int love = 0;
+								if(LoveValue >= 0)
+									love = LoveValue * Amount;
+								else
+									love = LoveValue;
+								if(PlayerNPC.getInt(u.getNPCuuid(player)+".love") + love >= 1000)
+									PlayerNPC.set(u.getNPCuuid(player)+".love", 1000);
+								else if(PlayerNPC.getInt(u.getNPCuuid(player)+".love") + love <= -1000)
+									PlayerNPC.set(u.getNPCuuid(player)+".love", -1000);
+								else
+									PlayerNPC.set(u.getNPCuuid(player)+".love", PlayerNPC.getInt(u.getNPCuuid(player)+".love") + love);
+								PlayerNPC.saveConfig();
+								if(love >= 0)
+								{
+									s.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
+									player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+ChatColor.YELLOW+NPCname+ChatColor.GREEN+"의 호감도가 "+ChatColor.YELLOW+love+ChatColor.GREEN+" 상승하였습니다!");
+								}
+								else
+								{
+									s.SP(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.8F);
+									player.sendMessage(ChatColor.RED + "[SYSTEM] : "+ChatColor.YELLOW+NPCname+ChatColor.RED+"의 호감도가 "+ChatColor.YELLOW+(love*-1)+ChatColor.RED+" 하락 하였습니다!");
+								}
+								return;
+							}
+							else
+							{
+								s.SP(player, Sound.ENTITY_ITEMFRAME_REMOVE_ITEM, 1.0F, 1.8F);
+								player.sendMessage(ChatColor.YELLOW + "[SYSTEM] : "+ChatColor.GOLD+NPCname+ChatColor.YELLOW+"는 선물을 사양하였다.");
+							}
+						}
+						else
+							s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+					}
+					else
+						s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+					return;
+				}
+			}
+		}
+		else//[NPC] 선물 가능 아이템 목록
+		{
+			event.setCancelled(true);
+			if(event.getSlot()==0)
+			{
+				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				MainGUI(player, NPCname, player.isOp());
+			}
+			else if(event.getSlot() == 8)
+			{
+				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				player.closeInventory();
+			}
+			else
+			{
+				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				if(event.getSlot()==1)
+				{
+					Object_UserData u = new Object_UserData();
+					u.setType(player, "NPC");
+					u.setString(player, (byte)2,NPCname);
+					u.setString(player, (byte)3,u.getNPCuuid(player));
+					u.setString(player, (byte)4,"PresentLove");
+					u.setInt(player, (byte)0, 1);
+					player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 아무 아이템이나 줄 때 상승하는 호감도 수치를 입력 해 주세요! (-1000 ~ 1000 사이 값)");
+					player.closeInventory();
+				}
+				else
+					PresentGiveGUI(player, NPCname, true, event.getSlot());
+			}
+			
+			return;
+		}
+		return;
+	}
+	
+
+	public void PresentInventoryClose(InventoryCloseEvent event)
+	{
+		if(event.getInventory().getItem(4)!=null)
+			event.getPlayer().getInventory().addItem(event.getInventory().getItem(4));
+		return;
 	}
 }
