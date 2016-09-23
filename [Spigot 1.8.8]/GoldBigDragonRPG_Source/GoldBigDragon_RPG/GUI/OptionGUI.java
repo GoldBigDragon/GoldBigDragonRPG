@@ -44,14 +44,14 @@ public class OptionGUI extends GUIutil
 		else{Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "전투 도우미", 166,0,1,Arrays.asList(ChatColor.RED + "[비활성화]",ChatColor.GRAY+"각종 전투 상황을 보지 않습니다."), 4, inv);}
 		if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).isAlert_Damage()){Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "데미지 알림", 267,0,1,Arrays.asList(ChatColor.GREEN + "[활성화]",ChatColor.GRAY+"적에게 입힌 피해를 알립니다."), 5, inv);}
 		else{Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "데미지 알림", 166,0,1,Arrays.asList(ChatColor.RED + "[비활성화]",ChatColor.GRAY+"적에게 입힌 피해를 알리지 않습니다."), 5, inv);}
-		if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).isClickUse()){Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "클릭시 사용", 438,0,1,Arrays.asList(ChatColor.GREEN + "[활성화]",ChatColor.GRAY+"소비 아이템을 클릭시 사용합니다."), 6, inv);}
+		if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).isClickUse()){Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "클릭시 사용", 373,8261,1,Arrays.asList(ChatColor.GREEN + "[활성화]",ChatColor.GRAY+"소비 아이템을 클릭시 사용합니다."), 6, inv);}
 		else{Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "클릭시 사용", 166,0,1,Arrays.asList(ChatColor.RED + "[비활성화]",ChatColor.GRAY+"소비 아이템을 단축키 처럼 사용합니다."), 6, inv);}
 		if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).isBgmOn()){Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "BGM 재생", 2256,0,1,Arrays.asList(ChatColor.GREEN + "[활성화]",ChatColor.GRAY+"영역 BGM을 실행 시킵니다."), 14, inv);}
 		else{Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "BGM 재생", 166,0,1,Arrays.asList(ChatColor.RED + "[비활성화]",ChatColor.GRAY+"영역 BGM을 듣지 않습니다."), 14, inv);}
 
 		
 		if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).isOption_EquipLook()){Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "장비 구경", 416,0,1,Arrays.asList(ChatColor.GREEN + "[허용]",ChatColor.GRAY+"다른 플레이어가 자신의 장비를",ChatColor.GRAY+"구경할 수 있습니다."), 11, inv);}
-		else{Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "장비 구경", 416,0,1,Arrays.asList(ChatColor.RED + "[비허용]",ChatColor.GRAY+"다른 플레이어가 자신의 장비를",ChatColor.GRAY+"구경할 수 없습니다."), 11, inv);}
+		else{Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "장비 구경", 166,0,1,Arrays.asList(ChatColor.RED + "[비허용]",ChatColor.GRAY+"다른 플레이어가 자신의 장비를",ChatColor.GRAY+"구경할 수 없습니다."), 11, inv);}
 
 		switch(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getOption_ChattingType())
 		{

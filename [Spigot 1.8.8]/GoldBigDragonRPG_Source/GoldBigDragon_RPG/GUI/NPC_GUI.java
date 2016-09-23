@@ -2399,7 +2399,6 @@ public class NPC_GUI extends GUIutil
 													ServerOption.PlayerList.get(player.getUniqueId().toString()).setPlayerRootJob(Job[count].toString());
 													GoldBigDragon_RPG.ETC.Job J = new GoldBigDragon_RPG.ETC.Job();
 													J.FixPlayerJobList(player);
-													J.FixPlayerSkillList(player);
 													player.closeInventory();
 													Bukkit.broadcastMessage(ChatColor.GREEN+""+ChatColor.BOLD+"["+ChatColor.YELLOW+""+ChatColor.BOLD+player.getName()+ChatColor.GREEN+""+ChatColor.BOLD+"´Ô²²¼­ "+ChatColor.YELLOW+""+ChatColor.BOLD+NPCscript.getString("Job.Job")+ChatColor.GREEN+""+ChatColor.BOLD+" ½Â±Þ¿¡ ¼º°ø ÇÏ¼Ì½À´Ï´Ù!]");
 												}

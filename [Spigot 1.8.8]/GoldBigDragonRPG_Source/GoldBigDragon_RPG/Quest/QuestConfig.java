@@ -41,16 +41,28 @@ public class QuestConfig
 			{
 				if(QuestList.getConfigurationSection(QuestName+".FlowChart").getKeys(false).toArray().length != 0)
 				{
+					String QuestType = QuestList.getString(QuestName+".FlowChart.0.Type");
 					QuestConfig.set("Started."+QuestName+".Flow", 0);
-					QuestConfig.set("Started."+QuestName+".Type", QuestList.getString(QuestName+".FlowChart."+0+".Type"));
+					QuestConfig.set("Started."+QuestName+".Type", QuestType);
+					if(QuestType.compareTo("Visit")==0)
+						QuestConfig.set("Started."+QuestName+".AreaName", QuestList.getString(QuestName+".FlowChart.0.AreaName"));
+					else if(QuestType.compareTo("Hunt")==0)
+					{
+						Object[] MobList = QuestList.getConfigurationSection(QuestName+".FlowChart.0.Monster").getKeys(false).toArray();
+						for(short counter = 0; counter < MobList.length; counter++)
+							QuestConfig.set("Started."+QuestName+".Hunt."+counter,0);
+					}
+					else if(QuestType.compareTo("Harvest")==0)
+					{
+						Object[] BlockList = QuestList.getConfigurationSection(QuestName+".FlowChart.0.Block").getKeys(false).toArray();
+						for(short counter = 0; counter < BlockList.length; counter++)
+							QuestConfig.set("Started."+QuestName+".Block."+counter,0);
+					}
 					QuestConfig.saveConfig();
 					player.sendMessage(ChatColor.YELLOW+"[Äù½ºÆ®] : »õ·Î¿î Äù½ºÆ®°¡ µµÂøÇß½À´Ï´Ù! " +ChatColor.GOLD+""+ChatColor.BOLD+"/Äù½ºÆ®");
-					if(QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("Nevigation")==0||
-						QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("Whisper")==0||
-						QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("BroadCast")==0||
-						QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("BlockPlace")==0||
-						QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("VarChange")==0||
-						QuestList.getString(QuestName+".FlowChart."+0+".Type").compareTo("TelePort")==0)
+					if(QuestType.compareTo("Nevigation")==0||QuestType.compareTo("Whisper")==0||
+					QuestType.compareTo("BroadCast")==0||QuestType.compareTo("BlockPlace")==0||
+					QuestType.compareTo("VarChange")==0||QuestType.compareTo("TelePort")==0)
 						new GoldBigDragon_RPG.Quest.QuestGUI().QuestTypeRouter(player, QuestName);
 				}
 			}
