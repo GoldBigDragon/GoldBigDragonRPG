@@ -31,7 +31,7 @@ public class NoteBlockAPIMain implements Listener
 	{
 		NoteBlockAPIAddMusic();
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
-		GoldBigDragon_RPG.Main.ServerOption.NoteBlockAPIAble = true;
+		GBD_RPG.Main_Main.Main_ServerOption.NoteBlockAPIAble = true;
 	}
 	
 	public NoteBlockAPIMain()
@@ -196,7 +196,7 @@ public class NoteBlockAPIMain implements Listener
 			player = Bukkit.getPlayer(event.getSongPlayer().getPlayerList().get(count));
 			if(player.getLocation().getWorld().getName().compareTo("Dungeon")==0)
 				SongPlay(player, event.getSongPlayer().getSong());
-			else if(GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_CurrentArea().compareTo("null") != 0)
+			else if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_CurrentArea().compareTo("null") != 0)
 				SongPlay(player, event.getSongPlayer().getSong());
 		}
 	}

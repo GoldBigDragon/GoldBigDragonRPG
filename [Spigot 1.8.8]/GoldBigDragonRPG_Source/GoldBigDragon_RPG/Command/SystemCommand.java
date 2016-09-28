@@ -458,6 +458,34 @@ public class SystemCommand
 	  			}
 	  		}
 	  		return;
+			case "강제철거":
+				if(args.length != 1 ||Integer.parseInt(args[0]) > 10000)
+				{
+					player.sendMessage(ChatColor.RED + "[SYSTEM] : /강제철거 [1~10000]");
+					s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+					return;
+				}
+				if(player.isOp() == true)
+				{
+				    List<Entity> entities = player.getNearbyEntities(Integer.parseInt(args[0]), Integer.parseInt(args[0]), Integer.parseInt(args[0]));
+				    short amount = 0;
+				    for(short count = 0; count < entities.size(); count++)
+				    {
+				    	if(entities.get(count).getType() != EntityType.PLAYER)
+				    	{
+				    		entities.get(count).remove();
+				    		amount = (short) (amount+1);
+				    	}
+				    }
+				    player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 반경 "+args[0]+"블록 이내에 있던 "+amount+"마리의 엔티티를 강제 철거하였습니다!");
+				}
+				else
+				{
+					player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
+					s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+					return;
+				}
+				return;
 			case "엔티티제거":
 				if(args.length != 1 ||Integer.parseInt(args[0]) > 10000)
 				{

@@ -28,10 +28,10 @@ import com.nisovin.magicspells.events.SpellTargetEvent;
 import com.nisovin.magicspells.events.SpellTargetLocationEvent;
 import com.nisovin.magicspells.mana.ManaChangeReason;
 
-import GoldBigDragon_RPG.Attack.Damage;
-import GoldBigDragon_RPG.Main.ServerOption;
-import GoldBigDragon_RPG.Util.YamlController;
-import GoldBigDragon_RPG.Util.YamlManager;
+import GBD_RPG.Battle.Battle_Calculator;
+import GBD_RPG.Main_Main.Main_ServerOption;
+import GBD_RPG.Util.YamlController;
+import GBD_RPG.Util.YamlManager;
 
 public class SpellMain implements Listener
 {
@@ -57,32 +57,32 @@ public class SpellMain implements Listener
 	
 	public float BonusPowerCalculator (Player player, LivingEntity target)
 	{
-	    Damage damage = new Damage();
-		Damage dam = new Damage();
+	    Battle_Calculator damage = new Battle_Calculator();
+		Battle_Calculator dam = new Battle_Calculator();
 		int bonuspower = 0;
-		if(GoldBigDragon_RPG.Main.ServerOption.PlayerUseSpell.containsKey(player) == true)
+		if(GBD_RPG.Main_Main.Main_ServerOption.PlayerUseSpell.containsKey(player) == true)
 		{
 			Damageable p = player;
-			String switchCheck = GoldBigDragon_RPG.Main.ServerOption.PlayerUseSpell.get(player);
+			String switchCheck = GBD_RPG.Main_Main.Main_ServerOption.PlayerUseSpell.get(player);
 			if(switchCheck.compareTo("생명력")==0)
 				bonuspower = dam.MagicSpellsDamageBonus((int) p.getHealth())+damage.getPlayerEquipmentStat(player, "HP", false, null)[0];
 			else if(switchCheck.compareTo("마나")==0)
 				bonuspower = dam.MagicSpellsDamageBonus(getPlayerMana(player))+damage.getPlayerEquipmentStat(player, "MP", false, null)[0];
-			else if(switchCheck.compareTo(ServerOption.STR)==0)
-				bonuspower = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR()+damage.getPlayerEquipmentStat(player, "STR", false, null)[0];
-			else if(switchCheck.compareTo(ServerOption.DEX)==0)
-				bonuspower = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX()+damage.getPlayerEquipmentStat(player, "DEX", false, null)[0];
-			else if(switchCheck.compareTo(ServerOption.INT)==0)
-				bonuspower = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT()+damage.getPlayerEquipmentStat(player, "INT", false, null)[0];
-			else if(switchCheck.compareTo(ServerOption.WILL)==0)
-				bonuspower = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL()+damage.getPlayerEquipmentStat(player, "WILL", false, null)[0];
-			else if(switchCheck.compareTo(ServerOption.LUK)==0)
-				bonuspower = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK()+damage.getPlayerEquipmentStat(player, "LUK", false, null)[0];
+			else if(switchCheck.compareTo(Main_ServerOption.STR)==0)
+				bonuspower = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR()+damage.getPlayerEquipmentStat(player, "STR", false, null)[0];
+			else if(switchCheck.compareTo(Main_ServerOption.DEX)==0)
+				bonuspower = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX()+damage.getPlayerEquipmentStat(player, "DEX", false, null)[0];
+			else if(switchCheck.compareTo(Main_ServerOption.INT)==0)
+				bonuspower = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT()+damage.getPlayerEquipmentStat(player, "INT", false, null)[0];
+			else if(switchCheck.compareTo(Main_ServerOption.WILL)==0)
+				bonuspower = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL()+damage.getPlayerEquipmentStat(player, "WILL", false, null)[0];
+			else if(switchCheck.compareTo(Main_ServerOption.LUK)==0)
+				bonuspower = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK()+damage.getPlayerEquipmentStat(player, "LUK", false, null)[0];
 			else
 				bonuspower = 0;
 		}
-		int[] WeaponPower = dam.getPlayerEquipmentStat(player, "MagicDamage",  false, GoldBigDragon_RPG.Main.ServerOption.PlayerlastItem.get(player));
-		int WeaponPowerFixed = new GoldBigDragon_RPG.Util.Number().RandomNum(WeaponPower[0], WeaponPower[1]);
+		int[] WeaponPower = dam.getPlayerEquipmentStat(player, "MagicDamage",  false, GBD_RPG.Main_Main.Main_ServerOption.PlayerlastItem.get(player));
+		int WeaponPowerFixed = new GBD_RPG.Util.Util_Number().RandomNum(WeaponPower[0], WeaponPower[1]);
 		bonuspower = bonuspower+WeaponPowerFixed;
 		int negativeBonus = 0;
 		if(target!=null)
@@ -91,14 +91,14 @@ public class SpellMain implements Listener
 			{
 				Player t = (Player) target;
 				if(t.isOnline())
-				  	negativeBonus = dam.getMagicProtect(t, GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT());
+				  	negativeBonus = dam.getMagicProtect(t, GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT());
 				else
 				{
 					if(t.isCustomNameVisible() == true)
 					{
-						String name = new GoldBigDragon_RPG.Monster.MonsterKill().getRealName(target);
-						if(GoldBigDragon_RPG.Main.ServerOption.MonsterList.containsKey(name))
-							negativeBonus = GoldBigDragon_RPG.Main.ServerOption.MonsterList.get(name).getMPRO();
+						String name = new GBD_RPG.Monster.Monster_Kill().getRealName(target);
+						if(GBD_RPG.Main_Main.Main_ServerOption.MonsterList.containsKey(name))
+							negativeBonus = GBD_RPG.Main_Main.Main_ServerOption.MonsterList.get(name).getMPRO();
 					}
 				}
 			}
@@ -106,13 +106,13 @@ public class SpellMain implements Listener
 			{
 				if(target.isCustomNameVisible() == true)
 				{
-					String name = new GoldBigDragon_RPG.Monster.MonsterKill().getRealName(target);
-					if(GoldBigDragon_RPG.Main.ServerOption.MonsterList.containsKey(name))
-						negativeBonus = GoldBigDragon_RPG.Main.ServerOption.MonsterList.get(name).getMPRO();
+					String name = new GBD_RPG.Monster.Monster_Kill().getRealName(target);
+					if(GBD_RPG.Main_Main.Main_ServerOption.MonsterList.containsKey(name))
+						negativeBonus = GBD_RPG.Main_Main.Main_ServerOption.MonsterList.get(name).getMPRO();
 				}
 			}
 		}
-		GoldBigDragon_RPG.Main.ServerOption.PlayerUseSpell.put(player, "us");
+		GBD_RPG.Main_Main.Main_ServerOption.PlayerUseSpell.put(player, "us");
 		return (float) (bonuspower*0.006)-negativeBonus;
 	}
 	
@@ -302,14 +302,14 @@ public class SpellMain implements Listener
 		int sort = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(49).getItemMeta().getLore().get(1)));
 		
 		Player player = (Player) event.getWhoClicked();
-		GoldBigDragon_RPG.Effect.Sound s = new GoldBigDragon_RPG.Effect.Sound();
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 
 		event.setCancelled(true);
 		switch (event.getSlot())
 		{
 			case 45://이전 목록으로
 				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
-				new GoldBigDragon_RPG.Skill.OPBoxSkillGUI().SkillRankOptionGUI(player, SkillName, (short) SkillLevel);
+				new GBD_RPG.Skill.OPboxSkill_GUI().SkillRankOptionGUI(player, SkillName, (short) SkillLevel);
 				break;
 			case 48://이전 페이지
 				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
@@ -333,11 +333,11 @@ public class SpellMain implements Listener
 				return;
 			default:
 				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
-				YamlController YC = new YamlController(GoldBigDragon_RPG.Main.Main.plugin);
+				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 				YamlManager SkillList  = YC.getNewConfig("Skill/SkillList.yml");
 				SkillList.set(SkillName+".SkillRank."+SkillLevel+".MagicSpells", ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 				SkillList.saveConfig();
-				new GoldBigDragon_RPG.Skill.OPBoxSkillGUI().SkillRankOptionGUI(player, SkillName, (short) SkillLevel);
+				new GBD_RPG.Skill.OPboxSkill_GUI().SkillRankOptionGUI(player, SkillName, (short) SkillLevel);
 				return;
 		}
 	}
@@ -374,12 +374,12 @@ public class SpellMain implements Listener
 
 	public void setPlayerMaxAndNowMana(Player player)
 	{
-		GoldBigDragon_RPG.Attack.Damage d = new GoldBigDragon_RPG.Attack.Damage();
+		GBD_RPG.Battle.Battle_Calculator d = new GBD_RPG.Battle.Battle_Calculator();
 		
 		int BonusMana = d.getPlayerEquipmentStat(player, "마나", false, null)[0];
-		int MaxMana = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxMP()+BonusMana;
-		int Mana = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MP()+BonusMana;
-		if(MaxMana > 0 && ServerOption.MagicSpellsEnable)
+		int MaxMana = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxMP()+BonusMana;
+		int Mana = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MP()+BonusMana;
+		if(MaxMana > 0 && Main_ServerOption.MagicSpellsEnable)
 		{
 			try
 			{
@@ -394,12 +394,12 @@ public class SpellMain implements Listener
 
 	public void setSlotChangePlayerMaxAndNowMana(Player player, ItemStack newSlot)
 	{
-		GoldBigDragon_RPG.Attack.Damage d = new GoldBigDragon_RPG.Attack.Damage();
+		GBD_RPG.Battle.Battle_Calculator d = new GBD_RPG.Battle.Battle_Calculator();
 		
 		int BonusMana = d.getPlayerEquipmentStat(player, "마나", false, newSlot)[0];
-		int MaxMana = GoldBigDragon_RPG.Main.ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxMP()+BonusMana;
+		int MaxMana = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxMP()+BonusMana;
 
-		if(MaxMana > 0 && GoldBigDragon_RPG.Main.ServerOption.MagicSpellsEnable == true)
+		if(MaxMana > 0 && GBD_RPG.Main_Main.Main_ServerOption.MagicSpellsEnable == true)
 		{
 			try
 			{

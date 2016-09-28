@@ -1,4 +1,4 @@
-package GoldBigDragon_RPG.Main;
+package GBD_RPG.Main_Main;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -21,13 +21,16 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import GoldBigDragon_RPG.Effect.Corpse;
-import GoldBigDragon_RPG.Party.PartyDataManager;
-import GoldBigDragon_RPG.Party.PartyDataObject;
-import GoldBigDragon_RPG.Util.YamlController;
-import GoldBigDragon_RPG.Util.YamlManager;
+import GBD_RPG.Area.Area_Object;
+import GBD_RPG.Corpse.Corpse_Main;
+import GBD_RPG.Monster.Monster_Object;
+import GBD_RPG.Party.Party_DataManager;
+import GBD_RPG.Party.Party_Object;
+import GBD_RPG.User.User_Object;
+import GBD_RPG.Util.YamlController;
+import GBD_RPG.Util.YamlManager;
 
-public class ServerOption
+public class Main_ServerOption
 {
 	public static ArrayList<String> DungeonTheme = new ArrayList<String>();
 	
@@ -55,11 +58,11 @@ public class ServerOption
 	public static int EXPShareDistance = 50;
 	public static long MaxDropMoney = 100000;
 	
-	public static String STR_Lore = "%enter%"+ChatColor.GRAY+" "+ServerOption.STR+"은 플레이어의%enter%"+ChatColor.GRAY + " 물리적 공격력을%enter%"+ChatColor.GRAY + " 상승시켜 줍니다.%enter%";
-	public static String DEX_Lore = "%enter%"+ChatColor.GRAY+" "+ServerOption.DEX+"는 플레이어의%enter%"+ChatColor.GRAY + " 원거리 공격력을%enter%"+ChatColor.GRAY + " 상승시켜 줍니다.%enter%";
-	public static String INT_Lore = "%enter%"+ChatColor.GRAY+" "+ServerOption.INT+"은 플레이어가%enter%"+ChatColor.GRAY + " 사용하는 스킬 중%enter%"+ChatColor.GRAY+" "+ServerOption.INT+" 영향을 받는%enter%"+ChatColor.GRAY+" 스킬 공격력을%enter%"+ChatColor.GRAY + " 상승시켜 줍니다.%enter%";
-	public static String WILL_Lore = "%enter%"+ChatColor.GRAY+" "+ServerOption.WILL+"는 플레이어의%enter%"+ChatColor.GRAY + " 크리티컬 및 스킬 중%enter%"+ChatColor.GRAY+" "+ServerOption.WILL+" 영향을 받는%enter%"+ChatColor.GRAY + " 스킬 공격력을%enter%"+ChatColor.GRAY+" 상승시켜 줍니다.%enter%";
-	public static String LUK_Lore = "%enter%"+ChatColor.GRAY+" "+ServerOption.LUK+"은 플레이어에게%enter%"+ChatColor.GRAY+" 뜻하지 않은 일이 일어날%enter%"+ChatColor.GRAY + " 확률을 증가시킵니다.%enter%";
+	public static String STR_Lore = "%enter%"+ChatColor.GRAY+" "+Main_ServerOption.STR+"은 플레이어의%enter%"+ChatColor.GRAY + " 물리적 공격력을%enter%"+ChatColor.GRAY + " 상승시켜 줍니다.%enter%";
+	public static String DEX_Lore = "%enter%"+ChatColor.GRAY+" "+Main_ServerOption.DEX+"는 플레이어의%enter%"+ChatColor.GRAY + " 원거리 공격력을%enter%"+ChatColor.GRAY + " 상승시켜 줍니다.%enter%";
+	public static String INT_Lore = "%enter%"+ChatColor.GRAY+" "+Main_ServerOption.INT+"은 플레이어가%enter%"+ChatColor.GRAY + " 사용하는 스킬 중%enter%"+ChatColor.GRAY+" "+Main_ServerOption.INT+" 영향을 받는%enter%"+ChatColor.GRAY+" 스킬 공격력을%enter%"+ChatColor.GRAY + " 상승시켜 줍니다.%enter%";
+	public static String WILL_Lore = "%enter%"+ChatColor.GRAY+" "+Main_ServerOption.WILL+"는 플레이어의%enter%"+ChatColor.GRAY + " 크리티컬 및 스킬 중%enter%"+ChatColor.GRAY+" "+Main_ServerOption.WILL+" 영향을 받는%enter%"+ChatColor.GRAY + " 스킬 공격력을%enter%"+ChatColor.GRAY+" 상승시켜 줍니다.%enter%";
+	public static String LUK_Lore = "%enter%"+ChatColor.GRAY+" "+Main_ServerOption.LUK+"은 플레이어에게%enter%"+ChatColor.GRAY+" 뜻하지 않은 일이 일어날%enter%"+ChatColor.GRAY + " 확률을 증가시킵니다.%enter%";
 
 	public static boolean MoneySystem = false;
 	public static short Money1ID = 348;
@@ -74,16 +77,14 @@ public class ServerOption
 	public static byte Money5DATA = 0;
 	public static short Money6ID = 41;
 	public static byte Money6DATA = 0;
-
+	
 	public static String serverUpdate = "2016-09-28-14:19";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/";
 	public static String currentServerUpdate = "2016-09-28-14:19";
 	public static String currentServerVersion = "Advanced";
 	
-	public static String SpawnMobName;
-
-	public static java.util.Map<Long, PartyDataObject> Party = new LinkedHashMap<Long, PartyDataObject>();
+	public static java.util.Map<Long, Party_Object> Party = new LinkedHashMap<Long, Party_Object>();
 	public static java.util.Map<Player, Long> PartyJoiner = new LinkedHashMap<Player, Long>();
 	
 	public static HashMap<Player, Location> catchedLocation1 = new HashMap<Player, Location>();
@@ -92,10 +93,10 @@ public class ServerOption
 	public static HashMap<Player, String> PlayerUseSpell = new HashMap<Player, String>();
 	public static HashMap<Player, ItemStack> PlayerlastItem = new HashMap<Player, ItemStack>();
 
-	public static HashMap<String, ArrayList<Object_Area>> AreaList = new HashMap<String, ArrayList<Object_Area>>();
+	public static HashMap<String, ArrayList<Area_Object>> AreaList = new HashMap<String, ArrayList<Area_Object>>();
 	public static HashMap<Player, String> PlayerCurrentArea = new HashMap<Player, String>();
-	public static HashMap<String, Object_Player> PlayerList = new HashMap<String, Object_Player>();
-	public static HashMap<String, Object_Monster> MonsterList = new HashMap<String, Object_Monster>();
+	public static HashMap<String, User_Object> PlayerList = new HashMap<String, User_Object>();
+	public static HashMap<String, Monster_Object> MonsterList = new HashMap<String, Monster_Object>();
 	public static HashMap<String, String> MonsterNameMatching = new HashMap<String, String>();
 		
 	public static boolean MagicSpellsCatched = false;
@@ -113,51 +114,51 @@ public class ServerOption
 	
 	public void Initialize()
 	{
-	  	new GoldBigDragon_RPG.ETC.Area().addAreaList();
+	  	new GBD_RPG.Area.Area_Main().addAreaList();
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" 영역 정보 로드");
 		Object[] players = Bukkit.getOnlinePlayers().toArray();
 		for(short count = 0; count < players.length; count++)
 		{
 			Player p = ((Player)players[count]);
-			PlayerList.put(p.getUniqueId().toString(), new Object_Player((Player)players[count]));
-			if(new GoldBigDragon_RPG.ETC.Area().SearchAreaName(p.getLocation()) != null)
-				PlayerCurrentArea.put(p, new GoldBigDragon_RPG.ETC.Area().SearchAreaName(p.getLocation())[0].toString());
+			PlayerList.put(p.getUniqueId().toString(), new User_Object((Player)players[count]));
+			if(new GBD_RPG.Area.Area_Main().SearchAreaName(p.getLocation()) != null)
+				PlayerCurrentArea.put(p, new GBD_RPG.Area.Area_Main().SearchAreaName(p.getLocation())[0].toString());
 			if(PlayerList.get(p.getUniqueId().toString()).isDeath())
-				new Corpse().CreateCorpse(p);
+				new Corpse_Main().CreateCorpse(p);
 		}
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" 플레이어 정보 로드");
-	  	YamlController YC = new YamlController(Main.plugin);
+	  	YamlController YC = new YamlController(Main_Main.plugin);
 		YamlManager Monster  = YC.getNewConfig("Monster/MonsterList.yml");
 		Object[] KeyList = Monster.getConfigurationSection("").getKeys(false).toArray();
 		for(int count = 0; count < KeyList.length; count++)
 		{
 			String RealName = (String)KeyList[count];
-			Object_Monster OM = new Object_Monster(RealName, Monster.getString(RealName+".Name"), Monster.getLong(RealName+".EXP"), Monster.getInt(RealName+".HP"), Monster.getInt(RealName+".MIN_Money"), Monster.getInt(RealName+".MAX_Money"), Monster.getInt(RealName+".STR"), Monster.getInt(RealName+".DEX"), Monster.getInt(RealName+".INT"), Monster.getInt(RealName+".WILL"), Monster.getInt(RealName+".LUK"), Monster.getInt(RealName+".DEF"), Monster.getInt(RealName+".Protect"), Monster.getInt(RealName+".Magic_DEF"), Monster.getInt(RealName+".Magic_Protect"));
+			Monster_Object OM = new Monster_Object(RealName, Monster.getString(RealName+".Name"), Monster.getLong(RealName+".EXP"), Monster.getInt(RealName+".HP"), Monster.getInt(RealName+".MIN_Money"), Monster.getInt(RealName+".MAX_Money"), Monster.getInt(RealName+".STR"), Monster.getInt(RealName+".DEX"), Monster.getInt(RealName+".INT"), Monster.getInt(RealName+".WILL"), Monster.getInt(RealName+".LUK"), Monster.getInt(RealName+".DEF"), Monster.getInt(RealName+".Protect"), Monster.getInt(RealName+".Magic_DEF"), Monster.getInt(RealName+".Magic_Protect"));
 			MonsterList.put(RealName, OM);
 			MonsterNameMatching.put(Monster.getString(RealName+".Name"), RealName);
 		}
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" 몬스터 정보 로드");
 		
-	  	File MusicFolder = new File(Main.plugin.getDataFolder().getAbsolutePath() + "/NoteBlockSound/");
+	  	File MusicFolder = new File(Main_Main.plugin.getDataFolder().getAbsolutePath() + "/NoteBlockSound/");
 		if(!MusicFolder.exists())
 			MusicFolder.mkdirs();
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" NBS 파일 로드");
-	  	GoldBigDragon_RPG.Config.configConfig config = new GoldBigDragon_RPG.Config.configConfig();
+	  	GBD_RPG.Main_Main.Main_Config config = new GBD_RPG.Main_Main.Main_Config();
 	  	config.CheckConfig(YC);
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" 콘피그 정보 로드");
 	  	config.CreateMapImageConfig(YC);
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" 맵 이미지 정보 로드");
 	  	if(YC.isExit("Skill/SkillList.yml") == false)
-	  	  new GoldBigDragon_RPG.Skill.SkillConfig().CreateNewSkillList();
+	  	  new GBD_RPG.Skill.Skill_Config().CreateNewSkillList();
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" 스킬 정보 로드");
 	  	if(YC.isExit("Skill/JobList.yml") == false)
-	  		new GoldBigDragon_RPG.Skill.SkillConfig().CreateNewJobList();
+	  		new GBD_RPG.Skill.Skill_Config().CreateNewJobList();
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" 직업 정보 로드");
 	  	if(YC.isExit("ETC/NewBie.yml") == false)
-	  		new GoldBigDragon_RPG.Config.NewBieConfig().CreateNewConfig();
+	  		new GBD_RPG.Admin.NewBie_Config().CreateNewConfig();
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" 초보자 정보 로드");
 	  	
-	  	new PartyDataManager().loadParty();
+	  	new Party_DataManager().loadParty();
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" 파티 정보 로드");
 	  	
 		YamlManager WorldConfig = YC.getNewConfig("WorldList.yml");
@@ -169,8 +170,8 @@ public class ServerOption
 
 		NoteBlockAPICatch();
 		
-		new GoldBigDragon_RPG.ServerTick.ServerTickMain(Main.plugin);
-		new GoldBigDragon_RPG.ServerTick.ServerTickScheduleManager().loadCategoriFile();
+		new GBD_RPG.ServerTick.ServerTick_Main(Main_Main.plugin);
+		new GBD_RPG.ServerTick.ServerTick_ScheduleManager().loadCategoriFile();
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" 틱 정보 로드");
 		
 		if(Bukkit.getServer().getOnlineMode()==false)
@@ -257,7 +258,7 @@ public class ServerOption
 				}
 			}
 		}
-		File directory = new File(Main.plugin.getDataFolder() + "\\Dungeon\\Schematic"); 
+		File directory = new File(Main_Main.plugin.getDataFolder() + "\\Dungeon\\Schematic"); 
 		if(directory.exists()==false)
 			directory.mkdir();
 		File[] fileList = directory.listFiles(); 
@@ -266,7 +267,7 @@ public class ServerOption
 			for(int count = 0 ; count < fileList.length ; count++)
 				if(fileList[count].isFile()==false)
 				{
-					File InnerDirectory = new File(Main.plugin.getDataFolder() + "\\Dungeon\\Schematic\\"+fileList[count].getName()); 
+					File InnerDirectory = new File(Main_Main.plugin.getDataFolder() + "\\Dungeon\\Schematic\\"+fileList[count].getName()); 
 					File[] schematicList = InnerDirectory.listFiles();
 					if(schematicList.length != 25)
 					{
@@ -308,10 +309,31 @@ public class ServerOption
 		}
 		catch(Exception e)
 		{}
-		
-		
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" 던전 정보 로드");
-		new GoldBigDragon_RPG.Util.SendString().SendForBukkit((byte) 0);
+
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "──────────────────────");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "I changed My Symbol!");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "Like this Oriental Dragon...");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "Because some peoples claimed");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "my original Dragon symbol...");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "(They said my original symbol");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "looks like the 'Nazi''s Hakenkreuz)");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "　");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　　　　◆"); 
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　　　◆　◆");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　　◆　　　◆");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　　　　　◆");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　　　　◆　　　◆");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　　　◆　　　◆　◆");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　　◆　　　◆　　　◆");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　◆　　　◆　　　　　◆");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　　◆　◆　　　　　　　◆");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　　　◆　　　　　　　　　◆");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "　GoldBigDragon Advanced");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "http://cafe.naver.com/goldbigdragon");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "　　　　");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "──────────────────────");
+	  	
 	  	VersionCheck();
 		return;
 	}
@@ -348,7 +370,7 @@ public class ServerOption
 			else
 			{
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[ ! ] GoldBigDragonRPG가 최신 버전이 아닙니다! 아래 주소에서 다운로드 받으세요!");
-				Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[ ! ] http://cafe.naver.com/goldbigdragon/40109");
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[ ! ] http://cafe.naver.com/goldbigdragon/57885");
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[ ! ] 패치가 필요한 이유 : " + Parsed[3].split(": ")[1]);
 			}
 			
@@ -366,7 +388,7 @@ public class ServerOption
 			MagicSpellsCatched = true;
 			if(Bukkit.getPluginManager().isPluginEnabled("MagicSpells") == false)
 			{
-				new GoldBigDragon_RPG.Util.SendString().SendForBukkit((byte) 1);
+				ErrorMessage();
 			  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "MagicSpells 플러그인을 찾을 수 없습니다!");
 			  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "MagicSpells 다운로드 URL");
 			  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "http://nisovin.com/magicspells/Start");
@@ -374,7 +396,7 @@ public class ServerOption
 			else
 			{
 				MagicSpellsEnable = true;
-				new OtherPlugins.SpellMain(Main.plugin);
+				new OtherPlugins.SpellMain(Main_Main.plugin);
 			}
 		}
 		return;
@@ -387,13 +409,13 @@ public class ServerOption
 			CitizensCatched = true;
 			if(Bukkit.getPluginManager().isPluginEnabled("Citizens") == false)
 			{
-				new GoldBigDragon_RPG.Util.SendString().SendForBukkit((byte) 1);
+				ErrorMessage();
 			  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "Citizens 플러그인을 찾을 수 없습니다!");
 			  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "Citizens 다운로드 URL");
 			  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "http://www.curse.com/bukkit-plugins/minecraft/citizens#t1:other-downloads");
 			}
 			else
-				new OtherPlugins.CitizensMain(Main.plugin);
+				new OtherPlugins.CitizensMain(Main_Main.plugin);
 		}
 		return;
 	}
@@ -401,7 +423,7 @@ public class ServerOption
 	public void NoteBlockAPICatch()
 	{
 		if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI"))
-			new OtherPlugins.NoteBlockAPIMain(Main.plugin);
+			new OtherPlugins.NoteBlockAPIMain(Main_Main.plugin);
 		return;
 	}
 	
@@ -412,17 +434,33 @@ public class ServerOption
 			NoteBlockAPI = true;
 			if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == false)
 			{
-				new GoldBigDragon_RPG.Util.SendString().SendForBukkit((byte) 1);
+				ErrorMessage();
 			  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "노트블록 재생 플러그인을 찾을 수 없습니다!");
 			  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "NoteBlockAPI 다운로드 URL");
 			  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "http://www.curse.com/bukkit-plugins/minecraft/noteblockapi");
 			}
 			else
 			{
-				new OtherPlugins.NoteBlockAPIMain(Main.plugin);
+				new OtherPlugins.NoteBlockAPIMain(Main_Main.plugin);
 			}
 		}
 		return;
 	}
 	
+	public void ErrorMessage()
+	{
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　　　［경　고］");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　　　　　■");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　　　　■■■");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　　　　■■■"); 
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　　　■■■■■");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　　　■■　■■");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　　■■■　■■■");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　　■■■　■■■");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　■■■■■■■■■");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "　■■■■　■■■■"); 
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "■■■■■■■■■■■");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[플레이에 지장은 없습니다]");
+	  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "");
+	}
 }
