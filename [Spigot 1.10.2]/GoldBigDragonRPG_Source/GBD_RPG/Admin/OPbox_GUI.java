@@ -31,7 +31,8 @@ public class OPbox_GUI extends Util_GUI
 	{
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager Config =YC.getNewConfig("config.yml");
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "관리자 도구 : "+page+" / 3");
+		String UniqueCode = "§0§0§1§0§0§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0관리자 도구 : "+page+" / 3");
 		
 		Stack2(ChatColor.BLACK +""+page, 160,11,1,null, 0, inv);
 		Stack2(" ", 160,11,1,null, 1, inv);
@@ -66,7 +67,6 @@ public class OPbox_GUI extends Util_GUI
 			case 1:
 				ItemStackStack(getPlayerSkull(ChatColor.WHITE+""+ChatColor.BOLD+"GoldBigDragonRPG", 1, Arrays.asList("",ChatColor.YELLOW+"[버전]",ChatColor.WHITE+""+ChatColor.BOLD+Main_ServerOption.serverVersion,"",ChatColor.YELLOW+"[패치]",ChatColor.WHITE+""+ChatColor.BOLD+Main_ServerOption.serverUpdate), "GoldBigDragon"), 10, inv);
 				Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "서버 설정", 137,0,1,Arrays.asList(ChatColor.GRAY +"서버에 대한 전반적인 설정을 합니다."), 12, inv);
-				//Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "던전", 52,0,1,Arrays.asList(ChatColor.GRAY +"던전의 생성과 삭제는 물론,",ChatColor.GRAY +"몬스터 설정 및 보상을 관리합니다."), 14, inv);
 				Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "몬스터", 397,4,1,Arrays.asList(ChatColor.GRAY +"커스텀 몬스터를 생성하거나",ChatColor.GRAY +"스폰 에그를 얻습니다."), 14, inv);
 				Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "이벤트", 401,0,1,Arrays.asList(ChatColor.GRAY +"이벤트 개최시 접속된 모든",ChatColor.GRAY +"플레이어들에게 알려지며,",ChatColor.GRAY +"이후 입장하는 모든 플레이어에게",ChatColor.GRAY +"이벤트 진행을 알려줍니다."), 16, inv);
 				if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == true)
@@ -111,7 +111,8 @@ public class OPbox_GUI extends Util_GUI
 	{
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager Config =YC.getNewConfig("config.yml");
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "관리자 옵션");
+		String UniqueCode = "§0§0§1§0§1§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0관리자 옵션");
 		
 		Stack2(" ", 160,11,1,null, 0, inv);
 		Stack2(" ", 160,11,1,null, 1, inv);
@@ -220,7 +221,8 @@ public class OPbox_GUI extends Util_GUI
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager BroadCast =YC.getNewConfig("BroadCast.yml");
 
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "관리자 공지사항 : " + (page+1));
+		String UniqueCode = "§0§0§1§0§2§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0관리자 공지사항 : " + (page+1));
 
 		if(BroadCast.contains("0"))
 		{
@@ -251,7 +253,8 @@ public class OPbox_GUI extends Util_GUI
 	
 	public void OPBoxGUI_StatChange(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "관리자 스텟 설정");
+		String UniqueCode = "§0§0§1§0§3§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0관리자 스텟 설정");
 
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "체력", 267,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+Main_ServerOption.STR), 0, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "솜씨", 261,0,1,Arrays.asList(ChatColor.GRAY + "[  현재 이름  ]",ChatColor.WHITE+Main_ServerOption.DEX), 1, inv);
@@ -286,7 +289,8 @@ public class OPbox_GUI extends Util_GUI
 	
 	public void OPBoxGUI_Money(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "관리자 화폐 설정");
+		String UniqueCode = "§0§0§1§0§4§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0관리자 화폐 설정");
 
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager Config =YC.getNewConfig("config.yml");
@@ -310,7 +314,8 @@ public class OPbox_GUI extends Util_GUI
 
 	public void OPBoxGUI_Death(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "관리자 사망 설정");
+		String UniqueCode = "§0§0§1§0§5§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0관리자 사망 설정");
 
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 	  	YamlManager Config = YC.getNewConfig("config.yml");
@@ -344,8 +349,9 @@ public class OPbox_GUI extends Util_GUI
 	{
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager Config =YC.getNewConfig("config.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.BLACK + "부활 아이템");
+
+		String UniqueCode = "§1§0§1§0§6§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0부활 아이템");
 
 		ItemStack item = Config.getItemStack("Death.ReviveItem");
 		
@@ -369,8 +375,9 @@ public class OPbox_GUI extends Util_GUI
 	{
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager Config =YC.getNewConfig("config.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.BLACK + "구조 아이템");
+
+		String UniqueCode = "§1§0§1§0§7§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0구조 아이템");
 
 		ItemStack item = Config.getItemStack("Death.RescueItem");
 		
@@ -389,358 +396,11 @@ public class OPbox_GUI extends Util_GUI
 		player.openInventory(inv);
 		return;
 	}
-	
-	
-	//각종 GUI창 속의 아이콘을 눌렸을 때, 해당 아이콘에 기능을 넣는 메소드1   -스텟 GUI, 오피박스, 커스텀 몬스터GUI-//
-	public void OPBoxGUIInventoryclick(InventoryClickEvent event)
-	{
 
-		event.setCancelled(true);
-		Player player = (Player) event.getWhoClicked();
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		if(event.getSlot() >= 2 && event.getSlot()<=6)
-		{
-			switch(event.getSlot())
-			{
-			case 2:
-				{
-					s.SP(player, Sound.ENTITY_CHICKEN_AMBIENT, 0.8F, 1.0F);
-					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setTime(0);
-					player.sendMessage(ChatColor.GOLD+"[System] : "+player.getLocation().getWorld().getName()+" 월드 시간을 낮으로 변경하였습니다!");
-				}
-				return;
-			case 3:
-				{
-					s.SP(player, Sound.ENTITY_WOLF_HOWL, 0.8F, 1.0F);
-					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setTime(14000);
-					player.sendMessage(ChatColor.GOLD+"[System] : "+player.getLocation().getWorld().getName()+" 월드 시간을 밤으로 변경하였습니다!");
-				}
-				return;
-			case 4:
-				{
-					s.SP(player, Sound.ENTITY_VILLAGER_YES, 0.8F, 1.0F);
-					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setSpawnLocation((int)player.getLocation().getX(), (int)player.getLocation().getY(), (int)player.getLocation().getZ());
-					player.sendMessage(ChatColor.GOLD+"[System] : "+player.getLocation().getWorld().getName()+" 월드의 스폰 지점을 "+(int)player.getLocation().getX()+","+(int)player.getLocation().getY()+","+(int)player.getLocation().getZ()+" 로 변경하였습니다!");
-				}
-				return;
-			case 5:
-				{
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setStorm(false);
-					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setWeatherDuration(180000);
-					player.sendMessage(ChatColor.GOLD+"[System] : "+player.getLocation().getWorld().getName()+" 월드 날씨를 맑음으로 변경하였습니다!");
-				}
-				return;
-			case 6:
-				{
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setStorm(true);
-					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setWeatherDuration(180000);
-					player.sendMessage(ChatColor.GOLD+"[System] : "+player.getLocation().getWorld().getName()+" 월드 날씨를 흐림으로 변경하였습니다!");
-				}
-				return;
-			}
-		}
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager Config =YC.getNewConfig("config.yml");
-		short page = Short.parseShort(ChatColor.stripColor(event.getInventory().getItem(0).getItemMeta().getDisplayName()));
-		switch ((ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())))
-		{
-		case "던전":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new GBD_RPG.Dungeon.Dungeon_GUI().DungeonListMainGUI(player, 0, 52);
-			return;
-		case "기능성 개체":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new Structure_GUI().StructureListGUI(player, 0);
-			return;
-		case"도박":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new Gamble_GUI().GambleMainGUI(player);
-			break;
-		case"네비게이션":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new Navigation_GUI().NavigationListGUI(player,(short) 0);
-			break;
-		case"GoldBigDragonRPG":
-			if(Main_ServerOption.serverVersion.compareTo(Main_ServerOption.currentServerVersion)==0&&
-					Main_ServerOption.serverUpdate.compareTo(Main_ServerOption.currentServerUpdate)==0)
-			{
-				s.SP(player,Sound.BLOCK_ANVIL_USE, 0.8F, 1.0F);
-				player.sendMessage(ChatColor.YELLOW + "[버전 체크] : 현재 GoldBigDragonRPG는 최신 버전입니다!");
-			}
-			else
-			{
-				s.SP(player,Sound.BLOCK_ANVIL_USE, 0.8F, 1.0F);
-				player.sendMessage(ChatColor.RED + "[버전 체크] : 현재 GoldBigDragonRPG는 업데이트가 필요합니다!");
-				player.sendMessage(ChatColor.RED + "[현재 버전] : "+Main_ServerOption.serverVersion);
-				player.sendMessage(ChatColor.RED + "[최신 버전] : "+Main_ServerOption.currentServerVersion);
-				player.sendMessage(ChatColor.RED + "[현재 패치] : "+Main_ServerOption.serverUpdate);
-				player.sendMessage(ChatColor.RED + "[최신 패치] : "+Main_ServerOption.currentServerUpdate);
-			}
-			break;
-		case "서버 설정":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_Setting(player);
-			return;
-		case "워프":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new GBD_RPG.Warp.Warp_GUI().WarpListGUI(player, 0);
-			return;
-		case "월드 생성":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new GBD_RPG.Admin.WorldCreate_GUI().WorldCreateGUIMain(player);
-			return;
-		case "몬스터":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new Monster_GUI().MonsterListGUI(player, 0);
-			return;
-		case "초심자":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new NewBie_GUI().NewBieGUIMain(player);
-			return;
-		case "개조식":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new Upgrade_GUI().UpgradeRecipeGUI(player,0);
-			return;
-		case "이벤트":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new Event_GUI().EventGUI_Main(player);
-			return;
-		case "게임 성향":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			Config.set("Time.LastSkillChanged", new GBD_RPG.Util.Util_Number().RandomNum(0, 100000)-new GBD_RPG.Util.Util_Number().RandomNum(0, 100000));
-			if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System")==true) {Config.set("Server.Like_The_Mabinogi_Online_Stat_System", false);}
-			else{Config.set("Server.Like_The_Mabinogi_Online_Stat_System", true);}
-			Config.saveConfig();
-			OPBoxGUI_Main(player,(byte) 1);
-			new GBD_RPG.Job.Job_Main().AllPlayerFixAllSkillAndJobYML();
-			return;
-		case "커스텀 아이템":
-			CustomItem_GUI IGUI = new CustomItem_GUI();
-			IGUI.ItemListGUI(player, 0);
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			return;
-		case "몬스터 스폰 효과":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if(Config.getInt("Server.MonsterSpawnEffect")<7) {Config.set("Server.MonsterSpawnEffect", Config.getInt("Server.MonsterSpawnEffect")+1);}
-			else{Config.set("Server.MonsterSpawnEffect", 0);}
-			Config.saveConfig();
-			OPBoxGUI_Main(player,(byte) 1);
-			return;
-		case "플러그인 가이드":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			Guide_GUI(player);
-			return;
-		case "퀘스트":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new Quest_GUI().AllOfQuestListGUI(player, (short) 0,false);
-			return;
-		case "스킬":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new OPboxSkill_GUI().AllSkillsGUI(player,(short) 0,false,null);
-			return;
-		case "카테고리 및 직업":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new Job_GUI().ChooseSystemGUI(player);
-			return;
-		case "소비 아이템":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new UseableItem_GUI().UseableItemListGUI(player, 0);
-			return;
-		case "영역":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new Area_GUI().AreaListGUI(player, (short) 0);
-			return;
-		case "이전 페이지":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_Main(player,(byte) (page-1));
-			return;
-		case "다음 페이지":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_Main(player,(byte) (page+1));
-			return;
-		case "닫기":
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.closeInventory();
-			return;
-		}
-		return;
-	}
-	
-	public void OPBoxGUI_SettingInventoryClick(InventoryClickEvent event)
-	{
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager Config =YC.getNewConfig("config.yml");
-		event.setCancelled(true);
-		Player player = (Player) event.getWhoClicked();
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		switch (event.getSlot())
-		{
-		case 10://엔티티 스폰
-			if(Config.getBoolean("Server.EntitySpawn") == true) {Config.set("Server.EntitySpawn", false);}
-			else{Config.set("Server.EntitySpawn", true);}
-			Config.saveConfig();
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_Setting(player);
-			return;
-		case 11://PVP
-			if(Config.getBoolean("Server.PVP")==true)
-			{
-				Config.set("Server.PVP", false);
-				GBD_RPG.Main_Main.Main_ServerOption.PVP = false;
-			}
-			else
-			{
-				Config.set("Server.PVP", true);
-				GBD_RPG.Main_Main.Main_ServerOption.PVP = true;
-			}
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			Config.saveConfig();
-			OPBoxGUI_Setting(player);
-			return;
-		case 12://몬스터 스폰 효과
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if(Config.getInt("Server.MonsterSpawnEffect")<7) {Config.set("Server.MonsterSpawnEffect", Config.getInt("Server.MonsterSpawnEffect")+1);}
-			else{Config.set("Server.MonsterSpawnEffect", 0);}
-			Config.saveConfig();
-			OPBoxGUI_Setting(player);
-			return;
-		case 13://커스텀 무기 파괴
-			if(Config.getBoolean("Server.CustomWeaponBreak") == true) {Config.set("Server.CustomWeaponBreak", false);}
-			else{Config.set("Server.CustomWeaponBreak", true);}
-			Config.saveConfig();
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_Setting(player);
-			return;
-		case 14://입장 메시지 변경
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				UserData_Object u = new UserData_Object();
-				u.setType(player, "System");
-				u.setString(player, (byte)1,"JM");
-				player.sendMessage(ChatColor.GREEN+"[SYSTEM] : 입장 메시지를 입력 해 주세요! ("+ChatColor.WHITE+"없음"+ChatColor.GREEN+" 입력시 입장 메시지 제거)");
-				player.sendMessage(ChatColor.GOLD + "%player%"+ChatColor.WHITE + " - 플레이어 지칭하기 -");
-				player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
-				ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
-						ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
-				ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
-						ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
-			}
-			return;
-		case 15://퇴장 메시지 변경
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				UserData_Object u = new UserData_Object();
-				u.setType(player, "System");
-				u.setString(player, (byte)1,"QM");
-				player.sendMessage(ChatColor.GREEN+"[SYSTEM] : 퇴장 메시지를 입력 해 주세요! ("+ChatColor.WHITE+"없음"+ChatColor.GREEN+" 입력시 퇴장 메시지 제거)");
-				player.sendMessage(ChatColor.GOLD + "%player%"+ChatColor.WHITE + " - 플레이어 지칭하기 -");
-				player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
-				ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
-						ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
-				ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
-						ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
-			}
-			return;
-		case 16://공지사항
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_BroadCast(player, (byte) 0);
-			return;
-		case 19://채팅 형태 변경
-			if(event.isLeftClick())
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				UserData_Object u = new UserData_Object();
-				u.setType(player, "System");
-				u.setString(player, (byte)1,"CCP");
-				player.sendMessage(ChatColor.GREEN+"[SYSTEM] : 채팅 형태를 입력 해 주세요!");
-				player.sendMessage(ChatColor.GOLD + "%t%"+ChatColor.WHITE + " - 현재 시각 지칭하기 -");
-				player.sendMessage(ChatColor.GOLD + "%gm%"+ChatColor.WHITE + " - 게임모드 지칭하기 -");
-				player.sendMessage(ChatColor.GOLD + "%ct%"+ChatColor.WHITE + " - 채팅 타입 지칭하기 -");
-				player.sendMessage(ChatColor.GOLD + "%lv%"+ChatColor.WHITE + " - 레벨 지칭하기 -");
-				player.sendMessage(ChatColor.GOLD + "%rlv%"+ChatColor.WHITE + " - 누적 레벨 지칭하기 - (서버 성향이 메이플스토리일 경우 쓸모 없음.)");
-				player.sendMessage(ChatColor.GOLD + "%job%"+ChatColor.WHITE + " - 직업 지칭하기 - (서버 성향이 마비노기일 경우 쓸모 없음.)");
-				player.sendMessage(ChatColor.GOLD + "%player%"+ChatColor.WHITE + " - 플레이어 지칭하기 -");
-				player.sendMessage(ChatColor.GOLD + "%message%"+ChatColor.WHITE + " - 채팅 내용 지칭하기 -");
-				player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
-				ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
-						ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
-				ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
-						ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
-			}
-			else if(event.isRightClick())
-			{
-				s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
-				Config.removeKey("Server.ChatPrefix");
-				Config.saveConfig();
-				player.sendMessage(ChatColor.RED+"[SYSTEM] : 접두사를 삭제하였습니다!");
-				OPBoxGUI_Setting(player);
-			}
-			return;
-		case 20://커스텀 블록 설치/설치 금지
-			if(Config.getBoolean("Server.CustomBlockPlace") == true) {Config.set("Server.CustomBlockPlace", false);}
-			else{Config.set("Server.CustomBlockPlace", true);}
-			Config.saveConfig();
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_Setting(player);
-			return;
-		case 21: //스텟 이름 변경
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				OPBoxGUI_StatChange(player);
-			}
-			return;
-		case 22: //금전 시스템 변경
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				OPBoxGUI_Money(player);
-			}
-			return;
-		case 23: //사망 시스템 변경
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				OPBoxGUI_Death(player);
-			}
-			return;
-			case 24: //폭발 방지 변경
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				if(Config.getBoolean("Server.AntiExplode") == true)
-				{
-					Config.set("Server.AntiExplode", false);
-					GBD_RPG.Main_Main.Main_ServerOption.AntiExplode = false;
-				}
-				else
-				{
-					Config.set("Server.AntiExplode", true);
-					GBD_RPG.Main_Main.Main_ServerOption.AntiExplode = true;
-				}
-				Config.saveConfig();
-				
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				OPBoxGUI_Setting(player);
-			}
-			return;
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
-			OPBoxGUI_Main(player, (byte) 1);
-			return;
-		case 53://닫기
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.closeInventory();
-			return;
-		}
-		return;
-	}
-	
-	
 	public void Guide_GUI (Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "관리자 가이드");
+		String UniqueCode = "§0§0§1§0§8§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0관리자 가이드");
 		
 		Stack2(ChatColor.YELLOW +""+ ChatColor.BOLD + "스텟 시스템", 340,0,1,Arrays.asList(ChatColor.GRAY+ "플러그인에는 5가지 스텟이 있습니다.",ChatColor.RED +"["+Main_ServerOption.STR+"]",ChatColor.GRAY+""+Main_ServerOption.STR+"은 플레이어의",ChatColor.GRAY+"물리적 데미지에 관여합니다.",ChatColor.GREEN +  "["+Main_ServerOption.DEX+"]",ChatColor.GRAY+""+Main_ServerOption.DEX+"는 플레이어의 밸런스 및",ChatColor.GRAY+"생산 성공률과 생산 품질,",ChatColor.GRAY+"원거리 데미지에 관여합니다.",ChatColor.BLUE+"["+Main_ServerOption.INT+"]",ChatColor.GRAY+""+Main_ServerOption.INT+"은 마법방어 및 마법보호,",ChatColor.GRAY+"마법 공격력에 관여합니다.",ChatColor.WHITE+"["+Main_ServerOption.WILL+"]",ChatColor.GRAY + ""+Main_ServerOption.WILL+"는 플레이어의",ChatColor.GRAY + "크리티컬에 관여합니다.",ChatColor.YELLOW + "["+Main_ServerOption.LUK+"]",ChatColor.GRAY + ""+Main_ServerOption.LUK+"은 크리티컬 및",ChatColor.GRAY +"럭키 피니시, 럭키 보너스 등",ChatColor.GRAY +"각종 '확률'에 관여합니다."), 0,inv);
 		Stack2(ChatColor.YELLOW +""+ ChatColor.BOLD + "럭키 피니시", 340,0,1,Arrays.asList(ChatColor.GRAY+ "몬스터를 사냥하였을 경우",ChatColor.GRAY+"일정 확률로 돈이 더 나오게 됩니다."), 1,inv);
@@ -774,79 +434,319 @@ public class OPbox_GUI extends Util_GUI
 		player.openInventory(inv);
 	}
 	
-	public void OPBoxGuideInventoryclick(InventoryClickEvent event)
+	
+	//각종 GUI창 속의 아이콘을 눌렸을 때, 해당 아이콘에 기능을 넣는 메소드1   -스텟 GUI, 오피박스, 커스텀 몬스터GUI-//
+	public void OPBoxGUIInventoryclick(InventoryClickEvent event)
 	{
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		switch ((ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())))
+		
+		int slot = event.getSlot();
+		
+		if((slot >= 0 && slot <= 8)||(slot >= 45 && slot <= 53))
 		{
-		case "[동영상 가이드]":
+			if(slot == 2)//월드 시간 낮으로
+			{
+				s.SP(player, Sound.ENTITY_CHICKEN_AMBIENT, 0.8F, 1.0F);
+				Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setTime(0);
+				player.sendMessage(ChatColor.GOLD+"[System] : "+player.getLocation().getWorld().getName()+" 월드 시간을 낮으로 변경하였습니다!");
+			}
+			else if(slot == 3)//월드 시간 밤으로
+			{
+				s.SP(player, Sound.ENTITY_WOLF_HOWL, 0.8F, 1.0F);
+				Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setTime(14000);
+				player.sendMessage(ChatColor.GOLD+"[System] : "+player.getLocation().getWorld().getName()+" 월드 시간을 밤으로 변경하였습니다!");
+			}
+			else if(slot == 4)//월드 스폰 지점 변경
+			{
+				s.SP(player, Sound.ENTITY_VILLAGER_YES, 0.8F, 1.0F);
+				Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setSpawnLocation((int)player.getLocation().getX(), (int)player.getLocation().getY(), (int)player.getLocation().getZ());
+				player.sendMessage(ChatColor.GOLD+"[System] : "+player.getLocation().getWorld().getName()+" 월드의 스폰 지점을 "+(int)player.getLocation().getX()+","+(int)player.getLocation().getY()+","+(int)player.getLocation().getZ()+" 로 변경하였습니다!");
+			}
+			else if(slot == 53)//닫기
+			{
+				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				player.closeInventory();
+			}
+			else
+			{
+				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				if(slot == 5)//월드 날씨 맑음
+				{
+					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setStorm(false);
+					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setWeatherDuration(180000);
+					player.sendMessage(ChatColor.GOLD+"[System] : "+player.getLocation().getWorld().getName()+" 월드 날씨를 맑음으로 변경하였습니다!");
+				}
+				else if(slot == 6)//월드 날씨 흐림
+				{
+					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setStorm(true);
+					Bukkit.getServer().getWorld(player.getLocation().getWorld().getName()).setWeatherDuration(180000);
+					player.sendMessage(ChatColor.GOLD+"[System] : "+player.getLocation().getWorld().getName()+" 월드 날씨를 흐림으로 변경하였습니다!");
+				}
+				else if(slot == 48)//이전 페이지
+					OPBoxGUI_Main(player,(byte) (Short.parseShort(ChatColor.stripColor(event.getInventory().getItem(0).getItemMeta().getDisplayName()))-1));
+				else if(slot == 50)//다음 페이지
+					OPBoxGUI_Main(player,(byte) (Short.parseShort(ChatColor.stripColor(event.getInventory().getItem(0).getItemMeta().getDisplayName()))+1));
+			}
+		}
+		else
+		{
+			String DisplayName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
+			
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			player.closeInventory();
-			event.setCancelled(true);
-			player.sendMessage(ChatColor.DARK_RED+""+ChatColor.BOLD+"[YouTube] "+ChatColor.WHITE+""+ChatColor.BOLD+": "+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"https://www.youtube.com/playlist?list=PLxqihkJXVJABIlxU3n6bNhhC8x6xPbORP   "+ChatColor.YELLOW+""+ChatColor.BOLD+"[클릭시 가이드 페이지로 연결됩니다]");
-			break;
-		case "이전 목록":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			event.setCancelled(true);
-			OPBoxGUI_Main(player,(byte) 1);
-			break;
-		case "닫기":
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			event.setCancelled(true);
-			player.closeInventory();
-			return;
-			default : return;
+			if(DisplayName.compareTo("커스텀 아이템") == 0)
+				new CustomItem_GUI().ItemListGUI(player, 0);
+			else if(DisplayName.compareTo("몬스터") == 0)
+				new Monster_GUI().MonsterListGUI(player, 0);
+			else if(DisplayName.compareTo("서버 설정") == 0)
+				OPBoxGUI_Setting(player);
+			else if(DisplayName.compareTo("퀘스트") == 0)
+				new Quest_GUI().AllOfQuestListGUI(player, (short) 0,false);
+			else if(DisplayName.compareTo("스킬") == 0)
+				new OPboxSkill_GUI().AllSkillsGUI(player,(short) 0,false,null);
+			else if(DisplayName.compareTo("카테고리 및 직업") == 0)
+				new Job_GUI().ChooseSystemGUI(player);
+			else if(DisplayName.compareTo("소비 아이템") == 0)
+				new UseableItem_GUI().UseableItemListGUI(player, 0);
+			else if(DisplayName.compareTo("영역") == 0)
+				new Area_GUI().AreaListGUI(player, (short) 0);
+			else if(DisplayName.compareTo("던전") == 0)
+				new GBD_RPG.Dungeon.Dungeon_GUI().DungeonListMainGUI(player, 0, 52);
+			else if(DisplayName.compareTo("기능성 개체") == 0)
+				new Structure_GUI().StructureListGUI(player, 0);
+			else if(DisplayName.compareTo("도박") == 0)
+				new Gamble_GUI().GambleMainGUI(player);
+			else if(DisplayName.compareTo("네비게이션") == 0)
+				new Navigation_GUI().NavigationListGUI(player,(short) 0);
+			else if(DisplayName.compareTo("워프") == 0)
+				new GBD_RPG.Warp.Warp_GUI().WarpListGUI(player, 0);
+			else if(DisplayName.compareTo("월드 생성") == 0)
+				new GBD_RPG.Admin.WorldCreate_GUI().WorldCreateGUIMain(player);
+			else if(DisplayName.compareTo("몬스터") == 0)
+				new Monster_GUI().MonsterListGUI(player, 0);
+			else if(DisplayName.compareTo("초심자") == 0)
+				new NewBie_GUI().NewBieGUIMain(player);
+			else if(DisplayName.compareTo("개조식") == 0)
+				new Upgrade_GUI().UpgradeRecipeGUI(player,0);
+			else if(DisplayName.compareTo("이벤트") == 0)
+				new Event_GUI().EventGUI_Main(player);
+			else if(DisplayName.compareTo("게임 성향") == 0)
+			{
+				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager Config =YC.getNewConfig("config.yml");
+				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				Config.set("Time.LastSkillChanged", new GBD_RPG.Util.Util_Number().RandomNum(0, 100000)-new GBD_RPG.Util.Util_Number().RandomNum(0, 100000));
+				if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System")==true) {Config.set("Server.Like_The_Mabinogi_Online_Stat_System", false);}
+				else{Config.set("Server.Like_The_Mabinogi_Online_Stat_System", true);}
+				Config.saveConfig();
+				OPBoxGUI_Main(player,(byte) 1);
+				new GBD_RPG.Job.Job_Main().AllPlayerFixAllSkillAndJobYML();
+			}
+			else if(DisplayName.compareTo("플러그인 가이드") == 0)
+				Guide_GUI(player);
+			else if(DisplayName.compareTo("GoldBigDragonRPG") == 0)
+			{
+				if(Main_ServerOption.serverVersion.compareTo(Main_ServerOption.currentServerVersion)==0&&Main_ServerOption.serverUpdate.compareTo(Main_ServerOption.currentServerUpdate)==0)
+				{
+					s.SP(player,Sound.BLOCK_ANVIL_USE, 0.8F, 1.0F);
+					player.sendMessage(ChatColor.YELLOW + "[버전 체크] : 현재 GoldBigDragonRPG는 최신 버전입니다!");
+				}
+				else
+				{
+					s.SP(player,Sound.BLOCK_ANVIL_USE, 0.8F, 1.0F);
+					player.sendMessage(ChatColor.RED + "[버전 체크] : 현재 GoldBigDragonRPG는 업데이트가 필요합니다!");
+					player.sendMessage(ChatColor.RED + "[현재 버전] : "+Main_ServerOption.serverVersion);
+					player.sendMessage(ChatColor.RED + "[최신 버전] : "+Main_ServerOption.currentServerVersion);
+					player.sendMessage(ChatColor.RED + "[현재 패치] : "+Main_ServerOption.serverUpdate);
+					player.sendMessage(ChatColor.RED + "[최신 패치] : "+Main_ServerOption.currentServerUpdate);
+				}
+			}
+			
 		}
 		return;
+	}
+	
+	public void OPBoxGUI_SettingInventoryClick(InventoryClickEvent event)
+	{
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		
+		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
+		
+		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+		YamlManager Config =YC.getNewConfig("config.yml");
+
+		if(slot == 53)//닫기
+		{
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if((slot >= 10 && slot <= 13) || slot == 20 || slot == 24)
+			{
+				if(slot == 10)//엔티티 스폰
+				{
+					if(Config.getBoolean("Server.EntitySpawn") == true)
+						Config.set("Server.EntitySpawn", false);
+					else
+						Config.set("Server.EntitySpawn", true);
+				}
+				else if(slot == 11)//PVP
+				{
+					if(Config.getBoolean("Server.PVP")==true)
+					{
+						Config.set("Server.PVP", false);
+						GBD_RPG.Main_Main.Main_ServerOption.PVP = false;
+					}
+					else
+					{
+						Config.set("Server.PVP", true);
+						GBD_RPG.Main_Main.Main_ServerOption.PVP = true;
+					}
+				}
+				else if(slot == 12)//몬스터 스폰 효과
+				{
+					if(Config.getInt("Server.MonsterSpawnEffect")<7)
+						Config.set("Server.MonsterSpawnEffect", Config.getInt("Server.MonsterSpawnEffect")+1);
+					else
+						Config.set("Server.MonsterSpawnEffect", 0);
+				}
+				else if(slot == 13)//커스텀 무기 파괴
+				{
+					if(Config.getBoolean("Server.CustomWeaponBreak") == true)
+						Config.set("Server.CustomWeaponBreak", false);
+					else
+						Config.set("Server.CustomWeaponBreak", true);
+				}
+				else if(slot == 20)//커스텀 블록 설치/설치 금지
+				{
+					if(Config.getBoolean("Server.CustomBlockPlace") == true)
+						Config.set("Server.CustomBlockPlace", false);
+					else
+						Config.set("Server.CustomBlockPlace", true);
+				}
+				else if(slot == 24)//폭발 방지 변경
+				{
+					if(Config.getBoolean("Server.AntiExplode") == true)
+					{
+						Config.set("Server.AntiExplode", false);
+						GBD_RPG.Main_Main.Main_ServerOption.AntiExplode = false;
+					}
+					else
+					{
+						Config.set("Server.AntiExplode", true);
+						GBD_RPG.Main_Main.Main_ServerOption.AntiExplode = true;
+					}
+				}
+				Config.saveConfig();
+				OPBoxGUI_Setting(player);
+			}
+			else
+			{
+				if(slot == 45)//이전 목록
+					OPBoxGUI_Main(player, (byte) 1);
+				else if(slot == 16)//공지사항
+					OPBoxGUI_BroadCast(player, (byte) 0);
+				else if(slot == 21)//스텟 이름 변경
+					OPBoxGUI_StatChange(player);
+				else if(slot == 22)//금전 시스템 변경
+					OPBoxGUI_Money(player);
+				else if(slot == 23)//사망 시스템 변경
+					OPBoxGUI_Death(player);
+				else
+				{
+					player.closeInventory();
+					UserData_Object u = new UserData_Object();
+					if(slot == 14)//입장 메시지 변경
+					{
+						u.setString(player, (byte)1,"JM");
+						player.sendMessage(ChatColor.GREEN+"[SYSTEM] : 입장 메시지를 입력 해 주세요! ("+ChatColor.WHITE+"없음"+ChatColor.GREEN+" 입력시 입장 메시지 제거)");
+					}
+					else if(slot == 15)//퇴장 메시지 변경
+					{
+						u.setString(player, (byte)1,"QM");
+						player.sendMessage(ChatColor.GREEN+"[SYSTEM] : 퇴장 메시지를 입력 해 주세요! ("+ChatColor.WHITE+"없음"+ChatColor.GREEN+" 입력시 퇴장 메시지 제거)");
+					}
+					else if(slot == 19)//채팅 형태 변경
+					{
+						if(event.isRightClick())
+						{
+							s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+							Config.removeKey("Server.ChatPrefix");
+							Config.saveConfig();
+							player.sendMessage(ChatColor.RED+"[SYSTEM] : 접두사를 삭제하였습니다!");
+							OPBoxGUI_Setting(player);
+							return;
+						}
+						u.setString(player, (byte)1,"CCP");
+						player.sendMessage(ChatColor.GREEN+"[SYSTEM] : 채팅 형태를 입력 해 주세요!");
+						player.sendMessage(ChatColor.GOLD + "%t%"+ChatColor.WHITE + " - 현재 시각 지칭하기 -");
+						player.sendMessage(ChatColor.GOLD + "%gm%"+ChatColor.WHITE + " - 게임모드 지칭하기 -");
+						player.sendMessage(ChatColor.GOLD + "%ct%"+ChatColor.WHITE + " - 채팅 타입 지칭하기 -");
+						player.sendMessage(ChatColor.GOLD + "%lv%"+ChatColor.WHITE + " - 레벨 지칭하기 -");
+						player.sendMessage(ChatColor.GOLD + "%rlv%"+ChatColor.WHITE + " - 누적 레벨 지칭하기 - (서버 성향이 메이플스토리일 경우 쓸모 없음.)");
+						player.sendMessage(ChatColor.GOLD + "%job%"+ChatColor.WHITE + " - 직업 지칭하기 - (서버 성향이 마비노기일 경우 쓸모 없음.)");
+						player.sendMessage(ChatColor.GOLD + "%message%"+ChatColor.WHITE + " - 채팅 내용 지칭하기 -");
+					}
+					u.setType(player, "System");
+					player.sendMessage(ChatColor.GOLD + "%player%"+ChatColor.WHITE + " - 플레이어 지칭하기 -");
+					player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
+					ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
+							ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
+					ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
+							ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
+				}
+			}
+		}
+		return;
+	}
+	
+	public void OPBoxGuideInventoryclick(InventoryClickEvent event)
+	{
+		Player player = (Player) event.getWhoClicked();
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		
+		int slot = event.getSlot();
+
+		if(slot==53)//닫기
+		{
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot==36)//동영상 가이드
+			{
+				player.closeInventory();
+				player.sendMessage(ChatColor.DARK_RED+""+ChatColor.BOLD+"[YouTube] "+ChatColor.WHITE+""+ChatColor.BOLD+": "+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"https://www.youtube.com/playlist?list=PLxqihkJXVJABIlxU3n6bNhhC8x6xPbORP   "+ChatColor.YELLOW+""+ChatColor.BOLD+"[클릭시 가이드 페이지로 연결됩니다]");
+			}
+			if(slot==45)//이전 목록
+				OPBoxGUI_Main(player,(byte) 1);
+		}
 	}
 
 	public void OPBoxGUI_BroadCastClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
+		
 		Player player = (Player) event.getWhoClicked();
-		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
-
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager BroadCast =YC.getNewConfig("BroadCast.yml");
-		switch (event.getSlot())
+		int slot = event.getSlot();
+		
+		if(slot == 53)//나가기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_Setting(player);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_BroadCast(player, (byte) (page-1));
-			return;
-		case 49://새 공지
-		{
-			int BCnumber = BroadCast.getConfigurationSection("").getKeys(false).size();
-			BroadCast.set(BCnumber+"", ChatColor.YELLOW+"[새로운 공지사항 설정 중]");
-			BroadCast.saveConfig();
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			player.closeInventory();
-			player.sendMessage(ChatColor.DARK_AQUA+"[공지] : 새로운 공지 사항을 입력 해 주세요!");
-			player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
-			ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
-					ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
-			ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
-					ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
-			UserData_Object u = new UserData_Object();
-			u.setType(player, "System");
-			u.setString(player, (byte)1, "NBM");
-			u.setInt(player, (byte)0, BCnumber);
 		}
-		return;
-		case 46://공지 간격
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 45)//이전 목록
+				OPBoxGUI_Setting(player);
+			else if(slot == 46)//공지 간격
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.closeInventory();
 				player.sendMessage(ChatColor.DARK_AQUA+"[공지] : 몇 초마다 공지를 띄울까요?");
 				player.sendMessage(ChatColor.YELLOW+"(최소 1초 ~ 최대 3600초(1시간) 이하 숫자를 입력 하세요!)");
@@ -854,24 +754,42 @@ public class OPbox_GUI extends Util_GUI
 				u.setType(player, "System");
 				u.setString(player, (byte)1, "BMT");
 			}
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_BroadCast(player, (byte) (page+1));
-			return;
-		default :
-			if(event.isShiftClick() == true && event.isRightClick() == true)
+			else if(slot == 48)//이전 페이지
+				OPBoxGUI_BroadCast(player, (byte) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-2));
+			else if(slot == 49)//새 공지
+			{
+				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager BroadCast =YC.getNewConfig("BroadCast.yml");
+				int BCnumber = BroadCast.getConfigurationSection("").getKeys(false).size();
+				BroadCast.set(BCnumber+"", ChatColor.YELLOW+"[새로운 공지사항 설정 중]");
+				BroadCast.saveConfig();
+				player.closeInventory();
+				player.sendMessage(ChatColor.DARK_AQUA+"[공지] : 새로운 공지 사항을 입력 해 주세요!");
+				player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
+				ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
+						ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
+				ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
+						ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
+				UserData_Object u = new UserData_Object();
+				u.setType(player, "System");
+				u.setString(player, (byte)1, "NBM");
+				u.setInt(player, (byte)0, BCnumber);
+			}
+			else if(slot == 50)//다음 페이지
+				OPBoxGUI_BroadCast(player, (byte) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])));
+			else if(event.isShiftClick() == true && event.isRightClick() == true)
 			{
 				s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager BroadCast =YC.getNewConfig("BroadCast.yml");
 				int Acount =  BroadCast.getConfigurationSection("").getKeys(false).toArray().length-1;
-				int number = ((page*45)+event.getSlot());
+				int number = (((Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1)*45)+event.getSlot());
 				for(int counter = number;counter <Acount;counter++)
 					BroadCast.set(counter+"", BroadCast.get((counter+1)+""));
 				BroadCast.removeKey(Acount+"");
 				BroadCast.saveConfig();
-				OPBoxGUI_BroadCast(player, (byte) page);
+				OPBoxGUI_BroadCast(player, (byte) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1));
 			}
-			return;
 		}
 	}
 
@@ -881,22 +799,22 @@ public class OPbox_GUI extends Util_GUI
 		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 
-		switch (event.getSlot())
+		int slot = event.getSlot();
+		if(slot == 53)//나가기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_Setting(player);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		default:
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 45)//이전 목록
+				OPBoxGUI_Setting(player);
+			else
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				player.closeInventory();
 	
-				if(event.getSlot()>=9&&event.getSlot()<=13)
+				if(slot >=9 && slot <=13)
 				{
 					player.sendMessage(ChatColor.DARK_AQUA+"[System] : 새로운 "+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())+"을 입력 해 주세요!");
 					player.sendMessage(ChatColor.GOLD + "%enter%"+ChatColor.WHITE + " - 한줄 띄어 쓰기 -");
@@ -912,156 +830,122 @@ public class OPbox_GUI extends Util_GUI
 				u.setString(player, (byte)1, "CSN");
 				u.setString(player, (byte)2, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 			}
-			return;
 		}
 	}
 
 	public void OPBoxGUI_MoneyClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		UserData_Object u = new UserData_Object();
-
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager Config =YC.getNewConfig("config.yml");
-		if(event.getSlot()>=28&&event.getSlot()<=33)
-		{
-			switch(event.getSlot())
-			{
-				case 28:
-				{u.setInt(player, (byte)1,50); break;}
-				case 29:
-				{u.setInt(player, (byte)1,100); break;}
-				case 30:
-				{u.setInt(player, (byte)1,1000); break;}
-				case 31:
-				{u.setInt(player, (byte)1,10000); break;}
-				case 32:
-				{u.setInt(player, (byte)1,50000); break;}
-				case 33:
-				{u.setInt(player, (byte)1,-1);}
-			}
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			player.closeInventory();
-			player.sendMessage(ChatColor.DARK_AQUA+"[System] : 화폐 모양으로 설정할 아이템 ID를 입력 해 주세요!");
-			u.setType(player, "System");
-			u.setString(player, (byte)1, "CMID");
-		}
 		
-		switch (event.getSlot())
+		int slot = event.getSlot();
+		
+		if(slot == 45)//이전 목록
 		{
-			case 11:
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[System] : 최대 얼마까지만 드랍 가능하도록 할까요?");
-				player.sendMessage(ChatColor.GRAY + "(최소 1000(1천)원 이상, 최대 1000000000(1억)원 이하)");
-				u.setType(player, "System");
-				u.setString(player, (byte)1, "CDML");
-			}
-			return;
-			case 13:
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[System] : 새로운 화폐 단위를 입력 해 주세요!");
-				player.sendMessage(ChatColor.GRAY+"(띄어 쓰기 및 기호 사용 불가)");
-				u.setType(player, "System");
-				u.setString(player, (byte)1, "CSN");
-				u.setString(player, (byte)2, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-			}
-			return;
-
-			case 34: //화폐 모양 초기화
-			{
-				s.SP(player, Sound.ENTITY_IRONGOLEM_ATTACK, 0.8F, 1.0F);
-				player.sendMessage(ChatColor.DARK_AQUA+"[System] : 화폐 모양이 초기화 되었습니다!");
-
-				Config.set("Server.Money.1.ID",348);
-				Main_ServerOption.Money1ID = 348;
-				Config.set("Server.Money.2.ID",371);
-				Main_ServerOption.Money2ID = 371;
-				Config.set("Server.Money.3.ID",147);
-				Main_ServerOption.Money3ID = 147;
-				Config.set("Server.Money.4.ID",266);
-				Main_ServerOption.Money4ID = 266;
-				Config.set("Server.Money.5.ID",41);
-				Main_ServerOption.Money5ID = 41;
-				Config.set("Server.Money.6.ID",41);
-				Main_ServerOption.Money6ID = 41;
-				Config.set("Server.Money.1.DATA",0);
-				Main_ServerOption.Money1DATA = 0;
-				Config.set("Server.Money.2.DATA",0);
-				Main_ServerOption.Money2DATA = 0;
-				Config.set("Server.Money.3.DATA",0);
-				Main_ServerOption.Money3DATA = 0;
-				Config.set("Server.Money.4.DATA",0);
-				Main_ServerOption.Money4DATA = 0;
-				Config.set("Server.Money.5.DATA",0);
-				Main_ServerOption.Money5DATA = 0;
-				Config.set("Server.Money.6.DATA",0);
-				Main_ServerOption.Money6DATA = 0;
-
-				Config.saveConfig();
-				OPBoxGUI_Money(player);
-			}
-			return;
-		case 45://이전 목록
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			OPBoxGUI_Setting(player);
-			return;
-		case 53://나가기
+		}
+		else if(slot == 53)//나가기
+		{
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
 		}
+		else if(slot == 34)//화폐 모양 초기화
+		{
+			YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+			YamlManager Config =YC.getNewConfig("config.yml");
+			
+			s.SP(player, Sound.ENTITY_IRONGOLEM_ATTACK, 0.8F, 1.0F);
+			player.sendMessage(ChatColor.DARK_AQUA+"[System] : 화폐 모양이 초기화 되었습니다!");
+
+			Config.set("Server.Money.1.ID",348);
+			Main_ServerOption.Money1ID = 348;
+			Config.set("Server.Money.2.ID",371);
+			Main_ServerOption.Money2ID = 371;
+			Config.set("Server.Money.3.ID",147);
+			Main_ServerOption.Money3ID = 147;
+			Config.set("Server.Money.4.ID",266);
+			Main_ServerOption.Money4ID = 266;
+			Config.set("Server.Money.5.ID",41);
+			Main_ServerOption.Money5ID = 41;
+			Config.set("Server.Money.6.ID",41);
+			Main_ServerOption.Money6ID = 41;
+			Config.set("Server.Money.1.DATA",0);
+			Main_ServerOption.Money1DATA = 0;
+			Config.set("Server.Money.2.DATA",0);
+			Main_ServerOption.Money2DATA = 0;
+			Config.set("Server.Money.3.DATA",0);
+			Main_ServerOption.Money3DATA = 0;
+			Config.set("Server.Money.4.DATA",0);
+			Main_ServerOption.Money4DATA = 0;
+			Config.set("Server.Money.5.DATA",0);
+			Main_ServerOption.Money5DATA = 0;
+			Config.set("Server.Money.6.DATA",0);
+			Main_ServerOption.Money6DATA = 0;
+
+			Config.saveConfig();
+			OPBoxGUI_Money(player);
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			UserData_Object u = new UserData_Object();
+			u.setType(player, "System");
+			if(slot >= 28 && slot <= 33)
+			{
+				if(slot == 28)
+					u.setInt(player, (byte)1,50);
+				else if(slot == 29)
+					u.setInt(player, (byte)1,100);
+				else if(slot == 30)
+					u.setInt(player, (byte)1,1000);
+				else if(slot == 31)
+					u.setInt(player, (byte)1,10000);
+				else if(slot == 32)
+					u.setInt(player, (byte)1,50000);
+				else if(slot == 33)
+					u.setInt(player, (byte)1,-1);
+				player.sendMessage(ChatColor.DARK_AQUA+"[System] : 화폐 모양으로 설정할 아이템 ID를 입력 해 주세요!");
+				u.setString(player, (byte)1, "CMID");
+			}
+			else
+			{
+				if(slot == 11)
+				{
+					player.sendMessage(ChatColor.DARK_AQUA+"[System] : 최대 얼마까지만 드랍 가능하도록 할까요?");
+					player.sendMessage(ChatColor.GRAY + "(최소 1000(1천)원 이상, 최대 1000000000(1억)원 이하)");
+					u.setString(player, (byte)1, "CDML");
+				}
+				if(slot == 13)
+				{
+					player.sendMessage(ChatColor.DARK_AQUA+"[System] : 새로운 화폐 단위를 입력 해 주세요!");
+					player.sendMessage(ChatColor.GRAY+"(띄어 쓰기 및 기호 사용 불가)");
+					u.setString(player, (byte)1, "CSN");
+					u.setString(player, (byte)2, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+				}
+			}
+			player.closeInventory();
+		}
+		return;
 	}
 
 	public void OPBoxGUI_DeathClick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
 
-		UserData_Object u = new UserData_Object();
-		switch(event.getSlot())
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+
+		if(slot == 53)//나가기
 		{
-		case 10://가까운 마을에서 부활
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			u.setType(player, "System");
-			u.setString(player, (byte)1, "RO_S_H");
-			player.sendMessage(ChatColor.GREEN+"[부활] : 마지막 마을에서 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"생명력"+ChatColor.GREEN+"을 가지고 부활 하도록 하겠습니까?");
-			player.sendMessage(ChatColor.GRAY + "(최소 1 ~ 최대 100)");
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 12://제자리에서 부활
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			u.setType(player, "System");
-			u.setString(player, (byte)1, "RO_T_H");
-			player.sendMessage(ChatColor.GREEN+"[부활] : 제자리에서 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"생명력"+ChatColor.GREEN+"을 가지고 부활 하도록 하겠습니까?");
-			player.sendMessage(ChatColor.GRAY + "(최소 1 ~ 최대 100)");
-			player.closeInventory();
-			return;
-		case 14://도움 요청
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			u.setType(player, "System");
-			u.setString(player, (byte)1, "RO_H_H");
-			player.sendMessage(ChatColor.GREEN+"[부활] : 도움을 받아 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"생명력"+ChatColor.GREEN+"을 가지고 부활 하도록 하겠습니까?");
-			player.sendMessage(ChatColor.GRAY + "(최소 1 ~ 최대 100)");
-			player.closeInventory();
-			return;
-		case 16://아이템 사용
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			u.setType(player, "System");
-			u.setString(player, (byte)1, "RO_I_H");
-			player.sendMessage(ChatColor.GREEN+"[부활] : 아이템을 사용하여 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"생명력"+ChatColor.GREEN+"을 가지고 부활 하도록 하겠습니까?");
-			player.sendMessage(ChatColor.GRAY + "(최소 1 ~ 최대 100)");
-			player.closeInventory();
-			return;
-		case 19://사망 BGM
+			if(slot == 19)//사망 BGM
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 			  	YamlManager Config = YC.getNewConfig("config.yml");
 				if(Config.getInt("Death.Track")==-1||Config.contains("Death.Track")==false)
@@ -1072,11 +956,9 @@ public class OPbox_GUI extends Util_GUI
 					Config.saveConfig();
 					OPBoxGUI_Death(player);
 				}
-				return;
 			}
-		case 21://제자리 부활 옵션 켜기/끄기
+			else if(slot == 21)//제자리 부활 옵션 켜기/끄기
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 			  	YamlManager Config = YC.getNewConfig("config.yml");
 				if(Config.getBoolean("Death.DistrictDirectRevive"))
@@ -1086,18 +968,12 @@ public class OPbox_GUI extends Util_GUI
 				Config.saveConfig();
 				OPBoxGUI_Death(player);
 			}
-		return;
-		case 23://구조 아이템 설정
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_SettingRescueItem(player);
-			return;
-		case 25://부활 아이템 설정
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_SettingReviveItem(player);
-			return;
-		case 31://사망 시스템 온/오프
+			else if(slot == 23)//구조 아이템 설정
+				OPBoxGUI_SettingRescueItem(player);
+			else if(slot == 25)//부활 아이템 설정
+				OPBoxGUI_SettingReviveItem(player);
+			else if(slot == 31)//사망 시스템 온/오프
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 			  	YamlManager Config = YC.getNewConfig("config.yml");
 				if(Config.getBoolean("Death.SystemOn"))
@@ -1107,56 +983,71 @@ public class OPbox_GUI extends Util_GUI
 				Config.saveConfig();
 				OPBoxGUI_Death(player);
 			}
-			return;
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_Setting(player);
-			return;
-		case 53://나가기
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.closeInventory();
-			return;
+			else if(slot == 45)//이전 목록
+				OPBoxGUI_Setting(player);
+			else
+			{
+				UserData_Object u = new UserData_Object();
+				u.setType(player, "System");
+				if(slot == 10)//가까운 마을에서 부활
+				{
+					u.setString(player, (byte)1, "RO_S_H");
+					player.sendMessage(ChatColor.GREEN+"[부활] : 마지막 마을에서 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"생명력"+ChatColor.GREEN+"을 가지고 부활 하도록 하겠습니까?");
+				}
+				else if(slot == 12)//제자리에서 부활
+				{
+					u.setString(player, (byte)1, "RO_T_H");
+					player.sendMessage(ChatColor.GREEN+"[부활] : 제자리에서 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"생명력"+ChatColor.GREEN+"을 가지고 부활 하도록 하겠습니까?");
+				}
+				else if(slot == 14)//도움 요청
+				{
+					u.setString(player, (byte)1, "RO_H_H");
+					player.sendMessage(ChatColor.GREEN+"[부활] : 도움을 받아 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"생명력"+ChatColor.GREEN+"을 가지고 부활 하도록 하겠습니까?");
+				}
+				else if(slot == 16)//아이템 사용
+				{
+					u.setString(player, (byte)1, "RO_I_H");
+					player.sendMessage(ChatColor.GREEN+"[부활] : 아이템을 사용하여 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"생명력"+ChatColor.GREEN+"을 가지고 부활 하도록 하겠습니까?");
+				}
+				player.sendMessage(ChatColor.GRAY + "(최소 1 ~ 최대 100)");
+				player.closeInventory();
+			}
 		}
 	}
 
 	public void OPBoxGUI_RescueOrReviveClick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		int slot = event.getSlot();
 		Player player = (Player) event.getWhoClicked();
 		
-		switch(event.getSlot())
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+
+		if(event.getClickedInventory().getTitle().compareTo("container.inventory") != 0)
 		{
-		case 1:
-		case 2:
-		case 3:
-		case 5:
-		case 6:
-		case 7:
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			event.setCancelled(true);
-			return;
-		case 0://이전 목록
-			event.setCancelled(true);
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPBoxGUI_Death(player);
-			return;
-		case 8://나가기
-			event.setCancelled(true);
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.closeInventory();
-			return;
+			if(slot != 4)
+				event.setCancelled(true);
+			if(slot == 8)//나가기
+			{
+				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				player.closeInventory();
+			}
+			else
+			{
+				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				if(slot == 0)//이전 목록
+					OPBoxGUI_Death(player);
+			}
 		}
 	}
 	
 	
-	
-	public void OPBoxGUI_RescueOrReviveClose(InventoryCloseEvent event)
+	public void OPBoxGUI_RescueOrReviveClose(InventoryCloseEvent event, String SubjectCode)
 	{
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager Config =YC.getNewConfig("config.yml");
 		if(event.getInventory().getItem(4) != null)
 		{
-			if(event.getInventory().getTitle().contains("부활")==true)
+			if(SubjectCode.compareTo("06") == 0)//부활
 			{
 				Config.set("Death.ReviveItem", event.getInventory().getItem(4));
 				Main_ServerOption.DeathRevive = event.getInventory().getItem(4);
@@ -1169,7 +1060,7 @@ public class OPbox_GUI extends Util_GUI
 		}
 		else
 		{
-			if(event.getInventory().getTitle().contains("부활")==true)
+			if(SubjectCode.compareTo("06") == 0)//부활
 			{
 				Config.set("Death.ReviveItem", null);
 				Main_ServerOption.DeathRevive = null;
@@ -1180,7 +1071,7 @@ public class OPbox_GUI extends Util_GUI
 				Main_ServerOption.DeathRescue = null;
 			}
 		}
-		if(event.getInventory().getTitle().contains("부활")==true)
+		if(SubjectCode.compareTo("06") == 0)//부활
 			event.getPlayer().sendMessage(ChatColor.GREEN+"[SYSTEM] : 부활 아이템 설정이 완료되었습니다!");
 		else
 			event.getPlayer().sendMessage(ChatColor.GREEN+"[SYSTEM] : 구조 아이템 설정이 완료되었습니다!");

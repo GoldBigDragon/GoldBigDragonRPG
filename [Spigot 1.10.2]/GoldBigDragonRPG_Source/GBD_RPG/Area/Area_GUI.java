@@ -25,7 +25,8 @@ public class Area_GUI extends Util_GUI
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "전체 영역 목록 : " + (page+1));
+		String UniqueCode = "§0§0§2§0§0§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0전체 영역 목록 : " + (page+1));
 
 		Object[] AreaList= AreaConfig.getConfigurationSection("").getKeys(false).toArray();
 		
@@ -69,11 +70,12 @@ public class Area_GUI extends Util_GUI
 		return;
 	}
 	
-	public void AreaGUI_Main (Player player, String AreaName)
+	public void AreaSettingGUI (Player player, String AreaName)
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
-		Inventory inv = Bukkit.createInventory(null, 45, ChatColor.BLACK + "영역 설정");
+		String UniqueCode = "§0§0§2§0§1§r";
+		Inventory inv = Bukkit.createInventory(null, 45, UniqueCode + "§0영역 설정");
 
 		if(AreaConfig.getBoolean(AreaName+".BlockUse") == false)
 			Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[블록 사용]", 166,0,1,Arrays.asList("",ChatColor.RED + ""+ChatColor.BOLD+"[   거부   ]",""), 9, inv);
@@ -170,7 +172,8 @@ public class Area_GUI extends Util_GUI
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
 
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "영역 몬스터 스폰 룰 : " + (page+1));
+		String UniqueCode = "§0§0§2§0§2§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0영역 몬스터 스폰 룰 : " + (page+1));
 		if(AreaConfig.contains(AreaName+".MonsterSpawnRule")==false)
 		{
 			AreaConfig.createSection(AreaName+".MonsterSpawnRule");
@@ -219,8 +222,9 @@ public class Area_GUI extends Util_GUI
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
 		YamlManager MonsterConfig =YC.getNewConfig("Monster/MonsterList.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "영역 대체 몬스터 : " + (page+1));
+
+		String UniqueCode = "§0§0§2§0§3§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0영역 대체 몬스터 : " + (page+1));
 
 		Object[] MonsterNameList= AreaConfig.getConfigurationSection(AreaName+".Monster").getKeys(false).toArray();
 		
@@ -263,8 +267,9 @@ public class Area_GUI extends Util_GUI
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "영역 추가 어류");
+
+		String UniqueCode = "§1§0§2§0§4§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0영역 추가 어류");
 		
 		Stack2(ChatColor.GREEN + "" + ChatColor.BOLD + "[     54%     ]", 160,5,1,Arrays.asList(ChatColor.GRAY + "이 줄에는 54% 확률로 낚일 아이템을 올리세요."), 0, inv);
 		Stack2(ChatColor.YELLOW + "" + ChatColor.BOLD + "[     30%     ]", 160,4,1,Arrays.asList(ChatColor.GRAY + "이 줄에는 30% 확률로 낚일 아이템을 올리세요."), 9, inv);
@@ -298,8 +303,9 @@ public class Area_GUI extends Util_GUI
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
 		GBD_RPG.Main_Event.Main_Interact I = new GBD_RPG.Main_Event.Main_Interact();
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "영역 특산품 : " + (page+1));
+
+		String UniqueCode = "§0§0§2§0§5§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0영역 특산품 : " + (page+1));
 
 		Object[] BlockIdDataList= AreaConfig.getConfigurationSection(AreaName+".Mining").getKeys(false).toArray();
 		
@@ -329,8 +335,9 @@ public class Area_GUI extends Util_GUI
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "해당 블록을 캐면 나올 아이템");
+
+		String UniqueCode = "§1§0§2§0§6§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0해당 블록을 캐면 나올 아이템");
 
 		ItemStack item = AreaConfig.getItemStack(AreaName+".Mining."+ItemData+".100");
 		
@@ -410,7 +417,9 @@ public class Area_GUI extends Util_GUI
 		YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
 		YamlManager MobList = YC.getNewConfig("Monster/MonsterList.yml");
 		GBD_RPG.Battle.Battle_Calculator d = new GBD_RPG.Battle.Battle_Calculator();
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "영역 몬스터 선택 : " + (page+1));
+
+		String UniqueCode = "§0§0§2§0§7§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0영역 몬스터 선택 : " + (page+1));
 
 		Object[] a= MobList.getKeys().toArray();
 		Object[] MonsterNameList= AreaConfig.getConfigurationSection(AreaName+".Monster").getKeys(false).toArray();
@@ -515,7 +524,8 @@ public class Area_GUI extends Util_GUI
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager MobList = YC.getNewConfig("Monster/MonsterList.yml");
 		GBD_RPG.Battle.Battle_Calculator d = new GBD_RPG.Battle.Battle_Calculator();
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "영역 특수 몬스터  : " + (page+1));
+		String UniqueCode = "§0§0§2§0§8§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0영역 특수 몬스터  : " + (page+1));
 
 		Object[] a= MobList.getKeys().toArray();
 
@@ -602,7 +612,8 @@ public class Area_GUI extends Util_GUI
 
 	public void AreaMusicSettingGUI(Player player, int page,String AreaName)
 	{
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "영역 배경음 : " + (page+1));
+		String UniqueCode = "§0§0§2§0§9§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0영역 배경음 : " + (page+1));
 		byte loc=0;
 		byte model = (byte) new GBD_RPG.Util.Util_Number().RandomNum(0, 11);
 		for(int count = page*45; count < new OtherPlugins.NoteBlockAPIMain().Musics.size();count++)
@@ -645,151 +656,142 @@ public class Area_GUI extends Util_GUI
 	}
 	
 	
+	
 	public void AreaListGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		
-		String AreaName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
-
-		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+		int slot = event.getSlot();
 		
-		switch (event.getSlot())
+		if(slot == 53)//나가기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPbox_GUI OGUI = new OPbox_GUI();
-			OGUI.OPBoxGUI_Main(player, (byte) 2);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaListGUI(player, (short) (page-1));
-			return;
-		case 49://새 영역
+			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+			String AreaName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
+			
+			if(slot == 45)//이전 목록
+				new OPbox_GUI().OPBoxGUI_Main(player, (byte) 2);
+			else if(slot == 48)//이전 페이지
+				AreaListGUI(player, (short) (page-1));
+			else if(slot == 49)//영역 추가
 			{
 			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 				YamlManager Config = YC.getNewConfig("config.yml");
-				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 				player.closeInventory();
 				GBD_RPG.Main_Event.Main_Interact IT = new GBD_RPG.Main_Event.Main_Interact();
 				player.sendMessage(ChatColor.DARK_AQUA + "[영역] : " + IT.SetItemDefaultName((short) Config.getInt("Server.AreaSettingWand"),(byte)0) +ChatColor.DARK_AQUA+" 아이템으로 구역을 설정을 한 뒤,");
 				player.sendMessage(ChatColor.GOLD +""+ChatColor.BOLD+ " /영역 <영역이름> 생성 "+ChatColor.DARK_AQUA+"명령어를 입력해 주세요!");
 				s.SP((Player)player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			}
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaListGUI(player, (short) (page+1));
-			return;
-		default :
-			if(event.isLeftClick() == true)
+			else if(slot == 50)//다음 페이지
+				AreaListGUI(player, (short) (page+1));
+			else
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				AreaGUI_Main(player, AreaName);
+				if(event.isLeftClick() == true)
+					AreaSettingGUI(player, AreaName);
+				else if(event.isShiftClick() == true && event.isRightClick() == true)
+				{
+					s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+				  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+					YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
+					for(int count = 0; count < Main_ServerOption.AreaList.get(AreaConfig.getString(AreaName+".World")).size(); count++)
+						if(Main_ServerOption.AreaList.get(AreaConfig.getString(AreaName+".World")).get(count).getAreaName().compareTo(AreaName)==0)
+							Main_ServerOption.AreaList.get(AreaConfig.getString(AreaName+".World")).remove(count);
+					AreaConfig.removeKey(AreaName);
+					AreaConfig.saveConfig();
+					AreaListGUI(player, page);
+				}
 			}
-			else if(event.isShiftClick() == true && event.isRightClick() == true)
-			{
-				s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
-			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
-				for(int count = 0; count < Main_ServerOption.AreaList.get(AreaConfig.getString(AreaName+".World")).size(); count++)
-					if(Main_ServerOption.AreaList.get(AreaConfig.getString(AreaName+".World")).get(count).getAreaName().compareTo(AreaName)==0)
-						Main_ServerOption.AreaList.get(AreaConfig.getString(AreaName+".World")).remove(count);
-				AreaConfig.removeKey(AreaName);
-				AreaConfig.saveConfig();
-				AreaListGUI(player, page);
-			}
-			return;
 		}
 	}
 	
-	public void AreaGUIInventoryclick(InventoryClickEvent event)
+	public void AreaSettingGUIInventoryclick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
-		String AreaName = ChatColor.stripColor(event.getInventory().getItem(44).getItemMeta().getLore().get(1));
-
-		event.setCancelled(true);
-		
+		int slot = event.getSlot();
 		Player player = (Player) event.getWhoClicked();
 		
-		if(event.getSlot() == 44)//창닫기
+		if(slot == 44)//창닫기
 		{
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
 		}
-		s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-		
-		if(event.getSlot() == 36)//이전 목록
+		else
 		{
-			AreaListGUI(player,(short) 0);
-			return;
-		}
-		
-		switch (event.getSlot())
-		{
-		case 9://블록 사용
-			if(AreaConfig.getBoolean(AreaName+".BlockUse") == false)
-				AreaConfig.set(AreaName+".BlockUse", true);
-			else
-				AreaConfig.set(AreaName+".BlockUse", false);
-			break;
-		case 10://블록 설치
-			if(AreaConfig.getBoolean(AreaName+".BlockPlace") == false)
-				AreaConfig.set(AreaName+".BlockPlace", true);
-			else
-				AreaConfig.set(AreaName+".BlockPlace", false);
-			break;
-		case 11://블록 파괴
-			if(AreaConfig.getBoolean(AreaName+".BlockBreak") == false)
-				AreaConfig.set(AreaName+".BlockBreak", true);
-			else
-				AreaConfig.set(AreaName+".BlockBreak", false);
-			break;
-		case 12://PVP
-			if(AreaConfig.getBoolean(AreaName+".PVP") == false)
-				AreaConfig.set(AreaName+".PVP", true);
-			else
-				AreaConfig.set(AreaName+".PVP", false);
-			break;
-		case 13://몬스터 스폰
-			if(AreaConfig.getBoolean(AreaName+".MobSpawn") == false)
-				AreaConfig.set(AreaName+".MobSpawn", true);
-			else
-				AreaConfig.set(AreaName+".MobSpawn", false);
-			break;
-		case 14://입장 메시지
-			if(AreaConfig.getBoolean(AreaName+".Alert") == false)
-				AreaConfig.set(AreaName+".Alert", true);
-			else
-				AreaConfig.set(AreaName+".Alert", false);
-			break;
-		case 15://리스폰 장소
-			if(AreaConfig.getBoolean(AreaName+".SpawnPoint") == false)
-				AreaConfig.set(AreaName+".SpawnPoint", true);
-			else
-				AreaConfig.set(AreaName+".SpawnPoint", false);
-			break;
-		case 16://배경음 재생
-			if(AreaConfig.getBoolean(AreaName+".Music") == false)
-				AreaConfig.set(AreaName+".Music", true);
-			else
-				AreaConfig.set(AreaName+".Music", false);
-			break;
-		case 19://특산품 설정
-			AreaBlockSettingGUI(player, (short) 0, AreaName);
-			return;
-		case 20://낚시 아이템
-			AreaFishSettingGUI(player, AreaName);
-			return;
-		case 21://우선 순위 변경
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+		  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+			YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
+			String AreaName = ChatColor.stripColor(event.getInventory().getItem(44).getItemMeta().getLore().get(1));
+			if(slot == 36)//이전 화면
+				AreaListGUI(player,(short) 0);
+			else if(slot >= 9 && slot <= 16)
+			{
+				if(slot == 9)//블록 사용
+				{
+					if(AreaConfig.getBoolean(AreaName+".BlockUse") == false)
+						AreaConfig.set(AreaName+".BlockUse", true);
+					else
+						AreaConfig.set(AreaName+".BlockUse", false);
+				}
+				else if(slot == 10)//블록 설치
+				{
+					if(AreaConfig.getBoolean(AreaName+".BlockPlace") == false)
+						AreaConfig.set(AreaName+".BlockPlace", true);
+					else
+						AreaConfig.set(AreaName+".BlockPlace", false);
+				}
+				else if(slot == 11)//블록 파괴
+				{
+					if(AreaConfig.getBoolean(AreaName+".BlockBreak") == false)
+						AreaConfig.set(AreaName+".BlockBreak", true);
+					else
+						AreaConfig.set(AreaName+".BlockBreak", false);
+				}
+				else if(slot == 12)//PVP
+				{
+					if(AreaConfig.getBoolean(AreaName+".PVP") == false)
+						AreaConfig.set(AreaName+".PVP", true);
+					else
+						AreaConfig.set(AreaName+".PVP", false);
+				}
+				else if(slot == 13)//몬스터 스폰
+				{
+					if(AreaConfig.getBoolean(AreaName+".MobSpawn") == false)
+						AreaConfig.set(AreaName+".MobSpawn", true);
+					else
+						AreaConfig.set(AreaName+".MobSpawn", false);
+				}
+				else if(slot == 14)//입장 메시지
+				{
+					if(AreaConfig.getBoolean(AreaName+".Alert") == false)
+						AreaConfig.set(AreaName+".Alert", true);
+					else
+						AreaConfig.set(AreaName+".Alert", false);
+				}
+				else if(slot == 15)//리스폰 장소
+				{
+					if(AreaConfig.getBoolean(AreaName+".SpawnPoint") == false)
+						AreaConfig.set(AreaName+".SpawnPoint", true);
+					else
+						AreaConfig.set(AreaName+".SpawnPoint", false);
+				}
+				else if(slot == 16)//배경음 재생
+				{
+					if(AreaConfig.getBoolean(AreaName+".Music") == false)
+						AreaConfig.set(AreaName+".Music", true);
+					else
+						AreaConfig.set(AreaName+".Music", false);
+				}
+				AreaConfig.saveConfig();
+				AreaSettingGUI(player, AreaName);
+			}
+			else if(slot == 21)//우선 순위 변경
 			{
 				UserData_Object u = new UserData_Object();
 				player.closeInventory();
@@ -799,127 +801,127 @@ public class Area_GUI extends Util_GUI
 				player.sendMessage(ChatColor.GREEN + "[영역] : "+ChatColor.YELLOW+AreaName+ChatColor.GREEN+" 영역의 우선 순위를 입력하세요!");
 				player.sendMessage(ChatColor.GRAY + "(최소 0 ~ 최대 100)");
 			}
-			return;
-		case 25://영역 배경음 설정
-			if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
+			else if(slot == 23)//메시지 변경
 			{
-				OtherPlugins.NoteBlockAPIMain NBAPIM = new OtherPlugins.NoteBlockAPIMain();
-				if(NBAPIM.SoundList(player,true))
-					AreaMusicSettingGUI(player, 0, AreaName);
+				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				player.sendMessage(ChatColor.GOLD + "/영역 "+AreaName+" 이름 <문자열>" + ChatColor.YELLOW + "\n - "+AreaName+" 구역의 알림 메시지에 보일 이름을 정합니다.");
+				player.sendMessage(ChatColor.GOLD + "/영역 "+AreaName+" 설명 <문자열>" + ChatColor.YELLOW + "\n - "+AreaName+" 구역의 알림 메시지에 보일 부가 설명을 정합니다.");
+				player.sendMessage(ChatColor.GOLD + "%player%"+ChatColor.WHITE + " - 플레이어 지칭하기 -");
+				player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
+				ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
+						ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
+				ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
+						ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
+				player.closeInventory();
 			}
-			else
-				s.SP(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.9F);
-			return;
-		case 22://몬스터 설정
-			AreaMonsterSettingGUI(player,(short) 0, AreaName);
-			return;
-		case 31://몬스터 스폰 룰
-			AreaMonsterSpawnSettingGUI(player, (short) 0, AreaName);
-			return;
-		case 23://메시지 변경
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.sendMessage(ChatColor.GOLD + "/영역 "+AreaName+" 이름 <문자열>" + ChatColor.YELLOW + "\n - "+AreaName+" 구역의 알림 메시지에 보일 이름을 정합니다.");
-			player.sendMessage(ChatColor.GOLD + "/영역 "+AreaName+" 설명 <문자열>" + ChatColor.YELLOW + "\n - "+AreaName+" 구역의 알림 메시지에 보일 부가 설명을 정합니다.");
-			player.sendMessage(ChatColor.GOLD + "%player%"+ChatColor.WHITE + " - 플레이어 지칭하기 -");
-			player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
-			ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
-					ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
-			ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
-					ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
-			player.closeInventory();
-			return;
-		case 24://중심지 변경
-			AreaConfig.set(AreaName+".World", player.getLocation().getWorld().getName());
-			AreaConfig.set(AreaName+".SpawnLocation.X", player.getLocation().getX());
-			AreaConfig.set(AreaName+".SpawnLocation.Y", player.getLocation().getY());
-			AreaConfig.set(AreaName+".SpawnLocation.Z", player.getLocation().getZ());
-			AreaConfig.set(AreaName+".SpawnLocation.Pitch", player.getLocation().getPitch());
-			AreaConfig.set(AreaName+".SpawnLocation.Yaw", player.getLocation().getYaw());
-			break;
-		case 28://블록 리젠
-			if(AreaConfig.getInt(AreaName+".RegenBlock") == 0)
+			else if(slot == 24)//중심지 변경
+			{
+				AreaConfig.set(AreaName+".World", player.getLocation().getWorld().getName());
+				AreaConfig.set(AreaName+".SpawnLocation.X", player.getLocation().getX());
+				AreaConfig.set(AreaName+".SpawnLocation.Y", player.getLocation().getY());
+				AreaConfig.set(AreaName+".SpawnLocation.Z", player.getLocation().getZ());
+				AreaConfig.set(AreaName+".SpawnLocation.Pitch", player.getLocation().getPitch());
+				AreaConfig.set(AreaName+".SpawnLocation.Yaw", player.getLocation().getYaw());
+				AreaConfig.saveConfig();
+				AreaSettingGUI(player, AreaName);
+			}
+			else if(slot == 25)//영역 배경음 설정
+			{
+				if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
+				{
+					OtherPlugins.NoteBlockAPIMain NBAPIM = new OtherPlugins.NoteBlockAPIMain();
+					if(NBAPIM.SoundList(player,true))
+						AreaMusicSettingGUI(player, 0, AreaName);
+				}
+				else
+					s.SP(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.9F);
+			}
+			else if(slot == 28)//블록 리젠
+			{
+				if(AreaConfig.getInt(AreaName+".RegenBlock") == 0)
+				{
+					player.closeInventory();
+					UserData_Object u = new UserData_Object();
+					AreaConfig.set(AreaName+".RegenBlock", 1);
+					AreaConfig.saveConfig();
+					u.setType(player, "Area");
+					u.setString(player, (byte)2, "ARR");
+					u.setString(player, (byte)3, AreaName);
+					player.sendMessage(ChatColor.GREEN + "[영역] : "+ChatColor.YELLOW+AreaName+ChatColor.GREEN+" 영역의 블록 리젠 속도를 설정하세요!");
+					player.sendMessage(ChatColor.GRAY + "(최소 1초 ~ 최대 3600초(1시간))");
+				}
+				else
+				{
+					AreaConfig.set(AreaName+".RegenBlock", 0);
+					AreaConfig.saveConfig();
+					AreaSettingGUI(player, AreaName);
+				}
+			}
+			else if(slot == 19)//특산품 설정
+				AreaBlockSettingGUI(player, (short) 0, AreaName);
+			else if(slot == 20)//낚시 아이템
+				AreaFishSettingGUI(player, AreaName);
+			else if(slot == 22)//몬스터 설정
+				AreaMonsterSettingGUI(player,(short) 0, AreaName);
+			else if(slot == 31)//몬스터 스폰 룰
+				AreaMonsterSpawnSettingGUI(player, (short) 0, AreaName);
+			else if(slot == 40)//영역 이동
 			{
 				player.closeInventory();
-				UserData_Object u = new UserData_Object();
-				AreaConfig.set(AreaName+".RegenBlock", 1);
-				AreaConfig.saveConfig();
-				u.setType(player, "Area");
-				u.setString(player, (byte)2, "ARR");
-				u.setString(player, (byte)3, AreaName);
-				player.sendMessage(ChatColor.GREEN + "[영역] : "+ChatColor.YELLOW+AreaName+ChatColor.GREEN+" 영역의 블록 리젠 속도를 설정하세요!");
-				player.sendMessage(ChatColor.GRAY + "(최소 1초 ~ 최대 3600초(1시간))");
+				player.teleport(new Location(Bukkit.getWorld(AreaConfig.getString(AreaName+".World")),AreaConfig.getInt(AreaName+".SpawnLocation.X"), AreaConfig.getInt(AreaName+".SpawnLocation.Y"),AreaConfig.getInt(AreaName+".SpawnLocation.Z"),AreaConfig.getInt(AreaName+".SpawnLocation.Yaw"),AreaConfig.getInt(AreaName+".SpawnLocation.Pitch")));
 			}
-			else
-			{
-				AreaConfig.set(AreaName+".RegenBlock", 0);
-				AreaConfig.saveConfig();
-				AreaGUI_Main(player, AreaName);
-			}
-			return;
-		case 40://영역 이동
-			player.closeInventory();
-			player.teleport(new Location(Bukkit.getWorld(AreaConfig.getString(AreaName+".World")),AreaConfig.getInt(AreaName+".SpawnLocation.X"), AreaConfig.getInt(AreaName+".SpawnLocation.Y"),AreaConfig.getInt(AreaName+".SpawnLocation.Z"),AreaConfig.getInt(AreaName+".SpawnLocation.Yaw"),AreaConfig.getInt(AreaName+".SpawnLocation.Pitch")));
-			break;
 		}
-		AreaConfig.saveConfig();
-		AreaGUI_Main(player, AreaName);
 		return;
 	}
 
 	public void AreaMonsterSettingGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
 
-		String AreaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
-		String MonsterName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
-
-		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
-
-	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
-		switch (event.getSlot())
+		if(slot == 53)//창닫기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaGUI_Main(player, AreaName);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaMonsterSettingGUI(player, (short) (page-1), AreaName);
-			return;
-		case 49://몬스터 추가
-			YamlManager MonsterConfig =YC.getNewConfig("Monster/MonsterList.yml");
-			if(MonsterConfig.getConfigurationSection("").getKeys(false).size() == 0)
+			String AreaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+			if(slot == 45)//이전 화면
+				AreaSettingGUI(player, AreaName);
+			else if(slot == 48)//이전 페이지
+				AreaMonsterSettingGUI(player, (short) (page-1), AreaName);
+			else if(slot == 49)//몬스터 추가
 			{
-				s.SP(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1.0F, 1.8F);
-				player.sendMessage(ChatColor.RED + "[영역] : 현재 등록된 커스텀 몬스터가 존재하지 않습니다!");
-				player.sendMessage(ChatColor.GOLD+""+ChatColor.BOLD + "/몬스터 <이름> 생성 " + ChatColor.YELLOW +"해당 이름을 가진 몬스터를 생성합니다.");
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager MonsterConfig =YC.getNewConfig("Monster/MonsterList.yml");
+				if(MonsterConfig.getConfigurationSection("").getKeys(false).size() == 0)
+				{
+					s.SP(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1.0F, 1.8F);
+					player.sendMessage(ChatColor.RED + "[영역] : 현재 등록된 커스텀 몬스터가 존재하지 않습니다!");
+					player.sendMessage(ChatColor.GOLD+""+ChatColor.BOLD + "/몬스터 <이름> 생성 " + ChatColor.YELLOW +"해당 이름을 가진 몬스터를 생성합니다.");
+				}
+				else
+					AreaAddMonsterListGUI(player, page, AreaName);
 			}
+			else if(slot == 50)//다음 페이지
+				AreaMonsterSettingGUI(player, (short) (page+1),AreaName);
 			else
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				AreaAddMonsterListGUI(player, page, AreaName);
+				if(event.isShiftClick() == true && event.isRightClick() == true)
+				{
+				  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+					YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
+					String MonsterName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
+					s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+					AreaConfig.removeKey(AreaName+".Monster."+MonsterName);
+					AreaConfig.saveConfig();
+					AreaMonsterSettingGUI(player, page,AreaName);
+				}
 			}
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaMonsterSettingGUI(player, (short) (page+1),AreaName);
-			return;
-		default :
-			if(event.isShiftClick() == true && event.isRightClick() == true)
-			{
-				s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
-				AreaConfig.removeKey(AreaName+".Monster."+MonsterName);
-				AreaConfig.saveConfig();
-				AreaMonsterSettingGUI(player, page,AreaName);
-			}
-			return;
 		}
 	}
 
@@ -927,58 +929,44 @@ public class Area_GUI extends Util_GUI
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		Player player = (Player) event.getWhoClicked();
-
+		int slot = event.getSlot();
 		String AreaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
-
-		switch (event.getSlot())
+		if(slot == 0 || slot == 9 || slot == 18 || slot == 27 || slot == 36 || slot >= 45)
+			event.setCancelled(true);
+		if(slot == 53)//나가기
 		{
-		case 0:
-		case 9:
-		case 18:
-		case 27:
-		case 36:
-			event.setCancelled(true);
-			return;
-		case 45://이전 목록
-			event.setCancelled(true);
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaGUI_Main(player, AreaName);
-			return;
-		case 53://나가기
-			event.setCancelled(true);
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
+		}
+		else if(slot == 45)//이전 목록
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			AreaSettingGUI(player, AreaName);
 		}
 	}
 
 	public void AreaBlockSettingGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
 		
-		String AreaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
-		String BlockName = event.getCurrentItem().getTypeId()+":"+event.getCurrentItem().getData().getData();
-		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
-		
-		switch (event.getSlot())
+		if(slot == 53)//나가기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaGUI_Main(player, AreaName);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaBlockSettingGUI(player, (short) (page-1), AreaName);
-			return;
-		case 49://특산물 추가
+			String AreaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+			if(slot == 45)//이전 목록
+				AreaSettingGUI(player, AreaName);
+			else if(slot == 48)//이전 페이지
+				AreaBlockSettingGUI(player, (short) (page-1), AreaName);
+			else if(slot == 49)//특산물 추가
 			{
-				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 				player.closeInventory();
 				player.sendMessage(ChatColor.DARK_AQUA + "[영역] : 설정할 블록을 좌클릭 하세요!");
 
@@ -987,27 +975,23 @@ public class Area_GUI extends Util_GUI
 				u.setString(player, (byte)2, AreaName);
 				u.setString(player, (byte)3, "ANBI");
 			}
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaBlockSettingGUI(player, (short) (page+1), AreaName);
-			return;
-		default :
-			if(event.isShiftClick()==false&&event.isLeftClick()==true)
+			else if(slot == 50)//다음 페이지
+				AreaBlockSettingGUI(player, (short) (page+1), AreaName);
+			else
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				AreaBlockItemSettingGUI(player, AreaName, BlockName);
+				String BlockName = event.getCurrentItem().getTypeId()+":"+event.getCurrentItem().getData().getData();
+				if(event.isShiftClick()==false&&event.isLeftClick()==true)
+					AreaBlockItemSettingGUI(player, AreaName, BlockName);
+				else if(event.isShiftClick() == true && event.isRightClick() == true)
+				{
+					s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+				  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+					YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
+					AreaConfig.removeKey(AreaName+".Mining."+BlockName);
+					AreaConfig.saveConfig();
+					AreaBlockSettingGUI(player, page, AreaName);
+				}
 			}
-			if(event.isShiftClick() == true && event.isRightClick() == true)
-			{
-				s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
-			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
-				AreaConfig.removeKey(AreaName+".Mining."+BlockName);
-				AreaConfig.saveConfig();
-				AreaBlockSettingGUI(player, page, AreaName);
-			}
-			return;
 		}
 	}
 
@@ -1015,27 +999,22 @@ public class Area_GUI extends Util_GUI
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		Player player = (Player) event.getWhoClicked();
-		
+		int slot = event.getSlot();
 		String AreaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
-		if(event.getSlot()!=4&&event.getSlot()!=13&&event.getSlot()!=22
-			&&event.getSlot()!=31&&event.getSlot()!=40&&event.getSlot()!=49)
+
+		if(event.getClickedInventory().getTitle().compareTo("container.inventory") != 0)
 		{
-			switch(event.getSlot())
+			if(slot==4||slot==13||slot==22||slot==31||slot==40||slot==49)
+				event.setCancelled(false);
+			else if(slot == 53)//나가기
 			{
-			case 45://이전 목록
-				event.setCancelled(true);
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				AreaBlockSettingGUI(player, (short) 0, AreaName);
-				return;
-			case 53://나가기
-				event.setCancelled(true);
 				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 				player.closeInventory();
-				return;
-			default:
+			}
+			else if(slot == 45)//이전 목록
+			{
 				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				event.setCancelled(true);
-				return;
+				AreaBlockSettingGUI(player, (short) 0, AreaName);
 			}
 		}
 	}
@@ -1043,31 +1022,27 @@ public class Area_GUI extends Util_GUI
 	public void AreaAddMonsterSpawnRuleGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
-		String AreaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
-
-		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
+		int slot = event.getSlot();
 		
-		switch (event.getSlot())
+		if(slot == 53)//나가기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaGUI_Main(player, AreaName);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaMonsterSpawnSettingGUI(player, (short) (page-1), AreaName);
-			return;
-		case 49://룰 추가
+			int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
+			String AreaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+			if(slot == 45)//이전 목록
+				AreaSettingGUI(player, AreaName);
+			else if(slot == 48)//이전 페이지
+				AreaMonsterSpawnSettingGUI(player, (short) (page-1), AreaName);
+			else if(slot == 49)//룰 추가
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
 				long count = new GBD_RPG.Util.ETC().getNowUTC();
 				AreaConfig.set(AreaName+".MonsterSpawnRule."+count+".range", 1);
 				AreaConfig.set(AreaName+".MonsterSpawnRule."+count+".count", 4);
@@ -1082,14 +1057,12 @@ public class Area_GUI extends Util_GUI
 				player.sendMessage(ChatColor.GREEN+"[영역] : 몬스터가 스폰 될 위치를 마우스 우 클릭 하세요!");
 				player.closeInventory();
 			}
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaMonsterSpawnSettingGUI(player, (short) (page+1), AreaName);
-			return;
-		default :
-			if(event.isRightClick()&&event.isShiftClick())
+			else if(slot == 50)//다음 페이지
+				AreaMonsterSpawnSettingGUI(player, (short) (page+1), AreaName);
+			else if(event.isRightClick()&&event.isShiftClick())
 			{
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
 				s.SP(player, Sound.BLOCK_LAVA_POP, 1.0F, 1.0F);
 				AreaConfig.removeKey(AreaName+".MonsterSpawnRule."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 				AreaConfig.saveConfig();
@@ -1098,76 +1071,63 @@ public class Area_GUI extends Util_GUI
 		}
 	}
 	
-	
 	public void AreaAddMonsterListGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
 		
 		String AreaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
-
 		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 		
-		switch (event.getSlot())
+		if(slot == 53)//나가기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaMonsterSettingGUI(player, (short) 0, AreaName);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaAddMonsterListGUI(player, (short) (page-1), AreaName);
-			return;
-		case 49:
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaAddMonsterListGUI(player, (short) (page+1), AreaName);
-			return;
-		default :
-			String MobName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
-			s.SP(player, Sound.ENTITY_WOLF_AMBIENT, 0.8F, 1.0F);
-		  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-			YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
-			AreaConfig.createSection(AreaName+".Monster."+MobName);
-			AreaConfig.saveConfig();
-			AreaAddMonsterListGUI(player, page, AreaName);
-			return;
+			if(slot == 45)//이전 목록
+				AreaMonsterSettingGUI(player, (short) 0, AreaName);
+			else if(slot == 45)//이전 페이지
+				AreaAddMonsterListGUI(player, (short) (page-1), AreaName);
+			else if(slot == 50)//다음 페이지
+				AreaAddMonsterListGUI(player, (short) (page+1), AreaName);
+			else
+			{
+				String MobName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
+				s.SP(player, Sound.ENTITY_WOLF_AMBIENT, 0.8F, 1.0F);
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
+				AreaConfig.createSection(AreaName+".Monster."+MobName);
+				AreaConfig.saveConfig();
+				AreaAddMonsterListGUI(player, page, AreaName);
+			}
 		}
 	}
 
 	public void AreaSpawnSpecialMonsterListGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		
+		int slot = event.getSlot();
+
 		String AreaName = ChatColor.stripColor(event.getInventory().getItem(49).getItemMeta().getLore().get(3));
 		String RuleCounter = ChatColor.stripColor(event.getInventory().getItem(49).getItemMeta().getLore().get(4));
-
 		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
-		
-		switch (event.getSlot())
+		if(slot == 49)//나가기
 		{
-		case 49://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			AreaMonsterSpawnSettingGUI(player, (short) 0, AreaName);
 			new GBD_RPG.Area.Area_Main().AreaMonsterSpawnAdd(AreaName, RuleCounter);
-			return;
-		case 48://이전 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+		}
+		else if(slot == 48)//이전 페이지
 			AreaAddMonsterListGUI(player, (short) (page-1), AreaName);
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+		else if(slot == 50)//다음 페이지
 			AreaAddMonsterListGUI(player, (short) (page+1), AreaName);
-			return;
-		default :
+		else
+		{
 			String MobName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
 			s.SP(player, Sound.BLOCK_ANVIL_LAND, 0.8F, 1.0F);
 		  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
@@ -1177,86 +1137,64 @@ public class Area_GUI extends Util_GUI
 			AreaMonsterSpawnSettingGUI(player, (short) 0, AreaName);
 			
 			new GBD_RPG.Area.Area_Main().AreaMonsterSpawnAdd(AreaName, RuleCounter);
-			return;
 		}
 	}
 
 	public void AreaMusicSettingGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		
 		String AreaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
 
+		int slot = event.getSlot();
 		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
-		
-		if(AreaName.compareTo("DeathBGM¡")==0)
+
+		if(slot == 53)//나가기
 		{
-			switch (event.getSlot())
-			{
-			case 45://이전 목록
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				new GBD_RPG.Admin.OPbox_GUI().OPBoxGUI_Death(player);
-				return;
-			case 53://나가기
-				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-				player.closeInventory();
-				return;
-			case 48://이전 페이지
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				AreaMusicSettingGUI(player, page-1,AreaName);
-				return;
-			case 50://다음 페이지
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				AreaMusicSettingGUI(player, page+1,AreaName);
-				return;
-			default :
-				if(event.isLeftClick())
-				{
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-					YamlManager Config =YC.getNewConfig("config.yml");
-					Config.set("Death.Track", Integer.parseInt(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())));
-					Config.saveConfig();
-					new GBD_RPG.Admin.OPbox_GUI().OPBoxGUI_Death(player);
-				}
-				return;
-			}
-		}
-		
-		switch (event.getSlot())
-		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaGUI_Main(player, AreaName);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
+		}
+		else if(AreaName.compareTo("DeathBGM¡")==0)
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaMusicSettingGUI(player, page-1,AreaName);
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AreaMusicSettingGUI(player, page+1,AreaName);
-			return;
-		default :
-			if(event.isLeftClick())
+			if(slot == 45)
+				new GBD_RPG.Admin.OPbox_GUI().OPBoxGUI_Death(player);
+			else if(slot == 48)
+				AreaMusicSettingGUI(player, page-1,AreaName);
+			else if(slot == 50)
+				AreaMusicSettingGUI(player, page+1,AreaName);
+			else
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager Config =YC.getNewConfig("config.yml");
+				Config.set("Death.Track", Integer.parseInt(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())));
+				Config.saveConfig();
+				new GBD_RPG.Admin.OPbox_GUI().OPBoxGUI_Death(player);
+			}
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 45)//이전 목록
+				AreaSettingGUI(player, AreaName);
+			else if(slot == 48)//이전 페이지
+				AreaMusicSettingGUI(player, page-1,AreaName);
+			else if(slot == 50)//다음 페이지
+				AreaMusicSettingGUI(player, page+1,AreaName);
+			else
+			{
 			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 				YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
 				AreaConfig.set(AreaName+".BGM", Integer.parseInt(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())));
 				AreaConfig.saveConfig();
-				AreaGUI_Main(player, AreaName);
+				AreaSettingGUI(player, AreaName);
 			}
-			return;
 		}
 	}
 
+	
+	
 	public void FishingSettingInventoryClose(InventoryCloseEvent event)
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);

@@ -22,7 +22,8 @@ public class Gamble_GUI extends Util_GUI
 {
 	public void GambleMainGUI(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 45, ChatColor.BLACK + "도박 메인");
+		String UniqueCode = "§0§0§1§0§c§r";
+		Inventory inv = Bukkit.createInventory(null, 45, UniqueCode + "§0도박 메인");
 
 		Stack2(ChatColor.WHITE + "상품 관리", 54,0,1,Arrays.asList(ChatColor.GRAY + "상품 패키지를 만들거나",ChatColor.GRAY + "삭제/확인 합니다."), 10, inv);
 		
@@ -36,35 +37,33 @@ public class Gamble_GUI extends Util_GUI
 	
 	public void GambleMainGUI_Click(InventoryClickEvent event)
 	{
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
+
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		switch (event.getSlot())
+		
+		if(slot == 44)//나가기
 		{
-		case 36://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPbox_GUI OPGUI = new OPbox_GUI();
-			OPGUI.OPBoxGUI_Main(player, (byte) 3);
-			return;
-		case 44://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 10 ://상품 관리
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			GamblePresentGUI(player, (short)0, (byte)0, (short)-1, null);
-			break;
-		case 12 ://슬롯 머신
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			SlotMachine_MainGUI(player,0);
-			break;
+			if(slot == 36)//이전 목록
+				new OPbox_GUI().OPBoxGUI_Main(player, (byte) 3);
+			else if(slot == 10)//상품 관리
+				GamblePresentGUI(player, (short)0, (byte)0, (short)-1, null);
+			else if(slot == 12)//슬롯 머신
+				SlotMachine_MainGUI(player,0);
 		}
 	}
 	
 	
 	public void GamblePresentGUI(Player player, short page, byte isChoose, short DetailChoose, String DeDetailChoose)
 	{
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "도박 상품 목록 : "+(page+1));
+		String UniqueCode = "§0§0§1§0§d§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0도박 상품 목록 : "+(page+1));
 
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager PresentList  = YC.getNewConfig("Item/GamblePresent.yml");
@@ -101,83 +100,85 @@ public class Gamble_GUI extends Util_GUI
 	
 	public void GamblePresentGUI_Click(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-
-		short page =  (short) (Short.parseShort(ChatColor.stripColor(event.getInventory().getTitle().split(" : ")[1]))-1);
-		byte isChoose = Byte.parseByte(ChatColor.stripColor(event.getInventory().getItem(45).getItemMeta().getLore().get(1)));
-		short DetailChoose = Short.parseShort(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
-		String DeDetailChoose = ChatColor.stripColor(event.getInventory().getItem(49).getItemMeta().getLore().get(1));
-		switch (event.getSlot())
+		int slot = event.getSlot();
+		
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		
+		if(slot == 53)//나가기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if(isChoose==0)
-				GambleMainGUI(player);
-			else if(isChoose==1)//슬롯 머신의 상품 선택
-				SlotMachine_DetailGUI(player, DeDetailChoose);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			GamblePresentGUI(player, (short) (page-1),isChoose,DetailChoose,DeDetailChoose);
-			return;
-		case 49://새 패키지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if(isChoose==1)//슬롯 머신의 상품 선택
+
+			short page =  (short) (Short.parseShort(ChatColor.stripColor(event.getInventory().getTitle().split(" : ")[1]))-1);
+			byte isChoose = Byte.parseByte(ChatColor.stripColor(event.getInventory().getItem(45).getItemMeta().getLore().get(1)));
+			short DetailChoose = Short.parseShort(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
+			String DeDetailChoose = ChatColor.stripColor(event.getInventory().getItem(49).getItemMeta().getLore().get(1));
+			
+			if(slot == 45)//이전 목록
 			{
-			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				YamlManager GambleConfig =YC.getNewConfig("ETC/SlotMachine.yml");
-				GambleConfig.set(DeDetailChoose+"."+DetailChoose, "null");
-				GambleConfig.saveConfig();
-				SlotMachine_DetailGUI(player, DeDetailChoose);
-				return;
+				if(isChoose==0)
+					GambleMainGUI(player);
+				else if(isChoose==1)//슬롯 머신의 상품 선택
+					SlotMachine_DetailGUI(player, DeDetailChoose);
 			}
-			UserData_Object u = new UserData_Object();
-			player.closeInventory();
-			u.setType(player, "Gamble");
-			u.setString(player, (byte)0, "NP");
-			player.sendMessage(ChatColor.GREEN + "[도박] : 상품 이름을 설정해 주세요!");
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			GamblePresentGUI(player, (short) (page+1),isChoose,DetailChoose,DeDetailChoose);
-			return;
-		default :
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if(isChoose==0)
+			else if(slot == 48)//이전 페이지
+				GamblePresentGUI(player, (short) (page-1),isChoose,DetailChoose,DeDetailChoose);
+			else if(slot == 49)//새 패키지
 			{
-				if(event.isLeftClick() == true&&event.isShiftClick()==false)
-					GambleDetailViewPackageGUI(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-				else if(event.isRightClick()==true&&event.isShiftClick()==true)
+				if(isChoose==1)//슬롯 머신의 상품 선택
 				{
 				  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-					YamlManager PresentList = YC.getNewConfig("Item/GamblePresent.yml");
-					PresentList.removeKey(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-					PresentList.saveConfig();
-					GamblePresentGUI(player, page,isChoose,DetailChoose,DeDetailChoose);
+					YamlManager GambleConfig =YC.getNewConfig("ETC/SlotMachine.yml");
+					GambleConfig.set(DeDetailChoose+"."+DetailChoose, "null");
+					GambleConfig.saveConfig();
+					SlotMachine_DetailGUI(player, DeDetailChoose);
+					return;
+				}
+				UserData_Object u = new UserData_Object();
+				player.closeInventory();
+				u.setType(player, "Gamble");
+				u.setString(player, (byte)0, "NP");
+				player.sendMessage(ChatColor.GREEN + "[도박] : 상품 이름을 설정해 주세요!");
+			}
+			else if(slot == 50)//다음 페이지
+				GamblePresentGUI(player, (short) (page+1),isChoose,DetailChoose,DeDetailChoose);
+			else
+			{
+				if(isChoose==0)
+				{
+					if(event.isLeftClick() == true&&event.isShiftClick()==false)
+						GambleDetailViewPackageGUI(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+					else if(event.isRightClick()==true&&event.isShiftClick()==true)
+					{
+					  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+						YamlManager PresentList = YC.getNewConfig("Item/GamblePresent.yml");
+						PresentList.removeKey(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+						PresentList.saveConfig();
+						GamblePresentGUI(player, page,isChoose,DetailChoose,DeDetailChoose);
+					}
+				}
+				else if(isChoose==1)//슬롯 머신의 상품 선택
+				{
+				  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+					YamlManager GambleConfig =YC.getNewConfig("ETC/SlotMachine.yml");
+					GambleConfig.set(DeDetailChoose+"."+DetailChoose, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+					GambleConfig.saveConfig();
+					SlotMachine_DetailGUI(player, DeDetailChoose);
 				}
 			}
-			else if(isChoose==1)//슬롯 머신의 상품 선택
-			{
-			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				YamlManager GambleConfig =YC.getNewConfig("ETC/SlotMachine.yml");
-				GambleConfig.set(DeDetailChoose+"."+DetailChoose, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-				GambleConfig.saveConfig();
-				SlotMachine_DetailGUI(player, DeDetailChoose);
-			}
-			return;
 		}
 	}
 	
 	
 	public void GambleDetailViewPackageGUI(Player player, String Package)
 	{
-		Inventory inv = Bukkit.createInventory(null, 36, ChatColor.BLACK + "도박 상품 정보");
+		String UniqueCode = "§1§0§1§0§e§r";
+		Inventory inv = Bukkit.createInventory(null, 36, UniqueCode + "§0도박 상품 정보");
 
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager PresentList  = YC.getNewConfig("Item/GamblePresent.yml");
@@ -209,66 +210,68 @@ public class Gamble_GUI extends Util_GUI
 
 	public void GambleDetailViewPackageGUI_Click(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		if(event.getSlot()>=27)
-			event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		String Package = ChatColor.stripColor(event.getInventory().getItem(27).getItemMeta().getLore().get(1));
-		switch (event.getSlot())
+		int slot = event.getSlot();
+		
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		
+		if(slot >= 27)
+			event.setCancelled(true);
+		if(slot == 35)//나가기
 		{
-		case 27://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			GamblePresentGUI(player,(byte)0,(byte)0,(short)0,null);
-			return;
-		case 35://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 31://등급 변경
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-		  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-			YamlManager PresentList  = YC.getNewConfig("Item/GamblePresent.yml");
-			String Grade = PresentList.getString(Package+".Grade");
-			String MaximumGrade = ChatColor.DARK_RED+""+ChatColor.BOLD+"["+ChatColor.GOLD+""+ChatColor.BOLD+"초"+ChatColor.DARK_GREEN+""+ChatColor.BOLD+"월"+ChatColor.DARK_BLUE+""+ChatColor.BOLD+"]";
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if(Grade.compareTo(ChatColor.WHITE+"[일반]")==0)
-				PresentList.set(Package+".Grade",ChatColor.GREEN+"[상급]");
-			else if(Grade.compareTo(ChatColor.GREEN+"[상급]")==0)
-				PresentList.set(Package+".Grade",ChatColor.BLUE+"[매직]");
-			else if(Grade.compareTo(ChatColor.BLUE+"[매직]")==0)
-				PresentList.set(Package+".Grade",ChatColor.YELLOW+"[레어]");
-			else if(Grade.compareTo(ChatColor.YELLOW+"[레어]")==0)
-				PresentList.set(Package+".Grade",ChatColor.DARK_PURPLE+"[에픽]");
-			else if(Grade.compareTo(ChatColor.DARK_PURPLE+"[에픽]")==0)
-				PresentList.set(Package+".Grade",ChatColor.GOLD+"[전설]");
-			else if(Grade.compareTo(ChatColor.GOLD+"[전설]")==0)
-				PresentList.set(Package+".Grade",MaximumGrade);
-			else if(Grade.compareTo(MaximumGrade)==0)
-				PresentList.set(Package+".Grade",ChatColor.GRAY+"[하급]");
-			else if(Grade.compareTo(ChatColor.GRAY+"[하급]")==0)
-				PresentList.set(Package+".Grade",ChatColor.WHITE+"[일반]");
-			else
-				PresentList.set(Package+".Grade",ChatColor.WHITE+"[일반]");
-			PresentList.saveConfig();
-			Grade = PresentList.getString(Package+".Grade");
-			ItemStack item[] = new ItemStack[27];
-			byte itemcount=0;
-			for(int count=0; count < 27; count++)
+			if(slot == 27)//이전 목록
+				GamblePresentGUI(player,(byte)0,(byte)0,(short)0,null);
+			else if(slot == 31)//등급 변경
 			{
-				if(event.getInventory().getItem(count)!=null)
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager PresentList  = YC.getNewConfig("Item/GamblePresent.yml");
+				String Package = ChatColor.stripColor(event.getInventory().getItem(27).getItemMeta().getLore().get(1));
+				String Grade = PresentList.getString(Package+".Grade");
+				String MaximumGrade = ChatColor.DARK_RED+""+ChatColor.BOLD+"["+ChatColor.GOLD+""+ChatColor.BOLD+"초"+ChatColor.DARK_GREEN+""+ChatColor.BOLD+"월"+ChatColor.DARK_BLUE+""+ChatColor.BOLD+"]";
+				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				if(Grade.compareTo(ChatColor.WHITE+"[일반]")==0)
+					PresentList.set(Package+".Grade",ChatColor.GREEN+"[상급]");
+				else if(Grade.compareTo(ChatColor.GREEN+"[상급]")==0)
+					PresentList.set(Package+".Grade",ChatColor.BLUE+"[매직]");
+				else if(Grade.compareTo(ChatColor.BLUE+"[매직]")==0)
+					PresentList.set(Package+".Grade",ChatColor.YELLOW+"[레어]");
+				else if(Grade.compareTo(ChatColor.YELLOW+"[레어]")==0)
+					PresentList.set(Package+".Grade",ChatColor.DARK_PURPLE+"[에픽]");
+				else if(Grade.compareTo(ChatColor.DARK_PURPLE+"[에픽]")==0)
+					PresentList.set(Package+".Grade",ChatColor.GOLD+"[전설]");
+				else if(Grade.compareTo(ChatColor.GOLD+"[전설]")==0)
+					PresentList.set(Package+".Grade",MaximumGrade);
+				else if(Grade.compareTo(MaximumGrade)==0)
+					PresentList.set(Package+".Grade",ChatColor.GRAY+"[하급]");
+				else if(Grade.compareTo(ChatColor.GRAY+"[하급]")==0)
+					PresentList.set(Package+".Grade",ChatColor.WHITE+"[일반]");
+				else
+					PresentList.set(Package+".Grade",ChatColor.WHITE+"[일반]");
+				PresentList.saveConfig();
+				Grade = PresentList.getString(Package+".Grade");
+				ItemStack item[] = new ItemStack[27];
+				byte itemcount=0;
+				for(int count=0; count < 27; count++)
 				{
-					item[itemcount] = event.getInventory().getItem(count);
-					itemcount++;
+					if(event.getInventory().getItem(count)!=null)
+					{
+						item[itemcount] = event.getInventory().getItem(count);
+						itemcount++;
+					}
 				}
+				PresentList.removeKey(Package+".Present");
+				PresentList.saveConfig();
+				for(byte count=0; count<itemcount;count++)
+					PresentList.set(Package+".Present."+count,item[count]);
+				PresentList.saveConfig();
+				GambleDetailViewPackageGUI(player, Package);
 			}
-			PresentList.removeKey(Package+".Present");
-			PresentList.saveConfig();
-			for(byte count=0; count<itemcount;count++)
-				PresentList.set(Package+".Present."+count,item[count]);
-			PresentList.saveConfig();
-			
-			GambleDetailViewPackageGUI(player, Package);
-			return;
 		}
 	}
 	
@@ -298,7 +301,8 @@ public class Gamble_GUI extends Util_GUI
 	
 	public void SlotMachine_MainGUI(Player player, int page)
 	{
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "도박 기계 목록 : "+(page+1));
+		String UniqueCode = "§0§0§1§0§f§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0도박 기계 목록 : "+(page+1));
 
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager SlotMachineList  = YC.getNewConfig("ETC/SlotMachine.yml");
@@ -331,59 +335,55 @@ public class Gamble_GUI extends Util_GUI
 
 	public void SlotMachine_MainGUI_Click(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-
+		int slot = event.getSlot();
 		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 
-		switch (event.getSlot())
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		
+		if(slot == 53)//나가기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			GambleMainGUI(player);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			SlotMachine_MainGUI(player, page-1);
-			return;
-		case 49://새 슬롯 머신
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-
-			UserData_Object u = new UserData_Object();
-			player.closeInventory();
-			u.setType(player, "Gamble");
-			u.setString(player, (byte)0, "NSM");
-			player.sendMessage(ChatColor.GREEN + "[도박] : 슬롯 머신을 등록 할 블록을 우클릭 해 주세요!");
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			SlotMachine_MainGUI(player, page+1);
-			return;
-		default :
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if(event.isLeftClick() == true&&event.isShiftClick()==false)
-				SlotMachine_DetailGUI(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-			else if(event.isRightClick()==true&&event.isShiftClick()==true)
+			if(slot == 45)//이전목록
+				GambleMainGUI(player);
+			else if(slot == 48)//이전 페이지
+				SlotMachine_MainGUI(player, page-1);
+			else if(slot == 49)//새 슬롯 머신
 			{
-			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				YamlManager PresentList = YC.getNewConfig("ETC/SlotMachine.yml");
-				PresentList.removeKey(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-				PresentList.saveConfig();
-				SlotMachine_MainGUI(player, page);
+				UserData_Object u = new UserData_Object();
+				player.closeInventory();
+				u.setType(player, "Gamble");
+				u.setString(player, (byte)0, "NSM");
+				player.sendMessage(ChatColor.GREEN + "[도박] : 슬롯 머신을 등록 할 블록을 우클릭 해 주세요!");
 			}
-			return;
+			else if(slot == 50)//다음 페이지
+				SlotMachine_MainGUI(player, page+1);
+			else
+			{
+				if(event.isLeftClick() == true&&event.isShiftClick()==false)
+					SlotMachine_DetailGUI(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+				else if(event.isRightClick()==true&&event.isShiftClick()==true)
+				{
+				  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+					YamlManager PresentList = YC.getNewConfig("ETC/SlotMachine.yml");
+					PresentList.removeKey(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+					PresentList.saveConfig();
+					SlotMachine_MainGUI(player, page);
+				}
+			}
 		}
 	}
 	
 	
 	public void SlotMachine_DetailGUI(Player player, String MachineNumber)
 	{
-		Inventory inv = Bukkit.createInventory(null, 36, ChatColor.BLACK + "도박 기계 설정 ");
+		String UniqueCode = "§0§0§1§1§0§r";
+		Inventory inv = Bukkit.createInventory(null, 36, UniqueCode + "§0도박 기계 설정 ");
 
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager GambleConfig =YC.getNewConfig("ETC/SlotMachine.yml");
@@ -440,49 +440,34 @@ public class Gamble_GUI extends Util_GUI
 	
 	public void SlotMachine_DetailGUI_Click(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-
 		String MachineNumber =  ChatColor.stripColor(event.getInventory().getItem(27).getItemMeta().getLore().get(1));
+		int slot = event.getSlot();
+		
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 
-		switch (event.getSlot())
+		if(slot == 35)//나가기
 		{
-		case 0://각 상품들
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-		case 6:
-		case 9:
-		case 10:
-		case 11:
-		case 12:
-		case 13:
-		case 14:
-		case 15:
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			GamblePresentGUI(player, (byte)0, (byte)1, (short)event.getSlot(),MachineNumber);
-			return;
-		case 8:
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			SlotMachineCoinGUI(player, MachineNumber);
-			return;
-		case 27://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			SlotMachine_MainGUI(player,0);
-			return;
-		case 35://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot <= 6 || (slot >= 9 && slot <= 15))//각 확률별 보상 설정
+				GamblePresentGUI(player, (byte)0, (byte)1, (short)event.getSlot(),MachineNumber);
+			else if(slot == 8)//코인 설정
+				SlotMachineCoinGUI(player, MachineNumber);
+			else if(slot == 27)//이전 목록
+				SlotMachine_MainGUI(player,0);
 		}
 	}
 
+	
 	public void SlotMachineCoinGUI(Player player, String MachineNumber)
 	{
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.BLACK + "도박 기계 코인");
+		String UniqueCode = "§1§0§1§1§1§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0도박 기계 코인");
 
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager GambleConfig =YC.getNewConfig("ETC/SlotMachine.yml");
@@ -504,21 +489,26 @@ public class Gamble_GUI extends Util_GUI
 	
 	public void SlotMachineCoinGUI_Click(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		if(event.getSlot()!=4)
-			event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
 		String MachineNumber = ChatColor.stripColor(event.getInventory().getItem(0).getItemMeta().getLore().get(1));
-		switch (event.getSlot())
+		
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+
+		if(event.getClickedInventory().getTitle().compareTo("container.inventory") != 0)
 		{
-		case 0://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			SlotMachine_DetailGUI(player, MachineNumber);
-			return;
-		case 8://나가기
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.closeInventory();
-			return;
+			if(slot!=4)
+				event.setCancelled(true);
+			if(slot == 0)
+			{
+				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SlotMachine_DetailGUI(player, MachineNumber);
+			}
+			else if(slot == 8)
+			{
+				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				player.closeInventory();
+			}
 		}
 	}
 
@@ -539,7 +529,8 @@ public class Gamble_GUI extends Util_GUI
 	
 	public void SlotMachine_PlayGUI(Player player, String MachineNumber)
 	{
-		Inventory inv = Bukkit.createInventory(null, 27, ChatColor.BLACK + "슬롯 머신");
+		String UniqueCode = "§0§0§1§1§2§r";
+		Inventory inv = Bukkit.createInventory(null, 27, UniqueCode + "§0슬롯 머신");
 
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager GambleConfig =YC.getNewConfig("ETC/SlotMachine.yml");
@@ -598,7 +589,6 @@ public class Gamble_GUI extends Util_GUI
 
 	public void SlotMachine_PlayGUI_Click(InventoryClickEvent event)
 	{
-		event.setCancelled(true);
 		if(event.getSlot()==15)
 		{
 			GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
@@ -707,11 +697,12 @@ public class Gamble_GUI extends Util_GUI
 
 	public void SlotMachine_RollingGUI(String player, short[] itemID, boolean fin, String MachineNumber)
 	{
+		String UniqueCode = "§1§0§1§1§3§r";
 		if(Bukkit.getServer().getPlayer(player)!=null)
 		{
 			if(Bukkit.getServer().getPlayer(player).isOnline())
 			{
-				Inventory inv = Bukkit.createInventory(null, 27, ChatColor.BLACK + "슬롯 머신");
+				Inventory inv = Bukkit.createInventory(null, 27, UniqueCode + "§0슬롯 머신");
 				if(fin)
 				{
 				  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);

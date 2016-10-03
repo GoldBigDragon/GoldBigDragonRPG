@@ -31,7 +31,7 @@ public class CustomItem_Chat extends Util_Chat
 		String Message = ChatColor.stripColor(event.getMessage());
 		if(u.getInt(player, (byte)3)!=-1)
 			number = u.getInt(player, (byte)3);
-		if(ItemList.getString(number+"")==null)
+		if(ItemList.getString(number+"")==null&&u.getType(player).compareTo("Upgrade")!=0)
 		{
 			player.sendMessage(ChatColor.RED+"[SYSTEM] : 다른 OP가 아이템을 삭제하여 반영되지 않았습니다!");
 			return;

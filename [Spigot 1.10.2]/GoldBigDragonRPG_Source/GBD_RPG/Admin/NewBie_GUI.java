@@ -20,7 +20,8 @@ public class NewBie_GUI extends Util_GUI
 {
 	public void NewBieGUIMain(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.BLACK + "초심자 옵션");
+		String UniqueCode = "§0§0§1§1§7§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0초심자 옵션");
 
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager NewBieYM = YC.getNewConfig("ETC/NewBie.yml");
@@ -38,10 +39,11 @@ public class NewBie_GUI extends Util_GUI
 	
 	public void NewBieSupportItemGUI(Player player)
 	{
+		String UniqueCode = "§1§0§1§1§8§r";
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager NewBieYM = YC.getNewConfig("ETC/NewBie.yml");
 		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "초심자 지원");
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0초심자 지원");
 
 		Object[] a= NewBieYM.getConfigurationSection("SupportItem").getKeys(false).toArray();
 
@@ -69,10 +71,11 @@ public class NewBie_GUI extends Util_GUI
 	
 	public void NewBieQuestGUI(Player player, short page)
 	{
+		String UniqueCode = "§0§0§1§1§9§r";
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
 		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "초심자 기본퀘 선택 : " + (page+1));
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0초심자 기본퀘 선택 : " + (page+1));
 
 		Object[] a = QuestList.getKeys().toArray();
 		
@@ -124,8 +127,9 @@ public class NewBie_GUI extends Util_GUI
 			NewBieYM.createSection("Guide");
 			NewBieYM.saveConfig();
 		}
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "초심자 가이드");
+
+		String UniqueCode = "§1§0§1§1§a§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0초심자 가이드");
 
 		Object[] a= NewBieYM.getConfigurationSection("Guide").getKeys(false).toArray();
 
@@ -154,157 +158,143 @@ public class NewBie_GUI extends Util_GUI
 	
 	public void NewBieGUIMainInventoryclick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		Player player = (Player) event.getWhoClicked();
-		event.setCancelled(true);
-		switch (event.getSlot())
+		int slot = event.getSlot();
+		
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		if(slot == 8)//닫기
 		{
-		case 0:
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			GBD_RPG.Admin.OPbox_GUI OGUI = new GBD_RPG.Admin.OPbox_GUI();
-			OGUI.OPBoxGUI_Main(player, (byte) 2);
-			return;
-		case 2://기본 아이템
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			NewBieSupportItemGUI(player);
-			return;
-		case 3: //기본 퀘스트
-			if(event.isLeftClick())
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				NewBieQuestGUI(player, (short) 0);
-			}
-			else if(event.isRightClick()&&event.isShiftClick())
-			{
-				s.SP(player, Sound.BLOCK_LAVA_POP, 1.0F, 1.0F);
-				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				YamlManager NewBieYM = YC.getNewConfig("ETC/NewBie.yml");
-				NewBieYM.set("FirstQuest", "null");
-				NewBieYM.saveConfig();
-				NewBieGUIMain(player);
-			}
-			return;
-		case 4: //기본 시작 위치
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-			YamlManager NewBieYM = YC.getNewConfig("ETC/NewBie.yml");
-			NewBieYM.set("TelePort.World", player.getLocation().getWorld().getName());
-			NewBieYM.set("TelePort.X", player.getLocation().getX());
-			NewBieYM.set("TelePort.Y", player.getLocation().getY());
-			NewBieYM.set("TelePort.Z", player.getLocation().getZ());
-			NewBieYM.set("TelePort.Pitch", player.getLocation().getPitch());
-			NewBieYM.set("TelePort.Yaw", player.getLocation().getYaw());
-			NewBieYM.saveConfig();
-			player.sendMessage(ChatColor.GREEN+"[뉴비 텔레포트지점] : 접속시 이동 위치 변경 완료!");
-			NewBieGUIMain(player);
-			return;
-		case 5://가이드
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			NewBieGuideGUI(player);
-			return;
-		case 8:
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.0F);
 			player.closeInventory();
-			return;
+		}
+		else
+		{
+			if(slot == 3)//기본 퀘스트
+			{
+				if(event.isLeftClick())
+					NewBieQuestGUI(player, (short) 0);
+				else if(event.isRightClick()&&event.isShiftClick())
+				{
+					s.SP(player, Sound.BLOCK_LAVA_POP, 1.0F, 1.0F);
+					YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+					YamlManager NewBieYM = YC.getNewConfig("ETC/NewBie.yml");
+					NewBieYM.set("FirstQuest", "null");
+					NewBieYM.saveConfig();
+					NewBieGUIMain(player);
+				}
+			}
+			else
+			{
+				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				if(slot == 0)//이전 목록
+					new GBD_RPG.Admin.OPbox_GUI().OPBoxGUI_Main(player, (byte) 2);
+				else if(slot == 2)//기본 아이템
+					NewBieSupportItemGUI(player);
+				else if(slot == 4)//기본 시작 위치
+				{
+					YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+					YamlManager NewBieYM = YC.getNewConfig("ETC/NewBie.yml");
+					NewBieYM.set("TelePort.World", player.getLocation().getWorld().getName());
+					NewBieYM.set("TelePort.X", player.getLocation().getX());
+					NewBieYM.set("TelePort.Y", player.getLocation().getY());
+					NewBieYM.set("TelePort.Z", player.getLocation().getZ());
+					NewBieYM.set("TelePort.Pitch", player.getLocation().getPitch());
+					NewBieYM.set("TelePort.Yaw", player.getLocation().getYaw());
+					NewBieYM.saveConfig();
+					player.sendMessage(ChatColor.GREEN+"[뉴비 텔레포트지점] : 접속시 이동 위치 변경 완료!");
+					NewBieGUIMain(player);
+				}
+				else if(slot == 5)//가이드
+					NewBieGuideGUI(player);
+			}
 		}
 	}
 	
-	public void NewBieSupportItemGUIInventoryclick(InventoryClickEvent event)
+	public void NewBieSupportItemGUIInventoryclick(InventoryClickEvent event, String SubjectCode)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		Player player = (Player) event.getWhoClicked();
-		switch (event.getSlot())
+		int slot = event.getSlot();
+		if(slot >= 45)
+			event.setCancelled(true);
+		if(slot == 53)//닫기
 		{
-		case 45:
-			event.setCancelled(true);
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			NewBieGUIMain(player);
-			return;
-		case 49://기본 지원
-			event.setCancelled(true);
-			if(ChatColor.stripColor(event.getInventory().getTitle()).compareTo("초심자 가이드")!=0)
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[뉴비 지원금] : 얼마를 가지고 시작하도록 하시겠습니까?");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-				UserData_Object u = new UserData_Object();
-				u.setType(player, "NewBie");
-				u.setString(player, (byte)1, "NSM");
-			}
-			return;
-		case 46:
-		case 47:
-		case 48:
-		case 50:
-		case 51:
-		case 52:
-			event.setCancelled(true);
-			return;
-		case 53:
-			event.setCancelled(true);
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.0F);
 			player.closeInventory();
-			return;
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			if(slot == 45)//이전 목록
+				NewBieGUIMain(player);
+			else if(slot == 49)//기본 지원
+			{
+				if(SubjectCode.compareTo("1a")!=0)//초심자 가이드 설정창이 아닐 경우
+				{
+					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+					player.closeInventory();
+					player.sendMessage(ChatColor.DARK_AQUA+"[뉴비 지원금] : 얼마를 가지고 시작하도록 하시겠습니까?");
+					player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+					UserData_Object u = new UserData_Object();
+					u.setType(player, "NewBie");
+					u.setString(player, (byte)1, "NSM");
+				}
+			}
 		}
 	}
 	
 	public void NewBieQuestGUIInventoryclick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-
-		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+		
+		int slot = event.getSlot();
 		Player player = (Player) event.getWhoClicked();
-		event.setCancelled(true);
-		switch (event.getSlot())
+		
+		if(slot == 53)
 		{
-		case 45:
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			NewBieGUIMain(player);
-			return;
-		case 48://이전 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			NewBieQuestGUI(player, (short) (page-1));
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			NewBieQuestGUI(player, (short) (page+1));
-			return;
-		case 54:
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.0F);
 			player.closeInventory();
-			return;
-		default:
-			String QuestName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
-			YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-			YamlManager NewBieYM = YC.getNewConfig("ETC/NewBie.yml");
-			YamlManager QuestList=YC.getNewConfig("Quest/QuestList.yml");
-			
-			if(QuestList.contains(QuestName)==true)
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			if(slot == 45)//이전 목록
+				NewBieGUIMain(player);
+			else if(slot == 48)//이전 페이지
+				NewBieQuestGUI(player, (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-2));
+			else if(slot == 50)//다음 페이지
+				NewBieQuestGUI(player, (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])));
+			else
 			{
-				if(QuestList.getConfigurationSection(QuestName+".FlowChart").getKeys(false).toArray().length != 0)
+				String QuestName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
+				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager NewBieYM = YC.getNewConfig("ETC/NewBie.yml");
+				YamlManager QuestList=YC.getNewConfig("Quest/QuestList.yml");
+				
+				if(QuestList.contains(QuestName)==true)
 				{
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-					NewBieYM.set("FirstQuest", QuestName);
-					NewBieYM.saveConfig();
-					NewBieGUIMain(player);
+					if(QuestList.getConfigurationSection(QuestName+".FlowChart").getKeys(false).toArray().length != 0)
+					{
+						NewBieYM.set("FirstQuest", QuestName);
+						NewBieYM.saveConfig();
+						NewBieGUIMain(player);
+					}
+					else
+					{
+						s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+						player.sendMessage(ChatColor.RED+"[뉴비 퀘스트] : 해당 퀘스트는 퀘스트 오브젝트가 존재하지 않습니다!");
+					}
 				}
 				else
 				{
 					s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.RED+"[뉴비 퀘스트] : 해당 퀘스트는 퀘스트 오브젝트가 존재하지 않습니다!");
+					player.sendMessage(ChatColor.RED+"[뉴비 퀘스트] : 해당 퀘스트는 존재하지 않습니다!");
 				}
 			}
-			else
-			{
-				s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-				player.sendMessage(ChatColor.RED+"[뉴비 퀘스트] : 해당 퀘스트는 존재하지 않습니다!");
-			}
-			
 		}
 	}
 
-	public void InventoryClose_NewBie(InventoryCloseEvent event)
+	public void InventoryClose_NewBie(InventoryCloseEvent event, String SubjectCode)
 	{
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager NewBieYM = YC.getNewConfig("ETC/NewBie.yml");
@@ -313,25 +303,25 @@ public class NewBie_GUI extends Util_GUI
 		{
 			if(event.getInventory().getItem(count) != null)
 			{
-				if(event.getInventory().getTitle().contains("가이드"))
+				if(SubjectCode.compareTo("1a")==0)//가이드
 					NewBieYM.set("Guide."+num, event.getInventory().getItem(count));
-				else
+				else//if(SubjectCode.compareTo("18")==0)//지원 아이템
 					NewBieYM.set("SupportItem."+num, event.getInventory().getItem(count));
 				num++;
 			}
 			else
-				if(event.getInventory().getTitle().contains("가이드"))
+				if(SubjectCode.compareTo("1a")==0)//가이드
 					NewBieYM.removeKey("Guide."+count);
-				else
+				else//if(SubjectCode.compareTo("18")==0)//지원 아이템
 					NewBieYM.removeKey("SupportItem."+count);
 		}
 		NewBieYM.saveConfig();
 
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 
-		if(event.getInventory().getTitle().contains("가이드"))
+		if(SubjectCode.compareTo("1a")==0)//가이드
 			event.getPlayer().sendMessage(ChatColor.GREEN + "[뉴비 가이드] : 성공적으로 저장 되었습니다!");
-		else
+		else//if(SubjectCode.compareTo("18")==0)//지원 아이템
 			event.getPlayer().sendMessage(ChatColor.GREEN + "[뉴비 아이템] : 성공적으로 저장 되었습니다!");
 		s.SP((Player) event.getPlayer(), Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 	}

@@ -5,13 +5,9 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryType;
 
 import GBD_RPG.Dungeon.Schematic;
 import GBD_RPG.ServerTick.ServerTick_Main;
-import GBD_RPG.User.UserData_Object;
 
 public class Structure_Main
 {
@@ -177,67 +173,5 @@ public class Structure_Main
 			new GBD_RPG.Dungeon.Dungeon_GUI().AltarUseGUI(player, StructureName);
 		}
 	}
-	
-	public void InventoryClickRouter(InventoryClickEvent event, String InventoryName)
-	{
-		String Striped = ChatColor.stripColor(event.getInventory().getName().toString());
-		if(event.getInventory().getType()==InventoryType.CHEST)
-		{
-			if(!(Striped.compareTo("보낼 아이템")==0
-			))
-				event.setCancelled(true);
-		}
-		if(InventoryName.compareTo("우편함")==0)
-			new Struct_PostBox().PostBoxMainGUIClick(event);
-		else if(InventoryName.compareTo("보낼 아이템")==0)
-			new Struct_PostBox().ItemPutterGUIClick(event);
-		else if(InventoryName.contains("게시판"))
-		{
-			if(InventoryName.contains("거래"))
-			{
-				if(InventoryName.contains("메뉴"))
-					new Struct_TradeBoard().SelectTradeTypeGUIClick(event);
-				else if(InventoryName.contains("설정"))
-					new Struct_TradeBoard().TradeBoardSettingGUIClick(event);
-				else
-					new Struct_TradeBoard().TradeBoardMainGUIClick(event);
-			}
-			else
-			{
-				if(InventoryName.contains("설정"))
-					new Struct_Board().BoardSettingGUIClick(event);
-				else
-					new Struct_Board().BoardMainGUIClick(event);
-			}
-		}
-		else if(InventoryName.compareTo("판매할 아이템을 고르세요")==0)
-			new Struct_TradeBoard().SelectSellItemGUIClick(event);
-		else if(InventoryName.compareTo("구매할 아이템을 고르세요")==0)
-			new Struct_TradeBoard().SelectBuyItemGUIClick(event);
-		else if(InventoryName.contains("일반 아이템"))
-			new Struct_TradeBoard().SelectNormalItemGUIClick(event);
-		else if(InventoryName.compareTo("받고싶은 아이템을 고르세요")==0)
-			new Struct_TradeBoard().SelectExchangeItem_YouGUIClick(event);
-		else if(InventoryName.compareTo("내가 줄 아이템을 고르세요")==0)
-			new Struct_TradeBoard().SelectExchangeItem_MyGUIClick(event);
-		else if(InventoryName.compareTo("모닥불")==0)
-			new Struct_CampFire().CampFireGUIClick(event);
-	}
-	
-	
-	public void InventoryCloseRouter(InventoryCloseEvent event, String InventoryName)
-	{
-		UserData_Object u = new UserData_Object();
-		Player player = (Player)event.getPlayer();
-		
-		if(InventoryName.compareTo("보낼 아이템")==0)
-			new Struct_PostBox().ItemPutterGUIClose(event);
-		else if(InventoryName.compareTo("판매할 아이템을 고르세요")==0||InventoryName.compareTo("구매할 아이템을 고르세요")==0)
-		{
-			if(u.getItemStack((Player)event.getPlayer())==null)
-				u.clearAll(player);
-		}
-		else if(InventoryName.contains("일반 아이템"))
-			u.clearAll(player);
-	}
+
 }

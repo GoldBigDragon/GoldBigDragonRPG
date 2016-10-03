@@ -11,18 +11,15 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import GBD_RPG.User.ETC_GUI;
 import GBD_RPG.User.Equip_GUI;
 import GBD_RPG.Util.Util_GUI;
 
 public final class Party_GUI extends Util_GUI
 {
-	private GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-	private ETC_GUI EGUI = new ETC_GUI();
-
 	public void PartyGUI_Main(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 45, ChatColor.BLACK + "파티");
+		String UniqueCode = "§0§0§4§0§0§r";
+		Inventory inv = Bukkit.createInventory(null, 45, UniqueCode + "§0파티");
 		Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "파티 목록", 340,0,1,Arrays.asList(ChatColor.GRAY + "현재 개설된 파티 목록을 봅니다."), 12, inv);
 		if(GBD_RPG.Main_Main.Main_ServerOption.PartyJoiner.containsKey(player)==false)
 		{
@@ -48,12 +45,13 @@ public final class Party_GUI extends Util_GUI
 	
 	public void PartyListGUI(Player player, short page)
 	{
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "파티 목록 : " + (page+1));
+		String UniqueCode = "§0§0§4§0§1§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0파티 목록 : " + (page+1));
 
 		Object[] a = GBD_RPG.Main_Main.Main_ServerOption.Party.keySet().toArray();
 		if(GBD_RPG.Main_Main.Main_ServerOption.Party.size() <= 0)
 		{
-			s.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			new GBD_RPG.Effect.Effect_Sound().SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			player.sendMessage(ChatColor.RED + "[파티] : 생성된 파티가 없습니다!");
 			player.sendMessage(ChatColor.GOLD + "/파티 생성 <이름>");
 			return;
@@ -82,13 +80,14 @@ public final class Party_GUI extends Util_GUI
 		player.openInventory(inv);
 	}
 	
-	public void PartyMemberInformation(Player player, short page, long PartyCreateTime, boolean isLeaderChange)
+	public void PartyMemberInformationGUI(Player player, short page, long PartyCreateTime, boolean isLeaderChange)
 	{
 		Inventory inv = null;
+		String UniqueCode = "§0§0§4§0§2§r";
 		if(isLeaderChange == false)
-			inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "파티 멤버 : " + (page+1));
+			inv = Bukkit.createInventory(null, 54, UniqueCode + "§0파티 멤버 : " + (page+1));
 		else
-			inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "파티 리더 교체 : " + (page+1));
+			inv = Bukkit.createInventory(null, 54, UniqueCode + "§0파티 리더 교체 : " + (page+1));
 			
 		Player[] Member = GBD_RPG.Main_Main.Main_ServerOption.Party.get(PartyCreateTime).getMember();
 			byte loc=0;
@@ -142,100 +141,76 @@ public final class Party_GUI extends Util_GUI
 	}
 	
 	
-	public void PartyGUIClickRouter(InventoryClickEvent event, String InventoryName)
+	public void PartyGUI_MainClick(InventoryClickEvent event)
 	{
-	    if(InventoryName.compareTo("파티")==0)
-	    	partyInventoryclick(event);
-		else if(InventoryName.contains("목록"))
-			PartyListInventoryclick(event);
-		else if(InventoryName.contains("멤버")||InventoryName.contains("교체"))
-			PartyMemberInformationClick(event);
-		return;
-	}
-	
-	
-	public void partyInventoryclick(InventoryClickEvent event)
-	{
-		event.setCancelled(true);
+		int slot = event.getSlot();
 		Player player = (Player) event.getWhoClicked();
-		switch ((ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())))
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+
+		if(slot == 44)//나가기
 		{
-		case "파티 개설":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
-			player.closeInventory();
-			player.sendMessage(ChatColor.GOLD + "/파티 생성 <이름>");
-			break;
-		case "파티 참여":
-		case "파티 목록":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
-			PartyListGUI(player, (short) 0);
-			break;
-		case "파티 탈퇴":
-			player.closeInventory();
-			GBD_RPG.Main_Main.Main_ServerOption.Party.get(GBD_RPG.Main_Main.Main_ServerOption.PartyJoiner.get(player)).QuitParty(player);
-			break;
-		case "파티 정보":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
-			player.closeInventory();
-			PartyMemberInformation(player, (short) 0, GBD_RPG.Main_Main.Main_ServerOption.PartyJoiner.get(player),false);
-			break;
-		case "리더 변경":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
-			PartyMemberInformation(player, (short) 0, GBD_RPG.Main_Main.Main_ServerOption.PartyJoiner.get(player),true);
-			break;
-		case "인원 변경":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
-			player.closeInventory();	player.sendMessage(ChatColor.GOLD + "/파티 인원 [인원 수]");
-			break;
-		case "강퇴":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
-			player.closeInventory();
-			player.sendMessage(ChatColor.GOLD + "/파티 강퇴 [닉네임]");
-			break;
-		case "파티 잠금":
-		case "파티 개방":
-			GBD_RPG.Main_Main.Main_ServerOption.Party.get(GBD_RPG.Main_Main.Main_ServerOption.PartyJoiner.get(player)).ChangeLock(player);
-			PartyGUI_Main(player);
-			break;
-		case "다음 목록":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			break;
-		case "이전 목록":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			EGUI.ETCGUI_Main(player);
-			break;
-		case "닫기":
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			break;
 		}
-			return;
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 36)//이전 목록
+				new GBD_RPG.User.ETC_GUI().ETCGUI_Main(player);
+			else if(slot == 10)//파티 개설 / 파티 정보
+			{
+				if(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()).compareTo("파티 개설")==0)
+				{
+					player.closeInventory();
+					player.sendMessage(ChatColor.GOLD + "/파티 생성 <이름>");
+				}
+				else
+					PartyMemberInformationGUI(player, (short) 0, GBD_RPG.Main_Main.Main_ServerOption.PartyJoiner.get(player),false);
+			}
+			else if(slot == 12)//파티 목록 / 파티 참여
+				PartyListGUI(player, (short) 0);
+			else if(slot == 14)//파티 탈퇴
+			{
+				player.closeInventory();
+				GBD_RPG.Main_Main.Main_ServerOption.Party.get(GBD_RPG.Main_Main.Main_ServerOption.PartyJoiner.get(player)).QuitParty(player);
+			}
+			else if(slot == 28)//리더 변경
+				PartyMemberInformationGUI(player, (short) 0, GBD_RPG.Main_Main.Main_ServerOption.PartyJoiner.get(player),true);
+			else if(slot == 30)//인원 변경
+			{
+				player.closeInventory();
+				player.sendMessage(ChatColor.GOLD + "/파티 인원 [인원 수]");
+			}
+			else if(slot == 34)//인원 변경
+			{
+				GBD_RPG.Main_Main.Main_ServerOption.Party.get(GBD_RPG.Main_Main.Main_ServerOption.PartyJoiner.get(player)).ChangeLock(player);
+				PartyGUI_Main(player);
+			}
+		}
 	}
 	
-	public void PartyListInventoryclick(InventoryClickEvent event)
+	public void PartyListGUIClick(InventoryClickEvent event)
 	{
-		event.setCancelled(true);
+		int slot = event.getSlot();
 		Player player = (Player) event.getWhoClicked();
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		
-		switch ((ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())))
+		if(slot == 53)//닫기
 		{
-			case "이전 페이지":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				PartyListGUI(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-2));
-				break;
-			case "다음 페이지":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				PartyListGUI(player,(short) Integer.parseInt(event.getInventory().getTitle().split(" : ")[1]));
-				break;
-			case "이전 목록":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 45)//이전 목록
 				PartyGUI_Main(player);
-				break;
-			case "닫기":
-				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-				player.closeInventory();
-				break;
-			default:
+			else if(slot == 48)//이전 페이지
+				PartyListGUI(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-2));
+			else if(slot == 50)//다음 페이지
+				PartyListGUI(player,(short) Integer.parseInt(event.getInventory().getTitle().split(" : ")[1]));
+			else
+			{
 				if(GBD_RPG.Main_Main.Main_ServerOption.Party.get(Long.parseLong(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(0).split(" : ")[1]))).getLock())
 				{
 				  s.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
@@ -246,62 +221,49 @@ public final class Party_GUI extends Util_GUI
 					GBD_RPG.Main_Main.Main_ServerOption.Party.get(Long.parseLong(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(0).split(" : ")[1]))).JoinParty(player);
 					PartyGUI_Main(player);
 				}
-				return;
+			}
 		}
-		return;
 	}
 
-	public void PartyMemberInformationClick(InventoryClickEvent event)
+	public void PartyMemberInformationGUIClick(InventoryClickEvent event)
 	{
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		boolean isLeaderChange = false;
-		if(event.getInventory().getTitle().contains("교체"))
-			isLeaderChange = true;
-			
-		switch ((ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())))
+		int slot = event.getSlot();
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		if(slot == 53)//닫기
 		{
-			case "이전 페이지":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				PartyMemberInformation(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-2),GBD_RPG.Main_Main.Main_ServerOption.PartyJoiner.get(player),isLeaderChange);
-				break;
-			case "다음 페이지":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				PartyMemberInformation(player,(short) Integer.parseInt(event.getInventory().getTitle().split(" : ")[1]),GBD_RPG.Main_Main.Main_ServerOption.PartyJoiner.get(player),isLeaderChange);
-				break;
-			case "이전 목록":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			boolean isLeaderChange = event.getInventory().getTitle().contains("교체");
+			if(slot == 45)//이전 목록
 				PartyGUI_Main(player);
-				break;
-			case "닫기":
-				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-				player.closeInventory();
-				break;
-			default:
+			else if(slot == 48)//이전 페이지
+				PartyMemberInformationGUI(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-2),GBD_RPG.Main_Main.Main_ServerOption.PartyJoiner.get(player),isLeaderChange);
+			else if(slot == 50)//다음 페이지
+				PartyMemberInformationGUI(player,(short) Integer.parseInt(event.getInventory().getTitle().split(" : ")[1]),GBD_RPG.Main_Main.Main_ServerOption.PartyJoiner.get(player),isLeaderChange);
+			else
+			{
 				if(event.isLeftClick())
 				{
 					if(isLeaderChange == false)
-					{
-						s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 						new Equip_GUI().EquipWatchGUI(player, Bukkit.getServer().getPlayer(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())));
-					}
 					else
-					{
 						GBD_RPG.Main_Main.Main_ServerOption.Party.get(GBD_RPG.Main_Main.Main_ServerOption.PartyJoiner.get(player)).ChangeLeader(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-					}
 				}
 				else if(event.isRightClick()&&event.isShiftClick())
 				{
 					if(isLeaderChange == false)
 					{
 						GBD_RPG.Main_Main.Main_ServerOption.Party.get(GBD_RPG.Main_Main.Main_ServerOption.PartyJoiner.get(player)).KickPartyMember(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-						PartyMemberInformation(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1),GBD_RPG.Main_Main.Main_ServerOption.PartyJoiner.get(player),isLeaderChange);
+						PartyMemberInformationGUI(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1),GBD_RPG.Main_Main.Main_ServerOption.PartyJoiner.get(player), isLeaderChange);
 					}
 				}
-				return;
+			}
 		}
-		return;
-		
 	}
 
 

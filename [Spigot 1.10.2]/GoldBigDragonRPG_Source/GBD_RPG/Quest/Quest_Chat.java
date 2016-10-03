@@ -495,19 +495,19 @@ public class Quest_Chat extends Util_Chat
 	    		    	event.setCancelled(true);
 	    				u.setString(player, (byte)4,null);
 	    				u.setInt(player, (byte)1, Integer.parseInt(ChatColor.stripColor(event.getMessage())));
-			    		QGUI.GetPresentGUI(player, u.getString(player, (byte)3));
+			    		QGUI.PresentItemSettingGUI(player, u.getString(player, (byte)3));
 	    				break;
 	    			case "E":
 	    		    	event.setCancelled(true);
 	    				u.setString(player, (byte)4,null);
 	    				u.setInt(player, (byte)2, Integer.parseInt(ChatColor.stripColor(event.getMessage())));
-			    		QGUI.GetPresentGUI(player, u.getString(player, (byte)3));
+			    		QGUI.PresentItemSettingGUI(player, u.getString(player, (byte)3));
 	    				break;
 	    			case "L":
 	    		    	event.setCancelled(true);
 	    				u.setString(player, (byte)4,null);
 	    				u.setInt(player, (byte)3, Integer.parseInt(ChatColor.stripColor(event.getMessage())));
-			    		QGUI.GetPresentGUI(player, u.getString(player, (byte)3));
+			    		QGUI.PresentItemSettingGUI(player, u.getString(player, (byte)3));
 	    				break;
     				default :
     					break;

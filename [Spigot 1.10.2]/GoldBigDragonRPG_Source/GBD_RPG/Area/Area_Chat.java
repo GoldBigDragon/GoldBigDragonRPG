@@ -30,7 +30,7 @@ public class Area_Chat extends Util_Chat
 					AreaConfig.set(u.getString(player, (byte)3)+".RegenBlock", Integer.parseInt(Message));
 	    			AreaConfig.saveConfig();
 	    			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-					AGUI.AreaGUI_Main(player, u.getString(player, (byte)3));
+					AGUI.AreaSettingGUI(player, u.getString(player, (byte)3));
 	    			u.clearAll(player);
 				}
 				return;
@@ -110,7 +110,7 @@ public class Area_Chat extends Util_Chat
 	    			AreaConfig.set(u.getString(player, (byte)3)+".Priority", Integer.parseInt(Message));
 	    			AreaConfig.saveConfig();
 	    			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-	    			AGUI.AreaGUI_Main(player, u.getString(player, (byte)3));
+	    			AGUI.AreaSettingGUI(player, u.getString(player, (byte)3));
 	    			u.clearAll(player);
 				}
 				return;

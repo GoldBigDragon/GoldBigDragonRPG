@@ -32,7 +32,8 @@ public class Struct_TradeBoard extends Util_GUI
 			Color=ChatColor.RED+"";
 		else if(ShopType==2)
 			Color=ChatColor.DARK_GREEN+"";
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.RED +""+ChatColor.BOLD +""+Color+""+ChatColor.BOLD +""+ "거래 게시판 : "+(page+1));
+		String UniqueCode = "§0§0§d§0§7§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode +""+Color+""+ChatColor.BOLD +""+ "거래 게시판 : "+(page+1));
 		
 		if(Board.contains("Buy")==false)
 		{
@@ -262,7 +263,8 @@ public class Struct_TradeBoard extends Util_GUI
 	{
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager Board =YC.getNewConfig("Structure/UserShopBoard.yml");
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.RED +""+ChatColor.BOLD +""+ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ "거래 게시판 설정");
+		String UniqueCode = "§0§0§d§0§8§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0거래 게시판 설정");
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[판매 수수료]", 266,0,1,Arrays.asList(ChatColor.GRAY + "물품 판매 수수료를 설정합니다.","",ChatColor.BLUE+"[현재 수수료]",ChatColor.WHITE+"판매 가격의 "+Board.getInt("SellCommission")+"%"), 1, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[등록 수수료]", 54,0,1,Arrays.asList(ChatColor.GRAY + "물품 등록 수수료를 설정합니다.","",ChatColor.BLUE+"[현재 수수료]",ChatColor.WHITE+"등록시 "+Board.getInt("RegisterCommission")+" "+GBD_RPG.Main_Main.Main_ServerOption.Money+ChatColor.WHITE+" 필요"), 2, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[등록 물품 제한]", 397,3,1,Arrays.asList(ChatColor.GRAY + "1인당 등록 가능한 물품 수를 제한합니다.","",ChatColor.BLUE+"[현재 최대 개수]",ChatColor.WHITE+""+Board.getInt("LimitPerPlayer")+" 개"), 3, inv);
@@ -274,7 +276,8 @@ public class Struct_TradeBoard extends Util_GUI
 	
 	public void SelectTradeTypeGUI(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.RED +""+ChatColor.BOLD +ChatColor.BLACK + "거래 게시판 메뉴");
+		String UniqueCode = "§0§0§d§0§9§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0거래 게시판 메뉴");
 
 		Stack2(ChatColor.BLUE + "" + ChatColor.BOLD + "[물품 판매]", 54,0,1,Arrays.asList(ChatColor.GRAY + "자신이 현재 가지고 있는 아이템을", ChatColor.GRAY + "등록하여 판매합니다."), 1, inv);
 		Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[물품 구매]", 130,0,1,Arrays.asList(ChatColor.GRAY + "구매하고 싶은 아이템을 등록하여", ChatColor.GRAY + "구매합니다."), 3, inv);
@@ -289,7 +292,8 @@ public class Struct_TradeBoard extends Util_GUI
 
 	public void SelectSellItemGUI(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.RED +""+ChatColor.BOLD +ChatColor.BLACK + "판매할 아이템을 고르세요");
+		String UniqueCode = "§0§0§d§0§a§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0판매할 아이템을 고르세요");
 		Stack2(ChatColor.RED + "" +ChatColor.RED + "" +ChatColor.RED + "" + ChatColor.BOLD + "[판매 취소]", 166,0,1,Arrays.asList(ChatColor.GRAY + "아이템 판매를 취소합니다."), 4, inv);
 		player.openInventory(inv);
 		return;
@@ -297,7 +301,8 @@ public class Struct_TradeBoard extends Util_GUI
 	
 	public void SelectBuyItemGUI(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.RED +""+ChatColor.BOLD +ChatColor.BLACK + "구매할 아이템을 고르세요");
+		String UniqueCode = "§0§0§d§0§b§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0구매할 아이템을 고르세요");
 		Stack2(ChatColor.RED + "" +ChatColor.RED + "" +ChatColor.WHITE + "" + ChatColor.BOLD + "[일반 아이템]", 2,0,1,Arrays.asList(ChatColor.GRAY + "일반 아이템 중에서 고릅니다."), 2, inv);
 		Stack2(ChatColor.RED + "" +ChatColor.RED + "" +ChatColor.RED + "" + ChatColor.BOLD + "[구매 취소]", 166,0,1,Arrays.asList(ChatColor.GRAY + "아이템 구매를 취소합니다."), 4, inv);
 		//Stack2(ChatColor.RED + "" +ChatColor.RED + "" +ChatColor.AQUA + "" + ChatColor.BOLD + "[특수 아이템]", 384,0,1,Arrays.asList(ChatColor.GRAY + "특수 아이템 중에서 고릅니다."), 6, inv);
@@ -307,7 +312,8 @@ public class Struct_TradeBoard extends Util_GUI
 
 	public void SelectExchangeItem_YouGUI(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.RED +""+ChatColor.BOLD +ChatColor.BLACK + "받고싶은 아이템을 고르세요");
+		String UniqueCode = "§0§0§d§0§c§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0받고싶은 아이템을 고르세요");
 		Stack2(ChatColor.RED + "" +ChatColor.RED + "" +ChatColor.WHITE + "" + ChatColor.BOLD + "[일반 아이템]", 2,0,1,Arrays.asList(ChatColor.GRAY + "일반 아이템 중에서 고릅니다."), 2, inv);
 		Stack2(ChatColor.RED + "" +ChatColor.RED + "" +ChatColor.RED + "" + ChatColor.BOLD + "[구매 취소]", 166,0,1,Arrays.asList(ChatColor.GRAY + "아이템 구매를 취소합니다."), 4, inv);
 		player.openInventory(inv);
@@ -316,7 +322,8 @@ public class Struct_TradeBoard extends Util_GUI
 	
 	public void SelectExchangeItem_MyGUI(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.RED +""+ChatColor.BOLD +ChatColor.BLACK + "내가 줄 아이템을 고르세요");
+		String UniqueCode = "§0§0§d§0§d§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0내가 줄 아이템을 고르세요");
 		Stack2(ChatColor.RED + "" +ChatColor.RED + "" +ChatColor.RED + "" + ChatColor.BOLD + "[판매 취소]", 166,0,1,Arrays.asList(ChatColor.GRAY + "아이템 판매를 취소합니다."), 4, inv);
 		player.openInventory(inv);
 		return;
@@ -324,7 +331,8 @@ public class Struct_TradeBoard extends Util_GUI
 	
 	public void SelectNormalItemGUI(Player player, byte page, byte ShopType)
 	{
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.RED +""+ChatColor.BOLD +ChatColor.BLACK+ChatColor.BOLD +""+ "일반 아이템 : "+(page+1));
+		String UniqueCode = "§0§0§d§0§e§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0일반 아이템 : "+(page+1));
 
 		byte loc=0;
 		int count = 0;
@@ -350,8 +358,9 @@ public class Struct_TradeBoard extends Util_GUI
 	public void TradeBoardMainGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		
+		
 		short page =  (short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1);
 		byte ShopType = 0;
 		if(event.getInventory().getItem(0).getData().getData()==14)
@@ -701,7 +710,6 @@ public class Struct_TradeBoard extends Util_GUI
 	public void TradeBoardSettingGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		
 		if(event.getSlot()>=1 && event.getSlot() <= 3)
@@ -746,7 +754,6 @@ public class Struct_TradeBoard extends Util_GUI
 	public void SelectTradeTypeGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		if(event.getSlot()==1||event.getSlot()==3||event.getSlot()==5)
 		{
@@ -804,7 +811,6 @@ public class Struct_TradeBoard extends Util_GUI
 	public void SelectSellItemGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		UserData_Object u = new UserData_Object();
 		if(event.getCurrentItem()!=null)
@@ -836,7 +842,6 @@ public class Struct_TradeBoard extends Util_GUI
 	public void SelectBuyItemGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		UserData_Object u = new UserData_Object();
 		if(event.getCurrentItem()!=null)
@@ -878,180 +883,170 @@ public class Struct_TradeBoard extends Util_GUI
 	public void SelectNormalItemGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		byte page =  (byte) (Byte.parseByte(event.getInventory().getTitle().split(" : ")[1])-1);
 		byte ShopType = Byte.parseByte(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
 
-		if(event.getCurrentItem()!=null)
-			if(event.getCurrentItem().getTypeId()!=0)
-			switch (event.getSlot())
-			{
-				case 48://이전 페이지
-					s.SP(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
-					SelectNormalItemGUI(player, (byte) (page-1), ShopType);
-					return;
-				case 50://다음 페이지
-					s.SP(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
-					SelectNormalItemGUI(player, (byte) (page+1), ShopType);
-					return;
-				case 53://닫기
-					s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-					player.closeInventory();
-					return;
-				default:
-					player.closeInventory();
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-					UserData_Object u = new UserData_Object();
-					u.setInt(player, (byte)0,ShopType);
-					u.setTemp(player, "Structure");
-					u.setType(player, "TradeBoard");
-					u.setItemStack(player, event.getCurrentItem());
-					u.setString(player, (byte)0, "SetNeedAmount");
-					u.setBoolean(player, (byte)1, true);
-					if(ShopType==3)
-						player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 얼마나 구매하실건가요? (1 ~ 1000)");
-					else if(ShopType==5)
-						player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 해당 아이템이 얼마나 필요한가요? (1 ~ 1000)");
-						
-					return;
-			}
+		if(event.getCurrentItem().getTypeId()!=0)
+		switch (event.getSlot())
+		{
+			case 48://이전 페이지
+				s.SP(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
+				SelectNormalItemGUI(player, (byte) (page-1), ShopType);
+				return;
+			case 50://다음 페이지
+				s.SP(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
+				SelectNormalItemGUI(player, (byte) (page+1), ShopType);
+				return;
+			case 53://닫기
+				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				player.closeInventory();
+				return;
+			default:
+				player.closeInventory();
+				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				UserData_Object u = new UserData_Object();
+				u.setInt(player, (byte)0,ShopType);
+				u.setTemp(player, "Structure");
+				u.setType(player, "TradeBoard");
+				u.setItemStack(player, event.getCurrentItem());
+				u.setString(player, (byte)0, "SetNeedAmount");
+				u.setBoolean(player, (byte)1, true);
+				if(ShopType==3)
+					player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 얼마나 구매하실건가요? (1 ~ 1000)");
+				else if(ShopType==5)
+					player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 해당 아이템이 얼마나 필요한가요? (1 ~ 1000)");
+					
+				return;
+		}
 	}
 	
 	public void SelectExchangeItem_YouGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		UserData_Object u = new UserData_Object();
-		if(event.getCurrentItem()!=null)
+		if(event.getCurrentItem().getTypeId()!=0)
 		{
-			if(event.getCurrentItem().getTypeId()!=0)
+			ItemStack item = event.getCurrentItem();
+			
+			if(event.getSlot()==4)
+				if(item.hasItemMeta())
+					if(item.getItemMeta().hasDisplayName())
+						if(item.getItemMeta().getDisplayName().compareTo(ChatColor.RED + "" +ChatColor.RED + "" +ChatColor.RED + "" + ChatColor.BOLD + "[구매 취소]")==0)
+							u.clearAll(player);
+			if(u.getString(player, (byte)0).compareTo("SelectItem")==0)
 			{
-				ItemStack item = event.getCurrentItem();
-				
-				if(event.getSlot()==4)
+				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
+				if(event.getSlot()==2)
 					if(item.hasItemMeta())
 						if(item.getItemMeta().hasDisplayName())
-							if(item.getItemMeta().getDisplayName().compareTo(ChatColor.RED + "" +ChatColor.RED + "" +ChatColor.RED + "" + ChatColor.BOLD + "[구매 취소]")==0)
-								u.clearAll(player);
-				if(u.getString(player, (byte)0).compareTo("SelectItem")==0)
-				{
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
-					if(event.getSlot()==2)
-						if(item.hasItemMeta())
-							if(item.getItemMeta().hasDisplayName())
-								if(item.getItemMeta().getDisplayName().compareTo(ChatColor.RED + "" +ChatColor.RED + "" +ChatColor.WHITE + "" + ChatColor.BOLD + "[일반 아이템]")==0)
-								{
-									SelectNormalItemGUI(player, (byte)0, (byte)5);
-									return;
-								}
-					byte amount = (byte) item.getAmount();
-					u.setInt(player, (byte)0,5);
-					u.setTemp(player, "Structure");
-					u.setType(player, "TradeBoard");
-					u.setInt(player, (byte) 2, amount);
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-					player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 당신은 무엇을 주실건가요?");
-					u.setString(player, (byte)0, "SetMyItem");
-					new Struct_TradeBoard().SelectExchangeItem_MyGUI(player);
-					item.setAmount(1);
-					u.setItemStack(player, item);
-					item.setAmount(amount);
-					return;
-				}
-				else
-					u.clearAll(player);
-				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
-				player.closeInventory();
+							if(item.getItemMeta().getDisplayName().compareTo(ChatColor.RED + "" +ChatColor.RED + "" +ChatColor.WHITE + "" + ChatColor.BOLD + "[일반 아이템]")==0)
+							{
+								SelectNormalItemGUI(player, (byte)0, (byte)5);
+								return;
+							}
+				byte amount = (byte) item.getAmount();
+				u.setInt(player, (byte)0,5);
+				u.setTemp(player, "Structure");
+				u.setType(player, "TradeBoard");
+				u.setInt(player, (byte) 2, amount);
+				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 당신은 무엇을 주실건가요?");
+				u.setString(player, (byte)0, "SetMyItem");
+				new Struct_TradeBoard().SelectExchangeItem_MyGUI(player);
+				item.setAmount(1);
+				u.setItemStack(player, item);
+				item.setAmount(amount);
+				return;
 			}
+			else
+				u.clearAll(player);
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
+			player.closeInventory();
 		}
 	}
 	
 	public void SelectExchangeItem_MyGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		UserData_Object u = new UserData_Object();
-		if(event.getCurrentItem()!=null)
+		if(event.getCurrentItem().getTypeId()!=0)
 		{
-			if(event.getCurrentItem().getTypeId()!=0)
+			ItemStack item = event.getCurrentItem();
+			byte amount = (byte)item.getAmount();
+			item.setAmount(1);
+			if(event.getSlot()==4)
+				if(item.hasItemMeta())
+					if(item.getItemMeta().hasDisplayName())
+						if(item.getItemMeta().getDisplayName().compareTo(ChatColor.RED + "" +ChatColor.RED + "" +ChatColor.RED + "" + ChatColor.BOLD + "[구매 취소]")==0)
+							u.clearAll(player);
+			if(u.getString(player, (byte)0).compareTo("SetMyItem")==0)
 			{
-				ItemStack item = event.getCurrentItem();
-				byte amount = (byte)item.getAmount();
-				item.setAmount(1);
-				if(event.getSlot()==4)
-					if(item.hasItemMeta())
-						if(item.getItemMeta().hasDisplayName())
-							if(item.getItemMeta().getDisplayName().compareTo(ChatColor.RED + "" +ChatColor.RED + "" +ChatColor.RED + "" + ChatColor.BOLD + "[구매 취소]")==0)
-								u.clearAll(player);
-				if(u.getString(player, (byte)0).compareTo("SetMyItem")==0)
+				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
+
+				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager Board =YC.getNewConfig("Structure/UserShopBoard.yml");
+				if(Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()<Board.getInt("RegisterCommission"))
 				{
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
-
-					YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-					YamlManager Board =YC.getNewConfig("Structure/UserShopBoard.yml");
-					if(Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()<Board.getInt("RegisterCommission"))
-					{
-						u.clearAll(player);
-						s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
-						player.sendMessage(ChatColor.RED+"[거래 게시판] : 등록 수수료가 부족합니다! 재 등록 해 주세요!");
-						return;
-					}
-					ItemStack itemAmountOne = u.getItemStack(player);
-					String ItemName = u.getItemStack(player).getType().name()+"%d%"+itemAmountOne.getData().getData();
-					if(u.getItemStack(player).hasItemMeta())
-						if(u.getItemStack(player).getItemMeta().hasDisplayName())
-							ItemName = u.getItemStack(player).getItemMeta().getDisplayName()+"%d%"+itemAmountOne.getData().getData();
-
-					ItemName = ItemName.replace(":","");
-					ItemName = ItemName.replace(".","");
-					ItemName = ItemName.replace("[","");
-					ItemName = ItemName.replace("]","");
-					if(u.getItemStack(player).hasItemMeta())
-					{
-						if(u.getItemStack(player).getItemMeta().hasLore())
-							ItemName = ItemName+u.getItemStack(player).getItemMeta().getLore().toString().length();
-						else
-							ItemName = ItemName+0;
-					}
-					else
-						ItemName = ItemName+0;
-					if(Board.contains("Exchange."+ItemName+"."+player.getUniqueId().toString()))
-					{
-						u.clearAll(player);
-						s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
-						player.sendMessage(ChatColor.RED+"[거래 게시판] : 동일 상품을 이미 등록하셨습니다!");
-						return;
-					}
-					if(Board.contains("Exchange."+ItemName)==false)
-						Board.set("Exchange."+ItemName+".Item", event.getCurrentItem());
-					Board.set("ExchangeRegistered", Board.getInt("ExchangeRegistered")+1);
-					Board.set("Exchange."+ItemName+"."+player.getUniqueId().toString()+".Name", player.getName());
-					Board.set("Exchange."+ItemName+"."+player.getUniqueId().toString()+".WantItem", u.getItemStack(player));
-					Board.set("Exchange."+ItemName+"."+player.getUniqueId().toString()+".WantItemAmount", u.getInt(player,(byte)2));
-
-					Board.set("Exchange."+ItemName+"."+player.getUniqueId().toString()+".GiveItem", item);
-					Board.set("Exchange."+ItemName+"."+player.getUniqueId().toString()+".GiveItemAmount", amount);
-					Board.saveConfig();
-
-					Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_Money(Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() - Board.getInt("RegisterCommission"));
-					YamlManager USRL =YC.getNewConfig("Structure/UserShopRegisterList.yml");
-					USRL.set(player.getUniqueId().toString(), USRL.getInt(player.getUniqueId().toString())+1);
-					USRL.saveConfig();
 					u.clearAll(player);
-					player.closeInventory();
-					s.SP(player, Sound.BLOCK_CHEST_OPEN, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 등록이 완료되었습니다!");
-					player.getInventory().setItem(event.getSlot(), null);
+					s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
+					player.sendMessage(ChatColor.RED+"[거래 게시판] : 등록 수수료가 부족합니다! 재 등록 해 주세요!");
 					return;
 				}
+				ItemStack itemAmountOne = u.getItemStack(player);
+				String ItemName = u.getItemStack(player).getType().name()+"%d%"+itemAmountOne.getData().getData();
+				if(u.getItemStack(player).hasItemMeta())
+					if(u.getItemStack(player).getItemMeta().hasDisplayName())
+						ItemName = u.getItemStack(player).getItemMeta().getDisplayName()+"%d%"+itemAmountOne.getData().getData();
+
+				ItemName = ItemName.replace(":","");
+				ItemName = ItemName.replace(".","");
+				ItemName = ItemName.replace("[","");
+				ItemName = ItemName.replace("]","");
+				if(u.getItemStack(player).hasItemMeta())
+				{
+					if(u.getItemStack(player).getItemMeta().hasLore())
+						ItemName = ItemName+u.getItemStack(player).getItemMeta().getLore().toString().length();
+					else
+						ItemName = ItemName+0;
+				}
 				else
+					ItemName = ItemName+0;
+				if(Board.contains("Exchange."+ItemName+"."+player.getUniqueId().toString()))
+				{
 					u.clearAll(player);
-				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
+					s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
+					player.sendMessage(ChatColor.RED+"[거래 게시판] : 동일 상품을 이미 등록하셨습니다!");
+					return;
+				}
+				if(Board.contains("Exchange."+ItemName)==false)
+					Board.set("Exchange."+ItemName+".Item", event.getCurrentItem());
+				Board.set("ExchangeRegistered", Board.getInt("ExchangeRegistered")+1);
+				Board.set("Exchange."+ItemName+"."+player.getUniqueId().toString()+".Name", player.getName());
+				Board.set("Exchange."+ItemName+"."+player.getUniqueId().toString()+".WantItem", u.getItemStack(player));
+				Board.set("Exchange."+ItemName+"."+player.getUniqueId().toString()+".WantItemAmount", u.getInt(player,(byte)2));
+
+				Board.set("Exchange."+ItemName+"."+player.getUniqueId().toString()+".GiveItem", item);
+				Board.set("Exchange."+ItemName+"."+player.getUniqueId().toString()+".GiveItemAmount", amount);
+				Board.saveConfig();
+
+				Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_Money(Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() - Board.getInt("RegisterCommission"));
+				YamlManager USRL =YC.getNewConfig("Structure/UserShopRegisterList.yml");
+				USRL.set(player.getUniqueId().toString(), USRL.getInt(player.getUniqueId().toString())+1);
+				USRL.saveConfig();
+				u.clearAll(player);
 				player.closeInventory();
+				s.SP(player, Sound.BLOCK_CHEST_OPEN, 1.0F, 1.8F);
+				player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 등록이 완료되었습니다!");
+				player.getInventory().setItem(event.getSlot(), null);
+				return;
 			}
+			else
+				u.clearAll(player);
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
+			player.closeInventory();
 		}
 	}
 	
@@ -1339,8 +1334,6 @@ public class Struct_TradeBoard extends Util_GUI
 		return "null";
 	}
 
-
-	
 	
 	public ItemStack getNormalItem(int number)
 	{

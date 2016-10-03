@@ -7,7 +7,6 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 
 import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;
@@ -132,7 +131,7 @@ public class Area_Main
 		new GBD_RPG.Effect.Effect_Sound().SP(player, org.bukkit.Sound.ENTITY_CHICKEN_EGG, 2.0F, 1.7F);
 		player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 지정 구역 등록 성공!");
 		GBD_RPG.Area.Area_GUI AGUI = new GBD_RPG.Area.Area_GUI();
-		AGUI.AreaGUI_Main(player, name);
+		AGUI.AreaSettingGUI(player, name);
 
 		GBD_RPG.Area.Area_Object AO = new GBD_RPG.Area.Area_Object();
 		AO.setAreaName(name);

@@ -30,8 +30,9 @@ public class Quest_GUI extends Util_GUI
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
 		YamlManager PlayerQuestList  = YC.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "퀘스트 목록 : " + (page+1));
+
+		String UniqueCode = "§0§0§5§0§0§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0퀘스트 목록 : " + (page+1));
 
 		Object[] a = PlayerQuestList.getConfigurationSection("Started").getKeys(false).toArray();
 		String QuestType = "";
@@ -132,8 +133,9 @@ public class Quest_GUI extends Util_GUI
 	{
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "전체 퀘스트 목록 : " + (page+1));
+
+		String UniqueCode = "§0§0§5§0§1§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0전체 퀘스트 목록 : " + (page+1));
 
 		Object[] a = QuestList.getKeys().toArray();
 		
@@ -204,8 +206,9 @@ public class Quest_GUI extends Util_GUI
 	{
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK +"퀘스트 흐름도 : " + (page+1));
+
+		String UniqueCode = "§0§0§5§0§2§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode +"§0퀘스트 흐름도 : " + (page+1));
 		Object[] a = QuestList.getConfigurationSection(QuestName+".FlowChart").getKeys(false).toArray();
 		
 		byte loc=0;
@@ -393,7 +396,8 @@ public class Quest_GUI extends Util_GUI
 
 	public void SelectObjectPage(Player player, byte page, String QuestName)
 	{
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "오브젝트 추가");
+		String UniqueCode = "§0§0§5§0§3§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0오브젝트 추가");
 
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "대사", 323,0,1,Arrays.asList(ChatColor.GRAY + "대화창을 띄우고, 작성된",ChatColor.GRAY+"스크립트를 유저에게 띄웁니다.",ChatColor.GRAY+"(화자 : NPC)"), 0, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "독백", 323,0,1,Arrays.asList(ChatColor.GRAY + "대화창을 띄우고, 작성된",ChatColor.GRAY+"스크립트를 유저에게 띄웁니다.",ChatColor.GRAY+"(화자 : 유저)"), 1, inv);
@@ -426,11 +430,425 @@ public class Quest_GUI extends Util_GUI
 		player.openInventory(inv);
 	}
 
-	public void QuestTypeRouter(Player player,String QuestName)
+	public void QuestScriptTypeGUI(Player player,String QuestName,String NPCname, short FlowChart, String[] script)
 	{
-		Inventory inv = Bukkit.createInventory(null, 27, ChatColor.BLACK + "[퀘스트]");
+		String UniqueCode = "§0§0§5§0§4§r";
+		Inventory inv = Bukkit.createInventory(null, 27, UniqueCode + "§0[퀘스트]");
 		Stack2(ChatColor.BLACK + ChatColor.stripColor(QuestName), 160,8,1,null, 19, inv);
+		
+		for(byte count=0;count < script.length; count++)
+			script[count] = script[count].replace("%player%", player.getName());
+		if(NPCname.equals(player.getName()))
+			ItemStackStack(getPlayerSkull(ChatColor.YELLOW+NPCname, 1, Arrays.asList(script), player.getName()), 13, inv);
+		else
+			Stack2(ChatColor.YELLOW + NPCname, 386,0,1,Arrays.asList(script), 13, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 26, inv);
+		player.openInventory(inv);
+	}
+	
+	public void QuestOptionGUI(Player player, String QuestName)
+	{
+		String UniqueCode = "§0§0§5§0§5§r";
+		Inventory inv = Bukkit.createInventory(null, 45, UniqueCode + "§0퀘스트 옵션");
 
+		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+		YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
+		
+		switch(QuestList.getString(QuestName + ".Type"))
+		{
+		case "N" :
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 타입", 340,0,1,Arrays.asList(ChatColor.WHITE + "일반 퀘스트"), 4, inv);
+			break;
+		case "R" :
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 타입", 386,0,1,Arrays.asList(ChatColor.WHITE + "반복 퀘스트"), 4, inv);
+			break;
+		case "D" :
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 타입", 403,0,1,Arrays.asList(ChatColor.WHITE + "일일 퀘스트"), 4, inv);
+			break;
+		case "W" :
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 타입", 403,0,7,Arrays.asList(ChatColor.WHITE + "주간 퀘스트"), 4, inv);
+			break;
+		case "M" :
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 타입", 403,0,31,Arrays.asList(ChatColor.WHITE + "월간 퀘스트"), 4, inv);
+			break;
+		}
+
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "레벨 제한", 384,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한 레벨을 설정합니다.",ChatColor.GOLD+"마비노기"+ChatColor.WHITE+" 시스템일 경우 "+ChatColor.YELLOW+"누적레벨"+ChatColor.WHITE+" 기준이며,",ChatColor.RED+"메이플스토리"+ChatColor.WHITE+" 시스템일 경우 "+ChatColor.YELLOW+"레벨"+ChatColor.WHITE+" 기준입니다.","",ChatColor.AQUA + "[필요 레벨 : " + QuestList.getInt(QuestName+".Need.LV")+"]"), 11, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "NPC 호감도 제한", 38,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+"NPC와의 호감도를 설정합니다.","",ChatColor.AQUA + "[필요 호감도 : " + QuestList.getInt(QuestName+".Need.Love")+"]"), 13, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "스킬 랭크 제한", 403,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+"스킬 랭크를 설정합니다.",""/*,ChatColor.AQUA + "[필요 스킬 : " + QuestList.getString(QuestName+".Need.Skill.Name")+"]",ChatColor.AQUA+"[필요 랭크 : " + QuestList.getInt(QuestName+".Need.Skill.Rank")+"]"*/), 15, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + ""+GBD_RPG.Main_Main.Main_ServerOption.STR+" 제한", 267,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+""+GBD_RPG.Main_Main.Main_ServerOption.STR+" 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 "+GBD_RPG.Main_Main.Main_ServerOption.STR+" : " + QuestList.getInt(QuestName+".Need.STR")+"]"), 20, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + ""+GBD_RPG.Main_Main.Main_ServerOption.DEX+" 제한", 261,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+""+GBD_RPG.Main_Main.Main_ServerOption.DEX+" 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 "+GBD_RPG.Main_Main.Main_ServerOption.DEX+" : " + QuestList.getInt(QuestName+".Need.DEX")+"]"), 21, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + ""+GBD_RPG.Main_Main.Main_ServerOption.INT+" 제한", 369,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+""+GBD_RPG.Main_Main.Main_ServerOption.INT+" 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 "+GBD_RPG.Main_Main.Main_ServerOption.INT+" : " + QuestList.getInt(QuestName+".Need.INT")+"]"), 22, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + ""+GBD_RPG.Main_Main.Main_ServerOption.WILL+" 제한", 370,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+""+GBD_RPG.Main_Main.Main_ServerOption.WILL+" 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 "+GBD_RPG.Main_Main.Main_ServerOption.WILL+" : " + QuestList.getInt(QuestName+".Need.WILL")+"]"), 23, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + ""+GBD_RPG.Main_Main.Main_ServerOption.LUK+" 제한", 322,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+""+GBD_RPG.Main_Main.Main_ServerOption.LUK+" 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 "+GBD_RPG.Main_Main.Main_ServerOption.LUK+" : " + QuestList.getInt(QuestName+".Need.LUK")+"]"), 24, inv);
+		if(QuestList.getString(QuestName+".Need.PrevQuest").equalsIgnoreCase("null") == true)
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "필수 완료 퀘스트", 386,0,1,Arrays.asList(ChatColor.WHITE+"이전 퀘스트를 수행한 뒤",ChatColor.WHITE+"현재 퀘스트를 수행 하도록 합니다.","",ChatColor.AQUA + "[이전 퀘스트 : 없음]"),29, inv);
+		else
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "필수 완료 퀘스트", 386,0,1,Arrays.asList(ChatColor.WHITE+"이전 퀘스트를 수행한 뒤",ChatColor.WHITE+"현재 퀘스트를 수행 하도록 합니다.",ChatColor.RED+"[Shift + 우클릭시 삭제됩니다]","",ChatColor.AQUA + "[이전 퀘스트 : " +QuestList.getString(QuestName+".Need.PrevQuest")+"]"),29, inv);
+		switch(QuestList.getInt(QuestName+".Server.Limit"))
+		{
+		case 0:
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 한정", 397,3,1,Arrays.asList(ChatColor.WHITE+"서버에서 단 몇 명만이",ChatColor.WHITE+"이 퀘스트를 수행 할 수 있습니다.",ChatColor.WHITE+"플레이어가 퀘스트를 받을 때 마다 1씩 깎이며,",ChatColor.WHITE+"-1이 될 경우 퀘스트를 받을 수 없습니다.",ChatColor.DARK_AQUA+"(0명으로 설정할 경우, 제한이 사라집니다.)","",ChatColor.AQUA +"[수행 가능 플레이어 수 : 제한 없음]"), 33, inv);
+			break;
+		case -1:
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 한정", 397,3,1,Arrays.asList(ChatColor.WHITE+"서버에서 단 몇 명만이",ChatColor.WHITE+"이 퀘스트를 수행 할 수 있습니다.",ChatColor.WHITE+"플레이어가 퀘스트를 받을 때 마다 1씩 깎이며,",ChatColor.WHITE+"-1이 될 경우 퀘스트를 받을 수 없습니다.",ChatColor.DARK_AQUA+"(0명으로 설정할 경우, 제한이 사라집니다.)","",ChatColor.RED +"[더이상 받을 수 없음]"), 33, inv);
+			break;
+		default:
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 한정", 397,3,1,Arrays.asList(ChatColor.WHITE+"서버에서 단 몇 명만이",ChatColor.WHITE+"이 퀘스트를 수행 할 수 있습니다.",ChatColor.WHITE+"플레이어가 퀘스트를 받을 때 마다 1씩 깎이며,",ChatColor.WHITE+"-1이 될 경우 퀘스트를 받을 수 없습니다.",ChatColor.DARK_AQUA+"(0명으로 설정할 경우, 제한이 사라집니다.)","",ChatColor.AQUA +"[수행 가능 플레이어 수 : "+QuestList.getInt(QuestName+".Server.Limit")+"]"), 33, inv);
+			break;
+		}
+	
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 36, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 44, inv);
+		player.openInventory(inv);
+	}
+	
+	public void GetterItemSetingGUI(Player player, String QuestName)
+	{
+		String UniqueCode = "§1§0§5§0§6§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0모아야 할 아이템 등록");
+		for(int count = 0;count<8;count++)
+			Stack2(ChatColor.WHITE+ "[아이템을 올려 주세요.]", 389,0,0,null, count, inv);
+		
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 8, inv);
+		player.openInventory(inv);
+	}
+
+	public void PresentItemSettingGUI(Player player, String QuestName)
+	{
+		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+		YamlManager QuestConfig=YC.getNewConfig("Quest/QuestList.yml");
+
+		UserData_Object u = new UserData_Object();
+
+		String UniqueCode = "§1§0§5§0§7§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0보상 아이템 등록");
+		if(u.getInt(player, (byte)1) == -1)
+			u.setInt(player, (byte)1, 0);
+		if(u.getInt(player, (byte)2) == -1)
+			u.setInt(player, (byte)2, 0);
+		if(u.getInt(player, (byte)3) == -1)
+			u.setInt(player, (byte)3, 0);
+			
+		Stack2(ChatColor.WHITE+ "[보상금 설정하기]", 266,0,1,Arrays.asList(ChatColor.WHITE+""+ChatColor.BOLD+""+u.getInt(player, (byte)1)+" "+GBD_RPG.Main_Main.Main_ServerOption.Money), 0, inv);
+		Stack2(ChatColor.WHITE+ "[경험치 설정하기]", 384,0,1,Arrays.asList(ChatColor.WHITE+""+ChatColor.BOLD+""+u.getInt(player, (byte)2)+ChatColor.AQUA+""+ChatColor.BOLD+ " EXP"), 1, inv);
+		Stack2(ChatColor.WHITE+ "[NPC 호감도 설정하기]", 38,0,1,Arrays.asList(ChatColor.WHITE+""+ChatColor.BOLD+""+u.getInt(player, (byte)3)+ChatColor.LIGHT_PURPLE+""+ChatColor.BOLD+ " Love"), 2, inv);
+		int ifItemExit = 0;
+		for(int count = 3;count<8;count++)
+		{
+			if(QuestConfig.getItemStack(QuestName + ".FlowChart."+ u.getInt(player, (byte)5) +".Item."+ifItemExit) != null)
+			{
+				ItemStackStack(QuestConfig.getItemStack(QuestName + ".FlowChart."+ u.getInt(player, (byte)5) +".Item."+ifItemExit), count, inv);
+				ifItemExit++;
+			}
+			else
+				Stack2(ChatColor.WHITE+ "[아이템을 올려 주세요.]", 389,0,0,null, count, inv);
+		}
+		
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 8, inv);
+		u.setString(player, (byte)4,null);
+		player.openInventory(inv);
+	}
+	
+	public void ShowItemGUI(Player player, String QuestName, short Flow, boolean isOP, boolean type)
+	{
+		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+		YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
+
+		String UniqueCode = "§0§0§5§0§8§r";
+		Inventory inv = null;
+		
+		if(QuestList.contains(QuestName+".FlowChart."+Flow+".Item") == true)
+		{
+			Object[] a =QuestList.getConfigurationSection(QuestName+".FlowChart."+Flow+".Item").getKeys(false).toArray();
+			if(type == false)
+			{
+				inv = Bukkit.createInventory(null, 27, UniqueCode + "§0모아야 할 아이템 목록");
+				for(short count = 0;count<a.length;count++)
+					ItemStackStack(QuestList.getItemStack(QuestName+".FlowChart."+Flow+".Item." + a[count]),count+10,inv);
+			}
+			else
+			{
+				inv = Bukkit.createInventory(null, 27, UniqueCode + "§0보상 목록");
+				Stack2(ChatColor.GOLD+ "[보상금]", 266,0,1,Arrays.asList("",ChatColor.WHITE + "" + ChatColor.BOLD + QuestList.getInt(QuestName+".FlowChart."+Flow+".Money") +ChatColor.GOLD +" "+GBD_RPG.Main_Main.Main_ServerOption.Money), 3, inv);
+				Stack2(ChatColor.AQUA+ "[경험치]", 384,0,1,Arrays.asList("",ChatColor.WHITE + "" + ChatColor.BOLD + QuestList.getInt(QuestName+".FlowChart."+Flow+".EXP") +ChatColor.AQUA + " EXP"), 4, inv);
+				Stack2(ChatColor.LIGHT_PURPLE+ "[호감도]", 38,0,1,Arrays.asList("",ChatColor.WHITE + "" + ChatColor.BOLD + QuestList.getInt(QuestName+".FlowChart."+Flow+".Love") +ChatColor.LIGHT_PURPLE + " Love"), 5, inv);
+
+				for(short count = 0;count<a.length;count++)
+					ItemStackStack(QuestList.getItemStack(QuestName+".FlowChart."+Flow+".Item." + a[count]),count+11,inv);
+				if(player.isOp())
+				{
+					UserData_Object u = new UserData_Object();
+					if(u.getInt(player, (byte)1)!=-9)
+					{
+						u.clearAll(player);
+						Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "보상 받기", 54,0,1,Arrays.asList(ChatColor.GRAY + "보상을 수령합니다." ,ChatColor.BLACK +""+ Flow), 22, inv);
+					}
+				}
+				else
+					Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "보상 받기", 54,0,1,Arrays.asList(ChatColor.GRAY + "보상을 수령합니다." ,ChatColor.BLACK +""+ Flow), 22, inv);
+			}
+		}
+		else
+		{
+			if(type == false)
+			{
+				inv = Bukkit.createInventory(null, 27, UniqueCode + "§0모아야 할 아이템 목록");
+			}
+			else
+			{
+				inv = Bukkit.createInventory(null, 27, UniqueCode + "§0보상 목록");
+				Stack2(ChatColor.GOLD+ "[보상금]", 266,0,1,Arrays.asList("",ChatColor.WHITE + "" + ChatColor.BOLD + QuestList.getInt(QuestName+".FlowChart."+Flow+".Money") +ChatColor.GOLD +" "+GBD_RPG.Main_Main.Main_ServerOption.Money), 3, inv);
+				Stack2(ChatColor.AQUA+ "[경험치]", 384,0,1,Arrays.asList("",ChatColor.WHITE + "" + ChatColor.BOLD + QuestList.getInt(QuestName+".FlowChart."+Flow+".EXP") +ChatColor.AQUA + " EXP"), 4, inv);
+				Stack2(ChatColor.LIGHT_PURPLE+ "[호감도]", 38,0,1,Arrays.asList("",ChatColor.WHITE + "" + ChatColor.BOLD + QuestList.getInt(QuestName+".FlowChart."+Flow+".Love") +ChatColor.LIGHT_PURPLE + " Love"), 5, inv);
+				if(player.isOp())
+				{
+					UserData_Object u = new UserData_Object();
+					if(u.getInt(player, (byte)1)!=-9)
+					{
+						u.clearAll(player);
+						Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "보상 받기", 54,0,1,Arrays.asList(ChatColor.GRAY + "보상을 수령합니다." ,ChatColor.BLACK +""+ Flow), 22, inv);
+					}
+				}
+				else
+					Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "보상 받기", 54,0,1,Arrays.asList(ChatColor.GRAY + "보상을 수령합니다." ,ChatColor.BLACK +""+ Flow), 22, inv);
+			}
+		}
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK +""+ isOP), 18, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 26, inv);
+		player.openInventory(inv);
+	}
+	
+	public void KillMonsterGUI(Player player, String QuestName, short Flow, boolean isOP)
+	{
+		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+		YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
+		YamlManager PlayerQuestList  = YC.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
+
+		String UniqueCode = "§0§0§5§0§8§r";
+		Inventory inv = Bukkit.createInventory(null, 27, UniqueCode + "§0사냥 해야 할 몬스터 목록");
+		
+		Object[] c = QuestList.getConfigurationSection(QuestName+".FlowChart."+Flow+".Monster").getKeys(false).toArray();
+		for(short counter = 0; counter < c.length; counter++)
+		{
+			String MobName = QuestList.getString(QuestName+".FlowChart."+Flow+".Monster."+counter+".MonsterName");
+			int Amount = QuestList.getInt(QuestName+".FlowChart."+Flow+".Monster."+counter+".Amount");
+			int PlayerKillAmount = PlayerQuestList.getInt("Started."+QuestName+".Hunt."+counter);
+			
+	        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1);
+	        SkullMeta meta = (SkullMeta) skull.getItemMeta();
+	        meta.setOwner(MobName);
+	        meta.setDisplayName(ChatColor.GOLD + SkullType(MobName));
+	        meta.setLore(Arrays.asList(ChatColor.WHITE + "[" +PlayerKillAmount+"/"+ Amount + "]"));
+	        skull.setItemMeta(meta);
+	        ItemStackStack(skull, counter, inv);
+			//Stack2(ChatColor.GOLD+ MobName, 266,0,1,Arrays.asList(ChatColor.WHITE + "[" +PlayerKillAmount+"/"+ Amount + "]"), counter, inv);
+		}
+		
+		
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK +""+ isOP), 18, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 26, inv);
+		player.openInventory(inv);
+	}
+	
+	public void HarvestGUI(Player player, String QuestName, short Flow, boolean isOP)
+	{
+		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+		YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
+		YamlManager PlayerQuestList  = YC.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
+
+		String UniqueCode = "§0§0§5§0§8§r";
+		Inventory inv = Bukkit.createInventory(null, 27, UniqueCode + "§0채집 해야 할 블록 목록");
+		
+		Object[] c = QuestList.getConfigurationSection(QuestName+".FlowChart."+Flow+".Block").getKeys(false).toArray();
+		for(short counter = 0; counter < c.length; counter++)
+		{
+			int BlockID = QuestList.getInt(QuestName+".FlowChart."+Flow+".Block."+counter+".BlockID");
+			byte BlockData = (byte) QuestList.getInt(QuestName+".FlowChart."+Flow+".Block."+counter+".BlockData");
+			int Amount = QuestList.getInt(QuestName+".FlowChart."+Flow+".Block."+counter+".Amount");
+			boolean DataEquals = QuestList.getBoolean(QuestName+".FlowChart."+Flow+".Block."+counter+".DataEquals");
+			int PlayerHarvestAmount = PlayerQuestList.getInt("Started."+QuestName+".Block."+counter);
+			GBD_RPG.Main_Event.Main_Interact IT = new GBD_RPG.Main_Event.Main_Interact();
+			
+			if(DataEquals == true)
+				Stack(ChatColor.YELLOW+IT.SetItemDefaultName((short) BlockID,(byte)BlockData), BlockID, BlockData, 1, Arrays.asList(ChatColor.WHITE + "[" +PlayerHarvestAmount+"/"+ Amount + "]","",ChatColor.GRAY + "아이템 ID : " +BlockID,ChatColor.GRAY + "아이템 Data : " +BlockData), counter, inv);
+			else
+				Stack(ChatColor.YELLOW+"아무런 "+IT.SetItemDefaultName((short) BlockID,(byte)BlockData)+ChatColor.YELLOW+" 종류", BlockID, 0, 1, Arrays.asList(ChatColor.WHITE + "[" +PlayerHarvestAmount+"/"+ Amount + "]","",ChatColor.GRAY + "아이템 ID : " +BlockID), counter, inv);
+		}
+		
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK +""+ isOP), 18, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 26, inv);
+		player.openInventory(inv);
+	}
+	
+	public void KeepGoing(Player player, String QuestName, short Flow, short Mob, boolean Harvest)
+	{
+		String UniqueCode = "§0§0§5§0§9§r";
+		Inventory inv = Bukkit.createInventory(null, 27, UniqueCode + "§0계속 등록 하시겠습니까?");
+
+		if(Harvest == false)
+		{
+			Stack2(ChatColor.GREEN + "" + ChatColor.BOLD + "계속 등록하기", 386,0,1,Arrays.asList(ChatColor.GRAY + "사냥 대상을 추가로 등록합니다.",ChatColor.BLACK +""+Flow,ChatColor.BLACK + ""+Mob), 10, inv);
+			Stack2(ChatColor.RED + "" + ChatColor.BOLD + "등록 중단하기", 166,0,1,Arrays.asList(ChatColor.GRAY + "사냥 대상 추가를 종료합니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 16, inv);
+		}
+		else
+		{
+			Stack2(ChatColor.GREEN + "" + ChatColor.BOLD + "계속 등록하기", 386,0,1,Arrays.asList(ChatColor.GRAY + "채집 대상을 추가로 등록합니다.",ChatColor.BLACK +""+Flow,ChatColor.BLACK + ""+Mob), 10, inv);
+			Stack2(ChatColor.RED + "" + ChatColor.BOLD + "등록 중단하기", 166,0,1,Arrays.asList(ChatColor.GRAY + "채집 대상 추가를 종료합니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 16, inv);
+		}
+		player.openInventory(inv);
+	}
+	
+	public void Quest_NavigationListGUI(Player player, short page, String QuestName)
+	{
+		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+		YamlManager NavigationConfig =YC.getNewConfig("Navigation/NavigationList.yml");
+
+		String UniqueCode = "§0§0§5§0§a§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0퀘스트 네비 설정 : " + (page+1));
+
+		Object[] Navi= NavigationConfig.getConfigurationSection("").getKeys(false).toArray();
+		
+		byte loc=0;
+		for(int count = page*45; count < Navi.length;count++)
+		{
+			if(count > Navi.length || loc >= 45) break;
+			String NaviName = NavigationConfig.getString(Navi[count]+".Name");
+			String world = NavigationConfig.getString(Navi[count]+".world");
+			int x = NavigationConfig.getInt(Navi[count]+".x");
+			short y = (short) NavigationConfig.getInt(Navi[count]+".y");
+			int z = NavigationConfig.getInt(Navi[count]+".z");
+			int Time = NavigationConfig.getInt(Navi[count]+".time");
+			short sensitive = (short) NavigationConfig.getInt(Navi[count]+".sensitive");
+			boolean Permition = NavigationConfig.getBoolean(Navi[count]+".onlyOPuse");
+			byte ShowArrow = (byte) NavigationConfig.getInt(Navi[count]+".ShowArrow");
+			
+			
+			String TimeS = ChatColor.DARK_AQUA+"<도착할 때 까지 유지>";
+			String PermitionS = ChatColor.DARK_AQUA+"<OP만 사용 가능>";
+			String sensitiveS = ChatColor.BLUE+"<반경 "+sensitive+"블록 이내를 도착지로 판정>";
+			String ShowArrowS = ChatColor.DARK_AQUA+"<기본 화살표 모양>";
+			if(Permition == false)
+				PermitionS = ChatColor.DARK_AQUA+"<모두 사용 가능>";
+			if(Time >= 0)
+				TimeS = ChatColor.DARK_AQUA+"<"+Time+"초 동안 유지>";
+			switch(ShowArrow)
+			{
+			default:
+				ShowArrowS = ChatColor.DARK_AQUA+"<기본 화살표 모양>";
+				break;
+			}
+			Stack2(ChatColor.BLACK + "" + ChatColor.BOLD + Navi[count].toString(), 395,0,1,Arrays.asList(
+			ChatColor.YELLOW+""+ChatColor.BOLD+NaviName,"",
+			ChatColor.BLUE+"[도착 지점]",ChatColor.BLUE+"월드 : "+ChatColor.WHITE+world,
+			ChatColor.BLUE+"좌표 : " + ChatColor.WHITE+x+","+y+","+z,sensitiveS,"",
+			ChatColor.DARK_AQUA+"[기타 옵션]",TimeS,PermitionS,ShowArrowS,""
+			,ChatColor.YELLOW+"[좌 클릭시 네비 선택]"), loc, inv);
+			loc++;
+		}
+		
+		if(Navi.length-(page*44)>45)
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+		if(page!=0)
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+QuestName), 53, inv);
+		player.openInventory(inv);
+	}
+	
+	public void Quest_OPChoice(Player player,String QuestName, short Flow,short page)
+	{
+		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+		YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
+
+		String UniqueCode = "§0§0§5§0§b§r";
+		Inventory inv = Bukkit.createInventory(null, 27, UniqueCode + "§0퀘스트 선택 확인");
+		
+		String[] script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.0.Lore")+"%enter%%enter%"+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"변수값 변경 : " + ChatColor.WHITE+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.0.Var")).split("%enter%");
+		
+		switch(QuestList.getConfigurationSection(QuestName+".FlowChart."+Flow+".Choice").getKeys(false).size())
+		{
+		case 1:
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,1,Arrays.asList(script), 13, inv);
+			break;
+		case 2:
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,1,Arrays.asList(script), 12, inv);
+			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore")+"%enter%%enter%"+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"변수값 변경 : " + ChatColor.WHITE+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.1.Var")).split("%enter%");
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,2,Arrays.asList(script), 14, inv);
+			break;
+		case 3:
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,1,Arrays.asList(script), 11, inv);
+			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore")+"%enter%%enter%"+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"변수값 변경 : " + ChatColor.WHITE+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.1.Var")).split("%enter%");
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,2,Arrays.asList(script), 13, inv);
+			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.2.Lore")+"%enter%%enter%"+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"변수값 변경 : " + ChatColor.WHITE+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.2.Var")).split("%enter%");
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,3,Arrays.asList(script), 15, inv);
+			break;
+		case 4:
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,1,Arrays.asList(script), 10, inv);
+			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore")+"%enter%%enter%"+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"변수값 변경 : " + ChatColor.WHITE+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.1.Var")).split("%enter%");
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,2,Arrays.asList(script), 12, inv);
+			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.2.Lore")+"%enter%%enter%"+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"변수값 변경 : " + ChatColor.WHITE+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.2.Var")).split("%enter%");
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,3,Arrays.asList(script), 14, inv);
+			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.3.Lore")+"%enter%%enter%"+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"변수값 변경 : " + ChatColor.WHITE+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.3.Var")).split("%enter%");
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,4,Arrays.asList(script), 16, inv);
+			break;
+		}
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK+""+page), 18, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+QuestName), 26, inv);
+		player.openInventory(inv);
+	}
+	
+	public void Quest_UserChoice(Player player,String QuestName, short Flow)
+	{
+		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+		YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
+
+		String UniqueCode = "§0§0§5§0§c§r";
+		Inventory inv = Bukkit.createInventory(null, 27, UniqueCode + "§0퀘스트 선택");
+
+		String lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.0.Lore").replace("%player%", player.getName());
+		String[] script = lore.split("%enter%");
+		
+		switch(QuestList.getConfigurationSection(QuestName+".FlowChart."+Flow+".Choice").getKeys(false).size())
+		{
+		case 1:
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,1,Arrays.asList(script), 13, inv);
+			break;
+		case 2:
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,1,Arrays.asList(script), 12, inv);
+			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore").replace("%player%", player.getName());
+			script = lore.split("%enter%");
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,2,Arrays.asList(script), 14, inv);
+			break;
+		case 3:
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,1,Arrays.asList(script), 11, inv);
+			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore").replace("%player%", player.getName());
+			script = lore.split("%enter%");
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,2,Arrays.asList(script), 13, inv);
+			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.2.Lore").replace("%player%", player.getName());
+			script = lore.split("%enter%");
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,3,Arrays.asList(script), 15, inv);
+			break;
+		case 4:
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,1,Arrays.asList(script), 10, inv);
+			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore").replace("%player%", player.getName());
+			script = lore.split("%enter%");
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,2,Arrays.asList(script), 12, inv);
+			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.2.Lore").replace("%player%", player.getName());
+			script = lore.split("%enter%");
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,3,Arrays.asList(script), 14, inv);
+			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.3.Lore").replace("%player%", player.getName());
+			script = lore.split("%enter%");
+			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,4,Arrays.asList(script), 16, inv);
+			break;
+		}
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+QuestName,ChatColor.BLACK+""+Flow), 26, inv);
+		player.openInventory(inv);
+	}
+	
+	
+	public void QuestRouter(Player player,String QuestName)
+	{
 		GBD_RPG.Effect.Effect_Potion p = new GBD_RPG.Effect.Effect_Potion();
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		
@@ -497,7 +915,7 @@ public class Quest_GUI extends Util_GUI
 					PlayerVarList.saveConfig();
 					PlayerQuestList.set("Started."+QuestName+".Flow",PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 					PlayerQuestList.saveConfig();
-					QuestTypeRouter(player, QuestName);
+					QuestRouter(player, QuestName);
 					return;
 				}
 				case "IF":
@@ -542,7 +960,7 @@ public class Quest_GUI extends Util_GUI
 					{
 						PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 						PlayerQuestList.saveConfig();
-						QuestTypeRouter(player, QuestName);
+						QuestRouter(player, QuestName);
 					}
 					else
 					{
@@ -564,7 +982,7 @@ public class Quest_GUI extends Util_GUI
 								}
 								PlayerQuestList.set("Started."+QuestName+".Flow",count);
 								PlayerQuestList.saveConfig();
-								QuestTypeRouter(player, QuestName);
+								QuestRouter(player, QuestName);
 								return;
 							}
 							if(MeetTheIF==0&&(QuestList.getString(QuestName+".FlowChart."+count+".Type").compareTo("ELSE")==0))
@@ -573,7 +991,7 @@ public class Quest_GUI extends Util_GUI
 								PlayerVarList.saveConfig();
 								PlayerQuestList.set("Started."+QuestName+".Flow",count);
 								PlayerQuestList.saveConfig();
-								QuestTypeRouter(player, QuestName);
+								QuestRouter(player, QuestName);
 								return;
 							}
 						}
@@ -614,7 +1032,7 @@ public class Quest_GUI extends Util_GUI
 								PlayerVarList.saveConfig();
 								PlayerQuestList.set("Started."+QuestName+".Flow",count);
 								PlayerQuestList.saveConfig();
-								QuestTypeRouter(player, QuestName);
+								QuestRouter(player, QuestName);
 								return;
 							}
 						}
@@ -637,7 +1055,7 @@ public class Quest_GUI extends Util_GUI
 					{
 						PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 						PlayerQuestList.saveConfig();
-						QuestTypeRouter(player, QuestName);
+						QuestRouter(player, QuestName);
 					}
 				}
 				break;
@@ -651,7 +1069,7 @@ public class Quest_GUI extends Util_GUI
 					}
 					PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 					PlayerQuestList.saveConfig();
-					QuestTypeRouter(player, QuestName);
+					QuestRouter(player, QuestName);
 				}
 				break;
 				case "QuestFail":
@@ -687,7 +1105,7 @@ public class Quest_GUI extends Util_GUI
 				PlayerVarList.saveConfig();
 				PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 				PlayerQuestList.saveConfig();
-				QuestTypeRouter(player, QuestName);
+				QuestRouter(player, QuestName);
 			}
 			break;
 			case "Choice":
@@ -728,7 +1146,7 @@ public class Quest_GUI extends Util_GUI
 				}
 				PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 				PlayerQuestList.saveConfig();
-				QuestTypeRouter(player, QuestName);
+				QuestRouter(player, QuestName);
 			}
 			break;
 			case "Whisper":
@@ -740,7 +1158,7 @@ public class Quest_GUI extends Util_GUI
 				player.sendMessage(script3);
 				PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 				PlayerQuestList.saveConfig();
-				QuestTypeRouter(player, QuestName);
+				QuestRouter(player, QuestName);
 			}
 			break;
 			case "BroadCast":
@@ -752,7 +1170,7 @@ public class Quest_GUI extends Util_GUI
 				Bukkit.getServer().broadcastMessage(script3);
 				PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 				PlayerQuestList.saveConfig();
-				QuestTypeRouter(player, QuestName);
+				QuestRouter(player, QuestName);
 			}
 			break;
 			case "Script": 
@@ -807,7 +1225,7 @@ public class Quest_GUI extends Util_GUI
 					s.SL(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 0.8F, 1.0F);
 					PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 					PlayerQuestList.saveConfig();
-					QuestTypeRouter(player, QuestName);
+					QuestRouter(player, QuestName);
 				}
 				break;
 			case "BlockPlace":
@@ -819,7 +1237,7 @@ public class Quest_GUI extends Util_GUI
 					block.setData((byte)QuestList.getInt(QuestName+".FlowChart."+FlowChart+".DATA"));
 					PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 					PlayerQuestList.saveConfig();
-					QuestTypeRouter(player, QuestName);
+					QuestRouter(player, QuestName);
 				}
 				break;
 			case "Harvest":
@@ -833,487 +1251,48 @@ public class Quest_GUI extends Util_GUI
 		}
 	}
 	
-	public void QuestScriptTypeGUI(Player player,String QuestName,String NPCname, short FlowChart, String[] script)
-	{
-		Inventory inv = Bukkit.createInventory(null, 27, ChatColor.BLACK + "[퀘스트]");
-		Stack2(ChatColor.BLACK + ChatColor.stripColor(QuestName), 160,8,1,null, 19, inv);
-		
-		for(byte count=0;count < script.length; count++)
-			script[count] = script[count].replace("%player%", player.getName());
-		if(NPCname.equals(player.getName()))
-			ItemStackStack(getPlayerSkull(ChatColor.YELLOW+NPCname, 1, Arrays.asList(script), player.getName()), 13, inv);
-		else
-			Stack2(ChatColor.YELLOW + NPCname, 386,0,1,Arrays.asList(script), 13, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 26, inv);
-		player.openInventory(inv);
-	}
-	
-	public void QuestOptionGUI(Player player, String QuestName)
-	{
-		Inventory inv = Bukkit.createInventory(null, 45, ChatColor.BLACK + "퀘스트 옵션");
-
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
-		
-		switch(QuestList.getString(QuestName + ".Type"))
-		{
-		case "N" :
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 타입", 340,0,1,Arrays.asList(ChatColor.WHITE + "일반 퀘스트"), 4, inv);
-			break;
-		case "R" :
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 타입", 386,0,1,Arrays.asList(ChatColor.WHITE + "반복 퀘스트"), 4, inv);
-			break;
-		case "D" :
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 타입", 403,0,1,Arrays.asList(ChatColor.WHITE + "일일 퀘스트"), 4, inv);
-			break;
-		case "W" :
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 타입", 403,0,7,Arrays.asList(ChatColor.WHITE + "주간 퀘스트"), 4, inv);
-			break;
-		case "M" :
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 타입", 403,0,31,Arrays.asList(ChatColor.WHITE + "월간 퀘스트"), 4, inv);
-			break;
-		}
-
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "레벨 제한", 384,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한 레벨을 설정합니다.",ChatColor.GOLD+"마비노기"+ChatColor.WHITE+" 시스템일 경우 "+ChatColor.YELLOW+"누적레벨"+ChatColor.WHITE+" 기준이며,",ChatColor.RED+"메이플스토리"+ChatColor.WHITE+" 시스템일 경우 "+ChatColor.YELLOW+"레벨"+ChatColor.WHITE+" 기준입니다.","",ChatColor.AQUA + "[필요 레벨 : " + QuestList.getInt(QuestName+".Need.LV")+"]"), 11, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "NPC 호감도 제한", 38,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+"NPC와의 호감도를 설정합니다.","",ChatColor.AQUA + "[필요 호감도 : " + QuestList.getInt(QuestName+".Need.Love")+"]"), 13, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "스킬 랭크 제한", 403,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+"스킬 랭크를 설정합니다.",""/*,ChatColor.AQUA + "[필요 스킬 : " + QuestList.getString(QuestName+".Need.Skill.Name")+"]",ChatColor.AQUA+"[필요 랭크 : " + QuestList.getInt(QuestName+".Need.Skill.Rank")+"]"*/), 15, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + ""+GBD_RPG.Main_Main.Main_ServerOption.STR+" 제한", 267,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+""+GBD_RPG.Main_Main.Main_ServerOption.STR+" 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 "+GBD_RPG.Main_Main.Main_ServerOption.STR+" : " + QuestList.getInt(QuestName+".Need.STR")+"]"), 20, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + ""+GBD_RPG.Main_Main.Main_ServerOption.DEX+" 제한", 261,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+""+GBD_RPG.Main_Main.Main_ServerOption.DEX+" 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 "+GBD_RPG.Main_Main.Main_ServerOption.DEX+" : " + QuestList.getInt(QuestName+".Need.DEX")+"]"), 21, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + ""+GBD_RPG.Main_Main.Main_ServerOption.INT+" 제한", 369,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+""+GBD_RPG.Main_Main.Main_ServerOption.INT+" 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 "+GBD_RPG.Main_Main.Main_ServerOption.INT+" : " + QuestList.getInt(QuestName+".Need.INT")+"]"), 22, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + ""+GBD_RPG.Main_Main.Main_ServerOption.WILL+" 제한", 370,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+""+GBD_RPG.Main_Main.Main_ServerOption.WILL+" 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 "+GBD_RPG.Main_Main.Main_ServerOption.WILL+" : " + QuestList.getInt(QuestName+".Need.WILL")+"]"), 23, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + ""+GBD_RPG.Main_Main.Main_ServerOption.LUK+" 제한", 322,0,1,Arrays.asList(ChatColor.WHITE+"퀘스트 수행에 필요한",ChatColor.WHITE+""+GBD_RPG.Main_Main.Main_ServerOption.LUK+" 스텟을 설정합니다.","",ChatColor.AQUA + "[필요 "+GBD_RPG.Main_Main.Main_ServerOption.LUK+" : " + QuestList.getInt(QuestName+".Need.LUK")+"]"), 24, inv);
-		if(QuestList.getString(QuestName+".Need.PrevQuest").equalsIgnoreCase("null") == true)
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "필수 완료 퀘스트", 386,0,1,Arrays.asList(ChatColor.WHITE+"이전 퀘스트를 수행한 뒤",ChatColor.WHITE+"현재 퀘스트를 수행 하도록 합니다.","",ChatColor.AQUA + "[이전 퀘스트 : 없음]"),29, inv);
-		else
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "필수 완료 퀘스트", 386,0,1,Arrays.asList(ChatColor.WHITE+"이전 퀘스트를 수행한 뒤",ChatColor.WHITE+"현재 퀘스트를 수행 하도록 합니다.",ChatColor.RED+"[Shift + 우클릭시 삭제됩니다]","",ChatColor.AQUA + "[이전 퀘스트 : " +QuestList.getString(QuestName+".Need.PrevQuest")+"]"),29, inv);
-		switch(QuestList.getInt(QuestName+".Server.Limit"))
-		{
-		case 0:
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 한정", 397,3,1,Arrays.asList(ChatColor.WHITE+"서버에서 단 몇 명만이",ChatColor.WHITE+"이 퀘스트를 수행 할 수 있습니다.",ChatColor.WHITE+"플레이어가 퀘스트를 받을 때 마다 1씩 깎이며,",ChatColor.WHITE+"-1이 될 경우 퀘스트를 받을 수 없습니다.",ChatColor.DARK_AQUA+"(0명으로 설정할 경우, 제한이 사라집니다.)","",ChatColor.AQUA +"[수행 가능 플레이어 수 : 제한 없음]"), 33, inv);
-			break;
-		case -1:
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 한정", 397,3,1,Arrays.asList(ChatColor.WHITE+"서버에서 단 몇 명만이",ChatColor.WHITE+"이 퀘스트를 수행 할 수 있습니다.",ChatColor.WHITE+"플레이어가 퀘스트를 받을 때 마다 1씩 깎이며,",ChatColor.WHITE+"-1이 될 경우 퀘스트를 받을 수 없습니다.",ChatColor.DARK_AQUA+"(0명으로 설정할 경우, 제한이 사라집니다.)","",ChatColor.RED +"[더이상 받을 수 없음]"), 33, inv);
-			break;
-		default:
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "퀘스트 한정", 397,3,1,Arrays.asList(ChatColor.WHITE+"서버에서 단 몇 명만이",ChatColor.WHITE+"이 퀘스트를 수행 할 수 있습니다.",ChatColor.WHITE+"플레이어가 퀘스트를 받을 때 마다 1씩 깎이며,",ChatColor.WHITE+"-1이 될 경우 퀘스트를 받을 수 없습니다.",ChatColor.DARK_AQUA+"(0명으로 설정할 경우, 제한이 사라집니다.)","",ChatColor.AQUA +"[수행 가능 플레이어 수 : "+QuestList.getInt(QuestName+".Server.Limit")+"]"), 33, inv);
-			break;
-		}
-	
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 36, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 44, inv);
-		player.openInventory(inv);
-	}
-	
-	public void GetItemGUI(Player player, String QuestName)
-	{
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.BLACK + "모아야 할 아이템 등록");
-		for(int count = 0;count<8;count++)
-			Stack2(ChatColor.WHITE+ "[아이템을 올려 주세요.]", 389,0,0,null, count, inv);
-		
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 8, inv);
-		player.openInventory(inv);
-	}
-
-	public void GetPresentGUI(Player player, String QuestName)
-	{
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager QuestConfig=YC.getNewConfig("Quest/QuestList.yml");
-
-		UserData_Object u = new UserData_Object();
-		
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.BLACK + "보상 아이템 등록");
-		if(u.getInt(player, (byte)1) == -1)
-			u.setInt(player, (byte)1, 0);
-		if(u.getInt(player, (byte)2) == -1)
-			u.setInt(player, (byte)2, 0);
-		if(u.getInt(player, (byte)3) == -1)
-			u.setInt(player, (byte)3, 0);
-			
-		Stack2(ChatColor.WHITE+ "[보상금 설정하기]", 266,0,1,Arrays.asList(ChatColor.WHITE+""+ChatColor.BOLD+""+u.getInt(player, (byte)1)+" "+GBD_RPG.Main_Main.Main_ServerOption.Money), 0, inv);
-		Stack2(ChatColor.WHITE+ "[경험치 설정하기]", 384,0,1,Arrays.asList(ChatColor.WHITE+""+ChatColor.BOLD+""+u.getInt(player, (byte)2)+ChatColor.AQUA+""+ChatColor.BOLD+ " EXP"), 1, inv);
-		Stack2(ChatColor.WHITE+ "[NPC 호감도 설정하기]", 38,0,1,Arrays.asList(ChatColor.WHITE+""+ChatColor.BOLD+""+u.getInt(player, (byte)3)+ChatColor.LIGHT_PURPLE+""+ChatColor.BOLD+ " Love"), 2, inv);
-		int ifItemExit = 0;
-		for(int count = 3;count<8;count++)
-		{
-			if(QuestConfig.getItemStack(QuestName + ".FlowChart."+ u.getInt(player, (byte)5) +".Item."+ifItemExit) != null)
-			{
-				ItemStackStack(QuestConfig.getItemStack(QuestName + ".FlowChart."+ u.getInt(player, (byte)5) +".Item."+ifItemExit), count, inv);
-				ifItemExit++;
-			}
-			else
-				Stack2(ChatColor.WHITE+ "[아이템을 올려 주세요.]", 389,0,0,null, count, inv);
-		}
-		
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 8, inv);
-		u.setString(player, (byte)4,null);
-		player.openInventory(inv);
-	}
-	
-	public void ShowItemGUI(Player player, String QuestName, short Flow, boolean isOP, boolean type)
-	{
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
-
-		Inventory inv = null;
-		
-		if(QuestList.contains(QuestName+".FlowChart."+Flow+".Item") == true)
-		{
-			Object[] a =QuestList.getConfigurationSection(QuestName+".FlowChart."+Flow+".Item").getKeys(false).toArray();
-			if(type == false)
-			{
-				inv = Bukkit.createInventory(null, 27, ChatColor.BLACK + "모아야 할 아이템 목록");
-				for(short count = 0;count<a.length;count++)
-					ItemStackStack(QuestList.getItemStack(QuestName+".FlowChart."+Flow+".Item." + a[count]),count+10,inv);
-			}
-			else
-			{
-				inv = Bukkit.createInventory(null, 27, ChatColor.BLACK + "보상 목록");
-				Stack2(ChatColor.GOLD+ "[보상금]", 266,0,1,Arrays.asList("",ChatColor.WHITE + "" + ChatColor.BOLD + QuestList.getInt(QuestName+".FlowChart."+Flow+".Money") +ChatColor.GOLD +" "+GBD_RPG.Main_Main.Main_ServerOption.Money), 3, inv);
-				Stack2(ChatColor.AQUA+ "[경험치]", 384,0,1,Arrays.asList("",ChatColor.WHITE + "" + ChatColor.BOLD + QuestList.getInt(QuestName+".FlowChart."+Flow+".EXP") +ChatColor.AQUA + " EXP"), 4, inv);
-				Stack2(ChatColor.LIGHT_PURPLE+ "[호감도]", 38,0,1,Arrays.asList("",ChatColor.WHITE + "" + ChatColor.BOLD + QuestList.getInt(QuestName+".FlowChart."+Flow+".Love") +ChatColor.LIGHT_PURPLE + " Love"), 5, inv);
-
-				for(short count = 0;count<a.length;count++)
-					ItemStackStack(QuestList.getItemStack(QuestName+".FlowChart."+Flow+".Item." + a[count]),count+11,inv);
-				if(player.isOp())
-				{
-					UserData_Object u = new UserData_Object();
-					if(u.getInt(player, (byte)1)!=-9)
-					{
-						u.clearAll(player);
-						Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "보상 받기", 54,0,1,Arrays.asList(ChatColor.GRAY + "보상을 수령합니다." ,ChatColor.BLACK +""+ Flow), 22, inv);
-					}
-				}
-				else
-					Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "보상 받기", 54,0,1,Arrays.asList(ChatColor.GRAY + "보상을 수령합니다." ,ChatColor.BLACK +""+ Flow), 22, inv);
-			}
-		}
-		else
-		{
-			if(type == false)
-			{
-				inv = Bukkit.createInventory(null, 27, ChatColor.BLACK + "모아야 할 아이템 목록");
-			}
-			else
-			{
-				inv = Bukkit.createInventory(null, 27, ChatColor.BLACK + "보상 목록");
-				Stack2(ChatColor.GOLD+ "[보상금]", 266,0,1,Arrays.asList("",ChatColor.WHITE + "" + ChatColor.BOLD + QuestList.getInt(QuestName+".FlowChart."+Flow+".Money") +ChatColor.GOLD +" "+GBD_RPG.Main_Main.Main_ServerOption.Money), 3, inv);
-				Stack2(ChatColor.AQUA+ "[경험치]", 384,0,1,Arrays.asList("",ChatColor.WHITE + "" + ChatColor.BOLD + QuestList.getInt(QuestName+".FlowChart."+Flow+".EXP") +ChatColor.AQUA + " EXP"), 4, inv);
-				Stack2(ChatColor.LIGHT_PURPLE+ "[호감도]", 38,0,1,Arrays.asList("",ChatColor.WHITE + "" + ChatColor.BOLD + QuestList.getInt(QuestName+".FlowChart."+Flow+".Love") +ChatColor.LIGHT_PURPLE + " Love"), 5, inv);
-				if(player.isOp())
-				{
-					UserData_Object u = new UserData_Object();
-					if(u.getInt(player, (byte)1)!=-9)
-					{
-						u.clearAll(player);
-						Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "보상 받기", 54,0,1,Arrays.asList(ChatColor.GRAY + "보상을 수령합니다." ,ChatColor.BLACK +""+ Flow), 22, inv);
-					}
-				}
-				else
-					Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "보상 받기", 54,0,1,Arrays.asList(ChatColor.GRAY + "보상을 수령합니다." ,ChatColor.BLACK +""+ Flow), 22, inv);
-			}
-		}
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK +""+ isOP), 18, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 26, inv);
-		player.openInventory(inv);
-	}
-	
-	public void KillMonsterGUI(Player player, String QuestName, short Flow, boolean isOP)
-	{
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
-		YamlManager PlayerQuestList  = YC.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
-
-		Inventory inv = Bukkit.createInventory(null, 27, ChatColor.BLACK + "사냥 해야 할 몬스터 목록");
-		
-		Object[] c = QuestList.getConfigurationSection(QuestName+".FlowChart."+Flow+".Monster").getKeys(false).toArray();
-		for(short counter = 0; counter < c.length; counter++)
-		{
-			String MobName = QuestList.getString(QuestName+".FlowChart."+Flow+".Monster."+counter+".MonsterName");
-			int Amount = QuestList.getInt(QuestName+".FlowChart."+Flow+".Monster."+counter+".Amount");
-			int PlayerKillAmount = PlayerQuestList.getInt("Started."+QuestName+".Hunt."+counter);
-			
-	        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1);
-	        SkullMeta meta = (SkullMeta) skull.getItemMeta();
-	        meta.setOwner(MobName);
-	        meta.setDisplayName(ChatColor.GOLD + SkullType(MobName));
-	        meta.setLore(Arrays.asList(ChatColor.WHITE + "[" +PlayerKillAmount+"/"+ Amount + "]"));
-	        skull.setItemMeta(meta);
-	        ItemStackStack(skull, counter, inv);
-			//Stack2(ChatColor.GOLD+ MobName, 266,0,1,Arrays.asList(ChatColor.WHITE + "[" +PlayerKillAmount+"/"+ Amount + "]"), counter, inv);
-		}
-		
-		
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK +""+ isOP), 18, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 26, inv);
-		player.openInventory(inv);
-	}
-	
-	public void HarvestGUI(Player player, String QuestName, short Flow, boolean isOP)
-	{
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
-		YamlManager PlayerQuestList  = YC.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
-
-		Inventory inv = Bukkit.createInventory(null, 27, ChatColor.BLACK + "채집 해야 할 블록 목록");
-		
-		Object[] c = QuestList.getConfigurationSection(QuestName+".FlowChart."+Flow+".Block").getKeys(false).toArray();
-		for(short counter = 0; counter < c.length; counter++)
-		{
-			int BlockID = QuestList.getInt(QuestName+".FlowChart."+Flow+".Block."+counter+".BlockID");
-			byte BlockData = (byte) QuestList.getInt(QuestName+".FlowChart."+Flow+".Block."+counter+".BlockData");
-			int Amount = QuestList.getInt(QuestName+".FlowChart."+Flow+".Block."+counter+".Amount");
-			boolean DataEquals = QuestList.getBoolean(QuestName+".FlowChart."+Flow+".Block."+counter+".DataEquals");
-			int PlayerHarvestAmount = PlayerQuestList.getInt("Started."+QuestName+".Block."+counter);
-			GBD_RPG.Main_Event.Main_Interact IT = new GBD_RPG.Main_Event.Main_Interact();
-			
-			if(DataEquals == true)
-				Stack(ChatColor.YELLOW+IT.SetItemDefaultName((short) BlockID,(byte)BlockData), BlockID, BlockData, 1, Arrays.asList(ChatColor.WHITE + "[" +PlayerHarvestAmount+"/"+ Amount + "]","",ChatColor.GRAY + "아이템 ID : " +BlockID,ChatColor.GRAY + "아이템 Data : " +BlockData), counter, inv);
-			else
-				Stack(ChatColor.YELLOW+"아무런 "+IT.SetItemDefaultName((short) BlockID,(byte)BlockData)+ChatColor.YELLOW+" 종류", BlockID, 0, 1, Arrays.asList(ChatColor.WHITE + "[" +PlayerHarvestAmount+"/"+ Amount + "]","",ChatColor.GRAY + "아이템 ID : " +BlockID), counter, inv);
-		}
-		
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK +""+ isOP), 18, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 26, inv);
-		player.openInventory(inv);
-	}
-	
-	public void KeepGoing(Player player, String QuestName, short Flow, short Mob, boolean Harvest)
-	{
-		Inventory inv = Bukkit.createInventory(null, 27, ChatColor.BLACK + "계속 등록 하시겠습니까?");
-
-		if(Harvest == false)
-		{
-			Stack2(ChatColor.GREEN + "" + ChatColor.BOLD + "계속 등록하기", 386,0,1,Arrays.asList(ChatColor.GRAY + "사냥 대상을 추가로 등록합니다.",ChatColor.BLACK +""+Flow,ChatColor.BLACK + ""+Mob), 10, inv);
-			Stack2(ChatColor.RED + "" + ChatColor.BOLD + "등록 중단하기", 166,0,1,Arrays.asList(ChatColor.GRAY + "사냥 대상 추가를 종료합니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 16, inv);
-		}
-		else
-		{
-			Stack2(ChatColor.GREEN + "" + ChatColor.BOLD + "계속 등록하기", 386,0,1,Arrays.asList(ChatColor.GRAY + "채집 대상을 추가로 등록합니다.",ChatColor.BLACK +""+Flow,ChatColor.BLACK + ""+Mob), 10, inv);
-			Stack2(ChatColor.RED + "" + ChatColor.BOLD + "등록 중단하기", 166,0,1,Arrays.asList(ChatColor.GRAY + "채집 대상 추가를 종료합니다.",ChatColor.BLACK + ChatColor.stripColor(QuestName)), 16, inv);
-		}
-		player.openInventory(inv);
-	}
-	
-	public void Quest_NavigationListGUI(Player player, short page, String QuestName)
-	{
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager NavigationConfig =YC.getNewConfig("Navigation/NavigationList.yml");
-
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "퀘스트 네비 설정 : " + (page+1));
-
-		Object[] Navi= NavigationConfig.getConfigurationSection("").getKeys(false).toArray();
-		
-		byte loc=0;
-		for(int count = page*45; count < Navi.length;count++)
-		{
-			if(count > Navi.length || loc >= 45) break;
-			String NaviName = NavigationConfig.getString(Navi[count]+".Name");
-			String world = NavigationConfig.getString(Navi[count]+".world");
-			int x = NavigationConfig.getInt(Navi[count]+".x");
-			short y = (short) NavigationConfig.getInt(Navi[count]+".y");
-			int z = NavigationConfig.getInt(Navi[count]+".z");
-			int Time = NavigationConfig.getInt(Navi[count]+".time");
-			short sensitive = (short) NavigationConfig.getInt(Navi[count]+".sensitive");
-			boolean Permition = NavigationConfig.getBoolean(Navi[count]+".onlyOPuse");
-			byte ShowArrow = (byte) NavigationConfig.getInt(Navi[count]+".ShowArrow");
-			
-			
-			String TimeS = ChatColor.DARK_AQUA+"<도착할 때 까지 유지>";
-			String PermitionS = ChatColor.DARK_AQUA+"<OP만 사용 가능>";
-			String sensitiveS = ChatColor.BLUE+"<반경 "+sensitive+"블록 이내를 도착지로 판정>";
-			String ShowArrowS = ChatColor.DARK_AQUA+"<기본 화살표 모양>";
-			if(Permition == false)
-				PermitionS = ChatColor.DARK_AQUA+"<모두 사용 가능>";
-			if(Time >= 0)
-				TimeS = ChatColor.DARK_AQUA+"<"+Time+"초 동안 유지>";
-			switch(ShowArrow)
-			{
-			default:
-				ShowArrowS = ChatColor.DARK_AQUA+"<기본 화살표 모양>";
-				break;
-			}
-			Stack2(ChatColor.BLACK + "" + ChatColor.BOLD + Navi[count].toString(), 395,0,1,Arrays.asList(
-			ChatColor.YELLOW+""+ChatColor.BOLD+NaviName,"",
-			ChatColor.BLUE+"[도착 지점]",ChatColor.BLUE+"월드 : "+ChatColor.WHITE+world,
-			ChatColor.BLUE+"좌표 : " + ChatColor.WHITE+x+","+y+","+z,sensitiveS,"",
-			ChatColor.DARK_AQUA+"[기타 옵션]",TimeS,PermitionS,ShowArrowS,""
-			,ChatColor.YELLOW+"[좌 클릭시 네비 선택]"), loc, inv);
-			loc++;
-		}
-		
-		if(Navi.length-(page*44)>45)
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
-		if(page!=0)
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+QuestName), 53, inv);
-		player.openInventory(inv);
-	}
-	
-	public void Quest_OPChoice(Player player,String QuestName, short Flow,short page)
-	{
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
-
-		Inventory inv = Bukkit.createInventory(null, 27, ChatColor.BLACK + "퀘스트 선택 확인");
-		
-		String[] script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.0.Lore")+"%enter%%enter%"+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"변수값 변경 : " + ChatColor.WHITE+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.0.Var")).split("%enter%");
-		
-		switch(QuestList.getConfigurationSection(QuestName+".FlowChart."+Flow+".Choice").getKeys(false).size())
-		{
-		case 1:
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,1,Arrays.asList(script), 13, inv);
-			break;
-		case 2:
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,1,Arrays.asList(script), 12, inv);
-			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore")+"%enter%%enter%"+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"변수값 변경 : " + ChatColor.WHITE+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.1.Var")).split("%enter%");
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,2,Arrays.asList(script), 14, inv);
-			break;
-		case 3:
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,1,Arrays.asList(script), 11, inv);
-			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore")+"%enter%%enter%"+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"변수값 변경 : " + ChatColor.WHITE+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.1.Var")).split("%enter%");
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,2,Arrays.asList(script), 13, inv);
-			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.2.Lore")+"%enter%%enter%"+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"변수값 변경 : " + ChatColor.WHITE+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.2.Var")).split("%enter%");
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,3,Arrays.asList(script), 15, inv);
-			break;
-		case 4:
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,1,Arrays.asList(script), 10, inv);
-			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore")+"%enter%%enter%"+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"변수값 변경 : " + ChatColor.WHITE+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.1.Var")).split("%enter%");
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,2,Arrays.asList(script), 12, inv);
-			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.2.Lore")+"%enter%%enter%"+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"변수값 변경 : " + ChatColor.WHITE+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.2.Var")).split("%enter%");
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,3,Arrays.asList(script), 14, inv);
-			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.3.Lore")+"%enter%%enter%"+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"변수값 변경 : " + ChatColor.WHITE+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.3.Var")).split("%enter%");
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,4,Arrays.asList(script), 16, inv);
-			break;
-		}
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK+""+page), 18, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+QuestName), 26, inv);
-		player.openInventory(inv);
-	}
-	
-	public void Quest_UserChoice(Player player,String QuestName, short Flow)
-	{
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
-
-		Inventory inv = Bukkit.createInventory(null, 27, ChatColor.BLACK + "퀘스트 선택");
-
-		String lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.0.Lore").replace("%player%", player.getName());
-		String[] script = lore.split("%enter%");
-		
-		switch(QuestList.getConfigurationSection(QuestName+".FlowChart."+Flow+".Choice").getKeys(false).size())
-		{
-		case 1:
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,1,Arrays.asList(script), 13, inv);
-			break;
-		case 2:
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,1,Arrays.asList(script), 12, inv);
-			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore").replace("%player%", player.getName());
-			script = lore.split("%enter%");
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,2,Arrays.asList(script), 14, inv);
-			break;
-		case 3:
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,1,Arrays.asList(script), 11, inv);
-			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore").replace("%player%", player.getName());
-			script = lore.split("%enter%");
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,2,Arrays.asList(script), 13, inv);
-			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.2.Lore").replace("%player%", player.getName());
-			script = lore.split("%enter%");
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,3,Arrays.asList(script), 15, inv);
-			break;
-		case 4:
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,1,Arrays.asList(script), 10, inv);
-			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore").replace("%player%", player.getName());
-			script = lore.split("%enter%");
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,2,Arrays.asList(script), 12, inv);
-			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.2.Lore").replace("%player%", player.getName());
-			script = lore.split("%enter%");
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,3,Arrays.asList(script), 14, inv);
-			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.3.Lore").replace("%player%", player.getName());
-			script = lore.split("%enter%");
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[선택]", 72,0,4,Arrays.asList(script), 16, inv);
-			break;
-		}
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+QuestName,ChatColor.BLACK+""+Flow), 26, inv);
-		player.openInventory(inv);
-	}
 	
 	
-	public void QuestGUIClickRouter(InventoryClickEvent event, String InventoryName)
-	{
-	    GBD_RPG.NPC.NPC_GUI NPGUI = new GBD_RPG.NPC.NPC_GUI();
-		if(InventoryName.compareTo("퀘스트 옵션")==0)
-			QuestOptionClick(event);
-		else if(InventoryName.compareTo("[퀘스트]")==0)
-			QuestScriptTypeGUIClick(event);
-		else if(InventoryName.contains("진행"))
-			NPGUI.QuestAcceptclickMain(event);
-		else if(InventoryName.contains("전체"))
-			OPboxAllQuestListInventoryclick(event);
-		else if(InventoryName.contains("등록"))
-			NPGUI.NPCQuestclickMain(event);
-		else if(InventoryName.contains("흐름도"))
-			FixQuestListInventoryclick(event);
-		else if(InventoryName.contains("네비"))
-			Quest_NavigationListGUIClick(event);
-		else if(InventoryName.contains("선택"))
-		{
-			if(InventoryName.contains("확인"))
-				Quest_OPChoiceClick(event);
-			else
-				Quest_UserChoiceClick(event);
-		}
-		else
-			MyQuestListInventoryclick(event);
-		return;
-	}
-	
-	
-	public void OPboxAllQuestListInventoryclick(InventoryClickEvent event)
+	public void AllOfQuestListGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
 
 		UserData_Object u = new UserData_Object();
-		
 		boolean ChooseQuestGUI = Boolean.parseBoolean(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
-		switch ((ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())))
+		if(slot == 53)//닫기
 		{
-			case "이전 페이지":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				AllOfQuestListGUI(player,(short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-2),ChooseQuestGUI);
-				break;
-			case "다음 페이지":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				AllOfQuestListGUI(player, Short.parseShort(event.getInventory().getTitle().split(" : ")[1]),ChooseQuestGUI);
-				break;
-			case "이전 목록":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(ChooseQuestGUI == true)
+				u.clearAll(player);
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 45)//이전 목록
+			{
 				if(ChooseQuestGUI == true)
 				{
 					QuestOptionGUI(player, u.getString(player, (byte)1));
 					u.clearAll(player);
 				}
 				else
-				{
-					GBD_RPG.Admin.OPbox_GUI OGUI = new GBD_RPG.Admin.OPbox_GUI();
-					OGUI.OPBoxGUI_Main(player,(byte) 1);
-				}
-				break;
-			case "닫기":
-				if(ChooseQuestGUI == true)
-					u.clearAll(player);
-				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-				player.closeInventory();
-				break;
-			case "새 퀘스트":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+					new GBD_RPG.Admin.OPbox_GUI().OPBoxGUI_Main(player,(byte) 1);
+			}
+			else if(slot==48)//이전 페이지
+				AllOfQuestListGUI(player,(short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-2),ChooseQuestGUI);
+			else if(slot==50)//다음 페이지
+				AllOfQuestListGUI(player, Short.parseShort(event.getInventory().getTitle().split(" : ")[1]),ChooseQuestGUI);
+			else if(slot==49)//새 퀘스트
+			{
 				player.sendMessage(ChatColor.GOLD + "/퀘스트 생성 [타입] [이름]" );
 				player.sendMessage(ChatColor.GREEN + "[타입 : 일반 / 반복 / 일일 / 일주 / 한달]");
 				player.closeInventory();
-				return;
-			default:
+			}
+			else
+			{
 				if(ChooseQuestGUI == true)
 				{
 					String QuestName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
@@ -1335,10 +1314,7 @@ public class Quest_GUI extends Util_GUI
 				else
 				{
 					if(event.getClick().isLeftClick() == true)
-					{
-						s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 						FixQuestGUI(player, (short) 0, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-					}
 					else if(event.getClick().isRightClick() == true && event.isShiftClick() == true)
 					{
 						String QuestName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
@@ -1361,49 +1337,39 @@ public class Quest_GUI extends Util_GUI
 						AllOfQuestListGUI(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1),false);
 					}
 					else if(event.getClick().isRightClick() == true)
-					{
-						s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 						QuestOptionGUI(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-					}
 				}
-				break;
+			}
 		}
-		return;
+		
 	}
 
-	public void FixQuestListInventoryclick(InventoryClickEvent event)
+	public void FixQuestGUIClick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		String QuestName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
-
-		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
-
-		switch ((ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())))
+		int slot = event.getSlot();
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		
+		if(slot == 53)
 		{
-			case "이전 페이지":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				FixQuestGUI(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-2),QuestName);
-				break;
-			case "다음 페이지":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				FixQuestGUI(player,(short) Integer.parseInt(event.getInventory().getTitle().split(" : ")[1]),QuestName);
-				break;
-			case "이전 목록":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			String QuestName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
+			if(slot == 45)//이전 목록
 				AllOfQuestListGUI(player,(short) 0,false);
-				break;
-			case "닫기":
-				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-				player.closeInventory();
-				break;
-			case "새 오브젝트 추가":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			else if(slot == 48)//이전 페이지
+				FixQuestGUI(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-2),QuestName);
+			else if(slot == 50)//다음 페이지
+				FixQuestGUI(player,(short) Integer.parseInt(event.getInventory().getTitle().split(" : ")[1]),QuestName);
+			else if(slot == 49)//새 오브젝트 추가
 				SelectObjectPage(player, (byte) 0, QuestName);
-				return;
-			default:
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			else
+			{
 				short Flow = Short.parseShort(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 				if(event.getClick().isLeftClick() == true)
 				{
@@ -1424,10 +1390,9 @@ public class Quest_GUI extends Util_GUI
 								break;
 							case "채집" :
 								HarvestGUI(player, QuestName, (short) Flow, player.isOp());
+								break;
 							case "선택":
 								Quest_OPChoice(player, QuestName, (short) Flow, (short) page);
-								break;
-							default :
 								break;
 						}
 				}
@@ -1443,38 +1408,32 @@ public class Quest_GUI extends Util_GUI
 					QuestList.saveConfig();
 					FixQuestGUI(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1),QuestName);
 				}
-				return;
+			}
 		}
-		return;
 	}
 	
-	public void MyQuestListInventoryclick(InventoryClickEvent event)
+	public void MyQuestListGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
 		
-		switch ((ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())))
+		if(slot == 53)
 		{
-			case "이전 페이지":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 45)//이전 목록
+				new GBD_RPG.User.Stats_GUI().StatusGUI(player);
+			else if(slot == 48)//이전 페이지
 				MyQuestListGUI(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-2));
-				break;
-			case "다음 페이지":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			else if(slot == 50)//다음 페이지
 				MyQuestListGUI(player,(short) Integer.parseInt(event.getInventory().getTitle().split(" : ")[1]));
-				break;
-			case "이전 목록":
-				GBD_RPG.User.Stats_GUI SGUI = new GBD_RPG.User.Stats_GUI();
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				SGUI.StatusGUI(player);
-				break;
-			case "닫기":
-				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-				player.closeInventory();
-				break;
-			default:
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			else
+			{
 				String QuestName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
 				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 				YamlManager PlayerQuestList  = YC.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
@@ -1486,21 +1445,18 @@ public class Quest_GUI extends Util_GUI
 				else if(event.getCurrentItem().getItemMeta().getLore().toString().contains("처치") == true)
 					KillMonsterGUI(player, QuestName, (short) Flow, player.isOp());
 				else if(event.getCurrentItem().getItemMeta().getLore().toString().contains("독백") == true)
-					QuestTypeRouter(player, QuestName);
+					QuestRouter(player, QuestName);
 				else if(event.getCurrentItem().getItemMeta().getLore().toString().contains("채집") == true)
 					HarvestGUI(player, QuestName, (short) Flow, false);
 				else if(event.getCurrentItem().getItemMeta().getLore().toString().contains("선택지") == true)
 					Quest_UserChoice(player, QuestName, (short) Flow);
-				
-				break;
+			}
 		}
-		return;
 	}
 
-	public void ObjectAddInventoryClick(InventoryClickEvent event)
+	public void SelectObjectPageClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 
 		UserData_Object u = new UserData_Object();
@@ -1770,46 +1726,57 @@ public class Quest_GUI extends Util_GUI
 	public void QuestScriptTypeGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		String QuestName = ChatColor.stripColor(event.getInventory().getItem(19).getItemMeta().getDisplayName());
+		int slot = event.getSlot();
 		
-		switch (event.getSlot())
+		if(slot == 26)
 		{
-			case 26:
-				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-				player.closeInventory();
-				break;
-			case 13:
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
-				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				YamlManager PlayerQuestList  = YC.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
-				PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
-				PlayerQuestList.saveConfig();
-				player.closeInventory();
-				QuestTypeRouter(player, QuestName);
-				break;
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
 		}
-		return;
+		else if(slot == 13)
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
+			String QuestName = ChatColor.stripColor(event.getInventory().getItem(19).getItemMeta().getDisplayName());
+			YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+			YamlManager PlayerQuestList  = YC.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
+			PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
+			PlayerQuestList.saveConfig();
+			player.closeInventory();
+			QuestRouter(player, QuestName);
+		}
 	}
 	
-	public void ShowItemGUIInventoryClick(InventoryClickEvent event)
+	public void GetterItemSetingGUIClick(InventoryClickEvent event)
+	{
+		if(event.getClickedInventory().getTitle().compareTo("container.inventory") != 0)
+			if(event.getSlot() == 8)
+				event.getWhoClicked().closeInventory();
+	}
+	
+	public void ShowNeedGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		switch (event.getSlot())
+		int slot = event.getSlot();
+		
+		if(slot == 26)
 		{
-		case 18:
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
-			if(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(1)).equalsIgnoreCase("false"))
-				MyQuestListGUI(player, (short) 0);
-			else
-				FixQuestGUI(player, (short) 0, ChatColor.stripColor(event.getInventory().getItem(26).getItemMeta().getLore().get(1)));
-			break;
-		case 22:
-				event.setCancelled(true);
-
+			if(slot == 18)
+			{
+				if(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(1)).equalsIgnoreCase("false"))
+					MyQuestListGUI(player, (short) 0);
+				else
+					FixQuestGUI(player, (short) 0, ChatColor.stripColor(event.getInventory().getItem(26).getItemMeta().getLore().get(1)));
+			}
+			else if(slot == 22)
+			{
 				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 				YamlManager YM,QuestList  = YC.getNewConfig("Quest/QuestList.yml");
 				YamlManager PlayerQuestList  = YC.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
@@ -1865,78 +1832,76 @@ public class Quest_GUI extends Util_GUI
 	    		if(QuestList.getInt(QuestName + ".FlowChart."+QuestFlow+".EXP") != 0)
 	    			new GBD_RPG.Util.Util_Player().addMoneyAndEXP(player, 0, QuestList.getLong(QuestName + ".FlowChart."+QuestFlow+".EXP"), null, false, false);
 				
-				event.setCancelled(true);
 				PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 				PlayerQuestList.saveConfig();
 				player.closeInventory();
-				QuestTypeRouter(player, QuestName);
-			break;
-		case 26:
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.closeInventory();
-			break;
+				QuestRouter(player, QuestName);
+			}
 		}
-		return;
 	}
 	
-	public void SettingPresentClick(InventoryClickEvent event)
+	public void PresentItemSettingGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		Player player = (Player) event.getWhoClicked();
-		UserData_Object u = new UserData_Object();
-		switch (event.getSlot())
+		int slot = event.getSlot();
+
+		if(slot <= 2 || slot == 8)
 		{
-		case 0:
-			event.setCancelled(true);
-			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 지급할 포상금을 입력 해 주세요. ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			u.setType(player, "Quest");
-			u.setString(player, (byte)4,"M");
-			player.closeInventory();
-			break;
-		case 1:
-			event.setCancelled(true);
-			u.setInt(player, (byte)2, 0);
-			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 상승시킬 경험치를 입력 해 주세요. ("+ChatColor.YELLOW + "1"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			u.setType(player, "Quest");
-			u.setString(player, (byte)4,"E");
-			player.closeInventory();
-			break;
-		case 2:
-			event.setCancelled(true);
-			u.setInt(player, (byte)3, 0);
-			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 상승시킬 NPC의 호감도를 입력 해 주세요. ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			u.setType(player, "Quest");
-			u.setString(player, (byte)4,"L");
-			player.closeInventory();
-			break;
-		case 8:
-			event.setCancelled(true);
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.closeInventory();
-			break;
-		default :
-			break;
+			if(event.getClickedInventory().getTitle().compareTo("container.inventory") != 0)
+			{
+				event.setCancelled(true);
+				if(slot == 8)
+				{
+					s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+					player.closeInventory();
+				}
+				else
+				{
+					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
+					UserData_Object u = new UserData_Object();
+					u.setType(player, "Quest");
+					player.closeInventory();
+					if(slot == 0)
+					{
+						player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 지급할 포상금을 입력 해 주세요. ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+						u.setString(player, (byte)4,"M");
+					}
+					else if(slot == 1)
+					{
+						u.setInt(player, (byte)2, 0);
+						player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 상승시킬 경험치를 입력 해 주세요. ("+ChatColor.YELLOW + "1"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+						u.setString(player, (byte)4,"E");
+					}
+					else if(slot == 2)
+					{
+						u.setInt(player, (byte)3, 0);
+						player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 상승시킬 NPC의 호감도를 입력 해 주세요. ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+						u.setString(player, (byte)4,"L");
+					}
+				}
+			}
 		}
-		return;
 	}
 	
 	public void KeepGoingClick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-
-		UserData_Object u = new UserData_Object();
-		
 		Player player = (Player) event.getWhoClicked();
-		String QuestName = ChatColor.stripColor(event.getInventory().getItem(16).getItemMeta().getLore().get(1));
-		short Flow = Short.parseShort(ChatColor.stripColor(event.getInventory().getItem(10).getItemMeta().getLore().get(1)));
-		short Mob = Short.parseShort(ChatColor.stripColor(event.getInventory().getItem(10).getItemMeta().getLore().get(2)));
-		switch (event.getSlot())
+		int slot = event.getSlot();
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		
+		if(slot == 16)
 		{
-		case 10:
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
+			UserData_Object u = new UserData_Object();
+			String QuestName = ChatColor.stripColor(event.getInventory().getItem(16).getItemMeta().getLore().get(1));
+			short Flow = Short.parseShort(ChatColor.stripColor(event.getInventory().getItem(10).getItemMeta().getLore().get(1)));
+			short Mob = Short.parseShort(ChatColor.stripColor(event.getInventory().getItem(10).getItemMeta().getLore().get(2)));
 			if(event.getCurrentItem().getItemMeta().getLore().get(0).contains("사냥"))
 			{
 				u.setType(player, "Quest");
@@ -1960,153 +1925,127 @@ public class Quest_GUI extends Util_GUI
 				player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 채집 해야 할 블록을 우클릭 하세요!");
 			}
 			player.closeInventory();
-			break;
-		case 16:
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.closeInventory();
-	    	//FixQuestGUI(player, 0, QuestName);
-			break;
 		}
-		return;
 	}
 	
-	public void QuestOptionClick(InventoryClickEvent event)
+	public void QuestOptionGUIClick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		String QuestName = ChatColor.stripColor(event.getInventory().getItem(44).getItemMeta().getLore().get(1));
-
-		UserData_Object u = new UserData_Object();
+		int slot = event.getSlot();
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
-		switch (event.getSlot())
+		if(slot == 44)
 		{
-		case 4://퀘스트 타입
-			switch(QuestList.getString(QuestName + ".Type"))
-			{
-			case "N" :
-				QuestList.set(QuestName+".Type", "R");
-				break;
-			case "R" :
-				QuestList.set(QuestName+".Type", "D");
-				break;
-			case "D" :
-				QuestList.set(QuestName+".Type", "W");
-				break;
-			case "W" :
-				QuestList.set(QuestName+".Type", "M");
-				break;
-			case "M" :
-				QuestList.set(QuestName+".Type", "N");
-				break;
-			}
-			QuestList.saveConfig();
+
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
-			QuestOptionGUI(player, QuestName);
-			return;
-		case 11://레벨 제한
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			u.setType(player, "Quest");
-			u.setString(player, (byte)1,"Level District");
-			u.setString(player, (byte)2,QuestName);
-			player.closeInventory();
-			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 몇 레벨 부터 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+"레벨)");
-			return;
-		case 13://호감도 제한
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			u.setType(player, "Quest");
-			u.setString(player, (byte)1,"Love District");
-			u.setString(player, (byte)2,QuestName);
-			player.closeInventory();
-			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 호감도 몇 이상부터 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
-			return;
-		case 15://스킬 랭크 제한
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
-			//스킬 선택 및 스킬 랭크 입력하기
-			return;
-		case 20://"+GoldBigDragon_RPG.Main.ServerOption.STR+" 제한
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			u.setType(player, "Quest");
-			u.setString(player, (byte)1,"STR District");
-			u.setString(player, (byte)2,QuestName);
-			player.closeInventory();
-			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+GBD_RPG.Main_Main.Main_ServerOption.STR+"이 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
-			return;
-		case 21://"+GoldBigDragon_RPG.Main.ServerOption.DEX+" 제한
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			u.setType(player, "Quest");
-			u.setString(player, (byte)1,"DEX District");
-			u.setString(player, (byte)2,QuestName);
-			player.closeInventory();
-			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+GBD_RPG.Main_Main.Main_ServerOption.DEX+"가 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
-			return;
-		case 22://"+GoldBigDragon_RPG.Main.ServerOption.INT+" 제한
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			u.setType(player, "Quest");
-			u.setString(player, (byte)1,"INT District");
-			u.setString(player, (byte)2,QuestName);
-			player.closeInventory();
-			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+GBD_RPG.Main_Main.Main_ServerOption.INT+"이 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
-			return;
-		case 23://"+GoldBigDragon_RPG.Main.ServerOption.WILL+" 제한
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			u.setType(player, "Quest");
-			u.setString(player, (byte)1,"WILL District");
-			u.setString(player, (byte)2,QuestName);
-			player.closeInventory();
-			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+GBD_RPG.Main_Main.Main_ServerOption.WILL+"가 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
-			return;
-		case 24://"+GoldBigDragon_RPG.Main.ServerOption.LUK+" 제한
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			u.setType(player, "Quest");
-			u.setString(player, (byte)1,"LUK District");
-			u.setString(player, (byte)2,QuestName);
-			player.closeInventory();
-			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+GBD_RPG.Main_Main.Main_ServerOption.LUK+"이 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
-			return;
-		case 29://필수 완료 퀘스트
-			if(event.isLeftClick() == true && event.isShiftClick() == false)
+			YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+			YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
+			String QuestName = ChatColor.stripColor(event.getInventory().getItem(44).getItemMeta().getLore().get(1));
+			if(slot == 36)
+				AllOfQuestListGUI(player, (short) 0,false);
+			else if(slot == 15)//스킬 랭크 제한
 			{
+				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
-				u.setString(player, (byte)1,QuestName);
-				AllOfQuestListGUI(player, (short) 0, true);
+				//스킬 선택 및 스킬 랭크 입력하는 창 업데이트 하기
 			}
-			if(event.isRightClick() == true && event.isShiftClick() == true)
+			else if(slot == 4)//퀘스트 타입
 			{
-				s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.8F);
-				QuestList.set(QuestName+".Need.PrevQuest", "null");
+				switch(QuestList.getString(QuestName + ".Type"))
+				{
+				case "N" :
+					QuestList.set(QuestName+".Type", "R");
+					break;
+				case "R" :
+					QuestList.set(QuestName+".Type", "D");
+					break;
+				case "D" :
+					QuestList.set(QuestName+".Type", "W");
+					break;
+				case "W" :
+					QuestList.set(QuestName+".Type", "M");
+					break;
+				case "M" :
+					QuestList.set(QuestName+".Type", "N");
+					break;
+				}
 				QuestList.saveConfig();
 				QuestOptionGUI(player, QuestName);
 			}
-			
-			return;
-		case 33://퀘스트 한정
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			u.setType(player, "Quest");
-			u.setString(player, (byte)1,"Accept District");
-			u.setString(player, (byte)2,QuestName);
-			player.closeInventory();
-			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 몇 명만 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+"명)");
-			return;
-		case 36:
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
-			AllOfQuestListGUI(player, (short) 0,false);
-			return;
-		case 44:
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.closeInventory();
-			return;
+			else if(slot == 29)//필수 완료 퀘스트
+			{
+				if(event.isLeftClick() == true && event.isShiftClick() == false)
+				{
+					UserData_Object u = new UserData_Object();
+					u.setString(player, (byte)1,QuestName);
+					AllOfQuestListGUI(player, (short) 0, true);
+				}
+				else if(event.isRightClick() == true && event.isShiftClick() == true)
+				{
+					s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.8F);
+					QuestList.set(QuestName+".Need.PrevQuest", "null");
+					QuestList.saveConfig();
+					QuestOptionGUI(player, QuestName);
+				}
+			}
+			else
+			{
+				UserData_Object u = new UserData_Object();
+				u.setType(player, "Quest");
+				u.setString(player, (byte)2,QuestName);
+				player.closeInventory();
+				if(slot == 11)//레벨 제한
+				{
+					u.setString(player, (byte)1,"Level District");
+					player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 몇 레벨 부터 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+"레벨)");
+				}
+				else if(slot == 13)//호감도 제한
+				{
+					u.setString(player, (byte)1,"Love District");
+					player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 호감도 몇 이상부터 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+				}
+				else if(slot == 20)//STR 제한
+				{
+					u.setString(player, (byte)1,"STR District");
+					player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+GBD_RPG.Main_Main.Main_ServerOption.STR+"이 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+				}
+				else if(slot == 21)//DEX 제한
+				{
+					u.setString(player, (byte)1,"DEX District");
+					player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+GBD_RPG.Main_Main.Main_ServerOption.DEX+"가 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+				}
+				else if(slot == 22)//INT 제한
+				{
+					u.setString(player, (byte)1,"INT District");
+					player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+GBD_RPG.Main_Main.Main_ServerOption.INT+"이 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+				}
+				else if(slot == 23)//WILL 제한
+				{
+					u.setString(player, (byte)1,"WILL District");
+					player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+GBD_RPG.Main_Main.Main_ServerOption.WILL+"가 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+				}
+				else if(slot == 24)//LUK 제한
+				{
+					u.setString(player, (byte)1,"LUK District");
+					player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+GBD_RPG.Main_Main.Main_ServerOption.LUK+"이 몇 이상 되어야 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+				}
+				else if(slot == 33)//퀘스트 한정
+				{
+					u.setString(player, (byte)1,"Accept District");
+					player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 몇 명만 수행 가능하게 하시겠습니까? ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+"명)");
+				}
+			}
 		}
 	}
 	
 	public void Quest_NavigationListGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 		String QuestName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
@@ -2148,7 +2087,6 @@ public class Quest_GUI extends Util_GUI
 	public void Quest_OPChoiceClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 
 		short page = Short.parseShort(ChatColor.stripColor(event.getInventory().getItem(18).getItemMeta().getLore().get(1)));
@@ -2169,7 +2107,6 @@ public class Quest_GUI extends Util_GUI
 	public void Quest_UserChoiceClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		if(event.getSlot() == 26)
 		{
@@ -2204,12 +2141,12 @@ public class Quest_GUI extends Util_GUI
 			PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 			PlayerQuestList.saveConfig();
 			player.closeInventory();
-			QuestTypeRouter(player, QuestName);
+			QuestRouter(player, QuestName);
 		}
 	}
 	
 	
-	public void ItemAddInvnetoryClose(InventoryCloseEvent event)
+	public void GetterItemSetingGUIClose(InventoryCloseEvent event)
 	{
 		Player player = (Player)event.getPlayer();
 		UserData_Object u = new UserData_Object();
@@ -2238,12 +2175,11 @@ public class Quest_GUI extends Util_GUI
 		QuestConfig.saveConfig();
 		s.SP((Player) event.getPlayer(), org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
     	event.getPlayer().sendMessage(ChatColor.GREEN + "[SYSTEM] : 성공적으로 등록되었습니다!");
-    	//FixQuestGUI((Player) event.getPlayer(), 0, Main.PSHM.get(player).get("Quest").get("3"));
 		u.clearAll(player);
 		return;
 	}
 
-	public void PresentAddInvnetoryClose(InventoryCloseEvent event)
+	public void PresentItemSettingGUIClose(InventoryCloseEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		Player player = (Player)event.getPlayer();

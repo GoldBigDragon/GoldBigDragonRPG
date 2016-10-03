@@ -59,7 +59,7 @@ public class CitizensMain implements Listener
 						if(isThatTarget == true)
 						{
 							event.setCancelled(true);
-							QGUI.QuestTypeRouter(player, QuestName);
+							QGUI.QuestRouter(player, QuestName);
 							return;
 						}
 						break;
@@ -68,7 +68,7 @@ public class CitizensMain implements Listener
 						return;
 					case "PScript":
 						event.setCancelled(true);
-						QGUI.QuestTypeRouter(player, QuestName);
+						QGUI.QuestRouter(player, QuestName);
 						return;
 					case "Talk":
 						if(ChatColor.stripColor(QuestList.getString(QuestName+".FlowChart."+QuestFlow+".TargetNPCuuid")).equalsIgnoreCase(ChatColor.stripColor(target.getUniqueId().toString())))
@@ -80,7 +80,7 @@ public class CitizensMain implements Listener
 							event.setCancelled(true);
 							PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 							PlayerQuestList.saveConfig();
-							QGUI.QuestTypeRouter(player, QuestName);
+							QGUI.QuestRouter(player, QuestName);
 							return;
 						}
 						break;
@@ -95,13 +95,13 @@ public class CitizensMain implements Listener
 							{
 								if(PlayerQuestList.getInt("Started."+QuestName+".Flow") == 0)
 								{
-									QGUI.QuestTypeRouter(player, QuestName);
+									QGUI.QuestRouter(player, QuestName);
 								}
 								else
 								{
 									PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 									PlayerQuestList.saveConfig();
-									QGUI.QuestTypeRouter(player, QuestName);
+									QGUI.QuestRouter(player, QuestName);
 								}
 								return;
 							}
@@ -156,7 +156,7 @@ public class CitizensMain implements Listener
 													event.setCancelled(true);
 													PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 													PlayerQuestList.saveConfig();
-													QGUI.QuestTypeRouter(player, QuestName);
+													QGUI.QuestRouter(player, QuestName);
 													return;
 												}
 											}
@@ -220,7 +220,7 @@ public class CitizensMain implements Listener
 						    			new GBD_RPG.Util.Util_Player().addMoneyAndEXP(player, 0, QuestList.getLong(QuestName + ".FlowChart."+QuestFlow+".EXP"), null, false, false);
 									
 									event.setCancelled(true);
-									QGUI.QuestTypeRouter(player, QuestName);
+									QGUI.QuestRouter(player, QuestName);
 									return;
 								}
 								else

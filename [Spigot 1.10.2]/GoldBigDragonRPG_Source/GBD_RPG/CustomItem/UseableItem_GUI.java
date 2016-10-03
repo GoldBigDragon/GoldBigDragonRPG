@@ -23,8 +23,9 @@ public class UseableItem_GUI extends Util_GUI
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager ItemList  = YC.getNewConfig("Item/Consume.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "소모성 아이템 목록 : " + (page+1));
+
+		String UniqueCode = "§0§0§3§0§3§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0소모성 아이템 목록 : " + (page+1));
 
 		Object[] a = ItemList.getConfigurationSection("").getKeys(false).toArray();
 		
@@ -53,7 +54,8 @@ public class UseableItem_GUI extends Util_GUI
 	
 	public void ChooseUseableItemTypeGUI(Player player, int number)
 	{
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.BLACK + "소모성 아이템 타입");
+		String UniqueCode = "§0§0§3§0§4§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0소모성 아이템 타입");
 
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[귀환서]", 340,0,1,Arrays.asList(ChatColor.GRAY + "특정 위치로 신속히 이동할 수 있는",ChatColor.GRAY+"귀환서를 제작합니다."), 2, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[주문서]", 339,0,1,Arrays.asList(ChatColor.GRAY + "특별한 기운이 담긴",ChatColor.GRAY+"주문서를 제작합니다."), 3, inv);
@@ -70,8 +72,9 @@ public class UseableItem_GUI extends Util_GUI
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager ItemList = YC.getNewConfig("Item/Consume.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "소모성 아이템 상세 설정");
+
+		String UniqueCode = "§0§0§3§0§5§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0소모성 아이템 상세 설정");
 		String ItemName = ItemList.getString(number+".DisplayName");
 		short ItemID = (short) ItemList.getInt(number+".ID");
 		byte ItemData = (byte) ItemList.getInt(number+".Data");
@@ -149,8 +152,9 @@ public class UseableItem_GUI extends Util_GUI
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager SkillList  = YC.getNewConfig("Skill/SkillList.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "등록 가능 스킬 목록 : " + (page+1));
+
+		String UniqueCode = "§0§0§3§0§6§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0등록 가능 스킬 목록 : " + (page+1));
 
 		Object[] a= SkillList.getKeys().toArray();
 		
@@ -184,211 +188,200 @@ public class UseableItem_GUI extends Util_GUI
 	public void UseableItemListGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
 
-		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
-
-		switch (event.getSlot())
+		if(slot == 53)//나가기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPbox_GUI OGUI = new OPbox_GUI();
-			OGUI.OPBoxGUI_Main(player, (byte) 2);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			UseableItemListGUI(player, page-1);
-			return;
-		case 49://새 아이템
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			ChooseUseableItemTypeGUI(player, ((page*45)+event.getSlot()));
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			UseableItemListGUI(player, page+1);
-			return;
-		default :
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			int number = ((page*45)+event.getSlot());
-			if(event.isLeftClick() == true&&event.isShiftClick()==false)
+			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+			if(slot==45)//이전 목록
+				new OPbox_GUI().OPBoxGUI_Main(player, (byte) 2);
+			else if(slot == 48)//이전 페이지
+				UseableItemListGUI(player, page-1);
+			else if(slot == 49)//새 아이템
+				ChooseUseableItemTypeGUI(player, ((page*45)+event.getSlot()));
+			else if(slot == 50)//다음 페이지
+				UseableItemListGUI(player, page+1);
+			else
 			{
-				player.sendMessage(ChatColor.GREEN+"[SYSTEM] : 클릭한 아이템을 지급 받았습니다!");
-				player.getInventory().addItem(event.getCurrentItem());
-			}
-			if(event.isLeftClick() == true&&event.isShiftClick()==true)
-				NewUseableItemGUI(player, number);
-			else if(event.isRightClick()==true&&event.isShiftClick()==true)
-			{
-			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				YamlManager ItemList = YC.getNewConfig("Item/Consume.yml");
-				short Acount =  (short) (ItemList.getConfigurationSection("").getKeys(false).toArray().length-1);
+				int number = ((page*45)+event.getSlot());
+				if(event.isLeftClick() == true&&event.isShiftClick()==false)
+				{
+					player.sendMessage(ChatColor.GREEN+"[SYSTEM] : 클릭한 아이템을 지급 받았습니다!");
+					player.getInventory().addItem(event.getCurrentItem());
+				}
+				if(event.isLeftClick() == true&&event.isShiftClick()==true)
+					NewUseableItemGUI(player, number);
+				else if(event.isRightClick()==true&&event.isShiftClick()==true)
+				{
+				  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+					YamlManager ItemList = YC.getNewConfig("Item/Consume.yml");
+					short Acount =  (short) (ItemList.getConfigurationSection("").getKeys(false).toArray().length-1);
 
-				for(int counter = number;counter <Acount;counter++)
-					ItemList.set(counter+"", ItemList.get((counter+1)+""));
-				ItemList.removeKey(Acount+"");
-				ItemList.saveConfig();
-				UseableItemListGUI(player, page);
+					for(int counter = number;counter <Acount;counter++)
+						ItemList.set(counter+"", ItemList.get((counter+1)+""));
+					ItemList.removeKey(Acount+"");
+					ItemList.saveConfig();
+					UseableItemListGUI(player, page);
+				}
 			}
-			return;
 		}
 	}
 	
 	public void ChooseUseableItemTypeGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-
-	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager UseableItemList = YC.getNewConfig("Item/Consume.yml");
+		int slot = event.getSlot();
 		
-		switch (event.getSlot())
+		if(slot == 8)
 		{
-		case 2://귀환서
-		case 3://주문서
-		case 4://스킬 북
-		case 5://음식, 포션
-		case 6://룬
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			String Type = "";
-			String Lore = "";
-			String DisplayName = "";
-			short ID = 267;
-			short Data = 0;
-			switch(event.getSlot())
-			{
-				case 2: Type = ChatColor.WHITE + "[귀환서]";
-				Lore = ChatColor.WHITE+"육체의 손실 없이 지정된 곳으로%enter%"+ChatColor.WHITE+"빠르게 이동할 수 있는 신비한%enter%"+ChatColor.WHITE+"귀환 주문서이다.";
-				DisplayName = ChatColor.WHITE+"0의 귀환 주문서";
-				ID = 340;
-				break;
-				case 3: Type = ChatColor.GOLD + "[주문서]";
-				Lore = ChatColor.WHITE+"사용시 스킬 포인트를%enter%"+ChatColor.WHITE+"5만큼 상승시켜 준다.";
-				DisplayName =ChatColor.WHITE+ "스킬 포인트 5 증가 주문서";
-				ID = 339;
-				break;
-				case 4: Type = ChatColor.DARK_PURPLE + "[스킬북]";
-				Lore = ChatColor.WHITE+"아직 아무것도 쓰여있지 않은%enter%"+ChatColor.WHITE+"빈 상태의 스킬 북이다.%enter% %enter%"+ChatColor.WHITE+"(아무것도 얻을 수 없을 것 같다.)";
-				DisplayName = ChatColor.WHITE+"빈 스킬 북";
-				ID = 403;
-				break;
-				case 5: Type = ChatColor.LIGHT_PURPLE + "[소비]";
-				Lore = ChatColor.WHITE+"퀵 슬롯에 놓고, 위급시%enter%"+ChatColor.WHITE+"사용할 경우, 생명력을%enter%"+ChatColor.WHITE+"10 치료해 주는 포션이다.";
-				DisplayName = ChatColor.WHITE+"시뻘건 포션";
-				ID = 373;
-				Data = 8261;
-				break;
-				case 6: Type = ChatColor.BLUE + "[룬]";
-				Lore = ChatColor.WHITE+"강렬한 녹색의 룬이다.%enter%"+ChatColor.WHITE+"무기의 밸런스를 올려주는 듯 하다.";
-				DisplayName =ChatColor.WHITE+ "녹색 룬";
-				ID = 351;
-				Data = 10;
-				break;
-			}
-
-			int ItemCounter = UseableItemList.getConfigurationSection("").getKeys(false).size();
-			UseableItemList.set(ItemCounter+".ShowType",ChatColor.WHITE+"[깔끔]");
-			UseableItemList.set(ItemCounter+".ID",ID);
-			UseableItemList.set(ItemCounter+".Data",Data);
-			UseableItemList.set(ItemCounter+".DisplayName",DisplayName);
-			UseableItemList.set(ItemCounter+".Lore",Lore);
-			UseableItemList.set(ItemCounter+".Type",Type);
-			UseableItemList.set(ItemCounter+".Grade",ChatColor.WHITE+"[일반]");
-			
-			switch(event.getSlot())
-			{
-			case 2:
-				UseableItemList.set(ItemCounter+".World",player.getLocation().getWorld().getName().toString());
-				UseableItemList.set(ItemCounter+".X",0);
-				UseableItemList.set(ItemCounter+".Y",0);
-				UseableItemList.set(ItemCounter+".Z",0);
-				UseableItemList.set(ItemCounter+".Pitch",0);
-				UseableItemList.set(ItemCounter+".Yaw",0);
-			break;
-			case 3:
-				UseableItemList.set(ItemCounter+".DEF",0);
-				UseableItemList.set(ItemCounter+".Protect",0);
-				UseableItemList.set(ItemCounter+".MaDEF",0);
-				UseableItemList.set(ItemCounter+".MaProtect",0);
-				UseableItemList.set(ItemCounter+".STR",0);
-				UseableItemList.set(ItemCounter+".DEX",0);
-				UseableItemList.set(ItemCounter+".INT",0);
-				UseableItemList.set(ItemCounter+".WILL",0);
-				UseableItemList.set(ItemCounter+".LUK",0);
-				UseableItemList.set(ItemCounter+".Balance",0);
-				UseableItemList.set(ItemCounter+".Critical",0);
-				UseableItemList.set(ItemCounter+".HP",0);
-				UseableItemList.set(ItemCounter+".MP",0);
-				UseableItemList.set(ItemCounter+".SkillPoint",5);
-				UseableItemList.set(ItemCounter+".StatPoint",0);
-			break;
-			case 4:
-				UseableItemList.set(ItemCounter+".Skill","null");
-			break;
-			case 5:
-				UseableItemList.set(ItemCounter+".HP",10);
-				UseableItemList.set(ItemCounter+".MP",0);
-				UseableItemList.set(ItemCounter+".Saturation",0);
-				UseableItemList.set(ItemCounter+".Rebirth",false);
-			break;
-			case 6:
-				UseableItemList.set(ItemCounter+".MinDamage",0);
-				UseableItemList.set(ItemCounter+".MaxDamage",0);
-				UseableItemList.set(ItemCounter+".MinMaDamage",0);
-				UseableItemList.set(ItemCounter+".MaxMaDamage",0);
-				UseableItemList.set(ItemCounter+".DEF",0);
-				UseableItemList.set(ItemCounter+".Protect",0);
-				UseableItemList.set(ItemCounter+".MaDEF",0);
-				UseableItemList.set(ItemCounter+".MaProtect",0);
-				UseableItemList.set(ItemCounter+".Durability",0);
-				UseableItemList.set(ItemCounter+".MaxDurability",0);
-				UseableItemList.set(ItemCounter+".STR",0);
-				UseableItemList.set(ItemCounter+".DEX",0);
-				UseableItemList.set(ItemCounter+".INT",0);
-				UseableItemList.set(ItemCounter+".WILL",0);
-				UseableItemList.set(ItemCounter+".LUK",0);
-				UseableItemList.set(ItemCounter+".Balance",10);
-				UseableItemList.set(ItemCounter+".Critical",0);
-				UseableItemList.set(ItemCounter+".HP",0);
-				UseableItemList.set(ItemCounter+".MP",0);
-			break;
-			}
-			UseableItemList.saveConfig();
-			NewUseableItemGUI(player,ItemCounter);
-			return;
-		case 0://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			UseableItemListGUI(player, 0);
-			return;
-		case 8://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 0)
+				UseableItemListGUI(player, 0);
+			else
+			{
+				String Type = "";
+				String Lore = "";
+				String DisplayName = "";
+				short ID = 267;
+				short Data = 0;
+				
+				if(slot == 2)
+				{
+					Type = ChatColor.WHITE + "[귀환서]";
+					Lore = ChatColor.WHITE+"육체의 손실 없이 지정된 곳으로%enter%"+ChatColor.WHITE+"빠르게 이동할 수 있는 신비한%enter%"+ChatColor.WHITE+"귀환 주문서이다.";
+					DisplayName = ChatColor.WHITE+"0의 귀환 주문서";
+					ID = 340;
+				}
+				else if(slot == 3)
+				{
+					Type = ChatColor.GOLD + "[주문서]";
+					Lore = ChatColor.WHITE+"사용시 스킬 포인트를%enter%"+ChatColor.WHITE+"5만큼 상승시켜 준다.";
+					DisplayName =ChatColor.WHITE+ "스킬 포인트 5 증가 주문서";
+					ID = 339;
+				}
+				else if(slot == 4)
+				{
+					Type = ChatColor.DARK_PURPLE + "[스킬북]";
+					Lore = ChatColor.WHITE+"아직 아무것도 쓰여있지 않은%enter%"+ChatColor.WHITE+"빈 상태의 스킬 북이다.%enter% %enter%"+ChatColor.WHITE+"(아무것도 얻을 수 없을 것 같다.)";
+					DisplayName = ChatColor.WHITE+"빈 스킬 북";
+					ID = 403;
+				}
+				else if(slot == 5)
+				{
+					Type = ChatColor.LIGHT_PURPLE + "[소비]";
+					Lore = ChatColor.WHITE+"퀵 슬롯에 놓고, 위급시%enter%"+ChatColor.WHITE+"사용할 경우, 생명력을%enter%"+ChatColor.WHITE+"10 치료해 주는 포션이다.";
+					DisplayName = ChatColor.WHITE+"시뻘건 포션";
+					ID = 373;
+					Data = 8261;
+				}
+				else if(slot == 6)
+				{
+					Type = ChatColor.BLUE + "[룬]";
+					Lore = ChatColor.WHITE+"강렬한 녹색의 룬이다.%enter%"+ChatColor.WHITE+"무기의 밸런스를 올려주는 듯 하다.";
+					DisplayName =ChatColor.WHITE+ "녹색 룬";
+					ID = 351;
+					Data = 10;
+				}
+
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager UseableItemList = YC.getNewConfig("Item/Consume.yml");
+				
+				int ItemCounter = UseableItemList.getConfigurationSection("").getKeys(false).size();
+				UseableItemList.set(ItemCounter+".ShowType",ChatColor.WHITE+"[깔끔]");
+				UseableItemList.set(ItemCounter+".ID",ID);
+				UseableItemList.set(ItemCounter+".Data",Data);
+				UseableItemList.set(ItemCounter+".DisplayName",DisplayName);
+				UseableItemList.set(ItemCounter+".Lore",Lore);
+				UseableItemList.set(ItemCounter+".Type",Type);
+				UseableItemList.set(ItemCounter+".Grade",ChatColor.WHITE+"[일반]");
+				
+				if(slot == 2)
+				{
+					UseableItemList.set(ItemCounter+".World",player.getLocation().getWorld().getName().toString());
+					UseableItemList.set(ItemCounter+".X",0);
+					UseableItemList.set(ItemCounter+".Y",0);
+					UseableItemList.set(ItemCounter+".Z",0);
+					UseableItemList.set(ItemCounter+".Pitch",0);
+					UseableItemList.set(ItemCounter+".Yaw",0);
+				}
+				else if(slot ==3)
+				{
+					UseableItemList.set(ItemCounter+".DEF",0);
+					UseableItemList.set(ItemCounter+".Protect",0);
+					UseableItemList.set(ItemCounter+".MaDEF",0);
+					UseableItemList.set(ItemCounter+".MaProtect",0);
+					UseableItemList.set(ItemCounter+".STR",0);
+					UseableItemList.set(ItemCounter+".DEX",0);
+					UseableItemList.set(ItemCounter+".INT",0);
+					UseableItemList.set(ItemCounter+".WILL",0);
+					UseableItemList.set(ItemCounter+".LUK",0);
+					UseableItemList.set(ItemCounter+".Balance",0);
+					UseableItemList.set(ItemCounter+".Critical",0);
+					UseableItemList.set(ItemCounter+".HP",0);
+					UseableItemList.set(ItemCounter+".MP",0);
+					UseableItemList.set(ItemCounter+".SkillPoint",5);
+					UseableItemList.set(ItemCounter+".StatPoint",0);
+				}
+				else if(slot ==4)
+					UseableItemList.set(ItemCounter+".Skill","null");
+				else if(slot ==5)
+				{
+					UseableItemList.set(ItemCounter+".HP",10);
+					UseableItemList.set(ItemCounter+".MP",0);
+					UseableItemList.set(ItemCounter+".Saturation",0);
+					UseableItemList.set(ItemCounter+".Rebirth",false);
+				}
+				else if(slot ==6)
+				{
+					UseableItemList.set(ItemCounter+".MinDamage",0);
+					UseableItemList.set(ItemCounter+".MaxDamage",0);
+					UseableItemList.set(ItemCounter+".MinMaDamage",0);
+					UseableItemList.set(ItemCounter+".MaxMaDamage",0);
+					UseableItemList.set(ItemCounter+".DEF",0);
+					UseableItemList.set(ItemCounter+".Protect",0);
+					UseableItemList.set(ItemCounter+".MaDEF",0);
+					UseableItemList.set(ItemCounter+".MaProtect",0);
+					UseableItemList.set(ItemCounter+".Durability",0);
+					UseableItemList.set(ItemCounter+".MaxDurability",0);
+					UseableItemList.set(ItemCounter+".STR",0);
+					UseableItemList.set(ItemCounter+".DEX",0);
+					UseableItemList.set(ItemCounter+".INT",0);
+					UseableItemList.set(ItemCounter+".WILL",0);
+					UseableItemList.set(ItemCounter+".LUK",0);
+					UseableItemList.set(ItemCounter+".Balance",10);
+					UseableItemList.set(ItemCounter+".Critical",0);
+					UseableItemList.set(ItemCounter+".HP",0);
+					UseableItemList.set(ItemCounter+".MP",0);
+				}
+				UseableItemList.saveConfig();
+				NewUseableItemGUI(player,ItemCounter);
+			}
 		}
 	}
 
 	public void NewUseableItemGUIclick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-
-		UserData_Object u = new UserData_Object();
+		String IconName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
 		
 		int itemnumber = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
-
-	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager ItemList = YC.getNewConfig("Item/Consume.yml");
-		
-		switch (ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()))
+		if(IconName.compareTo("[        스킬        ]")==0)
 		{
-		case "[        스킬        ]":
-
+		  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 			YamlManager Config = YC.getNewConfig("config.yml");
 			
 			if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System")==true)
@@ -401,53 +394,11 @@ public class UseableItem_GUI extends Util_GUI
 				s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				player.sendMessage(ChatColor.RED+ "[스킬 북 생성] : 현재 서버 시스템이 "+ChatColor.YELLOW+"'마비노기'"+ChatColor.RED+"가 아닙니다!");
 			}
-			return;
-		case "[       포만감       ]":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			player.closeInventory();
-			player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 회복할 포만감을 입력해 주세요!");
-			u.setType(player, "UseableItem");
-			u.setString(player, (byte)1, "Saturation");
-			u.setInt(player, (byte)3, itemnumber);
-			u.setInt(player, (byte)4, -1);
-			return;
-		case "[       생명력       ]":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			player.closeInventory();
-			player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 회복할 생명력을 입력해 주세요!");
-			u.setType(player, "UseableItem");
-			u.setString(player, (byte)1, "HP");
-			u.setInt(player, (byte)3, itemnumber);
-			u.setInt(player, (byte)4, -8);
-			return;
-		case "[        마나        ]":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			player.closeInventory();
-			player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 회복할 마나를 입력해 주세요!");
-			u.setType(player, "UseableItem");
-			u.setString(player, (byte)1, "MP");
-			u.setInt(player, (byte)3, itemnumber);
-			u.setInt(player, (byte)4, -8);
-			return;
-		case "[     스킬 포인트     ]":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			player.closeInventory();
-			player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 주고자 하는 스킬 포인트의 양을 입력해 주세요!");
-			u.setType(player, "UseableItem");
-			u.setString(player, (byte)1, "SkillPoint");
-			u.setInt(player, (byte)3, itemnumber);
-			u.setInt(player, (byte)4, -1);
-			return;
-		case "[     스텟 포인트     ]":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			player.closeInventory();
-			player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 주고자 하는 스킬 포인트의 양을 입력해 주세요!");
-			u.setType(player, "UseableItem");
-			u.setString(player, (byte)1, "StatPoint");
-			u.setInt(player, (byte)3, itemnumber);
-			u.setInt(player, (byte)4, -1);
-			return;
-		case "[    위치 지정    ]":
+		}
+		else if(IconName.compareTo("[    위치 지정    ]")==0)
+		{
+		  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+			YamlManager ItemList = YC.getNewConfig("Item/Consume.yml");
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			ItemList.set(itemnumber+".World", player.getLocation().getWorld().getName().toString());
 			ItemList.set(itemnumber+".X", player.getLocation().getX());
@@ -457,8 +408,11 @@ public class UseableItem_GUI extends Util_GUI
 			ItemList.set(itemnumber+".Yaw", player.getLocation().getYaw());
 			ItemList.saveConfig();
 			NewUseableItemGUI(player, itemnumber);
-			return;
-		case  "[        환생        ]":
+		}
+		else if(IconName.compareTo("[        환생        ]")==0)
+		{
+		  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+			YamlManager ItemList = YC.getNewConfig("Item/Consume.yml");
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(ItemList.getBoolean(itemnumber+".Rebirth") == false)
 				ItemList.set(itemnumber+".Rebirth", true);
@@ -466,8 +420,11 @@ public class UseableItem_GUI extends Util_GUI
 				ItemList.set(itemnumber+".Rebirth", false);
 			ItemList.saveConfig();
 			NewUseableItemGUI(player, itemnumber);
-			return;
-		case "[    형식 변경    ]":
+		}
+		else if(IconName.compareTo("[    형식 변경    ]")==0)
+		{
+		  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+			YamlManager ItemList = YC.getNewConfig("Item/Consume.yml");
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(ItemList.getString(itemnumber+".ShowType").contains("[깔끔]"))
 				ItemList.set(itemnumber+".ShowType",ChatColor.YELLOW+"[컬러]");
@@ -479,40 +436,13 @@ public class UseableItem_GUI extends Util_GUI
 				ItemList.set(itemnumber+".ShowType",ChatColor.WHITE+"[깔끔]");
 			ItemList.saveConfig();
 			NewUseableItemGUI(player, itemnumber);
-			return;
-		case "[    이름 변경    ]":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			player.closeInventory();
-			player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 이름을 입력해 주세요!");
-			player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
-			ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
-					ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
-			ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
-					ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
-			u.setType(player, "UseableItem");
-			u.setString(player, (byte)1, "DisplayName");
-			u.setInt(player, (byte)3, itemnumber);
-			u.setInt(player, (byte)4, -1);
-			return;
-		case  "[    설명 변경    ]":
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			player.closeInventory();
-			player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 설명을 입력해 주세요!");
-			player.sendMessage(ChatColor.GOLD + "%enter%"+ChatColor.WHITE + " - 한줄 띄워 쓰기 -");
-			player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
-			ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
-					ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
-			ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
-					ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
-			u.setType(player, "UseableItem");
-			u.setString(player, (byte)1, "Lore");
-			u.setInt(player, (byte)3, itemnumber);
-			u.setInt(player, (byte)4, -1);
-			return;
-		case "[    타입 변경    ]"://타입 변경
+		}
+		else if(IconName.compareTo("[    타입 변경    ]")==0)
 			s.SP(player, Sound.BLOCK_ANVIL_LAND, 0.8F, 1.8F);
-			return;
-		case "[    등급 변경    ]":
+		else if(IconName.compareTo("[    등급 변경    ]")==0)
+		{
+		  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+			YamlManager ItemList = YC.getNewConfig("Item/Consume.yml");
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(ItemList.getString(itemnumber+".Grade").contains("[일반]"))
 				ItemList.set(itemnumber+".Grade",ChatColor.GREEN+"[상급]");
@@ -532,153 +462,166 @@ public class UseableItem_GUI extends Util_GUI
 				ItemList.set(itemnumber+".Grade",ChatColor.WHITE+"[일반]");
 			ItemList.saveConfig();
 			NewUseableItemGUI(player, itemnumber);
-			return;
-			case  "[        ID        ]":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 ID 값을 입력해 주세요!");
-				u.setType(player, "UseableItem");
-				u.setString(player, (byte)1, "ID");
-				u.setInt(player, (byte)3, itemnumber);
-				u.setInt(player, (byte)4, -1);
-				return;
-			case "[       DATA       ]":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 DATA 값을 입력해 주세요!");
-				u.setType(player, "UseableItem");
-				u.setString(player, (byte)1, "Data");
-				u.setInt(player, (byte)3, itemnumber);
-				u.setInt(player, (byte)4, -1);
-				return;
-			case "[       대미지       ]":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최소 "+Main_ServerOption.Damage+"를 입력해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-				u.setType(player, "UseableItem");
-				u.setString(player, (byte)1, "MinDamage");
-				u.setInt(player, (byte)3, itemnumber);
-				u.setInt(player, (byte)4, -1);
-				return;
-			case "[     마법 대미지     ]":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최소 "+Main_ServerOption.MagicDamage+"를 입력해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-				u.setType(player, "UseableItem");
-				u.setString(player, (byte)1, "MinMaDamage");
-				u.setInt(player, (byte)3, itemnumber);
-				u.setInt(player, (byte)4, -1);
-				return;
-			case "[        방어        ]":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 방어력을 입력해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-				u.setType(player, "UseableItem");
-				u.setString(player, (byte)1, "DEF");
-				u.setInt(player, (byte)3, itemnumber);
-				u.setInt(player, (byte)4, -1);
-				return;
-			case "[        보호        ]":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보호를 입력해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-				u.setType(player, "UseableItem");
-				u.setString(player, (byte)1, "Protect");
-				u.setInt(player, (byte)3, itemnumber);
-				u.setInt(player, (byte)4, -1);
-				return;
-			case "[      마법 방어      ]":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 마법 방어력을 입력해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-				u.setType(player, "UseableItem");
-				u.setString(player, (byte)1, "MaDEF");
-				u.setInt(player, (byte)3, itemnumber);
-				u.setInt(player, (byte)4, -1);
-				return;
-			case "[      마법 보호      ]":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 마법 보호를 입력해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-				u.setType(player, "UseableItem");
-				u.setString(player, (byte)1, "MaProtect");
-				u.setInt(player, (byte)3, itemnumber);
-				u.setInt(player, (byte)4, -1);
-				return;
-			case "[        스텟        ]":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 생명력 보너스를 입력해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
-				u.setType(player, "UseableItem");
-				u.setString(player, (byte)1, "HP");
-				u.setInt(player, (byte)3, itemnumber);
-				u.setInt(player, (byte)4, -1);
-				return;
-			case"[       내구도       ]":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최대 내구력을 입력해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-				u.setType(player, "UseableItem");
-				u.setString(player, (byte)1, "MaxDurability");
-				u.setInt(player, (byte)3, itemnumber);
-				u.setInt(player, (byte)4, -1);
-				return;
-			case "이전 목록":
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				UseableItemListGUI(player, 0);
-				return;
-			case "닫기":
-				event.setCancelled(true);
+		}
+		else if(IconName.compareTo("이전 목록")==0)
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			UseableItemListGUI(player, 0);
+		}
+		else if(IconName.compareTo("닫기")==0)
+		{
 				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 				player.closeInventory();
-				return;
+		}
+		else if(!((event.getSlot()>=9&&event.getSlot()<=11)||(event.getSlot()>=18&&event.getSlot()<=20)||(event.getSlot()>=27&&event.getSlot()<=29)))
+		{
+			UserData_Object u = new UserData_Object();
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			u.setType(player, "UseableItem");
+			u.setInt(player, (byte)3, itemnumber);
+			u.setInt(player, (byte)4, -1);
+			player.closeInventory();
+			if(IconName.compareTo("[       포만감       ]")==0)
+			{
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 회복할 포만감을 입력해 주세요!");
+				u.setString(player, (byte)1, "Saturation");
+			}
+			else if(IconName.compareTo("[       생명력       ]")==0)
+			{
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 회복할 생명력을 입력해 주세요!");
+				u.setString(player, (byte)1, "HP");
+				u.setInt(player, (byte)4, -8);
+			}
+			else if(IconName.compareTo("[        마나        ]")==0)
+			{
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 회복할 마나를 입력해 주세요!");
+				u.setString(player, (byte)1, "MP");
+				u.setInt(player, (byte)4, -8);
+			}
+			else if(IconName.compareTo("[     스킬 포인트     ]")==0)
+			{
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 주고자 하는 스킬 포인트의 양을 입력해 주세요!");
+				u.setString(player, (byte)1, "SkillPoint");
+			}
+			else if(IconName.compareTo("[     스텟 포인트     ]")==0)
+			{
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 주고자 하는 스텟 포인트의 양을 입력해 주세요!");
+				u.setString(player, (byte)1, "StatPoint");
+			}
+			else if(IconName.compareTo("[        ID        ]")==0)
+			{
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 ID 값을 입력해 주세요!");
+				u.setString(player, (byte)1, "ID");
+			}
+			else if(IconName.compareTo("[       DATA       ]")==0)
+			{
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 DATA 값을 입력해 주세요!");
+				u.setString(player, (byte)1, "Data");
+			}
+			else if(IconName.compareTo("[       대미지       ]")==0)
+			{
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최소 "+Main_ServerOption.Damage+"를 입력해 주세요!");
+				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+				u.setString(player, (byte)1, "MinDamage");
+			}
+			else if(IconName.compareTo("[     마법 대미지     ]")==0)
+			{
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최소 "+Main_ServerOption.MagicDamage+"를 입력해 주세요!");
+				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+				u.setString(player, (byte)1, "MinMaDamage");
+			}
+			else if(IconName.compareTo("[        방어        ]")==0)
+			{
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 방어력을 입력해 주세요!");
+				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+				u.setString(player, (byte)1, "DEF");
+			}
+			else if(IconName.compareTo("[        보호        ]")==0)
+			{
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보호를 입력해 주세요!");
+				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+				u.setString(player, (byte)1, "Protect");
+			}
+			else if(IconName.compareTo("[      마법 방어      ]")==0)
+			{
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 마법 방어력을 입력해 주세요!");
+				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+				u.setString(player, (byte)1, "MaDEF");
+			}
+			else if(IconName.compareTo("[      마법 보호      ]")==0)
+			{
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 마법 보호를 입력해 주세요!");
+				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+				u.setString(player, (byte)1, "MaProtect");
+			}
+			else if(IconName.compareTo("[        스텟        ]")==0)
+			{
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 생명력 보너스를 입력해 주세요!");
+				player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
+				u.setString(player, (byte)1, "HP");
+			}
+			else if(IconName.compareTo("[       내구도       ]")==0)
+			{
+				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최대 내구력을 입력해 주세요!");
+				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+				u.setString(player, (byte)1, "MaxDurability");
+			}
+			else
+			{
+				if(IconName.compareTo("[    이름 변경    ]")==0)
+				{
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 이름을 입력해 주세요!");
+					u.setString(player, (byte)1, "DisplayName");
+				}
+				else if(IconName.compareTo("[    설명 변경    ]")==0)
+				{
+					player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 설명을 입력해 주세요!");
+					player.sendMessage(ChatColor.GOLD + "%enter%"+ChatColor.WHITE + " - 한줄 띄워 쓰기 -");
+					u.setString(player, (byte)1, "Lore");
+				}
+				player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
+				ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
+						ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
+				ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
+						ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
+			}
+			
 		}
 	}
 	
 	public void SelectSkillGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
+		int slot = event.getSlot();
 		Player player = (Player) event.getWhoClicked();
-		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
-
-	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager ItemList = YC.getNewConfig("Item/Consume.yml");
-		int itemnumber = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
-		switch (event.getSlot())
+		
+		if(slot == 53)//나가기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			NewUseableItemGUI(player, itemnumber);
-			break;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			break;
-		case 48://이전 페이지
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			SelectSkillGUI(player, (short) (page-1), itemnumber);
-			break;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			SelectSkillGUI(player, (short) (page+1), itemnumber);
-			break;
-		default:
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			ItemList.set(itemnumber+".Skill", ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-			ItemList.saveConfig();
-			NewUseableItemGUI(player, itemnumber);
-			break;
+			int itemnumber = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
+			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+			if(slot == 45)//이전 목록
+				NewUseableItemGUI(player, itemnumber);
+			else if(slot == 48)//이전 페이지
+				SelectSkillGUI(player, (short) (page-1), itemnumber);
+			else if(slot == 50)//다음 페이지
+				SelectSkillGUI(player, (short) (page-1), itemnumber);
+			else
+			{
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager ItemList = YC.getNewConfig("Item/Consume.yml");
+				ItemList.set(itemnumber+".Skill", ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+				ItemList.saveConfig();
+				NewUseableItemGUI(player, itemnumber);
+			}
 		}
 	}
+	
 	
 	public String[] LoreCreater(int ItemNumber)
 	{

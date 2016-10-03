@@ -63,7 +63,7 @@ public class Quest_Config
 					if(QuestType.compareTo("Nevigation")==0||QuestType.compareTo("Whisper")==0||
 					QuestType.compareTo("BroadCast")==0||QuestType.compareTo("BlockPlace")==0||
 					QuestType.compareTo("VarChange")==0||QuestType.compareTo("TelePort")==0)
-						new GBD_RPG.Quest.Quest_GUI().QuestTypeRouter(player, QuestName);
+						new GBD_RPG.Quest.Quest_GUI().QuestRouter(player, QuestName);
 				}
 			}
 		}

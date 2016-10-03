@@ -6,16 +6,19 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_10_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import GBD_RPG.Admin.OPbox_GUI;
-import GBD_RPG.Main_Event.Main_InventoryClick;
 import GBD_RPG.User.UserData_Object;
 import GBD_RPG.Util.Util_GUI;
 import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;
+import net.minecraft.server.v1_10_R1.NBTTagByte;
+import net.minecraft.server.v1_10_R1.NBTTagCompound;
 
 public class CustomItem_GUI extends Util_GUI
 {
@@ -23,8 +26,9 @@ public class CustomItem_GUI extends Util_GUI
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager ItemList = YC.getNewConfig("Item/ItemList.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "아이템 목록 : " + (page+1));
+
+		String UniqueCode = "§0§0§3§0§0§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0아이템 목록 : " + (page+1));
 
 		Object[] a= ItemList.getKeys().toArray();
 
@@ -37,6 +41,7 @@ public class CustomItem_GUI extends Util_GUI
 			int ItemID = ItemList.getInt(number+".ID");
 			int ItemData = ItemList.getInt(number+".Data");
 			Stack2(ItemName, ItemID, ItemData, 1,Arrays.asList(LoreCreater(number)), loc, inv);
+			
 			loc++;
 		}
 		
@@ -56,8 +61,9 @@ public class CustomItem_GUI extends Util_GUI
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager ItemList = YC.getNewConfig("Item/ItemList.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "아이템 상세 설정");
+
+		String UniqueCode = "§0§0§3§0§1§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0아이템 상세 설정");
 		String ItemName = ItemList.getString(number+".DisplayName");
 		short ItemID = (short) ItemList.getInt(number+".ID");
 		byte ItemData = (byte) ItemList.getInt(number+".Data");
@@ -109,8 +115,9 @@ public class CustomItem_GUI extends Util_GUI
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager JobList  = YC.getNewConfig("Skill/JobList.yml");
 		YamlManager Config = YC.getNewConfig("config.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "아이템 직업 제한 : " + (page+1));
+
+		String UniqueCode = "§0§0§3§0§2§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0아이템 직업 제한 : " + (page+1));
 
 		Object[] a = JobList.getConfigurationSection("MapleStory").getKeys(false).toArray();
 		
@@ -145,449 +152,385 @@ public class CustomItem_GUI extends Util_GUI
 	public void ItemListInventoryclick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		OPbox_GUI OGUI = new OPbox_GUI();
-		event.setCancelled(true);
-		short page = (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
 		
-
-	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager ItemList = YC.getNewConfig("Item/ItemList.yml");
-		switch (event.getSlot())
+		if(slot == 53)//나가기
 		{
-			case 48:
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			short page = (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+			if(slot == 45)//이전 목록
+				new OPbox_GUI().OPBoxGUI_Main(player,(byte) 1);
+			else if(slot == 48)//이전 페이지
 				ItemListGUI(player,page-1);
-				return;
-			case 50:
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			else if(slot == 50)//다음 페이지
 				ItemListGUI(player,page+1);
-				return;
-			case 45:
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				OGUI.OPBoxGUI_Main(player,(byte) 1);
-				return;
-			case 53:
-				event.setCancelled(true);
-				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-				player.closeInventory();
-				return;
-			case 49://새 아이템
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				int ItemCounter = ItemList.getConfigurationSection("").getKeys(false).size();
-				ItemList.set(ItemCounter+".ShowType",ChatColor.WHITE+"[깔끔]");
-				ItemList.set(ItemCounter+".ID",267);
-				ItemList.set(ItemCounter+".Data",0);
-				ItemList.set(ItemCounter+".DisplayName",ChatColor.WHITE+"방금 만든 따끈한 검");
-				ItemList.set(ItemCounter+".Lore",ChatColor.WHITE+"방금 만들어진 무기이다.%enter%"+ChatColor.WHITE+"조금은 허접할지도...");
-				ItemList.set(ItemCounter+".Type",ChatColor.RED+"[근접 무기]");
-				ItemList.set(ItemCounter+".Grade",ChatColor.WHITE+"[일반]");
-				ItemList.set(ItemCounter+".MinDamage",1);
-				ItemList.set(ItemCounter+".MaxDamage",7);
-				ItemList.set(ItemCounter+".MinMaDamage",0);
-				ItemList.set(ItemCounter+".MaxMaDamage",0);
-				ItemList.set(ItemCounter+".DEF",0);
-				ItemList.set(ItemCounter+".Protect",0);
-				ItemList.set(ItemCounter+".MaDEF",0);
-				ItemList.set(ItemCounter+".MaProtect",0);
-				ItemList.set(ItemCounter+".Durability",256);
-				ItemList.set(ItemCounter+".MaxDurability",256);
-				ItemList.set(ItemCounter+".STR",0);
-				ItemList.set(ItemCounter+".DEX",0);
-				ItemList.set(ItemCounter+".INT",0);
-				ItemList.set(ItemCounter+".WILL",0);
-				ItemList.set(ItemCounter+".LUK",0);
-				ItemList.set(ItemCounter+".Balance",10);
-				ItemList.set(ItemCounter+".Critical",5);
-				ItemList.set(ItemCounter+".MaxUpgrade",5);
-				ItemList.set(ItemCounter+".MaxSocket",3);
-				ItemList.set(ItemCounter+".HP",0);
-				ItemList.set(ItemCounter+".MP",0);
-				ItemList.set(ItemCounter+".JOB","공용");
-				ItemList.set(ItemCounter+".MinLV",0);
-				ItemList.set(ItemCounter+".MinRLV",0);
-				ItemList.set(ItemCounter+".MinSTR",0);
-				ItemList.set(ItemCounter+".MinDEX",0);
-				ItemList.set(ItemCounter+".MinINT",0);
-				ItemList.set(ItemCounter+".MinWILL",0);
-				ItemList.set(ItemCounter+".MinLUK",0);
-				ItemList.saveConfig();
-				NewItemGUI(player, ItemCounter);
-				return;
-			default:
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				int number = ((page*45)+event.getSlot());
-				if(event.isLeftClick() == true&&event.isShiftClick()==false)
+			else
+			{
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager ItemList = YC.getNewConfig("Item/ItemList.yml");
+				if(slot == 49)//새 아이템
 				{
-					player.sendMessage(ChatColor.GREEN+"[SYSTEM] : 클릭한 아이템을 지급 받았습니다!");
-					player.getInventory().addItem(event.getCurrentItem());
-				}
-				if(event.isLeftClick() == true&&event.isShiftClick()==true)
-					NewItemGUI(player, number);
-				else if(event.isRightClick()==true&&event.isShiftClick()==true)
-				{
-					short Acount =  (short) (ItemList.getConfigurationSection("").getKeys(false).toArray().length-1);
-
-					for(short counter = (short) number;counter <Acount;counter++)
-						ItemList.set(counter+"", ItemList.get((counter+1)+""));
-					ItemList.removeKey(Acount+"");
+					int ItemCounter = ItemList.getConfigurationSection("").getKeys(false).size();
+					ItemList.set(ItemCounter+".ShowType",ChatColor.WHITE+"[깔끔]");
+					ItemList.set(ItemCounter+".ID",267);
+					ItemList.set(ItemCounter+".Data",0);
+					ItemList.set(ItemCounter+".DisplayName",ChatColor.WHITE+"방금 만든 따끈한 검");
+					ItemList.set(ItemCounter+".Lore",ChatColor.WHITE+"방금 만들어진 무기이다.%enter%"+ChatColor.WHITE+"조금은 허접할지도...");
+					ItemList.set(ItemCounter+".Type",ChatColor.RED+"[근접 무기]");
+					ItemList.set(ItemCounter+".Grade",ChatColor.WHITE+"[일반]");
+					ItemList.set(ItemCounter+".MinDamage",1);
+					ItemList.set(ItemCounter+".MaxDamage",7);
+					ItemList.set(ItemCounter+".MinMaDamage",0);
+					ItemList.set(ItemCounter+".MaxMaDamage",0);
+					ItemList.set(ItemCounter+".DEF",0);
+					ItemList.set(ItemCounter+".Protect",0);
+					ItemList.set(ItemCounter+".MaDEF",0);
+					ItemList.set(ItemCounter+".MaProtect",0);
+					ItemList.set(ItemCounter+".Durability",256);
+					ItemList.set(ItemCounter+".MaxDurability",256);
+					ItemList.set(ItemCounter+".STR",0);
+					ItemList.set(ItemCounter+".DEX",0);
+					ItemList.set(ItemCounter+".INT",0);
+					ItemList.set(ItemCounter+".WILL",0);
+					ItemList.set(ItemCounter+".LUK",0);
+					ItemList.set(ItemCounter+".Balance",10);
+					ItemList.set(ItemCounter+".Critical",5);
+					ItemList.set(ItemCounter+".MaxUpgrade",5);
+					ItemList.set(ItemCounter+".MaxSocket",3);
+					ItemList.set(ItemCounter+".HP",0);
+					ItemList.set(ItemCounter+".MP",0);
+					ItemList.set(ItemCounter+".JOB","공용");
+					ItemList.set(ItemCounter+".MinLV",0);
+					ItemList.set(ItemCounter+".MinRLV",0);
+					ItemList.set(ItemCounter+".MinSTR",0);
+					ItemList.set(ItemCounter+".MinDEX",0);
+					ItemList.set(ItemCounter+".MinINT",0);
+					ItemList.set(ItemCounter+".MinWILL",0);
+					ItemList.set(ItemCounter+".MinLUK",0);
 					ItemList.saveConfig();
-					ItemListGUI(player, page);
+					NewItemGUI(player, ItemCounter);
 				}
-				return;
+				else
+				{
+					int number = ((page*45)+event.getSlot());
+					if(event.isLeftClick() == true&&event.isShiftClick()==false)
+					{
+						player.sendMessage(ChatColor.GREEN+"[SYSTEM] : 클릭한 아이템을 지급 받았습니다!");
+						player.getInventory().addItem(event.getCurrentItem());
+					}
+					if(event.isLeftClick() == true&&event.isShiftClick()==true)
+						NewItemGUI(player, number);
+					else if(event.isRightClick()==true&&event.isShiftClick()==true)
+					{
+						short Acount =  (short) (ItemList.getConfigurationSection("").getKeys(false).toArray().length-1);
+
+						for(short counter = (short) number;counter <Acount;counter++)
+							ItemList.set(counter+"", ItemList.get((counter+1)+""));
+						ItemList.removeKey(Acount+"");
+						ItemList.saveConfig();
+						ItemListGUI(player, page);
+					}
+				}
+			}
 		}
 	}
 	
 	public void NewItemGUIclick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		
-		int itemnumber = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
+		int slot = event.getSlot();
 
-	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager ItemList = YC.getNewConfig("Item/ItemList.yml");
-		if(ItemList.getString(itemnumber+"")==null)
+		if(slot == 53)//나가기
 		{
-			player.sendMessage(ChatColor.RED+"[SYSTEM] : 다른 OP가 아이템을 삭제하여 반영되지 않았습니다!");
-			event.setCancelled(true);
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
 		}
-		UserData_Object u = new UserData_Object();
-
-		switch (event.getSlot())
+		else
 		{
-		case 37://쇼 타입
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if(ItemList.getString(itemnumber+".ShowType").contains("[깔끔]"))
-				ItemList.set(itemnumber+".ShowType",ChatColor.YELLOW+"[컬러]");
-			else if(ItemList.getString(itemnumber+".ShowType").contains("[컬러]"))
-				ItemList.set(itemnumber+".ShowType",ChatColor.LIGHT_PURPLE+"[기호]");
-			else if(ItemList.getString(itemnumber+".ShowType").contains("[기호]"))
-				ItemList.set(itemnumber+".ShowType",ChatColor.BLUE+"[분류]");
-			else if(ItemList.getString(itemnumber+".ShowType").contains("[분류]"))
-				ItemList.set(itemnumber+".ShowType",ChatColor.WHITE+"[깔끔]");
-			ItemList.saveConfig();
-			NewItemGUI(player, itemnumber);
-			return;
-		case 13://이름 변경
+			if(slot == 45)//이전 화면
+				ItemListGUI(player, 0);
+			else if(!((event.getSlot()>=9&&event.getSlot()<=11)||(event.getSlot()>=18&&event.getSlot()<=20)||(event.getSlot()>=27&&event.getSlot()<=29)))
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 이름을 입력해 주세요!");
-				player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
-				ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
-						ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
-				ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
-						ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
-
-				u.setType(player, "Item");
-				u.setString(player, (byte)1, "DisplayName");
-				u.setInt(player, (byte)3, itemnumber);
-			}
-			return;
-		case 14://설명 변경
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			player.closeInventory();
-			player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 설명을 입력해 주세요!");
-			player.sendMessage(ChatColor.GOLD + "%enter%"+ChatColor.WHITE + " - 한줄 띄워 쓰기 -");
-			player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
-			ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
-					ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
-			ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
-					ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
-
-			u.setType(player, "Item");
-			u.setString(player, (byte)1, "Lore");
-			u.setInt(player, (byte)3, itemnumber);
-			return;
-		case 15://타입 변경
-			{
-			  	YamlManager Target = YC.getNewConfig("Item/CustomType.yml");
-
-			  	Object[] Type = Target.getKeys().toArray();
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			  	if(Type.length == 0)
-			  	{
-					if(ItemList.getString(itemnumber+".Type").contains("[근접 무기]"))
-						ItemList.set(itemnumber+".Type",ChatColor.RED+"[한손 검]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[한손 검]"))
-						ItemList.set(itemnumber+".Type",ChatColor.RED+"[양손 검]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[양손 검]"))
-						ItemList.set(itemnumber+".Type",ChatColor.RED+"[도끼]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[도끼]"))
-						ItemList.set(itemnumber+".Type",ChatColor.RED+"[낫]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[낫]"))
-						ItemList.set(itemnumber+".Type",ChatColor.DARK_GREEN+"[원거리 무기]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[원거리 무기]"))
-						ItemList.set(itemnumber+".Type",ChatColor.DARK_GREEN+"[활]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[활]"))
-						ItemList.set(itemnumber+".Type",ChatColor.DARK_GREEN+"[석궁]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[석궁]"))
-						ItemList.set(itemnumber+".Type",ChatColor.DARK_AQUA+"[마법 무기]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[마법 무기]"))
-						ItemList.set(itemnumber+".Type",ChatColor.DARK_AQUA+"[원드]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[원드]"))
-						ItemList.set(itemnumber+".Type",ChatColor.DARK_AQUA+"[스태프]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[스태프]"))
-						ItemList.set(itemnumber+".Type",ChatColor.WHITE+"[방어구]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[방어구]"))
-						ItemList.set(itemnumber+".Type",ChatColor.GRAY+"[기타]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[기타]"))
-						ItemList.set(itemnumber+".Type",ChatColor.RED+"[근접 무기]");
-			  	}
-			  	else
-			  	{
-					if(ItemList.getString(itemnumber+".Type").contains("[근접 무기]"))
-						ItemList.set(itemnumber+".Type",ChatColor.RED+"[한손 검]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[한손 검]"))
-						ItemList.set(itemnumber+".Type",ChatColor.RED+"[양손 검]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[양손 검]"))
-						ItemList.set(itemnumber+".Type",ChatColor.RED+"[도끼]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[도끼]"))
-						ItemList.set(itemnumber+".Type",ChatColor.RED+"[낫]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[낫]"))
-						ItemList.set(itemnumber+".Type",ChatColor.DARK_GREEN+"[원거리 무기]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[원거리 무기]"))
-						ItemList.set(itemnumber+".Type",ChatColor.DARK_GREEN+"[활]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[활]"))
-						ItemList.set(itemnumber+".Type",ChatColor.DARK_GREEN+"[석궁]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[석궁]"))
-						ItemList.set(itemnumber+".Type",ChatColor.DARK_AQUA+"[마법 무기]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[마법 무기]"))
-						ItemList.set(itemnumber+".Type",ChatColor.DARK_AQUA+"[원드]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[원드]"))
-						ItemList.set(itemnumber+".Type",ChatColor.DARK_AQUA+"[스태프]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[스태프]"))
-						ItemList.set(itemnumber+".Type",ChatColor.WHITE+"[방어구]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[방어구]"))
-						ItemList.set(itemnumber+".Type",ChatColor.GRAY+"[기타]");
-					else if(ItemList.getString(itemnumber+".Type").contains("[기타]"))
-						ItemList.set(itemnumber+".Type",ChatColor.WHITE+Type[0].toString());
-					else
-					{
-						for(short count = 0; count < Type.length; count++)
-						{
-							if((ItemList.getString(itemnumber+".Type").contains(Type[count].toString())))
-							{
-								if(count+1 == Type.length)
-									ItemList.set(itemnumber+".Type",ChatColor.RED+"[근접 무기]");
-								else
-									ItemList.set(itemnumber+".Type",ChatColor.WHITE+Type[(count+1)].toString());
-								break;
-							}
-						}
-					}
-			  	}
-				ItemList.saveConfig();
-				NewItemGUI(player, itemnumber);
-			}
-			return;
-		case 16://등급 변경
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if(ItemList.getString(itemnumber+".Grade").contains("[일반]"))
-				ItemList.set(itemnumber+".Grade",ChatColor.GREEN+"[상급]");
-			else if(ItemList.getString(itemnumber+".Grade").contains("[상급]"))
-				ItemList.set(itemnumber+".Grade",ChatColor.BLUE+"[매직]");
-			else if(ItemList.getString(itemnumber+".Grade").contains("[매직]"))
-				ItemList.set(itemnumber+".Grade",ChatColor.YELLOW+"[레어]");
-			else if(ItemList.getString(itemnumber+".Grade").contains("[레어]"))
-				ItemList.set(itemnumber+".Grade",ChatColor.DARK_PURPLE+"[에픽]");
-			else if(ItemList.getString(itemnumber+".Grade").contains("[에픽]"))
-				ItemList.set(itemnumber+".Grade",ChatColor.GOLD+"[전설]");
-			else if(ItemList.getString(itemnumber+".Grade").contains("[전설]"))
-				ItemList.set(itemnumber+".Grade",ChatColor.DARK_RED+""+ChatColor.BOLD+"["+ChatColor.GOLD+""+ChatColor.BOLD+"초"+ChatColor.DARK_GREEN+""+ChatColor.BOLD+"월"+ChatColor.DARK_BLUE+""+ChatColor.BOLD+"]");
-			else if(ItemList.getString(itemnumber+".Grade").contains("초"))
-				ItemList.set(itemnumber+".Grade",ChatColor.GRAY+"[하급]");
-			else if(ItemList.getString(itemnumber+".Grade").contains("[하급]"))
-				ItemList.set(itemnumber+".Grade",ChatColor.WHITE+"[일반]");
-			ItemList.saveConfig();
-			NewItemGUI(player, itemnumber);
-			return;
-			case 22://ID변경
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 ID 값을 입력해 주세요!");
-
-				u.setType(player, "Item");
-				u.setString(player, (byte)1, "ID");
-				u.setInt(player, (byte)3, itemnumber);
-				return;
-			case 23://DATA변경
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 DATA 값을 입력해 주세요!");
-
-				u.setType(player, "Item");
-				u.setString(player, (byte)1, "Data");
-				u.setInt(player, (byte)3, itemnumber);
-				return;
-			case 24://대미지 변경
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최소 "+GBD_RPG.Main_Main.Main_ServerOption.Damage+"를 입력해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-
-				u.setType(player, "Item");
-				u.setString(player, (byte)1, "MinDamage");
-				u.setInt(player, (byte)3, itemnumber);
-				return;
-			case 25://마법 대미지 변경
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최소 "+GBD_RPG.Main_Main.Main_ServerOption.MagicDamage+"를 입력해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-
-				u.setType(player, "Item");
-				u.setString(player, (byte)1, "MinMaDamage");
-				u.setInt(player, (byte)3, itemnumber);
-				return;
-			case 31://방어변경
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 방어력을 입력해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-
-				u.setType(player, "Item");
-				u.setString(player, (byte)1, "DEF");
-				u.setInt(player, (byte)3, itemnumber);
-				return;
-			case 32://보호변경
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보호를 입력해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-
-				u.setType(player, "Item");
-				u.setString(player, (byte)1, "Protect");
-				u.setInt(player, (byte)3, itemnumber);
-				return;
-			case 33://마법 방어 변경
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 마법 방어력을 입력해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-
-				u.setType(player, "Item");
-				u.setString(player, (byte)1, "MaDEF");
-				u.setInt(player, (byte)3, itemnumber);
-				return;
-			case 34://마법 보호 변경
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 마법 보호를 입력해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-
-				u.setType(player, "Item");
-				u.setString(player, (byte)1, "MaProtect");
-				u.setInt(player, (byte)3, itemnumber);
-				return;
-			case 40://스텟 보너스
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 생명력 보너스를 입력해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
-				u.setType(player, "Item");
-				u.setString(player, (byte)1, "HP");
-				u.setInt(player, (byte)3, itemnumber);
-				return;
-			case 41://내구도 설정
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최대 내구력을 입력해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-
-				u.setType(player, "Item");
-				u.setString(player, (byte)1, "MaxDurability");
-				u.setInt(player, (byte)3, itemnumber);
-				return;
-			case 42://개조 횟수 설정
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최대 개조 횟수를 입력해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ 127)");
-				u.setType(player, "Item");
-				u.setString(player, (byte)1, "MaxUpgrade");
-				u.setInt(player, (byte)3, itemnumber);
-				return;
-			case 43://최대 슬롯 설정
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				if(ItemList.getInt(itemnumber+".MaxSocket") < 5)
-					ItemList.set(itemnumber+".MaxSocket",ItemList.getInt(itemnumber+".MaxSocket")+1);
-				else if(ItemList.getInt(itemnumber+".MaxSocket") == 5)
-						ItemList.set(itemnumber+".MaxSocket", 0);
-				ItemList.saveConfig();
-				NewItemGUI(player, itemnumber);
-				return;
-			case 49://스텟 제한
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 레벨 제한을 입력 해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
-				u.setType(player, "Item");
-				u.setString(player, (byte)1, "MinLV");
-				u.setInt(player, (byte)3, itemnumber);
-				return;
-			case 50://직업 제한
-				if(event.isLeftClick())
+				int itemnumber = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager ItemList = YC.getNewConfig("Item/ItemList.yml");
+				if(ItemList.getString(itemnumber+"")==null)
 				{
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					JobListGUI(player, (short)0, itemnumber);
+					player.sendMessage(ChatColor.RED+"[SYSTEM] : 다른 OP가 아이템을 삭제하여 반영되지 않았습니다!");
+					s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+					player.closeInventory();
+					return;
 				}
-				else if(event.isRightClick())
+				if(slot==37)//쇼 타입
 				{
-					s.SP(player, Sound.ITEM_SHIELD_BREAK, 0.8F, 1.0F);
-					ItemList.set(itemnumber+".JOB", "공용");
+					if(ItemList.getString(itemnumber+".ShowType").contains("[깔끔]"))
+						ItemList.set(itemnumber+".ShowType",ChatColor.YELLOW+"[컬러]");
+					else if(ItemList.getString(itemnumber+".ShowType").contains("[컬러]"))
+						ItemList.set(itemnumber+".ShowType",ChatColor.LIGHT_PURPLE+"[기호]");
+					else if(ItemList.getString(itemnumber+".ShowType").contains("[기호]"))
+						ItemList.set(itemnumber+".ShowType",ChatColor.BLUE+"[분류]");
+					else if(ItemList.getString(itemnumber+".ShowType").contains("[분류]"))
+						ItemList.set(itemnumber+".ShowType",ChatColor.WHITE+"[깔끔]");
 					ItemList.saveConfig();
 					NewItemGUI(player, itemnumber);
 				}
-				return;
-			case 45://이전 목록
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				ItemListGUI(player, 0);
-				return;
-			case 53://나가기
-				event.setCancelled(true);
-				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-				player.closeInventory();
-				return;
+				else if(slot==15)//타입 변경
+				{
+				  	YamlManager Target = YC.getNewConfig("Item/CustomType.yml");
+				  	Object[] Type = Target.getKeys().toArray();
+					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				  	if(Type.length == 0)
+				  	{
+						if(ItemList.getString(itemnumber+".Type").contains("[근접 무기]"))
+							ItemList.set(itemnumber+".Type",ChatColor.RED+"[한손 검]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[한손 검]"))
+							ItemList.set(itemnumber+".Type",ChatColor.RED+"[양손 검]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[양손 검]"))
+							ItemList.set(itemnumber+".Type",ChatColor.RED+"[도끼]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[도끼]"))
+							ItemList.set(itemnumber+".Type",ChatColor.RED+"[낫]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[낫]"))
+							ItemList.set(itemnumber+".Type",ChatColor.DARK_GREEN+"[원거리 무기]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[원거리 무기]"))
+							ItemList.set(itemnumber+".Type",ChatColor.DARK_GREEN+"[활]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[활]"))
+							ItemList.set(itemnumber+".Type",ChatColor.DARK_GREEN+"[석궁]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[석궁]"))
+							ItemList.set(itemnumber+".Type",ChatColor.DARK_AQUA+"[마법 무기]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[마법 무기]"))
+							ItemList.set(itemnumber+".Type",ChatColor.DARK_AQUA+"[원드]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[원드]"))
+							ItemList.set(itemnumber+".Type",ChatColor.DARK_AQUA+"[스태프]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[스태프]"))
+							ItemList.set(itemnumber+".Type",ChatColor.WHITE+"[방어구]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[방어구]"))
+							ItemList.set(itemnumber+".Type",ChatColor.GRAY+"[기타]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[기타]"))
+							ItemList.set(itemnumber+".Type",ChatColor.RED+"[근접 무기]");
+				  	}
+				  	else
+				  	{
+						if(ItemList.getString(itemnumber+".Type").contains("[근접 무기]"))
+							ItemList.set(itemnumber+".Type",ChatColor.RED+"[한손 검]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[한손 검]"))
+							ItemList.set(itemnumber+".Type",ChatColor.RED+"[양손 검]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[양손 검]"))
+							ItemList.set(itemnumber+".Type",ChatColor.RED+"[도끼]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[도끼]"))
+							ItemList.set(itemnumber+".Type",ChatColor.RED+"[낫]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[낫]"))
+							ItemList.set(itemnumber+".Type",ChatColor.DARK_GREEN+"[원거리 무기]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[원거리 무기]"))
+							ItemList.set(itemnumber+".Type",ChatColor.DARK_GREEN+"[활]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[활]"))
+							ItemList.set(itemnumber+".Type",ChatColor.DARK_GREEN+"[석궁]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[석궁]"))
+							ItemList.set(itemnumber+".Type",ChatColor.DARK_AQUA+"[마법 무기]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[마법 무기]"))
+							ItemList.set(itemnumber+".Type",ChatColor.DARK_AQUA+"[원드]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[원드]"))
+							ItemList.set(itemnumber+".Type",ChatColor.DARK_AQUA+"[스태프]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[스태프]"))
+							ItemList.set(itemnumber+".Type",ChatColor.WHITE+"[방어구]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[방어구]"))
+							ItemList.set(itemnumber+".Type",ChatColor.GRAY+"[기타]");
+						else if(ItemList.getString(itemnumber+".Type").contains("[기타]"))
+							ItemList.set(itemnumber+".Type",ChatColor.WHITE+Type[0].toString());
+						else
+						{
+							for(short count = 0; count < Type.length; count++)
+							{
+								if((ItemList.getString(itemnumber+".Type").contains(Type[count].toString())))
+								{
+									if(count+1 == Type.length)
+										ItemList.set(itemnumber+".Type",ChatColor.RED+"[근접 무기]");
+									else
+										ItemList.set(itemnumber+".Type",ChatColor.WHITE+Type[(count+1)].toString());
+									break;
+								}
+							}
+						}
+				  	}
+					ItemList.saveConfig();
+					NewItemGUI(player, itemnumber);
+				}
+				else if(slot==16)//등급 변경
+				{
+					if(ItemList.getString(itemnumber+".Grade").contains("[일반]"))
+						ItemList.set(itemnumber+".Grade",ChatColor.GREEN+"[상급]");
+					else if(ItemList.getString(itemnumber+".Grade").contains("[상급]"))
+						ItemList.set(itemnumber+".Grade",ChatColor.BLUE+"[매직]");
+					else if(ItemList.getString(itemnumber+".Grade").contains("[매직]"))
+						ItemList.set(itemnumber+".Grade",ChatColor.YELLOW+"[레어]");
+					else if(ItemList.getString(itemnumber+".Grade").contains("[레어]"))
+						ItemList.set(itemnumber+".Grade",ChatColor.DARK_PURPLE+"[에픽]");
+					else if(ItemList.getString(itemnumber+".Grade").contains("[에픽]"))
+						ItemList.set(itemnumber+".Grade",ChatColor.GOLD+"[전설]");
+					else if(ItemList.getString(itemnumber+".Grade").contains("[전설]"))
+						ItemList.set(itemnumber+".Grade",ChatColor.DARK_RED+""+ChatColor.BOLD+"["+ChatColor.GOLD+""+ChatColor.BOLD+"초"+ChatColor.DARK_GREEN+""+ChatColor.BOLD+"월"+ChatColor.DARK_BLUE+""+ChatColor.BOLD+"]");
+					else if(ItemList.getString(itemnumber+".Grade").contains("초"))
+						ItemList.set(itemnumber+".Grade",ChatColor.GRAY+"[하급]");
+					else if(ItemList.getString(itemnumber+".Grade").contains("[하급]"))
+						ItemList.set(itemnumber+".Grade",ChatColor.WHITE+"[일반]");
+					ItemList.saveConfig();
+					NewItemGUI(player, itemnumber);
+				}
+				else if(slot==43)//최대 슬롯 설정
+				{
+					if(ItemList.getInt(itemnumber+".MaxSocket") < 5)
+						ItemList.set(itemnumber+".MaxSocket",ItemList.getInt(itemnumber+".MaxSocket")+1);
+					else if(ItemList.getInt(itemnumber+".MaxSocket") == 5)
+							ItemList.set(itemnumber+".MaxSocket", 0);
+					ItemList.saveConfig();
+					NewItemGUI(player, itemnumber);
+				}
+				else if(slot==50)//직업 제한
+				{
+					if(event.isLeftClick())
+						JobListGUI(player, (short)0, itemnumber);
+					else if(event.isRightClick())
+					{
+						s.SP(player, Sound.ITEM_SHIELD_BREAK, 0.8F, 1.0F);
+						ItemList.set(itemnumber+".JOB", "공용");
+						ItemList.saveConfig();
+						NewItemGUI(player, itemnumber);
+					}
+				}
+				else
+				{
+					UserData_Object u = new UserData_Object();
+					player.closeInventory();
+					u.setType(player, "Item");
+					u.setInt(player, (byte)3, itemnumber);
+					if(slot == 13 || slot == 14)
+					{
+						if(slot == 13)
+						{
+							player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 이름을 입력해 주세요!");
+							u.setString(player, (byte)1, "DisplayName");
+						}
+						else
+						{
+							player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 설명을 입력해 주세요!");
+							player.sendMessage(ChatColor.GOLD + "%enter%"+ChatColor.WHITE + " - 한줄 띄워 쓰기 -");
+							u.setString(player, (byte)1, "Lore");
+						}
+						player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
+						ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
+								ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
+						ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
+								ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
+					}
+					else if(slot == 22)//ID변경
+					{
+						player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 ID 값을 입력해 주세요!");
+						u.setString(player, (byte)1, "ID");
+					}
+					else if(slot == 23)//DATA변경
+					{
+						player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 DATA 값을 입력해 주세요!");
+						u.setString(player, (byte)1, "Data");
+					}
+					else if(slot == 24)//대미지 변경
+					{
+						player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최소 "+GBD_RPG.Main_Main.Main_ServerOption.Damage+"를 입력해 주세요!");
+						player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+						u.setString(player, (byte)1, "MinDamage");
+					}
+					else if(slot == 25)//마법 대미지 변경
+					{
+						player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최소 "+GBD_RPG.Main_Main.Main_ServerOption.MagicDamage+"를 입력해 주세요!");
+						player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+						u.setString(player, (byte)1, "MinMaDamage");
+					}
+					else if(slot == 31)//방어변경
+					{
+						player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 방어력을 입력해 주세요!");
+						player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+						u.setString(player, (byte)1, "DEF");
+					}
+					else if(slot == 32)//보호변경
+					{
+						player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 보호를 입력해 주세요!");
+						player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+						u.setString(player, (byte)1, "Protect");
+					}
+					else if(slot == 33)//마법 방어 변경
+					{
+						player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 마법 방어력을 입력해 주세요!");
+						player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+						u.setString(player, (byte)1, "MaDEF");
+					}
+					else if(slot == 34)//마법 보호 변경
+					{
+						player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 마법 보호를 입력해 주세요!");
+						player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+						u.setString(player, (byte)1, "MaProtect");
+					}
+					else if(slot == 40)//스텟 보너스
+					{
+						player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 생명력 보너스를 입력해 주세요!");
+						player.sendMessage(ChatColor.DARK_AQUA+"(-127 ~ 127)");
+						u.setString(player, (byte)1, "HP");
+					}
+					else if(slot == 41)//내구도 설정
+					{
+						player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최대 내구력을 입력해 주세요!");
+						player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+						u.setString(player, (byte)1, "MaxDurability");
+					}
+					else if(slot == 42)//개조 횟수 설정
+					{
+						player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 최대 개조 횟수를 입력해 주세요!");
+						player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ 127)");
+						u.setString(player, (byte)1, "MaxUpgrade");
+					}
+					else if(slot == 49)//스텟 제한
+					{
+						player.sendMessage(ChatColor.DARK_AQUA+"[아이템] : 아이템의 레벨 제한을 입력 해 주세요!");
+						player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ "+Integer.MAX_VALUE+")");
+						u.setString(player, (byte)1, "MinLV");
+					}
+				}
+			}
 		}
 	}
-	
 	
 	public void JobGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
 		
-		int itemnumber = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
-
-	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager ItemList = YC.getNewConfig("Item/ItemList.yml");
-		if(event.getSlot()==53)
+		if(slot == 53)//나가기
 		{
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
 		}
-		else if(event.getSlot()==45)
+		else
 		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			NewItemGUI(player, itemnumber);
-			return;
+			int itemnumber = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
+			if(slot == 45)//이전 목록
+				NewItemGUI(player, itemnumber);
+			else
+			{
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager ItemList = YC.getNewConfig("Item/ItemList.yml");
+				ItemList.set(itemnumber+".JOB", ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+				ItemList.saveConfig();
+				s.SP(player, Sound.ITEM_SHIELD_BREAK, 0.8F, 1.0F);
+				NewItemGUI(player, itemnumber);
+			}
 		}
-		else if(event.getCurrentItem() != null)
-		{
-			ItemList.set(itemnumber+".JOB", ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-			ItemList.saveConfig();
-			s.SP(player, Sound.ITEM_SHIELD_BREAK, 0.8F, 1.0F);
-			NewItemGUI(player, itemnumber);
-		}
-			
 	}
 	
 

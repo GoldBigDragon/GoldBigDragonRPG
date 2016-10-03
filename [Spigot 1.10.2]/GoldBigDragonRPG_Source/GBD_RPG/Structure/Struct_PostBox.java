@@ -26,7 +26,8 @@ public class Struct_PostBox extends Util_GUI
 	{
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager PlayerPost =YC.getNewConfig("Post/"+player.getUniqueId().toString()+".yml");
-		Inventory inv = Bukkit.createInventory(null, 45, ChatColor.RED +""+ChatColor.BOLD +""+ "우편함");
+		String UniqueCode = "§0§0§d§0§3§r";
+		Inventory inv = Bukkit.createInventory(null, 45, UniqueCode + "§c§l우편함");
 		if(Type==0)//받은 우편
 		{
 			if(PlayerPost.contains("Recieve")==false)
@@ -200,7 +201,8 @@ public class Struct_PostBox extends Util_GUI
 
 	public void ItemPutterGUI(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.RED +""+ChatColor.BOLD +""+ "보낼 아이템");
+		String UniqueCode = "§1§0§d§0§4§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§c§l보낼 아이템");
 		Stack2(ChatColor.RED + " ", 166,0,1,null, 0, inv);
 		Stack2(ChatColor.RED + " ", 166,0,1,null, 1, inv);
 		Stack2(ChatColor.RED + " ", 166,0,1,null, 2, inv);
@@ -217,31 +219,28 @@ public class Struct_PostBox extends Util_GUI
 	
 	public void PostBoxMainGUIClick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
+		int slot = event.getSlot();
 		Player player = (Player) event.getWhoClicked();
-		player.updateInventory();
-		byte Type = Byte.parseByte(ChatColor.stripColor(event.getInventory().getItem(26).getItemMeta().getLore().get(1)));
-
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager PlayerPost =YC.getNewConfig("Post/"+player.getUniqueId().toString()+".yml");
-
-		if(event.getClickedInventory().getName().compareTo(ChatColor.RED +""+ChatColor.BOLD +""+ "우편함")==0)
-		switch (event.getSlot())
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		if(slot == 26)//나가기
 		{
-		case 0://수신함
-			s.SP(player, Sound.BLOCK_CHEST_OPEN, 0.8F, 1.0F);
-			PostBoxMainGUI(player, (byte) 0);
-			return;
-		case 9://송신함
-			s.SP(player, Sound.BLOCK_CHEST_OPEN, 0.8F, 1.0F);
-			PostBoxMainGUI(player, (byte) 1);
-			return;
-		case 26://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 36://새 우편
+		}
+		else if(slot == 0)//수신함
+		{
+			s.SP(player, Sound.BLOCK_CHEST_OPEN, 0.8F, 1.0F);
+			PostBoxMainGUI(player, (byte) 0);
+		}
+		else if(slot == 9)//송신함
+		{
+			s.SP(player, Sound.BLOCK_CHEST_OPEN, 0.8F, 1.0F);
+			PostBoxMainGUI(player, (byte) 1);
+		}
+		else if(slot == 36)//새 우편
+		{
+			YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+			YamlManager PlayerPost =YC.getNewConfig("Post/"+player.getUniqueId().toString()+".yml");
 			if(PlayerPost.contains("Send"))
 				if(PlayerPost.getConfigurationSection("Send").getKeys(false).size()<25)
 				{
@@ -278,21 +277,14 @@ public class Struct_PostBox extends Util_GUI
 				player.closeInventory();
 				player.sendMessage(ChatColor.GREEN+"[우편] : 받으실 분의 닉네임을 입력 하세요.");
 			}
-			return;
-		case 1:
-		case 7:
-		case 10:
-		case 16:
-		case 19:
-		case 25:
-		case 28:
-		case 34:
-		case 37:
-		case 43:
-			return;
-		default :
+		}
+		else if(slot != 1 && slot != 7 && slot != 10 && slot != 16 && slot != 19 && slot != 25 && slot != 28 && slot != 34 && slot != 37 && slot != 43)
+		{
+			YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+			YamlManager PlayerPost =YC.getNewConfig("Post/"+player.getUniqueId().toString()+".yml");
 			if(event.getCurrentItem().hasItemMeta())
 			{
+				byte Type = Byte.parseByte(ChatColor.stripColor(event.getInventory().getItem(26).getItemMeta().getLore().get(1)));
 				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				long UTC = Long.parseLong(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(event.getCurrentItem().getItemMeta().getLore().size()-1)));
 				if(Type==0)//수신함
@@ -445,29 +437,21 @@ public class Struct_PostBox extends Util_GUI
 					}
 				}
 			}
-			return;
 		}
 	}
 	
 	public void ItemPutterGUIClick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		Player player = (Player) event.getWhoClicked();
-		if(event.getCurrentItem().getTypeId()==166&&event.getCurrentItem().hasItemMeta())
+		int slot = event.getSlot();
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+
+		if(slot != 4 && event.getCurrentItem().getTypeId()==166)
 		{
-			switch (event.getSlot())
+			if(event.getClickedInventory().getTitle().compareTo("container.inventory") != 0)
 			{
-			case 0:
-			case 1:
-			case 2:
-			case 3:
-			case 5:
-			case 6:
-			case 7:
-			case 8:
-				s.SP(player, Sound.BLOCK_ANVIL_LAND, 0.8F, 1.9F);
+				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.9F);
 				event.setCancelled(true);
-				return;
 			}
 		}
 	}

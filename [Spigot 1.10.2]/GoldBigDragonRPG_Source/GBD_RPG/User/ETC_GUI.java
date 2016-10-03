@@ -21,7 +21,8 @@ public final class ETC_GUI extends Util_GUI
 	
 	public void ETCGUI_Main(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 45, ChatColor.BLACK + "기타");
+		String UniqueCode = "§0§0§0§0§2§r";
+		Inventory inv = Bukkit.createInventory(null, 45, UniqueCode + "§0기타");
 
 		Stack2(ChatColor.WHITE + "스텟", 397,3,1,Arrays.asList(ChatColor.GRAY + "스텟을 확인합니다."), 0, inv);
 		Stack2(ChatColor.WHITE + "스킬", 403,0,1,Arrays.asList(ChatColor.GRAY + "스킬을 확인합니다."), 9, inv);
@@ -53,7 +54,8 @@ public final class ETC_GUI extends Util_GUI
 
 	public void Information(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "가이드");
+		String UniqueCode = "§0§0§0§0§3§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0가이드");
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager NewBieYM = YC.getNewConfig("ETC/NewBie.yml");
 
@@ -79,6 +81,7 @@ public final class ETC_GUI extends Util_GUI
 	
 	public void FriendsGUI(Player player, short page)
 	{
+		String UniqueCode = "§0§0§0§0§4§r";
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager FriendsList  = YC.getNewConfig("Friend/"+player.getUniqueId().toString()+".yml");
 		
@@ -90,7 +93,7 @@ public final class ETC_GUI extends Util_GUI
 			FriendsList.createSection("Waitting");
 			FriendsList.saveConfig();
 		}
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "친구 목록 : " + (page+1));
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0친구 목록 : " + (page+1));
 
 		if(FriendsList.getConfigurationSection("Waitting").getKeys(false).size()!=0)
 			Stack(ChatColor.WHITE + "" + ChatColor.BOLD + "친구 요청", 386,0,1,Arrays.asList(ChatColor.GRAY + "친구 요청이 들어 온 상태입니다!","",ChatColor.DARK_AQUA+"[   대기중인 요청   ]",ChatColor.WHITE+""+ChatColor.BOLD+FriendsList.getConfigurationSection("Waitting").getKeys(false).size()+ChatColor.DARK_AQUA+" 건"), 52, inv);
@@ -155,7 +158,8 @@ public final class ETC_GUI extends Util_GUI
 			FriendsList.createSection("Waitting");
 			FriendsList.saveConfig();
 		}
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "친구 요청 : " + (page+1));
+		String UniqueCode = "§0§0§0§0§5§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0친구 요청 : " + (page+1));
 
 		Object[] Friends= FriendsList.getConfigurationSection("Waitting").getKeys(false).toArray();
 		byte loc=0;
@@ -218,123 +222,100 @@ public final class ETC_GUI extends Util_GUI
 	
 	
 	
-	
 	public void ETCInventoryclick(InventoryClickEvent event)
 	{
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		if(ChatColor.stripColor(event.getInventory().getTitle()).equalsIgnoreCase("가이드") == true)
+		int slot = event.getSlot();
+		
+		if(slot == 26)//닫기
 		{
-			switch (event.getSlot())
-			{
-				case 45://이전 목록
-					ETCGUI_Main(player);
-					break;
-				case 53://닫기
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-					player.closeInventory();
-					break;
-				case 36:
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					player.closeInventory();
-					event.setCancelled(true);
-					player.sendMessage(ChatColor.DARK_RED+""+ChatColor.BOLD+"[YouTube] "+ChatColor.WHITE+""+ChatColor.BOLD+": "+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"https://www.youtube.com/playlist?list=PLxqihkJXVJABIlxU3n6bNhhC8x6xPbORP   "+ChatColor.YELLOW+""+ChatColor.BOLD+"[클릭시 가이드 페이지로 연결됩니다]");
-					break;
-					default : return;
-			}
-			return;
-		}
-		switch (event.getSlot())
-		{
-		case 0://스텟
-			GBD_RPG.User.Stats_GUI stat = new GBD_RPG.User.Stats_GUI();
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			stat.StatusGUI(player);
-			break;
-		case 27://옵션
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			Option_GUI OGUI = new Option_GUI();
-			OGUI.optionGUI(player);
-			break;
-		case 9://스킬
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			UserSkill_GUI PSGUI = new UserSkill_GUI();
-			PSGUI.MainSkillsListGUI(player, (short) 0);
-			break;
-		case 18://퀘스트
-			GBD_RPG.Quest.Quest_GUI QGUI = new GBD_RPG.Quest.Quest_GUI();
-			QGUI.MyQuestListGUI(player, (short) 0);
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			break;
-		case 2://가이드
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			Information(player);
-			break;
-		case 3://파티
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new GBD_RPG.Party.Party_GUI().PartyGUI_Main(player);
-			break;
-		case 4://워프
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new GBD_RPG.Warp.Warp_GUI().WarpListGUI(player, 0);
-			break;
-		case 5://친구
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			FriendsGUI(player, (short) 0);
-			break;
-		case 6://네비게이션
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new Navigation_GUI().UseNavigationGUI(player, (short) 0);
-			break;
-		case 26://닫기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			break;
-			default: return;
 		}
-			return;
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 0)
+				new GBD_RPG.User.Stats_GUI().StatusGUI(player);
+			else if(slot == 9)
+				new UserSkill_GUI().MainSkillsListGUI(player, (short) 0);
+			else if(slot == 18)
+				new GBD_RPG.Quest.Quest_GUI().MyQuestListGUI(player, (short) 0);
+			else if(slot == 27)
+				new GBD_RPG.User.Option_GUI().optionGUI(player);
+			else if(slot == 36)
+				new ETC_GUI().ETCGUI_Main(player);
+			else
+			{
+				if(slot == 2)//가이드
+					Information(player);
+				else if(slot ==3)//파티
+					new GBD_RPG.Party.Party_GUI().PartyGUI_Main(player);
+				else if(slot ==4)//워프
+					new GBD_RPG.Warp.Warp_GUI().WarpListGUI(player, 0);
+				else if(slot ==5)//친구
+					FriendsGUI(player, (short) 0);
+				else if(slot ==6)//네비게이션
+					new Navigation_GUI().UseNavigationGUI(player, (short) 0);
+			}
+		}
+		return;
+	}
+
+	public void GuideInventoryclick(InventoryClickEvent event)
+	{
+		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
+		
+		if(slot == 45)//이전 목록
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			ETCGUI_Main(player);
+		}
+		else if(slot == 53)//닫기
+		{
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else if(slot == 36)//유튜브 동영상
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			player.sendMessage(ChatColor.DARK_RED+""+ChatColor.BOLD+"[YouTube] "+ChatColor.WHITE+""+ChatColor.BOLD+": "+ChatColor.DARK_AQUA+""+ChatColor.BOLD+"https://www.youtube.com/playlist?list=PLxqihkJXVJABIlxU3n6bNhhC8x6xPbORP   "+ChatColor.YELLOW+""+ChatColor.BOLD+"[클릭시 가이드 페이지로 연결됩니다]");
+			player.closeInventory();
+		}
+		return;
 	}
 	
 	public void FriendsGUIclick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-
 		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
-		switch (event.getSlot())
+		int slot = event.getSlot();
+		
+		if(slot == 53)//닫기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			ETCGUI_Main(player);
-			return;
-		case 52://친구 요청
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
-			WaittingFriendsGUI(player, (short) 0);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			FriendsGUI(player, (short) (page-1));
-			return;
-		case 49://새 친구
+			if(slot == 45)//이전 목록
+				ETCGUI_Main(player);
+			else if(slot == 52)//친구 요청
+				WaittingFriendsGUI(player, (short) 0);
+			else if(slot == 48)//이전 페이지
+				FriendsGUI(player, (short) (page-1));
+			else if(slot == 49)//새 친구
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				player.closeInventory();
 				player.sendMessage(ChatColor.GREEN+"[친구] : 친구 요청을 하실 상대방의 닉네임을 입력 하세요!");
 				new UserData_Object().setTemp(player, "FA");
 			}
-		return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			FriendsGUI(player, (short) (page+1));
-			return;
-		default:
-			if(event.isShiftClick()&&event.isRightClick())
+			else if(slot == 50)//다음 페이지
+				FriendsGUI(player, (short) (page+1));
+			else if(event.isShiftClick()&&event.isRightClick())
 			{
 				String FName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
 			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
@@ -344,7 +325,6 @@ public final class ETC_GUI extends Util_GUI
 				s.SP(player, Sound.BLOCK_LAVA_POP, 1.0F, 0.7F);
 				player.sendMessage(ChatColor.LIGHT_PURPLE+"[친구] : "+ChatColor.YELLOW+FName+ChatColor.LIGHT_PURPLE+"님을 친구 목록에서 삭제하였습니다!");
 				FriendsGUI(player, (short) page);
-				return;
 			}
 		}
 	}
@@ -352,48 +332,44 @@ public final class ETC_GUI extends Util_GUI
 	public void WaittingFriendsGUIclick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 
 		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
-		switch (event.getSlot())
+		int slot = event.getSlot();
+		
+		if(slot == 53)//닫기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			FriendsGUI(player, (short) 0);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			WaittingFriendsGUI(player, (short) (page-1));
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			WaittingFriendsGUI(player, (short) (page+1));
-			return;
-		default:
-			String FName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
-		  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-			YamlManager FriendsList  = YC.getNewConfig("Friend/"+player.getUniqueId().toString()+".yml");
-			if(event.isShiftClick()&&event.isRightClick())
-			{
-				FriendsList.removeKey("Waitting."+FName);
-				FriendsList.saveConfig();
-				s.SP(player, Sound.BLOCK_LAVA_POP, 1.0F, 0.7F);
-			}
-			else if(event.isLeftClick()&&!event.isShiftClick())
-			{
-				new GBD_RPG.User.Equip_GUI().SetFriends(player, Bukkit.getPlayer(FName));
-			}
-			FriendsList  = YC.getNewConfig("Friend/"+player.getUniqueId().toString()+".yml");
-			if(FriendsList.getConfigurationSection("Waitting").getKeys(false).toArray().length == 0)
+			if(slot == 45)//이전 목록
 				FriendsGUI(player, (short) 0);
+			else if(slot == 48)//이전 페이지
+				WaittingFriendsGUI(player, (short) (page-1));
+			else if(slot == 50)//다음 페이지
+				WaittingFriendsGUI(player, (short) (page+1));
 			else
-				WaittingFriendsGUI(player, (short) page);
-			break;
+			{
+				String FName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager FriendsList  = YC.getNewConfig("Friend/"+player.getUniqueId().toString()+".yml");
+				if(event.isShiftClick()&&event.isRightClick())
+				{
+					FriendsList.removeKey("Waitting."+FName);
+					FriendsList.saveConfig();
+					s.SP(player, Sound.BLOCK_LAVA_POP, 1.0F, 0.7F);
+				}
+				else if(event.isLeftClick()&&!event.isShiftClick())
+					new GBD_RPG.User.Equip_GUI().SetFriends(player, Bukkit.getPlayer(FName));
+				FriendsList  = YC.getNewConfig("Friend/"+player.getUniqueId().toString()+".yml");
+				if(FriendsList.getConfigurationSection("Waitting").getKeys(false).toArray().length == 0)
+					FriendsGUI(player, (short) 0);
+				else
+					WaittingFriendsGUI(player, (short) page);
+			}
 		}
 	}
 }

@@ -23,7 +23,8 @@ public class Navigation_GUI extends Util_GUI
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager NavigationConfig =YC.getNewConfig("Navigation/NavigationList.yml");
 
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "네비 목록 : " + (page+1));
+		String UniqueCode = "§0§0§1§1§4§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0네비 목록 : " + (page+1));
 
 		Object[] Navi= NavigationConfig.getConfigurationSection("").getKeys(false).toArray();
 		
@@ -80,7 +81,8 @@ public class Navigation_GUI extends Util_GUI
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager NavigationConfig =YC.getNewConfig("Navigation/NavigationList.yml");
 
-		Inventory inv = Bukkit.createInventory(null, 36, ChatColor.BLACK + "네비 설정");
+		String UniqueCode = "§0§0§1§1§5§r";
+		Inventory inv = Bukkit.createInventory(null, 36, UniqueCode + "§0네비 설정");
 
 		String NaviName = NavigationConfig.getString(NaviUTC+".Name");
 		String world = NavigationConfig.getString(NaviUTC+".world");
@@ -124,7 +126,8 @@ public class Navigation_GUI extends Util_GUI
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager NavigationConfig =YC.getNewConfig("Navigation/NavigationList.yml");
 
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "네비 사용 : " + (page+1));
+		String UniqueCode = "§0§0§1§1§6§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0네비 사용 : " + (page+1));
 
 		Object[] Navi= NavigationConfig.getConfigurationSection("").getKeys(false).toArray();
 		
@@ -188,174 +191,152 @@ public class Navigation_GUI extends Util_GUI
 	
 	public void NavigationListGUIClick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+		int slot = event.getSlot();
+
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		
-		switch (event.getSlot())
+		if(slot == 53)//나가기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new OPbox_GUI().OPBoxGUI_Main(player, (byte) 1);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			NavigationListGUI(player, (short) (page-1));
-			return;
-		case 49://새 네비
+			if(slot == 45)//이전 목록
+				new OPbox_GUI().OPBoxGUI_Main(player, (byte) 1);
+			else if(slot == 48)//이전 페이지
+				NavigationListGUI(player, (short) (page-1));
+			else if(slot == 49)//새 네비
 			{
-				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 				player.closeInventory();
 				player.sendMessage(ChatColor.GREEN+"[네비] : 새로운 네비게이션 이름을 입력 해 주세요!");
 				UserData_Object u = new UserData_Object();
 				u.setType(player, "Navi");
 				u.setString(player, (byte)0, "NN");
 			}
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			NavigationListGUI(player, (short) (page+1));
-			return;
-		default :
-			if(event.isLeftClick() == true)
+			else if(slot == 50)//다음 페이지
+				NavigationListGUI(player, (short) (page+1));
+			else
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				NavigationOptionGUI(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+				if(event.isLeftClick() == true)
+				{
+					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+					NavigationOptionGUI(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+				}
+				else if(event.isShiftClick() == true && event.isRightClick() == true)
+				{
+					s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+					YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+					YamlManager NavigationConfig =YC.getNewConfig("Navigation/NavigationList.yml");
+					NavigationConfig.removeKey(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+					NavigationConfig.saveConfig();
+					NavigationListGUI(player, page);
+				}
 			}
-			else if(event.isShiftClick() == true && event.isRightClick() == true)
-			{
-				s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
-				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				YamlManager NavigationConfig =YC.getNewConfig("Navigation/NavigationList.yml");
-				NavigationConfig.removeKey(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-				NavigationConfig.saveConfig();
-				NavigationListGUI(player, page);
-			}
-			return;
 		}
 	}
 	
 	public void NavigationOptionGUIClick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
 
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager NavigationConfig =YC.getNewConfig("Navigation/NavigationList.yml");
-		String UTC = ChatColor.stripColor(event.getInventory().getItem(35).getItemMeta().getLore().get(1));
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		
-		switch (event.getSlot())
+		if(slot == 35)//나가기
 		{
-		case 10://이름 변경
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.9F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.GREEN+"[네비] : 원하는 네비게이션 이름을 입력 해 주세요!");
-				UserData_Object u = new UserData_Object();
-				u.setType(player, "Navi");
-				u.setString(player, (byte)0, "CNN");
-				u.setString(player, (byte)1, UTC);
-			}
-			return;
-		case 11://좌표 변경
-			s.SP(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 0.9F);
-			NavigationConfig.set(UTC+".world", player.getLocation().getWorld().getName());
-			NavigationConfig.set(UTC+".x", (int)player.getLocation().getX());
-			NavigationConfig.set(UTC+".y", (int)player.getLocation().getY());
-			NavigationConfig.set(UTC+".z", (int)player.getLocation().getZ());
-			NavigationConfig.saveConfig();
-			NavigationOptionGUI(player, UTC);
-			return;
-		case 12://지속 시간
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.9F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.GREEN+"[네비] : 네비게이션 지속 시간을 입력 해 주세요!");
-				player.sendMessage(ChatColor.YELLOW+"(-1초(찾을 때 까지) ~ 3600초(1시간))");
-				UserData_Object u = new UserData_Object();
-				u.setType(player, "Navi");
-				u.setString(player, (byte)0, "CNT");
-				u.setString(player, (byte)1, UTC);
-			}
-			return;
-		case 13://도착 반경
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.9F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.GREEN+"[네비] : 도착 판정 범위를 입력 해 주세요!");
-				player.sendMessage(ChatColor.YELLOW+"(1 ~ 1000)");
-				UserData_Object u = new UserData_Object();
-				u.setType(player, "Navi");
-				u.setString(player, (byte)0, "CNS");
-				u.setString(player, (byte)1, UTC);
-			}
-			return;
-		case 14://사용 권한
-			s.SP(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 0.9F);
-			if(NavigationConfig.getBoolean(UTC+".onlyOPuse"))
-				NavigationConfig.set(UTC+".onlyOPuse", false);
-			else
-				NavigationConfig.set(UTC+".onlyOPuse", true);
-			NavigationConfig.saveConfig();
-			NavigationOptionGUI(player, UTC);
-			return;
-		case 15://네비 타입
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.9F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.GREEN+"[네비] : 네비게이션 화살표 모양을 선택하세요!");
-				player.sendMessage(ChatColor.YELLOW+"(0 ~ 10)");
-				UserData_Object u = new UserData_Object();
-				u.setType(player, "Navi");
-				u.setString(player, (byte)0, "CNA");
-				u.setString(player, (byte)1, UTC);
-			}
-			return;
-		case 27://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			NavigationListGUI(player, (short) 0);
-			return;
-		case 35://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 27)//이전 목록
+				NavigationListGUI(player, (short) 0);
+			else
+			{
+				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager NavigationConfig =YC.getNewConfig("Navigation/NavigationList.yml");
+				String UTC = ChatColor.stripColor(event.getInventory().getItem(35).getItemMeta().getLore().get(1));
+
+				if(slot == 11)//좌표 변경
+				{
+					NavigationConfig.set(UTC+".world", player.getLocation().getWorld().getName());
+					NavigationConfig.set(UTC+".x", (int)player.getLocation().getX());
+					NavigationConfig.set(UTC+".y", (int)player.getLocation().getY());
+					NavigationConfig.set(UTC+".z", (int)player.getLocation().getZ());
+					NavigationConfig.saveConfig();
+					NavigationOptionGUI(player, UTC);
+				}
+				else if(slot == 14)//사용 권한
+				{
+					if(NavigationConfig.getBoolean(UTC+".onlyOPuse"))
+						NavigationConfig.set(UTC+".onlyOPuse", false);
+					else
+						NavigationConfig.set(UTC+".onlyOPuse", true);
+					NavigationConfig.saveConfig();
+					NavigationOptionGUI(player, UTC);
+				}
+				else
+				{
+					player.closeInventory();
+					UserData_Object u = new UserData_Object();
+					u.setType(player, "Navi");
+					u.setString(player, (byte)1, UTC);
+					if(slot == 10)//이름 변경
+					{
+						player.sendMessage(ChatColor.GREEN+"[네비] : 원하는 네비게이션 이름을 입력 해 주세요!");
+						u.setString(player, (byte)0, "CNN");
+					}
+					else if(slot == 12)//지속 시간
+					{
+						player.sendMessage(ChatColor.GREEN+"[네비] : 네비게이션 지속 시간을 입력 해 주세요!");
+						player.sendMessage(ChatColor.YELLOW+"(-1초(찾을 때 까지) ~ 3600초(1시간))");
+						u.setString(player, (byte)0, "CNT");
+					}
+					else if(slot == 13)//도착 반경
+					{
+						player.sendMessage(ChatColor.GREEN+"[네비] : 도착 판정 범위를 입력 해 주세요!");
+						player.sendMessage(ChatColor.YELLOW+"(1 ~ 1000)");
+						u.setString(player, (byte)0, "CNS");
+					}
+					else if(slot == 15)//네비 타입
+					{
+						player.sendMessage(ChatColor.GREEN+"[네비] : 네비게이션 화살표 모양을 선택하세요!");
+						player.sendMessage(ChatColor.YELLOW+"(0 ~ 10)");
+						u.setString(player, (byte)0, "CNA");
+					}
+				}
+			}
 		}
 	}
 
 	public void UseNavigationGUIClick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+		int slot = event.getSlot();
 		
-		switch (event.getSlot())
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		
+		if(slot == 53)//나가기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new ETC_GUI().ETCGUI_Main(player);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-
-		case 48://이전 페이지
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			UseNavigationGUI(player, (short) (page-1));
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			UseNavigationGUI(player, (short) (page+1));
-			return;
-		default :
-			if(event.isLeftClick() == true)
+			if(slot == 45)//이전 목록
+				new ETC_GUI().ETCGUI_Main(player);
+			else if(slot == 48)//이전 페이지
+				UseNavigationGUI(player, (short) (page-1));
+			else if(slot == 50)//다음 페이지
+				UseNavigationGUI(player, (short) (page+1));
+			else if(event.isLeftClick() == true)
 			{
 				for(int count = 0; count < ServerTick_Main.NaviUsingList.size();count++)
 				{
@@ -390,7 +371,6 @@ public class Navigation_GUI extends Util_GUI
 				player.sendMessage(ChatColor.YELLOW+"[네비게이션] : 길찾기 시스템이 가동됩니다!");
 				player.sendMessage(ChatColor.YELLOW+"(화살표가 보이지 않을 경우, [ESC] → [설정] → [비디오 설정] 속의 [입자]를 [모두]로 변경해 주세요!)");
 			}
-			return;
 		}
 	}
 }

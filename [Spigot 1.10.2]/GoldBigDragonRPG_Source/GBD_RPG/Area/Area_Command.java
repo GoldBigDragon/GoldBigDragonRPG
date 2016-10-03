@@ -39,7 +39,7 @@ public class Area_Command
 				{
 					s.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 					GBD_RPG.Area.Area_GUI AGUI = new GBD_RPG.Area.Area_GUI();
-					AGUI.AreaGUI_Main(player, args[0]);
+					AGUI.AreaSettingGUI(player, args[0]);
 				}
 				else
 				{

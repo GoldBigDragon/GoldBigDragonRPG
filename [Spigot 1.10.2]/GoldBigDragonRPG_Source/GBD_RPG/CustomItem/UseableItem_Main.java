@@ -57,7 +57,41 @@ public class UseableItem_Main
 		}
 		else if(type.compareTo("주문서")==0)
 		{
-		  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+			if(item.getItemMeta().getDisplayName().compareTo("§2§3§4§3§3§l[스텟 초기화 주문서]")==0)
+			{
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager Config = YC.getNewConfig("config.yml");
+				if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System")==false)
+				{
+					if(item.getAmount() != 1)
+					{
+						item.setAmount(item.getAmount()-1);
+						player.getInventory().setItem(player.getInventory().getHeldItemSlot(), item);
+					}
+					else
+						player.getInventory().setItem(player.getInventory().getHeldItemSlot(), new ItemStack(0));
+					int TotalStatPoint = Config.getInt("DefaultStat.StatPoint")+GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_StatPoint();
+					TotalStatPoint += GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR() - Config.getInt("DefaultStat.STR");
+					TotalStatPoint += GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX() - Config.getInt("DefaultStat.DEX");
+					TotalStatPoint += GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT() - Config.getInt("DefaultStat.INT");
+					TotalStatPoint += GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL() - Config.getInt("DefaultStat.WILL");
+					TotalStatPoint += GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK() - Config.getInt("DefaultStat.LUK");
+					GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_STR(Config.getInt("DefaultStat.STR"));
+					GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_DEX(Config.getInt("DefaultStat.DEX"));
+					GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_INT(Config.getInt("DefaultStat.INT"));
+					GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_WILL(Config.getInt("DefaultStat.WILL"));
+					GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_LUK(Config.getInt("DefaultStat.LUK"));
+					GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_StatPoint(TotalStatPoint);
+					sound.SP(player, Sound.ITEM_BOTTLE_FILL_DRAGONBREATH, 1.2F, 0.5F);
+					player.sendMessage(ChatColor.YELLOW+""+ChatColor.BOLD+"[SYSTEM] : 스텟이 초기화되었습니다!");
+				}
+				else
+				{
+					sound.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					player.sendMessage(ChatColor.RED+"[System] : 메이플 스토리 시스템일 경우만 사용 가능합니다!");
+				}
+				return;
+			}
 			
 			int StatPoint = 0;
 			int SkillPoint = 0;

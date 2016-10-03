@@ -21,7 +21,8 @@ public class Job_GUI extends Util_GUI
 {
 	public void ChooseSystemGUI(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 27, ChatColor.BLACK + "시스템 선택");
+		String UniqueCode = "§0§0§6§0§0§r";
+		Inventory inv = Bukkit.createInventory(null, 27, UniqueCode + "§0시스템 선택");
 		
 		Stack2(ChatColor.GOLD + "" + ChatColor.BOLD + "마비노기", 346,0,1,Arrays.asList(ChatColor.GRAY + "메이플 스토리와는 다르게",ChatColor.GRAY + "자유롭게 스킬을 습득 할 수 있습니다.",ChatColor.GRAY+"직업 개념이 없기 때문에",ChatColor.GRAY+"카테고리별로 스킬을 나눕니다.","",ChatColor.GREEN+"자유도 : "+ChatColor.YELLOW+"||||||||||||||||||||",ChatColor.GREEN+"노가다 : "+ChatColor.YELLOW+"||||||||||||||||||||","",ChatColor.RED+"[게임 성향이 마비노기일 경우만 적용]"), 12, inv);
 		Stack2(ChatColor.RED + "" + ChatColor.BOLD + "메이플 스토리", 40,0,1,Arrays.asList(ChatColor.GRAY + "마비노기와는 다르게",ChatColor.GRAY + "직업별로 스킬이 고정되어 있습니다.",ChatColor.GRAY+"직업 개념이 존재하기 때문에",ChatColor.GRAY+"직업별 및 승급별로 스킬을 나눕니다.","",ChatColor.GREEN+"자유도 : "+ChatColor.YELLOW+"||||||"+ChatColor.GRAY+"||||||||||||||",ChatColor.GREEN+"노가다 : "+ChatColor.YELLOW+"|||||||||||"+ChatColor.GRAY+"|||||||||","",ChatColor.RED+"[게임 성향이 메이플 스토리일 경우만 적용]"), 14, inv);
@@ -36,8 +37,9 @@ public class Job_GUI extends Util_GUI
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager JobList  = YC.getNewConfig("Skill/JobList.yml");
 		YamlManager Config = YC.getNewConfig("config.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "[MapleStory] 전체 직업 목록 : " + (page+1));
+
+		String UniqueCode = "§0§0§6§0§1§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0[MapleStory] 전체 직업 목록 : " + (page+1));
 
 		Object[] a = JobList.getConfigurationSection("MapleStory").getKeys(false).toArray();
 		
@@ -72,8 +74,9 @@ public class Job_GUI extends Util_GUI
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager JobList  = YC.getNewConfig("Skill/JobList.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 27, ChatColor.BLACK + "[MapleStory] 직업 설정");
+
+		String UniqueCode = "§0§0§6§0§2§r";
+		Inventory inv = Bukkit.createInventory(null, 27, UniqueCode + "§0[MapleStory] 직업 설정");
 
 		Object[] a = JobList.getConfigurationSection("MapleStory."+JobName).getKeys(false).toArray();
 
@@ -111,8 +114,9 @@ public class Job_GUI extends Util_GUI
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager JobList  = YC.getNewConfig("Skill/JobList.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "[Mabinogi] 전체 카테고리 목록 : " + (page+1));
+
+		String UniqueCode = "§0§0§6§0§3§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0[Mabinogi] 전체 카테고리 목록 : " + (page+1));
 
 		Object[] a = JobList.getConfigurationSection("Mabinogi").getKeys(false).toArray();
 		
@@ -142,11 +146,11 @@ public class Job_GUI extends Util_GUI
 	
 	public void Mabinogi_SkillSetting(Player player, short page, String CategoriName)
 	{
-
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 	  	YamlManager JobList  = YC.getNewConfig("Skill/JobList.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "[Mabinogi] 스킬 관리 목록 : " + (page+1));
+
+		String UniqueCode = "§0§0§6§0§4§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0[Mabinogi] 스킬 관리 목록 : " + (page+1));
 
 		Set<String> b= JobList.getConfigurationSection("Mabinogi."+CategoriName).getKeys(false);
 		YamlManager SkillList  = YC.getNewConfig("Skill/SkillList.yml");
@@ -185,8 +189,9 @@ public class Job_GUI extends Util_GUI
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 	  	YamlManager SkillList  = YC.getNewConfig("Skill/SkillList.yml");
 		YamlManager JobList  = YC.getNewConfig("Skill/JobList.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "등록된 스킬 목록 : " + (page+1));
+
+		String UniqueCode = "§0§0§6§0§5§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0등록된 스킬 목록 : " + (page+1));
 
 		Object[] a = JobList.getConfigurationSection("MapleStory."+JobName+"."+JobNick+".Skill").getKeys(false).toArray();
 		
@@ -215,385 +220,351 @@ public class Job_GUI extends Util_GUI
 	public void ChooseSystemGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		switch (event.getSlot())
+		int slot = event.getSlot();
+		
+		if(slot == 26)//나가기
 		{
-		case 12:
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			Mabinogi_ChooseCategory(player,(short) 0);
-			return;
-		case 14:
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			MapleStory_ChooseJob(player,(short) 0);
-			return;
-		case 18:
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPbox_GUI OGUI = new OPbox_GUI();
-			OGUI.OPBoxGUI_Main(player,(byte) 2);
-			return;
-		case 26:
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 18)//이전 목록
+				new OPbox_GUI().OPBoxGUI_Main(player,(byte) 2);
+			else if(slot == 12)//마비노기 타입 카테고리 목록
+				Mabinogi_ChooseCategory(player,(short) 0);
+			else if(slot == 12)//메이플스토리 타입 직업 목록
+				MapleStory_ChooseJob(player,(short) 0);
 		}
 	}
 
 	public void MapleStory_ChooseJobClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		switch (event.getSlot())
+		int slot = event.getSlot();
+		
+		if(slot == 53)
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			ChooseSystemGUI(player);
-			break;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			break;
-		case 48://이전 페이지
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			MapleStory_ChooseJob(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-2));
-			break;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			MapleStory_ChooseJob(player,(short) Integer.parseInt(event.getInventory().getTitle().split(" : ")[1]));
-			break;
-		case 49://새 직업
+			if(slot == 45)//이전 목록
+				ChooseSystemGUI(player);
+			else if(slot == 48)//이전 페이지
+				MapleStory_ChooseJob(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-2));
+			else if(slot == 49)//새 직업
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				player.closeInventory();
 				player.sendMessage(ChatColor.LIGHT_PURPLE+"[직업] : 새로운 직업 이름을 설정해 주세요!");
 				UserData_Object u = new UserData_Object();
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "CJ");
 			}
-			break;
-		default :
-			if(event.isLeftClick()==true&&event.isRightClick()==false)
+			else if(slot == 50)//다음 페이지
+				MapleStory_ChooseJob(player,(short) Integer.parseInt(event.getInventory().getTitle().split(" : ")[1]));
+			else
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				MapleStory_JobSetting(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-			}
-			if(event.getCurrentItem().getItemMeta().getLore().toString().contains("설정")==true&&event.isShiftClick()==true
-			&&event.isLeftClick()==true)
-			{
-				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				YamlManager Config = YC.getNewConfig("config.yml");
-				Config.set("Server.DefaultJob", ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-				Config.saveConfig();
-				MapleStory_ChooseJob(player, (short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1));
-			}
-			else if(event.getCurrentItem().getItemMeta().getLore().toString().contains("설정")==true&&event.isShiftClick()==true
-			&&event.isRightClick()==true)
-			{
-				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				YamlManager Config  = YC.getNewConfig("config.yml");
-				if(Config.getString("Server.DefaultJob").equalsIgnoreCase(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())))
+				if(event.isLeftClick()==true&&event.isRightClick()==false)
+					MapleStory_JobSetting(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+				if(event.getCurrentItem().getItemMeta().getLore().toString().contains("설정")==true&&event.isShiftClick()==true
+				&&event.isLeftClick()==true)
 				{
-					s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.RED + "[직업] : 서버 기본 직업은 삭제할 수 없습니다!");
-				}
-				else
-				{
-					s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
-					YamlManager SkillList  = YC.getNewConfig("Skill/JobList.yml");
-					SkillList.removeKey("MapleStory."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-					SkillList.saveConfig();
-					MapleStory_ChooseJob(player, (short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1));
-					Config.set("Time.LastSkillChanged", new GBD_RPG.Util.Util_Number().RandomNum(0, 100000)-new GBD_RPG.Util.Util_Number().RandomNum(0, 100000));
+					YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+					YamlManager Config = YC.getNewConfig("config.yml");
+					Config.set("Server.DefaultJob", ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 					Config.saveConfig();
-					new GBD_RPG.Job.Job_Main().AllPlayerFixAllSkillAndJobYML();
+					MapleStory_ChooseJob(player, (short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1));
+				}
+				else if(event.getCurrentItem().getItemMeta().getLore().toString().contains("설정")==true&&event.isShiftClick()==true
+				&&event.isRightClick()==true)
+				{
+					YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+					YamlManager Config  = YC.getNewConfig("config.yml");
+					if(Config.getString("Server.DefaultJob").equalsIgnoreCase(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())))
+					{
+						s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+						player.sendMessage(ChatColor.RED + "[직업] : 서버 기본 직업은 삭제할 수 없습니다!");
+					}
+					else
+					{
+						s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+						YamlManager SkillList  = YC.getNewConfig("Skill/JobList.yml");
+						SkillList.removeKey("MapleStory."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+						SkillList.saveConfig();
+						MapleStory_ChooseJob(player, (short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1));
+						Config.set("Time.LastSkillChanged", new GBD_RPG.Util.Util_Number().RandomNum(0, 100000)-new GBD_RPG.Util.Util_Number().RandomNum(0, 100000));
+						Config.saveConfig();
+						new GBD_RPG.Job.Job_Main().AllPlayerFixAllSkillAndJobYML();
+					}
 				}
 			}
-			return;
 		}
 	}
 
 	public void MapleStory_JobSettingClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		String JobName = ChatColor.stripColor(event.getInventory().getItem(26).getItemMeta().getLore().get(1));
-		String JobNick = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
-
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager SkillList  = YC.getNewConfig("Skill/JobList.yml");
-		short NowJobLV = (short) SkillList.getConfigurationSection("MapleStory."+JobName).getKeys(false).size();
-		switch (event.getSlot())
+		int slot = event.getSlot();
+		
+		if(slot == 26)//나가기
 		{
-		case 18://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			MapleStory_ChooseJob(player, (short) 0);
-			return;
-		case 26://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 22://새 승급
-			if(NowJobLV == 18)
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			String JobName = ChatColor.stripColor(event.getInventory().getItem(26).getItemMeta().getLore().get(1));
+			YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+			YamlManager SkillList  = YC.getNewConfig("Skill/JobList.yml");
+			
+			if(slot == 18)//이전 목록
+				MapleStory_ChooseJob(player, (short) 0);
+			else if(slot == 22)//새 승급
 			{
-				s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-				player.sendMessage(ChatColor.RED + "[직업] : 최대 승급은 18차 까지 입니다!");
-				return;
-			}
-			else
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.LIGHT_PURPLE+"[직업] : "+ChatColor.YELLOW + JobName+ChatColor.LIGHT_PURPLE+"의 새 승급 형태 이름을 설정해 주세요!");
-
-				UserData_Object u = new UserData_Object();
-				u.setType(player, "Job");
-				u.setString(player, (byte)1, "CJL");
-				u.setString(player, (byte)2, JobName);
-			}
-			break;
-		default :
-			if(event.isLeftClick()==true&&event.isShiftClick()==false)
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				GBD_RPG.Skill.OPboxSkill_GUI SKGUI = new GBD_RPG.Skill.OPboxSkill_GUI();
-
-				UserData_Object u = new UserData_Object();
-				u.setType(player, "Job");
-				u.setString(player, (byte)2, JobNick);
-				u.setString(player, (byte)3, JobName);
-				SKGUI.AllSkillsGUI(player,(short) 0, true,"Maple");
-			}
-			else if(event.isShiftClick()==true&&event.isLeftClick()==true)
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.LIGHT_PURPLE+"[직업] : "+ChatColor.YELLOW + JobNick+ChatColor.LIGHT_PURPLE+"의 승급 필요 레벨을 입력 하세요!");
-
-				UserData_Object u = new UserData_Object();
-				u.setType(player, "Job");
-				u.setString(player, (byte)1, "JNL");
-				u.setString(player, (byte)2, JobName);
-				u.setString(player, (byte)3, JobNick);
-				
-			}
-			else if(event.isShiftClick()==false&&event.isRightClick()==true)
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				AddedSkillsListGUI(player, 0, JobName, JobNick);
-			}
-			else if(event.isShiftClick()==true&&event.isRightClick()==true)
-			{
-				if(event.getSlot() == 0)
+				short NowJobLV = (short) SkillList.getConfigurationSection("MapleStory."+JobName).getKeys(false).size();
+				if(NowJobLV == 18)
 				{
 					s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.RED + "[직업] : 기본 클래스는 삭제할 수 없습니다!");
+					player.sendMessage(ChatColor.RED + "[직업] : 최대 승급은 18차 까지 입니다!");
 					return;
 				}
 				else
 				{
-					s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
-					SkillList.removeKey("MapleStory."+JobName+"."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-					SkillList.saveConfig();
-					MapleStory_JobSetting(player, JobName);
-					YamlManager Config  = YC.getNewConfig("config.yml");
-					Config.set("Time.LastSkillChanged", new GBD_RPG.Util.Util_Number().RandomNum(0, 100000)-new GBD_RPG.Util.Util_Number().RandomNum(0, 100000));
-					Config.saveConfig();
-					new GBD_RPG.Job.Job_Main().AllPlayerFixAllSkillAndJobYML();
+					player.closeInventory();
+					player.sendMessage(ChatColor.LIGHT_PURPLE+"[직업] : "+ChatColor.YELLOW + JobName+ChatColor.LIGHT_PURPLE+"의 새 승급 형태 이름을 설정해 주세요!");
+					UserData_Object u = new UserData_Object();
+					u.setType(player, "Job");
+					u.setString(player, (byte)1, "CJL");
+					u.setString(player, (byte)2, JobName);
 				}
 			}
-			return;
+			else
+			{
+				String JobNick = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
+				if(event.isLeftClick()==true&&event.isShiftClick()==false)
+				{
+					UserData_Object u = new UserData_Object();
+					u.setType(player, "Job");
+					u.setString(player, (byte)2, JobNick);
+					u.setString(player, (byte)3, JobName);
+					new GBD_RPG.Skill.OPboxSkill_GUI().AllSkillsGUI(player,(short) 0, true,"Maple");
+				}
+				else if(event.isShiftClick()==true&&event.isLeftClick()==true)
+				{
+					player.closeInventory();
+					player.sendMessage(ChatColor.LIGHT_PURPLE+"[직업] : "+ChatColor.YELLOW + JobNick+ChatColor.LIGHT_PURPLE+"의 승급 필요 레벨을 입력 하세요!");
+
+					UserData_Object u = new UserData_Object();
+					u.setType(player, "Job");
+					u.setString(player, (byte)1, "JNL");
+					u.setString(player, (byte)2, JobName);
+					u.setString(player, (byte)3, JobNick);
+					
+				}
+				else if(event.isShiftClick()==false&&event.isRightClick()==true)
+				{
+					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+					AddedSkillsListGUI(player, 0, JobName, JobNick);
+				}
+				else if(event.isShiftClick()==true&&event.isRightClick()==true)
+				{
+					if(event.getSlot() == 0)
+					{
+						s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+						player.sendMessage(ChatColor.RED + "[직업] : 기본 클래스는 삭제할 수 없습니다!");
+						return;
+					}
+					else
+					{
+						s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+						SkillList.removeKey("MapleStory."+JobName+"."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+						SkillList.saveConfig();
+						MapleStory_JobSetting(player, JobName);
+						YamlManager Config  = YC.getNewConfig("config.yml");
+						Config.set("Time.LastSkillChanged", new GBD_RPG.Util.Util_Number().RandomNum(0, 100000)-new GBD_RPG.Util.Util_Number().RandomNum(0, 100000));
+						Config.saveConfig();
+						new GBD_RPG.Job.Job_Main().AllPlayerFixAllSkillAndJobYML();
+					}
+				}
+			}
 		}
 	}
 
 	public void AddedSkillsListGUIClick(InventoryClickEvent event)
 	{
-
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
 		
-		String JobName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
-		String JobNick = ChatColor.stripColor(event.getInventory().getItem(45).getItemMeta().getLore().get(1));
-
-		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
-		
-		switch (event.getSlot())
+		if(slot == 53)//나가기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			MapleStory_JobSetting(player, JobName);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AddedSkillsListGUI(player, page-1, JobName, JobNick);
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			AddedSkillsListGUI(player, page+1, JobName, JobNick);
-			return;
-		default :
-			if(event.isShiftClick()==true&&event.isRightClick()==true)
-			{
-				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				YamlManager JobList  = YC.getNewConfig("Skill/JobList.yml");
-				s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
-				JobList.removeKey("MapleStory."+JobName+"."+JobNick+".Skill."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-				JobList.saveConfig();
-				AddedSkillsListGUI(player, page, JobName, JobNick);
-				YamlManager Config  = YC.getNewConfig("config.yml");
-				Config.set("Time.LastSkillChanged", new GBD_RPG.Util.Util_Number().RandomNum(0, 100000)-new GBD_RPG.Util.Util_Number().RandomNum(0, 100000));
-				Config.saveConfig();
-				new GBD_RPG.Job.Job_Main().AllPlayerFixAllSkillAndJobYML();
-			}
-			return;
 		}
-	}
-	
-	public void Mabinogi_ChooseCategoryClick(InventoryClickEvent event)
-	{
-		String CategoriName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
-		Player player = (Player) event.getWhoClicked();
-
-		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
-		
-		switch (event.getSlot())
+		else
 		{
-		case 45://이전 목록
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			ChooseSystemGUI(player);
-			break;
-		case 53://나가기
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.closeInventory();
-			break;
-		case 48://이전 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			Mabinogi_ChooseCategory(player,(short) (page-1));
-			break;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			Mabinogi_ChooseCategory(player,(short) (page+1));
-			break;
-		case 49://새 카테고리
+			String JobName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+			String JobNick = ChatColor.stripColor(event.getInventory().getItem(45).getItemMeta().getLore().get(1));
+			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+			
+			if(slot == 45)//이전 목록
+				MapleStory_JobSetting(player, JobName);
+			else if(slot == 48)//이전 페이지
+				AddedSkillsListGUI(player, page-1, JobName, JobNick);
+			else if(slot == 50)//다음 페이지
+				AddedSkillsListGUI(player, page+1, JobName, JobNick);
+			else
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.LIGHT_PURPLE+"[카테고리] : 새 카테고리의 이름을 설정해 주세요!");
-				UserData_Object u = new UserData_Object();
-				u.setType(player, "Job");
-				u.setString(player, (byte)1, "CC");
-			}
-			break;
-		default :
-			if(event.isLeftClick()==true)
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				if(event.isShiftClick() == false)
+				if(event.isShiftClick()==true&&event.isRightClick()==true)
 				{
-					GBD_RPG.Skill.OPboxSkill_GUI OGUI = new GBD_RPG.Skill.OPboxSkill_GUI();
-					OGUI.AllSkillsGUI(player, (short) 0, true, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-				}
-				else
-				{
-					Mabinogi_SkillSetting(player, (short) 0, CategoriName);
-				}
-			}
-			else if(event.isShiftClick()==true&&event.isRightClick()==true)
-			{
-				s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
-				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				YamlManager SkillList  = YC.getNewConfig("Skill/JobList.yml");
-				Object[] AddedSkillList = SkillList.getConfigurationSection("Mabinogi.Added").getKeys(false).toArray();
-				for(short count = 0; count <AddedSkillList.length;count++)
-				{
-					if(SkillList.getString("Mabinogi.Added."+AddedSkillList[count]).equals(CategoriName))
-						SkillList.removeKey("Mabinogi.Added."+AddedSkillList[count]);
-				}
-				SkillList.removeKey("Mabinogi."+CategoriName);
-				SkillList.saveConfig();
-				Mabinogi_ChooseCategory(player,page);
-				YamlManager Config  = YC.getNewConfig("config.yml");
-				Config.set("Time.LastSkillChanged", new GBD_RPG.Util.Util_Number().RandomNum(0, 100000)-new GBD_RPG.Util.Util_Number().RandomNum(0, 100000));
-				Config.saveConfig();
-				new GBD_RPG.Job.Job_Main().AllPlayerFixAllSkillAndJobYML();
-			}
-			return;
-		}
-	}
-	
-	public void Mabinogi_SkillSettingClick(InventoryClickEvent event)
-	{
-		String SkillName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
-		Player player = (Player) event.getWhoClicked();
-
-		String CategoriName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
-
-		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
-		
-		switch (event.getSlot())
-		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			Mabinogi_ChooseCategory(player,(short) 0);
-			break;
-		case 53://나가기
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.closeInventory();
-			break;
-		case 48://이전 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			Mabinogi_SkillSetting(player,(short) page,CategoriName);
-			break;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			Mabinogi_SkillSetting(player,(short) page,CategoriName);
-			break;
-		default :
-			YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-			YamlManager SkillList  = YC.getNewConfig("Skill/JobList.yml");
-			if(event.isLeftClick()==true)
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				if(SkillList.getBoolean("Mabinogi."+CategoriName+"."+SkillName) == true)
-				{
-					SkillList.set("Mabinogi."+CategoriName+"."+SkillName, false);
-					SkillList.saveConfig();
-					Mabinogi_SkillSetting(player,(short) page,CategoriName);
-				}
-				else
-				{
-					SkillList.set("Mabinogi."+CategoriName+"."+SkillName, true);
-					SkillList.saveConfig();
-					Mabinogi_SkillSetting(player,(short) page,CategoriName);
+					YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+					YamlManager JobList  = YC.getNewConfig("Skill/JobList.yml");
+					s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+					JobList.removeKey("MapleStory."+JobName+"."+JobNick+".Skill."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+					JobList.saveConfig();
+					AddedSkillsListGUI(player, page, JobName, JobNick);
 					YamlManager Config  = YC.getNewConfig("config.yml");
 					Config.set("Time.LastSkillChanged", new GBD_RPG.Util.Util_Number().RandomNum(0, 100000)-new GBD_RPG.Util.Util_Number().RandomNum(0, 100000));
 					Config.saveConfig();
 					new GBD_RPG.Job.Job_Main().AllPlayerFixAllSkillAndJobYML();
 				}
 			}
-			else if(event.isShiftClick()==true&&event.isRightClick()==true)
+		}
+	}
+	
+	public void Mabinogi_ChooseCategoryClick(InventoryClickEvent event)
+	{
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
+		
+		if(slot == 53)//나가기
+		{
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+			if(slot == 45)//이전 목록
+				ChooseSystemGUI(player);
+			else if(slot == 48)//이전 페이지
+				Mabinogi_ChooseCategory(player,(short) (page-1));
+			else if(slot == 50)//다음 페이지
+				Mabinogi_ChooseCategory(player,(short) (page+1));
+			else if(slot == 49)//새 카테고리
 			{
-				s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
-				SkillList.removeKey("Mabinogi.Added."+SkillName);
-				SkillList.removeKey("Mabinogi."+CategoriName+"."+SkillName);
-				SkillList.saveConfig();
-				Mabinogi_SkillSetting(player, (short) page, CategoriName);
-				YamlManager Config  = YC.getNewConfig("config.yml");
-				Config.set("Time.LastSkillChanged", new GBD_RPG.Util.Util_Number().RandomNum(0, 100000)-new GBD_RPG.Util.Util_Number().RandomNum(0, 100000));
-				Config.saveConfig();
-				new GBD_RPG.Job.Job_Main().AllPlayerFixAllSkillAndJobYML();
+				player.sendMessage(ChatColor.LIGHT_PURPLE+"[카테고리] : 새 카테고리의 이름을 설정해 주세요!");
+				UserData_Object u = new UserData_Object();
+				u.setType(player, "Job");
+				u.setString(player, (byte)1, "CC");
 			}
-			return;
+			else
+			{
+				String CategoriName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
+				if(event.isLeftClick()==true)
+				{
+					if(event.isShiftClick() == false)
+					{
+						GBD_RPG.Skill.OPboxSkill_GUI OGUI = new GBD_RPG.Skill.OPboxSkill_GUI();
+						OGUI.AllSkillsGUI(player, (short) 0, true, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+					}
+					else
+						Mabinogi_SkillSetting(player, (short) 0, CategoriName);
+				}
+				else if(event.isShiftClick()==true&&event.isRightClick()==true)
+				{
+					s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+					YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+					YamlManager SkillList  = YC.getNewConfig("Skill/JobList.yml");
+					Object[] AddedSkillList = SkillList.getConfigurationSection("Mabinogi.Added").getKeys(false).toArray();
+					for(short count = 0; count <AddedSkillList.length;count++)
+					{
+						if(SkillList.getString("Mabinogi.Added."+AddedSkillList[count]).equals(CategoriName))
+							SkillList.removeKey("Mabinogi.Added."+AddedSkillList[count]);
+					}
+					SkillList.removeKey("Mabinogi."+CategoriName);
+					SkillList.saveConfig();
+					Mabinogi_ChooseCategory(player,page);
+					YamlManager Config  = YC.getNewConfig("config.yml");
+					Config.set("Time.LastSkillChanged", new GBD_RPG.Util.Util_Number().RandomNum(0, 100000)-new GBD_RPG.Util.Util_Number().RandomNum(0, 100000));
+					Config.saveConfig();
+					new GBD_RPG.Job.Job_Main().AllPlayerFixAllSkillAndJobYML();
+				}
+			}
+		}
+	}
+	
+	public void Mabinogi_SkillSettingClick(InventoryClickEvent event)
+	{
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		Player player = (Player) event.getWhoClicked();
+
+		int slot = event.getSlot();
+		
+		if(slot == 53)//나가기
+		{
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			String CategoriName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+			int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
+			if(slot == 45)//이전 목록
+				Mabinogi_ChooseCategory(player,(short) 0);
+			else if(slot == 48)//이전 페이지
+				Mabinogi_SkillSetting(player,(short) page,CategoriName);
+			else if(slot == 50)//다음 페이지
+				Mabinogi_SkillSetting(player,(short) page,CategoriName);
+			else
+			{
+				String SkillName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
+				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager SkillList  = YC.getNewConfig("Skill/JobList.yml");
+				if(event.isLeftClick()==true)
+				{
+					if(SkillList.getBoolean("Mabinogi."+CategoriName+"."+SkillName) == true)
+					{
+						SkillList.set("Mabinogi."+CategoriName+"."+SkillName, false);
+						SkillList.saveConfig();
+						Mabinogi_SkillSetting(player,(short) page,CategoriName);
+					}
+					else
+					{
+						SkillList.set("Mabinogi."+CategoriName+"."+SkillName, true);
+						SkillList.saveConfig();
+						Mabinogi_SkillSetting(player,(short) page,CategoriName);
+						YamlManager Config  = YC.getNewConfig("config.yml");
+						Config.set("Time.LastSkillChanged", new GBD_RPG.Util.Util_Number().RandomNum(0, 100000)-new GBD_RPG.Util.Util_Number().RandomNum(0, 100000));
+						Config.saveConfig();
+						new GBD_RPG.Job.Job_Main().AllPlayerFixAllSkillAndJobYML();
+					}
+				}
+				else if(event.isShiftClick()==true&&event.isRightClick()==true)
+				{
+					s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+					SkillList.removeKey("Mabinogi.Added."+SkillName);
+					SkillList.removeKey("Mabinogi."+CategoriName+"."+SkillName);
+					SkillList.saveConfig();
+					Mabinogi_SkillSetting(player, (short) page, CategoriName);
+					YamlManager Config  = YC.getNewConfig("config.yml");
+					Config.set("Time.LastSkillChanged", new GBD_RPG.Util.Util_Number().RandomNum(0, 100000)-new GBD_RPG.Util.Util_Number().RandomNum(0, 100000));
+					Config.saveConfig();
+					new GBD_RPG.Job.Job_Main().AllPlayerFixAllSkillAndJobYML();
+				}
+			}
 		}
 	}
 	

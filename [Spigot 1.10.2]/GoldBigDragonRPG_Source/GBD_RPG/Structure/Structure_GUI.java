@@ -26,7 +26,8 @@ public class Structure_GUI extends Util_GUI
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager StructureConfig =YC.getNewConfig("Structure/StructureList.yml");
 
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "전체 개체 목록 : " + (page+1));
+		String UniqueCode = "§0§0§d§0§0§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0전체 개체 목록 : " + (page+1));
 
 		Object[] StructureList= StructureConfig.getConfigurationSection("").getKeys(false).toArray();
 		
@@ -35,7 +36,6 @@ public class Structure_GUI extends Util_GUI
 		{
 			String StructureCode = StructureList[count].toString();
 			short StructureType = (short)StructureConfig.getInt(StructureCode+".Type");
-			String StructureName = "null";
 			int ID = 1;
 			byte DATA = 0;
 			
@@ -71,7 +71,8 @@ public class Structure_GUI extends Util_GUI
 
 	public void SelectStructureTypeGUI(Player player, byte page)
 	{
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "개체 타입 선택 : " + (page+1));
+		String UniqueCode = "§0§0§d§0§1§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0개체 타입 선택 : " + (page+1));
 		switch(page)
 		{
 		case 0:
@@ -97,7 +98,8 @@ public class Structure_GUI extends Util_GUI
 
 	public void SelectStructureDirectionGUI(Player player, short StructureID)
 	{
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.BLACK + "개체 방향");
+		String UniqueCode = "§0§0§d§0§2§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0개체 방향");
 
 		Stack2(ChatColor.BLUE + "" + ChatColor.BOLD + "[동]", 345,0,1,Arrays.asList(ChatColor.GRAY + "개체가 동쪽 방향을 바라봅니다."), 1, inv);
 		Stack2(ChatColor.BLUE + "" + ChatColor.BOLD + "[서]", 345,0,1,Arrays.asList(ChatColor.GRAY + "개체가 서쪽 방향을 바라봅니다."), 3, inv);
@@ -114,193 +116,176 @@ public class Structure_GUI extends Util_GUI
 	
 	public void StructureListGUIClick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		
-		String StructureName = event.getCurrentItem().getItemMeta().getDisplayName();
-
-		StructureName=StructureName.substring(2, StructureName.length());
-		
-		byte page = (byte) (Byte.parseByte(event.getInventory().getTitle().split(" : ")[1])-1);
-		
-		switch (event.getSlot())
+		if(slot == 53)//닫기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new OPbox_GUI().OPBoxGUI_Main(player, (byte) 3);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
+		}
+		else
+		{
+			byte page = (byte) (Byte.parseByte(event.getInventory().getTitle().split(" : ")[1])-1);
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			StructureListGUI(player, page-1);
-			return;
-		case 49://새 개체
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
-			SelectStructureTypeGUI(player, (byte) 0);
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			StructureListGUI(player, page+1);
-			return;
-		default :
-			if(event.isLeftClick() == true)
+			if(slot == 45)//이전 목록
+				new OPbox_GUI().OPBoxGUI_Main(player, (byte) 3);
+			else if(slot == 48)//이전 페이지
+				StructureListGUI(player, page-1);
+			else if(slot == 50)//다음 페이지
+				StructureListGUI(player, page+1);
+			else if(slot == 49)//새 개체
+				SelectStructureTypeGUI(player, (byte) 0);
+			else
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				if(StructureName.contains("게시판"))
+				String StructureName = event.getCurrentItem().getItemMeta().getDisplayName();
+				StructureName=StructureName.substring(2, StructureName.length());
+				if(event.isLeftClick() == true)
 				{
-					if(StructureName.contains("거래"))
-						new GBD_RPG.Structure.Struct_TradeBoard().TradeBoardSettingGUI(player);
-					else
-						new GBD_RPG.Structure.Struct_Board().BoardSettingGUI(player, StructureName);
-				}
-				//기능 개체 세부내용(player, StructureName);
-			}
-			else if(event.isShiftClick() == true && event.isRightClick() == true)
-			{
-				s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
-				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				YamlManager StructureConfig =YC.getNewConfig("Structure/StructureList.yml");
-
-				Location loc = new Location(Bukkit.getServer().getWorld(StructureConfig.getString(StructureName+".World")), StructureConfig.getInt(StructureName+".X"), StructureConfig.getInt(StructureName+".Y"), StructureConfig.getInt(StructureName+".Z"));
-				byte radius = 10;
-				switch(StructureConfig.getInt(StructureName+".Type"))
-				{
-					case 0 :
-						radius = 2; break;
-					case 1 :
-					case 2 :
-						radius = 3; break;
-					case 3 :
+					if(StructureName.contains("게시판"))
 					{
-						radius = 3;
-						loc.setX(loc.getX()-1);
-						loc.setZ(loc.getZ()-1);
-						Block b = loc.getBlock();
-						if(b.getType()==Material.TORCH)
-							b.setType(Material.AIR);
-						loc.setY(loc.getY()-2);
-						b = loc.getBlock();
-						if(b.getType()==Material.STATIONARY_LAVA||
-							b.getType()==Material.LAVA)
-							b.setType(Material.STONE);
-						loc.setY(loc.getY()+1);
-						break;
+						if(StructureName.contains("거래"))
+							new GBD_RPG.Structure.Struct_TradeBoard().TradeBoardSettingGUI(player);
+						else
+							new GBD_RPG.Structure.Struct_Board().BoardSettingGUI(player, StructureName);
 					}
+					//기능 개체 세부내용(player, StructureName);
 				}
-				Object[] EntitiList = Bukkit.getServer().getWorld(StructureConfig.getString(StructureName+".World")).getNearbyEntities(loc, radius, radius, radius).toArray();
-				for(short count=0; count<EntitiList.length;count++)
-					if(((Entity)EntitiList[count]).getCustomName()!=null)
-						if(((Entity)EntitiList[count]).getCustomName().compareTo(StructureName)==0)
-							((Entity)EntitiList[count]).remove();
-				StructureConfig.removeKey(StructureName);
-				StructureConfig.saveConfig();
-				File file = new File("plugins/GoldBigDragonRPG/Structure/"+Changer(StructureName)+".yml");
-				if(file.exists())
-					file.delete();
-				StructureListGUI(player, page);
+				else if(event.isShiftClick() == true && event.isRightClick() == true)
+				{
+					s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+					YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+					YamlManager StructureConfig =YC.getNewConfig("Structure/StructureList.yml");
+
+					Location loc = new Location(Bukkit.getServer().getWorld(StructureConfig.getString(StructureName+".World")), StructureConfig.getInt(StructureName+".X"), StructureConfig.getInt(StructureName+".Y"), StructureConfig.getInt(StructureName+".Z"));
+					byte radius = 10;
+					switch(StructureConfig.getInt(StructureName+".Type"))
+					{
+						case 0 :
+							radius = 2; break;
+						case 1 :
+						case 2 :
+							radius = 3; break;
+						case 3 :
+						{
+							radius = 3;
+							loc.setX(loc.getX()-1);
+							loc.setZ(loc.getZ()-1);
+							Block b = loc.getBlock();
+							if(b.getType()==Material.TORCH)
+								b.setType(Material.AIR);
+							loc.setY(loc.getY()-2);
+							b = loc.getBlock();
+							if(b.getType()==Material.STATIONARY_LAVA||
+								b.getType()==Material.LAVA)
+								b.setType(Material.STONE);
+							loc.setY(loc.getY()+1);
+							break;
+						}
+					}
+					Object[] EntitiList = Bukkit.getServer().getWorld(StructureConfig.getString(StructureName+".World")).getNearbyEntities(loc, radius, radius, radius).toArray();
+					for(short count=0; count<EntitiList.length;count++)
+						if(((Entity)EntitiList[count]).getCustomName()!=null)
+							if(((Entity)EntitiList[count]).getCustomName().compareTo(StructureName)==0)
+								((Entity)EntitiList[count]).remove();
+					StructureConfig.removeKey(StructureName);
+					StructureConfig.saveConfig();
+					File file = new File("plugins/GoldBigDragonRPG/Structure/"+Changer(StructureName)+".yml");
+					if(file.exists())
+						file.delete();
+					StructureListGUI(player, page);
+				}
 			}
-			return;
 		}
 	}
 	
 	public void SelectStructureTypeGUIClick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
+		int slot = event.getSlot();
 		Player player = (Player) event.getWhoClicked();
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		
-		byte page = (byte) (Byte.parseByte(event.getInventory().getTitle().split(" : ")[1])-1);
-		
-		switch (event.getSlot())
+		if(slot == 53)//나가기
 		{
-			case 45://이전 목록
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			byte page = (byte) (Byte.parseByte(event.getInventory().getTitle().split(" : ")[1])-1);
+			if(slot == 45)//이전 목록
 				StructureListGUI(player, 0);
-				return;
-			case 53://나가기
-				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-				player.closeInventory();
-				return;
-			case 48://이전 페이지
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			else if(slot == 48)//이전 페이지
 				SelectStructureTypeGUI(player, (byte) (page-1));
-				return;
-			case 50://다음 페이지
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			else if(slot == 50)//다음 페이지
 				SelectStructureTypeGUI(player, (byte) (page+1));
-				return;
-			default :
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			else
+			{
 				int StructureID = event.getSlot()+(page*45);
 				SelectStructureDirectionGUI(player, (short) StructureID);
-				return;
+			}
 		}
 	}	
 	
 	public void SelectStructureDirectionGUIClick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		
-		short StructureID =  (short)(Short.parseShort(ChatColor.stripColor(event.getInventory().getItem(8).getItemMeta().getLore().get(1))));
-
-		String Code = ChatColor.BLACK+""+ChatColor.BOLD;
-		switch(StructureID)
+		if(slot == 8)//나가기
 		{
-			case 0:
-				Code = Code+ChatColor.RED+"[우편함]"; break;
-			case 1:
-				Code = Code+ChatColor.GREEN+"[게시판]"; break;
-			case 2:
-				Code = Code+ChatColor.BLUE+"[거래 게시판]"; break;
-			case 3:
-				Code = Code+ChatColor.RED+"[모닥불]"; break;
-			case 101:
-				Code = Code+ChatColor.WHITE+"[제단]"; break;
-		}
-		
-		switch (event.getSlot())
-		{
-		case 0://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			SelectStructureTypeGUI(player, (byte) 0);
-			return;
-		case 8://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 1 :
-		case 3 :
-		case 5 :
-		case 7 :
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			player.closeInventory();
-			YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-			YamlManager StructureConfig =YC.getNewConfig("Structure/StructureList.yml");
-			String Salt = Code;
-			for(;;)
+			if(slot == 0)//이전 목록
+				SelectStructureTypeGUI(player, (byte) 0);
+			else if(slot == 1||slot == 3||slot == 5||slot == 7)
 			{
-				for(byte count=0;count < 6; count++)
-					Salt = Salt+getRandomCode();
-				if(StructureConfig.contains(Salt)==false)
-					break;
-				Salt = Code;
+				short StructureID =  (short)(Short.parseShort(ChatColor.stripColor(event.getInventory().getItem(8).getItemMeta().getLore().get(1))));
+				String Code = ChatColor.BLACK+""+ChatColor.BOLD;
+				switch(StructureID)
+				{
+					case 0:
+						Code = Code+ChatColor.RED+"[우편함]"; break;
+					case 1:
+						Code = Code+ChatColor.GREEN+"[게시판]"; break;
+					case 2:
+						Code = Code+ChatColor.BLUE+"[거래 게시판]"; break;
+					case 3:
+						Code = Code+ChatColor.RED+"[모닥불]"; break;
+					case 101:
+						Code = Code+ChatColor.WHITE+"[제단]"; break;
+				}
+				player.closeInventory();
+				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager StructureConfig =YC.getNewConfig("Structure/StructureList.yml");
+				String Salt = Code;
+				for(;;)
+				{
+					for(byte count=0;count < 6; count++)
+						Salt = Salt+getRandomCode();
+					if(StructureConfig.contains(Salt)==false)
+						break;
+					Salt = Code;
+				}
+				StructureConfig.set(Salt+".Type", StructureID);
+				StructureConfig.set(Salt+".World", player.getLocation().getWorld().getName());
+				StructureConfig.set(Salt+".X", (int)player.getLocation().getX());
+				StructureConfig.set(Salt+".Y", (int)player.getLocation().getY());
+				StructureConfig.set(Salt+".Z", (int)player.getLocation().getZ());
+				StructureConfig.saveConfig();
+				new GBD_RPG.Structure.Structure_Main().CreateSturcture(player, Salt, StructureID, event.getSlot());
 			}
-			StructureConfig.set(Salt+".Type", StructureID);
-			StructureConfig.set(Salt+".World", player.getLocation().getWorld().getName());
-			StructureConfig.set(Salt+".X", (int)player.getLocation().getX());
-			StructureConfig.set(Salt+".Y", (int)player.getLocation().getY());
-			StructureConfig.set(Salt+".Z", (int)player.getLocation().getZ());
-			StructureConfig.saveConfig();
-			new GBD_RPG.Structure.Structure_Main().CreateSturcture(player, Salt, StructureID, event.getSlot());
-			return;
 		}
 	}
+	
+	
 	
 	public String getRandomCode()
 	{

@@ -69,7 +69,7 @@ public class Main_PlayerMove
 										PlayerQuestList.removeKey("Started."+QuestName+".AreaName");
 										PlayerQuestList.saveConfig();
 										GBD_RPG.Quest.Quest_GUI QGUI = new GBD_RPG.Quest.Quest_GUI();
-										QGUI.QuestTypeRouter(player, QuestName);
+										QGUI.QuestRouter(player, QuestName);
 										//퀘스트 완료 메시지//
 										break;
 									}

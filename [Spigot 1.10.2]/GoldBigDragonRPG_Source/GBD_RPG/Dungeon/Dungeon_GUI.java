@@ -8,14 +8,12 @@ import java.util.Calendar;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -45,105 +43,20 @@ public final class Dungeon_GUI extends Util_GUI
 	고로 던전/제단/통행증은 모두 각기 다름.
 	 */
 	
-	//GUI Router//
-	public void InventoryClickRouter(InventoryClickEvent event, String InventoryName)
-	{
-		String Striped = ChatColor.stripColor(event.getInventory().getName().toString());
-		
-		//닫아서 저장하는 류는 여기에 넣기
-		if(event.getInventory().getType()==InventoryType.CHEST)
-		{
-			if(!(Striped.contains("보상")||
-			ChatColor.stripColor(InventoryName).contains("바치면")
-			))
-				event.setCancelled(true);
-		}
-		InventoryName = InventoryName.split(":")[0];
-
-		if(ChatColor.stripColor(InventoryName).contains("바치면"))//일반 제단 기능 넣기
-			AltarUseGUIClick(event);
-		else if(InventoryName.contains("던전에서"))
-			DungeonEXITClick(event);
-		else if(InventoryName.contains("등록된"))
-			AltarEnterCardSettingGUIClick(event);
-		else if(InventoryName.contains("생성된"))
-			AltarEnterCardListGUIClick(event);
-		else if(InventoryName.contains("던전"))
-		{
-			if(InventoryName.contains("목록"))
-				DungeonListMainGUIClick(event);
-			else if(InventoryName.contains("설정"))
-				DungeonSetUpGUIClick(event);
-			else if(InventoryName.contains("보상"))
-				DungeonChestRewardClick(event);
-			else if(InventoryName.contains("몬스터"))
-			{
-				if(event.getInventory().getSize()==9)
-					DungeonMonsterChooseMainClick(event);
-				else if(event.getInventory().getSize()==54)
-						DungeonMonsterGUIMainClick(event);
-			}
-			else if(InventoryName.contains("배경음"))
-				DungeonMusicSettingGUIClick(event);
-		}
-		else if(InventoryName.contains("제단"))
-		{
-			if(InventoryName.contains("목록"))
-				DungeonListMainGUIClick(event);
-			else if(InventoryName.contains("형태"))
-				AltarShapeListGUIClick(event);
-			else if(InventoryName.contains("설정"))
-				AltarSettingGUIClick(event);
-			else if(InventoryName.contains("연결"))
-				AltarDungeonSettingGUIClick(event);
-			return;
-		}
-		else if(InventoryName.contains("통행증"))
-		{
-			if(InventoryName.contains("목록"))
-				DungeonListMainGUIClick(event);	
-			else if(InventoryName.contains("설정"))
-				EnterCardSetUpGUIClick(event);
-			else if(InventoryName.contains("연결"))
-				EnterCardDungeonSettingGUIClick(event);
-		}
-		else if(InventoryName.contains("몬스터"))
-		{
-			if(InventoryName.contains("일반"))
-				DungeonSelectNormalMonsterChooseClick(event);
-			else if(InventoryName.contains("커스텀"))
-				DungeonSelectCustomMonsterChooseClick(event);
-		}
-		return;
-	}
-	
-	public void InventoryCloseRouter(InventoryCloseEvent event, String InventoryName)
-	{
-		if(InventoryName.contains("바치면"))
-			AltarUSEGuiClose(event);
-		else if(InventoryName.contains("던전"))
-		{
-			if(InventoryName.contains("보상"))
-				DungeonChestRewardClose(event);
-		}
-	}
-	//GUI Router//
-	
-	
-	
 	//DungeonGUI//
 	public void DungeonListMainGUI(Player player, int page, int Type)
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager DungeonConfig = YC.getNewConfig("Dungeon/DungeonList.yml");
 
+		String UniqueCode = "§0§0§a§0§0§r";
 		Inventory inv = null;
 		if(Type==52)
-			inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ChatColor.BLACK+ "던전 목록 : " + (page+1));
+			inv = Bukkit.createInventory(null, 54, UniqueCode + "§0던전 목록 : " + (page+1));
 		else if(Type==358)
-			inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ChatColor.BLACK+ "통행증 목록 : " + (page+1));
+			inv = Bukkit.createInventory(null, 54, UniqueCode + "§0통행증 목록 : " + (page+1));
 		else if(Type==120)
-			inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ChatColor.BLACK+ "제단 목록 : " + (page+1));
+			inv = Bukkit.createInventory(null, 54, UniqueCode + "§0제단 목록 : " + (page+1));
 		Object[] DungeonList = null;
 		if(Type==52)//던전
 		{
@@ -265,8 +178,9 @@ public final class Dungeon_GUI extends Util_GUI
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Dungeon/"+DungeonName+"/Option.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 45, ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ChatColor.BLACK+ "던전 설정 : " +DungeonName);
+
+		String UniqueCode = "§0§0§a§0§1§r";
+		Inventory inv = Bukkit.createInventory(null, 45, UniqueCode + "§0던전 설정 : " +DungeonName);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "던전 타입", DungeonConfig.getInt("Type.ID"),DungeonConfig.getInt("Type.DATA"),1,Arrays.asList(ChatColor.GRAY + "현재 던전 타입 : "+DungeonConfig.getString("Type.Name")), 11, inv);
 		
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "던전 크기", 395,0,1,Arrays.asList(ChatColor.GRAY + "현재 던전 크기 : "+DungeonConfig.getInt("Size"),ChatColor.DARK_GRAY + "최소 : 5",ChatColor.DARK_GRAY + "최대 : 30"), 13, inv);
@@ -338,8 +252,9 @@ public final class Dungeon_GUI extends Util_GUI
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Dungeon/"+DungeonName+"/Reward.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ "던전 보상 : " +DungeonName);
+
+		String UniqueCode = "§1§0§a§0§2§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0던전 보상 : " +DungeonName);
 	
 		Stack2(ChatColor.BLUE + "" + ChatColor.BOLD + "[100% 확률]", 160,11,1,Arrays.asList("",ChatColor.WHITE+"100% 확률로 나올 아이템을",ChatColor.WHITE+"이 줄에 놓으시면 됩니다.",ChatColor.WHITE+"100% 확률로 이 줄에 있는",ChatColor.WHITE+"아이템 중, 하나가 나옵니다.",""), 0, inv);
 		Stack2(ChatColor.GREEN + "" + ChatColor.BOLD + "[90% 확률]", 160,5,1,Arrays.asList("",ChatColor.WHITE+"90% 확률로 나올 아이템을",ChatColor.WHITE+"이 줄에 놓으시면 됩니다.",ChatColor.WHITE+"90% 확률로 이 줄에 있는",ChatColor.WHITE+"아이템 중, 하나가 나옵니다.",""), 9, inv);
@@ -370,8 +285,9 @@ public final class Dungeon_GUI extends Util_GUI
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Dungeon/"+DungeonName+"/Monster.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ "던전 몬스터 : " +DungeonName);
+
+		String UniqueCode = "§0§0§a§0§3§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0던전 몬스터 : " +DungeonName);
 
 		Stack2(ChatColor.DARK_RED + "" + ChatColor.BOLD + "[BOSS]", 160,14,1,Arrays.asList("",ChatColor.WHITE+"보스방에서 나올 몬스터는",ChatColor.WHITE+"이 줄에서 설정합니다.",""), 0, inv);
 		Stack2(ChatColor.GOLD + "" + ChatColor.BOLD + "[부 보스]", 160,5,1,Arrays.asList("",ChatColor.WHITE+"보스방 앞에서 나올 몬스터는",ChatColor.WHITE+"이 줄에서 설정합니다.",""), 9, inv);
@@ -553,7 +469,8 @@ public final class Dungeon_GUI extends Util_GUI
 	
 	public void DungeonMonsterChooseMain(Player player, String DungeonName, int slot)
 	{
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ "던전 몬스터 : " +DungeonName);
+		String UniqueCode = "§0§0§a§0§4§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0던전 몬스터 : " +DungeonName);
 		Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[없음]", 166,0,1,Arrays.asList(ChatColor.GRAY + "몬스터 설정을 하지 않습니다."), 2, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[일반]", 383,0,1,Arrays.asList(ChatColor.GRAY + "일반적인 몬스터 중 하나로 고릅니다."), 4, inv);
 		Stack2(ChatColor.AQUA + "" + ChatColor.BOLD + "[커스텀]", 52,0,1,Arrays.asList(ChatColor.GRAY + "커스텀 몬스터 중 하나로 고릅니다.","",ChatColor.RED+"[엔더 크리스탈 형태의 몬스터를",ChatColor.RED+"선택할 경우, 고장의 원인이 됩니다.]"), 6, inv);
@@ -565,7 +482,8 @@ public final class Dungeon_GUI extends Util_GUI
 	
 	public void DungeonSelectNormalMonsterChoose(Player player, String DungeonName, String Type, int slot)
 	{
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ "일반 몬스터 : " +DungeonName);
+		String UniqueCode = "§0§0§a§0§5§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0일반 몬스터 : " +DungeonName);
 
 		Stack2(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "[좀비]",397,2,1,null, 0, inv);
 		Stack2(ChatColor.GRAY + "" + ChatColor.BOLD + "[스켈레톤]",397,0,1,null, 1, inv);
@@ -604,7 +522,8 @@ public final class Dungeon_GUI extends Util_GUI
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager MobList = YC.getNewConfig("Monster/MonsterList.yml");
 		GBD_RPG.Battle.Battle_Calculator d = new GBD_RPG.Battle.Battle_Calculator();
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GREEN +""+ChatColor.BOLD +ChatColor.BLACK+ "커스텀 몬스터 : " + (page+1));
+		String UniqueCode = "§0§0§a§0§6§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0커스텀 몬스터 : " + (page+1));
 
 		Object[] a= MobList.getKeys().toArray();
 
@@ -691,7 +610,8 @@ public final class Dungeon_GUI extends Util_GUI
 
 	public void DungeonMusicSettingGUI(Player player, int page,String DungeonName, boolean isBOSS)
 	{
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ChatColor.BLACK + "던전 배경음 : " + (page+1));
+		String UniqueCode = "§0§0§a§0§7§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0던전 배경음 : " + (page+1));
 		int loc=0;
 		int model = new GBD_RPG.Util.Util_Number().RandomNum(0, 11);
 		for(int count = page*45; count < OtherPlugins.NoteBlockAPIMain.Musics.size();count++)
@@ -740,8 +660,9 @@ public final class Dungeon_GUI extends Util_GUI
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager DungeonConfig = YC.getNewConfig("Dungeon/EnterCardList.yml");
-		
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.DARK_GREEN+""+ChatColor.BOLD +ChatColor.BLACK+"통행증 설정");
+
+		String UniqueCode = "§0§0§a§0§8§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0통행증 설정");
 		if(DungeonConfig.getString(EnterCardName+".Dungeon")!= null)
 			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "[통행증 연결 던전]", 52,0,1,Arrays.asList("",ChatColor.BLUE + "현재 이어진 던전 : "+ChatColor.WHITE+DungeonConfig.getString(EnterCardName+".Dungeon")), 2, inv);
 		else
@@ -775,7 +696,8 @@ public final class Dungeon_GUI extends Util_GUI
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager DungeonConfig = YC.getNewConfig("Dungeon/DungeonList.yml");
 
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ChatColor.BLACK+ "통행증 연결 : " + (page+1));
+		String UniqueCode = "§0§0§a§0§9§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0통행증 연결 : " + (page+1));
 		Object[] DungeonList = DungeonConfig.getConfigurationSection("").getKeys(false).toArray();
 		
 		int loc=0;
@@ -812,7 +734,8 @@ public final class Dungeon_GUI extends Util_GUI
 	//AltarGUI//
 	public void AltarShapeListGUI(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ChatColor.BLACK+ "제단 형태");
+		String UniqueCode = "§0§0§a§0§a§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0제단 형태");
 		Stack2(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "[이끼 낀 제단]", 48,0,1,Arrays.asList("",ChatColor.BLUE + "크기 : "+ChatColor.WHITE+"소형",ChatColor.BLUE+"예상 건축 시간 : "+ChatColor.WHITE+"13초","",ChatColor.GOLD+""+ChatColor.BOLD+"[     건축가     ]",ChatColor.WHITE+"GoldBigDragon [모두]"), 0, inv);
 		Stack2(ChatColor.YELLOW + "" + ChatColor.BOLD + "[金泰龍]", 41,0,1,Arrays.asList("",ChatColor.BLUE + "크기 : "+ChatColor.WHITE+"대형",ChatColor.BLUE+"예상 건축 시간 : "+ChatColor.WHITE+"15분","",ChatColor.GOLD+""+ChatColor.BOLD+"[     건축가     ]",ChatColor.WHITE+"ComputerFairy [날개]",ChatColor.WHITE+"GoldBigDragon [용]"), 1, inv);
 		Stack2(ChatColor.GRAY + "" + ChatColor.BOLD + "[스톤 헨지]", 1,0,1,Arrays.asList("",ChatColor.BLUE + "크기 : "+ChatColor.WHITE+"소형",ChatColor.BLUE+"예상 건축 시간 : "+ChatColor.WHITE+"1분 5초","",ChatColor.GOLD+""+ChatColor.BOLD+"[     건축가     ]",ChatColor.WHITE+"GoldBigDragon [모두]"), 2, inv);
@@ -828,7 +751,8 @@ public final class Dungeon_GUI extends Util_GUI
 
 	public void AltarSettingGUI(Player player, String AltarName)
 	{
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ChatColor.BLACK+ "제단 설정");
+		String UniqueCode = "§0§0§a§0§b§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0제단 설정");
 
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager AltarList = YC.getNewConfig("Dungeon/AltarList.yml");
@@ -862,7 +786,8 @@ public final class Dungeon_GUI extends Util_GUI
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager DungeonConfig = YC.getNewConfig("Dungeon/DungeonList.yml");
 
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ChatColor.BLACK+ "제단 연결 : " + (page+1));
+		String UniqueCode = "§0§0§a§0§c§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0제단 연결 : " + (page+1));
 		Object[] DungeonList = DungeonConfig.getConfigurationSection("").getKeys(false).toArray();
 		
 		int loc=0;
@@ -900,7 +825,8 @@ public final class Dungeon_GUI extends Util_GUI
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager AlterConfig = YC.getNewConfig("Dungeon/Altar/"+AltarName+".yml");
 
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ChatColor.BLACK+ "등록된 통행증 : " + (page+1));
+		String UniqueCode = "§0§0§a§0§d§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0등록된 통행증 : " + (page+1));
 
 		if(AlterConfig.getConfigurationSection("EnterCard").getKeys(false).size()!=0)
 		{
@@ -963,7 +889,8 @@ public final class Dungeon_GUI extends Util_GUI
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ChatColor.BLACK+ "생성된 통행증 목록 : " + (page+1));
+		String UniqueCode = "§0§0§a§0§e§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0생성된 통행증 목록 : " + (page+1));
 		
 		YamlManager DungeonConfig = YC.getNewConfig("Dungeon/EnterCardList.yml");
 		Object[] DungeonList = DungeonConfig.getConfigurationSection("").getKeys(false).toArray();
@@ -1011,7 +938,8 @@ public final class Dungeon_GUI extends Util_GUI
 	
 	public void AltarUseGUI(Player player, String AltarName)
 	{
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ChatColor.BLACK+ "제단에 물건을 바치면 던전으로 이동합니다");
+		String UniqueCode = "§1§0§a§0§f§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0제단에 물건을 바치면 던전으로 이동합니다");
 
 		Stack2(AltarName, 160,0,1,null, 0, inv);
 		Stack2(AltarName, 160,0,1,null, 1, inv);
@@ -1028,7 +956,8 @@ public final class Dungeon_GUI extends Util_GUI
 	
 	public void DungeonEXIT(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ChatColor.BLACK+ "던전에서 나가시겠습니까?");
+		String UniqueCode = "§0§0§a§1§0§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0던전에서 나가시겠습니까?");
 
 		Stack2(ChatColor.RED+""+ChatColor.BOLD+"[던전 잔류]", 166,0,1,null, 3, inv);
 		Stack2(ChatColor.BLUE+""+ChatColor.BOLD+"[던전 퇴장]", 138,0,1,null, 5, inv);
@@ -1043,223 +972,203 @@ public final class Dungeon_GUI extends Util_GUI
 	public void DungeonListMainGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
 		
-		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
-		int Type = event.getInventory().getItem(47).getTypeId();
-		
-		if(event.getCurrentItem()!=null)
-			if(event.getCurrentItem().getType()!=Material.AIR)
-				switch (event.getSlot())
-				{
-					case 45://이전 목록
-						s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-						new OPbox_GUI().OPBoxGUI_Main(player, (byte) 3);
-						return;
-					case 53://나가기
-						s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-						player.closeInventory();
-						return;
-					case 47://타입 변경
-						s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-						if(event.isLeftClick())
-						{
-							if(Type == 52)
-								DungeonListMainGUI(player, 0,358);
-							else if(Type == 358)
-								DungeonListMainGUI(player, 0,120);
-							else if(Type == 120)
-								DungeonListMainGUI(player, 0,52);
-						}
-						else
-						{
-							if(Type == 52)
-								DungeonListMainGUI(player, 0,120);
-							else if(Type == 358)
-								DungeonListMainGUI(player, 0,52);
-							else if(Type == 120)
-								DungeonListMainGUI(player, 0,358);
-						}
-						return;
-					case 48://이전 페이지
-						s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-						DungeonListMainGUI(player, page-1,Type);
-						return;
-					case 49://새 던전
-						if(GBD_RPG.Main_Main.Main_ServerOption.DungeonTheme.isEmpty())
-						{
-							s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-							player.sendMessage(ChatColor.RED+"[SYSTEM] : 생성 가능한 던전 테마를 찾을 수 없습니다!");
-							player.sendMessage(ChatColor.YELLOW+"(던전 테마 다운로드 : "+ChatColor.GOLD+"http://cafe.naver.com/goldbigdragon/56713"+ChatColor.YELLOW+")");
-							return;
-						}
-						s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-						UserData_Object u = new UserData_Object();
-						u.setTemp(player, "Dungeon");
-						player.closeInventory();
-						if(Type == 52)
-						{
-							u.setType(player, "DungeonMain");
-							u.setString(player, (byte)0, "ND");//NewDungeon
-							player.sendMessage(ChatColor.GREEN+"[던전] : 새로운 던전 이름을 입력 해 주세요!");
-						}
-						else if(Type == 358)
-						{
-							u.setType(player, "EnterCard");
-							u.setString(player, (byte)0, "NEC");//NewEnterCard
-							player.sendMessage(ChatColor.GREEN+"[던전] : 새로운 통행증 이름을 입력 해 주세요!");
-						}
-						else if(Type == 120)
-						{
-							u.setType(player, "Altar");
-							u.setString(player, (byte)0, "NA_Q");//NewAlter_Question
-							player.sendMessage(ChatColor.GREEN+"[던전] : 현재 서 있는 위치에 제단을 세우시겠습니까? (네/아니오)");
-						}
-						return;
-					case 50://다음 페이지
-						s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-						DungeonListMainGUI(player, page+1,Type);
-						return;
-					default :
-						if(event.getCurrentItem()==null)
-							return;
-						if(event.getCurrentItem().hasItemMeta()==false)
-							return;
+		if(slot == 53)//나가기
+		{
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			int Type = event.getInventory().getItem(47).getTypeId();
+			int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
 			
-						if(Type == 52)
-						{
-							String DungeonName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
-							if(event.isLeftClick() == true)
-							{
-								s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-								DungeonSetUpGUI(player, DungeonName);
-							}
-							else if(event.isShiftClick() == true && event.isRightClick() == true)
-							{
-								s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
-							  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-								YamlManager DungeonConfig = YC.getNewConfig("Dungeon/DungeonList.yml");
-								DungeonConfig.removeKey(DungeonName);
-								DungeonConfig.saveConfig();
-								File file = new File("plugins/GoldBigDragonRPG/Dungeon/Dungeon/"+DungeonName+"/Monster.yml");
-								file.delete();
-								file = new File("plugins/GoldBigDragonRPG/Dungeon/Dungeon/"+DungeonName+"/Option.yml");
-								file.delete();
-								file = new File("plugins/GoldBigDragonRPG/Dungeon/Dungeon/"+DungeonName+"/Reward.yml");
-								file.delete();
-								file = new File("plugins/GoldBigDragonRPG/Dungeon/Dungeon/"+DungeonName);
-								file.delete();
-								DungeonListMainGUI(player, page,Type);
-							}
-							else if(event.isShiftClick()==false&&event.isRightClick())
-							{
-							  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-								YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Dungeon/"+DungeonName+"/Option.yml");
-								new GBD_RPG.Dungeon.Dungeon_Creater().CreateTestSeed(player, DungeonConfig.getInt("Size"), DungeonConfig.getInt("Maze_Level"), DungeonConfig.getString("Type.Name"));
-							}
-						}
-						if(Type == 358)
-						{
-							String DungeonName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
-							if(event.isLeftClick() == true&&event.isShiftClick()==false)
-							{
-								s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-								EnterCardSetUpGUI(player, DungeonName);
-							}
-							else if(event.isShiftClick()&&event.isRightClick())
-							{
-								s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
-							  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-								YamlManager DungeonConfig = YC.getNewConfig("Dungeon/EnterCardList.yml");
-								DungeonConfig.removeKey(DungeonName);
-								DungeonConfig.saveConfig();
-								DungeonListMainGUI(player, page,Type);
-							}
-							else if(event.isShiftClick()&& event.isLeftClick())
-							{
-								s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-							  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-								YamlManager DungeonConfig = YC.getNewConfig("Dungeon/EnterCardList.yml");
-								ItemStack Icon = new MaterialData(DungeonConfig.getInt(DungeonName+".ID"), (byte) DungeonConfig.getInt(DungeonName+".DATA")).toItemStack(1);
-								ItemMeta Icon_Meta = Icon.getItemMeta();
-								Icon_Meta.setDisplayName(ChatColor.RED+""+ChatColor.BOLD+"[던전 통행증]");
-								Calendar Today = Calendar.getInstance();
-								String UseableTime = "[제한 시간 없음]";
-								if(DungeonConfig.getInt(DungeonName+".Hour")!=-1)
-								{
-									Today.add(Calendar.MONTH, 1);
-									Today.add(Calendar.HOUR, DungeonConfig.getInt(DungeonName+".Hour"));
-									Today.add(Calendar.MINUTE, DungeonConfig.getInt(DungeonName+".Min"));
-									Today.add(Calendar.SECOND, DungeonConfig.getInt(DungeonName+".Sec"));
-									
-									UseableTime = Today.get(Calendar.YEAR)+"년 "+Today.get(Calendar.MONTH)+"월 "+Today.get(Calendar.DATE)+"일 "+Today.get(Calendar.HOUR)+"시 "+Today.get(Calendar.MINUTE)+"분 "+Today.get(Calendar.SECOND)+"초 까지";
-								}
-								Icon_Meta.setLore(Arrays.asList("",ChatColor.RED+DungeonName,"",ChatColor.RED+"인원 : "+ChatColor.WHITE+DungeonConfig.getInt(DungeonName+".Capacity"),"",ChatColor.WHITE+""+UseableTime));
-								Icon.setItemMeta(Icon_Meta);
-								player.getInventory().addItem(Icon);
-							}
-						}
-						if(Type == 120)
-						{
-							String DungeonName = event.getCurrentItem().getItemMeta().getLore().get(event.getCurrentItem().getItemMeta().getLore().size()-1);
-							if(event.isLeftClick() == true&&event.isShiftClick()==false)
-							{
-								s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-								AltarSettingGUI(player, DungeonName);
-							}
-							else if(event.isShiftClick() == true && event.isRightClick() == true)
-							{
-								s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
-							  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-								YamlManager DungeonConfig = YC.getNewConfig("Dungeon/AltarList.yml");
-								Location loc = new Location(Bukkit.getServer().getWorld(DungeonConfig.getString(DungeonName+".World")), DungeonConfig.getInt(DungeonName+".X"), DungeonConfig.getInt(DungeonName+".Y"), DungeonConfig.getInt(DungeonName+".Z"));
-								int radius = DungeonConfig.getInt(DungeonName+".radius");
-								Object[] EntitiList = Bukkit.getServer().getWorld(DungeonConfig.getString(DungeonName+".World")).getNearbyEntities(loc, radius, radius, radius).toArray();
-								for(int count=0; count<EntitiList.length;count++)
-									if(((Entity)EntitiList[count]).getCustomName()!=null)
-										if(((Entity)EntitiList[count]).getCustomName().compareTo(DungeonName)==0)
-											((Entity)EntitiList[count]).remove();
-								DungeonConfig.removeKey(DungeonName);
-								DungeonConfig.saveConfig();
-								File file = new File("plugins/GoldBigDragonRPG/Dungeon/Altar/"+DungeonName+".yml");
-								file.delete();
-								DungeonListMainGUI(player, page,Type);
-							}
-							else if(event.isShiftClick() == true && event.isLeftClick() == true)
-							{
-								s.SP(player, Sound.ENTITY_ENDERMEN_TELEPORT, 0.8F, 1.0F);
-							  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-								YamlManager DungeonConfig = YC.getNewConfig("Dungeon/AltarList.yml");
-								Location loc = new Location(Bukkit.getServer().getWorld(DungeonConfig.getString(DungeonName+".World")), DungeonConfig.getInt(DungeonName+".X"), DungeonConfig.getInt(DungeonName+".Y"), DungeonConfig.getInt(DungeonName+".Z"));
-								player.teleport(loc);
-								s.SP(player, Sound.ENTITY_ENDERMEN_TELEPORT, 0.8F, 1.0F);
-							}
-						}
-						return;
+			if(slot == 45)//이전 목록
+				new OPbox_GUI().OPBoxGUI_Main(player, (byte) 3);
+			else if(slot == 47)//타입 변경
+			{
+				if(event.isLeftClick())
+				{
+					if(Type == 52)
+						DungeonListMainGUI(player, 0,358);
+					else if(Type == 358)
+						DungeonListMainGUI(player, 0,120);
+					else if(Type == 120)
+						DungeonListMainGUI(player, 0,52);
 				}
+				else
+				{
+					if(Type == 52)
+						DungeonListMainGUI(player, 0,120);
+					else if(Type == 358)
+						DungeonListMainGUI(player, 0,52);
+					else if(Type == 120)
+						DungeonListMainGUI(player, 0,358);
+				}
+			}
+			else if(slot == 48)//이전 페이지
+				DungeonListMainGUI(player, page-1,Type);
+			else if(slot == 49)//새 던전
+			{
+				if(GBD_RPG.Main_Main.Main_ServerOption.DungeonTheme.isEmpty())
+				{
+					s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					player.sendMessage(ChatColor.RED+"[SYSTEM] : 생성 가능한 던전 테마를 찾을 수 없습니다!");
+					player.sendMessage(ChatColor.YELLOW+"(던전 테마 다운로드 : "+ChatColor.GOLD+"http://cafe.naver.com/goldbigdragon/56713"+ChatColor.YELLOW+")");
+					return;
+				}
+				UserData_Object u = new UserData_Object();
+				u.setTemp(player, "Dungeon");
+				player.closeInventory();
+				if(Type == 52)
+				{
+					u.setType(player, "DungeonMain");
+					u.setString(player, (byte)0, "ND");//NewDungeon
+					player.sendMessage(ChatColor.GREEN+"[던전] : 새로운 던전 이름을 입력 해 주세요!");
+				}
+				else if(Type == 358)
+				{
+					u.setType(player, "EnterCard");
+					u.setString(player, (byte)0, "NEC");//NewEnterCard
+					player.sendMessage(ChatColor.GREEN+"[던전] : 새로운 통행증 이름을 입력 해 주세요!");
+				}
+				else if(Type == 120)
+				{
+					u.setType(player, "Altar");
+					u.setString(player, (byte)0, "NA_Q");//NewAlter_Question
+					player.sendMessage(ChatColor.GREEN+"[던전] : 현재 서 있는 위치에 제단을 세우시겠습니까? (네/아니오)");
+				}
+			}
+			else if(slot == 50)//다음 페이지
+				DungeonListMainGUI(player, page+1,Type);
+			else
+			{
+				if(event.getCurrentItem().hasItemMeta()==false)
+					return;
+				if(Type == 52)
+				{
+					String DungeonName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
+					if(event.isLeftClick() == true)
+						DungeonSetUpGUI(player, DungeonName);
+					else if(event.isShiftClick() == true && event.isRightClick() == true)
+					{
+						s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+					  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+						YamlManager DungeonConfig = YC.getNewConfig("Dungeon/DungeonList.yml");
+						DungeonConfig.removeKey(DungeonName);
+						DungeonConfig.saveConfig();
+						File file = new File("plugins/GoldBigDragonRPG/Dungeon/Dungeon/"+DungeonName+"/Monster.yml");
+						file.delete();
+						file = new File("plugins/GoldBigDragonRPG/Dungeon/Dungeon/"+DungeonName+"/Option.yml");
+						file.delete();
+						file = new File("plugins/GoldBigDragonRPG/Dungeon/Dungeon/"+DungeonName+"/Reward.yml");
+						file.delete();
+						file = new File("plugins/GoldBigDragonRPG/Dungeon/Dungeon/"+DungeonName);
+						file.delete();
+						DungeonListMainGUI(player, page,Type);
+					}
+					else if(event.isShiftClick()==false&&event.isRightClick())
+					{
+					  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+						YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Dungeon/"+DungeonName+"/Option.yml");
+						new GBD_RPG.Dungeon.Dungeon_Creater().CreateTestSeed(player, DungeonConfig.getInt("Size"), DungeonConfig.getInt("Maze_Level"), DungeonConfig.getString("Type.Name"));
+					}
+				}
+				if(Type == 358)
+				{
+					String DungeonName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
+					if(event.isLeftClick() == true&&event.isShiftClick()==false)
+						EnterCardSetUpGUI(player, DungeonName);
+					else if(event.isShiftClick()&&event.isRightClick())
+					{
+						s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+					  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+						YamlManager DungeonConfig = YC.getNewConfig("Dungeon/EnterCardList.yml");
+						DungeonConfig.removeKey(DungeonName);
+						DungeonConfig.saveConfig();
+						DungeonListMainGUI(player, page,Type);
+					}
+					else if(event.isShiftClick()&& event.isLeftClick())
+					{
+					  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+						YamlManager DungeonConfig = YC.getNewConfig("Dungeon/EnterCardList.yml");
+						ItemStack Icon = new MaterialData(DungeonConfig.getInt(DungeonName+".ID"), (byte) DungeonConfig.getInt(DungeonName+".DATA")).toItemStack(1);
+						ItemMeta Icon_Meta = Icon.getItemMeta();
+						Icon_Meta.setDisplayName(ChatColor.RED+""+ChatColor.BOLD+"[던전 통행증]");
+						Calendar Today = Calendar.getInstance();
+						String UseableTime = "[제한 시간 없음]";
+						if(DungeonConfig.getInt(DungeonName+".Hour")!=-1)
+						{
+							Today.add(Calendar.MONTH, 1);
+							Today.add(Calendar.HOUR, DungeonConfig.getInt(DungeonName+".Hour"));
+							Today.add(Calendar.MINUTE, DungeonConfig.getInt(DungeonName+".Min"));
+							Today.add(Calendar.SECOND, DungeonConfig.getInt(DungeonName+".Sec"));
+							
+							UseableTime = Today.get(Calendar.YEAR)+"년 "+Today.get(Calendar.MONTH)+"월 "+Today.get(Calendar.DATE)+"일 "+Today.get(Calendar.HOUR)+"시 "+Today.get(Calendar.MINUTE)+"분 "+Today.get(Calendar.SECOND)+"초 까지";
+						}
+						Icon_Meta.setLore(Arrays.asList("",ChatColor.RED+DungeonName,"",ChatColor.RED+"인원 : "+ChatColor.WHITE+DungeonConfig.getInt(DungeonName+".Capacity"),"",ChatColor.WHITE+""+UseableTime));
+						Icon.setItemMeta(Icon_Meta);
+						player.getInventory().addItem(Icon);
+					}
+				}
+				if(Type == 120)
+				{
+					String DungeonName = event.getCurrentItem().getItemMeta().getLore().get(event.getCurrentItem().getItemMeta().getLore().size()-1);
+					if(event.isLeftClick() == true&&event.isShiftClick()==false)
+						AltarSettingGUI(player, DungeonName);
+					else if(event.isShiftClick() == true && event.isRightClick() == true)
+					{
+						s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+					  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+						YamlManager DungeonConfig = YC.getNewConfig("Dungeon/AltarList.yml");
+						Location loc = new Location(Bukkit.getServer().getWorld(DungeonConfig.getString(DungeonName+".World")), DungeonConfig.getInt(DungeonName+".X"), DungeonConfig.getInt(DungeonName+".Y"), DungeonConfig.getInt(DungeonName+".Z"));
+						int radius = DungeonConfig.getInt(DungeonName+".radius");
+						Object[] EntitiList = Bukkit.getServer().getWorld(DungeonConfig.getString(DungeonName+".World")).getNearbyEntities(loc, radius, radius, radius).toArray();
+						for(int count=0; count<EntitiList.length;count++)
+							if(((Entity)EntitiList[count]).getCustomName()!=null)
+								if(((Entity)EntitiList[count]).getCustomName().compareTo(DungeonName)==0)
+									((Entity)EntitiList[count]).remove();
+						DungeonConfig.removeKey(DungeonName);
+						DungeonConfig.saveConfig();
+						File file = new File("plugins/GoldBigDragonRPG/Dungeon/Altar/"+DungeonName+".yml");
+						file.delete();
+						DungeonListMainGUI(player, page,Type);
+					}
+					else if(event.isShiftClick() == true && event.isLeftClick() == true)
+					{
+						s.SP(player, Sound.ENTITY_ENDERMEN_TELEPORT, 0.8F, 1.0F);
+					  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+						YamlManager DungeonConfig = YC.getNewConfig("Dungeon/AltarList.yml");
+						Location loc = new Location(Bukkit.getServer().getWorld(DungeonConfig.getString(DungeonName+".World")), DungeonConfig.getInt(DungeonName+".X"), DungeonConfig.getInt(DungeonName+".Y"), DungeonConfig.getInt(DungeonName+".Z"));
+						player.teleport(loc);
+						s.SP(player, Sound.ENTITY_ENDERMEN_TELEPORT, 0.8F, 1.0F);
+					}
+				}
+			}
+		}
 	}
 	
 	public void DungeonSetUpGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-
-		UserData_Object u = new UserData_Object();
-		String DungeonName = ChatColor.stripColor(event.getInventory().getTitle().split(" : ")[1]);
+		int slot = event.getSlot();
 		
-		switch (event.getSlot())
+		if(slot == 44)//나가기
 		{
-		case 36://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			DungeonListMainGUI(player, 0, 52);
-			return;
-		case 44://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 11://던전 타입
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			String DungeonName = ChatColor.stripColor(event.getInventory().getTitle().split(" : ")[1]);
+			if(slot == 36)//이전 목록
+				DungeonListMainGUI(player, 0, 52);
+			else if(slot == 11)//던전 타입
 			{
 				if(GBD_RPG.Main_Main.Main_ServerOption.DungeonTheme.isEmpty())
 				{
@@ -1288,97 +1197,78 @@ public final class Dungeon_GUI extends Util_GUI
 				DungeonConfig.saveConfig();
 				DungeonSetUpGUI(player, DungeonName);
 			}
-			return;
-		case 13://던전 크기
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			u.setTemp(player, "Dungeon");
-			u.setType(player, "DungeonMain");
-			u.setString(player, (byte)0, "DS");//DungeonSize
-			u.setString(player, (byte)1, DungeonName);
-			player.sendMessage(ChatColor.GREEN+"[던전] : 던전 크기를 입력 해 주세요! (최소 5 최대 50)");
-			player.closeInventory();
-			return;
-		case 15://던전 미로 레벨
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			u.setTemp(player, "Dungeon");
-			u.setType(player, "DungeonMain");
-			u.setString(player, (byte)0, "DML");//DungeonMazeLevel
-			u.setString(player, (byte)1, DungeonName);
-			player.sendMessage(ChatColor.GREEN+"[던전] : 던전 미로 레벨을 입력 해 주세요! (최소 0 최대 10)");
-			player.sendMessage(ChatColor.YELLOW+"[주의] 미로 레벨이 높아지면 유저들이 빡칠수도 있음!");
-			player.closeInventory();
-			return;
-		case 20://레벨 제한
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			u.setTemp(player, "Dungeon");
-			u.setType(player, "DungeonMain");
-			u.setString(player, (byte)0, "DDL");//DungeonDistrictLevel
-			u.setString(player, (byte)1, DungeonName);
-			player.sendMessage(ChatColor.GREEN+"[던전] : 던전 입장 가능 레벨을 입력 해 주세요!");
-			player.closeInventory();
-			return;
-		case 22://돈, 경험치 보상 설정
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			u.setTemp(player, "Dungeon");
-			u.setType(player, "DungeonMain");
-			u.setString(player, (byte)0, "DRM");//DungeonRewardMoney
-			u.setString(player, (byte)1, DungeonName);
-			player.sendMessage(ChatColor.GREEN+"[던전] : 던전 클리어 보상금을 입력 해 주세요!");
-			player.closeInventory();
-			return;
-		case 24://보상 상자
-			s.SP(player, Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
-			DungeonChestReward(player, DungeonName);
-			return;
-		case 29://몬스터
-			s.SP(player, Sound.ENTITY_WOLF_AMBIENT, 0.8F, 1.0F);
-			DungeonMonsterGUIMain(player, DungeonName);
-			return;
-		case 31://던전BGM 설정
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			DungeonMusicSettingGUI(player, 0, DungeonName, false);
-			return;
-		case 33://보스BGM 설정
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			DungeonMusicSettingGUI(player, 0, DungeonName, true);
-			return;
+			else if(slot == 24)//보상 상자
+			{
+				s.SP(player, Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
+				DungeonChestReward(player, DungeonName);
+			}
+			else if(slot == 29)//몬스터
+			{
+				s.SP(player, Sound.ENTITY_WOLF_AMBIENT, 0.8F, 1.0F);
+				DungeonMonsterGUIMain(player, DungeonName);
+			}
+			else if(slot == 31)//던전BGM 설정
+				DungeonMusicSettingGUI(player, 0, DungeonName, false);
+			else if(slot == 33)//보스BGM 설정
+				DungeonMusicSettingGUI(player, 0, DungeonName, true);
+			else
+			{
+				UserData_Object u = new UserData_Object();
+				u.setTemp(player, "Dungeon");
+				u.setType(player, "DungeonMain");
+				u.setString(player, (byte)1, DungeonName);
+				player.closeInventory();
+				if(slot == 13)//던전 크기
+				{
+					u.setString(player, (byte)0, "DS");//DungeonSize
+					player.sendMessage(ChatColor.GREEN+"[던전] : 던전 크기를 입력 해 주세요! (최소 5 최대 50)");
+				}
+				else if(slot == 15)//미로 레벨
+				{
+					u.setString(player, (byte)0, "DML");//DungeonMazeLevel
+					player.sendMessage(ChatColor.GREEN+"[던전] : 던전 미로 레벨을 입력 해 주세요! (최소 0 최대 10)");
+					player.sendMessage(ChatColor.YELLOW+"[주의] 미로 레벨이 높아지면 유저들이 빡칠수도 있음!");
+				}
+				else if(slot == 20)//레벨 제한
+				{
+					u.setString(player, (byte)0, "DDL");//DungeonDistrictLevel
+					player.sendMessage(ChatColor.GREEN+"[던전] : 던전 입장 가능 레벨을 입력 해 주세요!");
+				}
+				else if(slot == 22)//돈, 경험치 보상 설정
+				{
+					u.setString(player, (byte)0, "DRM");//DungeonRewardMoney
+					player.sendMessage(ChatColor.GREEN+"[던전] : 던전 클리어 보상금을 입력 해 주세요!");
+				}
+			}
 		}
 	}
 
 	public void DungeonChestRewardClick(InventoryClickEvent event)
 	{
-		if(event.getClickedInventory().getName().contains("보상"))
-			if(event.getSlot()%9==0)
+		if(event.getSlot()%9==0)
+			if(event.getClickedInventory().getName().contains("보상"))
 				event.setCancelled(true);
 	}
 	
 	public void DungeonMonsterGUIMainClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-
-		UserData_Object u = new UserData_Object();
-		String DungeonName = ChatColor.stripColor(event.getInventory().getTitle().split(" : ")[1]);
-
+		int slot = event.getSlot();
 		
-		switch (event.getSlot())
+		if(slot == 53)//나가기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			DungeonSetUpGUI(player, DungeonName);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
 		}
-		if(event.getSlot()%9==0)
-			event.setCancelled(true);
-		else if(event.getSlot()<=44)
+		else
 		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			DungeonMonsterChooseMain(player, DungeonName, event.getSlot());
+			String DungeonName = ChatColor.stripColor(event.getInventory().getTitle().split(" : ")[1]);
+			if(slot == 45)
+				DungeonSetUpGUI(player, DungeonName);
+			else if(slot%9 != 0 && slot <= 44)
+				DungeonMonsterChooseMain(player, DungeonName, slot);
 		}
 		return;
 	}
@@ -1386,224 +1276,211 @@ public final class Dungeon_GUI extends Util_GUI
 	public void DungeonMonsterChooseMainClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-
-		String DungeonName = ChatColor.stripColor(event.getInventory().getTitle().split(" : ")[1]);
-		int Slot = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(8).getItemMeta().getLore().get(1)));
-		String Type = null;
-		if(Slot< 9)
+		int slot = event.getSlot();
+		
+		if(slot == 8)//나가기
 		{
-			Type="Boss";
-			Slot = Slot-1;
-		}
-		else if(Slot < 18)
-		{
-			Type="SubBoss";
-			Slot = Slot-10;
-		}
-		else if(Slot < 27)
-		{
-			Type="High";
-			Slot = Slot-19;
-		}
-		else if(Slot < 36)
-		{
-			Type="Middle";
-			Slot = Slot-28;
-		}
-		else if(Slot < 45)
-		{
-			Type="Normal";
-			Slot = Slot-37;
-		}
-		switch (event.getSlot())
-		{
-		case 0://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			DungeonMonsterGUIMain(player, DungeonName);
-			return;
-		case 2://없음
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-		  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-			YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Dungeon/"+DungeonName+"/Monster.yml");
-			DungeonConfig.removeKey(Type+"."+Slot);
-			DungeonConfig.saveConfig();
-			DungeonMonsterGUIMain(player, DungeonName);
-			return;
-		case 4://일반 몬스터
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			DungeonSelectNormalMonsterChoose(player, DungeonName, Type, Slot);
-			return;
-		case 6://커스텀 몬스터
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			DungeonSelectCustomMonsterChoose(player, DungeonName, Type, Slot, 0);
-			return;
-		case 8://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			String DungeonName = ChatColor.stripColor(event.getInventory().getTitle().split(" : ")[1]);
+			
+			if(slot == 0)//이전 목록
+				DungeonMonsterGUIMain(player, DungeonName);
+			else
+			{
+				int Slot = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(8).getItemMeta().getLore().get(1)));
+				String Type = null;
+				if(Slot< 9)
+				{
+					Type="Boss";
+					Slot = Slot-1;
+				}
+				else if(Slot < 18)
+				{
+					Type="SubBoss";
+					Slot = Slot-10;
+				}
+				else if(Slot < 27)
+				{
+					Type="High";
+					Slot = Slot-19;
+				}
+				else if(Slot < 36)
+				{
+					Type="Middle";
+					Slot = Slot-28;
+				}
+				else if(Slot < 45)
+				{
+					Type="Normal";
+					Slot = Slot-37;
+				}
+				if(slot == 2)//없음
+				{
+				  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+					YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Dungeon/"+DungeonName+"/Monster.yml");
+					DungeonConfig.removeKey(Type+"."+Slot);
+					DungeonConfig.saveConfig();
+					DungeonMonsterGUIMain(player, DungeonName);
+				}
+				else if(slot == 4)//일반 몬스터
+					DungeonSelectNormalMonsterChoose(player, DungeonName, Type, Slot);
+				else if(slot == 6)//커스텀 몬스터
+					DungeonSelectCustomMonsterChoose(player, DungeonName, Type, Slot, 0);
+			}
 		}
 	}
 	
 	public void DungeonSelectNormalMonsterChooseClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 
-		String DungeonName = ChatColor.stripColor(event.getInventory().getTitle().split(" : ")[1]);
-		int Slot = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
-		String Type = ChatColor.stripColor(event.getInventory().getItem(45).getItemMeta().getLore().get(1));
-		int ClickedSlot = event.getSlot();
-	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Dungeon/"+DungeonName+"/Monster.yml");
-		if(ClickedSlot==0)
-			DungeonConfig.set(Type+"."+Slot, "놂좀비");
-		else if(ClickedSlot==1)
-			DungeonConfig.set(Type+"."+Slot, "놂스켈레톤");
-		else if(ClickedSlot==2)
-			DungeonConfig.set(Type+"."+Slot, "놂크리퍼");
-		else if(ClickedSlot==3)
-			DungeonConfig.set(Type+"."+Slot, "놂거미");
-		else if(ClickedSlot==4)
-			DungeonConfig.set(Type+"."+Slot, "놂동굴거미");
-		else if(ClickedSlot==5)
-			DungeonConfig.set(Type+"."+Slot, "놂엔더맨");
-		else if(ClickedSlot==6)
-			DungeonConfig.set(Type+"."+Slot, "놂슬라임");
-		else if(ClickedSlot==7)
-			DungeonConfig.set(Type+"."+Slot, "놂마그마큐브");
-		else if(ClickedSlot==8)
-			DungeonConfig.set(Type+"."+Slot, "놂마녀");
-		else if(ClickedSlot==9)
-			DungeonConfig.set(Type+"."+Slot, "놂좀비피그맨");
-		else if(ClickedSlot==10)
-			DungeonConfig.set(Type+"."+Slot, "놂블레이즈");
-		else if(ClickedSlot==11)
-			DungeonConfig.set(Type+"."+Slot, "놂가스트");
-		else if(ClickedSlot==12)
-			DungeonConfig.set(Type+"."+Slot, "놂수호자");
-		else if(ClickedSlot==13)
-			DungeonConfig.set(Type+"."+Slot, "놂박쥐");
-		else if(ClickedSlot==14)
-			DungeonConfig.set(Type+"."+Slot, "놂돼지");
-		else if(ClickedSlot==15)
-			DungeonConfig.set(Type+"."+Slot, "놂양");
-		else if(ClickedSlot==16)
-			DungeonConfig.set(Type+"."+Slot, "놂소");
-		else if(ClickedSlot==17)
-			DungeonConfig.set(Type+"."+Slot, "놂닭");
-		else if(ClickedSlot==18)
-			DungeonConfig.set(Type+"."+Slot, "놂오징어");
-		else if(ClickedSlot==19)
-			DungeonConfig.set(Type+"."+Slot, "놂늑대");
-		else if(ClickedSlot==20)
-			DungeonConfig.set(Type+"."+Slot, "놂버섯소");
-		else if(ClickedSlot==21)
-			DungeonConfig.set(Type+"."+Slot, "놂오셀롯");
-		else if(ClickedSlot==22)
-			DungeonConfig.set(Type+"."+Slot, "놂말");
-		else if(ClickedSlot==23)
-			DungeonConfig.set(Type+"."+Slot, "놂토끼");
-		else if(ClickedSlot==24)
-			DungeonConfig.set(Type+"."+Slot, "놂주민");
-		else if(ClickedSlot==25)
-			DungeonConfig.set(Type+"."+Slot, "놂북극곰");
-		else if(ClickedSlot==45)
-		{
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			DungeonMonsterChooseMain(player, DungeonName, Slot);
-			return;
-		}
-		else if(ClickedSlot==53)
+		int slot = event.getSlot();
+		
+		if(slot==53)//나가기
 		{
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
 		}
-		DungeonConfig.saveConfig();
-		s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
-		DungeonMonsterGUIMain(player, DungeonName);
-		return;
+		else
+		{
+			String DungeonName = ChatColor.stripColor(event.getInventory().getTitle().split(" : ")[1]);
+			int Slot = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot==45)
+				DungeonMonsterChooseMain(player, DungeonName, Slot);
+			else
+			{
+				String Type = ChatColor.stripColor(event.getInventory().getItem(45).getItemMeta().getLore().get(1));
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Dungeon/"+DungeonName+"/Monster.yml");
+				if(slot==0)
+					DungeonConfig.set(Type+"."+Slot, "놂좀비");
+				else if(slot==1)
+					DungeonConfig.set(Type+"."+Slot, "놂스켈레톤");
+				else if(slot==2)
+					DungeonConfig.set(Type+"."+Slot, "놂크리퍼");
+				else if(slot==3)
+					DungeonConfig.set(Type+"."+Slot, "놂거미");
+				else if(slot==4)
+					DungeonConfig.set(Type+"."+Slot, "놂동굴거미");
+				else if(slot==5)
+					DungeonConfig.set(Type+"."+Slot, "놂엔더맨");
+				else if(slot==6)
+					DungeonConfig.set(Type+"."+Slot, "놂슬라임");
+				else if(slot==7)
+					DungeonConfig.set(Type+"."+Slot, "놂마그마큐브");
+				else if(slot==8)
+					DungeonConfig.set(Type+"."+Slot, "놂마녀");
+				else if(slot==9)
+					DungeonConfig.set(Type+"."+Slot, "놂좀비피그맨");
+				else if(slot==10)
+					DungeonConfig.set(Type+"."+Slot, "놂블레이즈");
+				else if(slot==11)
+					DungeonConfig.set(Type+"."+Slot, "놂가스트");
+				else if(slot==12)
+					DungeonConfig.set(Type+"."+Slot, "놂수호자");
+				else if(slot==13)
+					DungeonConfig.set(Type+"."+Slot, "놂박쥐");
+				else if(slot==14)
+					DungeonConfig.set(Type+"."+Slot, "놂돼지");
+				else if(slot==15)
+					DungeonConfig.set(Type+"."+Slot, "놂양");
+				else if(slot==16)
+					DungeonConfig.set(Type+"."+Slot, "놂소");
+				else if(slot==17)
+					DungeonConfig.set(Type+"."+Slot, "놂닭");
+				else if(slot==18)
+					DungeonConfig.set(Type+"."+Slot, "놂오징어");
+				else if(slot==19)
+					DungeonConfig.set(Type+"."+Slot, "놂늑대");
+				else if(slot==20)
+					DungeonConfig.set(Type+"."+Slot, "놂버섯소");
+				else if(slot==21)
+					DungeonConfig.set(Type+"."+Slot, "놂오셀롯");
+				else if(slot==22)
+					DungeonConfig.set(Type+"."+Slot, "놂말");
+				else if(slot==23)
+					DungeonConfig.set(Type+"."+Slot, "놂토끼");
+				else if(slot==24)
+					DungeonConfig.set(Type+"."+Slot, "놂주민");
+				else if(slot==25)
+					DungeonConfig.set(Type+"."+Slot, "놂북극곰");
+				DungeonConfig.saveConfig();
+				DungeonMonsterGUIMain(player, DungeonName);
+			}
+		}
 	}
 	
 	public void DungeonSelectCustomMonsterChooseClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-
-		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
-		String DungeonName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(2));
-		int Slot = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
-		String Type = ChatColor.stripColor(event.getInventory().getItem(45).getItemMeta().getLore().get(1));
-
-		if(event.getCurrentItem()!=null)
-			if(event.getCurrentItem().getTypeId()==383)
+		int slot = event.getSlot();
+		
+		if(slot == 53)//나가기
+		{
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
+			int Slot = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
+			String Type = ChatColor.stripColor(event.getInventory().getItem(45).getItemMeta().getLore().get(1));
+			String DungeonName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(2));
+			
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
+			if(slot == 45)//이전 목록
+				DungeonMonsterChooseMain(player, DungeonName, Slot);
+			else if(slot == 48)//이전 페이지
+				DungeonSelectCustomMonsterChoose(player, DungeonName, Type, Slot, page-1);
+			else if(slot == 50)//다음 페이지
+				DungeonSelectCustomMonsterChoose(player, DungeonName, Type, Slot, page+1);
+			else if(event.getCurrentItem().getTypeId()==383)
 			{
 			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 				YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Dungeon/"+DungeonName+"/Monster.yml");
 				DungeonConfig.set(Type+"."+Slot, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 				DungeonConfig.saveConfig();
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 				DungeonMonsterGUIMain(player, DungeonName);
-				return;
 			}
-		switch (event.getSlot())
-		{
-		case 48://이전 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			DungeonSelectCustomMonsterChoose(player, DungeonName, Type, Slot, page-1);
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			DungeonSelectCustomMonsterChoose(player, DungeonName, Type, Slot, page+1);
-			return;
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			DungeonMonsterChooseMain(player, DungeonName, Slot);
-			return;
-		case 53://나가기
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.closeInventory();
-			return;
 		}
 	}
 	
 	public void DungeonMusicSettingGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		
-		String DungeonName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
-
-		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
-		boolean isBoss = Boolean.parseBoolean(ChatColor.stripColor(event.getInventory().getItem(45).getItemMeta().getLore().get(1)));
+		int slot = event.getSlot();
 		
-		switch (event.getSlot())
+		if(slot == 53)//나가기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			DungeonSetUpGUI(player, DungeonName);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
+		}
+		else
+		{
+			String DungeonName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+			int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
+			boolean isBoss = Boolean.parseBoolean(ChatColor.stripColor(event.getInventory().getItem(45).getItemMeta().getLore().get(1)));
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			DungeonMusicSettingGUI(player, page-1,DungeonName,isBoss);
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			DungeonMusicSettingGUI(player, page+1,DungeonName,isBoss);
-			return;
-		default :
-			if(event.isLeftClick())
+			if(slot == 45)//이전 목록
+				DungeonSetUpGUI(player, DungeonName);
+			else if(slot == 48)//이전 페이지
+				DungeonMusicSettingGUI(player, page-1,DungeonName,isBoss);
+			else if(slot == 50)//다음 페이지
+				DungeonMusicSettingGUI(player, page+1,DungeonName,isBoss);
+			else
 			{
-				if(event.getCurrentItem() != null && event.getCurrentItem().hasItemMeta())
+				if(event.getCurrentItem().hasItemMeta())
 				{
 					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
@@ -1616,6 +1493,12 @@ public final class Dungeon_GUI extends Util_GUI
 					DungeonSetUpGUI(player, DungeonName);
 				}
 			}
+		}
+			
+		
+		switch (event.getSlot())
+		{
+		default :
 			return;
 		}
 	}
@@ -1626,19 +1509,21 @@ public final class Dungeon_GUI extends Util_GUI
 	public void EnterCardSetUpGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
 		
-		String EnterCardName = ChatColor.stripColor(event.getInventory().getItem(8).getItemMeta().getLore().get(1));
-
-		UserData_Object u = new UserData_Object();
-		switch (event.getSlot())
+		if(slot == 8)//나가기
 		{
-		case 0://이전 목록
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			String EnterCardName = ChatColor.stripColor(event.getInventory().getItem(8).getItemMeta().getLore().get(1));
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			DungeonListMainGUI(player, 0, 358);
-			return;
-		case 2://던전 설정
+			if(slot == 0)//이전 목록
+				DungeonListMainGUI(player, 0, 358);
+			else if(slot == 2)//던전 설정
 			{
 			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 				YamlManager DungeonConfig = YC.getNewConfig("Dungeon/DungeonList.yml");
@@ -1648,22 +1533,9 @@ public final class Dungeon_GUI extends Util_GUI
 					player.sendMessage(ChatColor.RED+"[던전] : 생성된 던전이 없습니다! 던전을 먼저 만들고 오세요!");
 				}
 				else
-				{
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 					EnterCardDungeonSettingGUI(player, 0, EnterCardName);
-				}
 			}
-			return;
-		case 3://아이템 형태 설정
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			u.setTemp(player, "Dungeon");
-			player.closeInventory();
-			u.setType(player, "EnterCard");
-			u.setString(player, (byte)0, "ECID");//EnterCardID
-			u.setString(player, (byte)1, EnterCardName);
-			player.sendMessage(ChatColor.GREEN+"[통행증] : 통행증 아이템 타입 ID를 입력 해 주세요.");
-			return;
-		case 4://아이템 형태 초기화
+			else if(slot == 4)//아이템 형태 초기화
 			{
 				s.SP(player, Sound.ENTITY_IRONGOLEM_ATTACK, 1.0F, 1.8F);
 			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
@@ -1673,63 +1545,59 @@ public final class Dungeon_GUI extends Util_GUI
 				DungeonConfig.saveConfig();
 				EnterCardSetUpGUI(player, EnterCardName);
 			}
-			return;
-		case 5://입장 인원 설정
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			u.setTemp(player, "Dungeon");
-			player.closeInventory();
-			u.setType(player, "EnterCard");
-			u.setString(player, (byte)0, "ECC");//EnterCardCapacity
-			u.setString(player, (byte)1, EnterCardName);
-			player.sendMessage(ChatColor.GREEN+"[통행증] : 필요 입장 인원 수를 입력 해 주세요.");
-			return;
-		case 6://유효시간 설정
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			u.setTemp(player, "Dungeon");
-			player.closeInventory();
-			u.setType(player, "EnterCard");
-			u.setString(player, (byte)0, "ECUH");//EnterCardUseableHour
-			u.setString(player, (byte)1, EnterCardName);
-			player.sendMessage(ChatColor.GREEN+"[통행증] : 유효 시간을 입력 해 주세요. (최대 24시간, -1입력시 무제한)");
-			return;
-		case 8://나가기
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.closeInventory();
-			return;
+			else
+			{
+				UserData_Object u = new UserData_Object();
+				player.closeInventory();
+				u.setTemp(player, "Dungeon");
+				u.setType(player, "EnterCard");
+				u.setString(player, (byte)1, EnterCardName);
+				if(slot == 3)//아이템 형태 설정
+				{
+					u.setString(player, (byte)0, "ECID");//EnterCardID
+					player.sendMessage(ChatColor.GREEN+"[통행증] : 통행증 아이템 타입 ID를 입력 해 주세요.");
+				}
+				else if(slot == 5)//입장 인원 설정
+				{
+					u.setString(player, (byte)0, "ECC");//EnterCardCapacity
+					player.sendMessage(ChatColor.GREEN+"[통행증] : 필요 입장 인원 수를 입력 해 주세요.");
+				}
+				else if(slot == 6)//유효시간 설정
+				{
+					u.setString(player, (byte)0, "ECUH");//EnterCardUseableHour
+					player.sendMessage(ChatColor.GREEN+"[통행증] : 유효 시간을 입력 해 주세요. (최대 24시간, -1입력시 무제한)");
+				}
+			}
 		}
 	}
 
 	public void EnterCardDungeonSettingGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		
-		String EnterCardName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
-
-		if(event.getCurrentItem()!=null)
-			if(event.getCurrentItem().getType()!=Material.AIR)
+		int slot = event.getSlot();
+		
+		if(slot == 53)//나가기
+		{
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			String EnterCardName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 45)//이전 목록
+				EnterCardSetUpGUI(player, EnterCardName);
+			else
 			{
-				switch (event.getSlot())
-				{
-				case 45://이전 목록
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					EnterCardSetUpGUI(player, EnterCardName);
-					return;
-				case 53://나가기
-					s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-					player.closeInventory();
-					return;
-				default:
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-					YamlManager DungeonConfig = YC.getNewConfig("Dungeon/EnterCardList.yml");
-					DungeonConfig.set(EnterCardName+".Dungeon", ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-					DungeonConfig.saveConfig();
-					EnterCardSetUpGUI(player, EnterCardName);
-					return;
-				}
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager DungeonConfig = YC.getNewConfig("Dungeon/EnterCardList.yml");
+				DungeonConfig.set(EnterCardName+".Dungeon", ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+				DungeonConfig.saveConfig();
+				EnterCardSetUpGUI(player, EnterCardName);
 			}
+		}
 	}
 	//EnterCardGUI Click//
 
@@ -1738,264 +1606,228 @@ public final class Dungeon_GUI extends Util_GUI
 	public void AltarShapeListGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		if(event.getCurrentItem()!=null)
-			if(event.getCurrentItem().getTypeId()!=0)
+		int slot = event.getSlot();
+		
+		if(slot == 53)//나가기
+		{
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 45)//이전 목록
+				DungeonListMainGUI(player, 0, 120);
+			else
 			{
-				switch (event.getSlot())
+				if(ServerTick_Main.ServerTask.compareTo("null")!=0)
 				{
-				case 45://이전 목록
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					DungeonListMainGUI(player, 0, 120);
-					return;
-				case 53://나가기
-					s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-					player.closeInventory();
-					return;
-				default:
-					player.closeInventory();
-					if(ServerTick_Main.ServerTask.compareTo("null")!=0)
-					{
-						s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-						player.sendMessage(ChatColor.RED+"[Server] : 현재 서버는 "+ChatColor.YELLOW+ServerTick_Main.ServerTask+ChatColor.RED+" 작업 중입니다.");
-						return;
-					}
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-					YamlManager AltarList = YC.getNewConfig("Dungeon/AltarList.yml");
-					String Code = ChatColor.BLACK+""+ChatColor.BOLD;
-					Code = Code+ChatColor.WHITE+"[제단]";
-					String Salt = Code;
-					int ID = 1;
-					int DATA = 0;
-					String Type = null;
-					int radius = 5;
-					switch(event.getSlot())
-					{
-					case 0:
-						Type = "MossyAltar";
-						ID = 48;
-						radius = 3;
-						break;
-					case 1:
-						Type = "GoldBigDragon";
-						ID = 41;
-						radius = 20;
-						break;
-					case 2:
-						Type = "StoneHenge";
-						ID = 1;
-						radius = 8;
-						break;
-					case 3:
-						Type = "AnatomicalBoard";
-						ID = 1;
-						DATA = 5;
-						radius = 3;
-						break;
-					}
-					for(;;)
-					{
-						for(int count=0;count < 6; count++)
-							Salt = Salt+getRandomCode();
-						if(AltarList.contains(Salt)==false)
-							break;
-						Salt = Code;
-					}
-					AltarList.set(Salt+".Name", "방금 지어진 제단");
-					AltarList.set(Salt+".Type", Type);
-					AltarList.set(Salt+".radius", radius);
-					AltarList.set(Salt+".ID", ID);
-					AltarList.set(Salt+".DATA", DATA);
-					AltarList.set(Salt+".World", player.getLocation().getWorld().getName());
-					AltarList.set(Salt+".X", (int)player.getLocation().getX());
-					AltarList.set(Salt+".Y", (int)player.getLocation().getY());
-					AltarList.set(Salt+".Z", (int)player.getLocation().getZ());
-					AltarList.saveConfig();
-					AltarList = YC.getNewConfig("Dungeon/Altar/"+Salt+".yml");
-					AltarList.createSection("EnterCard");
-					AltarList.saveConfig();
-					new GBD_RPG.Structure.Structure_Main().CreateSturcture(player, Salt, (short) (101+event.getSlot()), 4);
+					s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					player.sendMessage(ChatColor.RED+"[Server] : 현재 서버는 "+ChatColor.YELLOW+ServerTick_Main.ServerTask+ChatColor.RED+" 작업 중입니다.");
 					return;
 				}
+				player.closeInventory();
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager AltarList = YC.getNewConfig("Dungeon/AltarList.yml");
+				String Code = ChatColor.BLACK+""+ChatColor.BOLD;
+				Code = Code+ChatColor.WHITE+"[제단]";
+				String Salt = Code;
+				int ID = 1;
+				int DATA = 0;
+				String Type = null;
+				int radius = 5;
+				if(slot == 0)
+				{
+					Type = "MossyAltar";
+					ID = 48;
+					radius = 3;
+				}
+				else if(slot == 1)
+				{
+					Type = "GoldBigDragon";
+					ID = 41;
+					radius = 20;
+				}
+				else if(slot == 2)
+				{
+					Type = "StoneHenge";
+					ID = 1;
+					radius = 8;
+				}
+				else if(slot == 3)
+				{
+					Type = "AnatomicalBoard";
+					ID = 1;
+					DATA = 5;
+					radius = 3;
+				}
+				
+				for(;;)
+				{
+					for(int count=0;count < 6; count++)
+						Salt = Salt+getRandomCode();
+					if(AltarList.contains(Salt)==false)
+						break;
+					Salt = Code;
+				}
+				AltarList.set(Salt+".Name", "방금 지어진 제단");
+				AltarList.set(Salt+".Type", Type);
+				AltarList.set(Salt+".radius", radius);
+				AltarList.set(Salt+".ID", ID);
+				AltarList.set(Salt+".DATA", DATA);
+				AltarList.set(Salt+".World", player.getLocation().getWorld().getName());
+				AltarList.set(Salt+".X", (int)player.getLocation().getX());
+				AltarList.set(Salt+".Y", (int)player.getLocation().getY());
+				AltarList.set(Salt+".Z", (int)player.getLocation().getZ());
+				AltarList.saveConfig();
+				AltarList = YC.getNewConfig("Dungeon/Altar/"+Salt+".yml");
+				AltarList.createSection("EnterCard");
+				AltarList.saveConfig();
+				new GBD_RPG.Structure.Structure_Main().CreateSturcture(player, Salt, (short) (101+event.getSlot()), 4);
 			}
+		}
 	}
 
 	public void AltarSettingGUIClick(InventoryClickEvent event)
 	{
+		int slot = event.getSlot();
+		Player player = (Player) event.getWhoClicked();
 		String AltarName = event.getInventory().getItem(8).getItemMeta().getLore().get(1);
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
-		Player player = (Player) event.getWhoClicked();
-		if(event.getCurrentItem()!=null)
-			if(event.getCurrentItem().getTypeId()!=0)
+		
+		if(slot == 8)//나가기
+		{
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 0)//이전 목록
+				DungeonListMainGUI(player, 0, 120);
+			else if(slot == 2)//이름 변경
 			{
-				switch (event.getSlot())
-				{
-				case 0://이전 목록
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					DungeonListMainGUI(player, 0, 120);
-					return;
-				case 2://이름 변경
-					{
-						UserData_Object u = new UserData_Object();
-						s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-						u.setTemp(player, "Dungeon");
-						player.closeInventory();
-						u.setType(player, "Altar");
-						u.setString(player, (byte)0, "EAN");//EditAltarName
-						u.setString(player, (byte)1, AltarName);
-						player.sendMessage(ChatColor.GREEN+"[제단] : 제단 이름을 입력 해 주세요.");
-					}
-					return;
-				case 4://일반 던전 설정
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-					AltarDungeonSettingGUI(player, 0, AltarName);
-					return;
-				case 6://통행증 설정
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-					AltarEnterCardSettingGUI(player, 0, AltarName.substring(2, AltarName.length()));
-					return;
-				case 8://나가기
-					s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-					player.closeInventory();
-					return;
-				}
+				UserData_Object u = new UserData_Object();
+				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				u.setTemp(player, "Dungeon");
+				player.closeInventory();
+				u.setType(player, "Altar");
+				u.setString(player, (byte)0, "EAN");//EditAltarName
+				u.setString(player, (byte)1, AltarName);
+				player.sendMessage(ChatColor.GREEN+"[제단] : 제단 이름을 입력 해 주세요.");
 			}
+			else if(slot == 4)//일반 던전 설정
+				AltarDungeonSettingGUI(player, 0, AltarName);
+			else if(slot == 6)//통행증 설정
+				AltarEnterCardSettingGUI(player, 0, AltarName.substring(2, AltarName.length()));
+		}
 	}
 	
 	public void AltarUseGUIClick(InventoryClickEvent event)
 	{
 		if(event.getSlot()!=4)
-			if(event.getCurrentItem()!=null)
-				if(event.getCurrentItem().getTypeId()!=0)
-					if(ChatColor.stripColor(event.getClickedInventory().getName()).compareTo("제단에 물건을 바치면 던전으로 이동합니다")==0)
-							event.setCancelled(true);
+			if(ChatColor.stripColor(event.getClickedInventory().getName()).compareTo("제단에 물건을 바치면 던전으로 이동합니다")==0)
+				event.setCancelled(true);
 	}
 	
 	public void AltarDungeonSettingGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		
 		String AltarName = event.getInventory().getItem(53).getItemMeta().getLore().get(1).substring(2, event.getInventory().getItem(53).getItemMeta().getLore().get(1).length());
-
-		if(event.getCurrentItem()!=null)
-			if(event.getCurrentItem().getType()!=Material.AIR)
+		int slot = event.getSlot();
+		
+		if(slot == 53)
+		{
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 45)
+				AltarSettingGUI(player, AltarName);
+			else
 			{
-				switch (event.getSlot())
-				{
-				case 45://이전 목록
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					AltarSettingGUI(player, AltarName);
-					return;
-				case 53://나가기
-					s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-					player.closeInventory();
-					return;
-				default:
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-					YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Altar/"+AltarName+".yml");
-					DungeonConfig.set("NormalDungeon", ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-					DungeonConfig.saveConfig();
-					AltarSettingGUI(player, AltarName);
-					return;
-				}
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Altar/"+AltarName+".yml");
+				DungeonConfig.set("NormalDungeon", ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+				DungeonConfig.saveConfig();
+				AltarSettingGUI(player, AltarName);
 			}
+		}
 	}
 	
 	public void AltarEnterCardSettingGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-
 		String AltarName = event.getInventory().getItem(53).getItemMeta().getLore().get(1);
+		int slot = event.getSlot();
 
-		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
-		if(event.getCurrentItem()!=null)
-			if(event.getCurrentItem().getType()!=Material.AIR)
+		if(slot == 53)//나가기
+		{
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
+			if(slot == 45)//이전 목록
+				AltarSettingGUI(player, AltarName);
+			else if(slot == 48)//이전 페이지
+				AltarEnterCardSettingGUI(player, page-1, AltarName);
+			else if(slot == 49)//통행증 등록
+				AltarEnterCardListGUI(player, page, AltarName);
+			else if(slot == 50)//다음 페이지
+				AltarEnterCardSettingGUI(player, page+1, AltarName);
+			else if(event.isShiftClick()&&event.isRightClick())
 			{
-				switch (event.getSlot())
-				{
-				case 45://이전 목록
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					AltarSettingGUI(player, AltarName);
-					return;
-				case 48://이전 페이지
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					AltarEnterCardSettingGUI(player, page-1, AltarName);
-					return;
-				case 49://통행증 등록
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					AltarEnterCardListGUI(player, page, AltarName);
-					return;
-				case 50://다음 페이지
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					AltarEnterCardSettingGUI(player, page+1, AltarName);
-					return;
-				case 53://나가기
-					s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-					player.closeInventory();
-					return;
-				default:
-					if(event.isShiftClick()&&event.isRightClick())
-					{
-						s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
-					  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-						YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Altar/"+AltarName+".yml");
-						DungeonConfig.removeKey("EnterCard."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-						DungeonConfig.saveConfig();
-						AltarEnterCardSettingGUI(player, page, AltarName);
-						return;
-					}
-				}
+				s.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Altar/"+AltarName+".yml");
+				DungeonConfig.removeKey("EnterCard."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+				DungeonConfig.saveConfig();
+				AltarEnterCardSettingGUI(player, page, AltarName);
+				return;
 			}
+		}
 	}
 	
 	public void AltarEnterCardListGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 
 		String AltarName = event.getInventory().getItem(53).getItemMeta().getLore().get(1);
-
-		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
-		if(event.getCurrentItem()!=null)
-			if(event.getCurrentItem().getType()!=Material.AIR)
+		int slot = event.getSlot();
+		
+		if(slot == 53)//나가기
+		{
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
+			if(slot == 45)//이전 목록
+				AltarEnterCardSettingGUI(player, 0, AltarName);
+			else if(slot == 48)//이전 페이지
+				AltarEnterCardListGUI(player, page-1, AltarName);
+			else if(slot == 50)//다음 페이지
+				AltarEnterCardListGUI(player, page+1, AltarName);
+			else
 			{
-				switch (event.getSlot())
-				{
-				case 45://이전 목록
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					AltarEnterCardSettingGUI(player, 0, AltarName);
-					return;
-				case 48://이전 페이지
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					AltarEnterCardListGUI(player, page-1, AltarName);
-					return;
-				case 50://다음 페이지
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					AltarEnterCardListGUI(player, page+1, AltarName);
-					return;
-				case 53://나가기
-					s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-					player.closeInventory();
-					return;
-				default:
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-					YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Altar/"+AltarName+".yml");
-					DungeonConfig.createSection("EnterCard."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-					DungeonConfig.saveConfig();
-					AltarEnterCardSettingGUI(player, page, AltarName);
-					return;
-				}
+			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Altar/"+AltarName+".yml");
+				DungeonConfig.createSection("EnterCard."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+				DungeonConfig.saveConfig();
+				AltarEnterCardSettingGUI(player, page, AltarName);
 			}
+		}
 	}
 	
 	public String getRandomCode()
@@ -2043,41 +1875,35 @@ public final class Dungeon_GUI extends Util_GUI
 	public void DungeonEXITClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 
-		if(event.getCurrentItem()!=null)
-			if(event.getCurrentItem().getType()!=Material.AIR)
+		int slot = event.getSlot();
+		player.closeInventory();
+		if(slot == 3)
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+		else if(slot == 5)
+		{
+			new GBD_RPG.Dungeon.Dungeon_Main().EraseAllDungeonKey(player, true);
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+			String DungeonName = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getDungeon_Enter();
+			long UTC = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getDungeon_UTC();
+			YamlManager PlayerConfig = YC.getNewConfig("Dungeon/Dungeon/"+DungeonName+"/Entered/"+UTC+".yml");
+			if(PlayerConfig.contains("EnteredAlter"))
 			{
-				switch (event.getSlot())
+				DungeonName = PlayerConfig.getString("EnteredAlter");
+				PlayerConfig = YC.getNewConfig("Dungeon/AltarList.yml");
+				if(PlayerConfig.contains(DungeonName))
 				{
-				case 3://던전 잔류
-					s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-					player.closeInventory();
-					return;
-				case 5://던전 퇴장
-					new GBD_RPG.Dungeon.Dungeon_Main().EraseAllDungeonKey(player, true);
-					s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-					player.closeInventory();
-				  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-					String DungeonName = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getDungeon_Enter();
-					long UTC = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getDungeon_UTC();
-					YamlManager PlayerConfig = YC.getNewConfig("Dungeon/Dungeon/"+DungeonName+"/Entered/"+UTC+".yml");
-					if(PlayerConfig.contains("EnteredAlter"))
-					{
-						DungeonName = PlayerConfig.getString("EnteredAlter");
-						PlayerConfig = YC.getNewConfig("Dungeon/AltarList.yml");
-						if(PlayerConfig.contains(DungeonName))
-						{
-							Location loc = new Location(Bukkit.getServer().getWorld(PlayerConfig.getString(DungeonName+".World")), PlayerConfig.getLong(DungeonName+".X"), PlayerConfig.getLong(DungeonName+".Y")+1, PlayerConfig.getLong(DungeonName+".Z"));
-							player.teleport(loc);
-							return;
-						}
-					}
-					new GBD_RPG.Util.Util_Player().teleportToCurrentArea(player, true);
+					Location loc = new Location(Bukkit.getServer().getWorld(PlayerConfig.getString(DungeonName+".World")), PlayerConfig.getLong(DungeonName+".X"), PlayerConfig.getLong(DungeonName+".Y")+1, PlayerConfig.getLong(DungeonName+".Z"));
+					player.teleport(loc);
 					return;
 				}
 			}
+			new GBD_RPG.Util.Util_Player().teleportToCurrentArea(player, true);
+			return;
+		}
 	}
 	
 	//DungeonGUI Close//

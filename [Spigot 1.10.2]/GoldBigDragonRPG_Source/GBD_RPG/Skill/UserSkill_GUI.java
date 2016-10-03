@@ -27,7 +27,8 @@ public class UserSkill_GUI extends Util_GUI
 		Inventory inv = null;
 		if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == false)
 		{
-			inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "직업군 선택 : " + (page+1));
+			String UniqueCode = "§0§0§b§0§3§r";
+			inv = Bukkit.createInventory(null, 54, UniqueCode + "§0직업군 선택 : " + (page+1));
 			Object[] a= PlayerSkillList.getConfigurationSection("MapleStory").getKeys(false).toArray();
 
 			byte loc=0;
@@ -47,7 +48,8 @@ public class UserSkill_GUI extends Util_GUI
 		}
 		else
 		{
-			inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "카테고리 선택 : " + (page+1));
+			String UniqueCode = "§0§0§b§0§4§r";
+			inv = Bukkit.createInventory(null, 54, UniqueCode + "§0카테고리 선택 : " + (page+1));
 			Object[] Categori= PlayerSkillList.getConfigurationSection("Mabinogi").getKeys(false).toArray();
 
 			byte loc=0;
@@ -78,9 +80,10 @@ public class UserSkill_GUI extends Util_GUI
 		YamlManager PlayerSkillList  = YC.getNewConfig("Skill/PlayerData/"+player.getUniqueId().toString()+".yml");
 		YamlManager AllSkillList  = YC.getNewConfig("Skill/SkillList.yml");
 		Inventory inv = null;
+		String UniqueCode = "§0§0§b§0§5§r";
 		if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == false)
 		{
-			inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "보유 스킬 목록 : " + (page+1));
+			inv = Bukkit.createInventory(null, 54, UniqueCode + "§0보유 스킬 목록 : " + (page+1));
 			Object[] a= PlayerSkillList.getConfigurationSection("MapleStory."+CategoriName+".Skill").getKeys(false).toArray();
 
 			byte loc=0;
@@ -148,7 +151,7 @@ public class UserSkill_GUI extends Util_GUI
 		}
 		else
 		{
-			inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "보유 스킬 목록 : " + (page+1));
+			inv = Bukkit.createInventory(null, 54, UniqueCode + "§0보유 스킬 목록 : " + (page+1));
 			Object[] a= PlayerSkillList.getConfigurationSection("Mabinogi."+CategoriName).getKeys(false).toArray();
 
 			byte loc=0;
@@ -219,7 +222,8 @@ public class UserSkill_GUI extends Util_GUI
 	
 	public void AddQuickBarGUI(Player player,boolean isMabinogi,  String CategoriName, String Skillname)
 	{
-		Inventory inv = Bukkit.createInventory(null, 18, ChatColor.BLACK + "퀵슬롯 등록");
+		String UniqueCode = "§0§0§b§0§6§r";
+		Inventory inv = Bukkit.createInventory(null, 18, UniqueCode + "§0퀵슬롯 등록");
 
 		for(byte count = 0;count < 9;count++)
 		{
@@ -239,234 +243,208 @@ public class UserSkill_GUI extends Util_GUI
 	public void MapleStory_MainSkillsListGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
 		
-		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
-		
-		switch (event.getSlot())
+		if(slot == 53)//나가기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			Stats_GUI SGUI = new Stats_GUI();
-			SGUI.StatusGUI(player);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			MainSkillsListGUI(player, (short) (page-1));
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			MainSkillsListGUI(player, (short) (page+1));
-			return;
-		default :
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			SkillListGUI(player, (short) 0, false, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-			return;
+			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+			if(slot == 45)//이전 목록
+				new Stats_GUI().StatusGUI(player);
+			else if(slot == 48)//이전 페이지
+				MainSkillsListGUI(player, (short) (page-1));
+			else if(slot == 50)//다음 페이지
+				MainSkillsListGUI(player, (short) (page+1));
+			else
+				SkillListGUI(player, (short) 0, false, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 		}
 	}
 	
 	public void Mabinogi_MainSkillsListGUIClick(InventoryClickEvent event)
 	{
+		int slot = event.getSlot();
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
-		switch (event.getSlot())
+		
+		if(slot == 53)//나가기
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			GBD_RPG.User.Stats_GUI SGUI = new GBD_RPG.User.Stats_GUI();
-			SGUI.StatusGUI(player);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			MainSkillsListGUI(player, (short) (page-1));
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			MainSkillsListGUI(player, (short) (page+1));
-			return;
-		default :
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			SkillListGUI(player, page, true, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-			return;
+			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+			if(slot == 45)//이전 목록
+				new Stats_GUI().StatusGUI(player);
+			else if(slot == 48)//이전 페이지
+				MainSkillsListGUI(player, (short) (page-1));
+			else if(slot == 50)//다음 페이지
+				MainSkillsListGUI(player, (short) (page+1));
+			else
+				SkillListGUI(player, page, true, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 		}
 	}
 	
 	
 	public void SkillListGUIClick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		boolean isMabinogi = Boolean.parseBoolean(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
-		String CategoriName = ChatColor.stripColor(event.getInventory().getItem(45).getItemMeta().getLore().get(1));
-		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+		int slot = event.getSlot();
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		
-		switch (event.getSlot())
+		if(slot == 53)
 		{
-		case 45://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			MainSkillsListGUI(player, (short) 0);
-			return;
-		case 53://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 48://이전 페이지
+		}
+		else
+		{
+			boolean isMabinogi = Boolean.parseBoolean(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
+			String CategoriName = ChatColor.stripColor(event.getInventory().getItem(45).getItemMeta().getLore().get(1));
+			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			SkillListGUI(player, (short) (page-1), isMabinogi, CategoriName);
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			SkillListGUI(player, (short) (page+1), isMabinogi, CategoriName);
-			return;
-		default :
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if(event.isLeftClick() == true && event.isShiftClick() == false)
-				AddQuickBarGUI(player, isMabinogi,CategoriName,ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-			else if(event.isLeftClick() == true && event.isShiftClick() == true)
+			if(slot == 45)//이전 목록
+				MainSkillsListGUI(player, (short) 0);
+			else if(slot == 48)//이전 페이지
+				SkillListGUI(player, (short) (page-1), isMabinogi, CategoriName);
+			else if(slot == 50)//다음 페이지
+				SkillListGUI(player, (short) (page+1), isMabinogi, CategoriName);
+			else
 			{
-				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				String SkillName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
-				YamlManager PlayerSkillList  = YC.getNewConfig("Skill/PlayerData/"+player.getUniqueId().toString()+".yml");
-				YamlManager AllSkillList  = YC.getNewConfig("Skill/SkillList.yml");
-				short SkillRank = 1;
-				short SkillMaxRank = (short) AllSkillList.getConfigurationSection(SkillName+".SkillRank").getKeys(false).size();
-				if(isMabinogi==false)
-					SkillRank= (short) PlayerSkillList.getInt("MapleStory."+CategoriName+".Skill."+SkillName);
-				else
-					SkillRank= (short) PlayerSkillList.getInt("Mabinogi."+CategoriName+"."+SkillName);
-				if(SkillRank<SkillMaxRank)
+				if(event.isLeftClick() == true && event.isShiftClick() == false)
+					AddQuickBarGUI(player, isMabinogi,CategoriName,ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+				else if(event.isLeftClick() == true && event.isShiftClick() == true)
 				{
-					if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level() < AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".NeedLevel"))
+					YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+					String SkillName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
+					YamlManager PlayerSkillList  = YC.getNewConfig("Skill/PlayerData/"+player.getUniqueId().toString()+".yml");
+					YamlManager AllSkillList  = YC.getNewConfig("Skill/SkillList.yml");
+					short SkillRank = 1;
+					short SkillMaxRank = (short) AllSkillList.getConfigurationSection(SkillName+".SkillRank").getKeys(false).size();
+					if(isMabinogi==false)
+						SkillRank= (short) PlayerSkillList.getInt("MapleStory."+CategoriName+".Skill."+SkillName);
+					else
+						SkillRank= (short) PlayerSkillList.getInt("Mabinogi."+CategoriName+"."+SkillName);
+					if(SkillRank<SkillMaxRank)
 					{
-						s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-						player.sendMessage(ChatColor.RED + "[스킬] : 레벨이 부족합니다!");
-						return;
-					}
-					else if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel() < AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".NeedRealLevel"))
-					{
-						s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-						player.sendMessage(ChatColor.RED + "[스킬] : 누적 레벨이 부족합니다!");
-						return;
-					}
-					else if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint() >= AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".SkillPoint"))
-					{
-						if(isMabinogi == false)
-							PlayerSkillList.set("MapleStory."+CategoriName+".Skill."+SkillName, SkillRank+1);
-						else
-							PlayerSkillList.set("Mabinogi."+CategoriName+"."+SkillName, SkillRank+1);
-						
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_SkillPoint(-1 * AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".SkillPoint"));
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MaxHP(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusHP"));
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_HP(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusHP"));
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MaxMP(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusMP"));
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MP(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusMP"));
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_Balance(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusBAL"));
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_Critical(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusCRI"));
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_STR(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusSTR"));
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_DEX(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusDEX"));
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_INT(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusINT"));
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_WILL(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusWILL"));
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_LUK(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusLUK"));
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_DEF(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusDEF"));
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_Protect(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusPRO"));
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_Magic_DEF(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusMDEF"));
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_Magic_Protect(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusMPRO"));
-						PlayerSkillList.saveConfig();
-						s.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 0.8F, 1.7F);
-
-						if(GBD_RPG.Main_Main.Main_ServerOption.MagicSpellsCatched == true)
+						if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level() < AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".NeedLevel"))
 						{
-							OtherPlugins.SpellMain MS = new OtherPlugins.SpellMain();
-							MS.setPlayerMaxAndNowMana(player);
+							s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							player.sendMessage(ChatColor.RED + "[스킬] : 레벨이 부족합니다!");
+							return;
 						}
-						Damageable p = player;
-						p.setMaxHealth(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxHP());
-						p.setHealth(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_HP());
-						
-						if(SkillRank!=SkillMaxRank-1)
-							player.sendMessage(ChatColor.GREEN + "[스킬] : "+ChatColor.YELLOW+SkillName+ChatColor.GREEN+" 스킬의 "+ChatColor.YELLOW+"랭크가 상승"+ChatColor.GREEN+"하였습니다!");
+						else if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel() < AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".NeedRealLevel"))
+						{
+							s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							player.sendMessage(ChatColor.RED + "[스킬] : 누적 레벨이 부족합니다!");
+							return;
+						}
+						else if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint() >= AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".SkillPoint"))
+						{
+							if(isMabinogi == false)
+								PlayerSkillList.set("MapleStory."+CategoriName+".Skill."+SkillName, SkillRank+1);
+							else
+								PlayerSkillList.set("Mabinogi."+CategoriName+"."+SkillName, SkillRank+1);
+							
+							GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_SkillPoint(-1 * AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".SkillPoint"));
+							GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MaxHP(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusHP"));
+							GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_HP(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusHP"));
+							GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MaxMP(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusMP"));
+							GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MP(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusMP"));
+							GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_Balance(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusBAL"));
+							GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_Critical(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusCRI"));
+							GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_STR(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusSTR"));
+							GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_DEX(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusDEX"));
+							GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_INT(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusINT"));
+							GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_WILL(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusWILL"));
+							GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_LUK(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusLUK"));
+							GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_DEF(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusDEF"));
+							GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_Protect(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusPRO"));
+							GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_Magic_DEF(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusMDEF"));
+							GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_Magic_Protect(AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".BonusMPRO"));
+							PlayerSkillList.saveConfig();
+							s.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 0.8F, 1.7F);
+
+							if(GBD_RPG.Main_Main.Main_ServerOption.MagicSpellsCatched == true)
+							{
+								OtherPlugins.SpellMain MS = new OtherPlugins.SpellMain();
+								MS.setPlayerMaxAndNowMana(player);
+							}
+							Damageable p = player;
+							p.setMaxHealth(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxHP());
+							p.setHealth(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_HP());
+							
+							if(SkillRank!=SkillMaxRank-1)
+								player.sendMessage(ChatColor.GREEN + "[스킬] : "+ChatColor.YELLOW+SkillName+ChatColor.GREEN+" 스킬의 "+ChatColor.YELLOW+"랭크가 상승"+ChatColor.GREEN+"하였습니다!");
+							else
+								player.sendMessage(ChatColor.DARK_PURPLE + "[스킬] : "+ChatColor.YELLOW+SkillName+ChatColor.DARK_PURPLE+" 스킬을 "+ChatColor.YELLOW+"마스터"+ChatColor.DARK_PURPLE+"하였습니다!");
+							
+							SkillListGUI(player, page, isMabinogi, CategoriName);
+						}
 						else
-							player.sendMessage(ChatColor.DARK_PURPLE + "[스킬] : "+ChatColor.YELLOW+SkillName+ChatColor.DARK_PURPLE+" 스킬을 "+ChatColor.YELLOW+"마스터"+ChatColor.DARK_PURPLE+"하였습니다!");
-						
-						SkillListGUI(player, page, isMabinogi, CategoriName);
+						{
+							s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							player.sendMessage(ChatColor.RED + "[스킬] : 스텟 포인트가 부족합니다!");
+						}
 					}
 					else
-					{
-						s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-						player.sendMessage(ChatColor.RED + "[스킬] : 스텟 포인트가 부족합니다!");
-					}
-				}
-				else
-				{
-					s.SP(player, Sound.BLOCK_ANVIL_LAND, 0.8F, 1.7F);
+						s.SP(player, Sound.BLOCK_ANVIL_LAND, 0.8F, 1.7F);
 				}
 			}
-			return;
 		}
 	}
 	
 	public void AddQuickBarGUIClick(InventoryClickEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-
-		boolean isMabinogi = Boolean.parseBoolean(ChatColor.stripColor(event.getInventory().getItem(9).getItemMeta().getLore().get(1)));
-		String Skillname = ChatColor.stripColor(event.getInventory().getItem(17).getItemMeta().getLore().get(1));
-		String CategoriName = ChatColor.stripColor(event.getInventory().getItem(17).getItemMeta().getLore().get(2));
+		int slot = event.getSlot();
 		
-		switch (event.getSlot())
+		if(slot == 17)//나가기
 		{
-		case 9://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			SkillListGUI(player, (short) 0, isMabinogi, CategoriName);
-			return;
-		case 17://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		default :
+		}
+		else
+		{
+			boolean isMabinogi = Boolean.parseBoolean(ChatColor.stripColor(event.getInventory().getItem(9).getItemMeta().getLore().get(1)));
+			String CategoriName = ChatColor.stripColor(event.getInventory().getItem(17).getItemMeta().getLore().get(2));
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if(player.getInventory().getItem(event.getSlot()) == null)
-			{
-				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				YamlManager Config = YC.getNewConfig("config.yml");
-				YamlManager PlayerSkillList  = YC.getNewConfig("Skill/PlayerData/"+player.getUniqueId().toString()+".yml");
-				YamlManager AllSkillList  = YC.getNewConfig("Skill/SkillList.yml");
-				int IconID = AllSkillList.getInt(Skillname+".ID");
-				byte IconDATA = (byte) AllSkillList.getInt(Skillname+".DATA");
-				byte IconAmount = (byte) AllSkillList.getInt(Skillname+".Amount");
-				String lore = ChatColor.WHITE + ""+CategoriName+"%enter%"+ChatColor.WHITE + ""+Skillname+"%enter%%enter%"+ChatColor.YELLOW + "[클릭시 퀵슬롯에서 삭제]%enter%";
-				String[] scriptA = lore.split("%enter%");
-				for(byte counter = 0; counter < scriptA.length; counter++)
-					scriptA[counter] =  scriptA[counter];
-				
-				
-				ItemStack Icon = new MaterialData(IconID, (byte) IconDATA).toItemStack(IconAmount);
-				ItemMeta Icon_Meta = Icon.getItemMeta();
-				Icon_Meta.setDisplayName(ChatColor.GREEN + "     [스킬 단축키]     ");
-				Icon_Meta.setLore(Arrays.asList(scriptA));
-				Icon.setItemMeta(Icon_Meta);
-				player.getInventory().setItem(event.getSlot(), Icon);
+			if(slot == 9)//이전 목록
 				SkillListGUI(player, (short) 0, isMabinogi, CategoriName);
-			}
 			else
 			{
-				AddQuickBarGUI(player, isMabinogi,CategoriName,Skillname);
+				String Skillname = ChatColor.stripColor(event.getInventory().getItem(17).getItemMeta().getLore().get(1));
+				if(player.getInventory().getItem(event.getSlot()) == null)
+				{
+					YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+					YamlManager AllSkillList  = YC.getNewConfig("Skill/SkillList.yml");
+					int IconID = AllSkillList.getInt(Skillname+".ID");
+					byte IconDATA = (byte) AllSkillList.getInt(Skillname+".DATA");
+					byte IconAmount = (byte) AllSkillList.getInt(Skillname+".Amount");
+					String lore = ChatColor.WHITE + ""+CategoriName+"%enter%"+ChatColor.WHITE + ""+Skillname+"%enter%%enter%"+ChatColor.YELLOW + "[클릭시 퀵슬롯에서 삭제]%enter%";
+					String[] scriptA = lore.split("%enter%");
+					for(byte counter = 0; counter < scriptA.length; counter++)
+						scriptA[counter] =  scriptA[counter];
+					
+					ItemStack Icon = new MaterialData(IconID, (byte) IconDATA).toItemStack(IconAmount);
+					ItemMeta Icon_Meta = Icon.getItemMeta();
+					Icon_Meta.setDisplayName(ChatColor.GREEN + "     [스킬 단축키]     ");
+					Icon_Meta.setLore(Arrays.asList(scriptA));
+					Icon.setItemMeta(Icon_Meta);
+					player.getInventory().setItem(event.getSlot(), Icon);
+					SkillListGUI(player, (short) 0, isMabinogi, CategoriName);
+				}
+				else
+					AddQuickBarGUI(player, isMabinogi,CategoriName,Skillname);
 			}
-			return;
 		}
 	}
 	

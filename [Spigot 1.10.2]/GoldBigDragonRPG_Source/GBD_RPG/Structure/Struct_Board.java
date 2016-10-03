@@ -22,7 +22,8 @@ public class Struct_Board extends Util_GUI
 	{
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager Board =YC.getNewConfig("Structure/"+BoardCode+".yml");
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.RED +""+ChatColor.BOLD +""+ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ "게시판 : "+(page+1));
+		String UniqueCode = "§0§0§d§0§5§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0게시판 : "+(page+1));
 		
 		if(Board.contains("Post_Number")==false)
 		{
@@ -132,7 +133,9 @@ public class Struct_Board extends Util_GUI
 	{
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager Board =YC.getNewConfig("Structure/"+BoardCode+".yml");
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.RED +""+ChatColor.BOLD +""+ChatColor.DARK_GREEN +""+ChatColor.BOLD +""+ "게시판 설정");
+
+		String UniqueCode = "§0§0§d§0§6§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0게시판 설정");
 		
 		if(Board.contains("Post_Number")==false)
 		{
@@ -177,56 +180,46 @@ public class Struct_Board extends Util_GUI
 	
 	public void BoardMainGUIClick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		byte page =  (byte) (Byte.parseByte(event.getInventory().getTitle().split(" : ")[1])-1);
-		
-		String Code = event.getInventory().getItem(0).getItemMeta().getLore().get(0);
+		int slot = event.getSlot();
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 
-		switch (event.getSlot())
+		byte page =  (byte) (Byte.parseByte(event.getInventory().getTitle().split(" : ")[1])-1);
+		String Code = event.getInventory().getItem(0).getItemMeta().getLore().get(0);
+		if(slot == 48 || slot == 50)
 		{
-		case 49://새 게시글
-			{
-				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				YamlManager Board =YC.getNewConfig("Structure/"+Code+".yml");
-				if(Board.getBoolean("OnlyUseOP")&&player.isOp()==false)
-				{
-					s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.RED+"[게시판] : 게시글 작성 권한이 없습니다!");
-					return;
-				}
-				UserData_Object u = new UserData_Object();
-				s.SP(player, Sound.BLOCK_CLOTH_STEP, 0.8F, 1.8F);
-				u.setTemp(player, "Structure");
-				u.setType(player, "Board");
-				u.setString(player, (byte)0, "Title");
-				u.setString(player, (byte)1, ChatColor.WHITE+"제목 없음");//게시글 제목
-				u.setString(player, (byte)2, ChatColor.WHITE+"내용 없음");//게시글 내용
-				u.setString(player, (byte)3, Code);//게시판 코드
-				player.closeInventory();
-				player.sendMessage(ChatColor.GREEN+"[게시판] : 게시글 제목을 입력 해 주세요.");
-			}
-			return;
-		case 48://이전 페이지
 			if(event.getCurrentItem().getTypeId()==323)
 			{
 				s.SP(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
-				BoardMainGUI(player, Code, (byte) (page-1));
+				if(slot == 48)//이전 페이지
+					BoardMainGUI(player, Code, (byte) (page-1));
+				else if(slot == 50)//다음 페이지
+					BoardMainGUI(player, Code, (byte) (page+1));
 			}
-			return;
-		case 50://다음 페이지
-			if(event.getCurrentItem().getTypeId()==323)
-			{
-				s.SP(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
-				BoardMainGUI(player, Code, (byte) (page+1));
-			}
-			return;
 		}
-		if((event.getSlot()>=10&&event.getSlot()<=16)||
-		   (event.getSlot()>=19&&event.getSlot()<=25)||
-		   (event.getSlot()>=28&&event.getSlot()<=34)||
-		   (event.getSlot()>=37&&event.getSlot()<=43))
+		else if(slot == 49)//새 게시글
+		{
+			YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+			YamlManager Board =YC.getNewConfig("Structure/"+Code+".yml");
+			if(Board.getBoolean("OnlyUseOP")&&player.isOp()==false)
+			{
+				s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				player.sendMessage(ChatColor.RED+"[게시판] : 게시글 작성 권한이 없습니다!");
+				return;
+			}
+			UserData_Object u = new UserData_Object();
+			s.SP(player, Sound.BLOCK_CLOTH_STEP, 0.8F, 1.8F);
+			u.setTemp(player, "Structure");
+			u.setType(player, "Board");
+			u.setString(player, (byte)0, "Title");
+			u.setString(player, (byte)1, ChatColor.WHITE+"제목 없음");//게시글 제목
+			u.setString(player, (byte)2, ChatColor.WHITE+"내용 없음");//게시글 내용
+			u.setString(player, (byte)3, Code);//게시판 코드
+			player.closeInventory();
+			player.sendMessage(ChatColor.GREEN+"[게시판] : 게시글 제목을 입력 해 주세요.");
+		}
+		else if((slot>=10&&slot<=16)||(slot>=19&&slot<=25)||
+				(slot>=28&&slot<=34)||(slot>=37&&slot<=43))
 		{
 			if(event.getCurrentItem().getTypeId()!=358)
 				return;
@@ -259,52 +252,51 @@ public class Struct_Board extends Util_GUI
 
 	public void BoardSettingGUIClick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		
-		String Code = event.getInventory().getItem(1).getItemMeta().getDisplayName();
-		
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		YamlManager Board =YC.getNewConfig("Structure/"+Code+".yml");
-		
-		switch (event.getSlot())
+		if(slot == 8)//나가기
 		{
-		case 0://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			new GBD_RPG.Structure.Structure_GUI().StructureListGUI(player, 0);
-			return;
-		case 8://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-
-		case 2://게시판 알림
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			UserData_Object u = new UserData_Object();
-			u.setTemp(player, "Structure");
-			u.setType(player, "Board");
-			u.setString(player, (byte)0, "Notice");
-			u.setString(player, (byte)1, Code);//게시판 코드
-			player.closeInventory();
-			player.sendMessage(ChatColor.GREEN+"[게시판] : 게시판 알림을 입력 해 주세요.");
-			return;
-		case 4://게시판 권한
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if(Board.getBoolean("OnlyUseOP"))
-				Board.set("OnlyUseOP", false);
-			else
-				Board.set("OnlyUseOP", true);
-			Board.saveConfig();
-			BoardSettingGUI(player, Code);
-			return;
-		case 6://게시판 비우기
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.5F);
-			Board.removeKey("User");
-			Board.set("Post_Number", 0);
-			Board.createSection("User");
-			Board.saveConfig();
-			return;
+			String Code = event.getInventory().getItem(1).getItemMeta().getDisplayName();
+			if(slot == 0)//이전 목록
+				new GBD_RPG.Structure.Structure_GUI().StructureListGUI(player, 0);
+			else if(slot == 2)//게시판 알림 설정
+			{
+				UserData_Object u = new UserData_Object();
+				u.setTemp(player, "Structure");
+				u.setType(player, "Board");
+				u.setString(player, (byte)0, "Notice");
+				u.setString(player, (byte)1, Code);//게시판 코드
+				player.closeInventory();
+				player.sendMessage(ChatColor.GREEN+"[게시판] : 게시판 알림을 입력 해 주세요.");
+			}
+			else if(slot == 4)//게시판 권한
+			{
+				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager Board =YC.getNewConfig("Structure/"+Code+".yml");
+				if(Board.getBoolean("OnlyUseOP"))
+					Board.set("OnlyUseOP", false);
+				else
+					Board.set("OnlyUseOP", true);
+				Board.saveConfig();
+				BoardSettingGUI(player, Code);
+			}
+			else if(slot == 6)//게시판 비우기
+			{
+				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager Board =YC.getNewConfig("Structure/"+Code+".yml");
+				Board.removeKey("User");
+				Board.set("Post_Number", 0);
+				Board.createSection("User");
+				Board.saveConfig();
+			}
 		}
 	}
 

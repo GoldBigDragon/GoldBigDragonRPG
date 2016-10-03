@@ -536,7 +536,7 @@ public class Monster_Kill
 							PlayerQuestList.removeKey("Started."+QuestName+".Hunt");
 							PlayerQuestList.saveConfig();
 							GBD_RPG.Quest.Quest_GUI QGUI = new GBD_RPG.Quest.Quest_GUI();
-							QGUI.QuestTypeRouter(player, QuestName);
+							QGUI.QuestRouter(player, QuestName);
 							//퀘스트 완료 메시지//
 							break;
 						}
@@ -606,7 +606,7 @@ public class Monster_Kill
 										PlayerQuestList.removeKey("Started."+QuestName+".Hunt");
 										PlayerQuestList.saveConfig();
 										GBD_RPG.Quest.Quest_GUI QGUI = new GBD_RPG.Quest.Quest_GUI();
-										QGUI.QuestTypeRouter(player, QuestName);
+										QGUI.QuestRouter(player, QuestName);
 										//퀘스트 완료 메시지//
 										break;
 									}

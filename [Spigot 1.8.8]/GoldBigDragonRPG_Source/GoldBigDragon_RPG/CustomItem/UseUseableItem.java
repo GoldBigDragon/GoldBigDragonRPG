@@ -57,7 +57,41 @@ public class UseUseableItem
 		}
 		else if(type.compareTo("주문서")==0)
 		{
-		  	YamlController YC = new YamlController(GoldBigDragon_RPG.Main.Main.plugin);
+			if(item.getItemMeta().getDisplayName().compareTo("§2§3§4§3§3§l[스텟 초기화 주문서]")==0)
+			{
+			  	YamlController YC = new YamlController(GoldBigDragon_RPG.Main.Main.plugin);
+				YamlManager Config = YC.getNewConfig("config.yml");
+				if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System")==false)
+				{
+					if(item.getAmount() != 1)
+					{
+						item.setAmount(item.getAmount()-1);
+						player.getInventory().setItem(player.getInventory().getHeldItemSlot(), item);
+					}
+					else
+						player.getInventory().setItem(player.getInventory().getHeldItemSlot(), new ItemStack(0));
+					int TotalStatPoint = Config.getInt("DefaultStat.StatPoint")+ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_StatPoint();
+					TotalStatPoint += ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR() - Config.getInt("DefaultStat.STR");
+					TotalStatPoint += ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX() - Config.getInt("DefaultStat.DEX");
+					TotalStatPoint += ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT() - Config.getInt("DefaultStat.INT");
+					TotalStatPoint += ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL() - Config.getInt("DefaultStat.WILL");
+					TotalStatPoint += ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK() - Config.getInt("DefaultStat.LUK");
+					ServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_STR(Config.getInt("DefaultStat.STR"));
+					ServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_DEX(Config.getInt("DefaultStat.DEX"));
+					ServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_INT(Config.getInt("DefaultStat.INT"));
+					ServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_WILL(Config.getInt("DefaultStat.WILL"));
+					ServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_LUK(Config.getInt("DefaultStat.LUK"));
+					ServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_StatPoint(TotalStatPoint);
+					sound.SP(player, Sound.ENDERDRAGON_GROWL, 1.2F, 0.5F);
+					player.sendMessage(ChatColor.YELLOW+""+ChatColor.BOLD+"[SYSTEM] : 스텟이 초기화되었습니다!");
+				}
+				else
+				{
+					sound.SP(player, Sound.ORB_PICKUP, 1.0F, 1.8F);
+					player.sendMessage(ChatColor.RED+"[System] : 메이플 스토리 시스템일 경우만 사용 가능합니다!");
+				}
+				return;
+			}
 			
 			int StatPoint = 0;
 			int SkillPoint = 0;

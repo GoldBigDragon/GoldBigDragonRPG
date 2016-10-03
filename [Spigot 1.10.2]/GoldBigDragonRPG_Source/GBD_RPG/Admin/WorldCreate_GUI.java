@@ -16,7 +16,8 @@ public class WorldCreate_GUI extends Util_GUI
 {
 	public void WorldCreateGUIMain(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.BLACK + "월드 선택");
+		String UniqueCode = "§0§0§1§1§b§r";
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0월드 선택");
 
 		Stack(ChatColor.WHITE + "" + ChatColor.BOLD + "일반 월드", 6,0,1,Arrays.asList(ChatColor.GRAY + "일반적인 월드를 생성합니다."), 2, inv);
 		Stack(ChatColor.WHITE + "" + ChatColor.BOLD + "완전한 평지", 2,0,1,Arrays.asList(ChatColor.GRAY + "완전한 평지를 가진 월드를 생성합니다."), 4, inv);
@@ -29,45 +30,36 @@ public class WorldCreate_GUI extends Util_GUI
 	
 	public void WorldCreateGUIClick(InventoryClickEvent event)
 	{
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
+		int slot = event.getSlot();
+		
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		UserData_Object u = new UserData_Object();
-		switch (event.getSlot())
+		
+		if(slot == 8)//나가기
 		{
-		case 0://이전 목록
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OPbox_GUI OPGUI = new OPbox_GUI();
-			OPGUI.OPBoxGUI_Main(player, (byte) 2);
-			return;
-		case 8://나가기
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
-		case 2 :
-			player.closeInventory();
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			u.setType(player, "WorldCreater");
-			u.setString(player, (byte)2, "WorldCreate");
-			u.setString(player, (byte)3, "NORMAL");
-			player.sendMessage(ChatColor.GOLD+"[월드 생성] : 새로운 월드 이름을 작성 해 주세요!");
-			break;
-		case 4 :
-			player.closeInventory();
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			u.setType(player, "WorldCreater");
-			u.setString(player, (byte)2, "WorldCreate");
-			u.setString(player, (byte)3, "FLAT");
-			player.sendMessage(ChatColor.GOLD+"[월드 생성] : 새로운 월드 이름을 작성 해 주세요!");
-			break;
-		case 6 :
-			player.closeInventory();
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			u.setType(player, "WorldCreater");
-			u.setString(player, (byte)2, "WorldCreate");
-			u.setString(player, (byte)3, "LARGE_BIOMES");
-			player.sendMessage(ChatColor.GOLD+"[월드 생성] : 새로운 월드 이름을 작성 해 주세요!");
-			break;
+			if(slot == 0)//이전 목록
+				new OPbox_GUI().OPBoxGUI_Main(player, (byte) 2);
+			else
+			{
+				UserData_Object u = new UserData_Object();
+				u.setType(player, "WorldCreater");
+				u.setString(player, (byte)2, "WorldCreate");
+				player.closeInventory();
+				if(slot == 2)//일반 월드 생성
+					u.setString(player, (byte)3, "NORMAL");
+				else if(slot == 4)//평지 월드 생성
+					u.setString(player, (byte)3, "FLAT");
+				else if(slot == 6)//넓은 바이옴 월드 생성
+					u.setString(player, (byte)3, "LARGE_BIOMES");
+				
+				player.sendMessage(ChatColor.GOLD+"[월드 생성] : 새로운 월드 이름을 작성 해 주세요!");
+			}
 		}
 	}
 }

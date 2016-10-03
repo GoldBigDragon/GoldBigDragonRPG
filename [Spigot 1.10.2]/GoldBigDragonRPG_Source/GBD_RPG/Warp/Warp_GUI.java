@@ -9,8 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
-import GBD_RPG.Admin.OPbox_GUI;
-import GBD_RPG.User.ETC_GUI;
 import GBD_RPG.User.UserData_Object;
 import GBD_RPG.Util.Util_GUI;
 import GBD_RPG.Util.YamlController;
@@ -22,7 +20,8 @@ public class Warp_GUI extends Util_GUI
 	{
 		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager TelePort  = YC.getNewConfig("Teleport/TeleportList.yml");
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "워프 목록 : " + (page+1));
+		String UniqueCode = "§0§0§c§0§0§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0워프 목록 : " + (page+1));
 
 		Object[] TelePortList= TelePort.getKeys().toArray();
 
@@ -119,68 +118,58 @@ public class Warp_GUI extends Util_GUI
 	
 	public void WarpListGUIInventoryclick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 		Player player = (Player) event.getWhoClicked();
-		event.setCancelled(true);
-		switch (event.getSlot())
+		int slot = event.getSlot();
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		if(slot == 53)//닫기
 		{
-		case 45:
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.0F);
+			player.closeInventory();
+		}
+		else
+		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			if(player.isOp() == true)
-				new GBD_RPG.Admin.OPbox_GUI().OPBoxGUI_Main(player, (byte) 2);
-			else
-				new GBD_RPG.User.ETC_GUI().ETCGUI_Main(player);
-			return;
-		case 48://이전 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			WarpListGUI(player, page-1);
-			return;
-		case 49://워프 생성
+			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+			if(slot == 45)
 			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				if(player.isOp())
+					new GBD_RPG.Admin.OPbox_GUI().OPBoxGUI_Main(player, (byte) 2);
+				else
+					new GBD_RPG.User.ETC_GUI().ETCGUI_Main(player);
+			}
+			else if(slot == 48)//이전 페이지
+				WarpListGUI(player, page-1);
+			else if(slot == 50)//다음 페이지
+				WarpListGUI(player, page+1);
+			else if(slot == 49)//워프 생성
+			{
 				player.closeInventory();
 				player.sendMessage(ChatColor.DARK_AQUA+"[워프] : 새 워프지점 이름을 적어 주세요!");
 				UserData_Object u = new UserData_Object();
 				u.setType(player, "Teleport");
 				u.setString(player, (byte)1, "NW");
 			}
-			return;
-		case 50://다음 페이지
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			WarpListGUI(player, page+1);
-			return;
-		case 54:
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.0F);
-			player.closeInventory();
-			return;
-		default:
-			if(event.getCurrentItem().getTypeId()==2)
-			{
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				new GBD_RPG.Warp.Warp_Main().TeleportUser(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-			}
 			else
 			{
-				if(event.isShiftClick()==false&&event.isLeftClick())
-				{
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				if(event.getCurrentItem().getTypeId()==2)
 					new GBD_RPG.Warp.Warp_Main().TeleportUser(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-				}
-				else if(event.isShiftClick()&&event.isLeftClick()&&player.isOp())
+				else
 				{
-					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-					new GBD_RPG.Warp.Warp_Main().setTeleportPermission(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-					WarpListGUI(player, page);
-				}
-				else if(event.isShiftClick()&&event.isRightClick()&&player.isOp())
-				{
-					s.SP(player, Sound.BLOCK_LAVA_POP, 1.0F, 1.0F);
-					new GBD_RPG.Warp.Warp_Main().RemoveTeleportList(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-					WarpListGUI(player, page);
+					if(event.isShiftClick()==false&&event.isLeftClick())
+						new GBD_RPG.Warp.Warp_Main().TeleportUser(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+					else if(event.isShiftClick()&&event.isLeftClick()&&player.isOp())
+					{
+						new GBD_RPG.Warp.Warp_Main().setTeleportPermission(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+						WarpListGUI(player, page);
+					}
+					else if(event.isShiftClick()&&event.isRightClick()&&player.isOp())
+					{
+						s.SP(player, Sound.BLOCK_LAVA_POP, 1.0F, 1.0F);
+						new GBD_RPG.Warp.Warp_Main().RemoveTeleportList(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+						WarpListGUI(player, page);
+					}
 				}
 			}
-			return;
 		}
 	}
 }

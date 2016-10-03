@@ -24,7 +24,8 @@ public class Equip_GUI extends Util_GUI
 {
 	public void EquipWatchGUI(Player player, Player target)
 	{
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "장비 구경");
+		String UniqueCode = "§0§0§0§0§6§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0장비 구경");
 	  	if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(target.getUniqueId().toString()).isOption_EquipLook())
 	  	{
 			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 0, inv);
@@ -132,7 +133,8 @@ public class Equip_GUI extends Util_GUI
 	
 	public void ExChangeGUI(Player player, Player target, ItemStack[] SideItems, boolean MyReady,boolean TargetReady)
 	{
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "교환");
+		String UniqueCode = "§0§0§0§0§7§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0교환");
 
 		for(byte count = 0; count < 5; count++)
 			Stack(ChatColor.GRAY +""+ChatColor.BOLD+ "[   칸막이   ]", 160,15,1,null, 4+(count*9), inv);
@@ -204,21 +206,20 @@ public class Equip_GUI extends Util_GUI
 		player.openInventory(inv);
 	}
 	
-	public void optionInventoryclick(InventoryClickEvent event)
+	
+	
+	
+	public void EquipSeeInventoryclick(InventoryClickEvent event)
 	{
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		Player target = (Player) Bukkit.getServer().getPlayer(ChatColor.stripColor(event.getInventory().getItem(16).getItemMeta().getLore().get(3)));
 
-		switch(event.getSlot())
-		{
-		case 15:
+		int slot = event.getSlot();
+		
+		if(slot == 15)
 			AddExchangeTarget(player, target);
-			break;
-		case 16:
+		else if(slot == 16)
 			SetFriends(player, target);
-			break;
-		}
 	}
 
 	public void ExchangeInventoryclick(InventoryClickEvent event)
@@ -227,7 +228,6 @@ public class Equip_GUI extends Util_GUI
 		Player target = Bukkit.getServer().getPlayer(ChatColor.stripColor(event.getInventory().getItem(8).getItemMeta().getDisplayName()));
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 
-		event.setCancelled(true);
 		if((event.getAction() == InventoryAction.PICKUP_ALL||
 		event.getAction() == InventoryAction.PICKUP_HALF||
 		event.getAction() == InventoryAction.PICKUP_ONE||
@@ -597,7 +597,7 @@ public class Equip_GUI extends Util_GUI
 	}
 	
 	
-	public void InventoryClose_ExchangeGUI(InventoryCloseEvent event)
+	public void ExchangeGUI_Close(InventoryCloseEvent event)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		if(event.getInventory().getItem(0).getTypeId() == 138)

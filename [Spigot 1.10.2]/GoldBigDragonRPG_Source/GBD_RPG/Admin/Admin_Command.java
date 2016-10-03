@@ -1,11 +1,16 @@
 package GBD_RPG.Admin;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.MaterialData;
 
 import GBD_RPG.Main_Main.Main_ServerOption;
 import GBD_RPG.User.UserData_Object;
@@ -110,6 +115,30 @@ public class Admin_Command
 			    	}
 			    }
 			    player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 반경 "+args[0]+"블록 이내에 있던 "+amount+"마리의 엔티티를 강제 철거하였습니다!");
+			}
+			else if(string.compareTo("스텟초기화권")==0)
+			{
+				ItemStack Icon = new MaterialData(340, (byte) 0).toItemStack(1);
+				ItemMeta Icon_Meta = Icon.getItemMeta();
+				Icon_Meta.setDisplayName("§2§3§4§3§3§l[스텟 초기화 주문서]");
+				Icon_Meta.setLore(Arrays.asList("§a[주문서]",""));
+				Icon.setItemMeta(Icon_Meta);
+				if(args.length==1)
+				{
+	  				if(Bukkit.getServer().getPlayer(args[0]) != null)
+	  				{
+	  					Player target = Bukkit.getServer().getPlayer(args[0]);
+		  				if(target.isOnline())
+		  					new GBD_RPG.Util.Util_Player().giveItemForce(target, Icon);
+		  				else
+		  				{
+		  					player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 플레이어는 접속중이 아닙니다!");
+		  					s.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+		  				}
+	  				}
+				}
+				else
+  					new GBD_RPG.Util.Util_Player().giveItemForce(player, Icon);
 			}
 		}
 		else

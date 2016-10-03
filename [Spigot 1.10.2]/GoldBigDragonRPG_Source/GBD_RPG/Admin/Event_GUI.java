@@ -21,8 +21,11 @@ public class Event_GUI extends Util_GUI
 	public void EventGUI_Main (Player player)
 	{
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+	  	
 		YamlManager Config =YC.getNewConfig("config.yml");
-		Inventory inv = Bukkit.createInventory(null, 45, ChatColor.BLACK + "이벤트 진행");
+		String UniqueCode = "§0§0§1§0§9§r";
+		
+		Inventory inv = Bukkit.createInventory(null, 45, UniqueCode + "§0이벤트 진행");
 		
 		if(Config.getInt("Event.Multiple_Level_Up_SkillPoint") == 1)
 		{Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "스킬 포인트 추가 획득", 340,0,1,Arrays.asList(ChatColor.RED + "[비 활성화]",ChatColor.GRAY + "레벨 업당 얻는 스킬 포인트 : " + Config.getInt("Server.Level_Up_SkillPoint")), 10, inv);}
@@ -62,9 +65,10 @@ public class Event_GUI extends Util_GUI
 
 	public void AllPlayerGiveEventGUI(Player player, boolean All)
 	{
-		Inventory inv = Bukkit.createInventory(null, 45, ChatColor.BLACK + "이벤트 전체 지급");
+		String UniqueCode = "§1§0§1§0§a§r";
+		Inventory inv = Bukkit.createInventory(null, 45, UniqueCode + "§0이벤트 전체 지급");
 		if(All==false)
-			inv = Bukkit.createInventory(null, 45, ChatColor.BLACK + "이벤트 랜덤 지급");
+			inv = Bukkit.createInventory(null, 45, "§1§0§1§0§b§r" + "§0이벤트 랜덤 지급");
 		for(byte count = 0; count <10;count++)
 			Stack2(ChatColor.YELLOW+"[ 지급 할 아이템 ]", 160, 4, 1, null, count, inv);
 		Stack2(ChatColor.YELLOW+"[ 지급 할 아이템 ]", 160, 4, 1, null, 17, inv);
@@ -86,208 +90,175 @@ public class Event_GUI extends Util_GUI
 	}
 	
 	
-	
-	
 	//각종 GUI창 속의 아이콘을 눌렸을 때, 해당 아이콘에 기능을 넣는 메소드1   -스텟 GUI, 오피박스, 커스텀 몬스터GUI-//
 	public void EventGUIInventoryclick(InventoryClickEvent event)
 	{
-		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		switch (event.getSlot())
+		int slot = event.getSlot();
+		
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		
+		if(slot == 44)//닫기
 		{
-		case 28://전체 주기
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			AllPlayerGiveEventGUI(player,true);
-			return;
-		case 30://랜덤 주기
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			AllPlayerGiveEventGUI(player,false);
-			return;
-		case 10:
-			{
-				UserData_Object u = new UserData_Object();
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.GREEN+"[이벤트] : 스킬 포인트 상승량을 몇 배로 하실래요?");
-				player.sendMessage(ChatColor.YELLOW+"(1 ~ 10) (1일 경우 이벤트 종료)");
-				u.setType(player, "Event");
-				u.setString(player, (byte)1, "SKP");
-			}
-			return;
-		case 11:
-			{
-				UserData_Object u = new UserData_Object();
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.GREEN+"[이벤트] : 스텟 포인트 상승량을 몇 배로 하실래요?");
-				player.sendMessage(ChatColor.YELLOW+"(1 ~ 10) (1일 경우 이벤트 종료)");
-				u.setType(player, "Event");
-				u.setString(player, (byte)1, "STP");
-			}
-			return;
-		case 12:
-			{
-				UserData_Object u = new UserData_Object();
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.GREEN+"[이벤트] : 경험치 상승량을 몇 배로 하실래요?");
-				player.sendMessage(ChatColor.YELLOW+"(1 ~ 10) (1일 경우 이벤트 종료)");
-				u.setType(player, "Event");
-				u.setString(player, (byte)1, "EXP");
-			}
-			return;
-		case 13:
-			{
-				UserData_Object u = new UserData_Object();
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.closeInventory();
-				player.sendMessage(ChatColor.GREEN+"[이벤트] : 경험치 상승량을 몇 배로 하실래요?");
-				player.sendMessage(ChatColor.YELLOW+"(1 ~ 10) (1일 경우 이벤트 종료)");
-				u.setType(player, "Event");
-				u.setString(player, (byte)1, "DROP");
-			}
-			return;
-		case 14:
-		{
-			UserData_Object u = new UserData_Object();
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			player.closeInventory();
-			player.sendMessage(ChatColor.GREEN+"[이벤트] : 숙련도 상승량을 몇 배로 하실래요?");
-			player.sendMessage(ChatColor.YELLOW+"(1 ~ 10) (1일 경우 이벤트 종료)");
-			u.setType(player, "Event");
-			u.setString(player, (byte)1, "Proficiency");
-		}
-		return;
-		case 36:
-			OPbox_GUI OGUI = new OPbox_GUI();
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			OGUI.OPBoxGUI_Main(player,(byte) 1);
-			return;
-		case 44:
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			return;
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 36)//이전 목록
+				new OPbox_GUI().OPBoxGUI_Main(player,(byte) 1);
+			else if(slot == 28)//전체 주기
+				AllPlayerGiveEventGUI(player,true);
+			else if(slot == 30)//랜덤 주기
+				AllPlayerGiveEventGUI(player,true);
+			else if(slot == 30)//랜덤 주기
+				AllPlayerGiveEventGUI(player,false);
+			else
+			{
+				UserData_Object u = new UserData_Object();
+				if(slot == 10)
+				{
+					player.sendMessage(ChatColor.GREEN+"[이벤트] : 스킬 포인트 상승량을 몇 배로 하실래요?");
+					u.setString(player, (byte)1, "SKP");
+				}
+				else if(slot == 11)
+				{
+					player.sendMessage(ChatColor.GREEN+"[이벤트] : 스텟 포인트 상승량을 몇 배로 하실래요?");
+					u.setString(player, (byte)1, "STP");
+				}
+				else if(slot == 12)
+				{
+					player.sendMessage(ChatColor.GREEN+"[이벤트] : 경험치 상승량을 몇 배로 하실래요?");
+					u.setString(player, (byte)1, "EXP");
+				}
+				else if(slot == 13)
+				{
+					player.sendMessage(ChatColor.GREEN+"[이벤트] : 드롭률 상승량을 몇 배로 하실래요?");
+					u.setString(player, (byte)1, "DROP");
+				}
+				else if(slot == 14)
+				{
+					player.sendMessage(ChatColor.GREEN+"[이벤트] : 숙련도 상승량을 몇 배로 하실래요?");
+					u.setString(player, (byte)1, "Proficiency");
+				}
+				player.sendMessage(ChatColor.YELLOW+"(1 ~ 10) (1일 경우 이벤트 종료)");
+				u.setType(player, "Event");
+				player.closeInventory();
+			}
 		}
 		return;
 	}
 
-	public void AllPlayerGiveEventGUIclick(InventoryClickEvent event)
+	public void AllPlayerGiveEventGUIclick(InventoryClickEvent event, String SubjectCode)
 	{
+		int slot = event.getSlot();
+		Player player = (Player) event.getWhoClicked();
+
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 
-		Player player = (Player) event.getWhoClicked();
-		if(event.getSlot()>=0&&event.getSlot()<=9)
-			event.setCancelled(true);
-		if(event.getSlot()>=27&&event.getSlot()<=35)
-			event.setCancelled(true);
-		if(event.getSlot()>=35)
-			event.setCancelled(true);
-		switch (event.getSlot())
+		if(event.getClickedInventory().getTitle().compareTo("container.inventory") != 0)
 		{
-		case 17:
-		case 18:
-		case 26:
-			event.setCancelled(true);
-			break;
-		case 36:
-			event.setCancelled(true);
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			EventGUI_Main(player);
-			return;
-		case 40://지급 시작
-			event.setCancelled(true);
-			GBD_RPG.Main_Event.Main_Interact IT = new GBD_RPG.Main_Event.Main_Interact();
-			if(event.getInventory().getTitle().contains("랜덤"))
+			if((slot >=0 && slot <= 9)||slot == 17||slot == 18||slot >= 26)
+				event.setCancelled(true);
+			if(slot == 36)//이전 화면
 			{
-				boolean ItemExit = false;
-  		    	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
-  		    	Player[] a = new Player[playerlist.size()];
-  		    	playerlist.toArray(a);
-  		    	short LuckyGuy = (short) new GBD_RPG.Util.Util_Number().RandomNum(0, a.length-1);
-				for(byte count = 10; count < 17;count++)
+				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				EventGUI_Main(player);
+			}
+			else if(slot == 40)//지급 시작
+			{
+				GBD_RPG.Main_Event.Main_Interact IT = new GBD_RPG.Main_Event.Main_Interact();
+				if(SubjectCode.compareTo("0b")==0)//랜덤 지급
 				{
-					if(event.getInventory().getItem(count) != null)
+					boolean ItemExit = false;
+	  		    	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
+	  		    	Player[] a = new Player[playerlist.size()];
+	  		    	playerlist.toArray(a);
+	  		    	short LuckyGuy = (short) new GBD_RPG.Util.Util_Number().RandomNum(0, a.length-1);
+					for(byte count = 10; count < 17;count++)
 					{
-						ItemExit = true;
-						ItemStack item = event.getInventory().getItem(count);
-						new GBD_RPG.Util.Util_Player().giveItemForce(a[LuckyGuy], item);
+						if(event.getInventory().getItem(count) != null)
+						{
+							ItemExit = true;
+							ItemStack item = event.getInventory().getItem(count);
+							new GBD_RPG.Util.Util_Player().giveItemForce(a[LuckyGuy], item);
+						}
+					}
+					for(byte count = 19; count < 26;count++)
+					{
+						if(event.getInventory().getItem(count) != null)
+						{
+							ItemExit = true;
+							ItemStack item = event.getInventory().getItem(count);
+							new GBD_RPG.Util.Util_Player().giveItemForce(a[LuckyGuy], item);
+						}
+					}
+					if(ItemExit)
+					{
+						s.SP(a[LuckyGuy], Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.9F);
+						Bukkit.broadcastMessage(ChatColor.YELLOW+"[이벤트] : "+ChatColor.GOLD+""+ChatColor.BOLD+a[LuckyGuy].getName()+ChatColor.YELLOW+"님께서 랜덤 아이템 지급에 당첨 되셨습니다!");
+						EventGUI_Main(player);
 					}
 				}
-				for(byte count = 19; count < 26;count++)
+				else
 				{
-					if(event.getInventory().getItem(count) != null)
+					boolean ItemExit = false;
+					for(byte count = 10; count < 17;count++)
 					{
-						ItemExit = true;
-						ItemStack item = event.getInventory().getItem(count);
-						new GBD_RPG.Util.Util_Player().giveItemForce(a[LuckyGuy], item);
+						if(event.getInventory().getItem(count) != null)
+						{
+							ItemExit = true;
+							ItemStack item = event.getInventory().getItem(count);
+			  		    	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
+			  		    	Player[] a = new Player[playerlist.size()];
+			  		    	playerlist.toArray(a);
+			  	  			for(short counter = 0; counter<a.length;counter++)
+			  	  			{
+								new GBD_RPG.Util.Util_Player().giveItemForce(a[counter], item);
+			  	  				if(item.hasItemMeta())
+			  	  				{
+			  	  					if(item.getItemMeta().hasDisplayName())
+			  	  						a[counter].sendMessage(ChatColor.YELLOW+"[이벤트] : "+item.getItemMeta().getDisplayName()+ChatColor.YELLOW+" 아이템을 "+item.getAmount()+"개 지급 받았습니다!");
+			  	  				}
+			  	  				else
+		  	  						a[counter].sendMessage(ChatColor.YELLOW+"[이벤트] : "+IT.SetItemDefaultName((short) item.getTypeId(), item.getData().getData())+ChatColor.YELLOW+" 아이템을 "+item.getAmount()+"개 지급 받았습니다!");
+			  	  				s.SP(a[counter], Sound.ENTITY_ITEM_PICKUP, 0.7F, 1.8F);
+			  	  			}
+						}
 					}
-				}
-				if(ItemExit)
-				{
-					s.SP(a[LuckyGuy], Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.9F);
-					Bukkit.broadcastMessage(ChatColor.YELLOW+"[이벤트] : "+ChatColor.GOLD+""+ChatColor.BOLD+a[LuckyGuy].getName()+ChatColor.YELLOW+"님께서 랜덤 아이템 지급에 당첨 되셨습니다!");
-					EventGUI_Main(player);
+					for(byte count = 19; count < 26;count++)
+					{
+						if(event.getInventory().getItem(count) != null)
+						{
+							ItemExit = true;
+							ItemStack item = event.getInventory().getItem(count);
+			  		    	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
+			  		    	Player[] a = new Player[playerlist.size()];
+			  		    	playerlist.toArray(a);
+			  	  			for(short counter = 0; counter<a.length;counter++)
+			  	  			{
+								new GBD_RPG.Util.Util_Player().giveItemForce(a[counter], item);
+			  	  				if(item.hasItemMeta())
+			  	  				{
+			  	  					if(item.getItemMeta().hasDisplayName())
+			  	  						a[counter].sendMessage(ChatColor.YELLOW+"[이벤트] : "+item.getItemMeta().getDisplayName()+ChatColor.YELLOW+" 아이템을 "+item.getAmount()+"개 지급 받았습니다!");
+			  	  				}
+			  	  				else
+		  	  						a[counter].sendMessage(ChatColor.YELLOW+"[이벤트] : "+IT.SetItemDefaultName((short) item.getTypeId(), item.getData().getData())+ChatColor.YELLOW+" 아이템을 "+item.getAmount()+"개 지급 받았습니다!");
+			  	  				s.SP(a[counter], Sound.ENTITY_ITEM_PICKUP, 0.7F, 1.8F);	
+			  	  			}
+						}
+					}
+					if(ItemExit)
+						EventGUI_Main(player);
 				}
 			}
-			else
+			else if(slot == 44)//나가기
 			{
-				boolean ItemExit = false;
-				for(byte count = 10; count < 17;count++)
-				{
-					if(event.getInventory().getItem(count) != null)
-					{
-						ItemExit = true;
-						ItemStack item = event.getInventory().getItem(count);
-		  		    	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
-		  		    	Player[] a = new Player[playerlist.size()];
-		  		    	playerlist.toArray(a);
-		  	  			for(short counter = 0; counter<a.length;counter++)
-		  	  			{
-							new GBD_RPG.Util.Util_Player().giveItemForce(a[counter], item);
-		  	  				if(item.hasItemMeta())
-		  	  				{
-		  	  					if(item.getItemMeta().hasDisplayName())
-		  	  						a[counter].sendMessage(ChatColor.YELLOW+"[이벤트] : "+item.getItemMeta().getDisplayName()+ChatColor.YELLOW+" 아이템을 "+item.getAmount()+"개 지급 받았습니다!");
-		  	  				}
-		  	  				else
-	  	  						a[counter].sendMessage(ChatColor.YELLOW+"[이벤트] : "+IT.SetItemDefaultName((short) item.getTypeId(), item.getData().getData())+ChatColor.YELLOW+" 아이템을 "+item.getAmount()+"개 지급 받았습니다!");
-		  	  				s.SP(a[counter], Sound.ENTITY_ITEM_PICKUP, 0.7F, 1.8F);
-		  	  			}
-					}
-				}
-				for(byte count = 19; count < 26;count++)
-				{
-					if(event.getInventory().getItem(count) != null)
-					{
-						ItemExit = true;
-						ItemStack item = event.getInventory().getItem(count);
-		  		    	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
-		  		    	Player[] a = new Player[playerlist.size()];
-		  		    	playerlist.toArray(a);
-		  	  			for(short counter = 0; counter<a.length;counter++)
-		  	  			{
-							new GBD_RPG.Util.Util_Player().giveItemForce(a[counter], item);
-		  	  				if(item.hasItemMeta())
-		  	  				{
-		  	  					if(item.getItemMeta().hasDisplayName())
-		  	  						a[counter].sendMessage(ChatColor.YELLOW+"[이벤트] : "+item.getItemMeta().getDisplayName()+ChatColor.YELLOW+" 아이템을 "+item.getAmount()+"개 지급 받았습니다!");
-		  	  				}
-		  	  				else
-	  	  						a[counter].sendMessage(ChatColor.YELLOW+"[이벤트] : "+IT.SetItemDefaultName((short) item.getTypeId(), item.getData().getData())+ChatColor.YELLOW+" 아이템을 "+item.getAmount()+"개 지급 받았습니다!");
-		  	  				s.SP(a[counter], Sound.ENTITY_ITEM_PICKUP, 0.7F, 1.8F);	
-		  	  			}
-					}
-				}
-				if(ItemExit)
-					EventGUI_Main(player);
+				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				player.closeInventory();
 			}
-			return;
-		case 44:
-			event.setCancelled(true);
-			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.closeInventory();
-			return;
 		}
 	}
 }

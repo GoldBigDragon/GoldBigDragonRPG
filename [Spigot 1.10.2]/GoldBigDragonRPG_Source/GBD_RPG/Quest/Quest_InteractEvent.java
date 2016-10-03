@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
 
 import GBD_RPG.User.UserData_Object;
 import GBD_RPG.Util.YamlController;
@@ -63,14 +62,14 @@ public class Quest_InteractEvent
     		    	player.sendMessage(ChatColor.GREEN + "[SYSTEM] : NPC가 유저에게 받을 물건을 설정하세요!");
     		    	player.closeInventory();
     		    	u.setBoolean(player, (byte)1, true);
-    	    		QGUI.GetItemGUI(player, u.getString(player,(byte)3));
+    	    		QGUI.GetterItemSetingGUI(player, u.getString(player,(byte)3));
     			}
     			else if(u.getString(player,(byte)1).compareTo("Present")==0)
     			{
     		    	player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 보상으로 줄 물건을 설정하세요!");
     		    	player.closeInventory();
     		    	u.setBoolean(player, (byte)1, true);
-    	    		QGUI.GetPresentGUI(player, u.getString(player,(byte)3));
+    	    		QGUI.PresentItemSettingGUI(player, u.getString(player,(byte)3));
     			}
 				u.setString(player, (byte)1, target.getUniqueId().toString());
         		return;

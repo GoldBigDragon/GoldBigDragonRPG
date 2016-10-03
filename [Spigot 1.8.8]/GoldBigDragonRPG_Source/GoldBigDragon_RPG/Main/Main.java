@@ -1,5 +1,6 @@
 package GoldBigDragon_RPG.Main;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -51,6 +53,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.server.MapInitializeEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import GoldBigDragon_RPG.Party.PartyDataManager;
@@ -261,28 +265,8 @@ public class Main extends JavaPlugin implements Listener
 	@EventHandler
 	private void PlayerChatting(PlayerChatEvent event)
 	{
-		if(event.getMessage().contains("&") == true)
-		{
-			event.setMessage(event.getMessage().replaceAll("&l", ChatColor.BOLD+""));
-			event.setMessage(event.getMessage().replaceAll("&0", ChatColor.BLACK+""));
-			event.setMessage(event.getMessage().replaceAll("&1", ChatColor.DARK_BLUE+""));
-			event.setMessage(event.getMessage().replaceAll("&2", ChatColor.DARK_GREEN+""));
-			event.setMessage(event.getMessage().replaceAll("&3", ChatColor.DARK_AQUA+""));
-			event.setMessage(event.getMessage().replaceAll("&4", ChatColor.DARK_RED+""));
-			event.setMessage(event.getMessage().replaceAll("&5", ChatColor.DARK_PURPLE+""));
-			event.setMessage(event.getMessage().replaceAll("&6", ChatColor.GOLD+""));
-			event.setMessage(event.getMessage().replaceAll("&7", ChatColor.GRAY+""));
-			event.setMessage(event.getMessage().replaceAll("&8", ChatColor.DARK_GRAY+""));
-			event.setMessage(event.getMessage().replaceAll("&9", ChatColor.BLUE+""));
-			event.setMessage(event.getMessage().replaceAll("&a", ChatColor.GREEN+""));
-			event.setMessage(event.getMessage().replaceAll("&b", ChatColor.AQUA+""));
-			event.setMessage(event.getMessage().replaceAll("&c", ChatColor.RED+""));
-			event.setMessage(event.getMessage().replaceAll("&d", ChatColor.LIGHT_PURPLE+""));
-			event.setMessage(event.getMessage().replaceAll("&e", ChatColor.YELLOW+""));
-			event.setMessage(event.getMessage().replaceAll("&f", ChatColor.WHITE+""));
-		}
-		GoldBigDragon_RPG.Event.PlayerAction PA = new GoldBigDragon_RPG.Event.PlayerAction();
-		PA.PlayerChatting(event);
+		event.setMessage(ChatColor.translateAlternateColorCodes('&', event.getMessage()));
+		new GoldBigDragon_RPG.Event.PlayerAction().PlayerChatting(event);
 		return;
 	}
 
@@ -716,28 +700,7 @@ public class Main extends JavaPlugin implements Listener
 		new GoldBigDragon_RPG.Main.ServerOption().MagicSpellCatch();
 		new GoldBigDragon_RPG.Main.ServerOption().CitizensCatch();
 		for(byte count = 0; count <args.length; count++)
-		{
-			if(args[count].contains("&"))
-			{
-				args[count]=args[count].replaceAll("&l", ChatColor.BOLD+"");
-				args[count]=args[count].replaceAll("&0", ChatColor.BLACK+"");
-				args[count]=args[count].replaceAll("&1", ChatColor.DARK_BLUE+"");
-				args[count]=args[count].replaceAll("&2", ChatColor.DARK_GREEN+"");
-				args[count]=args[count].replaceAll("&3", ChatColor.DARK_AQUA+"");
-				args[count]=args[count].replaceAll("&4", ChatColor.DARK_RED+"");
-				args[count]=args[count].replaceAll("&5", ChatColor.DARK_PURPLE+"");
-				args[count]=args[count].replaceAll("&6", ChatColor.GOLD+"");
-				args[count]=args[count].replaceAll("&7", ChatColor.GRAY+"");
-				args[count]=args[count].replaceAll("&8", ChatColor.DARK_GRAY+"");
-				args[count]=args[count].replaceAll("&9", ChatColor.BLUE+"");
-				args[count]=args[count].replaceAll("&a", ChatColor.GREEN+"");
-				args[count]=args[count].replaceAll("&b", ChatColor.AQUA+"");
-				args[count]=args[count].replaceAll("&c", ChatColor.RED+"");
-				args[count]=args[count].replaceAll("&d", ChatColor.LIGHT_PURPLE+"");
-				args[count]=args[count].replaceAll("&e", ChatColor.YELLOW+"");
-				args[count]=args[count].replaceAll("&f", ChatColor.WHITE+"");
-			}
-		}
+			args[count] = ChatColor.translateAlternateColorCodes('&', args[count]);
 		
 		if(talker instanceof Player)
 		{
@@ -746,6 +709,37 @@ public class Main extends JavaPlugin implements Listener
 			
 			switch(string)
 			{
+		  		case "스텟초기화권":
+		  			if(player.isOp() == true)
+		  			{
+						ItemStack Icon = new MaterialData(340, (byte) 0).toItemStack(1);
+						ItemMeta Icon_Meta = Icon.getItemMeta();
+						Icon_Meta.setDisplayName("§2§3§4§3§3§l[스텟 초기화 주문서]");
+						Icon_Meta.setLore(Arrays.asList("§a[주문서]",""));
+						Icon.setItemMeta(Icon_Meta);
+						if(args.length==1)
+						{
+			  				if(Bukkit.getServer().getPlayer(args[0]) != null)
+			  				{
+			  					Player target = Bukkit.getServer().getPlayer(args[0]);
+				  				if(target.isOnline())
+				  					new GoldBigDragon_RPG.Util.PlayerUtil().giveItemForce(target, Icon);
+				  				else
+				  				{
+				  					player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 플레이어는 접속중이 아닙니다!");
+				  					s.SP(player, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+				  				}
+			  				}
+						}
+						else
+		  					new GoldBigDragon_RPG.Util.PlayerUtil().giveItemForce(player, Icon);
+		  			}
+					else
+					{
+						talker.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
+						s.SP((Player)talker, org.bukkit.Sound.ORB_PICKUP, 2.0F, 1.7F);
+					}
+		  			return true;
 				case"gui사용":
 					if(player.isOp() == true)
 					{
@@ -909,5 +903,16 @@ public class Main extends JavaPlugin implements Listener
 		}
 		return false;
     }
+
+	@EventHandler
+	public void Sign(SignChangeEvent event)
+	{
+		for (int i = 0; i <= 3; i++)
+	    {
+			String line = event.getLine(i);
+	        line = ChatColor.translateAlternateColorCodes('&', line);
+	        event.setLine(i, line);
+	    }
+	}
 
 }

@@ -12,13 +12,13 @@ import org.bukkit.inventory.Inventory;
 import GBD_RPG.Main_Main.Main_ServerOption;
 import GBD_RPG.Skill.UserSkill_GUI;
 import GBD_RPG.Util.Util_GUI;
-import GBD_RPG.Util.YamlController;
 
 public class Option_GUI extends Util_GUI
 {
 	public void optionGUI(Player player)
 	{
-		Inventory inv = Bukkit.createInventory(null, 45, ChatColor.BLACK + "옵션");
+		String UniqueCode = "§0§0§0§0§1§r";
+		Inventory inv = Bukkit.createInventory(null, 45, UniqueCode+"§0옵션");
 
 		Stack2(ChatColor.WHITE + "스텟", 397,3,1,Arrays.asList(ChatColor.GRAY + "스텟을 확인합니다."), 0, inv);
 		Stack2(ChatColor.WHITE + "스킬", 403,0,1,Arrays.asList(ChatColor.GRAY + "스킬을 확인합니다."), 9, inv);
@@ -79,95 +79,97 @@ public class Option_GUI extends Util_GUI
 	
 	public void optionInventoryclick(InventoryClickEvent event)
 	{
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		Stats_GUI SGUI = new Stats_GUI();
-		ETC_GUI EGUI = new ETC_GUI();
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
-		
-		switch (event.getSlot())
+
+		int slot = event.getSlot();
+
+		if(event.getSlot()==26)
 		{
-			case 0: //스텟
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				SGUI.StatusGUI(player);
-				break;
-			case 36://기타
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				EGUI.ETCGUI_Main(player);
-				break;
-			case 9://스킬
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				UserSkill_GUI PGUI = new UserSkill_GUI();
-				PGUI.MainSkillsListGUI(player, (short) 0);
-				break;
-			case 18://퀘스트
-				GBD_RPG.Quest.Quest_GUI QGUI = new GBD_RPG.Quest.Quest_GUI();
-				QGUI.MyQuestListGUI(player, (short) 0);
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				break;
-			case 26://닫기
-				s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-				player.closeInventory();
-				break;
-			case 2://경험치 획득 알림
-				if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isAlert_EXPget()){GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setAlert_EXPget(false);}
-				else{GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setAlert_EXPget(true);}
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 0)
+				new GBD_RPG.User.Stats_GUI().StatusGUI(player);
+			else if(slot == 9)
+				new UserSkill_GUI().MainSkillsListGUI(player, (short) 0);
+			else if(slot == 18)
+				new GBD_RPG.Quest.Quest_GUI().MyQuestListGUI(player, (short) 0);
+			else if(slot == 36)
+				new ETC_GUI().ETCGUI_Main(player);
+			else
+			{
+				if(slot == 2)//경험치 획득 알림
+				{
+					if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isAlert_EXPget())
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setAlert_EXPget(false);
+					else
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setAlert_EXPget(true);
+				}
+				else if(slot == 3)//아이템 획득 알림
+				{
+					if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isAlert_ItemPickUp())
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setAlert_ItemPickUp(false);
+					else
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setAlert_ItemPickUp(true);
+				}
+				else if(slot == 4)//전투 도우미
+				{
+					if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isAlert_MobHealth())
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setAlert_MobHealth(false);
+					else
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setAlert_MobHealth(true);
+				}
+				else if(slot == 5)//데미지 알림
+				{
+					if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isAlert_Damage())
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setAlert_Damage(false);
+					else
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setAlert_Damage(true);
+				}
+				else if(slot == 6)//클릭시 사용
+				{
+					if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isClickUse())
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setClickUse(false);
+					else
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setClickUse(true);
+				}
+				else if(slot == 11)//장비 구경
+				{
+					if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isOption_EquipLook())
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setOption_EquipLook(false);
+					else
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setOption_EquipLook(true);
+				}
+				else if(slot == 12)//채팅 옵션
+				{
+					if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getOption_ChattingType() < 3)
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setOption_ChattingType((byte) (GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getOption_ChattingType()+1));
+					else
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setOption_ChattingType((byte) (0));
+				}
+				else if(slot == 13)//장비 전환 사운드
+				{
+					if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isOption_HotBarSound())
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setOption_HotBarSound(false);
+					else
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setOption_HotBarSound(true);
+				}
+				else if(slot == 14)//BGM 재생
+				{
+					if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isBgmOn())
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setBgm(false);
+					else
+						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setBgm(true);
+					if(Main_ServerOption.NoteBlockAPIAble)
+						new OtherPlugins.NoteBlockAPIMain().Stop(player);
+				}
+				
 				optionGUI(player);
-				break;
-			case 3://아이템 획득 알림
-				if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isAlert_ItemPickUp()){GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setAlert_ItemPickUp(false);}
-				else{GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setAlert_ItemPickUp(true);}
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				optionGUI(player);
-				break;
-			case 4://전투 도우미
-				if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isAlert_MobHealth()){GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setAlert_MobHealth(false);}
-				else{GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setAlert_MobHealth(true);}
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				optionGUI(player);
-				break;
-			case 5://데미지 알림
-				if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isAlert_Damage()){GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setAlert_Damage(false);}
-				else{GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setAlert_Damage(true);}
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				optionGUI(player);
-				break;
-			case 6://클릭시 사용
-				if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isClickUse()){GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setClickUse(false);}
-				else{GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setClickUse(true);}
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				optionGUI(player);
-				break;
-			case 11://장비 구경
-				if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isOption_EquipLook()){GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setOption_EquipLook(false);}
-				else{GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setOption_EquipLook(true);}
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				optionGUI(player);
-				break;
-			case 12://채팅 옵션
-				if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getOption_ChattingType() < 3)
-					GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setOption_ChattingType((byte) (GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getOption_ChattingType()+1));
-				else
-					GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setOption_ChattingType((byte) (0));
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				optionGUI(player);
-				break;
-			case 13://장비 전환 사운드
-				if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isOption_HotBarSound()){GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setOption_HotBarSound(false);}
-				else{GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setOption_HotBarSound(true);}
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				optionGUI(player);
-				break;
-			case 14://BGM 재생
-				if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isBgmOn()){GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setBgm(false);}
-				else{GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setBgm(true);}
-				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				if(Main_ServerOption.NoteBlockAPIAble)
-					new OtherPlugins.NoteBlockAPIMain().Stop(player);
-				optionGUI(player);
-				break;
+			}
 		}
 		return;
 	}

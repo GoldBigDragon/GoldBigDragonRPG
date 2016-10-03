@@ -23,8 +23,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
-import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -36,9 +36,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
-import org.bukkit.event.player.PlayerChangedMainHandEvent;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerFishEvent;
@@ -254,26 +252,7 @@ public class Main_Main extends JavaPlugin implements Listener
 	@EventHandler
 	private void PlayerChatting(PlayerChatEvent event)
 	{
-		if(event.getMessage().contains("&") == true)
-		{
-			event.setMessage(event.getMessage().replaceAll("&l", ChatColor.BOLD+""));
-			event.setMessage(event.getMessage().replaceAll("&0", ChatColor.BLACK+""));
-			event.setMessage(event.getMessage().replaceAll("&1", ChatColor.DARK_BLUE+""));
-			event.setMessage(event.getMessage().replaceAll("&2", ChatColor.DARK_GREEN+""));
-			event.setMessage(event.getMessage().replaceAll("&3", ChatColor.DARK_AQUA+""));
-			event.setMessage(event.getMessage().replaceAll("&4", ChatColor.DARK_RED+""));
-			event.setMessage(event.getMessage().replaceAll("&5", ChatColor.DARK_PURPLE+""));
-			event.setMessage(event.getMessage().replaceAll("&6", ChatColor.GOLD+""));
-			event.setMessage(event.getMessage().replaceAll("&7", ChatColor.GRAY+""));
-			event.setMessage(event.getMessage().replaceAll("&8", ChatColor.DARK_GRAY+""));
-			event.setMessage(event.getMessage().replaceAll("&9", ChatColor.BLUE+""));
-			event.setMessage(event.getMessage().replaceAll("&a", ChatColor.GREEN+""));
-			event.setMessage(event.getMessage().replaceAll("&b", ChatColor.AQUA+""));
-			event.setMessage(event.getMessage().replaceAll("&c", ChatColor.RED+""));
-			event.setMessage(event.getMessage().replaceAll("&d", ChatColor.LIGHT_PURPLE+""));
-			event.setMessage(event.getMessage().replaceAll("&e", ChatColor.YELLOW+""));
-			event.setMessage(event.getMessage().replaceAll("&f", ChatColor.WHITE+""));
-		}
+		event.setMessage(ChatColor.translateAlternateColorCodes('&', event.getMessage()));
 		new GBD_RPG.Main_Event.Main_PlayerChat().PlayerChatting(event);
 		return;
 	}
@@ -607,17 +586,16 @@ public class Main_Main extends JavaPlugin implements Listener
 	@EventHandler
 	private void InventoryClick(InventoryClickEvent event)
 	{
-		if(Bukkit.getPluginManager().isPluginEnabled("MagicSpells") == true
-		&&Main_ServerOption.MagicSpellsCatched==true)
+		if(Bukkit.getPluginManager().isPluginEnabled("MagicSpells") == true &&Main_ServerOption.MagicSpellsCatched==true)
 		{
 			GBD_RPG.Util.ETC ETC = new GBD_RPG.Util.ETC();
 			ETC.UpdatePlayerHPMP((Player)event.getWhoClicked());
 		}
-		if(event.getClickedInventory() == null)
+		if(event.getClickedInventory() == null || event.getCurrentItem()==null || event.getCurrentItem().getType()==Material.AIR)
 			return;
-		if(event.getCurrentItem().hasItemMeta() == true)
+		if(event.getCurrentItem().hasItemMeta())
 		{
-			if(event.getCurrentItem().getItemMeta().hasLore() == true)
+			if(event.getCurrentItem().getItemMeta().hasLore())
 			{
 				if(event.getCurrentItem().getItemMeta().getLore().size() == 4)
 				{
@@ -626,62 +604,24 @@ public class Main_Main extends JavaPlugin implements Listener
 						event.setCancelled(true);
 						event.getWhoClicked().getInventory().setItem(event.getSlot(), null);
 						new GBD_RPG.Effect.Effect_Sound().SP((Player)event.getWhoClicked(), Sound.BLOCK_ANVIL_LAND, 1.0F, 1.9F);
+						return;
 					}
 				}
 			}
 		}
-		if(ChatColor.stripColor(event.getWhoClicked().getOpenInventory().getTitle()).compareTo("교환")==0)
-			new GBD_RPG.User.Equip_GUI().ExchangeInventoryclick(event);
-		
-		if(event.getInventory().getName().length() >= 3)
+		if(event.getInventory().getName().charAt(0)=='§')
 		{
-			if(event.getInventory().getName().charAt(0)=='§')
-			{
-				if(event.getInventory().getName().charAt(1)=='c')//개체GUI
-					new GBD_RPG.Structure.Structure_Main().InventoryClickRouter(event, ChatColor.stripColor(event.getInventory().getName().toString()));
-				else if(event.getInventory().getName().charAt(1)=='2')//던전GUI
-					new GBD_RPG.Dungeon.Dungeon_GUI().InventoryClickRouter(event, ChatColor.stripColor(event.getInventory().getName().toString()));
-				else if(event.getInventory().getName().charAt(1)=='0')//일반GUI
-				{
-					String InventoryName = ChatColor.stripColor(event.getInventory().getName().toString());
-					if(event.getInventory().getType()==InventoryType.CHEST)
-					{
-						if(!(InventoryName.compareTo("몬스터 장비 설정")==0||InventoryName.compareTo("모아야 할 아이템 등록")==0
-						||InventoryName.compareTo("보상 아이템 등록")==0||InventoryName.compareTo("초심자 지원")==0
-						||InventoryName.compareTo("해당 블록을 캐면 나올 아이템")==0||InventoryName.compareTo("영역 추가 어류")==0
-						||InventoryName.compareTo("NPC 룬 장착")==0||InventoryName.compareTo("container.chest")==0
-						||InventoryName.compareTo("container.chestDouble")==0||InventoryName.compareTo("초심자 가이드")==0
-						||InventoryName.compareTo("container.minecart")==0||InventoryName.compareTo("이벤트 전체 지급")==0
-						||InventoryName.compareTo("이벤트 랜덤 지급")==0||InventoryName.compareTo("교환")==0||InventoryName.compareTo("부활 아이템")==0
-						||InventoryName.compareTo("구조 아이템")==0||InventoryName.compareTo("도박 상품 정보")==0||InventoryName.compareTo("도박 기계 코인")==0
-						||InventoryName.compareTo("[NPC] 선물 아이템을 올려 주세요")==0
-						))
-						{
-							event.setCancelled(true);
-						}
-					}
-					
-					if(InventoryName.contains("스텟")||InventoryName.contains("옵션")||InventoryName.contains("개조식")||
-					   InventoryName.compareTo("기타")==0||InventoryName.contains("가이드")||
-					   InventoryName.contains("파티")||InventoryName.contains("NPC")
-					   ||InventoryName.contains("던전")||InventoryName.compareTo("이벤트 진행")==0
-					   ||InventoryName.contains("목록")||InventoryName.contains("퀘스트")||
-					   InventoryName.contains("관리자")||InventoryName.contains("등록")||InventoryName.compareTo("오브젝트 추가")==0
-					   ||InventoryName.contains("장비")||InventoryName.contains("선택")||InventoryName.contains("아이템")
-					    ||InventoryName.contains("[MapleStory]")||InventoryName.contains("[Mabinogi]")
-					    ||InventoryName.contains("스킬")||InventoryName.contains("랭크")||InventoryName.contains("몬스터")
-					    ||InventoryName.contains("등록된")||InventoryName.contains("직업군")||InventoryName.contains("초심자")
-					    ||InventoryName.contains("카테고리")||InventoryName.compareTo("해당 블록을 캐면 나올 아이템")==0||InventoryName.contains("영역")
-					    ||InventoryName.contains("월드")||InventoryName.contains("워프")||InventoryName.contains("매직스펠")
-					    ||InventoryName.contains("이벤트")||InventoryName.contains("친구")||InventoryName.contains("네비")
-					    ||InventoryName.compareTo("교환")==0||InventoryName.contains("부활")||InventoryName.contains("도박")
-					    ||InventoryName.compareTo("슬롯 머신")==0||InventoryName.contains("개체")
-					    )
-					{
-						new GBD_RPG.Main_Event.Main_InventoryClick().InventoryClickRouter(event, InventoryName);
-					}
-				}
-			}
+			String InventoryCode = event.getInventory().getName().split("§r")[0].replaceAll("§", "");
+			//[§0] [§0§0] [§0§0] [§r]
+			//1번째 색 코드 표 = 클릭시 이벤트 캔슬 여부
+			//2,3번째 색 코드 표 = 해당 GUI화면 타입
+			//4,5번째 색 코드 표 = 해당 GUI화면 타입 중, 몇 번째 GUI인지
+			//6번째 되돌림 색 코드 표 = split을 위한 코드
+			
+			//1번째 색 코드가 0이면, 클릭시 무조건 취소되는 것
+			if(event.getInventory().getName().charAt(1)=='0')
+				event.setCancelled(true);
+			new GBD_RPG.Main_Event.Main_InventoryClick().InventoryClickRouter(event, InventoryCode);
 		}
 		return;
 	}
@@ -698,12 +638,13 @@ public class Main_Main extends JavaPlugin implements Listener
 
 		if(event.getInventory().getName().charAt(0)=='§')
 		{
-			if(event.getInventory().getName().charAt(1)=='c')
-				new GBD_RPG.Structure.Structure_Main().InventoryCloseRouter(event, ChatColor.stripColor(event.getInventory().getName().toString()));
-			else if(event.getInventory().getName().charAt(1)=='2')
-				new GBD_RPG.Dungeon.Dungeon_GUI().InventoryCloseRouter(event, ChatColor.stripColor(event.getInventory().getName().toString()));
-			else
-				new GBD_RPG.Main_Event.Main_InventoryClose().InventoryCloseRouter(event);
+			String InventoryCode = event.getInventory().getName().split("§r")[0].replaceAll("§", "");
+			//[§0] [§0§0] [§0§0] [§r]
+			//1번째 색 코드 표 = 클릭시 이벤트 캔슬 여부
+			//2,3번째 색 코드 표 = 해당 GUI화면 타입
+			//4,5번째 색 코드 표 = 해당 GUI화면 타입 중, 몇 번째 GUI인지
+			//6번째 되돌림 색 코드 표 = split을 위한 코드
+			new GBD_RPG.Main_Event.Main_InventoryClose().InventoryCloseRouter(event, InventoryCode);
 		}
 		return;
 	}
@@ -713,28 +654,7 @@ public class Main_Main extends JavaPlugin implements Listener
 		new GBD_RPG.Main_Main.Main_ServerOption().MagicSpellCatch();
 		new GBD_RPG.Main_Main.Main_ServerOption().CitizensCatch();
 		for(byte count = 0; count <args.length; count++)
-		{
-			if(args[count].contains("&"))
-			{
-				args[count]=args[count].replaceAll("&l", ChatColor.BOLD+"");
-				args[count]=args[count].replaceAll("&0", ChatColor.BLACK+"");
-				args[count]=args[count].replaceAll("&1", ChatColor.DARK_BLUE+"");
-				args[count]=args[count].replaceAll("&2", ChatColor.DARK_GREEN+"");
-				args[count]=args[count].replaceAll("&3", ChatColor.DARK_AQUA+"");
-				args[count]=args[count].replaceAll("&4", ChatColor.DARK_RED+"");
-				args[count]=args[count].replaceAll("&5", ChatColor.DARK_PURPLE+"");
-				args[count]=args[count].replaceAll("&6", ChatColor.GOLD+"");
-				args[count]=args[count].replaceAll("&7", ChatColor.GRAY+"");
-				args[count]=args[count].replaceAll("&8", ChatColor.DARK_GRAY+"");
-				args[count]=args[count].replaceAll("&9", ChatColor.BLUE+"");
-				args[count]=args[count].replaceAll("&a", ChatColor.GREEN+"");
-				args[count]=args[count].replaceAll("&b", ChatColor.AQUA+"");
-				args[count]=args[count].replaceAll("&c", ChatColor.RED+"");
-				args[count]=args[count].replaceAll("&d", ChatColor.LIGHT_PURPLE+"");
-				args[count]=args[count].replaceAll("&e", ChatColor.YELLOW+"");
-				args[count]=args[count].replaceAll("&f", ChatColor.WHITE+"");
-			}
-		}
+			args[count] = ChatColor.translateAlternateColorCodes('&', args[count]);
 		
 		if(talker instanceof Player)
 		{
@@ -798,6 +718,7 @@ public class Main_Main extends JavaPlugin implements Listener
 				case "아이템제거":
 		  		case "강제철거":
 		  		case "오피박스":
+		  		case "스텟초기화권":
 		  			new GBD_RPG.Admin.Admin_Command().onCommand(player, args, string);
 		  			return true;
 				case "수락":
@@ -890,4 +811,14 @@ public class Main_Main extends JavaPlugin implements Listener
 		return false;
     }
 
+	@EventHandler
+	public void Sign(SignChangeEvent event)
+	{
+		for (int i = 0; i <= 3; i++)
+	    {
+			String line = event.getLine(i);
+	        line = ChatColor.translateAlternateColorCodes('&', line);
+	        event.setLine(i, line);
+	    }
+	}
 }

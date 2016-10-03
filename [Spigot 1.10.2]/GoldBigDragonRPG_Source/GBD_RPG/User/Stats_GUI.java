@@ -23,11 +23,12 @@ public class Stats_GUI extends Util_GUI
 	//스텟 GUI창의 1 페이지를 구성해 주는 메소드//
 	public void StatusGUI(Player player)
 	{
+		String UniqueCode = "§0§0§0§0§0§r";
 		Battle_Calculator dam = new Battle_Calculator();
 	    YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 	    YamlManager Config = YC.getNewConfig("config.yml");
 		
-		Inventory inv = Bukkit.createInventory(null, 45, ChatColor.BLACK + "스텟");
+		Inventory inv = Bukkit.createInventory(null, 45, UniqueCode + "§0스텟");
 
 		int MaxStats = new GBD_RPG.Main_Main.Main_ServerOption().MaxStats;
 		
@@ -251,129 +252,70 @@ public class Stats_GUI extends Util_GUI
 	//각종 GUI창 속의 아이콘을 눌렸을 때, 해당 아이콘에 기능을 넣는 메소드1   -스텟 GUI, 오피박스, 커스텀 몬스터GUI-//
 	public void StatusInventoryclick(InventoryClickEvent event)
 	{
-	    YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		event.setCancelled(true);
 		Player player = (Player) event.getWhoClicked();
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
-		YamlManager Config = YC.getNewConfig("config.yml");
+		
 		int MaxStats = new GBD_RPG.Main_Main.Main_ServerOption().MaxStats;
-		switch (event.getSlot())
+		int slot = event.getSlot();
+		
+		if(slot == 26)
 		{
-		case 36:
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			ETC_GUI EGUI = new ETC_GUI();
-			EGUI.ETCGUI_Main(player);
-			break;
-		case 9:
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			UserSkill_GUI PGUI = new UserSkill_GUI();
-			PGUI.MainSkillsListGUI(player, (short) 0);
-			break;
-		case 18:
-			GBD_RPG.Quest.Quest_GUI QGUI = new GBD_RPG.Quest.Quest_GUI();
-			QGUI.MyQuestListGUI(player, (short) 0);
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			break;
-		case 27:
-			GBD_RPG.User.Option_GUI oGUI = new GBD_RPG.User.Option_GUI();
-			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			oGUI.optionGUI(player);
-			break;
-		case 29:
-			if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == false)
-				if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_StatPoint() >= 1)
-				{
-					if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR() < MaxStats)
-					{
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_StatPoint(-1);
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_STR(1);
-						s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					}
-					else
-					{
-						s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-						new GBD_RPG.Effect.Effect_Packet().sendActionBar(player, ChatColor.RED+""+ChatColor.BOLD+"[해당 능력은 더 이상 상승시킬 수 없습니다!]");
-					}
-				}
-			StatusGUI(player);
-			break;
-		case 30:
-			if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == false)
-				if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_StatPoint() >= 1)
-				{
-					if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX() < MaxStats)
-					{
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_StatPoint(-1);
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_DEX(1);
-						s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					}
-					else
-					{
-						s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-						new GBD_RPG.Effect.Effect_Packet().sendActionBar(player, ChatColor.RED+""+ChatColor.BOLD+"[해당 능력은 더 이상 상승시킬 수 없습니다!]");
-					}
-				}
-			StatusGUI(player);
-			break;
-		case 31:
-			if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == false)
-				if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_StatPoint() >= 1)
-				{
-					if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT() < MaxStats)
-					{
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_StatPoint(-1);
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_INT(1);
-						s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					}
-					else
-					{
-						s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-						new GBD_RPG.Effect.Effect_Packet().sendActionBar(player, ChatColor.RED+""+ChatColor.BOLD+"[해당 능력은 더 이상 상승시킬 수 없습니다!]");
-					}
-
-				}
-			StatusGUI(player);
-			break;
-		case 32:
-			if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == false)
-				if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_StatPoint() >= 1)
-				{
-					if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL() < MaxStats)
-					{
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_StatPoint(-1);
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_WILL(1);
-						s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					}
-					else
-					{
-						s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-						new GBD_RPG.Effect.Effect_Packet().sendActionBar(player, ChatColor.RED+""+ChatColor.BOLD+"[해당 능력은 더 이상 상승시킬 수 없습니다!]");
-					}
-				}
-			StatusGUI(player);
-			break;
-		case 33:
-			if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == false)
-				if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_StatPoint() >= 1)
-				{
-					if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK() < MaxStats)
-					{
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_StatPoint(-1);
-						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_LUK(1);
-						s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					}
-					else
-					{
-						s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-						new GBD_RPG.Effect.Effect_Packet().sendActionBar(player, ChatColor.RED+""+ChatColor.BOLD+"[해당 능력은 더 이상 상승시킬 수 없습니다!]");
-					}
-				}
-			StatusGUI(player);
-			break;
-		case 26:
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
-			break;
+		}
+		else
+		{
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot >= 29 && slot <= 33)
+			{
+			    YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager Config = YC.getNewConfig("config.yml");
+				if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == false)
+					if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_StatPoint() >= 1)
+					{
+						boolean isOk = false;
+						if(slot == 29)
+							isOk = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR() < MaxStats;
+						else if(slot == 30)
+							isOk = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX() < MaxStats;
+						else if(slot == 31)
+							isOk = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT() < MaxStats;
+						else if(slot == 32)
+							isOk = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL() < MaxStats;
+						else if(slot == 33)
+							isOk = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK() < MaxStats;
+						
+						if(isOk)
+						{
+							GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_StatPoint(-1);
+							if(slot == 29)
+								GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_STR(1);
+							else if(slot == 30)
+								GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_DEX(1);
+							else if(slot == 31)
+								GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_INT(1);
+							else if(slot == 32)
+								GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_WILL(1);
+							else if(slot == 33)
+								GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_LUK(1);
+							s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+						}
+						else
+						{
+							s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							new GBD_RPG.Effect.Effect_Packet().sendActionBar(player, ChatColor.RED+""+ChatColor.BOLD+"[해당 능력은 더 이상 상승시킬 수 없습니다!]");
+						}
+					}
+				StatusGUI(player);
+			}
+			else if(slot == 9)
+				new UserSkill_GUI().MainSkillsListGUI(player, (short) 0);
+			else if(slot == 18)
+				new GBD_RPG.Quest.Quest_GUI().MyQuestListGUI(player, (short) 0);
+			else if(slot == 27)
+				new GBD_RPG.User.Option_GUI().optionGUI(player);
+			else if(slot == 36)
+				new ETC_GUI().ETCGUI_Main(player);
 		}
 		return;
 	}
