@@ -563,7 +563,10 @@ public class OPbox_GUI extends Util_GUI
 				}
 			}
 			else if(DisplayName.compareTo("제작") == 0)
-				new Event_GUI().EventGUI_Main(player);
+			{
+				s.SP(player,Sound.BLOCK_ANVIL_USE, 0.8F, 1.0F);
+				player.sendMessage(ChatColor.RED + "[버전 체크] : 다음 업데이트 때 공개됩니다!");
+			}
 			
 		}
 		return;

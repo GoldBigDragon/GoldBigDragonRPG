@@ -111,8 +111,6 @@ public class Event_GUI extends Util_GUI
 			else if(slot == 28)//전체 주기
 				AllPlayerGiveEventGUI(player,true);
 			else if(slot == 30)//랜덤 주기
-				AllPlayerGiveEventGUI(player,true);
-			else if(slot == 30)//랜덤 주기
 				AllPlayerGiveEventGUI(player,false);
 			else
 			{
