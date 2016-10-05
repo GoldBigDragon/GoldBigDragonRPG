@@ -96,6 +96,7 @@ public class OPbox_GUI extends Util_GUI
 				Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "도박", 266,0,1,Arrays.asList(ChatColor.GRAY +"도박 관련 기능을 봅니다."), 10, inv);
 				Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "기능성 개체", 130,0,1,Arrays.asList(ChatColor.GRAY +"각종 기능을 가진 개체들을",ChatColor.GRAY +"설치하거나 제거합니다."), 12, inv);
 				Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "던전", 52,0,1,Arrays.asList(ChatColor.GRAY +"인스 턴스 던전에 대한 설정을 합니다."), 14, inv);
+				Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "제작", 58,0,1,Arrays.asList(ChatColor.GRAY +"제작에 대한 설정을 합니다."), 16, inv);
 				
 				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
 				break;
@@ -561,6 +562,8 @@ public class OPbox_GUI extends Util_GUI
 					player.sendMessage(ChatColor.RED + "[최신 패치] : "+Main_ServerOption.currentServerUpdate);
 				}
 			}
+			else if(DisplayName.compareTo("제작") == 0)
+				new Event_GUI().EventGUI_Main(player);
 			
 		}
 		return;

@@ -24,5 +24,7 @@ public class Main_InventoryClose
 		    new GBD_RPG.Dungeon._DungeonGUIManager().CloseRouting(event, SubjectCode);
 		else if(UniqueCode.compareTo("0d")==0)//Structure 패키지 속의 GUI Close를 관리함.
 		    new GBD_RPG.Structure._StructureGUIManager().CloseRouting(event, SubjectCode);
+		else if(UniqueCode.compareTo("0e")==0)//Making 패키지 속의 GUI Close를 관리함.
+		    new GBD_RPG.Making._MakingGUIManager().CloseRouting(event, SubjectCode);
 	}
 }

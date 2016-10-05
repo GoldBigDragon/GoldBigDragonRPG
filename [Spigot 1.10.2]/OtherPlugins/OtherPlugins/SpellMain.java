@@ -350,7 +350,7 @@ public class SpellMain implements Listener
 		for(short count = 0; count < spells.length;count++)
 		{
 			spell = (Spell) spells[count];
-			if(spell.getName().equals(SpellName) == true)
+			if(spell.getName().compareTo(SpellName) == 0)
 				spell.cast(player);
 		}
 	}

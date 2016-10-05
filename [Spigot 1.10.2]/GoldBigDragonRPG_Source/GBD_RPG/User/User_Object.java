@@ -5,7 +5,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import GBD_RPG.Main_Main.Main_Main;
 import GBD_RPG.Main_Main.Main_ServerOption;
 import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;

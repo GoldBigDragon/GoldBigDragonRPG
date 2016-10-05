@@ -36,5 +36,7 @@ public class Main_InventoryClick
 		    new GBD_RPG.Warp._WarpGUIManager().ClickRouting(event, SubjectCode);
 		else if(UniqueCode.compareTo("0d")==0)//Structure 패키지 속의 GUI Click을 관리함.
 		    new GBD_RPG.Structure._StructureGUIManager().ClickRouting(event, SubjectCode);
+		else if(UniqueCode.compareTo("0e")==0)//Making 패키지 속의 GUI Click을 관리함.
+		    new GBD_RPG.Making._MakingGUIManager().ClickRouting(event, SubjectCode);
 	}
 }

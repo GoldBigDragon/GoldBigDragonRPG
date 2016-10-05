@@ -235,7 +235,7 @@ public class Job_GUI extends Util_GUI
 				new OPbox_GUI().OPBoxGUI_Main(player,(byte) 2);
 			else if(slot == 12)//마비노기 타입 카테고리 목록
 				Mabinogi_ChooseCategory(player,(short) 0);
-			else if(slot == 12)//메이플스토리 타입 직업 목록
+			else if(slot == 14)//메이플스토리 타입 직업 목록
 				MapleStory_ChooseJob(player,(short) 0);
 		}
 	}

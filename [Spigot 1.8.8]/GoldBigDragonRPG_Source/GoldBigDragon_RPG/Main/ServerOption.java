@@ -77,7 +77,7 @@ public class ServerOption
 
 	public static String serverUpdate = "2016-10-03-21:46";
 	public static String serverVersion = "Advanced";
-	private static String updateCheckURL = "https://goldbigdragon.github.io/";
+	private static String updateCheckURL = "https://goldbigdragon.github.io/1_8_8.html";
 	public static String currentServerUpdate = "2016-10-03-21:46";
 	public static String currentServerVersion = "Advanced";
 	
