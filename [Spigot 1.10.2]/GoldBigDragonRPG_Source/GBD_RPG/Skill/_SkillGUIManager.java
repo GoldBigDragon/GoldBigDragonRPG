@@ -26,5 +26,7 @@ public class _SkillGUIManager
 			new GBD_RPG.Skill.UserSkill_GUI().SkillListGUIClick(event);
 		else if(SubjectCode.compareTo("06")==0)//Äü½½·Ô µî·Ï
 			new GBD_RPG.Skill.UserSkill_GUI().AddQuickBarGUIClick(event);
+		else if(SubjectCode.compareTo("07")==0)//¸ðµç ¸ÅÁ÷½ºÆç º¸±â
+			new OtherPlugins.SpellMain().ShowAllMaigcGUIClick(event);
 	}
 }

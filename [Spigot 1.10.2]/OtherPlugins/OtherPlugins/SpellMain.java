@@ -216,8 +216,9 @@ public class SpellMain implements Listener
 					break;
 			break;
 		}
-		
-		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.BLACK + "매직스펠 목록 : " + (page+1));
+
+		String UniqueCode = "§0§0§b§0§7§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0매직스펠 목록 : " + (page+1));
 
 		byte loc=0;
 		Spell spell;
