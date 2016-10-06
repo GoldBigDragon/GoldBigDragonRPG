@@ -415,7 +415,7 @@ public class Upgrade_GUI extends Util_GUI
 						player.sendMessage(ChatColor.GREEN + "("+ChatColor.YELLOW + Integer.MIN_VALUE+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
 						u.setString(player, (byte)1, "UMD");
 					}
-					else if(slot == 32)//개조 레벨 설정
+					else if(slot == 33)//개조 레벨 설정
 					{
 						player.sendMessage(ChatColor.DARK_AQUA+"[개조] : 이 개조를 하기 위한 개조 레벨을 입력하세요!");
 						player.sendMessage(ChatColor.GREEN + "("+ChatColor.YELLOW +0+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");

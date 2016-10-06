@@ -612,6 +612,12 @@ public class Dungeon_Main
     	Object[] MobList = null;
     	String ListName = "Normal";
     	byte randomLevel = (byte) new GBD_RPG.Util.Util_Number().RandomNum(0, 3);
+        if(MonsterConfig.contains("Normal")==false)
+        	MonsterConfig.createSection("Normal");
+        if(MonsterConfig.contains("Middle")==false)
+        	MonsterConfig.createSection("Middle");
+        if(MonsterConfig.contains("High")==false)
+        	MonsterConfig.createSection("High");
     	if(randomLevel <= 1)
     	{
     		if(MonsterConfig.getConfigurationSection("Normal").getKeys(false).size()==0)
