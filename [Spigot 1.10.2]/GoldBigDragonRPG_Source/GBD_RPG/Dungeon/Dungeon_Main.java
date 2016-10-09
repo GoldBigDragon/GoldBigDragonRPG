@@ -374,10 +374,10 @@ public class Dungeon_Main
 		
 		else if(block.getType().getId()==23) //´øÀü ¹® ¿­¼è±¸¸Û
 		{
+			event.setCancelled(true);
 			Block SB = new Location(block.getWorld(),block.getX(),block.getY()+10,block.getZ()).getBlock();
 			if(SB.getType()!=Material.SIGN_POST)
 				return;
-			event.setCancelled(true);
 			if(event.getClickedBlock().getLocation().add(0, 10, 0).getBlock() !=null)
 			{
 				if(event.getClickedBlock().getLocation().add(0,10,0).getBlock().getType() == Material.SIGN_POST)

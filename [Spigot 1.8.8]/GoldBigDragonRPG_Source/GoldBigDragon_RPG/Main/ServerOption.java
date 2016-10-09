@@ -75,10 +75,10 @@ public class ServerOption
 	public static short Money6ID = 41;
 	public static byte Money6DATA = 0;
 
-	public static String serverUpdate = "2016-10-03-21:46";
+	public static String serverUpdate = "2016-10-09-19:18";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/1_8_8.html";
-	public static String currentServerUpdate = "2016-10-03-21:46";
+	public static String currentServerUpdate = "2016-10-09-19:18";
 	public static String currentServerVersion = "Advanced";
 	
 	public static String SpawnMobName;

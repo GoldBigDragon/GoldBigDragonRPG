@@ -2589,7 +2589,7 @@ public class NPC_GUI extends Util_GUI
 					else
 						ShopGUI(player, NPCname, (short) showingPage3, false,true);
 				}
-				else
+				else if(item.hasItemMeta())
 				{
 					int value = Integer.parseInt(item.getItemMeta().getLore().get(item.getItemMeta().getLore().size()-2).split(" ")[2]);
 					if(item.getItemMeta().getLore().size() < 4)
