@@ -1861,7 +1861,6 @@ public class Quest_GUI extends Util_GUI
 					s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
 					UserData_Object u = new UserData_Object();
 					u.setType(player, "Quest");
-					player.closeInventory();
 					if(slot == 0)
 					{
 						player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 지급할 포상금을 입력 해 주세요. ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
@@ -1879,6 +1878,7 @@ public class Quest_GUI extends Util_GUI
 						player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 상승시킬 NPC의 호감도를 입력 해 주세요. ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
 						u.setString(player, (byte)4,"L");
 					}
+					player.closeInventory();
 				}
 			}
 		}

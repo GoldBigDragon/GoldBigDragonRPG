@@ -1,6 +1,7 @@
 package GBD_RPG.Effect;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -48,12 +49,10 @@ public class Effect_Packet
 
 	public void sendTitleAllPlayers(String message)
 	{
-		OfflinePlayer[] offlineplayer = Bukkit.getServer().getOfflinePlayers();
-		for(int count=0;count<offlineplayer.length;count++)
-		{
-			if(offlineplayer[count].isOnline()==true)
-				sendTitle(Bukkit.getPlayer(offlineplayer[count].getName()), message, (byte)1, (byte)5, (byte)1);
-		}
+		Object[] PlayerList = Bukkit.getServer().getOnlinePlayers().toArray();
+		for(int count=0;count<PlayerList.length;count++)
+			if(((Player)PlayerList[count]).isOnline())
+				sendTitle(((Player)PlayerList[count]), message, (byte)1, (byte)5, (byte)1);
 	}
 	    
 	public void sendActionBarAllPlayers(String message)
