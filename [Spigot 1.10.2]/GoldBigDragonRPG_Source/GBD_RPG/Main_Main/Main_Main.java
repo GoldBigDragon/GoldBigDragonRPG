@@ -664,6 +664,7 @@ public class Main_Main extends JavaPlugin implements Listener
 			switch(string)
 			{
 				case"gui사용":
+				case"gbdenablegui":
 					if(player.isOp() == true)
 					{
 					 	s.SP((Player)talker, org.bukkit.Sound.ENTITY_VILLAGER_YES, 1.0F, 1.8F);
@@ -677,15 +678,18 @@ public class Main_Main extends JavaPlugin implements Listener
 					}
 					return true;
 				case"친구":
+				case"gbdfriend":
 				 	s.SP((Player)talker, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 				 	new GBD_RPG.User.ETC_GUI().FriendsGUI(player, (short) 0);
 					return true;
 				case"스킬":
+				case"gbdskill":
 				 	s.SP((Player)talker, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 				    GBD_RPG.Skill.UserSkill_GUI PSKGUI = new GBD_RPG.Skill.UserSkill_GUI();
 					PSKGUI.MainSkillsListGUI(player, (short) 0);
 					return true;
 		  		case "아이템" :
+		  		case "gbditem" :
 		  			GBD_RPG.CustomItem.CustomItem_Command ItemC = new GBD_RPG.CustomItem.CustomItem_Command();
 		  			if(args.length <= 0)
 		  			{
@@ -708,6 +712,7 @@ public class Main_Main extends JavaPlugin implements Listener
 				  		ItemC.onCommand1(talker, command, string, args);
 		  			break;
 		  		case "파티":
+		  		case "gbdparty":
 		  			GBD_RPG.Party.Party_Command PartyC = new GBD_RPG.Party.Party_Command();
 		  			PartyC.onCommand(talker, command, string, args);
 		  			return true;
@@ -719,26 +724,44 @@ public class Main_Main extends JavaPlugin implements Listener
 		  		case "강제철거":
 		  		case "오피박스":
 		  		case "스텟초기화권":
+		  		case "경주":
+		  		case "경험치주기":
+				case "gbdtest":
+				case "gbdtest2":
+				case "gbdaddtype":
+				case "gbdremoveentity":
+				case "gbdremoveitem":
+				case "gbdforceremove":
+				case "opbox":
+				case "gbdbacktothenewbie":
+				case "giveexp":
 		  			new GBD_RPG.Admin.Admin_Command().onCommand(player, args, string);
 		  			return true;
 				case "수락":
 				case "거절":
 		  		case "돈":
+				case "gbdaccept":
+				case "gbddeny":
+		  		case "gbdmoney":
 		  			new GBD_RPG.User.User_Command().onCommand(player, args, string);
 		  			return true;
 		  		case "스텟":
+		  		case "gbdstat":
 				 	s.SP((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
 				 	new GBD_RPG.User.Stats_GUI().StatusGUI((Player)talker);
 					return true;
 		  		case "옵션":
+		  		case "gbdoption":
 				 	s.SP((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
 				 	new GBD_RPG.User.Option_GUI().optionGUI((Player)talker);
 					return true;
 		  		case "기타":
+		  		case "gbdetc":
 				 	s.SP((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
 				 	new GBD_RPG.User.ETC_GUI().ETCGUI_Main((Player) talker);
 					return true;
 		  		case "몬스터" :
+		  		case "gbdmobs" :
 				  if(talker.isOp() == true)
 				  {
 					  s.SP((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
@@ -751,22 +774,27 @@ public class Main_Main extends JavaPlugin implements Listener
 				  }
 		  			return true;
 		  		case "워프":
+		  		case "gbdwarp":
 		  			GBD_RPG.Warp.Warp_Command WarpC = new GBD_RPG.Warp.Warp_Command();
 		  			WarpC.onCommand(talker, command, string, args);
 		  			return true;
 		  		case "영역":
+		  		case "gbdarea":
 		  			GBD_RPG.Area.Area_Command AreaC = new GBD_RPG.Area.Area_Command();
 		  			AreaC.onCommand(talker, command, string, args);
 		  			return true;
 		  		case "상점":
+		  		case "gbdshop":
 		  			GBD_RPG.NPC.NPC_Command NPCC = new GBD_RPG.NPC.NPC_Command();
 		  			NPCC.onCommand(talker, command, string, args);
 		  			return true;
 		  		case "퀘스트":
+		  		case "gbdquest":
 		  			GBD_RPG.Quest.Quest_Command QC = new GBD_RPG.Quest.Quest_Command();
 		  			QC.onCommand(talker, command, string, args);
 		  			return true;
 		  		case "커맨드":
+		  		case "gbdcommand":
 		  			if(player.isOp() == true)
 		  			{
 		  				UserData_Object u = new UserData_Object();
@@ -807,6 +835,39 @@ public class Main_Main extends JavaPlugin implements Listener
 					return true;
 			}
 			return false;
+		}
+		else
+		{
+			if(string.compareTo("경주")==0||string.compareTo("giveexp")==0||string.compareTo("경험치주기")==0)
+			{
+				if(args.length==2)
+				{
+  					Player target = Bukkit.getServer().getPlayer(args[0]);
+	  				if(target.isOnline())
+	  				{
+	  					int EXP = 0;
+	  					try
+	  					{
+	  						EXP = Integer.parseInt(args[1]);
+	  					}
+	  					catch(NumberFormatException e)
+	  					{
+	  					  	Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[SYSTEM] : 정수 형태의 값(숫자)을 입력하세요!");
+		  					return true;
+	  					}
+	  					GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(target.getUniqueId().toString()).addStat_MoneyAndEXP(0, EXP, true);
+  					  	Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN+"[SYSTEM] : " + args[0] + "님에게 경험치 " + EXP + "을 지급하였습니다!");
+	  				}
+	  				else
+	  				{
+					  	Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[SYSTEM] : 해당 플레이어는 접속중이 아닙니다!");
+	  				}
+				}
+				else
+				{
+					  	Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[SYSTEM] : /경주 [닉네임] [경험치]");
+				}
+			}
 		}
 		return false;
     }

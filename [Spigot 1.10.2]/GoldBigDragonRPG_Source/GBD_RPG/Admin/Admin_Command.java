@@ -26,21 +26,21 @@ public class Admin_Command
 
 		if(player.isOp() == true)
 		{
-			if(string.compareTo("테스트")==0)
+			if(string.compareTo("테스트")==0||string.compareTo("gbdtest")==0)
 			{
 				player.sendMessage(""+Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getPlayerRootJob());
 			}
-			else if(string.compareTo("테스트2")==0)
+			else if(string.compareTo("테스트2")==0||string.compareTo("gbdtest2")==0)
 			{
 				//여분의 공간
 			}
-			else if(string.compareTo("오피박스")==0)
+			else if(string.compareTo("오피박스")==0||string.compareTo("opbox")==0)
 			{
 				new UserData_Object().clearAll(player);
 				s.SP(player, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
 				new GBD_RPG.Admin.OPbox_GUI().OPBoxGUI_Main(player,(byte) 1);
 			}
-			else if(string.compareTo("타입추가")==0)
+			else if(string.compareTo("타입추가")==0||string.compareTo("gbdaddtype")==0)
 			{
 				if(args.length!=1)
 				{
@@ -56,7 +56,7 @@ public class Admin_Command
 					s.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.7F);
 				}
 			}
-			else if(string.compareTo("엔티티제거")==0)
+			else if(string.compareTo("엔티티제거")==0||string.compareTo("gbdremoveentity")==0)
 			{
 				if(args.length != 1 ||Integer.parseInt(args[0]) > 10000)
 				{
@@ -76,7 +76,7 @@ public class Admin_Command
 			    }
 			    player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 반경 "+args[0]+"블록 이내에 있던 "+amount+"마리의 엔티티를 삭제하였습니다!");
 			}
-			else if(string.compareTo("아이템제거")==0)
+			else if(string.compareTo("아이템제거")==0||string.compareTo("gbdremoveitem")==0)
 			{
 				if(args.length != 1 ||Integer.parseInt(args[0]) > 10000)
 				{
@@ -96,7 +96,7 @@ public class Admin_Command
 			    }
 			    player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 반경 "+args[0]+"블록 이내에 있던 "+amount+"개의 아이템을 삭제하였습니다!");
 			}
-			else if(string.compareTo("강제철거")==0)
+			else if(string.compareTo("강제철거")==0||string.compareTo("gbdforceremove")==0)
 			{
 				if(args.length != 1 ||Integer.parseInt(args[0]) > 10000)
 				{
@@ -116,7 +116,7 @@ public class Admin_Command
 			    }
 			    player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 반경 "+args[0]+"블록 이내에 있던 "+amount+"마리의 엔티티를 강제 철거하였습니다!");
 			}
-			else if(string.compareTo("스텟초기화권")==0)
+			else if(string.compareTo("스텟초기화권")==0||string.compareTo("gbdbacktothenewbie")==0)
 			{
 				ItemStack Icon = new MaterialData(340, (byte) 0).toItemStack(1);
 				ItemMeta Icon_Meta = Icon.getItemMeta();
@@ -139,6 +139,39 @@ public class Admin_Command
 				}
 				else
   					new GBD_RPG.Util.Util_Player().giveItemForce(player, Icon);
+			}
+			else if(string.compareTo("경주")==0||string.compareTo("giveexp")==0||string.compareTo("경험치주기")==0)
+			{
+				if(args.length==2)
+				{
+  					Player target = Bukkit.getServer().getPlayer(args[0]);
+	  				if(target.isOnline())
+	  				{
+	  					int EXP = 0;
+	  					try
+	  					{
+	  						EXP = Integer.parseInt(args[1]);
+	  					}
+	  					catch(NumberFormatException e)
+	  					{
+	  						player.sendMessage(ChatColor.RED + "[SYSTEM] : 정수 형태의 값(숫자)을 입력하세요!");
+		  					s.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+		  					return;
+	  					}
+	  					GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(target.getUniqueId().toString()).addStat_MoneyAndEXP(0, EXP, true);
+	  					player.sendMessage(ChatColor.GREEN+"[SYSTEM] : " + args[0] + "님에게 경험치 " + EXP + "을 지급하였습니다!");
+	  				}
+	  				else
+	  				{
+	  					player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 플레이어는 접속중이 아닙니다!");
+	  					s.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+	  				}
+				}
+				else
+				{
+  					player.sendMessage(ChatColor.RED + "[SYSTEM] : /경주 [닉네임] [경험치]");
+  					s.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+				}
 			}
 		}
 		else

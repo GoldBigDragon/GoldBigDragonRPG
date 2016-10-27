@@ -1,51 +1,83 @@
 ﻿name: GoldBigDragonRPG
-main: GoldBigDragon_RPG.Main.Main
+main: GBD_RPG.Main_Main.Main_Main
 version: 20160816
 description: Mabinogi!!!
 commands:
+  경주:
+    aliases: [경험치주기, giveexp]
+    description: 경험치를 줍니다.
   돈:
+    aliases: gbdmoney
     description: 자신의 소지 금액을 확인합니다.
   스텟:
+    aliases: gbdstat
     description: 캐릭터의 스텟을 확인합니다.
   옵션:
+    aliases: gbdoption
     description: 게임 옵션을 조절합니다.
   기타:
+    aliases: gbdetc
     description: 기타 기능들을 확인합니다.
   파티:
+    aliases: gbdparty
     description: 파티 관련 GUI창을 엽니다.
   오피박스:
+    aliases: opbox
     description: 서버 OP만의 설정 GUI창을 엽니다.
   아이템:
+    aliases: gbditem
     description: 아이템 관련 명령어를 실행합니다.
   몬스터:
+    aliases: gbdmobs
     description: 몬스터 관련 명령어를 실행합니다.
   워프:
+    aliases: gbdwarp
     description: 워프 관련 명령어를 실행합니다.
   영역:
+    aliases: gbdarea
     description: 영역 관련 명령어를 실행합니다.
   상점:
+    aliases: gbdshop
     description: NPC의 상점 관련 명령어를 실행합니다.
   엔티티제거:
+    aliases: gbdremoveentity
     description: 플레이어, 아이템 액자, 아머 스탠드를 제외한 모든 엔티티를 제거합니다.
   아이템제거:
+    aliases: gbdremoveitem
     description: 반경 내에 떨어진 모든 아이템을 제거합니다.
+  강제철거:
+    aliases: gbdforceremove
+    description: 모든 엔티티를 강제로 철거해 버립니다.
   퀘스트:
+    aliases: gbdquest
     description: 퀘스트 관련 GUI창을 엽니다.
   커맨드:
+    aliases: gbdcommand
     description: 스킬 커맨드 등록용 커맨드 입니다.
   스킬:
+    aliases: gbdskill
     description: 자신의 스킬 창을 확인합니다.
   친구:
+    aliases: gbdfriend
     description: 친구 GUI창을 엽니다.
   gui사용:
+    aliases: gbdenablegui
     description: 비활성화 시킨 NPC의 GUI창을 활성화 시킵니다.
   테스트:
+    aliases: gbdtest
     description: 테스트용 명령어 입니다.
   테스트2:
+    aliases: gbdtest2
     description: 테스트용 명령어 입니다.
   수락:
+    aliases: gbdaccept
     description: 상대방 요청을 수락니다.
   거절:
+    aliases: gbddeny
     description: 상대방 요청을 거절합니다.
   타입추가:
+    aliases: gbdaddtype
     description: 무기 타입을 추가합니다.
+  스텟초기화권:
+    aliases: gbdbacktothenewbie
+    description: 스텟 초기화 주문서를 얻습니다. /스텟초기화권 [이름] 을 통해 다른사람에게도 줄 수 있습니다.
