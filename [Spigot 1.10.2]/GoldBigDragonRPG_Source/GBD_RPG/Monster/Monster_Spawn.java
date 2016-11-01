@@ -3,7 +3,6 @@ package GBD_RPG.Monster;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -14,8 +13,6 @@ import org.bukkit.entity.*;
 import org.bukkit.entity.Skeleton.SkeletonType;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -58,13 +55,20 @@ public class Monster_Spawn
 		}
 		if(event.getEntity().getType()==EntityType.ARMOR_STAND)
 			return;
-
-		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-	    YamlManager Config = YC.getNewConfig("config.yml");
-		
+		if(event.getSpawnReason() == SpawnReason.SLIME_SPLIT)
+		{
+			if(event.getEntity().getCustomName()!=null)
+			{
+				if(GBD_RPG.Main_Main.Main_ServerOption.MonsterNameMatching.containsKey(event.getEntity().getCustomName()))
+				{
+					event.setCancelled(true);
+				}
+			}
+		}
 		GBD_RPG.Area.Area_Main A = new GBD_RPG.Area.Area_Main();
 		String[] Area = A.getAreaName(event.getEntity());
 		
+		YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		if(Area != null)
 		{
 			if(A.getAreaOption(Area[0], (char) 3) == false)
@@ -100,6 +104,7 @@ public class Monster_Spawn
 				}
 			}
 		}
+	    YamlManager Config = YC.getNewConfig("config.yml");
 		new GBD_RPG.Monster.Monster_Spawn().SpawnEffect(event.getEntity(),event.getLocation(), (byte) Config.getInt("Server.MonsterSpawnEffect"));
 		return;
 	}
@@ -599,6 +604,7 @@ public class Monster_Spawn
 		Monster.setCustomNameVisible(true);
 		return Monster;
 	}
+
 	
 	private static void Stack(String Display, int ID, byte DATA, byte STACK, List<String> Lore, byte Loc, Inventory inventory)
 	{
