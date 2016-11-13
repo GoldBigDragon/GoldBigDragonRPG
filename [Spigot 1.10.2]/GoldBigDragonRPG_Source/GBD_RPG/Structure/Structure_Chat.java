@@ -37,7 +37,8 @@ public class Structure_Chat
 		//Reciever NickName
 		if(u.getString(player,(byte)0).compareTo("RN")==0)
 		{
-			if(Message.compareTo(ChatColor.stripColor(player.getName()))==0)
+			String lower = Message.toLowerCase();
+			if(lower.compareTo(ChatColor.stripColor(player.getName().toLowerCase()))==0)
 			{
 				s.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				u.clearAll(player);

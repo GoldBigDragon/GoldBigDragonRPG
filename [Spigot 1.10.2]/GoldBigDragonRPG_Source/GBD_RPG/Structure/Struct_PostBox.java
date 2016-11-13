@@ -134,7 +134,7 @@ public class Struct_PostBox extends Util_GUI
 						Memo.add(ChatColor.WHITE+PostMemo.substring(0+(count2*20), PostMemo.length()));
 				}
 				Memo.add("");
-				Memo.add(ChatColor.BLUE+"받는 이 : " + ChatColor.WHITE+PostTo);
+				Memo.add(ChatColor.BLUE+"받는이 : " + ChatColor.WHITE+PostTo);
 				if(PostItem==null)
 				{
 					Memo.add(ChatColor.YELLOW+"[좌 클릭시 메시지 전송 취소]");
@@ -145,21 +145,24 @@ public class Struct_PostBox extends Util_GUI
 				{
 					int PostValue = PlayerPost.getInt("Send."+PostList[count].toString()+".Value");
 					ItemMeta PIMeta = PostItem.getItemMeta();
+					List<String> PostedItemLore = PIMeta.getLore();
 					if(PostItem.hasItemMeta() && PIMeta != null)
 					{
-						PIMeta.getLore().add(" ");
-						PIMeta.getLore().add(ChatColor.BLUE +"보낸 이 : " + ChatColor.WHITE+PostTo);
-						PIMeta.getLore().add(ChatColor.BLUE +"대금 청구 : " + ChatColor.WHITE+PostValue);
-						PIMeta.getLore().add(ChatColor.YELLOW +"[좌 클릭시 물품 회수]");
-						PIMeta.getLore().add(ChatColor.BLACK+PostList[count].toString());
+						PostedItemLore.add(ChatColor.BLUE +"대금 청구 : " + ChatColor.WHITE+PostValue);
+						PostedItemLore.add(" ");
+						PostedItemLore.add(ChatColor.YELLOW +"[좌 클릭시 물품 회수]");
+						PostedItemLore.add(ChatColor.BLACK+PostList[count].toString());
+						for(int count2 = 0; count2 < PostedItemLore.size(); count2++)
+							Memo.add(PostedItemLore.get(count2));
 					}
 					else
 					{
-						Memo.add(ChatColor.BLUE+"대금 청구 : " + ChatColor.WHITE+PostValue);
+						Memo.add(ChatColor.BLUE+"대금청구 : " + ChatColor.WHITE+PostValue);
+						Memo.add(" ");
 						Memo.add(ChatColor.YELLOW+"[좌 클릭시 물품 회수]");
 						Memo.add(ChatColor.BLACK+PostList[count].toString());
-						PIMeta.setLore(Memo);
 					}
+					PIMeta.setLore(Memo);
 					PostItem.setItemMeta(PIMeta);
 					ItemStackStack(PostItem, loc, inv);
 				}
@@ -406,15 +409,15 @@ public class Struct_PostBox extends Util_GUI
 						PostBoxMainGUI(player, Type);
 						return;
 					}
-					String Sender = PlayerPost.getString("Send."+UTC+".To");
-					Sender = Bukkit.getOfflinePlayer(Sender).getUniqueId().toString();
-					YamlManager SenderPost =YC.getNewConfig("Post/"+Sender+".yml");
+					String Receiver = PlayerPost.getString("Send."+UTC+".To");
+					Receiver = Bukkit.getOfflinePlayer(Receiver).getUniqueId().toString();
+					YamlManager ReceiverPost =YC.getNewConfig("Post/"+Receiver+".yml");
 					if(PlayerPost.getItemStack("Send."+UTC+".Item")==null)
 					{
+						ReceiverPost.removeKey("Recieve."+UTC);
+						ReceiverPost.saveConfig();
 						PlayerPost.removeKey("Send."+UTC);
 						PlayerPost.saveConfig();
-						SenderPost.removeKey("Recieve."+UTC);
-						SenderPost.saveConfig();
 						PostBoxMainGUI(player, Type);
 						return;
 					}
@@ -422,10 +425,11 @@ public class Struct_PostBox extends Util_GUI
 					{
 						if(new GBD_RPG.Util.Util_Player().giveItem(player, PlayerPost.getItemStack("Send."+UTC+".Item")))
 						{
+							ReceiverPost.removeKey("Recieve."+UTC+".Item");
+							ReceiverPost.removeKey("Recieve."+UTC);
+							ReceiverPost.saveConfig();
 							PlayerPost.removeKey("Send."+UTC);
 							PlayerPost.saveConfig();
-							SenderPost.removeKey("Recieve."+UTC);
-							SenderPost.saveConfig();
 							PostBoxMainGUI(player, Type);
 							return;
 						}
