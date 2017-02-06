@@ -1,6 +1,8 @@
 package GBD_RPG.Main_Event;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -36,13 +38,12 @@ public class Main_Interact
 			if(event.getPlayer().isOp())
 				OPwork(event);
 
-
 			if(event.getPlayer().getWorld().getName().compareTo("Dungeon")==0)
 			{
 				new GBD_RPG.Dungeon.Dungeon_Main().DungeonInteract(event);
 				return;
 			}
-			
+
 			if(event.getAction()==Action.RIGHT_CLICK_BLOCK&&event.getClickedBlock()!=null)
 			{
 				short id = (short) event.getClickedBlock().getTypeId();

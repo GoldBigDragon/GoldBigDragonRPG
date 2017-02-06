@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
+
 import net.minecraft.server.v1_10_R1.EntityInsentient;
 import net.minecraft.server.v1_10_R1.EntityTypes;
 
@@ -35,7 +37,7 @@ public class NMSUtils
             * 마인크래프트가 이 맵들을 체크할 때, 이미 등록된 id가 있다면,
             * 이전의 데이터를 지워 버리고, 우리가 등록한 것을 짚어 넣게 된다.
             */
-            
+
             dataMaps.get(0).remove(name);
             dataMaps.get(2).remove(id);
             

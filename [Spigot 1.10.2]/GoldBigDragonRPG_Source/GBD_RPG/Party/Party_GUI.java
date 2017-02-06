@@ -265,6 +265,4 @@ public final class Party_GUI extends Util_GUI
 			}
 		}
 	}
-
-
 }

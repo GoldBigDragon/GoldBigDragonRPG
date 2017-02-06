@@ -682,7 +682,7 @@ public class User_Object
 			Alert_EXPget = true;
 
 			Option_BGM = true;
-			Option_ClickUse = false;
+			Option_ClickUse = true;
 			Option_EquipLook = true;
 			Option_HotBarSound = true;
 			Option_ChattingType = 0;

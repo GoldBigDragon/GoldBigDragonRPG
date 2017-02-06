@@ -20,6 +20,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
@@ -476,6 +477,31 @@ public class Main_Main extends JavaPlugin implements Listener
     @EventHandler
     private void ITBlock(PlayerInteractEvent event)
     {
+		if (event.getAction() == Action.PHYSICAL)
+		{
+			Block block = event.getClickedBlock();
+			if (block != null)
+			{
+				if (block.getTypeId() == 60) 
+				{
+					GBD_RPG.Area.Area_Main A = new GBD_RPG.Area.Area_Main();
+					String[] Area = A.getAreaName(event.getClickedBlock());
+					if(Area != null)
+					{
+						if(A.getAreaOption(Area[0], (char) 7) == false)
+						{
+							event.setCancelled(true);
+							if(event.getPlayer().isOp() == false)
+							{
+								new GBD_RPG.Effect.Effect_Sound().SP(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+								event.getPlayer().sendMessage(ChatColor.RED + "[SYSTEM] : " + ChatColor.YELLOW + Area[1] + ChatColor.RED + " 지역에 있는 작물은 손 댈 수없습니다!");
+							}
+							return;
+						}
+					}
+				}
+			}
+		}
     	new GBD_RPG.Util.ETC().UpdatePlayerHPMP(event.getPlayer());
     	new GBD_RPG.Main_Event.Main_Interact().PlayerInteract(event);
     	return;
@@ -488,6 +514,7 @@ public class Main_Main extends JavaPlugin implements Listener
     	new GBD_RPG.Main_Event.Main_Interact().PlayerInteractEntity(event);
     	return;
     }
+    
     @EventHandler
     private void ItemGetMessage(PlayerPickupItemEvent event) {new GBD_RPG.Main_Event.Main_Interact().PlayerGetItem(event);}
 	@EventHandler
@@ -562,13 +589,6 @@ public class Main_Main extends JavaPlugin implements Listener
 			}
 		}
 	}
-	
-	/*
-	private void changeMainHand(PlayerChangedMainHandEvent event)
-	{
-		
-	}
-	*/
 	
 	@EventHandler
 	private void applyHealthRegen(EntityRegainHealthEvent event)

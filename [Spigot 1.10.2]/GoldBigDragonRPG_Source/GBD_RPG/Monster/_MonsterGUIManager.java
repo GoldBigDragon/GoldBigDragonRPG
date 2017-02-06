@@ -21,6 +21,8 @@ public class _MonsterGUIManager
 			new GBD_RPG.Monster.Monster_GUI().MonsterPotionGUIClick(event);
 		else if(SubjectCode.compareTo("03")==0)//몬스터 장비 설정
 			new GBD_RPG.Monster.Monster_GUI().ArmorGUIClick(event);
+		else if(SubjectCode.compareTo("0b")==0)//몬스터 타입 선택
+			new GBD_RPG.Monster.Monster_GUI().MonsterTypeGUIClick(event);
 		
 	}
 	

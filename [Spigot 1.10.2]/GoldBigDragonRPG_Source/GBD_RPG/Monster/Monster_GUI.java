@@ -365,6 +365,62 @@ public class Monster_GUI extends Util_GUI
 		return;
 	}
 
+	public void MonsterTypeGUI(Player player, String MonsterName)
+	{
+		String UniqueCode = "§1§0§8§0§b§r";
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0몬스터 타입 설정");
+
+		Stack2("§2§l[좀비]", 367,0,1,null, 0, inv);
+		Stack2("§2§l[자이언트]", 367,0,2,null, 1, inv);
+		Stack2("§d§l[좀비 피그맨]", 283,0,1,null, 2, inv);
+		Stack2("§a§l[크리퍼]", 289,0,1,null, 3, inv);
+		Stack2("§a§l[번개 크리퍼]", 289,0,1,null, 4, inv);
+		Stack2("§f§l[스켈레톤]", 352,0,1,null, 5, inv);
+		Stack2("§8§l[위더 스켈레톤]", 263,0,1,null, 6, inv);
+		Stack2("§8§l[위더]", 399,0,1,null, 7, inv);
+		Stack2("§7§l[거미]", 287,0,1,null, 8, inv);
+		Stack2("§7§l[동굴거미]", 287,0,2,null, 9, inv);
+		Stack2("§a§l[작은 슬라임]", 341,0,1,null, 10, inv);
+		Stack2("§a§l[보통 슬라임]", 341,0,2,null, 11, inv);
+		Stack2("§a§l[큰 슬라임]", 341,0,4,null, 12, inv);
+		Stack2("§a§l[특대 슬라임]", 341,0,8,null, 13, inv);
+		Stack2("§a§l[초대형 슬라임]", 341,0,16,null, 14, inv);
+		Stack2("§7§l[작은 마그마큐브]", 378,0,1,null, 15, inv);
+		Stack2("§7§l[보통 마그마큐브]", 378,0,1,null, 16, inv);
+		Stack2("§7§l[큰 마그마큐브]", 378,0,1,null, 17, inv);
+		Stack2("§7§l[특대 마그마큐브]", 378,0,1,null, 18, inv);
+		Stack2("§7§l[초대형 마그마큐브]", 378,0,1,null, 19, inv);
+		Stack2("§8§l[박쥐]", 362,0,1,null, 20, inv);
+		Stack2("§f§l[가스트]", 370,0,1,null, 21, inv);
+		Stack2("§e§l[블레이즈]", 369,0,1,null, 22, inv);
+		Stack2("§7§l[좀벌레]", 1,0,1,null, 23, inv);
+		Stack2("§5§l[엔더 진드기]", 432,0,1,null, 24, inv);
+		Stack2("§a§l[주민]", 388,0,1,null, 25, inv);
+		Stack2("§5§l[마녀]", 438,0,1,null, 26, inv);
+		Stack2("§3§l[가디언]", 409,0,1,null, 27, inv);
+		Stack2("§8§l[엔더맨]", 368,0,1,null, 28, inv);
+		Stack2("§5§l[셜커]", 443,0,1,null, 29, inv);
+		Stack2("§8§l[엔더드래곤]", 122,0,1,null, 30, inv);
+		Stack2("§d§l[돼지]", 319,0,1,null, 31, inv);
+		Stack2("§f§l[양]", 423,0,1,null, 32, inv);
+		Stack2("§7§l[소]", 363,0,1,null, 33, inv);
+		Stack2("§c§l[버섯 소]", 40,0,1,null, 34, inv);
+		Stack2("§f§l[닭]", 365,0,1,null, 35, inv);
+		Stack2("§8§l[오징어]", 351,0,1,null, 36, inv);
+		Stack2("§7§l[늑대]", 280,0,1,null, 37, inv);
+		Stack2("§e§l[오셀롯]", 349,0,1,null, 38, inv);
+		Stack2("§f§l[눈사람]", 332,0,1,null, 39, inv);
+		Stack2("§f§l[철골렘]", 265,0,1,null, 40, inv);
+		Stack2("§f§l[토끼]", 411,0,1,null, 41, inv);
+		Stack2("§f§l[북극곰]", 349,1,1,null, 42, inv);
+		Stack2("§6§l[말]", 417,0,1,null, 43, inv);
+		Stack2("§5§l[엔더 크리스탈]", 426,0,1,null, 44, inv);
+
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+MonsterName), 53, inv);
+		player.openInventory(inv);
+	}
+	
 
 	public void MonsterListGUIClick(InventoryClickEvent event)
 	{
@@ -433,103 +489,7 @@ public class Monster_GUI extends Util_GUI
 			if(slot == 45)//이전 목록
 				MonsterListGUI(player, 0);
 			else if(slot == 14)//몹 타입 변경
-			{
-				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-				YamlManager MobList = YC.getNewConfig("Monster/MonsterList.yml");
-				String Type = MobList.getString(MonsterName+".Type");
-				if(Type.compareTo("크리퍼")==0)
-					MobList.set(MonsterName+".Type", "번개크리퍼");
-				else if(Type.compareTo("번개크리퍼")==0)
-					MobList.set(MonsterName+".Type", "스켈레톤");
-				else if(Type.compareTo("스켈레톤")==0)
-					MobList.set(MonsterName+".Type", "네더스켈레톤");
-				else if(Type.compareTo("네더스켈레톤")==0)
-					MobList.set(MonsterName+".Type", "거미");
-				else if(Type.compareTo("거미")==0)
-					MobList.set(MonsterName+".Type", "좀비");
-				else if(Type.compareTo("좀비")==0)
-					MobList.set(MonsterName+".Type", "자이언트");
-				else if(Type.compareTo("자이언트")==0)
-					MobList.set(MonsterName+".Type", "작은슬라임");
-				else if(Type.compareTo("작은슬라임")==0)
-					MobList.set(MonsterName+".Type", "보통슬라임");
-				else if(Type.compareTo("보통슬라임")==0)
-					MobList.set(MonsterName+".Type", "큰슬라임");
-				else if(Type.compareTo("큰슬라임")==0)
-					MobList.set(MonsterName+".Type", "특대슬라임");
-				else if(Type.compareTo("특대슬라임")==0)
-					MobList.set(MonsterName+".Type", "초대형슬라임");
-				else if(Type.compareTo("초대형슬라임")==0)
-					MobList.set(MonsterName+".Type", "가스트");
-				else if(Type.compareTo("가스트")==0)
-					MobList.set(MonsterName+".Type", "좀비피그맨");
-				else if(Type.compareTo("좀비피그맨")==0)
-					MobList.set(MonsterName+".Type", "엔더맨");
-				else if(Type.compareTo("엔더맨")==0)
-					MobList.set(MonsterName+".Type", "동굴거미");
-				else if(Type.compareTo("동굴거미")==0)
-					MobList.set(MonsterName+".Type", "좀벌레");
-				else if(Type.compareTo("좀벌레")==0)
-					MobList.set(MonsterName+".Type", "블레이즈");
-				else if(Type.compareTo("블레이즈")==0)
-					MobList.set(MonsterName+".Type", "작은마그마큐브");
-				else if(Type.compareTo("작은마그마큐브")==0)
-					MobList.set(MonsterName+".Type", "보통마그마큐브");
-				else if(Type.compareTo("보통마그마큐브")==0)
-					MobList.set(MonsterName+".Type", "큰마그마큐브");
-				else if(Type.compareTo("큰마그마큐브")==0)
-					MobList.set(MonsterName+".Type", "특대마그마큐브");
-				else if(Type.compareTo("특대마그마큐브")==0)
-					MobList.set(MonsterName+".Type", "박쥐");
-				else if(Type.compareTo("박쥐")==0)
-					MobList.set(MonsterName+".Type", "마녀");
-				else if(Type.compareTo("마녀")==0)
-					MobList.set(MonsterName+".Type", "엔더진드기");
-				else if(Type.compareTo("엔더진드기")==0)
-					MobList.set(MonsterName+".Type", "수호자");
-				else if(Type.compareTo("수호자")==0)
-					MobList.set(MonsterName+".Type", "돼지");
-				else if(Type.compareTo("돼지")==0)
-					MobList.set(MonsterName+".Type", "양");
-				else if(Type.compareTo("양")==0)
-					MobList.set(MonsterName+".Type", "소");
-				else if(Type.compareTo("소")==0)
-					MobList.set(MonsterName+".Type", "닭");
-				else if(Type.compareTo("닭")==0)
-					MobList.set(MonsterName+".Type", "오징어");
-				else if(Type.compareTo("오징어")==0)
-					MobList.set(MonsterName+".Type", "늑대");
-				else if(Type.compareTo("늑대")==0)
-					MobList.set(MonsterName+".Type", "버섯소");
-				else if(Type.compareTo("버섯소")==0)
-					MobList.set(MonsterName+".Type", "오셀롯");
-				else if(Type.compareTo("오셀롯")==0)
-					MobList.set(MonsterName+".Type", "말");
-				else if(Type.compareTo("말")==0)
-					MobList.set(MonsterName+".Type", "토끼");
-				else if(Type.compareTo("토끼")==0)
-					MobList.set(MonsterName+".Type", "주민");
-				else if(Type.compareTo("주민")==0)
-					MobList.set(MonsterName+".Type", "눈사람");
-				else if(Type.compareTo("눈사람")==0)
-					MobList.set(MonsterName+".Type", "골렘");
-				else if(Type.compareTo("골렘")==0)
-					MobList.set(MonsterName+".Type", "위더");
-				else if(Type.compareTo("위더")==0)
-					MobList.set(MonsterName+".Type", "엔더드래곤");
-				else if(Type.compareTo("엔더드래곤")==0)
-					MobList.set(MonsterName+".Type", "엔더크리스탈");
-				else if(Type.compareTo("엔더크리스탈")==0)
-					MobList.set(MonsterName+".Type", "셜커");
-				else if(Type.compareTo("셜커")==0)
-					MobList.set(MonsterName+".Type", "북극곰");
-				else if(Type.compareTo("북극곰")==0)
-					MobList.set(MonsterName+".Type", "크리퍼");
-				else
-					MobList.set(MonsterName+".Type", "좀비");
-				MobList.saveConfig();
-				MonsterOptionSettingGUI(player, MonsterName);
-			}
+				MonsterTypeGUI(player, MonsterName);
 			else if(slot == 15)//스폰 바이옴 변경
 			{
 				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
@@ -807,4 +767,123 @@ public class Monster_GUI extends Util_GUI
 		return;
 	}
 
+	public void MonsterTypeGUIClick(InventoryClickEvent event)
+	{
+		event.setCancelled(true);
+		int slot = event.getSlot();
+		Player player = (Player) event.getWhoClicked();
+
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		if(slot == 53)//나가기
+		{
+			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			player.closeInventory();
+		}
+		else
+		{
+			String MonsterName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+			
+			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			if(slot == 45)//이전 목록
+				MonsterOptionSettingGUI(player, MonsterName);
+			else
+			{
+
+				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+				YamlManager MobList = YC.getNewConfig("Monster/MonsterList.yml");
+				if(slot == 0)
+					MobList.set(MonsterName+".Type", "좀비");
+				else if(slot == 1)
+					MobList.set(MonsterName+".Type", "자이언트");
+				else if(slot == 2)
+					MobList.set(MonsterName+".Type", "좀비피그맨");
+				else if(slot == 3)
+					MobList.set(MonsterName+".Type", "크리퍼");
+				else if(slot == 4)
+					MobList.set(MonsterName+".Type", "번개크리퍼");
+				else if(slot == 5)
+					MobList.set(MonsterName+".Type", "스켈레톤");
+				else if(slot == 6)
+					MobList.set(MonsterName+".Type", "네더스켈레톤");
+				else if(slot == 7)
+					MobList.set(MonsterName+".Type", "위더");
+				else if(slot == 8)
+					MobList.set(MonsterName+".Type", "거미");
+				else if(slot == 9)
+					MobList.set(MonsterName+".Type", "동굴거미");
+				else if(slot == 10)
+					MobList.set(MonsterName+".Type", "작은슬라임");
+				else if(slot == 11)
+					MobList.set(MonsterName+".Type", "보통슬라임");
+				else if(slot == 12)
+					MobList.set(MonsterName+".Type", "큰슬라임");
+				else if(slot == 13)
+					MobList.set(MonsterName+".Type", "특대슬라임");
+				else if(slot == 14)
+					MobList.set(MonsterName+".Type", "초대형슬라임");
+				else if(slot == 15)
+					MobList.set(MonsterName+".Type", "작은마그마큐브");
+				else if(slot == 16)
+					MobList.set(MonsterName+".Type", "보통마그마큐브");
+				else if(slot == 17)
+					MobList.set(MonsterName+".Type", "큰마그마큐브");
+				else if(slot == 18)
+					MobList.set(MonsterName+".Type", "특대마그마큐브");
+				else if(slot == 19)
+					MobList.set(MonsterName+".Type", "초대형마그마큐브");
+				else if(slot == 20)
+					MobList.set(MonsterName+".Type", "박쥐");
+				else if(slot == 21)
+					MobList.set(MonsterName+".Type", "가스트");
+				else if(slot == 22)
+					MobList.set(MonsterName+".Type", "블레이즈");
+				else if(slot == 23)
+					MobList.set(MonsterName+".Type", "좀벌레");
+				else if(slot == 24)
+					MobList.set(MonsterName+".Type", "엔더진드기");
+				else if(slot == 25)
+					MobList.set(MonsterName+".Type", "주민");
+				else if(slot == 26)
+					MobList.set(MonsterName+".Type", "마녀");
+				else if(slot == 27)
+					MobList.set(MonsterName+".Type", "수호자");
+				else if(slot == 28)
+					MobList.set(MonsterName+".Type", "엔더맨");
+				else if(slot == 29)
+					MobList.set(MonsterName+".Type", "셜커");
+				else if(slot == 30)
+					MobList.set(MonsterName+".Type", "엔더드래곤");
+				else if(slot == 31)
+					MobList.set(MonsterName+".Type", "돼지");
+				else if(slot == 32)
+					MobList.set(MonsterName+".Type", "양");
+				else if(slot == 33)
+					MobList.set(MonsterName+".Type", "소");
+				else if(slot == 34)
+					MobList.set(MonsterName+".Type", "버섯소");
+				else if(slot == 35)
+					MobList.set(MonsterName+".Type", "닭");
+				else if(slot == 36)
+					MobList.set(MonsterName+".Type", "오징어");
+				else if(slot == 37)
+					MobList.set(MonsterName+".Type", "늑대");
+				else if(slot == 38)
+					MobList.set(MonsterName+".Type", "오셀롯");
+				else if(slot == 39)
+					MobList.set(MonsterName+".Type", "눈사람");
+				else if(slot == 40)
+					MobList.set(MonsterName+".Type", "골렘");
+				else if(slot == 41)
+					MobList.set(MonsterName+".Type", "토끼");
+				else if(slot == 42)
+					MobList.set(MonsterName+".Type", "북극곰");
+				else if(slot == 43)
+					MobList.set(MonsterName+".Type", "말");
+				else if(slot == 44)
+					MobList.set(MonsterName+".Type", "엔더크리스탈");
+				MobList.saveConfig();
+				MonsterOptionSettingGUI(player, MonsterName);
+			}
+		}
+	}
 }
