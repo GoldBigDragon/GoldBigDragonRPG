@@ -191,57 +191,50 @@ public final class Dungeon_GUI extends Util_GUI
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "던전 보상 상자", 54,0,1,Arrays.asList(ChatColor.GRAY + "던전 추가 보상을 설정합니다."), 24, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "던전 몬스터", 383,0,1,Arrays.asList(ChatColor.GRAY + "던전 몬스터를 설정합니다."), 29, inv);
 		
-		if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
+		String lore = "";
+		OtherPlugins.NoteBlockAPIMain NBAPI = new OtherPlugins.NoteBlockAPIMain();
+		int tracknumber = DungeonConfig.getInt("BGM.Normal");
+		lore = " %enter%"+ChatColor.GRAY + "던전 BGM을 설정합니다.%enter% %enter%"+ChatColor.BLUE + "[클릭시 노트블록 사운드 설정]%enter% %enter%"+ChatColor.DARK_AQUA+"[트랙] "+ChatColor.BLUE +""+ tracknumber+"%enter%"
+		+ChatColor.DARK_AQUA+"[제목] "+ChatColor.BLUE +""+ NBAPI.getTitle(tracknumber)+"%enter%"
+		+ChatColor.DARK_AQUA+"[저자] "+ChatColor.BLUE+NBAPI.getAuthor(tracknumber)+"%enter%"+ChatColor.DARK_AQUA+"[설명] ";
+		
+		String Description = NBAPI.getDescription(tracknumber);
+		String lore2="";
+		int a = 0;
+		for(int count = 0; count <Description.toCharArray().length; count++)
 		{
-			String lore = "";
-			int tracknumber = DungeonConfig.getInt("BGM.Normal");
-			lore = " %enter%"+ChatColor.GRAY + "던전 BGM을 설정합니다.%enter% %enter%"+ChatColor.BLUE + "[클릭시 노트블록 사운드 설정]%enter% %enter%"+ChatColor.DARK_AQUA+"[트랙] "+ChatColor.BLUE +""+ tracknumber+"%enter%"
-			+ChatColor.DARK_AQUA+"[제목] "+ChatColor.BLUE +""+ new OtherPlugins.NoteBlockAPIMain().getTitle(tracknumber)+"%enter%"
-			+ChatColor.DARK_AQUA+"[저자] "+ChatColor.BLUE+new OtherPlugins.NoteBlockAPIMain().getAuthor(tracknumber)+"%enter%"+ChatColor.DARK_AQUA+"[설명] ";
-			
-			String Description = new OtherPlugins.NoteBlockAPIMain().getDescription(tracknumber);
-			String lore2="";
-			int a = 0;
-			for(int count = 0; count <Description.toCharArray().length; count++)
+			lore2 = lore2+ChatColor.BLUE+Description.toCharArray()[count];
+			a=a+1;
+			if(a >= 15)
 			{
-				lore2 = lore2+ChatColor.BLUE+Description.toCharArray()[count];
-				a=a+1;
-				if(a >= 15)
-				{
-					a = 0;
-					lore2 = lore2+"%enter%      ";
-				}
+				a = 0;
+				lore2 = lore2+"%enter%      ";
 			}
-			lore = lore + lore2;
-			Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[던전 배경음]", 2263,0,1,Arrays.asList(lore.split("%enter%")), 31, inv);
+		}
+		lore = lore + lore2;
+		Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[던전 배경음]", 2263,0,1,Arrays.asList(lore.split("%enter%")), 31, inv);
 
-			lore = "";
-			tracknumber = DungeonConfig.getInt("BGM.BOSS");
-			lore = " %enter%"+ChatColor.GRAY + "던전 BGM을 설정합니다.%enter% %enter%"+ChatColor.BLUE + "[클릭시 노트블록 사운드 설정]%enter% %enter%"+ChatColor.DARK_AQUA+"[트랙] "+ChatColor.BLUE +""+ tracknumber+"%enter%"
-			+ChatColor.DARK_AQUA+"[제목] "+ChatColor.BLUE +""+ new OtherPlugins.NoteBlockAPIMain().getTitle(tracknumber)+"%enter%"
-			+ChatColor.DARK_AQUA+"[저자] "+ChatColor.BLUE+new OtherPlugins.NoteBlockAPIMain().getAuthor(tracknumber)+"%enter%"+ChatColor.DARK_AQUA+"[설명] ";
-			
-			Description = new OtherPlugins.NoteBlockAPIMain().getDescription(tracknumber);
-			lore2="";
-			a = 0;
-			for(int count = 0; count <Description.toCharArray().length; count++)
-			{
-				lore2 = lore2+ChatColor.BLUE+Description.toCharArray()[count];
-				a=a+1;
-				if(a >= 15)
-				{
-					a = 0;
-					lore2 = lore2+"%enter%      ";
-				}
-			}
-			lore = lore + lore2;
-			Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[보스 배경음]", 2259,0,1,Arrays.asList(lore.split("%enter%")), 33, inv);
-		}
-		else
+		lore = "";
+		tracknumber = DungeonConfig.getInt("BGM.BOSS");
+		lore = " %enter%"+ChatColor.GRAY + "던전 BGM을 설정합니다.%enter% %enter%"+ChatColor.BLUE + "[클릭시 노트블록 사운드 설정]%enter% %enter%"+ChatColor.DARK_AQUA+"[트랙] "+ChatColor.BLUE +""+ tracknumber+"%enter%"
+		+ChatColor.DARK_AQUA+"[제목] "+ChatColor.BLUE +""+ NBAPI.getTitle(tracknumber)+"%enter%"
+		+ChatColor.DARK_AQUA+"[저자] "+ChatColor.BLUE+NBAPI.getAuthor(tracknumber)+"%enter%"+ChatColor.DARK_AQUA+"[설명] ";
+		
+		Description = NBAPI.getDescription(tracknumber);
+		lore2="";
+		a = 0;
+		for(int count = 0; count <Description.toCharArray().length; count++)
 		{
-			Stack2(ChatColor.RED + ""+ChatColor.BOLD+"[던전 배경음]", 2266,0,1,Arrays.asList("",ChatColor.GRAY + "던전 입장시 테마 음을",ChatColor.GRAY+"재생 시킬 수 있습니다.","",ChatColor.RED + "[     필요 플러그인     ]",ChatColor.RED+" - NoteBlockAPI"), 31, inv);
-			Stack2(ChatColor.RED + ""+ChatColor.BOLD+"[보스 배경음]", 2266,0,1,Arrays.asList("",ChatColor.GRAY + "보스방 입장시 테마 음을",ChatColor.GRAY+"재생 시킬 수 있습니다.","",ChatColor.RED + "[     필요 플러그인     ]",ChatColor.RED+" - NoteBlockAPI"), 33, inv);
+			lore2 = lore2+ChatColor.BLUE+Description.toCharArray()[count];
+			a=a+1;
+			if(a >= 15)
+			{
+				a = 0;
+				lore2 = lore2+"%enter%      ";
+			}
 		}
+		lore = lore + lore2;
+		Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[보스 배경음]", 2259,0,1,Arrays.asList(lore.split("%enter%")), 33, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 44, inv);
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 36, inv);
 
@@ -620,10 +613,11 @@ public final class Dungeon_GUI extends Util_GUI
 				model=model+1;
 			else
 				model=0;
+			OtherPlugins.NoteBlockAPIMain NBAPI = new OtherPlugins.NoteBlockAPIMain();
 			String lore = " %enter%"+ChatColor.DARK_AQUA+"[트랙] "+ChatColor.BLUE +""+ count+"%enter%"
-			+ChatColor.DARK_AQUA+"[제목] "+ChatColor.BLUE +""+ new OtherPlugins.NoteBlockAPIMain().getTitle(count)+"%enter%"
-			+ChatColor.DARK_AQUA+"[저자] "+ChatColor.BLUE+new OtherPlugins.NoteBlockAPIMain().getAuthor(count)+"%enter%"+ChatColor.DARK_AQUA+"[설명] ";
-			String Description = new OtherPlugins.NoteBlockAPIMain().getDescription(count);
+			+ChatColor.DARK_AQUA+"[제목] "+ChatColor.BLUE +""+ NBAPI.getTitle(count)+"%enter%"
+			+ChatColor.DARK_AQUA+"[저자] "+ChatColor.BLUE+NBAPI.getAuthor(count)+"%enter%"+ChatColor.DARK_AQUA+"[설명] ";
+			String Description = NBAPI.getDescription(count);
 			String lore2="";
 			int a = 0;
 			for(int counter = 0; counter <Description.toCharArray().length; counter++)

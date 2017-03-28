@@ -19,8 +19,7 @@ public class Main_PlayerMove
 		{
 			if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getDungeon_Enter() != null)
 			{
-				if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI"))
-					new OtherPlugins.NoteBlockAPIMain().Stop(player);
+				new OtherPlugins.NoteBlockAPIMain().Stop(player);
 				GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setDungeon_Enter(null);
 				GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setDungeon_UTC(-1);
 			}
@@ -35,8 +34,7 @@ public class Main_PlayerMove
 					GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setETC_CurrentArea(Area);
 					GBD_RPG.Main_Main.Main_ServerOption.PlayerCurrentArea.put(player, Area);
 					A.AreaMonsterSpawnAdd(Area, "-1");
-					if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
-						new OtherPlugins.NoteBlockAPIMain().Stop(player);
+					new OtherPlugins.NoteBlockAPIMain().Stop(player);
 					GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setETC_CurrentArea(Area);
 					if(A.getAreaOption(Area, (char) 2) == true)
 						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setETC_LastVisited(Area);
@@ -46,8 +44,7 @@ public class Main_PlayerMove
     					{
     					  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
     						YamlManager AreaList = YC.getNewConfig("Area/AreaList.yml");
-    						if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
-    							new OtherPlugins.NoteBlockAPIMain().Play(player, AreaList.getInt(Area+".BGM"));
+							new OtherPlugins.NoteBlockAPIMain().Play(player, AreaList.getInt(Area+".BGM"));
     					}
     				}
 					if(A.getAreaOption(Area, (char) 4) == true)
@@ -84,8 +81,7 @@ public class Main_PlayerMove
 			{
 				GBD_RPG.Main_Main.Main_ServerOption.PlayerCurrentArea.put(player, "null");
 				GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setETC_CurrentArea("null");
-				if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
-					new OtherPlugins.NoteBlockAPIMain().Stop(player);
+				new OtherPlugins.NoteBlockAPIMain().Stop(player);
 			}
 			return;
 		}

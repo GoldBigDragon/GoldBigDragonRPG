@@ -2078,7 +2078,7 @@ public class NPC_GUI extends Util_GUI
 			s.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
-		else if(slot == 8)//GUI 비 활성화
+		else if(slot == 8 && player.isOp())//GUI 비 활성화
 		{
 			s.SP(player, Sound.ENTITY_VILLAGER_HURT, 0.8F, 1.0F);
 			YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
@@ -2361,7 +2361,7 @@ public class NPC_GUI extends Util_GUI
 		else
 		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if(slot == 7)//세일 설정
+			if(slot == 7 && player.isOp())//세일 설정
 			{
 				UserData_Object u = new UserData_Object();
 				YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
@@ -2392,14 +2392,17 @@ public class NPC_GUI extends Util_GUI
 				QuestListGUI(player, (short) 0);
 			else if(slot == 16)//선물하기
 				PresentGiveGUI(player, NPCname, false, -1);
-			else if(slot == 19)//대화 수정
-				NPCTalkGUI(player, (short) 0, NPCname,"NT");
-			else if(slot == 21)//거래 수정
-				ShopGUI(player,NPCname,(short) 0,true,true);
-			else if(slot == 23)//퀘스트 수정
-				QuestAddGUI(player, (short) 0);
-			else if(slot == 25)//선물 수정
-				PresentSettingGUI(player, NPCname);
+			else if(player.isOp())
+			{
+				if(slot == 19)//대화 수정
+					NPCTalkGUI(player, (short) 0, NPCname,"NT");
+				else if(slot == 21)//거래 수정
+					ShopGUI(player,NPCname,(short) 0,true,true);
+				else if(slot == 23)//퀘스트 수정
+					QuestAddGUI(player, (short) 0);
+				else if(slot == 25)//선물 수정
+					PresentSettingGUI(player, NPCname);
+			}
 		}
 		return;
 	}

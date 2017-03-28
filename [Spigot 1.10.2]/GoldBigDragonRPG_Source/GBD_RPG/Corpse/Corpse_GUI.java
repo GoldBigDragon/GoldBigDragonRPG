@@ -120,8 +120,7 @@ public class Corpse_GUI extends Util_GUI
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			ReviveAtLastVisitedArea(player);
 			new Corpse_Main().RemoveCorpse(player.getName());
-	    	if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
-	    		new OtherPlugins.NoteBlockAPIMain().Stop(player);
+    		new OtherPlugins.NoteBlockAPIMain().Stop(player);
 		}
 		else if(slot == 12)//제자리에서 부활
 		{
@@ -135,8 +134,7 @@ public class Corpse_GUI extends Util_GUI
 				s.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				new Corpse_Main().RemoveCorpse(player.getName());
 				ReviveAtDeadPoint(player);
-		    	if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
-		    		new OtherPlugins.NoteBlockAPIMain().Stop(player);
+	    		new OtherPlugins.NoteBlockAPIMain().Stop(player);
 			}
 		}
 		else if(slot == 14)//도움 요청
@@ -222,8 +220,7 @@ public class Corpse_GUI extends Util_GUI
 					for(short countta=0;countta<210;countta++)
 						new GBD_RPG.Effect.Effect_Particle().PL(player.getLocation(), org.bukkit.Effect.SMOKE, new GBD_RPG.Util.Util_Number().RandomNum(0, 14));
 					s.SL(player.getLocation(), Sound.ENTITY_BLAZE_AMBIENT, 0.5F, 1.8F);
-			    	if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
-			    		new OtherPlugins.NoteBlockAPIMain().Stop(player);
+		    		new OtherPlugins.NoteBlockAPIMain().Stop(player);
 					Penalty(player, Config.getString("Death.Spawn_Item.SetHealth"), Config.getString("Death.Spawn_Item.PenaltyEXP"), Config.getString("Death.Spawn_Item.PenaltyMoney"));
 					return;
 				}

@@ -141,7 +141,7 @@ public class Warp_GUI extends Util_GUI
 				WarpListGUI(player, page-1);
 			else if(slot == 50)//다음 페이지
 				WarpListGUI(player, page+1);
-			else if(slot == 49)//워프 생성
+			else if(slot == 49 && player.isOp())//워프 생성
 			{
 				player.closeInventory();
 				player.sendMessage(ChatColor.DARK_AQUA+"[워프] : 새 워프지점 이름을 적어 주세요!");

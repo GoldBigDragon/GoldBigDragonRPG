@@ -129,35 +129,28 @@ public class Area_GUI extends Util_GUI
 		Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[몬스터 스폰 설정]", 52,0,1,Arrays.asList("",ChatColor.GRAY + "현재 영역의 특정 구역에",ChatColor.GRAY+"특정 시각마다 몬스터를",ChatColor.GRAY+"스폰 합니다.","",ChatColor.YELLOW + "[클릭시 몬스터 스폰 설정]"), 31, inv);
 		Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[메시지 변경]", 386,0,1,Arrays.asList("",ChatColor.GRAY + "영역 입장 메시지를 변경합니다.","",ChatColor.YELLOW + "[클릭시 입장 메시지 설정]"), 23, inv);
 		Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[중심지 변경]", 138,0,1,Arrays.asList("",ChatColor.GRAY + "마을 귀환, 최근 방문 위치에서",ChatColor.GRAY+"리스폰 등의 현재 영역으로",ChatColor.GRAY+"텔레포트 되는 이벤트가 발생할 경우",ChatColor.GRAY+"현재 위치가 중심점이 됩니다.","",ChatColor.DARK_AQUA+"[  현재 중심지  ]",ChatColor.DARK_AQUA+""+AreaConfig.getString(AreaName+".World")+" : "+AreaConfig.getInt(AreaName+".SpawnLocation.X")+","+AreaConfig.getInt(AreaName+".SpawnLocation.Y")+","+AreaConfig.getInt(AreaName+".SpawnLocation.Z"),"",ChatColor.YELLOW+ "[클릭시 현재 위치로 변경]"), 24, inv);
-		if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
+		String lore = "";
+		short tracknumber = (short) AreaConfig.getInt(AreaName+".BGM");
+		lore = " %enter%"+ChatColor.GRAY + "영역 입장시 테마 음을%enter%"+ChatColor.GRAY+"재생 시킬 수 있습니다.%enter% %enter%"+ChatColor.BLUE + "[클릭시 노트블록 사운드 설정]%enter% %enter%"+ChatColor.DARK_AQUA+"[트랙] "+ChatColor.BLUE +""+ tracknumber+"%enter%"
+		+ChatColor.DARK_AQUA+"[제목] "+ChatColor.BLUE +""+ new OtherPlugins.NoteBlockAPIMain().getTitle(tracknumber)+"%enter%"
+		+ChatColor.DARK_AQUA+"[저자] "+ChatColor.BLUE+new OtherPlugins.NoteBlockAPIMain().getAuthor(tracknumber)+"%enter%"+ChatColor.DARK_AQUA+"[설명] ";
+		
+		String Description = new OtherPlugins.NoteBlockAPIMain().getDescription(AreaConfig.getInt(AreaName+".BGM"));
+		String lore2="";
+		short a = 0;
+		for(int count = 0; count <Description.toCharArray().length; count++)
 		{
-			String lore = "";
-			short tracknumber = (short) AreaConfig.getInt(AreaName+".BGM");
-			lore = " %enter%"+ChatColor.GRAY + "영역 입장시 테마 음을%enter%"+ChatColor.GRAY+"재생 시킬 수 있습니다.%enter% %enter%"+ChatColor.BLUE + "[클릭시 노트블록 사운드 설정]%enter% %enter%"+ChatColor.DARK_AQUA+"[트랙] "+ChatColor.BLUE +""+ tracknumber+"%enter%"
-			+ChatColor.DARK_AQUA+"[제목] "+ChatColor.BLUE +""+ new OtherPlugins.NoteBlockAPIMain().getTitle(tracknumber)+"%enter%"
-			+ChatColor.DARK_AQUA+"[저자] "+ChatColor.BLUE+new OtherPlugins.NoteBlockAPIMain().getAuthor(tracknumber)+"%enter%"+ChatColor.DARK_AQUA+"[설명] ";
-			
-			String Description = new OtherPlugins.NoteBlockAPIMain().getDescription(AreaConfig.getInt(AreaName+".BGM"));
-			String lore2="";
-			short a = 0;
-			for(int count = 0; count <Description.toCharArray().length; count++)
+			lore2 = lore2+ChatColor.BLUE+Description.toCharArray()[count];
+			a++;
+			if(a >= 15)
 			{
-				lore2 = lore2+ChatColor.BLUE+Description.toCharArray()[count];
-				a++;
-				if(a >= 15)
-				{
-					a = 0;
-					lore2 = lore2+"%enter%      ";
-				}
+				a = 0;
+				lore2 = lore2+"%enter%      ";
 			}
-			lore = lore + lore2;
-			
-			Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[영역 배경음]", 2263,0,1,Arrays.asList(lore.split("%enter%")), 25, inv);
 		}
-		else
-		{
-			Stack2(ChatColor.RED + ""+ChatColor.BOLD+"[영역 배경음]", 2266,0,1,Arrays.asList("",ChatColor.GRAY + "영역 입장시 테마 음을",ChatColor.GRAY+"재생 시킬 수 있습니다.","",ChatColor.RED + "[     필요 플러그인     ]",ChatColor.RED+" - NoteBlockAPI"), 25, inv);
-		}
+		lore = lore + lore2;
+		
+		Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[영역 배경음]", 2263,0,1,Arrays.asList(lore.split("%enter%")), 25, inv);
 		
 		Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "영역 이동", 368,0,1,Arrays.asList(ChatColor.GRAY + "현재 영역으로 빠르게 이동합니다."), 40, inv);
 		Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "영역 목록으로 돌아갑니다."), 36, inv);
@@ -827,12 +820,8 @@ public class Area_GUI extends Util_GUI
 			}
 			else if(slot == 25)//영역 배경음 설정
 			{
-				if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
-				{
-					OtherPlugins.NoteBlockAPIMain NBAPIM = new OtherPlugins.NoteBlockAPIMain();
-					if(NBAPIM.SoundList(player,true))
-						AreaMusicSettingGUI(player, 0, AreaName);
-				}
+				if(new OtherPlugins.NoteBlockAPIMain().SoundList(player,true))
+					AreaMusicSettingGUI(player, 0, AreaName);
 				else
 					s.SP(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.9F);
 			}

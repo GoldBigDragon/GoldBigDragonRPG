@@ -164,8 +164,7 @@ public class Option_GUI extends Util_GUI
 						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setBgm(false);
 					else
 						GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setBgm(true);
-					if(Main_ServerOption.NoteBlockAPIAble)
-						new OtherPlugins.NoteBlockAPIMain().Stop(player);
+					new OtherPlugins.NoteBlockAPIMain().Stop(player);
 				}
 				
 				optionGUI(player);

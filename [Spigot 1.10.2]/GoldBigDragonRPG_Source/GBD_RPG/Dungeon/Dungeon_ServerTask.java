@@ -368,23 +368,20 @@ public class Dungeon_ServerTask
     		YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Dungeon/"+DSO.getDungeonName()+"/Option.yml");
     		int SoundTrack = DungeonConfig.getInt("BGM.Normal");
     		
-    		if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
+    		for(int count2 = 0; count2 < DSO.getDungeonMakerSize(); count2++)
     		{
-        		for(int count2 = 0; count2 < DSO.getDungeonMakerSize(); count2++)
-        		{
-        			if(Bukkit.getPlayer(DSO.getDungeonMaker(count2))!=null)
-        			{
-            			Player player = Bukkit.getPlayer(DSO.getDungeonMaker(count2));
-        				if(Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isBgmOn())
+    			if(Bukkit.getPlayer(DSO.getDungeonMaker(count2))!=null)
+    			{
+        			Player player = Bukkit.getPlayer(DSO.getDungeonMaker(count2));
+    				if(Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isBgmOn())
+    				{
+        				if(player.getLocation().getWorld().getName().compareTo("Dungeon")==0)
         				{
-            				if(player.getLocation().getWorld().getName().compareTo("Dungeon")==0)
-            				{
-                    			new OtherPlugins.NoteBlockAPIMain().Stop(Bukkit.getPlayer(DSO.getDungeonMaker(count2)));
-                    			new OtherPlugins.NoteBlockAPIMain().Play(Bukkit.getPlayer(DSO.getDungeonMaker(count2)),SoundTrack);		
-            				}
+                			new OtherPlugins.NoteBlockAPIMain().Stop(Bukkit.getPlayer(DSO.getDungeonMaker(count2)));
+                			new OtherPlugins.NoteBlockAPIMain().Play(Bukkit.getPlayer(DSO.getDungeonMaker(count2)),SoundTrack);		
         				}
-        			}
-        		}
+    				}
+    			}
     		}
     		ServerTick_Main.DungeonSchedule.remove(DSO);
     	}

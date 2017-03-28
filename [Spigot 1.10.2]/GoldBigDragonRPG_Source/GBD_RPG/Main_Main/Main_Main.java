@@ -69,6 +69,7 @@ public class Main_Main extends JavaPlugin implements Listener
 	{
 		getServer().getPluginManager().registerEvents(this, this);
 		plugin = this;
+		new OtherPlugins.NoteBlockAPIMain(Main_Main.plugin);
 		new Main_ServerOption().Initialize();
 	  	return;
 	}
@@ -76,14 +77,11 @@ public class Main_Main extends JavaPlugin implements Listener
 	public void onDisable()
 	{
 		new GBD_RPG.Corpse.Corpse_Main().RemoveAllCorpse();
-		if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI"))
-		{
-	    	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
-	    	Player[] a = new Player[playerlist.size()];
-	    	playerlist.toArray(a);
-	    	for(short count = 0; count <a.length;count++)
-	    		new OtherPlugins.NoteBlockAPIMain().Stop(a[count]);
-		}
+    	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
+    	Player[] a = new Player[playerlist.size()];
+    	playerlist.toArray(a);
+    	for(short count = 0; count <a.length;count++)
+    		new OtherPlugins.NoteBlockAPIMain().Stop(a[count]);
 	  	new Party_DataManager().saveParty();
 
 		new GBD_RPG.ServerTick.ServerTick_ScheduleManager().saveCategoriFile();
@@ -180,8 +178,7 @@ public class Main_Main extends JavaPlugin implements Listener
 		if(Main_ServerOption.PartyJoiner.containsKey(player))
 			Main_ServerOption.Party.get(Main_ServerOption.PartyJoiner.get(player)).QuitParty(player);
 		
-		if(Main_ServerOption.NoteBlockAPIAble == true)
-			new OtherPlugins.NoteBlockAPIMain().Stop(event.getPlayer());
+		new OtherPlugins.NoteBlockAPIMain().Stop(event.getPlayer());
 
 		YamlManager UserData = YC.getNewConfig("UserData/"+ player.getUniqueId()+".yml");
 		UserData.removeKey("Data");
@@ -213,13 +210,10 @@ public class Main_Main extends JavaPlugin implements Listener
 	    	player.setGameMode(GameMode.SPECTATOR);
 			if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isBgmOn())
 			{
-		    	if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
-		    	{
-		    		new OtherPlugins.NoteBlockAPIMain().Stop(player);
-					if(Config.contains("Death.Track"))
-						if(Config.getInt("Death.Track")!=-1)
-							new OtherPlugins.NoteBlockAPIMain().Play(player, Config.getInt("Death.Track"));
-		    	}
+	    		new OtherPlugins.NoteBlockAPIMain().Stop(player);
+				if(Config.contains("Death.Track"))
+					if(Config.getInt("Death.Track")!=-1)
+						new OtherPlugins.NoteBlockAPIMain().Play(player, Config.getInt("Death.Track"));
 			}
 	    	new GBD_RPG.Corpse.Corpse_GUI().OpenReviveSelectGUI(player);
 		}
@@ -326,8 +320,7 @@ public class Main_Main extends JavaPlugin implements Listener
 												for(short count2=0;count2<210;count2++)
 													new GBD_RPG.Effect.Effect_Particle().PL(target.getLocation(), org.bukkit.Effect.SMOKE, new GBD_RPG.Util.Util_Number().RandomNum(0, 14));
 												s.SL(target.getLocation(), Sound.ENTITY_BLAZE_AMBIENT, 0.5F, 1.8F);
-										    	if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
-										    		new OtherPlugins.NoteBlockAPIMain().Stop(target);
+									    		new OtherPlugins.NoteBlockAPIMain().Stop(target);
 											  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 										    	YamlManager Config = YC.getNewConfig("config.yml");
 										    	new GBD_RPG.Corpse.Corpse_GUI().Penalty(target, Config.getString("Death.Spawn_Help.SetHealth"), Config.getString("Death.Spawn_Help.PenaltyEXP"), Config.getString("Death.Spawn_Help.PenaltyMoney"));

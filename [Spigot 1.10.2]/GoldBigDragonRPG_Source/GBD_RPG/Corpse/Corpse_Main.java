@@ -41,14 +41,11 @@ public class Corpse_Main
 		  			new Corpse_GUI().OpenReviveSelectGUI(player);
 		  		else if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isBgmOn())
 		  		{
-		  	    	if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == true)
-		  	    	{
-		  	    		new OtherPlugins.NoteBlockAPIMain().Stop(player);
-		  			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-		  				YamlManager Config = YC.getNewConfig("config.yml");
-		  				if(Config.getInt("Death.Track")!=-1)
-		  					new OtherPlugins.NoteBlockAPIMain().Play(player, Config.getInt("Death.Track"));
-		  	    	}
+	  	    		new OtherPlugins.NoteBlockAPIMain().Stop(player);
+	  			  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+	  				YamlManager Config = YC.getNewConfig("config.yml");
+	  				if(Config.getInt("Death.Track")!=-1)
+	  					new OtherPlugins.NoteBlockAPIMain().Play(player, Config.getInt("Death.Track"));
 		  		}
 		  		if(Corpses.containsKey(player.getName())==false)
 		  			CreateCorpse(player);

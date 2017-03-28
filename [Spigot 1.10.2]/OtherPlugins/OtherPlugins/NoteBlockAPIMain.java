@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,8 +29,6 @@ public class NoteBlockAPIMain implements Listener
 	public NoteBlockAPIMain(JavaPlugin plugin)
 	{
 		NoteBlockAPIAddMusic();
-		plugin.getServer().getPluginManager().registerEvents(this, plugin);
-		GBD_RPG.Main_Main.Main_ServerOption.NoteBlockAPIAble = true;
 	}
 	
 	public NoteBlockAPIMain()
@@ -68,8 +65,8 @@ public class NoteBlockAPIMain implements Listener
 		}
 		if(Musics.size()==0)
 		{
-			player.sendMessage(ChatColor.RED+"[BGM] : 재생 가능한 nbs파일이 없습니다! nbs 파일을 아래 경로에 넣어 주세요.");
-			player.sendMessage(ChatColor.RED+"[자신의 버킷 폴더] -> [plugins] -> [GoldBigDragonRPG] -> [NoteBlockSound]");
+			player.sendMessage("§c[BGM] : 재생 가능한 nbs파일이 없습니다! nbs 파일을 아래 경로에 넣어 주세요.");
+			player.sendMessage("§c[자신의 버킷 폴더] -> [plugins] -> [GoldBigDragonRPG] -> [NoteBlockSound]");
 			return false;
 		}
 		else
@@ -132,7 +129,6 @@ public class NoteBlockAPIMain implements Listener
 		else
 			return "[음반 없음]";
 	}
-	
 	public int SoundSize()
 	{
 		if(MusicAdded==false||Musics.size()==0)
@@ -149,22 +145,10 @@ public class NoteBlockAPIMain implements Listener
 		{
 			Stop(player);
 			SongPlayer sp = new RadioSongPlayer(Musics.get(number));
-			
 			sp.addPlayer(player);
 			sp.setPlaying(true);
 			sp.setAutoDestroy(true);
 			currentStations.put(player, sp);
-		}
-		else
-		{
-			if(MusicAdded==false)
-			{
-				MusicAdded = true;
-				NoteBlockAPIAddMusic();
-				Play(player, number);
-				return;
-			}
-			player.sendMessage(ChatColor.RED+"[BGM] : "+number+"번째 사운드 트랙을 찾을 수 없습니다! 관리자에게 문의하세요!");
 		}
 	}
 
@@ -194,10 +178,7 @@ public class NoteBlockAPIMain implements Listener
 		for(int count = 0; count < event.getSongPlayer().getPlayerList().size(); count++)
 		{
 			player = Bukkit.getPlayer(event.getSongPlayer().getPlayerList().get(count));
-			if(player.getLocation().getWorld().getName().compareTo("Dungeon")==0)
-				SongPlay(player, event.getSongPlayer().getSong());
-			else if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_CurrentArea().compareTo("null") != 0)
-				SongPlay(player, event.getSongPlayer().getSong());
+			SongPlay(player, event.getSongPlayer().getSong());
 		}
 	}
 	    

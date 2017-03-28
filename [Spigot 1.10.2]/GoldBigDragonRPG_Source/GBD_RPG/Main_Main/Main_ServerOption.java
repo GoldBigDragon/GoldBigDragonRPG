@@ -78,10 +78,10 @@ public class Main_ServerOption
 	public static short Money6ID = 41;
 	public static byte Money6DATA = 0;
 	
-	public static String serverUpdate = "2017-02-06-20:43";
+	public static String serverUpdate = "2017-03-28-22:46";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/1_10.html";
-	public static String currentServerUpdate = "2017-02-06-20:43";
+	public static String currentServerUpdate = "2017-03-28-22:46";
 	public static String currentServerVersion = "Advanced";
 	
 	public static java.util.Map<Long, Party_Object> Party = new LinkedHashMap<Long, Party_Object>();
@@ -102,8 +102,6 @@ public class Main_ServerOption
 	public static boolean MagicSpellsCatched = false;
 	public static boolean MagicSpellsEnable = false;
 	public static boolean CitizensCatched = false;
-	public static boolean NoteBlockAPI = false;
-	public static boolean NoteBlockAPIAble = false;
 	
 	public static boolean Mapping = false;
 	public static boolean AntiExplode = true;
@@ -168,8 +166,6 @@ public class Main_ServerOption
 				WorldCreator.name(worldname[count].toString()).createWorld();
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" 월드 정보 로드");
 
-		NoteBlockAPICatch();
-		
 		new GBD_RPG.ServerTick.ServerTick_Main(Main_Main.plugin);
 		new GBD_RPG.ServerTick.ServerTick_ScheduleManager().loadCategoriFile();
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" 틱 정보 로드");
@@ -416,33 +412,6 @@ public class Main_ServerOption
 			}
 			else
 				new OtherPlugins.CitizensMain(Main_Main.plugin);
-		}
-		return;
-	}
-	
-	public void NoteBlockAPICatch()
-	{
-		if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI"))
-			new OtherPlugins.NoteBlockAPIMain(Main_Main.plugin);
-		return;
-	}
-	
-	public void NoteBlockAPICatchPJ()
-	{
-		if(NoteBlockAPI == false)
-		{
-			NoteBlockAPI = true;
-			if(Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI") == false)
-			{
-				ErrorMessage();
-			  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "노트블록 재생 플러그인을 찾을 수 없습니다!");
-			  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "NoteBlockAPI 다운로드 URL");
-			  	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "http://www.curse.com/bukkit-plugins/minecraft/noteblockapi");
-			}
-			else
-			{
-				new OtherPlugins.NoteBlockAPIMain(Main_Main.plugin);
-			}
 		}
 		return;
 	}

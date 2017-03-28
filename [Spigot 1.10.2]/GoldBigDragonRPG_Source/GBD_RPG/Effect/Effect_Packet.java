@@ -1,10 +1,8 @@
 package GBD_RPG.Effect;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_10_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
