@@ -108,18 +108,27 @@ public class Dungeon_Main
 		YamlManager DungeonConfig = YC.getNewConfig("Dungeon/Dungeon/"+GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getDungeon_Enter() +"/Option.yml");
 		int SoundTrack = DungeonConfig.getInt("BGM.BOSS");
 		
-		Player[] partyMember = Main_ServerOption.Party.get(Main_ServerOption.PartyJoiner.get(player)).getMember();
-		for(short count = 0; count < partyMember.length; count++)
+		OtherPlugins.NoteBlockAPIMain NBAPIM = new OtherPlugins.NoteBlockAPIMain();
+		if(Main_ServerOption.PartyJoiner.containsKey(player))
 		{
-			if(Main_ServerOption.PlayerList.get(partyMember[count].getUniqueId().toString()).isBgmOn())
+			Player[] partyMember = Main_ServerOption.Party.get(Main_ServerOption.PartyJoiner.get(player)).getMember();
+			for(short count = 0; count < partyMember.length; count++)
 			{
-				Long target = Main_ServerOption.PlayerList.get(partyMember[count].getUniqueId().toString()).getDungeon_UTC();
-				if(target.equals(Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getDungeon_UTC()))
+				if(Main_ServerOption.PlayerList.get(partyMember[count].getUniqueId().toString()).isBgmOn())
 				{
-        			new OtherPlugins.NoteBlockAPIMain().Stop(partyMember[count]);
-        			new OtherPlugins.NoteBlockAPIMain().Play(partyMember[count], SoundTrack);	
+					Long target = Main_ServerOption.PlayerList.get(partyMember[count].getUniqueId().toString()).getDungeon_UTC();
+					if(target.equals(Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getDungeon_UTC()))
+					{
+						NBAPIM.Stop(partyMember[count]);
+						NBAPIM.Play(partyMember[count], SoundTrack);	
+					}
 				}
 			}
+		}
+		else
+		{
+			NBAPIM.Stop(player);
+			NBAPIM.Play(player, SoundTrack);	
 		}
 		
 		YamlManager MonsterConfig = YC.getNewConfig("Dungeon/Dungeon/"+DungeonName +"/Monster.yml");
