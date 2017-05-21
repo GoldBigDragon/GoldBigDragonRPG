@@ -3,8 +3,8 @@ package com.xxmicloxx.NoteBlockAPI;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class SongEndEvent extends Event {
-
+public class SongEndEvent extends Event
+{
     private static final HandlerList handlers = new HandlerList();
     private SongPlayer song;
 

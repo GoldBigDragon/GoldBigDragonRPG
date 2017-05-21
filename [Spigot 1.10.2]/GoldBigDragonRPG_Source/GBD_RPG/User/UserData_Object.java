@@ -3,7 +3,6 @@ package GBD_RPG.User;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import GBD_RPG.Main_Main.Main_Main;
 import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;
 

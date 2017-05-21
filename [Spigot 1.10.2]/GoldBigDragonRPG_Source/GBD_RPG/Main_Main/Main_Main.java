@@ -64,6 +64,18 @@ import net.minecraft.server.v1_10_R1.PacketPlayInClientCommand;
 public class Main_Main extends JavaPlugin implements Listener
 {
 	public static JavaPlugin plugin = null;
+
+	@EventHandler
+	public void SongEndEvent(com.xxmicloxx.NoteBlockAPI.SongEndEvent event)
+	{
+		event.getSongPlayer().setPlaying(false);
+		Player player = null;
+		for(int count = 0; count < event.getSongPlayer().getPlayerList().size(); count++)
+		{
+			player = Bukkit.getPlayer(event.getSongPlayer().getPlayerList().get(count));
+			new OtherPlugins.NoteBlockAPIMain().SongPlay(player, event.getSongPlayer().getSong());
+		}
+	}
 	
 	public void onEnable()
 	{

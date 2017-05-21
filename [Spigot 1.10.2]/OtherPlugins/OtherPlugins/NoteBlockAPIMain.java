@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -169,17 +167,4 @@ public class NoteBlockAPIMain implements Listener
 		joinedPlayer.remove(player);
 		NoteBlockPlayerMain.stopPlaying(player);
 	}
-    
-	@EventHandler
-	public void SongEndEvent(com.xxmicloxx.NoteBlockAPI.SongEndEvent event)
-	{
-		event.getSongPlayer().setPlaying(false);
-		Player player = null;
-		for(int count = 0; count < event.getSongPlayer().getPlayerList().size(); count++)
-		{
-			player = Bukkit.getPlayer(event.getSongPlayer().getPlayerList().get(count));
-			SongPlay(player, event.getSongPlayer().getSong());
-		}
-	}
-	    
 }

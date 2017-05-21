@@ -22,7 +22,7 @@ public class Main_PlayerChat extends Util_Chat
 		UserData_Object u = new UserData_Object();
 		GBD_RPG.Effect.Effect_Sound sound = new GBD_RPG.Effect.Effect_Sound();
 	    Player player = event.getPlayer();
-
+	    String playerUUID = event.getPlayer().getUniqueId().toString();
 	    if(u.getTemp(player) != null)
 	    {
 	    	TEMProuter(event, u.getTemp(player));
@@ -77,20 +77,20 @@ public class Main_PlayerChat extends Util_Chat
 			else if(player.getGameMode()==GameMode.SPECTATOR)
 				Prefix=Prefix.replace("%gm%","관전");
 			
-			if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getOption_ChattingType()==0)
+			if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(playerUUID).getOption_ChattingType()==0)
 				Prefix=Prefix.replace("%ct%","일반");
-			else if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getOption_ChattingType()==1)
+			else if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(playerUUID).getOption_ChattingType()==1)
 				Prefix=Prefix.replace("%ct%","파티");
-			else if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getOption_ChattingType()==3)
+			else if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(playerUUID).getOption_ChattingType()==3)
 				Prefix=Prefix.replace("%ct%","관리자");
-			Prefix=Prefix.replace("%lv%",GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getStat_Level()+"");
-			Prefix=Prefix.replace("%rlv%",GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getStat_RealLevel()+"");
+			Prefix=Prefix.replace("%lv%",GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(playerUUID).getStat_Level()+"");
+			Prefix=Prefix.replace("%rlv%",GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(playerUUID).getStat_RealLevel()+"");
 		  	YamlManager Job = YC.getNewConfig("Skill/PlayerData/" + player.getUniqueId()+".yml");
 			Prefix=Prefix.replace("%job%",Job.getString("Job.Type"));
 			Prefix=Prefix.replace("%player%",player.getName());
 			Prefix=Prefix.replace("%message%",event.getMessage());
   			event.setCancelled(true);
-		  	switch(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getOption_ChattingType())
+		  	switch(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(playerUUID).getOption_ChattingType())
 		  	{
 		  	case 0:
 		  		Bukkit.broadcastMessage(Prefix);
@@ -137,7 +137,7 @@ public class Main_PlayerChat extends Util_Chat
 	  	}
 	  	else
 	  	{
-		  	switch(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getOption_ChattingType())
+		  	switch(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(playerUUID).getOption_ChattingType())
 		  	{
 		  	case 0:
 		  		return;
