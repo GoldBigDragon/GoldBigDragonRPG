@@ -56,6 +56,7 @@ public class User_Object
 	private byte Option_ChattingType;
 	private boolean Option_BGM;
 	private boolean Option_ClickUse;
+	private boolean Option_SeeInventory;
 
 	private long ETC_Party;
 	private boolean ETC_Death;
@@ -686,6 +687,7 @@ public class User_Object
 			Option_EquipLook = true;
 			Option_HotBarSound = true;
 			Option_ChattingType = 0;
+			Option_SeeInventory = true;
 
 			ETC_Party = -1;
 			ETC_Death = false;
@@ -781,6 +783,7 @@ public class User_Object
 		Option_ChattingType = (byte) PlayerConfig.getInt("Option.ChattingType");
 		Option_BGM = PlayerConfig.getBoolean("Option.BGM");
 		Option_ClickUse = PlayerConfig.getBoolean("Option.ClickUse");
+		Option_SeeInventory = PlayerConfig.getBoolean("Option.SeeInventory");
 
 		ETC_Party = PlayerConfig.getLong("ETC.Party");
 		ETC_Death = PlayerConfig.getBoolean("ETC.Death");
@@ -851,6 +854,7 @@ public class User_Object
 	  	PlayerConfig.set("Option.HotBarSound", Option_HotBarSound);
 	  	PlayerConfig.set("Option.BGM", Option_BGM);
 	  	PlayerConfig.set("Option.ClickUse", Option_ClickUse);
+	  	PlayerConfig.set("Option.SeeInventory", Option_SeeInventory);
 
 	  	PlayerConfig.set("ETC.Party", ETC_Party);
 	  	PlayerConfig.set("ETC.Death", ETC_Death);
@@ -920,5 +924,13 @@ public class User_Object
 	public void setPlayerRootJob(String playerRootJob)
 	{
 		PlayerRootJob = playerRootJob;
+	}
+
+	public boolean isOption_SeeInventory() {
+		return Option_SeeInventory;
+	}
+
+	public void setOption_SeeInventory(boolean option_SeeInventory) {
+		Option_SeeInventory = option_SeeInventory;
 	}
 }

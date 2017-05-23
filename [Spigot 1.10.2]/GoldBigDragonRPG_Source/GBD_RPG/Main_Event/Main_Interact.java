@@ -1,8 +1,6 @@
 package GBD_RPG.Main_Event;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -97,12 +95,15 @@ public class Main_Interact
 
 			if(target.getType() == EntityType.PLAYER)
 			{
-				Player t = (Player)target;
-				if(t.isOnline()==true)
+				if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isOption_SeeInventory())
 				{
-					GBD_RPG.User.Equip_GUI EGUI = new GBD_RPG.User.Equip_GUI();
-					EGUI.EquipWatchGUI(player, t);
-					return;
+					Player t = (Player)target;
+					if(t.isOnline()==true)
+					{
+						GBD_RPG.User.Equip_GUI EGUI = new GBD_RPG.User.Equip_GUI();
+						EGUI.EquipWatchGUI(player, t);
+						return;
+					}
 				}
 			}
 		    if(player.isOp())
