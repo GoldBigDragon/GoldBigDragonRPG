@@ -1,6 +1,9 @@
 package GBD_RPG.ServerTick;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
@@ -10,8 +13,34 @@ import org.bukkit.scheduler.BukkitScheduler;
 import GBD_RPG.Area.Area_ServerTask;
 import GBD_RPG.Dungeon.Dungeon_ScheduleObject;
 import GBD_RPG.Dungeon.Dungeon_ServerTask;
+import GBD_RPG.Main_Main.Main_Main;
 import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;
+
+class Object_RankingSet
+{
+	String stringValue;
+	long longValue;
+	public Object_RankingSet(String stringValue, long longValue)
+	{
+		this.stringValue = stringValue;
+		this.longValue = longValue;
+	}
+
+	public Long getLongValue()
+	{
+		return longValue;
+	}
+}
+
+class Descending_longValue implements Comparator<Object_RankingSet>
+{
+    @Override
+    public int compare(Object_RankingSet o1, Object_RankingSet o2)
+    {
+        return o2.getLongValue().compareTo(o1.getLongValue());
+    }
+}
 
 public class ServerTick_Main
 {
@@ -52,6 +81,47 @@ public class ServerTick_Main
         	  	//Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA +"1"+"초 경과");
             }
         }, 10, 2);
+	  	
+	  	Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable()
+        {
+	  		File directory = new File(Main_Main.plugin.getDataFolder() + "\\Stats"); 
+            @Override
+            public void run() 
+            {
+            	if(directory.exists()==false)
+        			directory.mkdir();
+        		File[] fileList = directory.listFiles();
+    		  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+    			YamlManager YAML = null;
+    			ArrayList<Object_RankingSet> MoneyRankingSet = new ArrayList<Object_RankingSet>();
+    			Object_RankingSet ORS = null;
+        		try
+        		{
+        			for(int count = 0 ; count < fileList.length ; count++)
+        				if(fileList[count].isFile())
+        				{
+        					YAML = YC.getNewConfig("Stats/"+fileList[count].getName());
+        					ORS = new Object_RankingSet(YAML.getString("Player.Name"), YAML.getLong("Stat.Money"));
+        					MoneyRankingSet.add(ORS);
+        				}
+        		}
+        		catch(Exception e)
+        		{
+				}
+        		Collections.sort(MoneyRankingSet, new Descending_longValue());
+        		YAML = YC.getNewConfig("Ranking/money.yml");
+        		YAML.removeKey("Rank");
+        		YAML.removeKey("NameSet");
+    			for(int count = 0 ; count < MoneyRankingSet.size() ; count++)
+    			{
+    				YAML.set("Rank."+count+".Name", MoneyRankingSet.get(count).stringValue);
+    				YAML.set("Rank."+count+".Money", MoneyRankingSet.get(count).longValue);
+    				YAML.set("NameSet."+MoneyRankingSet.get(count).stringValue+".Rank", count);
+    				YAML.set("NameSet."+MoneyRankingSet.get(count).stringValue+".Money", MoneyRankingSet.get(count).longValue);
+    			}
+    			YAML.saveConfig();
+            }
+        }, 0,1200);//1분마다
     	return;
 	}
 	

@@ -28,11 +28,11 @@ public class Admin_Command
 		{
 			if(string.compareTo("테스트")==0||string.compareTo("gbdtest")==0)
 			{
-				player.sendMessage(""+Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getPlayerRootJob());
+				player.sendMessage("테스트1");
 			}
 			else if(string.compareTo("테스트2")==0||string.compareTo("gbdtest2")==0)
 			{
-				//여분의 공간
+				player.sendMessage("테스트2");
 			}
 			else if(string.compareTo("오피박스")==0||string.compareTo("opbox")==0)
 			{

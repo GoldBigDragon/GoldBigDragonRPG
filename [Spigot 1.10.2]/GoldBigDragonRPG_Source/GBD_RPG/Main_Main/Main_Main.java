@@ -823,7 +823,7 @@ public class Main_Main extends JavaPlugin implements Listener
 		  			if(player.isOp() == true)
 		  			{
 		  				UserData_Object u = new UserData_Object();
-						if(u.getType(player).compareTo("Skill")==0)
+						if(u.getType(player)!=null&&u.getType(player).compareTo("Skill")==0)
 						{
 							if(u.getString(player, (byte)1).equalsIgnoreCase("SKC"))
 							{
@@ -847,7 +847,7 @@ public class Main_Main extends JavaPlugin implements Listener
 						}
 						else
 						{
-		  					player.sendMessage(ChatColor.RED+"[스킬 설정] : 스킬 설정을 위한 커맨드 입니다!");
+		  					player.sendMessage(ChatColor.RED+"[스킬 설정] : 이 명령어는 스킬 설정시 사용됩니다!");
 							s.SP((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		  					return true;
 						}

@@ -13,6 +13,8 @@ import org.bukkit.material.MaterialData;
 
 import GBD_RPG.Main_Main.Main_ServerOption;
 import GBD_RPG.ServerTick.ServerTick_Main;
+import GBD_RPG.Util.YamlController;
+import GBD_RPG.Util.YamlManager;
 
 public class User_Command
 {
@@ -78,6 +80,7 @@ public class User_Command
 			 	s.SP(player, org.bukkit.Sound.BLOCK_LAVA_POP, 0.8F, 1.8F);
 			 	player.sendMessage(ChatColor.YELLOW + "[현재 소지 금액] " + ChatColor.WHITE+ChatColor.BOLD +"" +Money + " "+Main_ServerOption.Money);
 			 	player.sendMessage(ChatColor.GOLD + "/돈 꺼내기 [금액]"+ChatColor.WHITE+" 해당 금액 만큼 돈을 아이템으로 꺼냅니다.");
+			 	player.sendMessage(ChatColor.GOLD + "/돈 랭킹 [닉네임]"+ChatColor.WHITE+" 해당 플레이어의 랭킹을 확인합니다.");
   				if(player.isOp()==true)
 	  				player.sendMessage(ChatColor.AQUA + "/돈 주기 [금액] [플레이어]"+ChatColor.WHITE+" 해당 금액 만큼 플레이어에게 돈을 줍니니다."+ChatColor.AQUA+""+ChatColor.BOLD+"(관리자)");
   			}
@@ -398,11 +401,45 @@ public class User_Command
 					s.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
   				}
   			}
+  			else if(args[0].compareTo("랭킹")==0)
+  			{
+    		  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+    			YamlManager YAML = YC.getNewConfig("Ranking/money.yml");
+				if(YAML.contains("Rank")&&YAML.getConfigurationSection("Rank").getKeys(false).size()>0)
+				{
+	  				if(args.length == 2)
+	  				{
+	  					if(YAML.contains("NameSet."+args[1]))
+	  	  					player.sendMessage("§e§l┼─[§a§l"+ (YAML.getInt("NameSet."+args[1]+".Rank")+1) +"§e§l] §f§l"+args[1]+ " §6("+YAML.getLong("NameSet."+args[1]+".Money")+")");
+	  	  				else
+	  	  				{
+	  						player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 플레이어에 대한 자료가 없습니다!");
+	  						s.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+	  	  				}
+	  				}
+	  				else
+	  				{
+  	  					int rankSize = YAML.getConfigurationSection("Rank").getKeys(false).size();
+  	  					if(rankSize > 5)
+  	  						rankSize = 5;
+  	  					player.sendMessage("§e§l┌────────────[Ranking]────────────┐");
+	  	  				for(int count = 0 ; count < rankSize; count++)
+	  	  					player.sendMessage("§e§l├─[§a§l"+ (count+1) +"§e§l] §f§l"+YAML.getString("Rank."+count+".Name") + " §6("+YAML.getLong("Rank."+count+".Money")+")");
+  	  					player.sendMessage("§e§l└────────────[Ranking]────────────┘");
+	  				}
+				}
+				else
+				{
+					player.sendMessage(ChatColor.RED + "[SYSTEM] : 랭킹을 불러 올 수가 없습니다! 잠시 후 다시 시도 해 주시길 바랍니다.");
+					s.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+				}
+  			}
   			else
   			{
   				s.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
   				player.sendMessage(ChatColor.GOLD + "/돈"+ChatColor.WHITE+" 현재 자신이 보유한 금액을 확인합니다.");
   				player.sendMessage(ChatColor.GOLD + "/돈 꺼내기 [금액]"+ChatColor.WHITE+" 해당 금액 만큼 돈을 아이템으로 꺼냅니다.");
+			 	player.sendMessage(ChatColor.GOLD + "/돈 랭킹 [닉네임]"+ChatColor.WHITE+" 해당 플레이어의 랭킹을 확인합니다.");
   				if(player.isOp()==true)
 	  				player.sendMessage(ChatColor.AQUA + "/돈 주기 [금액] [플레이어]"+ChatColor.WHITE+" 해당 금액 만큼 플레이어에게 돈을 줍니니다."+ChatColor.AQUA+""+ChatColor.BOLD+"(관리자)");
   			}
