@@ -25,9 +25,10 @@ public class Job_Main
     	Player[] players = new Player[playerlist.size()];
     	playerlist.toArray(players);
 		FixJobList();
+		YamlManager PlayerList  = null;
 		for(short count = 0; count < players.length;count++)
 		{
-			YamlManager PlayerList  = YC.getNewConfig("Skill/PlayerData/"+players[count].getUniqueId().toString()+".yml");
+			PlayerList  = YC.getNewConfig("Skill/PlayerData/"+players[count].getUniqueId().toString()+".yml");
 	  		if(Config.getInt("Time.LastSkillChanged")!=PlayerList.getInt("Update") || PlayerList.contains("Update")==false)
 	  		{
 	  			PlayerList.set("Update", Config.getInt("Time.LastSkillChanged"));
@@ -246,9 +247,12 @@ public class Job_Main
 							//스킬 최대 레벨 넘긴것들을 최대 레벨로 수정 해 주기.
 							for(short cc = 0; cc < PlayerJobSkills.size();cc++)
 							{
-								short SkillMaxRank = (short) SkillList.getConfigurationSection(PlayerJobSkills.get(cc)+".SkillRank").getKeys(false).size();
-								if(PlayerList.getInt("MapleStory."+PlayerJob[counter]+".Skill."+PlayerJobSkills.get(cc)) >  SkillMaxRank)
-									PlayerList.set("MapleStory."+PlayerJob[counter]+".Skill."+PlayerJobSkills.get(cc), SkillMaxRank);
+								if(SkillList.contains(PlayerJobSkills.get(cc)+".SkillRank"))
+								{
+									short SkillMaxRank = (short) SkillList.getConfigurationSection(PlayerJobSkills.get(cc)+".SkillRank").getKeys(false).size();
+									if(PlayerList.getInt("MapleStory."+PlayerJob[counter]+".Skill."+PlayerJobSkills.get(cc)) >  SkillMaxRank)
+										PlayerList.set("MapleStory."+PlayerJob[counter]+".Skill."+PlayerJobSkills.get(cc), SkillMaxRank);
+								}
 							}
 							
 							PlayerList.saveConfig();
