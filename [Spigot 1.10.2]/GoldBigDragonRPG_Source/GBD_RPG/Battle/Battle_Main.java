@@ -213,25 +213,32 @@ public class Battle_Main implements Listener
 	    }
 	    int Attacker_Stat[] = null;
 
-		if (AttackType == "R_A"||AttackType == "R_A_F"||AttackType == "M"||AttackType == "E_E"||AttackType == "P")//Range Arrow
+		if (AttackType.charAt(0)=='R'||AttackType.charAt(0)=='M'||AttackType.charAt(0)=='E'||AttackType.charAt(0)=='P')//Range Arrow
 			Attacker_Stat = getAttackerStats(Attacker);
 		
 	    int Defender_Stat[] = getDefenderStats(event.getEntity());
 			
-		if (AttackType == "R_A"||AttackType == "R_A_F")
+		if(AttackType.charAt(0)=='R')
 		{
-			if (AttackType == "R_A_F")
-				Damage = Damage+(Damage/2);
-			Damage = damage.damagerand(Attacker, damage.returnRangeDamageValue(Attacker, Attacker_Stat[1], Damage, true),
-					damage.returnRangeDamageValue(Attacker, Attacker_Stat[1], Damage, false), Attacker_Stat[8]);
-			if(Attacker instanceof Player)
+			if(AttackType == "R_S")//눈덩이
 			{
-				Player player = (Player)Attacker;
-				if(player.isOnline())
-					Damage = (int)((Damage* GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_BowPull() )/110);
+				Damage = 0;
+			}
+			else
+			{
+				if(AttackType.compareTo("R_A_F")==0)
+					Damage = Damage+(Damage/2);
+				Damage = damage.damagerand(Attacker, damage.returnRangeDamageValue(Attacker, Attacker_Stat[1], Damage, true),
+						damage.returnRangeDamageValue(Attacker, Attacker_Stat[1], Damage, false), Attacker_Stat[8]);
+				if(Attacker instanceof Player)
+				{
+					Player player = (Player)Attacker;
+					if(player.isOnline())
+						Damage = (int)((Damage* GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_BowPull() )/110);
+				}
 			}
 		}
-		else if(AttackType == "M")
+		else if(AttackType.charAt(0)=='M')
 		{
 			Damage = damage.damagerand(Attacker, damage.CombatDamageGet(Attacker, (int)Damage, Attacker_Stat[0], true),
 					damage.CombatDamageGet(Attacker, (int)Damage, Attacker_Stat[0], false),  Attacker_Stat[8]);
@@ -247,6 +254,7 @@ public class Battle_Main implements Listener
 			Damage = damage.damagerand(Attacker, damage.returnExplosionDamageValue(Attacker_Stat[2], Damage, true), damage.returnExplosionDamageValue(Attacker_Stat[2], Damage, false),  Attacker_Stat[8]);
 		else if(AttackType == "P")
 			Damage = damage.damagerand(Attacker, damage.returnCombatValue(Attacker_Stat[2], Damage, true), damage.returnCombatValue(Attacker_Stat[2], Damage, false),  Attacker_Stat[8]);
+
 		
 		
 		int critdamage = damage.criticalrend(Attacker, Attacker_Stat[4], Attacker_Stat[1],Damage, Defender_Stat[1],Attacker_Stat[7]);
@@ -281,15 +289,18 @@ public class Battle_Main implements Listener
 			Damage =(int)(Damage-Defender_Stat[1]);
 		if(Damage <= 0 || (100-Defender_Stat[1])<=0/*보호가 100 이상일 경우*/)
 		{
-			if(Attacker instanceof Player)
+			if(AttackType.compareTo("R_S")!=0)//눈덩이
 			{
-				Player player = (Player)Attacker;
-				if(player.isOnline())
-					DamageCancellMessage(player, event.getEntity());
-				if(isProjectile)
-					event.getDamager().remove();
+				if(Attacker instanceof Player)
+				{
+					Player player = (Player)Attacker;
+					if(player.isOnline())
+						DamageCancellMessage(player, event.getEntity());
+					if(isProjectile)
+						event.getDamager().remove();
+				}
+				event.setDamage(0.5);
 			}
-			event.setDamage(0.5);
 			return;
 		}
 		event.setDamage(Damage);

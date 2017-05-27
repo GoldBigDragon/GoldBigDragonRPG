@@ -126,13 +126,10 @@ public class Main_PlayerChat extends Util_Chat implements Listener
 	  		    	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
 	  		    	Player[] a = new Player[playerlist.size()];
 	  		    	playerlist.toArray(a);
-	  	  			for(short count = 0; count<a.length;count++)
+	  	  			for(int count = 0; count < a.length;count++)
 	  	  			{
-	  	  		    	if(a[count].isOnline() == true)
-	  	  		    	{
-	  	  		    		Player send = (Player) Bukkit.getOfflinePlayer(((Player)a[count]).getName());
-	  	  		    		send.sendMessage(ChatColor.LIGHT_PURPLE + "[包府磊] "+Prefix);
-	  	  		    	}	
+	  	  		    	if(a[count].isOp())
+	  	  		    		a[count].sendMessage(ChatColor.LIGHT_PURPLE + "[包府磊] "+Prefix);
 	  	  		    }
 	  		  		Bukkit.getConsoleSender().sendMessage("[包府磊] "+Prefix);
 	  			}

@@ -211,6 +211,9 @@ public class OPbox_GUI extends Util_GUI
 			Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "폭발 방지", 166,0,1,Arrays.asList(ChatColor.RED+"[비 활성화]",ChatColor.GRAY + "크리퍼, TNT, 엔더 크리스탈로 인한",ChatColor.GRAY+"블록 파괴를 방치합니다."), 24, inv);
 
 		
+		Economy 연동
+		https://youtu.be/GeIkAhdavMg
+		
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
 		Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "작업 관리자 창을 닫습니다."), 53, inv);
 		
