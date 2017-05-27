@@ -1,14 +1,16 @@
 package GBD_RPG.Main_Event;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;
 
-public class Main_PlayerMove
+public class Main_PlayerMove implements Listener
 {
+	@EventHandler
 	public void PlayerMove(PlayerMoveEvent event)
 	{
 		Player player = event.getPlayer();

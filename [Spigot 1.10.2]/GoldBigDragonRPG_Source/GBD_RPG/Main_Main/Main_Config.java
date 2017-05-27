@@ -12,7 +12,7 @@ public class Main_Config
     	if(Config.contains("Version")==false)
     	{
 		  	Config.set("Version", "Advanced");
-		  	Config.set("Update", 20160905);
+		  	Config.set("Update", 20170527);
 		  	Config.set("Server.BroadCastSecond", 30);
 		  	Config.set("Server.EntitySpawn", true);
 		  	Config.set("Server.PVP", true);
@@ -25,7 +25,12 @@ public class Main_Config
 		  	Config.set("Server.ChattingDistance", -1);
 		  	Config.set("Server.DefaultJob", "초보자");
 		  	Config.set("Server.CustomWeaponBreak", true);
-
+			Config.set("Server.AntiExplode", true);
+		  	Config.set("Server.PVP", true);
+		  	Config.set("MaxStat.Level", 100);
+		  	Config.set("MaxStat.Stats", 1500);
+		  	Config.set("Event.Multiple_Proficiency_Get", 1);
+		  	
 		  	Config.set("Server.STR", "체력");
 		  	Config.set("Server.DEX", "솜씨");
 		  	Config.set("Server.INT", "지력");
@@ -230,41 +235,7 @@ public class Main_Config
 		  	Config.set("Normal_Monster.POLAR_BEAR.MAX_MONEY", 45);
 		  	Config.saveConfig();
     	}
-    	if(Config.getLong("Update") < 20160816)
-    	{
-    		Config.set("Update", 20160816);
-		  	Config.set("MaxStat.Level", 100);
-		  	Config.set("MaxStat.Stats", 1500);
-			Config.set("Server.AntiExplode", true);
-		  	Config.set("Event.Multiple_Proficiency_Get", 1);
-		  	Config.removeKey("Server.AttackDelay");
-		  	Config.set("Server.PVP", true);
-			Config.saveConfig();
-    	}
-    	if(Config.getLong("Update") < 20160905)
-    	{
-    		Config.set("Update", 20160905);
-			Config.saveConfig();
-    		YamlManager ItemList = YC.getNewConfig("Item/ItemList.yml");
-    		int ItemAmount = ItemList.getConfigurationSection("").getKeys(false).size();
-    		for(int count= 0; count < ItemAmount; count++)
-    		{
-    			if(ItemList.contains(count+".JOB")==false)
-    			{
-    				ItemList.set(count+".JOB","공용");
-    				ItemList.set(count+".MinLV",0);
-    				ItemList.set(count+".MinRLV",0);
-    				ItemList.set(count+".MinSTR",0);
-    				ItemList.set(count+".MinDEX",0);
-    				ItemList.set(count+".MinINT",0);
-    				ItemList.set(count+".MinWILL",0);
-    				ItemList.set(count+".MinLUK",0);
-    			}
-    		}
-    		ItemList.saveConfig();
-    	}
-    	
-    	
+
 		if(Config.contains("Server.MabinogiMoneySystem"))
 			GBD_RPG.Main_Main.Main_ServerOption.MoneySystem = Config.getBoolean("Server.MabinogiMoneySystem");
 		if(Config.contains("Server.STR"))
@@ -339,25 +310,38 @@ public class Main_Config
 		
 		GBD_RPG.Main_Main.Main_ServerOption.LevelUpPerSkillPoint = (byte) Config.getInt("Server.Level_Up_SkillPoint");
 		GBD_RPG.Main_Main.Main_ServerOption.LevelUpPerStatPoint = (byte) Config.getInt("Server.Level_Up_StatPoint");
-	  	return;
-	}
-
-    public void CreateMapImageConfig(YamlController YC)
-	{
-    	YamlManager YM = YC.getNewConfig("MapImageURL.yml");
-    	if(YM.contains("GBD.URL") == false)
+    		
+		Config = YC.getNewConfig("MapImageURL.yml");
+    	if(Config.contains("GBD.URL") == false)
     	{
-    		YM.set("KoreaLanguage(UTF-8)->JavaEntityLanguage", "http://itpro.cz/juniconv/");
-		  	YM.set("GBD.URL", "http://cafeptthumb3.phinf.naver.net/20140309_183/dnwndugod642_1394374547812opRrb_PNG/GBD%28classic%29.png?type=w740");
-		  	YM.set("GBD.Xcenter", 0);
-		  	YM.set("GBD.Ycenter", 0);
-		  	YM.set("WhatTheHorrible.URL", "http://cafeptthumb3.phinf.naver.net/20150828_126/dnwndugod642_1440694230353y2Dsp_PNG/%B9%B9%BE%DF%C0%CC%B0%C5_%B9%AB%BC%AD%BF%F6.png?type=w740");
-		  	YM.set("WhatTheHorrible.Xcenter", 0);
-		  	YM.set("WhatTheHorrible.Ycenter", 0);
-		  	YM.set("MinimicAngry.URL", "http://cafeptthumb3.phinf.naver.net/20150828_84/dnwndugod642_1440694230655boUgx_PNG/%B9%CC%B4%CF%B9%CD_%C4%BC%BE%D32.png?type=w740");
-		  	YM.set("MinimicAngry.Xcenter", 0);
-		  	YM.set("MinimicAngry.Ycenter", 0);
-		  	YM.saveConfig();
+    		Config.set("KoreaLanguage(UTF-8)->JavaEntityLanguage", "http://itpro.cz/juniconv/");
+		  	Config.set("GBD.URL", "http://cafeptthumb3.phinf.naver.net/20140309_183/dnwndugod642_1394374547812opRrb_PNG/GBD%28classic%29.png?type=w740");
+		  	Config.set("GBD.Xcenter", 0);
+		  	Config.set("GBD.Ycenter", 0);
+		  	Config.set("WhatTheHorrible.URL", "http://cafeptthumb3.phinf.naver.net/20150828_126/dnwndugod642_1440694230353y2Dsp_PNG/%B9%B9%BE%DF%C0%CC%B0%C5_%B9%AB%BC%AD%BF%F6.png?type=w740");
+		  	Config.set("WhatTheHorrible.Xcenter", 0);
+		  	Config.set("WhatTheHorrible.Ycenter", 0);
+		  	Config.set("MinimicAngry.URL", "http://cafeptthumb3.phinf.naver.net/20150828_84/dnwndugod642_1440694230655boUgx_PNG/%B9%CC%B4%CF%B9%CD_%C4%BC%BE%D32.png?type=w740");
+		  	Config.set("MinimicAngry.Xcenter", 0);
+		  	Config.set("MinimicAngry.Ycenter", 0);
+		  	Config.saveConfig();
+    	}
+
+    	Config = YC.getNewConfig("Level.yml");
+    	if(Config.contains(1+"") == false)
+    	{
+    		long EXP = 100;
+    		for(int level = 1; level < 250; level++)
+    		{
+    			if(level + ((1.1) * EXP)< 0 ||level + (1.1) * EXP> Long.MAX_VALUE)
+    				break;
+    			else
+    			{
+    	    		Config.set(level+"", EXP);
+    				EXP = (long) (level + (1.1) * EXP);
+    			}
+    		}
+    		Config.saveConfig();
     	}
 	  	return;
 	}

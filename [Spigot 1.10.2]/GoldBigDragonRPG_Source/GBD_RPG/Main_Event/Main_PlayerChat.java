@@ -8,6 +8,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 
 import GBD_RPG.User.UserData_Object;
@@ -15,10 +17,12 @@ import GBD_RPG.Util.Util_Chat;
 import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;
 
-public class Main_PlayerChat extends Util_Chat
+public class Main_PlayerChat extends Util_Chat implements Listener
 {
+	@EventHandler
 	public void PlayerChatting(PlayerChatEvent event)
 	{
+		event.setMessage(ChatColor.translateAlternateColorCodes('&', event.getMessage()));
 		UserData_Object u = new UserData_Object();
 		GBD_RPG.Effect.Effect_Sound sound = new GBD_RPG.Effect.Effect_Sound();
 	    Player player = event.getPlayer();

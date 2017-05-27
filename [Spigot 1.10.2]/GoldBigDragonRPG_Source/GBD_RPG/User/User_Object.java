@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import GBD_RPG.Main_Main.Main_Main;
 import GBD_RPG.Main_Main.Main_ServerOption;
 import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;
@@ -71,12 +72,6 @@ public class User_Object
 
 	private boolean Death;
 	private Location LastDeathPoint;
-	
-	public String getPlayerName()
-	{return PlayerName;}
-	
-	public void setPlayerName(String playerName)
-	{PlayerName = playerName;}
 	
 	public String getPlayerUUID()
 	{return PlayerUUID;}
@@ -162,13 +157,15 @@ public class User_Object
 			Stat_EXP = LongProcessing(Stat_EXP, EXP);
 
 		    boolean isLevelUp = false;
+
+    		YamlManager levelYAML = new YamlController(Main_Main.plugin).getNewConfig("Level.yml");
 			for(;;)
 			{
 				if(Stat_EXP < Stat_MaxEXP)
 					break;
 				else
 				{
-					if(Main_ServerOption.MaxLevel <= Stat_Level)
+					if(Main_ServerOption.MaxLevel <= Stat_Level && levelYAML.contains((Stat_Level+1)+"")==false)
 						break;
 					else
 					{
@@ -181,11 +178,11 @@ public class User_Object
 						Stat_RealLevel++;
 						Stat_SkillPoint = Stat_SkillPoint + LevelUp_PerSkillPoint;
 						Stat_StatPoint = Stat_StatPoint + LevelUp_PerStatPoint;
-						
-						if((long)(Stat_Level + ((1.1) * Stat_MaxEXP)) < 0 ||(long)(Stat_Level + (1.1) * Stat_MaxEXP) > Long.MAX_VALUE)
+						Stat_MaxEXP = levelYAML.getLong(Stat_Level+"");
+						if(Stat_MaxEXP > Long.MAX_VALUE)
 							Stat_MaxEXP = Long.MAX_VALUE;
-						else
-							Stat_MaxEXP = (long)(Stat_Level + ((1.1) * Stat_MaxEXP));
+						else if(Stat_MaxEXP <= 0)
+							Stat_MaxEXP = 100;
 	
 						if(Main_ServerOption.MaxLevel <= Stat_Level)
 							new GBD_RPG.Effect.Effect_Packet().sendActionBar(Bukkit.getPlayer(PlayerName), ChatColor.RED+""+ChatColor.BOLD+"[최대 레벨에 도달하여 더이상 레벨업 하실 수가 없습니다!]");
@@ -633,8 +630,7 @@ public class User_Object
 	{LastDeathPoint = lastDeathPoint;	}
 	
 	public User_Object()
-	{
-	}
+	{}
 	
 	public User_Object(Player player)
 	{
@@ -645,33 +641,34 @@ public class User_Object
 		YamlManager PlayerConfig = YC.getNewConfig("Stats/"+PlayerUUID+".yml");
 		if(PlayerConfig.contains("Stat.Money")==false)
 		{
-			YamlManager Config=YC.getNewConfig("config.yml");
-			YamlManager NewBieYM = YC.getNewConfig("ETC/NewBie.yml");
+			PlayerConfig = YC.getNewConfig("Level.yml");
 			Stat_Level = 1;
 			Stat_RealLevel = 1;
-			Stat_SkillPoint = Config.getInt("DefaultStat.SkillPoint");
-			Stat_StatPoint = Config.getInt("DefaultStat.StatPoint");
+			Stat_MaxEXP = PlayerConfig.getLong(1+"");
+			PlayerConfig = YC.getNewConfig("ETC/NewBie.yml");
+			Stat_Money = PlayerConfig.getInt("SupportMoney");
+			PlayerConfig=YC.getNewConfig("config.yml");
+			Stat_SkillPoint = PlayerConfig.getInt("DefaultStat.SkillPoint");
+			Stat_StatPoint = PlayerConfig.getInt("DefaultStat.StatPoint");
 			Stat_EXP = 0;
-			Stat_MaxEXP = Config.getInt("DefaultStat.MaxEXP");
-			Stat_Money = NewBieYM.getInt("SupportMoney");
-			Stat_HP = Config.getInt("DefaultStat.HP");
-			Stat_MaxHP = Config.getInt("DefaultStat.HP");
-			Stat_Wond = Config.getInt("DefaultStat.Wond");
-			Stat_MP = Config.getInt("DefaultStat.MP");
-			Stat_MaxMP = Config.getInt("DefaultStat.MP");
-			Stat_STR = Config.getInt("DefaultStat.STR");
-			Stat_DEX = Config.getInt("DefaultStat.DEX");
-			Stat_INT = Config.getInt("DefaultStat.INT");
-			Stat_WILL = Config.getInt("DefaultStat.WILL");
-			Stat_LUK = Config.getInt("DefaultStat.LUK");
-			Stat_Balance = Config.getInt("DefaultStat.Balance");
-			Stat_Critical = Config.getInt("DefaultStat.Critical");
-			Stat_DEF = Config.getInt("DefaultStat.DEF");
-			Stat_DEFcrash = Config.getInt("DefaultStat.DEFcrash");
-			Stat_Protect = Config.getInt("DefaultStat.Protect");
-			Stat_Magic_DEF = Config.getInt("DefaultStat.Magic_DEF");
-			Stat_MagicDEFcrash = Config.getInt("DefaultStat.MagicDEFcrash");
-			Stat_Magic_Protect = Config.getInt("DefaultStat.Magic_Protect");
+			Stat_HP = PlayerConfig.getInt("DefaultStat.HP");
+			Stat_MaxHP = PlayerConfig.getInt("DefaultStat.HP");
+			Stat_Wond = PlayerConfig.getInt("DefaultStat.Wond");
+			Stat_MP = PlayerConfig.getInt("DefaultStat.MP");
+			Stat_MaxMP = PlayerConfig.getInt("DefaultStat.MP");
+			Stat_STR = PlayerConfig.getInt("DefaultStat.STR");
+			Stat_DEX = PlayerConfig.getInt("DefaultStat.DEX");
+			Stat_INT = PlayerConfig.getInt("DefaultStat.INT");
+			Stat_WILL = PlayerConfig.getInt("DefaultStat.WILL");
+			Stat_LUK = PlayerConfig.getInt("DefaultStat.LUK");
+			Stat_Balance = PlayerConfig.getInt("DefaultStat.Balance");
+			Stat_Critical = PlayerConfig.getInt("DefaultStat.Critical");
+			Stat_DEF = PlayerConfig.getInt("DefaultStat.DEF");
+			Stat_DEFcrash = PlayerConfig.getInt("DefaultStat.DEFcrash");
+			Stat_Protect = PlayerConfig.getInt("DefaultStat.Protect");
+			Stat_Magic_DEF = PlayerConfig.getInt("DefaultStat.Magic_DEF");
+			Stat_MagicDEFcrash = PlayerConfig.getInt("DefaultStat.MagicDEFcrash");
+			Stat_Magic_Protect = PlayerConfig.getInt("DefaultStat.Magic_Protect");
 			Stat_AttackTime = -1;
 			Stat_BowPull = 0;
 
@@ -703,107 +700,115 @@ public class User_Object
 			Death = false;
 			LastDeathPoint = null;
 			saveAll();
-			return;
 		}
-		YamlManager PlayerJob  = YC.getNewConfig("Skill/PlayerData/"+player.getUniqueId().toString()+".yml");
-		if(PlayerJob.contains("Job.Root"))
-			PlayerRootJob =  PlayerJob.getString("Job.Root");
 		else
 		{
-	    	YamlManager Config = YC.getNewConfig("config.yml");
-			if(PlayerJob.getString("Job.Type").compareTo(Config.getString("Server.DefaultJob"))==0)
-				PlayerJob.set("Job.Root", Config.getString("Server.DefaultJob"));
+
+			Stat_Level = PlayerConfig.getInt("Stat.Level");
+			Stat_RealLevel = PlayerConfig.getInt("Stat.RealLevel");
+			Stat_SkillPoint = PlayerConfig.getInt("Stat.SkillPoint");
+			Stat_StatPoint = PlayerConfig.getInt("Stat.StatPoint");
+			Stat_EXP = PlayerConfig.getLong("Stat.EXP");
+			Stat_MaxEXP = PlayerConfig.getLong("Stat.MaxEXP");
+			Stat_Money = PlayerConfig.getLong("Stat.Money");
+			Stat_HP = PlayerConfig.getInt("Stat.HP");
+			Stat_MaxHP = PlayerConfig.getInt("Stat.MAXHP");
+			Stat_Wond = PlayerConfig.getInt("Stat.Wond");
+			Stat_MP = PlayerConfig.getInt("Stat.MP");
+			Stat_MaxMP = PlayerConfig.getInt("Stat.MAXMP");
+			Stat_STR = PlayerConfig.getInt("Stat.STR");
+			Stat_DEX = PlayerConfig.getInt("Stat.DEX");
+			Stat_INT = PlayerConfig.getInt("Stat.INT");
+			Stat_WILL = PlayerConfig.getInt("Stat.WILL");
+			Stat_LUK = PlayerConfig.getInt("Stat.LUK");
+			Stat_Balance = PlayerConfig.getInt("Stat.Balance");
+			Stat_Critical = PlayerConfig.getInt("Stat.Critical");
+			Stat_DEF = PlayerConfig.getInt("Stat.DEF");
+			Stat_DEFcrash = PlayerConfig.getInt("Stat.DEFcrash");
+			Stat_Protect = PlayerConfig.getInt("Stat.Protect");
+			Stat_Magic_DEF = PlayerConfig.getInt("Stat.Magic_DEF");
+			Stat_MagicDEFcrash = PlayerConfig.getInt("Stat.MagicDEFcrash");
+			Stat_Magic_Protect = PlayerConfig.getInt("Stat.Magic_Protect");
+			Stat_AttackTime = PlayerConfig.getLong("Stat.AttackTime");
+			Stat_BowPull = (byte) PlayerConfig.getInt("Stat.BowPull");
+
+			Alert_Damage = PlayerConfig.getBoolean("Alert.Damage");
+			Alert_MobHealth = PlayerConfig.getBoolean("Alert.MobHealth");
+			Alert_Critical = PlayerConfig.getBoolean("Alert.Critical");
+			Alert_AttackDelay = PlayerConfig.getBoolean("Alert.AttackDelay");
+			Alert_ItemPickUp = PlayerConfig.getBoolean("Alert.ItemPickUp");
+			Alert_EXPget = PlayerConfig.getBoolean("Alert.EXPget");
+			
+			Option_EquipLook = PlayerConfig.getBoolean("Option.EquipLook");
+			Option_HotBarSound = PlayerConfig.getBoolean("Option.HotBarSound");
+			Option_ChattingType = (byte) PlayerConfig.getInt("Option.ChattingType");
+			Option_BGM = PlayerConfig.getBoolean("Option.BGM");
+			Option_ClickUse = PlayerConfig.getBoolean("Option.ClickUse");
+			Option_SeeInventory = PlayerConfig.getBoolean("Option.SeeInventory");
+
+			ETC_Party = PlayerConfig.getLong("ETC.Party");
+			ETC_Death = PlayerConfig.getBoolean("ETC.Death");
+			ETC_CurrentArea = PlayerConfig.getString("ETC.CurrentArea");
+			ETC_LastVisited = PlayerConfig.getString("ETC.LastVisited");
+			ETC_BuffCoolTime = PlayerConfig.getInt("ETC.BuffCoolTime");
+		  	
+			Dungeon_Enter = PlayerConfig.getString("Dungeon.Enter");
+			Dungeon_UTC = PlayerConfig.getLong("Dungeon.UTC");
+			Dungeon_NormalBGMplaying = PlayerConfig.getBoolean("Dungeon.NormalBGMplaying");
+			Dungeon_BossBGMplaying = PlayerConfig.getBoolean("Dungeon.BossBGMplaying");
+
+			Death = PlayerConfig.getBoolean("Death");
+			if(PlayerConfig.getString("LastDeathPoint.World") != null)
+			{
+				Location loc = new Location(Bukkit.getWorld(PlayerConfig.getString("LastDeathPoint.World")), PlayerConfig.getInt("LastDeathPoint.X"), PlayerConfig.getInt("LastDeathPoint.Y"), PlayerConfig.getInt("LastDeathPoint.Z"), (float)PlayerConfig.getDouble("LastDeathPoint.Yaw"), (float)PlayerConfig.getDouble("LastDeathPoint.Pitch"));
+				LastDeathPoint = loc;
+			}
+			else
+				LastDeathPoint = null;
+			
+			
+			
+			YamlManager PlayerJob  = YC.getNewConfig("Skill/PlayerData/"+player.getUniqueId().toString()+".yml");
+			if(PlayerJob.contains("Job.Root"))
+				PlayerRootJob =  PlayerJob.getString("Job.Root");
 			else
 			{
-				boolean getIt = false;
-				YamlManager JobList  = YC.getNewConfig("Skill/JobList.yml");
-				Object[] Job = JobList.getConfigurationSection("MapleStory").getKeys(false).toArray();
-				for(short count = 0; count < Job.length; count++)
-				{
-					Object[] q = JobList.getConfigurationSection("MapleStory."+Job[count].toString()).getKeys(false).toArray();
-					for(short counter=0;counter<q.length;counter++)
-					{
-						if(q[counter].toString().compareTo(PlayerJob.getString("Job.Type"))==0)
-						{
-							PlayerJob.set("Job.Root", Job[count].toString());
-							PlayerRootJob =  Job[count].toString();
-							getIt = true;
-							break;
-						}
-					}
-					if(getIt)
-						break;
-				}
-				if(getIt==false)
-				{
-					PlayerJob.set("Job.Type", Config.getString("Server.DefaultJob"));
+		    	YamlManager Config = YC.getNewConfig("config.yml");
+				if(PlayerJob.getString("Job.Type").compareTo(Config.getString("Server.DefaultJob"))==0)
 					PlayerJob.set("Job.Root", Config.getString("Server.DefaultJob"));
-					PlayerRootJob = Config.getString("Server.DefaultJob");
+				else
+				{
+					boolean getIt = false;
+					YamlManager JobList  = YC.getNewConfig("Skill/JobList.yml");
+					Object[] Job = JobList.getConfigurationSection("MapleStory").getKeys(false).toArray();
+					for(short count = 0; count < Job.length; count++)
+					{
+						Object[] q = JobList.getConfigurationSection("MapleStory."+Job[count].toString()).getKeys(false).toArray();
+						for(short counter=0;counter<q.length;counter++)
+						{
+							if(q[counter].toString().compareTo(PlayerJob.getString("Job.Type"))==0)
+							{
+								PlayerJob.set("Job.Root", Job[count].toString());
+								PlayerRootJob =  Job[count].toString();
+								getIt = true;
+								break;
+							}
+						}
+						if(getIt)
+							break;
+					}
+					if(getIt==false)
+					{
+						PlayerJob.set("Job.Type", Config.getString("Server.DefaultJob"));
+						PlayerJob.set("Job.Root", Config.getString("Server.DefaultJob"));
+						PlayerRootJob = Config.getString("Server.DefaultJob");
+					}
 				}
+				PlayerJob.saveConfig();
 			}
-			PlayerJob.saveConfig();
 		}
-		Stat_Level = PlayerConfig.getInt("Stat.Level");
-		Stat_RealLevel = PlayerConfig.getInt("Stat.RealLevel");
-		Stat_SkillPoint = PlayerConfig.getInt("Stat.SkillPoint");
-		Stat_StatPoint = PlayerConfig.getInt("Stat.StatPoint");
-		Stat_EXP = PlayerConfig.getLong("Stat.EXP");
-		Stat_MaxEXP = PlayerConfig.getLong("Stat.MaxEXP");
-		Stat_Money = PlayerConfig.getLong("Stat.Money");
-		Stat_HP = PlayerConfig.getInt("Stat.HP");
-		Stat_MaxHP = PlayerConfig.getInt("Stat.MAXHP");
-		Stat_Wond = PlayerConfig.getInt("Stat.Wond");
-		Stat_MP = PlayerConfig.getInt("Stat.MP");
-		Stat_MaxMP = PlayerConfig.getInt("Stat.MAXMP");
-		Stat_STR = PlayerConfig.getInt("Stat.STR");
-		Stat_DEX = PlayerConfig.getInt("Stat.DEX");
-		Stat_INT = PlayerConfig.getInt("Stat.INT");
-		Stat_WILL = PlayerConfig.getInt("Stat.WILL");
-		Stat_LUK = PlayerConfig.getInt("Stat.LUK");
-		Stat_Balance = PlayerConfig.getInt("Stat.Balance");
-		Stat_Critical = PlayerConfig.getInt("Stat.Critical");
-		Stat_DEF = PlayerConfig.getInt("Stat.DEF");
-		Stat_DEFcrash = PlayerConfig.getInt("Stat.DEFcrash");
-		Stat_Protect = PlayerConfig.getInt("Stat.Protect");
-		Stat_Magic_DEF = PlayerConfig.getInt("Stat.Magic_DEF");
-		Stat_MagicDEFcrash = PlayerConfig.getInt("Stat.MagicDEFcrash");
-		Stat_Magic_Protect = PlayerConfig.getInt("Stat.Magic_Protect");
-		Stat_AttackTime = PlayerConfig.getLong("Stat.AttackTime");
-		Stat_BowPull = (byte) PlayerConfig.getInt("Stat.BowPull");
-
-		Alert_Damage = PlayerConfig.getBoolean("Alert.Damage");
-		Alert_MobHealth = PlayerConfig.getBoolean("Alert.MobHealth");
-		Alert_Critical = PlayerConfig.getBoolean("Alert.Critical");
-		Alert_AttackDelay = PlayerConfig.getBoolean("Alert.AttackDelay");
-		Alert_ItemPickUp = PlayerConfig.getBoolean("Alert.ItemPickUp");
-		Alert_EXPget = PlayerConfig.getBoolean("Alert.EXPget");
-		
-		Option_EquipLook = PlayerConfig.getBoolean("Option.EquipLook");
-		Option_HotBarSound = PlayerConfig.getBoolean("Option.HotBarSound");
-		Option_ChattingType = (byte) PlayerConfig.getInt("Option.ChattingType");
-		Option_BGM = PlayerConfig.getBoolean("Option.BGM");
-		Option_ClickUse = PlayerConfig.getBoolean("Option.ClickUse");
-		Option_SeeInventory = PlayerConfig.getBoolean("Option.SeeInventory");
-
-		ETC_Party = PlayerConfig.getLong("ETC.Party");
-		ETC_Death = PlayerConfig.getBoolean("ETC.Death");
-		ETC_CurrentArea = PlayerConfig.getString("ETC.CurrentArea");
-		ETC_LastVisited = PlayerConfig.getString("ETC.LastVisited");
-		ETC_BuffCoolTime = PlayerConfig.getInt("ETC.BuffCoolTime");
-	  	
-		Dungeon_Enter = PlayerConfig.getString("Dungeon.Enter");
-		Dungeon_UTC = PlayerConfig.getLong("Dungeon.UTC");
-		Dungeon_NormalBGMplaying = PlayerConfig.getBoolean("Dungeon.NormalBGMplaying");
-		Dungeon_BossBGMplaying = PlayerConfig.getBoolean("Dungeon.BossBGMplaying");
-
-		Death = PlayerConfig.getBoolean("Death");
-		if(PlayerConfig.getString("LastDeathPoint.World") != null)
-		{
-			Location loc = new Location(Bukkit.getWorld(PlayerConfig.getString("LastDeathPoint.World")), PlayerConfig.getInt("LastDeathPoint.X"), PlayerConfig.getInt("LastDeathPoint.Y"), PlayerConfig.getInt("LastDeathPoint.Z"), (float)PlayerConfig.getDouble("LastDeathPoint.Yaw"), (float)PlayerConfig.getDouble("LastDeathPoint.Pitch"));
-			LastDeathPoint = loc;
-		}
-		else
-			LastDeathPoint = null;
+		Main_ServerOption.PlayerList.put(player.getUniqueId().toString(), this);
+		return;
 	}
 	
 	public void saveAll()

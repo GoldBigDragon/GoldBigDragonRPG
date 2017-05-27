@@ -27,11 +27,9 @@ import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -79,8 +77,17 @@ public class Main_Main extends JavaPlugin implements Listener
 	
 	public void onEnable()
 	{
-		getServer().getPluginManager().registerEvents(this, this);
 		plugin = this;
+		getServer().getPluginManager().registerEvents(this, this);
+		getServer().getPluginManager().registerEvents(new GBD_RPG.Battle.Battle_Main(), this);
+		getServer().getPluginManager().registerEvents(new GBD_RPG.Main_Event.Main_BlockPlace(), this);
+		getServer().getPluginManager().registerEvents(new GBD_RPG.Map.Map(), this);
+		getServer().getPluginManager().registerEvents(new GBD_RPG.Main_Event.Main_BlockBreak(), this);
+		getServer().getPluginManager().registerEvents(new GBD_RPG.Main_Event.Main_Fishing(), this);
+		getServer().getPluginManager().registerEvents(new GBD_RPG.Main_Event.Main_PlayerChat(), this);
+		getServer().getPluginManager().registerEvents(new GBD_RPG.Main_Event.Main_ChangeHotBar(), this);
+		getServer().getPluginManager().registerEvents(new GBD_RPG.Main_Event.Main_PlayerMove(), this);
+		getServer().getPluginManager().registerEvents(new GBD_RPG.Main_Event.Main_PlayerJoin(), this);
 		new OtherPlugins.NoteBlockAPIMain(Main_Main.plugin);
 		new Main_ServerOption().Initialize();
 	  	return;
@@ -102,77 +109,6 @@ public class Main_Main extends JavaPlugin implements Listener
 			Main_ServerOption.PlayerList.get(((Player)players[count]).getUniqueId().toString()).saveAll();
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[Clossing GoldBigDragon Advanced...]");
 	  	return;
-	}
-	
-	@EventHandler
-	private void PlayerJoin(PlayerJoinEvent event)
-	{
-		Player player = event.getPlayer();
-	  	YamlController YC = new YamlController(this);
-	  	if(YC.isExit("Skill/PlayerData/" + player.getUniqueId()+".yml") == false)
-	  		new GBD_RPG.Skill.Skill_Config().CreateNewPlayerSkill(player);
-	  	else
-	  		new GBD_RPG.Job.Job_Main().PlayerFixAllSkillAndJobYML(player);
-		User_Object PO = new User_Object(player);
-		Main_ServerOption.PlayerList.put(player.getUniqueId().toString(), PO);
-		if(player.getLocation().getWorld().getName().compareTo("Dungeon")==0)
-		{
-			new GBD_RPG.Util.Util_Player().teleportToCurrentArea(player, true);
-			new GBD_RPG.Dungeon.Dungeon_Main().EraseAllDungeonKey(player, false);
-			GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setDungeon_Enter(null);
-			GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setDungeon_UTC(-1);
-		}
-		if(new GBD_RPG.Corpse.Corpse_Main().DeathCapture(player,true))
-			new GBD_RPG.Corpse.Corpse_Main().CreateCorpse(player);
-		
-    	new GBD_RPG.Main_Main.Main_ServerOption().MagicSpellCatch();
-    	new GBD_RPG.Main_Main.Main_ServerOption().CitizensCatch();
-
-		new UserData_Object().UserDataInit(player);
-		
-		if(player.isOp() == true)
-			new GBD_RPG.Effect.Effect_Packet().sendTitleSubTitle(player,"\'§e/오피박스\'", "\'§eGoldBigDragonAdvanced 가이드 및 서버 설정이 가능합니다.\'", (byte)1,(byte)10, (byte)1);
-		else
-		{
-			YamlManager Config = YC.getNewConfig("config.yml");
-			if(Config.getInt("Event.DropChance")>=2||Config.getInt("Event.Multiple_EXP_Get")>=2||Config.getInt("Event.Multiple_Level_Up_StatPoint")>=2||Config.getInt("Event.Multiple_Level_Up_SkillPoint")>=2)
-			{
-				String alert = "[";
-				if(Config.getInt("Event.DropChance")>=2)
-					alert =alert+ "드롭률 증가 "+Config.getInt("Event.DropChance")+"배";
-				if(Config.getInt("Event.DropChance")>=2)
-					alert = alert+", ";
-				if(Config.getInt("Event.Multiple_EXP_Get")>=2)
-					alert = alert + "경험치 " + Config.getInt("Event.Multiple_EXP_Get")+"배 획득";
-				if(Config.getInt("Event.Multiple_EXP_Get")>=2)
-					alert = alert+", ";
-				if(Config.getInt("Event.Multiple_Level_Up_StatPoint")>=2)
-					alert = alert +"스텟 포인트 "+Config.getInt("Event.Multiple_Level_Up_StatPoint")+"배 획득";
-				if(Config.getInt("Event.Multiple_Level_Up_StatPoint")>=2)
-					alert = alert+", ";
-				if(Config.getInt("Event.Multiple_Level_Up_SkillPoint")>=2)
-					alert = alert +"스킬 포인트 " +Config.getInt("Event.Multiple_Level_Up_SkillPoint")+"배 획득";
-				alert = alert+"]";
-				new GBD_RPG.Effect.Effect_Packet().sendTitleSubTitle(player, "\'현재 이벤트가 진행중입니다.\'", "\'"+alert+"\'", (byte)1, (byte)10, (byte)1);
-			}
-		}
-	  	if(YC.isExit("Quest/PlayerData/" + player.getUniqueId()+".yml") == false)
-	  	{
-	  	    new GBD_RPG.Quest.Quest_Config().CreateNewPlayerConfig(player);
-
-			YamlManager NewBieYM = YC.getNewConfig("ETC/NewBie.yml");
-			for(byte count = 0; count < YC.getNewConfig("ETC/NewBie.yml").getConfigurationSection("SupportItem").getKeys(false).toArray().length;count++)
-				if(NewBieYM.getItemStack("SupportItem."+count) != null)
-					player.getInventory().addItem(NewBieYM.getItemStack("SupportItem."+count));
-			player.teleport(new Location(Bukkit.getWorld(NewBieYM.getString("TelePort.World")), NewBieYM.getInt("TelePort.X"), NewBieYM.getInt("TelePort.Y"), NewBieYM.getInt("TelePort.Z"), NewBieYM.getInt("TelePort.Yaw"), NewBieYM.getInt("TelePort.Pitch")));
-	  	}
-		new GBD_RPG.Util.ETC().UpdatePlayerHPMP(event.getPlayer());
-    	new GBD_RPG.User.Equip_GUI().FriendJoinQuitMessage(player, true);
-
-		if(YC.getNewConfig("config.yml").getString("Server.JoinMessage") != null)
-			event.setJoinMessage(YC.getNewConfig("config.yml").getString("Server.JoinMessage").replace("%player%",event.getPlayer().getName()));
-		else
-			event.setJoinMessage(null);
 	}
 	
 	@EventHandler
@@ -231,18 +167,7 @@ public class Main_Main extends JavaPlugin implements Listener
 		}
 		return;
 	}
-	
-	@EventHandler
-	private void Move(PlayerMoveEvent event){new GBD_RPG.Main_Event.Main_PlayerMove().PlayerMove(event);return;}
 
-	@EventHandler
-	private void HotBarMove(PlayerItemHeldEvent event)
-	{
-		//if(MagicSpellsCatched == false)
-		//	MagicSpellCatch();
-		new GBD_RPG.Main_Event.Main_ChangeHotBar().HotBarMove(event);
-		return;
-	}
 	
 	@EventHandler
 	private void PlayerItemDrop(PlayerDropItemEvent event)
@@ -253,29 +178,6 @@ public class Main_Main extends JavaPlugin implements Listener
 				if(IT.getItemMeta().getLore().size() == 4)
 					if(IT.getItemMeta().getLore().get(3).equals(ChatColor.YELLOW+"[클릭시 퀵슬롯에서 삭제]")==true)
 						event.setCancelled(true);
-		return;
-	}
-	
-	@EventHandler
-	private void PlayerChatting(PlayerChatEvent event)
-	{
-		event.setMessage(ChatColor.translateAlternateColorCodes('&', event.getMessage()));
-		new GBD_RPG.Main_Event.Main_PlayerChat().PlayerChatting(event);
-		return;
-	}
-
-	@EventHandler
-	private void PlayerFishing(PlayerFishEvent event)
-	{
-		GBD_RPG.Main_Event.Main_Fishing F = new GBD_RPG.Main_Event.Main_Fishing();
-		F.PlayerFishing(event);
-		return;
-	}
-	
-	@EventHandler
-	private void Map(MapInitializeEvent event)
-	{
-		new GBD_RPG.Map.Map().onMap(event);
 		return;
 	}
 	
@@ -473,10 +375,6 @@ public class Main_Main extends JavaPlugin implements Listener
 		return;
 	}
 	
-	@EventHandler
-	private void RA(EntityShootBowEvent event) {new GBD_RPG.Battle.Battle_Main().RangeAttack(event);return;}
-    @EventHandler
-    private void Attack(EntityDamageByEntityEvent event) {new GBD_RPG.Battle.Battle_Main().AttackRouter(event);return;}
     @EventHandler
 	private void EntitySpawn(CreatureSpawnEvent event) {new GBD_RPG.Monster.Monster_Spawn().EntitySpawn(event);return;}
     @EventHandler
@@ -524,11 +422,6 @@ public class Main_Main extends JavaPlugin implements Listener
     private void ItemGetMessage(PlayerPickupItemEvent event) {new GBD_RPG.Main_Event.Main_Interact().PlayerGetItem(event);}
 	@EventHandler
 	private void MonsterKill(EntityDeathEvent event)	{new GBD_RPG.Monster.Monster_Kill().MonsterKilling(event);return;}
-	@EventHandler
-	private void BBreak(BlockBreakEvent event)
-	{new GBD_RPG.Main_Event.Main_BlockBreak().BlockBreaking(event); return;}
-	@EventHandler
-	private void BlockPlace(BlockPlaceEvent event){new GBD_RPG.Main_Event.Main_BlockPlace().BlockPlaceE(event); return;}
 
 	@EventHandler
 	private void EntityExplode(EntityExplodeEvent event)

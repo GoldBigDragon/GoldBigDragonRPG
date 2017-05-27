@@ -2,6 +2,8 @@ package GBD_RPG.Main_Event;
 
 import org.bukkit.craftbukkit.v1_10_R1.entity.CraftItem;
 import org.bukkit.entity.EntityType;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerFishEvent.State;
 import org.bukkit.inventory.ItemStack;
@@ -9,8 +11,9 @@ import org.bukkit.inventory.ItemStack;
 import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;
 
-public class Main_Fishing
+public class Main_Fishing implements Listener
 {
+	@EventHandler
 	public void PlayerFishing(PlayerFishEvent event)
 	{
 		if(event.getState() == State.CAUGHT_FISH)

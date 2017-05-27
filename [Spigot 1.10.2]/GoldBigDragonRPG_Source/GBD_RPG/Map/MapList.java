@@ -31,8 +31,6 @@ public class MapList extends MapRenderer
 
 		  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 			YamlManager MapConfig=YC.getNewConfig("MapImageURL.yml");
-			if(YC.isExit("MapImageURL.yml") == false)
-				new GBD_RPG.Main_Main.Main_Config().CreateMapImageConfig(YC);
 			String Name = new UserData_Object().getString(player, (byte)1);
 			URL = MapConfig.getString(Name+".URL");
 			Xcenter = MapConfig.getInt(Name+".Xcenter");

@@ -5,6 +5,8 @@ import org.bukkit.Sound;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Damageable;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -15,8 +17,9 @@ import GBD_RPG.Main_Main.Main_ServerOption;
 import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;
 
-public class Main_ChangeHotBar
+public class Main_ChangeHotBar implements Listener
 {
+	@EventHandler
 	public void HotBarMove(PlayerItemHeldEvent event)
 	{
 		Player player = event.getPlayer();

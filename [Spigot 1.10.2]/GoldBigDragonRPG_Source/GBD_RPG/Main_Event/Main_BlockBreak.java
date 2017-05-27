@@ -7,6 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
 import GBD_RPG.Battle.Battle_Calculator;
@@ -14,8 +16,9 @@ import GBD_RPG.Main_Main.Main_ServerOption;
 import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;
 
-public class Main_BlockBreak
+public class Main_BlockBreak implements Listener
 {
+	@EventHandler
 	public void BlockBreaking(BlockBreakEvent event)
 	{
 		if(event.isCancelled())

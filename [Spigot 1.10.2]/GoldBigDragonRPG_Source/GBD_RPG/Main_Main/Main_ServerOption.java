@@ -78,10 +78,10 @@ public class Main_ServerOption
 	public static short Money6ID = 41;
 	public static byte Money6DATA = 0;
 	
-	public static String serverUpdate = "2017-05-25-19:02";
+	public static String serverUpdate = "2017-05-27-15:32";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/1_10.html";
-	public static String currentServerUpdate = "2017-05-25-19:02";
+	public static String currentServerUpdate = "2017-05-27-15:32";
 	public static String currentServerVersion = "Advanced";
 	
 	public static java.util.Map<Long, Party_Object> Party = new LinkedHashMap<Long, Party_Object>();
@@ -118,7 +118,7 @@ public class Main_ServerOption
 		for(short count = 0; count < players.length; count++)
 		{
 			Player p = ((Player)players[count]);
-			PlayerList.put(p.getUniqueId().toString(), new User_Object((Player)players[count]));
+			new User_Object(p);
 			if(new GBD_RPG.Area.Area_Main().SearchAreaName(p.getLocation()) != null)
 				PlayerCurrentArea.put(p, new GBD_RPG.Area.Area_Main().SearchAreaName(p.getLocation())[0].toString());
 			if(PlayerList.get(p.getUniqueId().toString()).isDeath())
@@ -141,11 +141,8 @@ public class Main_ServerOption
 		if(!MusicFolder.exists())
 			MusicFolder.mkdirs();
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" NBS 파일 로드");
-	  	GBD_RPG.Main_Main.Main_Config config = new GBD_RPG.Main_Main.Main_Config();
-	  	config.CheckConfig(YC);
+	  	new GBD_RPG.Main_Main.Main_Config().CheckConfig(YC);
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" 콘피그 정보 로드");
-	  	config.CreateMapImageConfig(YC);
-	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" 맵 이미지 정보 로드");
 	  	if(YC.isExit("Skill/SkillList.yml") == false)
 	  	  new GBD_RPG.Skill.Skill_Config().CreateNewSkillList();
 	  	Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN +""+ChatColor.BOLD+ "[OK]"+ChatColor.DARK_GRAY+" 스킬 정보 로드");

@@ -10,6 +10,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.SplashPotion;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
@@ -18,9 +20,10 @@ import GBD_RPG.Monster.Monster_Object;
 
 import org.bukkit.event.entity.EntityShootBowEvent;
 
-public class Battle_Main
+public class Battle_Main implements Listener
 {
 	//활 공격시 얼마나 힘을 주었는지 값을 구해주는 메소드//
+	@EventHandler
 	public void RangeAttack(EntityShootBowEvent event)
 	{
 		if(event.getEntityType() == EntityType.PLAYER)
@@ -50,6 +53,7 @@ public class Battle_Main
 		return;
 	}
 
+	@EventHandler
 	public void AttackRouter(EntityDamageByEntityEvent event)
 	{
 		if(event.getEntity() instanceof LivingEntity)

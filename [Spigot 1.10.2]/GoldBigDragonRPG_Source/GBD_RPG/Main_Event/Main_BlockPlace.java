@@ -4,13 +4,16 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;
 
-public class Main_BlockPlace
+public class Main_BlockPlace implements Listener
 {
+	@EventHandler
 	public void BlockPlaceE(BlockPlaceEvent event)
 	{
 		Player player = event.getPlayer();
