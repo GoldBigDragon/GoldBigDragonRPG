@@ -137,19 +137,29 @@ public class User_Object
 
 	public boolean addStat_MoneyAndEXP(long Money, long EXP, boolean isAlert)
 	{
-		if(Money != 0)
+		if(GBD_RPG.Main_Main.Main_ServerOption.economy!=null)
 		{
-			if(Stat_Money + Money <= 2000000000)
+			if(Money > 0)
+				GBD_RPG.Main_Main.Main_ServerOption.economy.depositPlayer(player.getName(), Money);
+			else if(Money < 0)
+				GBD_RPG.Main_Main.Main_ServerOption.economy.withdrawPlayer(player.getName(), -1*Money);
+		}
+		else
+		{
+			if(Money != 0)
 			{
-				if(Stat_Money + Money < 0)
-					return false;
+				if(Stat_Money + Money <= 2000000000)
+				{
+					if(Stat_Money + Money < 0)
+						return false;
+					else
+						setStat_Money(this.Stat_Money+Money);
+				}
 				else
-					setStat_Money(this.Stat_Money+Money);
-			}
-			else
-			{
-				player.sendMessage(ChatColor.RED+"[System] : "+Main_ServerOption.Money+ChatColor.RED+" 을(를) 2000000000(20억)이상 가질 수 없습니다!");
-				setStat_Money(2000000000);
+				{
+					player.sendMessage(ChatColor.RED+"[System] : "+Main_ServerOption.Money+ChatColor.RED+" 을(를) 2000000000(20억)이상 가질 수 없습니다!");
+					setStat_Money(2000000000);
+				}
 			}
 		}
 		if(EXP!=0)
@@ -215,10 +225,23 @@ public class User_Object
 	{Stat_MaxEXP = value;}
 	
 	public long getStat_Money()
-	{return Stat_Money;}
+	{
+		if(GBD_RPG.Main_Main.Main_ServerOption.economy!=null)
+			return (long) GBD_RPG.Main_Main.Main_ServerOption.economy.getBalance(player.getName());
+		else
+			return Stat_Money;
+	}
 
 	public void setStat_Money(long value)
-	{Stat_Money = value;}
+	{
+		if(GBD_RPG.Main_Main.Main_ServerOption.economy!=null)
+		{
+			if(GBD_RPG.Main_Main.Main_ServerOption.economy.withdrawPlayer(player.getName(), GBD_RPG.Main_Main.Main_ServerOption.economy.getBalance(player.getName())).transactionSuccess())
+				GBD_RPG.Main_Main.Main_ServerOption.economy.depositPlayer(player.getName(), value);
+		}
+		else
+			Stat_Money = value;
+	}
 	
 	public int getStat_HP()
 	{return Stat_HP;}
@@ -710,7 +733,10 @@ public class User_Object
 			Stat_StatPoint = PlayerConfig.getInt("Stat.StatPoint");
 			Stat_EXP = PlayerConfig.getLong("Stat.EXP");
 			Stat_MaxEXP = PlayerConfig.getLong("Stat.MaxEXP");
-			Stat_Money = PlayerConfig.getLong("Stat.Money");
+			if(GBD_RPG.Main_Main.Main_ServerOption.economy!=null)
+				Stat_Money = (long) GBD_RPG.Main_Main.Main_ServerOption.economy.getBalance(player.getName());
+			else
+				Stat_Money = PlayerConfig.getLong("Stat.Money");
 			Stat_HP = PlayerConfig.getInt("Stat.HP");
 			Stat_MaxHP = PlayerConfig.getInt("Stat.MAXHP");
 			Stat_Wond = PlayerConfig.getInt("Stat.Wond");
@@ -825,7 +851,10 @@ public class User_Object
 	  	PlayerConfig.set("Stat.StatPoint", Stat_StatPoint);
 	  	PlayerConfig.set("Stat.EXP", Stat_EXP);
 	  	PlayerConfig.set("Stat.MaxEXP", Stat_MaxEXP);
-	  	PlayerConfig.set("Stat.Money", Stat_Money);
+		if(GBD_RPG.Main_Main.Main_ServerOption.economy!=null)
+			PlayerConfig.set("Stat.Money", (long) GBD_RPG.Main_Main.Main_ServerOption.economy.getBalance(player.getName()));
+		else
+			PlayerConfig.set("Stat.Money", Stat_Money);
 	  	PlayerConfig.set("Stat.HP", Stat_HP);
 	  	PlayerConfig.set("Stat.MAXHP", Stat_MaxHP);
 	  	PlayerConfig.set("Stat.Wond", Stat_Wond);

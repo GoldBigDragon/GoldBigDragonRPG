@@ -50,6 +50,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.server.MapInitializeEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import GBD_RPG.Party.Party_DataManager;
@@ -57,6 +58,7 @@ import GBD_RPG.User.UserData_Object;
 import GBD_RPG.User.User_Object;
 import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;
+import net.milkbowl.vault.economy.Economy;
 import net.minecraft.server.v1_10_R1.PacketPlayInClientCommand;
 
 public class Main_Main extends JavaPlugin implements Listener
@@ -90,6 +92,13 @@ public class Main_Main extends JavaPlugin implements Listener
 		getServer().getPluginManager().registerEvents(new GBD_RPG.Main_Event.Main_PlayerJoin(), this);
 		new OtherPlugins.NoteBlockAPIMain(Main_Main.plugin);
 		new Main_ServerOption().Initialize();
+		
+		if(getServer().getPluginManager().getPlugin("Vault")!=null)
+		{
+			RegisteredServiceProvider<Economy> rspE = getServer().getServicesManager().getRegistration(Economy.class);
+			if(rspE != null)
+				GBD_RPG.Main_Main.Main_ServerOption.economy = rspE.getProvider();
+		}
 	  	return;
 	}
 	

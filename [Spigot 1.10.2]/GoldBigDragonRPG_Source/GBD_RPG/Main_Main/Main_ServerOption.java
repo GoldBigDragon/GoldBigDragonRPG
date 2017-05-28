@@ -29,10 +29,13 @@ import GBD_RPG.Party.Party_Object;
 import GBD_RPG.User.User_Object;
 import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;
+import net.milkbowl.vault.economy.Economy;
 
 public class Main_ServerOption
 {
 	public static ArrayList<String> DungeonTheme = new ArrayList<String>();
+	
+	public static Economy economy = null;
 	
 	public static String STR = "Ã¼·Â";
 	public static String DEX = "¼Ø¾¾";
@@ -78,10 +81,10 @@ public class Main_ServerOption
 	public static short Money6ID = 41;
 	public static byte Money6DATA = 0;
 	
-	public static String serverUpdate = "2017-05-27-15:32";
+	public static String serverUpdate = "2017-05-28-11:25";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/1_10.html";
-	public static String currentServerUpdate = "2017-05-27-15:32";
+	public static String currentServerUpdate = "2017-05-28-11:25";
 	public static String currentServerVersion = "Advanced";
 	
 	public static java.util.Map<Long, Party_Object> Party = new LinkedHashMap<Long, Party_Object>();
