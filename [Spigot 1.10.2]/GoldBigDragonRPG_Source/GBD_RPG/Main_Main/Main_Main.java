@@ -33,8 +33,10 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -49,7 +51,10 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.server.MapInitializeEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -76,6 +81,30 @@ public class Main_Main extends JavaPlugin implements Listener
 			new OtherPlugins.NoteBlockAPIMain().SongPlay(player, event.getSongPlayer().getSong());
 		}
 	}
+
+    @EventHandler
+    public void craftItem(PrepareItemCraftEvent event)
+    {
+    	Inventory inv = event.getInventory();
+    	ItemStack item = null;
+    	boolean cantCraft = false;
+    	for(int count = 0; count < inv.getSize(); count++)
+    	{
+    		item = inv.getItem(count);
+    		if(item != null && item.getType() != Material.AIR)
+    		{
+    			if(item.hasItemMeta()&&item.getItemMeta().hasItemFlag(ItemFlag.HIDE_UNBREAKABLE)&&item.getItemMeta().hasLore()&&item.getItemMeta().hasDisplayName()&&
+    			item.getItemMeta().getLore().get(0).contains("[µ·]"))
+    			{
+    				cantCraft = true;
+    				break;
+    			}
+    				
+    		}
+    	}
+    	if(cantCraft)
+    		inv.setItem(0, new ItemStack(Material.AIR));
+    }
 	
 	public void onEnable()
 	{
