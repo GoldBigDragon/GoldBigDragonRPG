@@ -3,8 +3,9 @@
 	<classpathentry kind="src" path="GoldBigDragonRPG_Source"/>
 	<classpathentry kind="src" path="OtherPlugins"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/[서버팩] [1.10.2]/plugins/Citizens.jar"/>
-	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/[서버팩] [1.10.2]/plugins/MagicSpells-3.5-dev-1603090833.jar"/>
-	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/[서버팩] [1.10.2]/spigot-latest.jar"/>
+	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/1.10연구공간/[서버팩] [1.10.2]/plugins/Citizens.jar"/>
+	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/1.10연구공간/[서버팩] [1.10.2]/plugins/MagicSpells.jar"/>
+	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/1.10연구공간/[서버팩] [1.10.2]/spigot-latest.jar"/>
+	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/1.10연구공간/[서버팩] [1.10.2]/plugins/Vault.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

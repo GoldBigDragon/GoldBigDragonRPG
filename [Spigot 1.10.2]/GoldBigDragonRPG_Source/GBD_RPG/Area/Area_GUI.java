@@ -129,6 +129,17 @@ public class Area_GUI extends Util_GUI
 		Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[몬스터 스폰 설정]", 52,0,1,Arrays.asList("",ChatColor.GRAY + "현재 영역의 특정 구역에",ChatColor.GRAY+"특정 시각마다 몬스터를",ChatColor.GRAY+"스폰 합니다.","",ChatColor.YELLOW + "[클릭시 몬스터 스폰 설정]"), 31, inv);
 		Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[메시지 변경]", 386,0,1,Arrays.asList("",ChatColor.GRAY + "영역 입장 메시지를 변경합니다.","",ChatColor.YELLOW + "[클릭시 입장 메시지 설정]"), 23, inv);
 		Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[중심지 변경]", 138,0,1,Arrays.asList("",ChatColor.GRAY + "마을 귀환, 최근 방문 위치에서",ChatColor.GRAY+"리스폰 등의 현재 영역으로",ChatColor.GRAY+"텔레포트 되는 이벤트가 발생할 경우",ChatColor.GRAY+"현재 위치가 중심점이 됩니다.","",ChatColor.DARK_AQUA+"[  현재 중심지  ]",ChatColor.DARK_AQUA+""+AreaConfig.getString(AreaName+".World")+" : "+AreaConfig.getInt(AreaName+".SpawnLocation.X")+","+AreaConfig.getInt(AreaName+".SpawnLocation.Y")+","+AreaConfig.getInt(AreaName+".SpawnLocation.Z"),"",ChatColor.YELLOW+ "[클릭시 현재 위치로 변경]"), 24, inv);
+		
+		if(AreaConfig.getInt(AreaName+".Restrict.MinNowLevel")+AreaConfig.getInt(AreaName+".Restrict.MinNowLevel")+
+			AreaConfig.getInt(AreaName+".Restrict.MinRealLevel")+AreaConfig.getInt(AreaName+".Restrict.MaxRealLevel")==0)
+			Stack2(ChatColor.GREEN + ""+ChatColor.BOLD+"[입장 레벨 제한 없음]", 166,0,1,Arrays.asList("",ChatColor.GRAY + "레벨에 따른 입장 제한이 없습니다.",""), 34, inv);
+		else
+			Stack2(ChatColor.RED + ""+ChatColor.BOLD+"[입장 레벨 제한]", 399,0,1,Arrays.asList("",ChatColor.GRAY + "레벨에 따른 입장 제한이 있습니다.",""
+			,ChatColor.DARK_AQUA+"[  최소 현재 레벨  ]", "  "+ChatColor.DARK_AQUA+""+AreaConfig.getInt(AreaName+".Restrict.MinNowLevel")
+			,ChatColor.DARK_AQUA+"[  최대 현재 레벨  ]", "  "+ChatColor.DARK_AQUA+""+AreaConfig.getInt(AreaName+".Restrict.MaxNowLevel")
+			,ChatColor.GRAY+" ▼ 마비노기 시스템일 경우 추가 적용 ▼"
+			,ChatColor.DARK_AQUA+"[  최소 누적 레벨  ]", "  "+ChatColor.DARK_AQUA+""+AreaConfig.getInt(AreaName+".Restrict.MinRealLevel")
+			,ChatColor.DARK_AQUA+"[  최대 누적 레벨  ]", "  "+ChatColor.DARK_AQUA+""+AreaConfig.getInt(AreaName+".Restrict.MaxRealLevel"),""), 34, inv);
 		String lore = "";
 		short tracknumber = (short) AreaConfig.getInt(AreaName+".BGM");
 		lore = " %enter%"+ChatColor.GRAY + "영역 입장시 테마 음을%enter%"+ChatColor.GRAY+"재생 시킬 수 있습니다.%enter% %enter%"+ChatColor.BLUE + "[클릭시 노트블록 사운드 설정]%enter% %enter%"+ChatColor.DARK_AQUA+"[트랙] "+ChatColor.BLUE +""+ tracknumber+"%enter%"
@@ -694,7 +705,7 @@ public class Area_GUI extends Util_GUI
 				  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 					YamlManager AreaConfig =YC.getNewConfig("Area/AreaList.yml");
 					for(int count = 0; count < Main_ServerOption.AreaList.get(AreaConfig.getString(AreaName+".World")).size(); count++)
-						if(Main_ServerOption.AreaList.get(AreaConfig.getString(AreaName+".World")).get(count).getAreaName().compareTo(AreaName)==0)
+						if(Main_ServerOption.AreaList.get(AreaConfig.getString(AreaName+".World")).get(count).AreaName.compareTo(AreaName)==0)
 							Main_ServerOption.AreaList.get(AreaConfig.getString(AreaName+".World")).remove(count);
 					AreaConfig.removeKey(AreaName);
 					AreaConfig.saveConfig();
@@ -854,6 +865,15 @@ public class Area_GUI extends Util_GUI
 				AreaMonsterSettingGUI(player,(short) 0, AreaName);
 			else if(slot == 31)//몬스터 스폰 룰
 				AreaMonsterSpawnSettingGUI(player, (short) 0, AreaName);
+			else if(slot == 34)//레벨 제한
+			{
+				UserData_Object u = new UserData_Object();
+				player.closeInventory();
+				u.setType(player, "Area");
+				u.setString(player, (byte)2, "MinNLR");
+				u.setString(player, (byte)3, AreaName);
+				player.sendMessage(ChatColor.GREEN + "[영역] : "+ChatColor.YELLOW+AreaName+ChatColor.GREEN+" 영역의 입장에 필요한 최소 레벨을 입력 하세요!"+ChatColor.GRAY + " (0 입력시 제한 없음)");
+			}
 			else if(slot == 40)//영역 이동
 			{
 				player.closeInventory();

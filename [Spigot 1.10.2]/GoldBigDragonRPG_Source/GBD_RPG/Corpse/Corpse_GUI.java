@@ -51,63 +51,66 @@ public class Corpse_GUI extends Util_GUI
 	
 	public void OpenReviveSelectGUI(Player player)
 	{
-		String UniqueCode = "§0§0§9§0§0§r";
-		Inventory inv = Bukkit.createInventory(null, 27, UniqueCode + "§0행동불능 상태 -부활 방법 선택-");
+		if(player.getOpenInventory().getTitle().compareTo("§0§0§9§0§0§r§0행동불능 상태 -부활 방법 선택-")!=0)
+		{
+			String UniqueCode = "§0§0§9§0§0§r";
+			Inventory inv = Bukkit.createInventory(null, 27, UniqueCode + "§0행동불능 상태 -부활 방법 선택-");
 
-	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
-	  	YamlManager Config = YC.getNewConfig("config.yml");
+		  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+		  	YamlManager Config = YC.getNewConfig("config.yml");
 
-	  	SetNormal("Death.Spawn_Home.SetHealth", "100%");
-	  	SetNormal("Death.Spawn_Home.PenaltyEXP", "10%");
-	  	SetNormal("Death.Spawn_Home.PenaltyMoney", "0%");
+		  	SetNormal("Death.Spawn_Home.SetHealth", "100%");
+		  	SetNormal("Death.Spawn_Home.PenaltyEXP", "10%");
+		  	SetNormal("Death.Spawn_Home.PenaltyMoney", "0%");
 
-	  	SetNormal("Death.Spawn_Here.SetHealth", "1%");
-	  	SetNormal("Death.Spawn_Here.PenaltyEXP", "15%");
-	  	SetNormal("Death.Spawn_Here.PenaltyMoney", "10%");
-	  	
-	  	SetNormal("Death.Spawn_Help.SetHealth", "1%");
-	  	SetNormal("Death.Spawn_Help.PenaltyEXP", "5%");
-	  	SetNormal("Death.Spawn_Help.PenaltyMoney", "0%");
-	  	
-	  	SetNormal("Death.Spawn_Item.SetHealth", "100%");
-	  	SetNormal("Death.Spawn_Item.PenaltyEXP", "0%");
-	  	SetNormal("Death.Spawn_Item.PenaltyMoney", "0%");
-	  	
-	  	try
-	  	{
-			if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_LastVisited()==null||GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_LastVisited().compareTo("null")==0)
-				Stack2(ChatColor.GOLD + "" + ChatColor.BOLD + "[가까운 마을에서 부활]", 345,0,1,Arrays.asList(ChatColor.GRAY + "최근 방문한 마을이 없습니다.",ChatColor.GRAY + "이 방법을 선택할 경우,",ChatColor.GRAY + player.getLocation().getWorld().getName()+"월드에 설정된",ChatColor.GRAY + "기본 스폰 지점에서 부활합니다.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Home.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Home.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Home.PenaltyMoney")+" 감소"), 10, inv);
+		  	SetNormal("Death.Spawn_Here.SetHealth", "1%");
+		  	SetNormal("Death.Spawn_Here.PenaltyEXP", "15%");
+		  	SetNormal("Death.Spawn_Here.PenaltyMoney", "10%");
+		  	
+		  	SetNormal("Death.Spawn_Help.SetHealth", "1%");
+		  	SetNormal("Death.Spawn_Help.PenaltyEXP", "5%");
+		  	SetNormal("Death.Spawn_Help.PenaltyMoney", "0%");
+		  	
+		  	SetNormal("Death.Spawn_Item.SetHealth", "100%");
+		  	SetNormal("Death.Spawn_Item.PenaltyEXP", "0%");
+		  	SetNormal("Death.Spawn_Item.PenaltyMoney", "0%");
+		  	
+		  	try
+		  	{
+				if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_LastVisited()==null||GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_LastVisited().compareTo("null")==0)
+					Stack2(ChatColor.GOLD + "" + ChatColor.BOLD + "[가까운 마을에서 부활]", 345,0,1,Arrays.asList(ChatColor.GRAY + "최근 방문한 마을이 없습니다.",ChatColor.GRAY + "이 방법을 선택할 경우,",ChatColor.GRAY + player.getLocation().getWorld().getName()+"월드에 설정된",ChatColor.GRAY + "기본 스폰 지점에서 부활합니다.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Home.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Home.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Home.PenaltyMoney")+" 감소"), 10, inv);
+				else
+					Stack2(ChatColor.GOLD + "" + ChatColor.BOLD + "[가까운 마을에서 부활]", 345,0,1,Arrays.asList(ChatColor.YELLOW + GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_LastVisited()+ChatColor.GRAY +"에서 부활합니다.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Home.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Home.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Home.PenaltyMoney")+" 감소"), 10, inv);
+		  	}
+		  	catch(NullPointerException e)
+		  	{
+		  		Stack2(ChatColor.GOLD + "" + ChatColor.BOLD + "[가까운 마을에서 부활]", 345,0,1,Arrays.asList(ChatColor.GRAY + "최근 방문한 마을이 없습니다.",ChatColor.GRAY + "이 방법을 선택할 경우,",ChatColor.GRAY + player.getLocation().getWorld().getName()+"월드에 설정된",ChatColor.GRAY + "기본 스폰 지점에서 부활합니다.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Home.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Home.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Home.PenaltyMoney")+" 감소"), 10, inv);
+		  	}
+			if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_EXP()<0)
+				Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[다시 일어선다]", 166,0,1,Arrays.asList(ChatColor.GRAY + "경험치가 부족하여 제자리",ChatColor.GRAY + "부활이 불가능 합니다."), 12, inv);
+			else if(Config.getBoolean("Death.DistrictDirectRevive"))
+				Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[다시 일어선다]", 166,0,1,Arrays.asList(ChatColor.GRAY + "제자리 부활이 불가능합니다."), 12, inv);
 			else
-				Stack2(ChatColor.GOLD + "" + ChatColor.BOLD + "[가까운 마을에서 부활]", 345,0,1,Arrays.asList(ChatColor.YELLOW + GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_LastVisited()+ChatColor.GRAY +"에서 부활합니다.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Home.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Home.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Home.PenaltyMoney")+" 감소"), 10, inv);
-	  	}
-	  	catch(NullPointerException e)
-	  	{
-	  		Stack2(ChatColor.GOLD + "" + ChatColor.BOLD + "[가까운 마을에서 부활]", 345,0,1,Arrays.asList(ChatColor.GRAY + "최근 방문한 마을이 없습니다.",ChatColor.GRAY + "이 방법을 선택할 경우,",ChatColor.GRAY + player.getLocation().getWorld().getName()+"월드에 설정된",ChatColor.GRAY + "기본 스폰 지점에서 부활합니다.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Home.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Home.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Home.PenaltyMoney")+" 감소"), 10, inv);
-	  	}
-		if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_EXP()<0)
-			Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[다시 일어선다]", 166,0,1,Arrays.asList(ChatColor.GRAY + "경험치가 부족하여 제자리",ChatColor.GRAY + "부활이 불가능 합니다."), 12, inv);
-		else if(Config.getBoolean("Death.DistrictDirectRevive"))
-			Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[다시 일어선다]", 166,0,1,Arrays.asList(ChatColor.GRAY + "제자리 부활이 불가능합니다."), 12, inv);
-		else
-			Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[다시 일어선다]", 2266,0,1,Arrays.asList(ChatColor.GRAY + "아픔을 참고 다시 일어섭니다.",ChatColor.GRAY + "좋은 상태는 기대하기 힘듭니다.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Here.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Here.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Here.PenaltyMoney")+" 감소"), 12, inv);
-		
-		ItemStack item = Config.getItemStack("Death.RescueItem");
-		
-		if(item == null)
-			Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[구조를 기다린다]", 397,3,1,Arrays.asList(ChatColor.GRAY + "다른 사람의 도움을 요청합니다.",ChatColor.GRAY + "주위에 사람이 있는지 살펴보세요.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Help.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Help.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Help.PenaltyMoney")+" 감소"), 14, inv);
-		else
-			Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[구조를 기다린다]", item.getTypeId(),item.getData().getData(),item.getAmount(),Arrays.asList(ChatColor.GRAY + "다른 사람의 도움을 요청합니다.",ChatColor.GRAY + "주위에 사람이 있는지 살펴보세요.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Help.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Help.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Help.PenaltyMoney")+" 감소"), 14, inv);
-		
-		item = Config.getItemStack("Death.ReviveItem");
-		if(item == null)
-			Stack2(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "[부활석 사용]", 399,0,1,Arrays.asList(ChatColor.GRAY + "제자리 부활 아이템을 사용합니다.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Item.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Item.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Item.PenaltyMoney")+" 감소"), 16, inv);
-		else if(item.hasItemMeta()==false)
-			Stack2(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "[부활석 사용]", item.getTypeId(),item.getData().getData(),item.getAmount(),Arrays.asList(ChatColor.GRAY + "제자리 부활 아이템을 사용합니다.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Item.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Item.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Item.PenaltyMoney")+" 감소"), 16, inv);
-		else if(item.getItemMeta().hasDisplayName()==false)
-			Stack2(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "[부활석 사용]", item.getTypeId(),item.getData().getData(),item.getAmount(),Arrays.asList(ChatColor.GRAY + "제자리 부활 아이템을 사용합니다.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Item.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Item.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Item.PenaltyMoney")+" 감소"), 16, inv);
-		else
-			Stack2(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "["+item.getItemMeta().getDisplayName()+ChatColor.DARK_AQUA + "" + ChatColor.BOLD +" 사용]", item.getTypeId(),item.getData().getData(),item.getAmount(),Arrays.asList(ChatColor.GRAY + "제자리 부활 아이템을 사용합니다.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Item.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Item.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Item.PenaltyMoney")+" 감소"), 16, inv);
-		player.openInventory(inv);
+				Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[다시 일어선다]", 2266,0,1,Arrays.asList(ChatColor.GRAY + "아픔을 참고 다시 일어섭니다.",ChatColor.GRAY + "좋은 상태는 기대하기 힘듭니다.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Here.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Here.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Here.PenaltyMoney")+" 감소"), 12, inv);
+			
+			ItemStack item = Config.getItemStack("Death.RescueItem");
+			
+			if(item == null)
+				Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[구조를 기다린다]", 397,3,1,Arrays.asList(ChatColor.GRAY + "다른 사람의 도움을 요청합니다.",ChatColor.GRAY + "주위에 사람이 있는지 살펴보세요.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Help.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Help.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Help.PenaltyMoney")+" 감소"), 14, inv);
+			else
+				Stack2(ChatColor.RED + "" + ChatColor.BOLD + "[구조를 기다린다]", item.getTypeId(),item.getData().getData(),item.getAmount(),Arrays.asList(ChatColor.GRAY + "다른 사람의 도움을 요청합니다.",ChatColor.GRAY + "주위에 사람이 있는지 살펴보세요.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Help.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Help.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Help.PenaltyMoney")+" 감소"), 14, inv);
+			
+			item = Config.getItemStack("Death.ReviveItem");
+			if(item == null)
+				Stack2(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "[부활석 사용]", 399,0,1,Arrays.asList(ChatColor.GRAY + "제자리 부활 아이템을 사용합니다.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Item.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Item.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Item.PenaltyMoney")+" 감소"), 16, inv);
+			else if(item.hasItemMeta()==false)
+				Stack2(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "[부활석 사용]", item.getTypeId(),item.getData().getData(),item.getAmount(),Arrays.asList(ChatColor.GRAY + "제자리 부활 아이템을 사용합니다.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Item.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Item.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Item.PenaltyMoney")+" 감소"), 16, inv);
+			else if(item.getItemMeta().hasDisplayName()==false)
+				Stack2(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "[부활석 사용]", item.getTypeId(),item.getData().getData(),item.getAmount(),Arrays.asList(ChatColor.GRAY + "제자리 부활 아이템을 사용합니다.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Item.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Item.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Item.PenaltyMoney")+" 감소"), 16, inv);
+			else
+				Stack2(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "["+item.getItemMeta().getDisplayName()+ChatColor.DARK_AQUA + "" + ChatColor.BOLD +" 사용]", item.getTypeId(),item.getData().getData(),item.getAmount(),Arrays.asList(ChatColor.GRAY + "제자리 부활 아이템을 사용합니다.","",ChatColor.GREEN+" + "+Config.getString("Death.Spawn_Item.SetHealth")+" 생명력",ChatColor.RED+" - 경험치 "+Config.getString("Death.Spawn_Item.PenaltyEXP")+" 감소",ChatColor.RED+" - 소지금 "+Config.getString("Death.Spawn_Item.PenaltyMoney")+" 감소"), 16, inv);
+			player.openInventory(inv);	
+		}
 	}
 	
 	public void ReviveSelectClick(InventoryClickEvent event)

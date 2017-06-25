@@ -5,15 +5,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitScheduler;
 
 import GBD_RPG.Area.Area_ServerTask;
 import GBD_RPG.Dungeon.Dungeon_ScheduleObject;
 import GBD_RPG.Dungeon.Dungeon_ServerTask;
 import GBD_RPG.Main_Main.Main_Main;
+import GBD_RPG.User.User_Object;
 import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;
 
@@ -63,24 +67,168 @@ public class ServerTick_Main
 	public ServerTick_Main(JavaPlugin plugin)
 	{
 		nowUTC = new GBD_RPG.Util.ETC().getNowUTC();
-	  	BukkitScheduler scheduler1 = Bukkit.getServer().getScheduler();
-	  	scheduler1.scheduleSyncRepeatingTask(plugin, new Runnable()
+		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable()
         {
             @Override
             public void run() 
             {
-            	if(oneSec==10)
-            	{
-            		BroadCastMessage();
-            		oneSec=0;
-            	}
-            	else
-            		oneSec++;
+            	nowUTC += 50;
             	CheckShcedule();
-            	nowUTC = nowUTC +110;
-        	  	//Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA +"1"+"초 경과");
             }
-        }, 10, 2);
+        }, 0, 1);
+
+		Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable()
+        {
+			Iterator<Player> PlayerList;
+			GBD_RPG.Corpse.Corpse_Main CCM = new GBD_RPG.Corpse.Corpse_Main();
+			OtherPlugins.NoteBlockAPIMain NBAPI = new OtherPlugins.NoteBlockAPIMain();
+			YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
+			GBD_RPG.Area.Area_Main A = new GBD_RPG.Area.Area_Main();
+			GBD_RPG.Quest.Quest_GUI QGUI = new GBD_RPG.Quest.Quest_GUI();
+        	String Area;
+        	String QuestName;
+        	User_Object uo;
+            @Override
+            public void run() 
+            {
+        		BroadCastMessage();
+            	
+            	PlayerList = (Iterator<Player>) Bukkit.getOnlinePlayers().iterator();
+            	Player player;
+	  			YamlManager AreaList = YC.getNewConfig("config.yml");
+			  	boolean isMabinogi = AreaList.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System");
+				while (PlayerList.hasNext())
+				{
+					player = PlayerList.next();
+					uo = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString());
+					CCM.asyncDeathCapture(player);
+	        		if(player.getLocation().getWorld().getName().compareTo("Dungeon")!=0)
+	        		{
+	        			if(uo.getDungeon_Enter() != null)
+	        			{
+	        				NBAPI.Stop(player);
+	        				uo.setDungeon_Enter(null);
+	        				uo.setDungeon_UTC(-1);
+	        			}
+	        			if(A.getAreaName(player) != null)
+	        			{
+	        				if(uo.getETC_CurrentArea()==null)
+	        					uo.setETC_CurrentArea("null");
+	        				Area = A.getAreaName(player)[0];
+	        				if(uo.getETC_CurrentArea().compareTo(Area) != 0)
+	        				{
+	        					AreaList = YC.getNewConfig("Area/AreaList.yml");
+	        					//레벨 제한 확인
+	        					boolean restrict = false;
+	        					if(AreaList.getInt(Area+".Restrict.MinNowLevel")!=0 &&(AreaList.getInt(Area+".Restrict.MinNowLevel") > uo.getStat_Level()||AreaList.getInt(Area+".Restrict.MaxNowLevel") < uo.getStat_Level()))
+	        						restrict=true;
+	        					if(isMabinogi&&(AreaList.getInt(Area+".Restrict.MinRealLevel")!=0 &&(AreaList.getInt(Area+".Restrict.MinRealLevel") > uo.getStat_RealLevel()||AreaList.getInt(Area+".Restrict.MaxRealLevel") < uo.getStat_RealLevel())))
+	        						restrict=true;
+	        					if(restrict)
+	        					{
+	        						Location playerLoc = player.getLocation();
+	        						int calc1 = AreaList.getInt(Area+".X.Max") - playerLoc.getBlockX();
+	        						int calc2 = AreaList.getInt(Area+".X.Min") - playerLoc.getBlockX();
+	        						int staticX = AreaList.getInt(Area+".X.Min");
+	        						int staticZ = AreaList.getInt(Area+".Z.Min");
+
+	        						int xF = 0;
+	        						int zF = 0;
+	        						
+	        						if(calc1 < 0)
+	        							calc1 *= -1;
+	        						if(calc2 < 0)
+	        							calc2 *= -1;
+	        						if(calc1 < calc2)
+	        						{
+	        							staticX = AreaList.getInt(Area+".X.Max")+1;
+	        							xF = calc1;
+	        						}
+	        						else
+	        						{
+	        							staticX = AreaList.getInt(Area+".X.Min")-1;
+	        							xF = calc2;
+	        						}
+
+	        						calc1 = AreaList.getInt(Area+".Z.Max") - playerLoc.getBlockZ();
+	        						calc2 = AreaList.getInt(Area+".Z.Min") - playerLoc.getBlockZ();
+	        						calc1 = AreaList.getInt(Area+".Z.Max") - playerLoc.getBlockZ();
+	        						calc2 = AreaList.getInt(Area+".Z.Min") - playerLoc.getBlockZ();
+	        						if(calc1 < 0)
+	        							calc1 *= -1;
+	        						if(calc2 < 0)
+	        							calc2 *= -1;
+	        						if(calc1 < calc2)
+	        						{
+	        							staticZ = AreaList.getInt(Area+".Z.Max")+1;
+	        							zF = calc1;
+	        						}
+	        						else
+	        						{
+	        							staticZ = AreaList.getInt(Area+".Z.Min")-1;
+	        							zF = calc2;
+	        						}
+
+	        		    			new GBD_RPG.Effect.Effect_Sound().SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+	        		    			new GBD_RPG.Effect.Effect_Packet().sendActionBar(player, "§c§l레벨이 맞지 않아 입장할 수 없습니다!");
+	        						if(xF < zF)
+	        							player.teleport(new Location(player.getWorld(), staticX, playerLoc.getY()+0.2, playerLoc.getZ(), playerLoc.getYaw(), playerLoc.getPitch()));
+	        						else
+	        							player.teleport(new Location(player.getWorld(), playerLoc.getX(), playerLoc.getY()+0.2, staticZ, playerLoc.getYaw(), playerLoc.getPitch()));
+	        					}
+	        					else
+	        					{
+		        					uo.setETC_CurrentArea(Area);
+		        					GBD_RPG.Main_Main.Main_ServerOption.PlayerCurrentArea.put(player, Area);
+		        					A.AreaMonsterSpawnAdd(Area, "-1");
+		        					NBAPI.Stop(player);
+		        					uo.setETC_CurrentArea(Area);
+		        					if(AreaList.getBoolean(Area + ".SpawnPoint") == true)
+		        						uo.setETC_LastVisited(Area);
+		            				if(uo.isBgmOn())
+		            				{
+		            					if(AreaList.getBoolean(Area + ".Music") == true)
+		        							NBAPI.Play(player, AreaList.getInt(Area+".BGM"));
+		            				}
+		        					if(AreaList.getBoolean(Area + ".Alert") == true)
+		        					{
+		        						YamlManager QuestList  = YC.getNewConfig("Quest/QuestList.yml");
+		        						YamlManager PlayerQuestList  = YC.getNewConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
+		        						
+		        						Object[] b = PlayerQuestList.getConfigurationSection("Started").getKeys(false).toArray();
+		        						for(short count = 0; count < b.length; count++)
+		        						{
+		        							QuestName = (String) b[count];
+		        							if(PlayerQuestList.getString("Started."+QuestName+".Type").compareTo("Visit")==0)
+		        							{
+		        								if(PlayerQuestList.getString("Started."+QuestName+".AreaName").compareTo(Area)==0)
+	        									{
+	        										PlayerQuestList.set("Started."+QuestName+".Type",QuestList.getString(QuestName+".FlowChart."+(PlayerQuestList.getInt("Started."+QuestName+".Flow")+1)+".Type"));
+	        										PlayerQuestList.set("Started."+QuestName+".Flow",PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
+	        										PlayerQuestList.removeKey("Started."+QuestName+".AreaName");
+	        										PlayerQuestList.saveConfig();
+	        										QGUI.QuestRouter(player, QuestName);
+	        										break;
+	        									}
+		        							}
+		        						}
+		        						A.sendAreaTitle(player, Area);
+		        					}
+	        					}
+	        				}
+	        			}
+	        			else
+	        			{
+	        				GBD_RPG.Main_Main.Main_ServerOption.PlayerCurrentArea.put(player, "null");
+	        				uo.setETC_CurrentArea("null");
+	        				NBAPI.Stop(player);
+	        			}
+	        		}
+        		}
+        	
+            	
+            }
+        }, 0, 10);
 	  	
 	  	Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable()
         {

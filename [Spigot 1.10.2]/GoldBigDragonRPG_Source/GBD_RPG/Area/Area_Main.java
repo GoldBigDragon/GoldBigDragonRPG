@@ -24,13 +24,13 @@ public class Area_Main
 		for(short count =0; count <arealist.length;count++)
 		{
 			GBD_RPG.Area.Area_Object AO = new GBD_RPG.Area.Area_Object();
-			AO.setAreaName(arealist[count].toString());
-			AO.setMinX(AreaList.getInt(arealist[count].toString()+".X.Min"));
-			AO.setMaxX(AreaList.getInt(arealist[count].toString()+".X.Max"));
-			AO.setMinY(AreaList.getInt(arealist[count].toString()+".Y.Min"));
-			AO.setMaxY(AreaList.getInt(arealist[count].toString()+".Y.Max"));
-			AO.setMinZ(AreaList.getInt(arealist[count].toString()+".Z.Min"));
-			AO.setMaxZ(AreaList.getInt(arealist[count].toString()+".Z.Max"));
+			AO.AreaName = arealist[count].toString();
+			AO.minX = AreaList.getInt(arealist[count].toString()+".X.Min");
+			AO.maxX = AreaList.getInt(arealist[count].toString()+".X.Max");
+			AO.minY = AreaList.getInt(arealist[count].toString()+".Y.Min");
+			AO.maxY = AreaList.getInt(arealist[count].toString()+".Y.Max");
+			AO.minZ = AreaList.getInt(arealist[count].toString()+".Z.Min");
+			AO.maxZ = AreaList.getInt(arealist[count].toString()+".Z.Max");
 			if(GBD_RPG.Main_Main.Main_ServerOption.AreaList.containsKey(AreaList.getString(arealist[count].toString()+".World")))
 			{
 				ArrayList<GBD_RPG.Area.Area_Object> areaList = GBD_RPG.Main_Main.Main_ServerOption.AreaList.get(AreaList.getString(arealist[count].toString()+".World"));
@@ -126,6 +126,10 @@ public class Area_Main
 		AreaList.createSection(name+".Fishing.5");
 		AreaList.createSection(name+".Fishing.1");
 		AreaList.createSection(name+".Mining");
+		AreaList.set(name+".Restrict.MinNowLevel", 0);
+		AreaList.set(name+".Restrict.MaxNowLevel", 0);
+		AreaList.set(name+".Restrict.MinRealLevel", 0);
+		AreaList.set(name+".Restrict.MaxRealLevel", 0);
 		AreaList.saveConfig();
 		
 		new GBD_RPG.Effect.Effect_Sound().SP(player, org.bukkit.Sound.ENTITY_CHICKEN_EGG, 2.0F, 1.7F);
@@ -134,13 +138,13 @@ public class Area_Main
 		AGUI.AreaSettingGUI(player, name);
 
 		GBD_RPG.Area.Area_Object AO = new GBD_RPG.Area.Area_Object();
-		AO.setAreaName(name);
-		AO.setMinX(AreaList.getInt(name+".X.Min"));
-		AO.setMaxX(AreaList.getInt(name+".X.Max"));
-		AO.setMinY(AreaList.getInt(name+".Y.Min"));
-		AO.setMaxY(AreaList.getInt(name+".Y.Max"));
-		AO.setMinZ(AreaList.getInt(name+".Z.Min"));
-		AO.setMaxZ(AreaList.getInt(name+".Z.Max"));
+		AO.AreaName = name;
+		AO.minX = AreaList.getInt(name+".X.Min");
+		AO.maxX = AreaList.getInt(name+".X.Max");
+		AO.minY = AreaList.getInt(name+".Y.Min");
+		AO.maxY = AreaList.getInt(name+".Y.Max");
+		AO.minZ = AreaList.getInt(name+".Z.Min");
+		AO.maxZ = AreaList.getInt(name+".Z.Max");
 		if(GBD_RPG.Main_Main.Main_ServerOption.AreaList.containsKey(AreaList.getString(name+".World")))
 		{
 			ArrayList<GBD_RPG.Area.Area_Object> areaList = GBD_RPG.Main_Main.Main_ServerOption.AreaList.get(AreaList.getString(name+".World"));
@@ -200,6 +204,10 @@ public class Area_Main
 			AreaList.removeKey(name+".SpawnPoint");
 			AreaList.removeKey(name+".MobSpawn");
 			AreaList.removeKey(name+".Alert");
+			AreaList.removeKey(name+".Restrict.MinNowLevel");
+			AreaList.removeKey(name+".Restrict.MaxNowLevel");
+			AreaList.removeKey(name+".Restrict.MinRealLevel");
+			AreaList.removeKey(name+".Restrict.MaxRealLevel");
 			AreaList.removeKey(name);
 			AreaList.saveConfig();
 			new GBD_RPG.Effect.Effect_Sound().SP(player, org.bukkit.Sound.ENTITY_CHICKEN_EGG, 2.0F, 1.7F);
@@ -253,10 +261,10 @@ public class Area_Main
 			ArrayList<GBD_RPG.Area.Area_Object> AreaList = GBD_RPG.Main_Main.Main_ServerOption.AreaList.get(loc.getWorld().getName());
 			for(short count = 0; count < AreaList.size(); count++)
 			{
-				if(AreaList.get(count).getMinX() <= loc.getX() && AreaList.get(count).getMaxX() >= loc.getX())
-					if(AreaList.get(count).getMinY() <= loc.getY() && AreaList.get(count).getMaxY()>= loc.getY())
-						if(AreaList.get(count).getMinZ() <= loc.getZ() && AreaList.get(count).getMaxZ() >= loc.getZ())
-							AreaName.add(AreaList.get(count).getAreaName());
+				if(AreaList.get(count).minX <= loc.getX() && AreaList.get(count).maxX >= loc.getX())
+					if(AreaList.get(count).minY <= loc.getY() && AreaList.get(count).maxY>= loc.getY())
+						if(AreaList.get(count).minZ <= loc.getZ() && AreaList.get(count).maxZ >= loc.getZ())
+							AreaName.add(AreaList.get(count).AreaName);
 			}
 			
 			if(AreaName.isEmpty())

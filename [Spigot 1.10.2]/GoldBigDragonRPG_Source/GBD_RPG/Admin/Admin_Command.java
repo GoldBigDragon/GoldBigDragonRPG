@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
-import GBD_RPG.Main_Main.Main_ServerOption;
 import GBD_RPG.User.UserData_Object;
 import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;

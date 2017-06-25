@@ -29,14 +29,11 @@ public class Corpse_Main
 		{
 		  	if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isDeath()==true)
 		  	{
-		  		if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getLastDeathPoint().getBlockY() >= 0)
-		  			player.teleport(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getLastDeathPoint());
-		  		else
-		  		{
-		  			Location l = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getLastDeathPoint();
+	  			Location l = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getLastDeathPoint();
+		  		if(l.getBlockY() < 0)
 		  			l.setY(0);
+		  		if(l.getBlockX()!=player.getLocation().getBlockX()||l.getBlockY()!=player.getLocation().getBlockY()||l.getBlockZ()!=player.getLocation().getBlockZ())
 		  			player.teleport(l);
-		  		}
 		  		if(isJoin==false)
 		  			new Corpse_GUI().OpenReviveSelectGUI(player);
 		  		else if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isBgmOn())
@@ -53,6 +50,43 @@ public class Corpse_Main
 		  	}
 		}
 		return false;
+	}
+	
+	public void asyncDeathCapture(final Player player)
+	{
+		if(player.getGameMode()==GameMode.SPECTATOR)
+		{
+		  	if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isDeath()==true)
+		  	{
+	  			Location l = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getLastDeathPoint();
+		  		if(l.getBlockY() < 0)
+		  			l.setY(0);
+		  		if(l.getBlockX()!=player.getLocation().getBlockX()||l.getBlockY()!=player.getLocation().getBlockY()||l.getBlockZ()!=player.getLocation().getBlockZ())
+		  		{
+		  			final Location loc = l.clone();
+		  			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(GBD_RPG.Main_Main.Main_Main.plugin, new Runnable()
+		  	        {
+		  	            @Override
+		  	            public void run() 
+		  	            {
+				  			player.teleport(loc);
+		  	            }
+		  	        }, 0);
+		  		}
+				new Corpse_GUI().OpenReviveSelectGUI(player);
+		  		if(Corpses.containsKey(player.getName())==false)
+		  		{
+		  			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(GBD_RPG.Main_Main.Main_Main.plugin, new Runnable()
+		  	        {
+		  	            @Override
+		  	            public void run() 
+		  	            {
+				  			CreateCorpse(player);
+		  	            }
+		  	        }, 0);
+		  		}
+		  	}
+		}
 	}
 	
 	public void CreateCorpse(Player player)
@@ -86,7 +120,8 @@ public class Corpse_Main
 		        head.setItemMeta(meta);
 		        stand.setHelmet(head);
 		        stand.setHeadPose(new EulerAngle(0.75d, playerRandom, 0));
-		        player.setSpectatorTarget(stand);
+		        player.teleport(stand.getLocation());
+		        //player.setSpectatorTarget(stand);
 		        AL.add(stand);
 		        
 		        loc.add(0.41,-0.5,-0.6);
