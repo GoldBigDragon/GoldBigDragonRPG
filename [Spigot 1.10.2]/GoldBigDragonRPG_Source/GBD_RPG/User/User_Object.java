@@ -169,34 +169,33 @@ public class User_Object
 		    boolean isLevelUp = false;
 
     		YamlManager levelYAML = new YamlController(Main_Main.plugin).getNewConfig("Level.yml");
+		    int LevelUp_PerSkillPoint = Main_ServerOption.LevelUpPerSkillPoint * Main_ServerOption.Event_SkillPoint;
+		    int LevelUp_PerStatPoint = Main_ServerOption.LevelUpPerStatPoint * Main_ServerOption.Event_StatPoint;
 			for(;;)
 			{
 				if(Stat_EXP < Stat_MaxEXP)
 					break;
+				else if(Main_ServerOption.MaxLevel <= Stat_Level || levelYAML.contains((Stat_Level+1)+"")==false)
+				{
+					Stat_EXP = Stat_MaxEXP;
+					break;
+				}
 				else
 				{
-					if(Main_ServerOption.MaxLevel <= Stat_Level && levelYAML.contains((Stat_Level+1)+"")==false)
-						break;
-					else
-					{
-					    int LevelUp_PerSkillPoint = Main_ServerOption.LevelUpPerSkillPoint * Main_ServerOption.Event_SkillPoint;
-					    int LevelUp_PerStatPoint = Main_ServerOption.LevelUpPerStatPoint * Main_ServerOption.Event_StatPoint;
-	
-						isLevelUp = true;
-						Stat_EXP = Stat_EXP - Stat_MaxEXP;
-						Stat_Level++;
-						Stat_RealLevel++;
-						Stat_SkillPoint = Stat_SkillPoint + LevelUp_PerSkillPoint;
-						Stat_StatPoint = Stat_StatPoint + LevelUp_PerStatPoint;
-						Stat_MaxEXP = levelYAML.getLong(Stat_Level+"");
-						if(Stat_MaxEXP > Long.MAX_VALUE)
-							Stat_MaxEXP = Long.MAX_VALUE;
-						else if(Stat_MaxEXP <= 0)
-							Stat_MaxEXP = 100;
-	
-						if(Main_ServerOption.MaxLevel <= Stat_Level)
-							new GBD_RPG.Effect.Effect_Packet().sendActionBar(Bukkit.getPlayer(PlayerName), ChatColor.RED+""+ChatColor.BOLD+"[최대 레벨에 도달하여 더이상 레벨업 하실 수가 없습니다!]");
-					}
+					isLevelUp = true;
+					Stat_EXP -= Stat_MaxEXP;
+					Stat_Level++;
+					Stat_RealLevel++;
+					Stat_SkillPoint += LevelUp_PerSkillPoint;
+					Stat_StatPoint += LevelUp_PerStatPoint;
+					Stat_MaxEXP = levelYAML.getLong(Stat_Level+"");
+					if(Stat_MaxEXP > Long.MAX_VALUE)
+						Stat_MaxEXP = Long.MAX_VALUE;
+					else if(Stat_MaxEXP <= 0)
+						Stat_MaxEXP = 100;
+
+					if(Main_ServerOption.MaxLevel <= Stat_Level)
+						new GBD_RPG.Effect.Effect_Packet().sendActionBar(Bukkit.getPlayer(PlayerName), ChatColor.RED+""+ChatColor.BOLD+"[최대 레벨에 도달하여 더이상 레벨업 하실 수가 없습니다!]");
 				}
 			}
 			if(isLevelUp)
@@ -362,8 +361,8 @@ public class User_Object
 	
 	public int getStat_STR()
 	{
-		if(Stat_STR > Main_ServerOption.MaxStats)
-			return Main_ServerOption.MaxStats;
+		if(Stat_STR > Main_ServerOption.MaxSTR)
+			return Main_ServerOption.MaxSTR;
 		else
 			return Stat_STR;
 	}
@@ -376,8 +375,8 @@ public class User_Object
 	
 	public int getStat_DEX()
 	{
-		if(Stat_DEX > Main_ServerOption.MaxStats)
-			return Main_ServerOption.MaxStats;
+		if(Stat_DEX > Main_ServerOption.MaxDEX)
+			return Main_ServerOption.MaxDEX;
 		else
 			return Stat_DEX;
 	}
@@ -390,8 +389,8 @@ public class User_Object
 	
 	public int getStat_INT()
 	{
-		if(Stat_INT > Main_ServerOption.MaxStats)
-			return Main_ServerOption.MaxStats;
+		if(Stat_INT > Main_ServerOption.MaxINT)
+			return Main_ServerOption.MaxINT;
 		else
 			return Stat_INT;
 	}
@@ -404,8 +403,8 @@ public class User_Object
 	
 	public int getStat_WILL()
 	{
-		if(Stat_WILL > Main_ServerOption.MaxStats)
-			return Main_ServerOption.MaxStats;
+		if(Stat_WILL > Main_ServerOption.MaxWILL)
+			return Main_ServerOption.MaxWILL;
 		else
 			return Stat_WILL;
 	}
@@ -418,8 +417,8 @@ public class User_Object
 	
 	public int getStat_LUK()
 	{
-		if(Stat_LUK > Main_ServerOption.MaxStats)
-			return Main_ServerOption.MaxStats;
+		if(Stat_LUK > Main_ServerOption.MaxLUK)
+			return Main_ServerOption.MaxLUK;
 		else
 			return Stat_LUK;
 	}
@@ -918,17 +917,17 @@ public class User_Object
 	{
 		if(AddNumber < 0)
 		{
-			if(BaseNumber - AddNumber >= Integer.MIN_VALUE)
-				return BaseNumber = BaseNumber + AddNumber;
+			if(BaseNumber + AddNumber >= Integer.MIN_VALUE)
+				return BaseNumber + AddNumber;
 			else
-				return BaseNumber = Integer.MIN_VALUE;
+				return Integer.MIN_VALUE;
 		}
 		else
 		{
 			if(BaseNumber+AddNumber <= Integer.MAX_VALUE)
-				return BaseNumber = BaseNumber+AddNumber;
+				return BaseNumber+AddNumber;
 			else
-				return BaseNumber = Integer.MAX_VALUE;
+				return Integer.MAX_VALUE;
 		}
 	}
 	
@@ -936,17 +935,17 @@ public class User_Object
 	{
 		if(AddNumber < 0)
 		{
-			if(BaseNumber - AddNumber >= Long.MIN_VALUE)
-				return BaseNumber = BaseNumber + AddNumber;
+			if(BaseNumber + AddNumber >= Long.MIN_VALUE)
+				return BaseNumber + AddNumber;
 			else
-				return BaseNumber = Long.MIN_VALUE;
+				return Long.MIN_VALUE;
 		}
 		else
 		{
 			if(BaseNumber+AddNumber <= Long.MAX_VALUE)
-				return BaseNumber = BaseNumber+AddNumber;
+				return BaseNumber+AddNumber;
 			else
-				return BaseNumber = Long.MAX_VALUE;
+				return Long.MAX_VALUE;
 		}
 	}
 

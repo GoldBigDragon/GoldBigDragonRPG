@@ -29,10 +29,10 @@ public class Battle_Calculator
 			ItemStack item = player.getInventory().getItemInMainHand();
 			if(item != null)
 			{
-				if(item.hasItemMeta() == true)
+				if(item.hasItemMeta())
 				{
-					if(item.getItemMeta().hasLore() == true)
-						if(item.getItemMeta().getLore().toString().contains(GBD_RPG.Main_Main.Main_ServerOption.Damage+" : ") == true)
+					if(item.getItemMeta().hasLore())
+						if(item.getItemMeta().getLore().toString().contains(GBD_RPG.Main_Main.Main_ServerOption.Damage+" : "))
 						{
 							switch(item.getType())
 							{
@@ -40,61 +40,62 @@ public class Battle_Calculator
 							case GOLD_SPADE :
 							case WOOD_PICKAXE :
 							case GOLD_PICKAXE:
-								DefaultDamage = DefaultDamage - 2;
+								DefaultDamage -= 2;
 								break;
 							case STONE_SPADE:
 							case STONE_PICKAXE:
-								DefaultDamage = DefaultDamage -3;
+								DefaultDamage -= 3;
 								break;
 							case IRON_SPADE:
 							case WOOD_SWORD:
 							case GOLD_SWORD:
 							case IRON_PICKAXE:
-								DefaultDamage = DefaultDamage -4;
+								DefaultDamage -= 4;
 								break;
 							case DIAMOND_SPADE:
 							case STONE_SWORD:
 							case DIAMOND_PICKAXE:
-								DefaultDamage = DefaultDamage -5;
+								DefaultDamage -= 5;
 								break;
 							case IRON_SWORD:
-								DefaultDamage = DefaultDamage -6;
+								DefaultDamage -= 6;
 								break;
 							case WOOD_AXE:
 							case GOLD_AXE:
 							case DIAMOND_AXE:
 							case DIAMOND_SWORD:
-								DefaultDamage = DefaultDamage -7;
+								DefaultDamage -= 7;
 								break;
 							case STONE_AXE:
 							case IRON_AXE:
-								DefaultDamage = DefaultDamage -9;
+								DefaultDamage -= 9;
+								break;
+							default:
 								break;
 							}
 					}
 				}
 			}
-			STR = STR + getPlayerEquipmentStat((Player)entity, "STR", true, null)[0];
+			STR += getPlayerEquipmentStat((Player)entity, "STR", true, null)[0];
 			if(isMin)
-				DefaultDamage = DefaultDamage + getPlayerEquipmentStat((Player)entity, "Damage", true, null)[0];
+				DefaultDamage += getPlayerEquipmentStat((Player)entity, "Damage", true, null)[0];
 			else
-				DefaultDamage = DefaultDamage + getPlayerEquipmentStat((Player)entity, "Damage", true, null)[1];
+				DefaultDamage += getPlayerEquipmentStat((Player)entity, "Damage", true, null)[1];
 		}
-		return returnCombatValue(STR, DefaultDamage, true);
+		return returnCombatValue(STR, DefaultDamage, isMin);
 	}
 	
 	//근접 공격력을 따 오는 메소드//
 	public int returnCombatValue(int Stat, int DefaultDamage, boolean isMin)
 	{
-		int dam=0;
 		if(isMin)
-			dam = ((Stat/5) + DefaultDamage);
+			DefaultDamage += Stat/5;
 		else
-			dam=((Stat/3) + DefaultDamage);
-		if(dam <= 0)
+			DefaultDamage += Stat/3;
+		if(DefaultDamage <= 0)
 			return 0;
 		else
-			return dam;
+			return DefaultDamage;
 	}
 
 	//폭발 공격력을 따 오는 메소드//

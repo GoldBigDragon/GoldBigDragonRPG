@@ -30,8 +30,6 @@ public class Stats_GUI extends Util_GUI
 		
 		Inventory inv = Bukkit.createInventory(null, 45, UniqueCode + "§0스텟");
 
-		int MaxStats = new GBD_RPG.Main_Main.Main_ServerOption().MaxStats;
-		
 		Stack2(ChatColor.WHITE + "스텟", 160,4,1,Arrays.asList(ChatColor.GRAY + "스텟을 확인합니다."), 0, inv);
 		Stack2(ChatColor.WHITE + "스킬", 403,0,1,Arrays.asList(ChatColor.GRAY + "스킬을 확인합니다."), 9, inv);
 		Stack2(ChatColor.WHITE + "퀘스트", 358,0,1,Arrays.asList(ChatColor.GRAY + "현재 진행중인 퀘스트를 확인합니다."), 18, inv);
@@ -89,35 +87,35 @@ public class Stats_GUI extends Util_GUI
 					case GOLD_SPADE :
 					case WOOD_PICKAXE :
 					case GOLD_PICKAXE:
-						DefaultDamage = DefaultDamage - 2;
+						DefaultDamage += 2;
 						break;
 					case STONE_SPADE:
 					case STONE_PICKAXE:
-						DefaultDamage = DefaultDamage -3;
+						DefaultDamage += 3;
 						break;
 					case IRON_SPADE:
 					case WOOD_SWORD:
 					case GOLD_SWORD:
 					case IRON_PICKAXE:
-						DefaultDamage = DefaultDamage -4;
+						DefaultDamage += 4;
 						break;
 					case DIAMOND_SPADE:
 					case STONE_SWORD:
 					case DIAMOND_PICKAXE:
-						DefaultDamage = DefaultDamage -5;
+						DefaultDamage += 5;
 						break;
 					case IRON_SWORD:
-						DefaultDamage = DefaultDamage -6;
+						DefaultDamage += 6;
 						break;
 					case WOOD_AXE:
 					case GOLD_AXE:
 					case DIAMOND_AXE:
 					case DIAMOND_SWORD:
-						DefaultDamage = DefaultDamage -7;
+						DefaultDamage += 7;
 						break;
 					case STONE_AXE:
 					case IRON_AXE:
-						DefaultDamage = DefaultDamage -9;
+						DefaultDamage += 9;
 						break;
 					}
 				}
@@ -125,8 +123,8 @@ public class Stats_GUI extends Util_GUI
 		}
 		int EquipmentStat = dam.getPlayerEquipmentStat(player, "STR", false, null)[0];
 		int PlayerStat = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR();
-		if(PlayerStat > MaxStats)
-			PlayerStat = MaxStats;
+		if(PlayerStat > GBD_RPG.Main_Main.Main_ServerOption.MaxSTR)
+			PlayerStat = GBD_RPG.Main_Main.Main_ServerOption.MaxSTR;
 		String Additional = ChatColor.RED +""+ChatColor.BOLD+(dam.CombatDamageGet(player,DefaultDamage,PlayerStat, true)) + " ~ " + (dam.CombatDamageGet(player,DefaultDamage, PlayerStat, false));
 		String CurrentStat;
 		if(EquipmentStat == 0)
@@ -144,8 +142,8 @@ public class Stats_GUI extends Util_GUI
 
 		int DEX = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX();
 		EquipmentStat=dam.getPlayerEquipmentStat(player, "DEX", false, null)[0];
-		if(DEX > MaxStats)
-			DEX = MaxStats;
+		if(DEX > GBD_RPG.Main_Main.Main_ServerOption.MaxDEX)
+			DEX = GBD_RPG.Main_Main.Main_ServerOption.MaxDEX;
 		Additional = ChatColor.RED + "" + ChatColor.BOLD + "" + dam.returnRangeDamageValue(player, DEX, 0, true) + " ~ " + dam.returnRangeDamageValue(player, DEX, 0, false);
 		if(EquipmentStat == 0)
 			CurrentStat = ChatColor.WHITE +""+ChatColor.BOLD +""+ DEX;
@@ -162,8 +160,8 @@ public class Stats_GUI extends Util_GUI
 				Arrays.asList(lore.split("%enter%")), 21, inv);
 		
 		int INT = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT();
-		if(INT > MaxStats)
-			INT = MaxStats;
+		if(INT > GBD_RPG.Main_Main.Main_ServerOption.MaxINT)
+			INT = GBD_RPG.Main_Main.Main_ServerOption.MaxINT;
 		EquipmentStat=dam.getPlayerEquipmentStat(player, "INT", false, null)[0];
 		Additional = ChatColor.RED + "" + ChatColor.BOLD + "" + ((INT+dam.getPlayerEquipmentStat(player, "INT", false, null)[0])*0.6+100) + " %";
 		if(EquipmentStat == 0)
@@ -181,8 +179,8 @@ public class Stats_GUI extends Util_GUI
 				Arrays.asList(lore.split("%enter%")), 22, inv);
 
 		int WILL = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL();
-		if(WILL > MaxStats)
-			WILL = MaxStats;
+		if(WILL > GBD_RPG.Main_Main.Main_ServerOption.MaxWILL)
+			WILL = GBD_RPG.Main_Main.Main_ServerOption.MaxWILL;
 		EquipmentStat=dam.getPlayerEquipmentStat(player, "WILL", false, null)[0];
 		Additional = ChatColor.RED + "" + ChatColor.BOLD + "" + ((WILL+dam.getPlayerEquipmentStat(player, "WILL", false, null)[0])*0.6+100) + " %";
 		if(EquipmentStat == 0)
@@ -200,8 +198,8 @@ public class Stats_GUI extends Util_GUI
 				Arrays.asList(lore.split("%enter%")), 23, inv);
 		
 		int LUK = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK();
-		if(LUK > MaxStats)
-			LUK = MaxStats;
+		if(LUK > GBD_RPG.Main_Main.Main_ServerOption.MaxLUK)
+			LUK = GBD_RPG.Main_Main.Main_ServerOption.MaxLUK;
 		EquipmentStat=dam.getPlayerEquipmentStat(player, "LUK", false, null)[0];
 		if(EquipmentStat == 0)
 			CurrentStat = ChatColor.WHITE +""+ChatColor.BOLD +""+ LUK;
@@ -255,7 +253,6 @@ public class Stats_GUI extends Util_GUI
 		Player player = (Player) event.getWhoClicked();
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
 		
-		int MaxStats = new GBD_RPG.Main_Main.Main_ServerOption().MaxStats;
 		int slot = event.getSlot();
 		
 		if(slot == 26)
@@ -275,15 +272,15 @@ public class Stats_GUI extends Util_GUI
 					{
 						boolean isOk = false;
 						if(slot == 29)
-							isOk = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR() < MaxStats;
+							isOk = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR() < GBD_RPG.Main_Main.Main_ServerOption.MaxSTR;
 						else if(slot == 30)
-							isOk = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX() < MaxStats;
+							isOk = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX() < GBD_RPG.Main_Main.Main_ServerOption.MaxDEX;
 						else if(slot == 31)
-							isOk = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT() < MaxStats;
+							isOk = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT() < GBD_RPG.Main_Main.Main_ServerOption.MaxINT;
 						else if(slot == 32)
-							isOk = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL() < MaxStats;
+							isOk = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL() < GBD_RPG.Main_Main.Main_ServerOption.MaxWILL;
 						else if(slot == 33)
-							isOk = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK() < MaxStats;
+							isOk = GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK() < GBD_RPG.Main_Main.Main_ServerOption.MaxLUK;
 						
 						if(isOk)
 						{

@@ -57,7 +57,11 @@ public class Main_ServerOption
 	
 	
 	public static int MaxLevel = 100;
-	public static int MaxStats = 1500;
+	public static int MaxSTR = 1500;
+	public static int MaxDEX = 1500;
+	public static int MaxINT = 1500;
+	public static int MaxWILL = 1500;
+	public static int MaxLUK = 1500;
 	public static int EXPShareDistance = 50;
 	public static long MaxDropMoney = 100000;
 	
@@ -81,10 +85,10 @@ public class Main_ServerOption
 	public static short Money6ID = 41;
 	public static byte Money6DATA = 0;
 	
-	public static String serverUpdate = "2017-06-26-00:33";
+	public static String serverUpdate = "2017-06-28-01:03";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/1_10.html";
-	public static String currentServerUpdate = "2017-06-26-00:33";
+	public static String currentServerUpdate = "2017-06-28-01:03";
 	public static String currentServerVersion = "Advanced";
 	
 	public static java.util.Map<Long, Party_Object> Party = new LinkedHashMap<Long, Party_Object>();

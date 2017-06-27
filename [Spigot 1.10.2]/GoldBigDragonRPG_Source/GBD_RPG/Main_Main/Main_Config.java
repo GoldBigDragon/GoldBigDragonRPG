@@ -28,7 +28,11 @@ public class Main_Config
 			Config.set("Server.AntiExplode", true);
 		  	Config.set("Server.PVP", true);
 		  	Config.set("MaxStat.Level", 100);
-		  	Config.set("MaxStat.Stats", 1500);
+		  	Config.set("MaxStat.STR", 1500);
+		  	Config.set("MaxStat.DEX", 1500);
+		  	Config.set("MaxStat.INT", 1500);
+		  	Config.set("MaxStat.WILL", 1500);
+		  	Config.set("MaxStat.LUK", 1500);
 		  	Config.set("Event.Multiple_Proficiency_Get", 1);
 		  	
 		  	Config.set("Server.STR", "Ã¼·Â");
@@ -294,10 +298,25 @@ public class Main_Config
 			GBD_RPG.Main_Main.Main_ServerOption.DeathRevive = Config.getItemStack("Death.ReviveItem");
 		if(Config.contains("Death.RescueItem"))
 			GBD_RPG.Main_Main.Main_ServerOption.DeathRescue = Config.getItemStack("Death.RescueItem");
+		if(Config.contains("MaxStat.Stats"))
+		{
+			int maxStat = Config.getInt("MaxStat.Stats");
+			Config.set("MaxStat.STR", maxStat);
+			Config.set("MaxStat.DEX", maxStat);
+			Config.set("MaxStat.INT", maxStat);
+			Config.set("MaxStat.WILL", maxStat);
+			Config.set("MaxStat.LUK", maxStat);
+			Config.removeKey("MaxStat.Stats");
+			Config.saveConfig();
+		}
 		
 		
 		GBD_RPG.Main_Main.Main_ServerOption.MaxLevel = Config.getInt("MaxStat.Level");
-		GBD_RPG.Main_Main.Main_ServerOption.MaxStats = Config.getInt("MaxStat.Stats");
+		GBD_RPG.Main_Main.Main_ServerOption.MaxSTR = Config.getInt("MaxStat.STR");
+		GBD_RPG.Main_Main.Main_ServerOption.MaxDEX = Config.getInt("MaxStat.DEX");
+		GBD_RPG.Main_Main.Main_ServerOption.MaxINT = Config.getInt("MaxStat.INT");
+		GBD_RPG.Main_Main.Main_ServerOption.MaxWILL = Config.getInt("MaxStat.WILL");
+		GBD_RPG.Main_Main.Main_ServerOption.MaxLUK = Config.getInt("MaxStat.LUK");
 		GBD_RPG.Main_Main.Main_ServerOption.PVP = Config.getBoolean("Server.PVP");
 		GBD_RPG.Main_Main.Main_ServerOption.MaxDropMoney = Config.getLong("Server.Max_Drop_Money");
 		GBD_RPG.Main_Main.Main_ServerOption.EXPShareDistance = Config.getInt("Party.EXPShareDistance");
