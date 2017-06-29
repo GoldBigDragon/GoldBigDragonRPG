@@ -27,6 +27,7 @@ public class Main_Config
 		  	Config.set("Server.CustomWeaponBreak", true);
 			Config.set("Server.AntiExplode", true);
 		  	Config.set("Server.PVP", true);
+		  	Config.set("Server.LeftHandWeaponDamageEnable", true);
 		  	Config.set("MaxStat.Level", 100);
 		  	Config.set("MaxStat.STR", 1500);
 		  	Config.set("MaxStat.DEX", 1500);
@@ -329,7 +330,9 @@ public class Main_Config
 		
 		GBD_RPG.Main_Main.Main_ServerOption.LevelUpPerSkillPoint = (byte) Config.getInt("Server.Level_Up_SkillPoint");
 		GBD_RPG.Main_Main.Main_ServerOption.LevelUpPerStatPoint = (byte) Config.getInt("Server.Level_Up_StatPoint");
-    		
+		
+		GBD_RPG.Main_Main.Main_ServerOption.dualWeapon = Config.getBoolean("Server.LeftHandWeaponDamageEnable");
+		
 		Config = YC.getNewConfig("MapImageURL.yml");
     	if(Config.contains("GBD.URL") == false)
     	{

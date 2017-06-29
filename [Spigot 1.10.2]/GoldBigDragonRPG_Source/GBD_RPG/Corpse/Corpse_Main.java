@@ -69,7 +69,13 @@ public class Corpse_Main
 		  	            @Override
 		  	            public void run() 
 		  	            {
-				  			player.teleport(loc);
+		  	            	try
+		  	            	{
+					  			player.teleport(loc);
+		  	            	}
+		  	            	catch(Exception e)
+		  	            	{
+		  	            	}
 		  	            }
 		  	        }, 0);
 		  		}

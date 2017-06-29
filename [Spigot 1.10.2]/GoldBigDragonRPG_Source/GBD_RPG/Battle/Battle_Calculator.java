@@ -305,7 +305,8 @@ public class Battle_Calculator
 			else
 				item.add(newSlot);
 		}
-		item.add(player.getInventory().getItemInOffHand());
+		if(GBD_RPG.Main_Main.Main_ServerOption.dualWeapon)
+			item.add(player.getInventory().getItemInOffHand());
 		boolean Totaluseable = true;
 		for(byte counter = 0; counter < item.size(); counter++)
 		{
@@ -451,11 +452,12 @@ public class Battle_Calculator
 			item.add(player.getInventory().getItemInMainHand());
 			added = (byte) (added + 1);
 		}
-		if(player.getInventory().getItemInOffHand().getTypeId()==442)
-		{
-			item.add(player.getInventory().getItemInOffHand());
-			added = (byte) (added + 2);
-		}
+		if(GBD_RPG.Main_Main.Main_ServerOption.dualWeapon)
+			if(player.getInventory().getItemInOffHand().getTypeId()==442)
+			{
+				item.add(player.getInventory().getItemInOffHand());
+				added = (byte) (added + 2);
+			}
 		for(byte counter = 0; counter < item.size(); counter++)
 		{
 			if(item.get(counter) != null)
@@ -607,7 +609,8 @@ public class Battle_Calculator
 		boolean DurabilityExit = false;
 		ArrayList<ItemStack> item = new ArrayList<ItemStack>();
 		item.add(player.getInventory().getItemInMainHand());
-		item.add(player.getInventory().getItemInOffHand());
+		if(GBD_RPG.Main_Main.Main_ServerOption.dualWeapon)
+			item.add(player.getInventory().getItemInOffHand());
 		for(int counter = 0; counter < item.size(); counter++)
 		{
 			if(item.get(counter)!=null)

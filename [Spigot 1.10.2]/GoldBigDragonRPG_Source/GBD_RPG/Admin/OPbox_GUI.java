@@ -210,6 +210,11 @@ public class OPbox_GUI extends Util_GUI
 		else
 			Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "폭발 방지", 166,0,1,Arrays.asList(ChatColor.RED+"[비 활성화]",ChatColor.GRAY + "크리퍼, TNT, 엔더 크리스탈로 인한",ChatColor.GRAY+"블록 파괴를 방치합니다."), 24, inv);
 
+		if(GBD_RPG.Main_Main.Main_ServerOption.dualWeapon)
+			Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "왼손 무기 데미지 적용", 442,0,1,Arrays.asList(ChatColor.GREEN+"[활성화]",ChatColor.GRAY + "왼손에 장착된 무기도",ChatColor.GRAY+"데미지 계산에 들어갑니다."), 25, inv);
+		else
+			Stack2(ChatColor.GREEN +""+ ChatColor.BOLD + "왼손 무기 데미지 적용", 166,0,1,Arrays.asList(ChatColor.RED+"[비 활성화]",ChatColor.GRAY + "왼손에 장착된 무기는",ChatColor.GRAY+"없는 것으로 간주합니다."), 25, inv);
+
 		
 		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
 		Stack2(ChatColor.WHITE +""+ ChatColor.BOLD + "닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "작업 관리자 창을 닫습니다."), 53, inv);
@@ -590,27 +595,14 @@ public class OPbox_GUI extends Util_GUI
 		else
 		{
 			s.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if((slot >= 10 && slot <= 13) || slot == 20 || slot == 24)
+			if((slot >= 10 && slot <= 13) || slot == 20 || slot == 24|| slot == 25)
 			{
 				if(slot == 10)//엔티티 스폰
-				{
-					if(Config.getBoolean("Server.EntitySpawn") == true)
-						Config.set("Server.EntitySpawn", false);
-					else
-						Config.set("Server.EntitySpawn", true);
-				}
+					Config.set("Server.EntitySpawn", Config.getBoolean("Server.EntitySpawn")==false);
 				else if(slot == 11)//PVP
 				{
-					if(Config.getBoolean("Server.PVP")==true)
-					{
-						Config.set("Server.PVP", false);
-						GBD_RPG.Main_Main.Main_ServerOption.PVP = false;
-					}
-					else
-					{
-						Config.set("Server.PVP", true);
-						GBD_RPG.Main_Main.Main_ServerOption.PVP = true;
-					}
+					Config.set("Server.PVP", Config.getBoolean("Server.PVP")==false);
+					GBD_RPG.Main_Main.Main_ServerOption.PVP = Config.getBoolean("Server.PVP")==false;
 				}
 				else if(slot == 12)//몬스터 스폰 효과
 				{
@@ -620,31 +612,18 @@ public class OPbox_GUI extends Util_GUI
 						Config.set("Server.MonsterSpawnEffect", 0);
 				}
 				else if(slot == 13)//커스텀 무기 파괴
-				{
-					if(Config.getBoolean("Server.CustomWeaponBreak") == true)
-						Config.set("Server.CustomWeaponBreak", false);
-					else
-						Config.set("Server.CustomWeaponBreak", true);
-				}
+					Config.set("Server.CustomWeaponBreak", Config.getBoolean("Server.CustomWeaponBreak")==false);
 				else if(slot == 20)//커스텀 블록 설치/설치 금지
-				{
-					if(Config.getBoolean("Server.CustomBlockPlace") == true)
-						Config.set("Server.CustomBlockPlace", false);
-					else
-						Config.set("Server.CustomBlockPlace", true);
-				}
+					Config.set("Server.CustomBlockPlace", Config.getBoolean("Server.CustomBlockPlace")==false);
 				else if(slot == 24)//폭발 방지 변경
 				{
-					if(Config.getBoolean("Server.AntiExplode") == true)
-					{
-						Config.set("Server.AntiExplode", false);
-						GBD_RPG.Main_Main.Main_ServerOption.AntiExplode = false;
-					}
-					else
-					{
-						Config.set("Server.AntiExplode", true);
-						GBD_RPG.Main_Main.Main_ServerOption.AntiExplode = true;
-					}
+					Config.set("Server.AntiExplode", Config.getBoolean("Server.AntiExplode")==false);
+					GBD_RPG.Main_Main.Main_ServerOption.AntiExplode = Config.getBoolean("Server.AntiExplode")==false;
+				}
+				else if(slot == 25)//왼손 무기 계산
+				{
+					Config.set("Server.LeftHandWeaponDamageEnable", Config.getBoolean("Server.LeftHandWeaponDamageEnable")==false);
+					GBD_RPG.Main_Main.Main_ServerOption.dualWeapon = Config.getBoolean("Server.LeftHandWeaponDamageEnable")==false;
 				}
 				Config.saveConfig();
 				OPBoxGUI_Setting(player);
