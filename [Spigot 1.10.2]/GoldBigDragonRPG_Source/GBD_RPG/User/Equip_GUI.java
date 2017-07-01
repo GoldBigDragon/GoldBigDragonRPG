@@ -785,7 +785,7 @@ public class Equip_GUI extends Util_GUI
 			player.sendMessage(ChatColor.RED+"[교환] : 당신은 먼저 요청받은 일을 처리해야 합니다.");
 			return;
 		}
-		long UTC = new ServerTick_Main().getNowUTC()-1;
+		long UTC = GBD_RPG.ServerTick.ServerTick_Main.nowUTC-1;
 		ServerTick_Main.PlayerTaskList.put(player.getName(), ""+UTC);
 		ServerTick_Main.PlayerTaskList.put(player.getName(), ""+UTC);
 		player.closeInventory();

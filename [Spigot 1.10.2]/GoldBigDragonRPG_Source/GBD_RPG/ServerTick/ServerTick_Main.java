@@ -350,6 +350,9 @@ public class ServerTick_Main
 		case "Sound":
 			new ServerTask_Effect().PlaySoundEffect(Schedule.get(UTC));
 			return;
+		case "P_UTS":
+			new ServerTask_Player().UseTeleportScroll(UTC);
+			return;
 		default:
 			return;
 		}
@@ -370,10 +373,4 @@ public class ServerTick_Main
 			return;
 		}
 	}
-	
-	public Long getNowUTC()
-	{
-		return nowUTC;
-	}
-	
 }

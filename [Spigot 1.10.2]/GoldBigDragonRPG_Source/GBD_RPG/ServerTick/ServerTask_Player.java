@@ -9,9 +9,58 @@ import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 
 public class ServerTask_Player
 {
+	public void UseTeleportScroll(long UTC)
+	{
+		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();
+		Player user = Bukkit.getServer().getPlayer(ServerTick_Main.Schedule.get(UTC).getString((byte)2));
+		if(user == null)
+		{
+			ServerTick_Main.Schedule.remove(UTC);
+			ServerTick_Main.PlayerTaskList.remove(ServerTick_Main.Schedule.get(UTC).getString((byte)2));
+			return;
+		}
+		else
+		{
+			Location loc = user.getLocation();
+			String[] savedLoc = ServerTick_Main.Schedule.get(UTC).getString((byte)1).split(",");
+			boolean isCancel = false;
+			if(loc.getWorld().getName().compareTo(savedLoc[0])!=0)
+				isCancel = true;
+			else if(loc.getBlockX() != Integer.parseInt(savedLoc[1])
+					|| loc.getBlockY() != Integer.parseInt(savedLoc[2])
+					|| loc.getBlockZ() != Integer.parseInt(savedLoc[3]))
+				isCancel = true;
+			if(isCancel)
+			{
+				ServerTick_Main.Schedule.remove(UTC);
+				new GBD_RPG.Effect.Effect_Sound().SP(user, Sound.ITEM_SHIELD_BREAK, 0.6F, 1.4F);
+				new GBD_RPG.Effect.Effect_Packet().sendActionBar(user, "§c§l[텔레포트가 취소되었습니다!]");
+				ServerTick_Main.PlayerTaskList.remove(user.getName());
+			}
+			else
+			{
+				if(ServerTick_Main.Schedule.get(UTC).getCount() > 0)
+				{
+					new GBD_RPG.Effect.Effect_Packet().sendActionBar(user, "§e§l[텔레포트까지 남은 시간 : §f§l" + ServerTick_Main.Schedule.get(UTC).getCount() +"§e§l초]");
+					ServerTick_Main.Schedule.get(UTC).setCount(ServerTick_Main.Schedule.get(UTC).getCount()-1);
+					ServerTick_Main.Schedule.get(UTC).copyThisScheduleObject(UTC+1000);
+				}
+				else
+				{
+					String[] teleportLoc = ServerTick_Main.Schedule.get(UTC).getString((byte)0).split(",");
+					user.teleport(new Location(Bukkit.getWorld(teleportLoc[0]), (double)Integer.parseInt(teleportLoc[1]), (double)Integer.parseInt(teleportLoc[2]), (double)Integer.parseInt(teleportLoc[3])));
+					new GBD_RPG.Effect.Effect_Sound().SP(user, Sound.ENTITY_ENDERMEN_TELEPORT, 0.6F, 1.0F);
+					ServerTick_Main.PlayerTaskList.remove(user.getName());
+				}
+				ServerTick_Main.Schedule.remove(UTC);
+			}
+		}
+	}
+	
 	public void ExChangeTimer(long UTC)
 	{
 		GBD_RPG.Effect.Effect_Sound s = new GBD_RPG.Effect.Effect_Sound();

@@ -1,14 +1,15 @@
 package GBD_RPG.CustomItem;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
 import GBD_RPG.Main_Main.Main_ServerOption;
+import GBD_RPG.ServerTick.ServerTick_Main;
 import GBD_RPG.Util.YamlController;
 import GBD_RPG.Util.YamlManager;
 
@@ -20,6 +21,12 @@ public class UseableItem_Main
 		ItemStack item = player.getInventory().getItemInMainHand();
 		if(type.compareTo("귀환서")==0)
 		{
+			if(ServerTick_Main.PlayerTaskList.containsKey(player.getName())==true)
+			{
+				sound.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				new GBD_RPG.Effect.Effect_Packet().sendActionBar(player, "§c§l[현재 텔레포트를 할 수 없는 상태입니다!]");
+				return;
+			}
 			GBD_RPG.Util.ETC ETC = new GBD_RPG.Util.ETC();
 			if(GBD_RPG.Main_Main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_AttackTime() >= ETC.getSec())
 			{
@@ -53,7 +60,19 @@ public class UseableItem_Main
 			}
 			else
 				player.getInventory().setItem(player.getInventory().getHeldItemSlot(), new ItemStack(0));
-			player.teleport(new Location(Bukkit.getWorld(world), X, Y, Z));
+			long UTC= GBD_RPG.ServerTick.ServerTick_Main.nowUTC-1;
+			GBD_RPG.ServerTick.ServerTick_Object STSO = new GBD_RPG.ServerTick.ServerTick_Object(UTC, "P_UTS");
+			Location loc = player.getLocation();
+			STSO.setTick(UTC);//텔레포트 시작 시간
+			STSO.setCount(5);//텔레포트 시간
+			STSO.setString((byte)0, world+","+X+","+Y+","+Z);//이동 위치 저장
+			STSO.setString((byte)1, loc.getWorld().getName()+","+loc.getBlockX()+","+loc.getBlockY()+","+loc.getBlockZ());//현재 위치 저장
+			STSO.setString((byte)2, player.getName());//플레이어 이름 저장
+			GBD_RPG.ServerTick.ServerTick_Main.Schedule.put(UTC, STSO);
+			ServerTick_Main.PlayerTaskList.put(player.getName(), ""+UTC);
+			new GBD_RPG.Effect.Effect_Potion().givePotionEffect(player, PotionEffectType.CONFUSION, 8, 255);
+			sound.SP(player, Sound.BLOCK_CLOTH_BREAK, 0.7F, 0.5F);
+			sound.SP(player, Sound.BLOCK_PORTAL_TRAVEL, 0.6F, 1.4F);
 		}
 		else if(type.compareTo("주문서")==0)
 		{
