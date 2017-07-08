@@ -326,11 +326,14 @@ public class ServerTask_Player
 						else
 							player.sendMessage(ChatColor.GREEN+"[ΩΩ∑‘ ∏”Ω≈] : "+ChatColor.YELLOW+""+ChatColor.BOLD+Present+" "+Grade+ChatColor.GREEN+" ªÛ«∞ø° ¥Á√∑µ«ºÃΩ¿¥œ¥Ÿ!");
 
-						Object[] Presents = PresentList.getConfigurationSection(Present+".Present").getKeys(false).toArray();
-						for(byte counter=0;counter<Presents.length;counter++)
+						if(PresentList.contains(Present+".Present"))
 						{
-							ItemStack item = PresentList.getItemStack(Present+".Present."+counter);
-							new GBD_RPG.Util.Util_Player().giveItemForce(player, item);
+							Object[] Presents = PresentList.getConfigurationSection(Present+".Present").getKeys(false).toArray();
+							for(byte counter=0;counter<Presents.length;counter++)
+							{
+								ItemStack item = PresentList.getItemStack(Present+".Present."+counter);
+								new GBD_RPG.Util.Util_Player().giveItemForce(player, item);
+							}
 						}
 					}
 				}

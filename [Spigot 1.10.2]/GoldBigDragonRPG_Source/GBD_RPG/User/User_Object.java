@@ -661,14 +661,19 @@ public class User_Object
 		PlayerUUID = player.getUniqueId().toString();
 	  	YamlController YC = new YamlController(GBD_RPG.Main_Main.Main_Main.plugin);
 		YamlManager PlayerConfig = YC.getNewConfig("Stats/"+PlayerUUID+".yml");
-		if(PlayerConfig.contains("Stat.Money")==false)
+		if(PlayerConfig.contains("Stat.STR")==false)
 		{
 			PlayerConfig = YC.getNewConfig("Level.yml");
 			Stat_Level = 1;
 			Stat_RealLevel = 1;
 			Stat_MaxEXP = PlayerConfig.getLong(1+"");
 			PlayerConfig = YC.getNewConfig("ETC/NewBie.yml");
-			Stat_Money = PlayerConfig.getInt("SupportMoney");
+
+			if(GBD_RPG.Main_Main.Main_ServerOption.economy!=null)
+				GBD_RPG.Main_Main.Main_ServerOption.economy.depositPlayer(player.getName(), PlayerConfig.getInt("SupportMoney"));
+			else
+				Stat_Money = PlayerConfig.getInt("SupportMoney");
+			
 			PlayerConfig=YC.getNewConfig("config.yml");
 			Stat_SkillPoint = PlayerConfig.getInt("DefaultStat.SkillPoint");
 			Stat_StatPoint = PlayerConfig.getInt("DefaultStat.StatPoint");

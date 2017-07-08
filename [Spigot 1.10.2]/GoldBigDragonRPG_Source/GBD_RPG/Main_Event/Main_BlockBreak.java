@@ -157,7 +157,7 @@ public class Main_BlockBreak implements Listener
 				{
 					String QuestName = (String) a[count];
 					short Flow = (short) PlayerQuestList.getInt("Started."+QuestName+".Flow");
-					if(PlayerQuestList.getString("Started."+QuestName+".Type").equalsIgnoreCase("Harvest"))
+					if(QuestList.contains(QuestName+".FlowChart."+Flow+".Block")&&PlayerQuestList.getString("Started."+QuestName+".Type").equalsIgnoreCase("Harvest"))
 					{
 						Object[] MobList = QuestList.getConfigurationSection(QuestName+".FlowChart."+Flow+".Block").getKeys(false).toArray();
 						short Finish = 0;

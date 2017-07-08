@@ -1,5 +1,6 @@
 package GBD_RPG.Battle;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -71,28 +72,33 @@ public class Battle_Main implements Listener
 				if (event.getDamager() != null && event.getDamager() instanceof Projectile)
 				{
 					Projectile projectile = (Projectile) event.getDamager();
-					if(projectile.getShooter() != null && projectile.getShooter() instanceof Player)
+					if(projectile.getShooter() != null)
 					{
-						if(projectile.getType() == EntityType.ARROW || projectile.getType() == EntityType.SPECTRAL_ARROW || projectile.getType() == EntityType.TIPPED_ARROW)
+						if(projectile.getShooter() instanceof Player)
 						{
-							if(projectile.isCustomNameVisible()==true)
+							if(projectile.getType() == EntityType.ARROW || projectile.getType() == EntityType.SPECTRAL_ARROW || projectile.getType() == EntityType.TIPPED_ARROW)
 							{
-								if(projectile.getCustomName().compareTo(ChatColor.RED+""+ChatColor.BOLD+"[불 화살]")==0)
-									DamageSetter(event,"R_A_F",(Entity) projectile.getShooter(), true);
+								if(projectile.isCustomNameVisible()==true)
+								{
+									if(projectile.getCustomName().compareTo(ChatColor.RED+""+ChatColor.BOLD+"[불 화살]")==0)
+										DamageSetter(event,"R_A_F",(Entity) projectile.getShooter(), true);
+									else
+										DamageSetter(event,"R_A",(Entity) projectile.getShooter(), true);
+								}
 								else
 									DamageSetter(event,"R_A",(Entity) projectile.getShooter(), true);
 							}
-							else
-								DamageSetter(event,"R_A",(Entity) projectile.getShooter(), true);
+							if(projectile.getType() == EntityType.FISHING_HOOK)
+							{
+								DamageSetter(event,"R_FH",(Entity) projectile.getShooter(), true);
+							}
+							if(projectile.getType() == EntityType.SNOWBALL)
+							{
+								DamageSetter(event,"R_S",(Entity) projectile.getShooter(), true);
+							}
 						}
-						if(projectile.getType() == EntityType.FISHING_HOOK)
-						{
-							DamageSetter(event,"R_FH",(Entity) projectile.getShooter(), true);
-						}
-						if(projectile.getType() == EntityType.SNOWBALL)
-						{
-							DamageSetter(event,"R_S",(Entity) projectile.getShooter(), true);
-						}
+						else
+							DamageSetter(event,"R_A",(Entity) projectile.getShooter(), true);
 					}
 				}
 			}
