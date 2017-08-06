@@ -1,5 +1,5 @@
 ﻿name: GoldBigDragonRPG
-main: GBD_RPG.Main_Main.Main_Main
+main: main.Main
 version: 20170708
 description: Mabinogi!!!
 commands:
