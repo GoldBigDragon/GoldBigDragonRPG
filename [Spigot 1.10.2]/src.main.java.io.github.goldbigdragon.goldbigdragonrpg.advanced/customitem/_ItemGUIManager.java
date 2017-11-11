@@ -12,19 +12,19 @@ public class _ItemGUIManager
 	
 	public void ClickRouting(InventoryClickEvent event, String SubjectCode)
 	{
-		if(SubjectCode.compareTo("00")==0)//아이템 목록
+		if(SubjectCode.equals("00"))//아이템 목록
 			new customitem.CustomItem_GUI().ItemListInventoryclick(event);
-		else if(SubjectCode.compareTo("01")==0)//아이템 설정
+		else if(SubjectCode.equals("01"))//아이템 설정
 			new customitem.CustomItem_GUI().NewItemGUIclick(event);
-		else if(SubjectCode.compareTo("02")==0)//아이템 직업 제한
+		else if(SubjectCode.equals("02"))//아이템 직업 제한
 			new customitem.CustomItem_GUI().JobGUIClick(event);
-		else if(SubjectCode.compareTo("03")==0)//소모성 아이템 목록
+		else if(SubjectCode.equals("03"))//소모성 아이템 목록
 			new customitem.UseableItem_GUI().UseableItemListGUIClick(event);
-		else if(SubjectCode.compareTo("04")==0)//소모성 아이템 타입 선택
+		else if(SubjectCode.equals("04"))//소모성 아이템 타입 선택
 			new customitem.UseableItem_GUI().ChooseUseableItemTypeGUIClick(event);
-		else if(SubjectCode.compareTo("05")==0)//소모성 아이템 설정
+		else if(SubjectCode.equals("05"))//소모성 아이템 설정
 			new customitem.UseableItem_GUI().NewUseableItemGUIclick(event);
-		else if(SubjectCode.compareTo("06")==0)//스킬북 스킬 등록
+		else if(SubjectCode.equals("06"))//스킬북 스킬 등록
 			new customitem.UseableItem_GUI().SelectSkillGUIClick(event);
 	}
 }

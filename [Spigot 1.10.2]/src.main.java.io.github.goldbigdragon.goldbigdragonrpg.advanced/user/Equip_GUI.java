@@ -20,8 +20,6 @@ import servertick.ServerTick_Main;
 import util.Util_GUI;
 import util.YamlLoader;
 
-
-
 public class Equip_GUI extends Util_GUI
 {
 	public void EquipWatchGUI(Player player, Player target)
@@ -30,106 +28,106 @@ public class Equip_GUI extends Util_GUI
 		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0장비 구경");
 	  	if(main.Main_ServerOption.PlayerList.get(target.getUniqueId().toString()).isOption_EquipLook())
 	  	{
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 0, inv);
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 1, inv);
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 2, inv);
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 3, inv);
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 4, inv);
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 9, inv);
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 18, inv);
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 27, inv);
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 36, inv);
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 45, inv);
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 46, inv);
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 47, inv);
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 48, inv);
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 49, inv);
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 40, inv);
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 31, inv);
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 22, inv);
-			Stack(ChatColor.DARK_AQUA + "[    장비    ]", 160,7,1,null, 13, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 0, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 1, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 2, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 3, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 4, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 9, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 18, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 27, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 36, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 45, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 46, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 47, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 48, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 49, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 40, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 31, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 22, inv);
+			Stack("§3[    장비    ]", 160,7,1,null, 13, inv);
 			
 			
 	  		if(target.getInventory().getHelmet() == null)
-	  			Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "미착용", 302,0,1,null, 11, inv);
+	  			Stack2("§f§l미착용", 302,0,1,null, 11, inv);
 	  		else
 	  			ItemStackStack(target.getInventory().getHelmet(), 11, inv);
 	  		if(target.getInventory().getChestplate() == null)
-	  			Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "미착용", 303,0,01,null, 20, inv);
+	  			Stack2("§f§l미착용", 303,0,01,null, 20, inv);
 	  		else
 	  			ItemStackStack(target.getInventory().getChestplate(), 20, inv);
 	  		if(target.getInventory().getLeggings() == null)
-	  			Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "미착용", 304,0,1,null, 29, inv);
+	  			Stack2("§f§l미착용", 304,0,1,null, 29, inv);
 	  		else
 	  			ItemStackStack(target.getInventory().getLeggings(), 29, inv);
 	  		if(target.getInventory().getBoots() == null)
-	  			Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "미착용", 305,0,1,null, 38, inv);
+	  			Stack2("§f§l미착용", 305,0,1,null, 38, inv);
 	  		else
 	  			ItemStackStack(target.getInventory().getBoots(), 38, inv);
 	  		if(target.getInventory().getItemInMainHand() == null)
-	  			Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "맨손", 336,0,1,null, 28, inv);
+	  			Stack2("§f§l맨손", 336,0,1,null, 28, inv);
 	  		else
 	  			if(target.getInventory().getItemInMainHand().getType() == Material.AIR)
-		  			Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "맨손", 336,0,1,null, 28, inv);
+		  			Stack2("§f§l맨손", 336,0,1,null, 28, inv);
 	  			else
 	  				ItemStackStack(target.getInventory().getItemInMainHand(), 28, inv);
 	  		if(target.getInventory().getItemInOffHand() == null)
-	  			Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "맨손", 336,0,1,null, 30, inv);
+	  			Stack2("§f§l맨손", 336,0,1,null, 30, inv);
 	  		else
 	  			if(target.getInventory().getItemInOffHand().getType() == Material.AIR)
-		  			Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "맨손", 336,0,1,null, 30, inv);
+		  			Stack2("§f§l맨손", 336,0,1,null, 30, inv);
 	  			else
 	  				ItemStackStack(target.getInventory().getItemInOffHand(), 30, inv);
 	  	}
 	  	else
 	  	{
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 0, inv);
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 1, inv);
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 2, inv);
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 3, inv);
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 4, inv);
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 9, inv);
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 18, inv);
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 27, inv);
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 36, inv);
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 45, inv);
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 46, inv);
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 47, inv);
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 48, inv);
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 49, inv);
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 40, inv);
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 31, inv);
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 22, inv);
-			Stack(ChatColor.RED + "[    비공개    ]", 160,14,1,null, 13, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 0, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 1, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 2, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 3, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 4, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 9, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 18, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 27, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 36, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 45, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 46, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 47, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 48, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 49, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 40, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 31, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 22, inv);
+			Stack("§c[    비공개    ]", 160,14,1,null, 13, inv);
 			
-	  		Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "알수없음", 302,0,1,null, 11, inv);
-  			Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "알수없음", 303,0,1,null, 20, inv);
-  			Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "알수없음", 304,0,1,null, 29, inv);
-  			Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "알수없음", 305,0,1,null, 38, inv);
-  			Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "알수없음", 336,0,1,null, 28, inv);
+	  		Stack2("§f§l알수없음", 302,0,1,null, 11, inv);
+  			Stack2("§f§l알수없음", 303,0,1,null, 20, inv);
+  			Stack2("§f§l알수없음", 304,0,1,null, 29, inv);
+  			Stack2("§f§l알수없음", 305,0,1,null, 38, inv);
+  			Stack2("§f§l알수없음", 336,0,1,null, 28, inv);
 	  	}
 
-		Stack(ChatColor.DARK_AQUA + "[    행동    ]", 160,9,1,null, 5, inv);
-		Stack(ChatColor.DARK_AQUA + "[    행동    ]", 160,9,1,null, 6, inv);
-		Stack(ChatColor.DARK_AQUA + "[    행동    ]", 160,9,1,null, 7, inv);
-		Stack(ChatColor.DARK_AQUA + "[    행동    ]", 160,9,1,null, 8, inv);
-		Stack(ChatColor.DARK_AQUA + "[    행동    ]", 160,9,1,null, 14, inv);
-		Stack(ChatColor.DARK_AQUA + "[    행동    ]", 160,9,1,null, 17, inv);
-		Stack(ChatColor.DARK_AQUA + "[    행동    ]", 160,9,1,null, 23, inv);
-		Stack(ChatColor.DARK_AQUA + "[    행동    ]", 160,9,1,null, 26, inv);
-		Stack(ChatColor.DARK_AQUA + "[    행동    ]", 160,9,1,null, 32, inv);
-		Stack(ChatColor.DARK_AQUA + "[    행동    ]", 160,9,1,null, 35, inv);
-		Stack(ChatColor.DARK_AQUA + "[    행동    ]", 160,9,1,null, 41, inv);
-		Stack(ChatColor.DARK_AQUA + "[    행동    ]", 160,9,1,null, 44, inv);
-		Stack(ChatColor.DARK_AQUA + "[    행동    ]", 160,9,1,null, 50, inv);
-		Stack(ChatColor.DARK_AQUA + "[    행동    ]", 160,9,1,null, 51, inv);
-		Stack(ChatColor.DARK_AQUA + "[    행동    ]", 160,9,1,null, 52, inv);
-		Stack(ChatColor.DARK_AQUA + "[    행동    ]", 160,9,1,null, 53, inv);
+		Stack("§3[    행동    ]", 160,9,1,null, 5, inv);
+		Stack("§3[    행동    ]", 160,9,1,null, 6, inv);
+		Stack("§3[    행동    ]", 160,9,1,null, 7, inv);
+		Stack("§3[    행동    ]", 160,9,1,null, 8, inv);
+		Stack("§3[    행동    ]", 160,9,1,null, 14, inv);
+		Stack("§3[    행동    ]", 160,9,1,null, 17, inv);
+		Stack("§3[    행동    ]", 160,9,1,null, 23, inv);
+		Stack("§3[    행동    ]", 160,9,1,null, 26, inv);
+		Stack("§3[    행동    ]", 160,9,1,null, 32, inv);
+		Stack("§3[    행동    ]", 160,9,1,null, 35, inv);
+		Stack("§3[    행동    ]", 160,9,1,null, 41, inv);
+		Stack("§3[    행동    ]", 160,9,1,null, 44, inv);
+		Stack("§3[    행동    ]", 160,9,1,null, 50, inv);
+		Stack("§3[    행동    ]", 160,9,1,null, 51, inv);
+		Stack("§3[    행동    ]", 160,9,1,null, 52, inv);
+		Stack("§3[    행동    ]", 160,9,1,null, 53, inv);
 		
-	  	Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "교환 신청", 388,0,1,Arrays.asList(
-	  			ChatColor.GRAY+"교환 신청을 합니다.",ChatColor.GRAY+"보안을 위해 아이템을 나누는",ChatColor.GRAY+"동작은 금지되어 있습니다.","",ChatColor.YELLOW+"[    대상    ]",ChatColor.WHITE+""+ChatColor.BOLD+target.getName()), 15, inv);
-		Stack2(ChatColor.WHITE  + "" + ChatColor.BOLD + "친구 추가", 397,3,1,Arrays.asList(
-				ChatColor.GRAY+"친구 추가 요청을 합니다.","",ChatColor.YELLOW+"[    대상    ]",ChatColor.WHITE+""+ChatColor.BOLD+target.getName()), 16, inv);
+	  	Stack2("§f§l교환 신청", 388,0,1,Arrays.asList(
+	  			"§7교환 신청을 합니다.","§7보안을 위해 아이템을 나누는","§7동작은 금지되어 있습니다.","","§e[    대상    ]","§f§l"+target.getName()), 15, inv);
+		Stack2("§f§l친구 추가", 397,3,1,Arrays.asList(
+				"§7친구 추가 요청을 합니다.","","§e[    대상    ]","§f§l"+target.getName()), 16, inv);
 		player.openInventory(inv);
 	}
 	
@@ -139,35 +137,35 @@ public class Equip_GUI extends Util_GUI
 		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0교환");
 
 		for(int count = 0; count < 5; count++)
-			Stack(ChatColor.GRAY +""+ChatColor.BOLD+ "[   칸막이   ]", 160,15,1,null, 4+(count*9), inv);
+			Stack("§7§l[   칸막이   ]", 160,15,1,null, 4+(count*9), inv);
 
-		Stack(ChatColor.WHITE +""+ChatColor.BOLD+ "[ 교환 취소 ]", 166,0,1,null, 49, inv);
+		Stack("§f§l[ 교환 취소 ]", 166,0,1,null, 49, inv);
 		
-		ItemStackStack(getPlayerSkull(ChatColor.GREEN +""+ChatColor.BOLD+player.getName(), 1, null, player.getName()), 0, inv);
-		ItemStackStack(getPlayerSkull(ChatColor.GREEN +""+ChatColor.BOLD+target.getName(), 1, null, target.getName()), 8, inv);
+		ItemStackStack(getPlayerSkull("§a§l"+player.getName(), 1, null, player.getName()), 0, inv);
+		ItemStackStack(getPlayerSkull("§a§l"+target.getName(), 1, null, target.getName()), 8, inv);
 
 		for(int count = 1; count < 4; count++)
-			Stack(ChatColor.BLUE +""+ChatColor.BOLD+ "[   자신   ]", 160,11,1,null, count, inv);
+			Stack("§9§l[   자신   ]", 160,11,1,null, count, inv);
 		for(int count = 5; count < 8; count++)
-			Stack(ChatColor.RED +""+ChatColor.BOLD+ "[   상대   ]", 160,14,1,null, count, inv);
+			Stack("§c§l[   상대   ]", 160,14,1,null, count, inv);
 
 		for(int count = 0; count < 4; count++)
-			Stack(ChatColor.BLUE +""+ChatColor.BOLD+ "[   자신   ]", 160,11,1,null, 9+(count*9), inv);
+			Stack("§9§l[   자신   ]", 160,11,1,null, 9+(count*9), inv);
 		for(int count = 0; count < 4; count++)
-			Stack(ChatColor.RED +""+ChatColor.BOLD+ "[   상대   ]", 160,14,1,null, 17+(count*9), inv);
+			Stack("§c§l[   상대   ]", 160,14,1,null, 17+(count*9), inv);
 		
 		for(int count = 46; count < 49; count++)
-			Stack(ChatColor.BLUE +""+ChatColor.BOLD+ "[   자신   ]", 160,11,1,null, count, inv);
+			Stack("§9§l[   자신   ]", 160,11,1,null, count, inv);
 		for(int count = 50; count < 53; count++)
-			Stack(ChatColor.RED +""+ChatColor.BOLD+ "[   상대   ]", 160,14,1,null, count, inv);
+			Stack("§c§l[   상대   ]", 160,14,1,null, count, inv);
 
 		for(int count = 0; count < 4; count ++)
 			for(int count2 = 10; count2 < 13; count2 ++)
-				Stack(ChatColor.GRAY +""+ChatColor.BOLD+ "[아무것도 올려지지 않음]", 160,8,1,null, count2+(count*9), inv);
+				Stack("§7§l[아무것도 올려지지 않음]", 160,8,1,null, count2+(count*9), inv);
 		
 		for(int count = 0; count < 4; count ++)
 			for(int count2 = 14; count2 < 17; count2 ++)
-				Stack(ChatColor.GRAY +""+ChatColor.BOLD+ "[아무것도 올려지지 않음]", 160,8,1,null, count2+(count*9), inv);
+				Stack("§7§l[아무것도 올려지지 않음]", 160,8,1,null, count2+(count*9), inv);
 		
 		if(SideItems != null)
 		{
@@ -196,14 +194,14 @@ public class Equip_GUI extends Util_GUI
 		}
 		
 		if(MyReady)
-			Stack(ChatColor.BLUE +""+ChatColor.BOLD+ "[ 준비 완료 ]", 35,11,1,null, 45, inv);
+			Stack("§9§l[ 준비 완료 ]", 35,11,1,null, 45, inv);
 		else
-			Stack(ChatColor.RED +""+ChatColor.BOLD+ "[  대기중  ]", 35,14,1,null, 45, inv);
+			Stack("§c§l[  대기중  ]", 35,14,1,null, 45, inv);
 
 		if(TargetReady)
-			Stack(ChatColor.BLUE +""+ChatColor.BOLD+ "[ 준비 완료 ]", 35,11,1,null, 53, inv);
+			Stack("§9§l[ 준비 완료 ]", 35,11,1,null, 53, inv);
 		else
-			Stack(ChatColor.RED +""+ChatColor.BOLD+ "[  대기중  ]", 35,14,1,null, 53, inv);
+			Stack("§c§l[  대기중  ]", 35,14,1,null, 53, inv);
 		
 		player.openInventory(inv);
 	}
@@ -234,7 +232,7 @@ public class Equip_GUI extends Util_GUI
 		event.getAction() == InventoryAction.PICKUP_HALF||
 		event.getAction() == InventoryAction.PICKUP_ONE||
 		event.getAction() == InventoryAction.PICKUP_SOME)&&
-		ChatColor.stripColor(event.getClickedInventory().getName()).compareTo("교환") != 0)
+		!ChatColor.stripColor(event.getClickedInventory().getName()).equals("교환"))
 		{
 			ItemStack mySideSlot[] = new ItemStack[12];
 			byte MSS = 0;
@@ -257,7 +255,7 @@ public class Equip_GUI extends Util_GUI
 						if(mySideSlot[count].getItemMeta().hasLore()==false&&
 							mySideSlot[count].getItemMeta().hasDisplayName())
 						{
-							if(mySideSlot[count].getItemMeta().getDisplayName().compareTo(ChatColor.GRAY +""+ChatColor.BOLD+ "[아무것도 올려지지 않음]")==0)
+							if(mySideSlot[count].getItemMeta().getDisplayName().equals("§7§l[아무것도 올려지지 않음]"))
 							{emptySlot = (byte) count; break;}
 						}
 					}
@@ -324,7 +322,7 @@ public class Equip_GUI extends Util_GUI
 				Icon.setAmount(1);
 				ItemMeta Icon_Meta = Icon.getItemMeta();
 				Icon_Meta.setLore(null);
-				Icon_Meta.setDisplayName(ChatColor.RED +""+ChatColor.BOLD+ "[  대기중  ]");
+				Icon_Meta.setDisplayName("§c§l[  대기중  ]");
 				Icon.setItemMeta(Icon_Meta);
 				
 				target.getOpenInventory().setItem(45, Icon);
@@ -336,14 +334,14 @@ public class Equip_GUI extends Util_GUI
 			else
 			{
 				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-				player.sendMessage(ChatColor.RED+"[교환] : 더 이상 물건을 올릴 수 없습니다!");
+				player.sendMessage("§c[교환] : 더 이상 물건을 올릴 수 없습니다!");
 			}
 		}
 		else if((event.getAction() == InventoryAction.PICKUP_ALL||
 				event.getAction() == InventoryAction.PICKUP_HALF||
 				event.getAction() == InventoryAction.PICKUP_ONE||
 				event.getAction() == InventoryAction.PICKUP_SOME)&&
-				ChatColor.stripColor(event.getClickedInventory().getName()).compareTo("교환") == 0)
+				ChatColor.stripColor(event.getClickedInventory().getName()).equals("교환"))
 		{
 			if((event.getSlot()>=10&&event.getSlot()<=12)||
 			(event.getSlot()>=19&&event.getSlot()<=21)||
@@ -357,7 +355,7 @@ public class Equip_GUI extends Util_GUI
 						if(event.getCurrentItem().getItemMeta().hasLore()==false&&
 								event.getCurrentItem().getItemMeta().hasDisplayName())
 						{
-							if(event.getCurrentItem().getItemMeta().getDisplayName().compareTo(ChatColor.GRAY +""+ChatColor.BOLD+ "[아무것도 올려지지 않음]")==0)
+							if(event.getCurrentItem().getItemMeta().getDisplayName().equals("§7§l[아무것도 올려지지 않음]"))
 							{return;}
 						}
 					}
@@ -366,7 +364,7 @@ public class Equip_GUI extends Util_GUI
 				Icon.setAmount(1);
 				ItemMeta Icon_Meta = Icon.getItemMeta();
 				Icon_Meta.setLore(null);
-				Icon_Meta.setDisplayName(ChatColor.GRAY +""+ChatColor.BOLD+ "[아무것도 올려지지 않음]");
+				Icon_Meta.setDisplayName("§7§l[아무것도 올려지지 않음]");
 				Icon.setItemMeta(Icon_Meta);
 				player.getInventory().addItem(event.getCurrentItem());
 				target.getOpenInventory().setItem(event.getSlot()+4, Icon);
@@ -377,7 +375,7 @@ public class Equip_GUI extends Util_GUI
 				Icon.setAmount(1);
 				Icon_Meta = Icon.getItemMeta();
 				Icon_Meta.setLore(null);
-				Icon_Meta.setDisplayName(ChatColor.RED +""+ChatColor.BOLD+ "[  대기중  ]");
+				Icon_Meta.setDisplayName("§c§l[  대기중  ]");
 				Icon.setItemMeta(Icon_Meta);
 				
 				target.getOpenInventory().setItem(45, Icon);
@@ -424,7 +422,7 @@ public class Equip_GUI extends Util_GUI
 										if(item.hasItemMeta())
 											if(item.getItemMeta().hasDisplayName())
 											{
-												if(ChatColor.stripColor(item.getItemMeta().getDisplayName()).compareTo("[아무것도 올려지지 않음]")!=0)
+												if(!ChatColor.stripColor(item.getItemMeta().getDisplayName()).equals("[아무것도 올려지지 않음]"))
 													needSlot++;
 											}
 											else
@@ -441,8 +439,8 @@ public class Equip_GUI extends Util_GUI
 								mySlot++;
 						if(mySlot < needSlot)
 						{
-							player.sendMessage(ChatColor.RED+"[교환] : 당신의 인벤토리 공간이 부족합니다!");
-							target.sendMessage(ChatColor.RED+"[교환] : 상대방의 인벤토리 공간이 부족합니다!");
+							player.sendMessage("§c[교환] : 당신의 인벤토리 공간이 부족합니다!");
+							target.sendMessage("§c[교환] : 상대방의 인벤토리 공간이 부족합니다!");
 							return;
 						}
 						
@@ -459,7 +457,7 @@ public class Equip_GUI extends Util_GUI
 										if(item.hasItemMeta())
 											if(item.getItemMeta().hasDisplayName())
 											{
-												if(ChatColor.stripColor(item.getItemMeta().getDisplayName()).compareTo("[아무것도 올려지지 않음]")!=0)
+												if(!ChatColor.stripColor(item.getItemMeta().getDisplayName()).equals("[아무것도 올려지지 않음]"))
 													needSlot++;
 											}
 											else
@@ -477,8 +475,8 @@ public class Equip_GUI extends Util_GUI
 
 						if(mySlot < needSlot)
 						{
-							player.sendMessage(ChatColor.RED+"[교환] : 상대방의 인벤토리 공간이 부족합니다!");
-							target.sendMessage(ChatColor.RED+"[교환] : 당신의 인벤토리 공간이 부족합니다!");
+							player.sendMessage("§c[교환] : 상대방의 인벤토리 공간이 부족합니다!");
+							target.sendMessage("§c[교환] : 당신의 인벤토리 공간이 부족합니다!");
 							return;
 						}
 						
@@ -493,7 +491,7 @@ public class Equip_GUI extends Util_GUI
 										if(event.getInventory().getItem(count2+(count*9)).getItemMeta().hasLore()==false&&
 												event.getInventory().getItem(count2+(count*9)).getItemMeta().hasDisplayName())
 										{
-											if(event.getInventory().getItem(count2+(count*9)).getItemMeta().getDisplayName().compareTo(ChatColor.GRAY +""+ChatColor.BOLD+ "[아무것도 올려지지 않음]")!=0)
+											if(!event.getInventory().getItem(count2+(count*9)).getItemMeta().getDisplayName().equals("§7§l[아무것도 올려지지 않음]"))
 												target.getInventory().addItem(event.getInventory().getItem(count2+(count*9)));
 										}
 										else
@@ -518,7 +516,7 @@ public class Equip_GUI extends Util_GUI
 										if(target.getOpenInventory().getItem(count2+(count*9)).getItemMeta().hasLore()==false&&
 												target.getOpenInventory().getItem(count2+(count*9)).getItemMeta().hasDisplayName())
 										{
-											if(target.getOpenInventory().getItem(count2+(count*9)).getItemMeta().getDisplayName().compareTo(ChatColor.GRAY +""+ChatColor.BOLD+ "[아무것도 올려지지 않음]")!=0)
+											if(!target.getOpenInventory().getItem(count2+(count*9)).getItemMeta().getDisplayName().equals("§7§l[아무것도 올려지지 않음]"))
 												player.getInventory().addItem(target.getOpenInventory().getItem(count2+(count*9)));
 										}
 										else
@@ -541,7 +539,7 @@ public class Equip_GUI extends Util_GUI
 						ItemStack Icon = new MaterialData(35, (byte) 11).toItemStack();
 						Icon.setAmount(1);
 						ItemMeta Icon_Meta = Icon.getItemMeta();
-						Icon_Meta.setDisplayName(ChatColor.BLUE +""+ChatColor.BOLD+ "[ 준비 완료 ]");
+						Icon_Meta.setDisplayName("§9§l[ 준비 완료 ]");
 						Icon.setItemMeta(Icon_Meta);
 						event.getInventory().setItem(45, Icon);
 						target.getOpenInventory().setItem(53, Icon);
@@ -554,7 +552,7 @@ public class Equip_GUI extends Util_GUI
 					ItemStack Icon = new MaterialData(35, (byte) 14).toItemStack();
 					Icon.setAmount(1);
 					ItemMeta Icon_Meta = Icon.getItemMeta();
-					Icon_Meta.setDisplayName(ChatColor.RED +""+ChatColor.BOLD+ "[  대기중  ]");
+					Icon_Meta.setDisplayName("§c§l[  대기중  ]");
 					Icon.setItemMeta(Icon_Meta);
 					event.getInventory().setItem(45, Icon);
 					target.getOpenInventory().setItem(53, Icon);
@@ -577,7 +575,7 @@ public class Equip_GUI extends Util_GUI
 								if(event.getInventory().getItem(count2+(count*9)).getItemMeta().hasLore()==false&&
 										event.getInventory().getItem(count2+(count*9)).getItemMeta().hasDisplayName())
 								{
-									if(event.getInventory().getItem(count2+(count*9)).getItemMeta().getDisplayName().compareTo(ChatColor.GRAY +""+ChatColor.BOLD+ "[아무것도 올려지지 않음]")!=0)
+									if(!event.getInventory().getItem(count2+(count*9)).getItemMeta().getDisplayName().equals("§7§l[아무것도 올려지지 않음]"))
 										player.getInventory().addItem(event.getInventory().getItem(count2+(count*9)));
 								}
 								else
@@ -605,14 +603,14 @@ public class Equip_GUI extends Util_GUI
 		if(event.getInventory().getItem(0).getTypeId() == 138)
 		{
 			SoundEffect.SP((Player)event.getPlayer(), Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
-			event.getPlayer().sendMessage(ChatColor.RED+"[교환] : 교환을 취소하였습니다!");
+			event.getPlayer().sendMessage("§c[교환] : 교환을 취소하였습니다!");
 		}
 		else if(event.getInventory().getItem(0).getTypeId()== 397)
 		{
 			Player target = Bukkit.getServer().getPlayer(ChatColor.stripColor(event.getInventory().getItem(8).getItemMeta().getDisplayName()));
 			Player player = (Player) event.getPlayer();
 			SoundEffect.SP((Player)event.getPlayer(), Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
-			event.getPlayer().sendMessage(ChatColor.RED+"[교환] : 교환이 취소되었습니다!");
+			event.getPlayer().sendMessage("§c[교환] : 교환이 취소되었습니다!");
 			for(int count = 0; count < 4; count ++)
 			{
 				for(int count2 = 10; count2 < 13; count2 ++)
@@ -624,7 +622,7 @@ public class Equip_GUI extends Util_GUI
 							if(event.getInventory().getItem(count2+(count*9)).getItemMeta().hasLore()==false&&
 									event.getInventory().getItem(count2+(count*9)).getItemMeta().hasDisplayName())
 							{
-								if(event.getInventory().getItem(count2+(count*9)).getItemMeta().getDisplayName().compareTo(ChatColor.GRAY +""+ChatColor.BOLD+ "[아무것도 올려지지 않음]")!=0)
+								if(!event.getInventory().getItem(count2+(count*9)).getItemMeta().getDisplayName().equals("§7§l[아무것도 올려지지 않음]"))
 									player.getInventory().addItem(event.getInventory().getItem(count2+(count*9)));
 							}
 							else
@@ -643,7 +641,7 @@ public class Equip_GUI extends Util_GUI
 		else if(event.getInventory().getItem(0).getTypeId()== 2)
 		{
 			SoundEffect.SP((Player)event.getPlayer(), Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
-			event.getPlayer().sendMessage(ChatColor.GREEN+"[교환] : 교환이 성사되었습니다!");
+			event.getPlayer().sendMessage("§a[교환] : 교환이 성사되었습니다!");
 		}
 	}
 	
@@ -680,7 +678,7 @@ public class Equip_GUI extends Util_GUI
 			if(SideFriend[counter].toString().equals(player.getName()))
 			{
 				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-				player.sendMessage(ChatColor.RED+"[친구] : 이미 상대방에게 친구 요청을 한 상태입니다!");
+				player.sendMessage("§c[친구] : 이미 상대방에게 친구 요청을 한 상태입니다!");
 				return;
 			}
 		}
@@ -696,11 +694,11 @@ public class Equip_GUI extends Util_GUI
 				FriendsList.set("Friends."+target.getName(),AddTime);
 				FriendsList.saveConfig();
 				SoundEffect.SP(player, Sound.BLOCK_LAVA_POP,1.0F, 1.2F);
-				player.sendMessage(ChatColor.AQUA+"[친구] : "+ChatColor.YELLOW+target.getName()+ChatColor.AQUA+"님께서 친구로 등록되었습니다!");
+				player.sendMessage("§b[친구] : §e"+target.getName()+"§b님께서 친구로 등록되었습니다!");
 				if(target.isOnline())
 				{
 					SoundEffect.SP(target, Sound.BLOCK_LAVA_POP,1.0F, 1.2F);
-					target.sendMessage(ChatColor.AQUA+"[친구] : "+ChatColor.YELLOW+player.getName()+ChatColor.AQUA+"님께서 친구로 등록되었습니다!");
+					target.sendMessage("§b[친구] : §e"+player.getName()+"§b님께서 친구로 등록되었습니다!");
 				}
 				return;
 			}
@@ -711,7 +709,7 @@ public class Equip_GUI extends Util_GUI
 			if(Friend[counter].toString().equals(target.getName()))
 			{
 				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-				player.sendMessage(ChatColor.RED+"[친구] : 이미 친구로 등록된 플레이어 입니다!");
+				player.sendMessage("§c[친구] : 이미 친구로 등록된 플레이어 입니다!");
 				return;
 			}
 		}
@@ -719,12 +717,12 @@ public class Equip_GUI extends Util_GUI
 		SideFriendsList.set("Waitting."+player.getName(), AddTime);
 		SideFriendsList.saveConfig();
 		SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
-		player.sendMessage(ChatColor.YELLOW+"[친구] : 상대방에게 친구 신청을 하였습니다!");
+		player.sendMessage("§e[친구] : 상대방에게 친구 신청을 하였습니다!");
 		if(target.isOnline())
 		{
 			SoundEffect.SP(target, Sound.ENTITY_WOLF_AMBIENT,1.0F, 1.0F);
-			target.sendMessage(ChatColor.YELLOW+"[친구] : "+ChatColor.WHITE+player.getName()+ChatColor.YELLOW+"님께서 친구 요청을 하셨습니다!");
-			target.sendMessage(ChatColor.GOLD+"/친구"+ChatColor.WHITE+" 명령어를 입력하여 친구 신청을 확인 해 주세요!");
+			target.sendMessage("§e[친구] : §f"+player.getName()+"§e님께서 친구 요청을 하셨습니다!");
+			target.sendMessage("§6/친구§f 명령어를 입력하여 친구 신청을 확인 해 주세요!");
 		}
 	}
 	
@@ -758,12 +756,12 @@ public class Equip_GUI extends Util_GUI
 						if(isJoinMessage)
 						{
 							SoundEffect.SP(target, Sound.BLOCK_WOODEN_DOOR_OPEN, 0.5F, 1.0F);
-							target.sendMessage("§a§l[접속] "+ChatColor.WHITE+""+ChatColor.BOLD+player.getName());
+							target.sendMessage("§a§l[접속] §f§l"+player.getName());
 						}
 						else
 						{
 							SoundEffect.SP(target, Sound.BLOCK_WOODEN_DOOR_CLOSE, 0.5F, 1.0F);
-							target.sendMessage("§c§l[퇴장] "+ChatColor.GRAY+""+ChatColor.BOLD+player.getName());
+							target.sendMessage("§c§l[퇴장] §7§l"+player.getName());
 						}
 						break;
 					}
@@ -778,14 +776,14 @@ public class Equip_GUI extends Util_GUI
 		if(ServerTick_Main.PlayerTaskList.containsKey(target.getName())==true)
 		{
 			SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-			player.sendMessage(ChatColor.RED+"[교환] : 해당 플레이어는 현재 다른 요청을 처리하고 있습니다.");
-			player.sendMessage(ChatColor.GRAY+"(잠시 후 다시 시도 해 보세요.)");
+			player.sendMessage("§c[교환] : 해당 플레이어는 현재 다른 요청을 처리하고 있습니다.");
+			player.sendMessage("§7(잠시 후 다시 시도 해 보세요.)");
 			return;
 		}
 		if(ServerTick_Main.PlayerTaskList.containsKey(player.getName())==true)
 		{
 			SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-			player.sendMessage(ChatColor.RED+"[교환] : 당신은 먼저 요청받은 일을 처리해야 합니다.");
+			player.sendMessage("§c[교환] : 당신은 먼저 요청받은 일을 처리해야 합니다.");
 			return;
 		}
 		long UTC = servertick.ServerTick_Main.nowUTC-1;
@@ -799,10 +797,10 @@ public class Equip_GUI extends Util_GUI
 		STSO.setString((byte)1, target.getName());//교환 요청 받은 플레이어 이름 저장(플레이어가 오프라인인지 확인해야 하므로)
 		servertick.ServerTick_Main.Schedule.put(UTC, STSO);
 		SoundEffect.SP(player, Sound.BLOCK_NOTE_PLING, 1.0F, 1.0F);
-		player.sendMessage(ChatColor.YELLOW+"[교환] : 상대방에게 교환 신청을 하였습니다!");
-		target.sendMessage(ChatColor.YELLOW+"[교환] : "+ChatColor.WHITE+ChatColor.BOLD+player.getName()+ChatColor.GREEN+" 님께서 교환 요청을 하였습니다!");
-		target.sendMessage(ChatColor.GOLD+"/수락"+ChatColor.WHITE+" 상대의 요청에 수락합니다.");
-		target.sendMessage(ChatColor.GOLD+"/거절"+ChatColor.WHITE+" 상대의 요청에 거절합니다.");
+		player.sendMessage("§e[교환] : 상대방에게 교환 신청을 하였습니다!");
+		target.sendMessage("§e[교환] : §f"+ChatColor.BOLD+player.getName()+"§a 님께서 교환 요청을 하였습니다!");
+		target.sendMessage("§6/수락§f 상대의 요청에 수락합니다.");
+		target.sendMessage("§6/거절§f 상대의 요청에 거절합니다.");
 	}
 
 }

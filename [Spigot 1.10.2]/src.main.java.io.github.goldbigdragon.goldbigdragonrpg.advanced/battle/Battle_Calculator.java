@@ -34,7 +34,7 @@ public class Battle_Calculator
 				if(item.hasItemMeta())
 				{
 					if(item.getItemMeta().hasLore())
-						if(item.getItemMeta().getLore().toString().contains(main.Main_ServerOption.Damage+" : "))
+						if(item.getItemMeta().getLore().toString().contains(main.Main_ServerOption.damage+" : "))
 						{
 							switch(item.getType())
 							{
@@ -273,19 +273,19 @@ public class Battle_Calculator
 		String Lore[];
 		switch(type)
 		{
-			case "Damage":type = main.Main_ServerOption.Damage;break;
+			case "Damage":type = main.Main_ServerOption.damage;break;
 			case "DEF":type = "방어";break;
 			case "DEFcrash":type = "방어관통";break;
 			case "Protect":type = "보호";break;
-			case "MagicDamage":type = main.Main_ServerOption.MagicDamage;break;
+			case "MagicDamage":type = main.Main_ServerOption.magicDamage;break;
 			case "Magic_DEF":type = "마법 방어";break;
 			case "MagicDEFcrash":type = "마법 방어관통";break;
 			case "Magic_Protect":type = "마법 보호";break;
-			case "STR":type = main.Main_ServerOption.STR;break;
-			case "DEX":type = main.Main_ServerOption.DEX;break;
-			case "INT":type = main.Main_ServerOption.INT;break;
-			case "WILL":type = main.Main_ServerOption.WILL;break;
-			case "LUK":type = main.Main_ServerOption.LUK;break;
+			case "STR":type = main.Main_ServerOption.statSTR;break;
+			case "DEX":type = main.Main_ServerOption.statDEX;break;
+			case "INT":type = main.Main_ServerOption.statINT;break;
+			case "WILL":type = main.Main_ServerOption.statWILL;break;
+			case "LUK":type = main.Main_ServerOption.statLUK;break;
 			case "HP":type = "생명력";break;
 			case "MP":type = "마나";break;
 			case "Critical":type = "크리티컬";break;
@@ -320,14 +320,14 @@ public class Battle_Calculator
 				{
 					if(counter == 4)
 					{
-						if(isCombat == false && !(item.get(4).getTypeId() == 261 ||item.get(4).getTypeId() == 262 || item.get(4).getTypeId() == 439|| item.get(4).getTypeId() == 440) && type.compareTo(main.Main_ServerOption.Damage)==0)
+						if(isCombat == false && !(item.get(4).getTypeId() == 261 ||item.get(4).getTypeId() == 262 || item.get(4).getTypeId() == 439|| item.get(4).getTypeId() == 440) && type.equals(main.Main_ServerOption.damage))
 							isCancel = true;
 					}
 					else
 					{
-						if(isCombat ==false && !(item.get(5).getTypeId() == 261 ||item.get(5).getTypeId() == 262 || item.get(5).getTypeId() == 439|| item.get(5).getTypeId() == 440) && type.compareTo(main.Main_ServerOption.Damage)==0)
+						if(isCombat ==false && !(item.get(5).getTypeId() == 261 ||item.get(5).getTypeId() == 262 || item.get(5).getTypeId() == 439|| item.get(5).getTypeId() == 440) && type.equals(main.Main_ServerOption.damage))
 							isCancel = true;
-						if(isCombat && (item.get(counter).getTypeId()==261) && type.compareTo(main.Main_ServerOption.Damage)==0)
+						if(isCombat && (item.get(counter).getTypeId()==261) && type.equals(main.Main_ServerOption.damage))
 							break;
 					}
 				}
@@ -348,24 +348,24 @@ public class Battle_Calculator
 										if(nowlore.contains(" : "))
 										{
 											if(nowlore.contains("직업") == true)
-												if(nowlore.split(" : ")[1].compareTo(Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getPlayerRootJob())!=0)
+												if(!nowlore.split(" : ")[1].equals(Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getPlayerRootJob()))
 													useable = false;
 											if(nowlore.contains("최소") == true)
 											{
 												String[] Resist = nowlore.split(" ");
-												if(Resist[Resist.length-3].compareTo("레벨")==0)
+												if(Resist[Resist.length-3].equals("레벨"))
 													useable = Integer.parseInt(Resist[Resist.length-1]) <= Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level();
-												else if(Resist[Resist.length-3].compareTo("누적레벨")==0)
+												else if(Resist[Resist.length-3].equals("누적레벨"))
 													useable = Integer.parseInt(Resist[Resist.length-1]) <= Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel();
-												else if(Resist[Resist.length-3].compareTo(main.Main_ServerOption.STR)==0)
+												else if(Resist[Resist.length-3].equals(main.Main_ServerOption.statSTR))
 													useable = Integer.parseInt(Resist[Resist.length-1]) <= Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR();
-												else if(Resist[Resist.length-3].compareTo(main.Main_ServerOption.DEX)==0)
+												else if(Resist[Resist.length-3].equals(main.Main_ServerOption.statDEX))
 													useable = Integer.parseInt(Resist[Resist.length-1]) <= Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX();
-												else if(Resist[Resist.length-3].compareTo(main.Main_ServerOption.INT)==0)
+												else if(Resist[Resist.length-3].equals(main.Main_ServerOption.statINT))
 													useable = Integer.parseInt(Resist[Resist.length-1]) <= Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT();
-												else if(Resist[Resist.length-3].compareTo(main.Main_ServerOption.WILL)==0)
+												else if(Resist[Resist.length-3].equals(main.Main_ServerOption.statWILL))
 													useable = Integer.parseInt(Resist[Resist.length-1]) <= Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL();
-												else if(Resist[Resist.length-3].compareTo(main.Main_ServerOption.LUK)==0)
+												else if(Resist[Resist.length-3].equals(main.Main_ServerOption.statLUK))
 													useable = Integer.parseInt(Resist[Resist.length-1]) <= Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK();
 											}
 											if(useable==false)
@@ -398,22 +398,22 @@ public class Battle_Calculator
 														Lore = ChatColor.stripColor(item.get(counter).getItemMeta().getLore().get(count)).split(" : ");
 														if(Lore[0].contains(type))
 														{
-															if(type.compareTo(main.Main_ServerOption.STR)==0||type.compareTo(main.Main_ServerOption.DEX)==0||
-																type.compareTo(main.Main_ServerOption.INT)==0||type.compareTo(main.Main_ServerOption.WILL)==0||
-																type.compareTo(main.Main_ServerOption.LUK)==0)
+															if(type.equals(main.Main_ServerOption.statSTR)||type.equals(main.Main_ServerOption.statDEX)||
+																type.equals(main.Main_ServerOption.statINT)||type.equals(main.Main_ServerOption.statWILL)||
+																type.equals(main.Main_ServerOption.statLUK))
 															{
 																if(item.get(counter).getItemMeta().getLore().get(count).contains("최소") == false)
 																	bonus[0] = bonus[0] + Integer.parseInt(Lore[1]);
 															}
-															else if(type.compareTo(main.Main_ServerOption.Damage)==0||type.compareTo(main.Main_ServerOption.MagicDamage)==0||type.compareTo("업그레이드")==0)
+															else if(type.equals(main.Main_ServerOption.damage)||type.equals(main.Main_ServerOption.magicDamage)||type.equals("업그레이드"))
 															{
-																if(type.compareTo(main.Main_ServerOption.Damage)==0)
+																if(type.equals(main.Main_ServerOption.damage))
 																{
 																	String[] SubLore = Lore[1].split(" ~ ");
 																	bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
 																	bonus[1] = bonus[1] + Integer.parseInt(SubLore[1]);
 																}
-																else if(type.compareTo(main.Main_ServerOption.MagicDamage)==0||type.compareTo("업그레이드")==0)
+																else if(type.equals(main.Main_ServerOption.magicDamage)||type.equals("업그레이드"))
 																{
 																	String[] SubLore = Lore[1].split(" ~ ");
 																	bonus[0] = bonus[0] + Integer.parseInt(SubLore[0]);
@@ -492,9 +492,9 @@ public class Battle_Calculator
 												{
 													SoundEffect.SP(player, Sound.ENTITY_ITEM_BREAK, 1.2F, 1.0F);
 													if(item.get(counter).getItemMeta().hasDisplayName())
-														player.sendMessage(ChatColor.RED+"[장비 파괴] : "+ ChatColor.YELLOW+item.get(counter).getItemMeta().getDisplayName()+ChatColor.RED+ " 장비가 파괴되었습니다!");
+														player.sendMessage("§c[장비 파괴] : §e"+item.get(counter).getItemMeta().getDisplayName()+"§c 장비가 파괴되었습니다!");
 													else
-														player.sendMessage(ChatColor.RED+"[장비 파괴] : 장비가 파괴되었습니다!");
+														player.sendMessage("§c[장비 파괴] : 장비가 파괴되었습니다!");
 													if(counter==0)
 														player.getInventory().setHelmet(new ItemStack(0));
 													else if(counter==1)
@@ -519,7 +519,7 @@ public class Battle_Calculator
 													break;
 												}
 												else
-													PLore.set(count,ChatColor.WHITE +  Lore[0] + " : "+ 0 +" / "+SubLore[1]);
+													PLore.set(count,"§f"+  Lore[0] + " : "+ 0 +" / "+SubLore[1]);
 											}
 											else
 											{
@@ -527,28 +527,28 @@ public class Battle_Calculator
 												{
 													SoundEffect.SP(player, Sound.BLOCK_ANVIL_USE, 0.8F, 0.5F);
 													if(counter==0)
-														player.sendMessage(ChatColor.YELLOW+"[장비 파괴] : 투구의 내구도가 다 닳아 갑니다!");
+														player.sendMessage("§e[장비 파괴] : 투구의 내구도가 다 닳아 갑니다!");
 													else if(counter==1)
-														player.sendMessage(ChatColor.YELLOW+"[장비 파괴] : 흉갑의 내구도가 다 닳아 갑니다!");
+														player.sendMessage("§e[장비 파괴] : 흉갑의 내구도가 다 닳아 갑니다!");
 													else if(counter==2)
-														player.sendMessage(ChatColor.YELLOW+"[장비 파괴] : 낭갑의 내구도가 다 닳아 갑니다!");
+														player.sendMessage("§e[장비 파괴] : 낭갑의 내구도가 다 닳아 갑니다!");
 													else if(counter==3)
-														player.sendMessage(ChatColor.YELLOW+"[장비 파괴] : 신발의 내구도가 다 닳아 갑니다!");
+														player.sendMessage("§e[장비 파괴] : 신발의 내구도가 다 닳아 갑니다!");
 													else if(added==1 && counter==4)
-														player.sendMessage(ChatColor.YELLOW+"[장비 파괴] : 주 무기의 내구도가 다 닳아 갑니다!");
+														player.sendMessage("§e[장비 파괴] : 주 무기의 내구도가 다 닳아 갑니다!");
 													else if(added==2 && counter==4)
-														player.sendMessage(ChatColor.YELLOW+"[장비 파괴] : 보조 무기의 내구도가 다 닳아 갑니다!");
+														player.sendMessage("§e[장비 파괴] : 보조 무기의 내구도가 다 닳아 갑니다!");
 													else if(added==3)
 													{
 														if(counter==4)
-															player.sendMessage(ChatColor.YELLOW+"[장비 파괴] : 주 무기의 내구도가 다 닳아 갑니다!");
+															player.sendMessage("§e[장비 파괴] : 주 무기의 내구도가 다 닳아 갑니다!");
 														else
-															player.sendMessage(ChatColor.YELLOW+"[장비 파괴] : 보조 무기의 내구도가 다 닳아 갑니다!");
+															player.sendMessage("§e[장비 파괴] : 보조 무기의 내구도가 다 닳아 갑니다!");
 													}
 													else
-														player.sendMessage(ChatColor.YELLOW+"[장비 파괴] : 장비의 내구도가 다 닳아 갑니다!");
+														player.sendMessage("§e[장비 파괴] : 장비의 내구도가 다 닳아 갑니다!");
 												}
-												PLore.set(count,ChatColor.WHITE +  Lore[0] + " : "+(Integer.parseInt(SubLore[0])-1) +" / "+SubLore[1]);
+												PLore.set(count,"§f"+  Lore[0] + " : "+(Integer.parseInt(SubLore[0])-1) +" / "+SubLore[1]);
 												DurabilityExit = true;
 											}
 											Meta.setLore(PLore);
@@ -581,7 +581,7 @@ public class Battle_Calculator
 									ItemMeta Meta = item.get(counter).getItemMeta();
 									if(Meta.getLore().get(count).contains("숙련도") == true)
 									{
-										float Proficiency = 0.07F * main.Main_ServerOption.Event_Proficiency;
+										float Proficiency = 0.07F * main.Main_ServerOption.eventProficiency;
 										String[] Lore = ChatColor.stripColor(Meta.getLore().get(count)).split(" : ");
 										String[] SubLore = Lore[1].split("%");
 										List<String> PLore = Meta.getLore();
@@ -590,9 +590,9 @@ public class Battle_Calculator
 										if(str.charAt(0)=='.')
 											str = "0"+str;
 										if((Float.parseFloat(SubLore[0])+0.07F) >= 100.0F)
-											PLore.set(count,ChatColor.WHITE +  Lore[0] + " : "+ 100.0 +"%"+ChatColor.WHITE);
+											PLore.set(count,"§f"+  Lore[0] + " : "+ 100.0 +"%§f");
 										else
-											PLore.set(count,ChatColor.WHITE +  Lore[0] + " : "+ str +"%"+ChatColor.WHITE);
+											PLore.set(count,"§f"+  Lore[0] + " : "+ str +"%§f");
 										Meta.setLore(PLore);
 										item.get(counter).setItemMeta(Meta);
 									}
@@ -646,9 +646,9 @@ public class Battle_Calculator
 												{
 													SoundEffect.SP(player, Sound.ENTITY_ITEM_BREAK, 1.2F, 1.0F);
 													if(item.get(counter).getItemMeta().hasDisplayName())
-														player.sendMessage(ChatColor.RED+"[장비 파괴] : "+ ChatColor.YELLOW+item.get(counter).getItemMeta().getDisplayName()+ChatColor.RED+ " 장비가 파괴되었습니다!");
+														player.sendMessage("§c[장비 파괴] : §e"+item.get(counter).getItemMeta().getDisplayName()+"§c 장비가 파괴되었습니다!");
 													else
-														player.sendMessage(ChatColor.RED+"[장비 파괴] : 장비가 파괴되었습니다!");
+														player.sendMessage("§c[장비 파괴] : 장비가 파괴되었습니다!");
 													if(counter==0)
 														player.getInventory().setItemInMainHand(new ItemStack(0));
 													else
@@ -656,11 +656,11 @@ public class Battle_Calculator
 													break;
 												}
 												else
-													PLore.set(count, ChatColor.WHITE + Lore[0] + " : "+ 0 +" / "+SubLore[1]);
+													PLore.set(count, "§f"+ Lore[0] + " : "+ 0 +" / "+SubLore[1]);
 											}
 											else
 											{
-												PLore.set(count, ChatColor.WHITE + Lore[0] + " : "+(Integer.parseInt(SubLore[0])-1) +" / "+SubLore[1]);
+												PLore.set(count, "§f"+ Lore[0] + " : "+(Integer.parseInt(SubLore[0])-1) +" / "+SubLore[1]);
 												DurabilityExit = true;
 											}
 											Meta.setLore(PLore);
@@ -688,7 +688,7 @@ public class Battle_Calculator
 										ItemMeta Meta = item.get(counter).getItemMeta();
 										if(Meta.getLore().get(count).contains("숙련도") == true)
 										{
-											float Proficiency = 0.07F * main.Main_ServerOption.Event_Proficiency;
+											float Proficiency = 0.07F * main.Main_ServerOption.eventProficiency;
 											String[] Lore = ChatColor.stripColor(Meta.getLore().get(count)).split(" : ");
 											String[] SubLore = Lore[1].split("%");
 											List<String> PLore = Meta.getLore();
@@ -697,9 +697,9 @@ public class Battle_Calculator
 											if(str.charAt(0)=='.')
 												str = "0"+str;
 											if((Float.parseFloat(SubLore[0])+0.07F) >= 100.0F)
-												PLore.set(count,ChatColor.WHITE +  Lore[0] + " : "+ 100.0 +"%"+ChatColor.WHITE);
+												PLore.set(count,"§f"+  Lore[0] + " : "+ 100.0 +"%§f");
 											else
-												PLore.set(count,ChatColor.WHITE +  Lore[0] + " : "+ str +"%"+ChatColor.WHITE);
+												PLore.set(count,"§f"+  Lore[0] + " : "+ str +"%§f");
 											Meta.setLore(PLore);
 											item.get(counter).setItemMeta(Meta);
 										}

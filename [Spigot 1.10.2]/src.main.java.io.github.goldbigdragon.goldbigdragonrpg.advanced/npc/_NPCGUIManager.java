@@ -14,49 +14,49 @@ public class _NPCGUIManager
 	
 	public void ClickRouting(InventoryClickEvent event, String SubjectCode)
 	{
-		if(SubjectCode.compareTo("00")==0)//NPC 메인 GUI
+		if(SubjectCode.equals("00"))//NPC 메인 GUI
 			new npc.NPC_GUI().MainGUIClick(event, ChatColor.stripColor(event.getInventory().getName()).split("C] ")[1]);
-		else if(SubjectCode.compareTo("01")==0)//NPC 상점 목록 GUI
+		else if(SubjectCode.equals("01"))//NPC 상점 목록 GUI
 			new npc.NPC_GUI().ShopGUIClick(event, ChatColor.stripColor(event.getInventory().getName()).split("C] ")[1]);
-		else if(SubjectCode.compareTo("02")==0)//NPC 대화 GUI
+		else if(SubjectCode.equals("02"))//NPC 대화 GUI
 			new npc.NPC_GUI().TalkGUIClick(event, ChatColor.stripColor(event.getInventory().getName()).split("C] ")[1]);
-		else if(SubjectCode.compareTo("03")==0)//NPC 모든 퀘스트 목록 GUI
+		else if(SubjectCode.equals("03"))//NPC 모든 퀘스트 목록 GUI
 			new npc.NPC_GUI().QuestAddGUIClick(event);
-		else if(SubjectCode.compareTo("04")==0)//진행 가능 퀘스트 목록 GUI
+		else if(SubjectCode.equals("04"))//진행 가능 퀘스트 목록 GUI
 			new npc.NPC_GUI().QuestListGUIClick(event);
-		else if(SubjectCode.compareTo("05")==0)//NPC 직업 선택 GUI
+		else if(SubjectCode.equals("05"))//NPC 직업 선택 GUI
 			new npc.NPC_GUI().NPCjobGUIClick(event, ChatColor.stripColor(event.getInventory().getItem(18).getItemMeta().getLore().get(1)));
-		else if(SubjectCode.compareTo("06")==0)//NPC 워프 목록 GUI
+		else if(SubjectCode.equals("06"))//NPC 워프 목록 GUI
 			new npc.NPC_GUI().WarpMainGUIClick(event);
-		else if(SubjectCode.compareTo("07")==0)//NPC 워프 등록 GUI
+		else if(SubjectCode.equals("07"))//NPC 워프 등록 GUI
 			new npc.NPC_GUI().WarperGUIClick(event);
-		else if(SubjectCode.compareTo("08")==0)//NPC 개조 목록 GUI
+		else if(SubjectCode.equals("08"))//NPC 개조 목록 GUI
 			new npc.NPC_GUI().UpgraderGUIClick(event);
-		else if(SubjectCode.compareTo("09")==0)//NPC 개조식 등록 GUI
+		else if(SubjectCode.equals("09"))//NPC 개조식 등록 GUI
 			new npc.NPC_GUI().SelectUpgradeRecipeGUIClick(event);
-		else if(SubjectCode.compareTo("0a")==0)//NPC 룬 세공사 GUI
+		else if(SubjectCode.equals("0a"))//NPC 룬 세공사 GUI
 			new npc.NPC_GUI().RuneEquipGUIClick(event);
-		else if(SubjectCode.compareTo("0b")==0)//NPC 대화 목록 GUI
+		else if(SubjectCode.equals("0b"))//NPC 대화 목록 GUI
 			new npc.NPC_GUI().TalkGUIClick(event);
-		else if(SubjectCode.compareTo("0c")==0)//NPC 대화 설정 GUI
+		else if(SubjectCode.equals("0c"))//NPC 대화 설정 GUI
 			new npc.NPC_GUI().TalkSettingGUIClick(event);
-		else if(SubjectCode.compareTo("0d")==0)//NPC 가르칠 스킬 선택 GUI
+		else if(SubjectCode.equals("0d"))//NPC 가르칠 스킬 선택 GUI
 			new npc.NPC_GUI().AddAbleSkillsGUIClick(event);
-		else if(SubjectCode.compareTo("0e")==0)//NPC 물품 수량 설정 GUI
+		else if(SubjectCode.equals("0e"))//NPC 물품 수량 설정 GUI
 			new npc.NPC_GUI().ItemBuyGuiClick(event);
-		else if(SubjectCode.compareTo("0f")==0)//NPC 수리 GUI
+		else if(SubjectCode.equals("0f"))//NPC 수리 GUI
 			new npc.NPC_GUI().ItemFixGuiClick(event);
-		else if(SubjectCode.compareTo("10")==0)//NPC 선물 아이템 목록 GUI
+		else if(SubjectCode.equals("10"))//NPC 선물 아이템 목록 GUI
 			new npc.NPC_GUI().PresentGuiClick(event);
-		else if(SubjectCode.compareTo("11")==0)//NPC 선물 아이템 설정 GUI
+		else if(SubjectCode.equals("11"))//NPC 선물 아이템 설정 GUI
 			new npc.NPC_GUI().PresentGuiClick(event);
 	}
 	
 	public void CloseRouting(InventoryCloseEvent event, String SubjectCode)
 	{
-		if(SubjectCode.compareTo("0a")==0)//NPC 룬 세공사 GUI
+		if(SubjectCode.equals("0a"))//NPC 룬 세공사 GUI
 			new npc.NPC_GUI().RuneEquipGUIClose(event);
-		else if(SubjectCode.compareTo("11")==0)//NPC 선물 아이템 설정 GUI
+		else if(SubjectCode.equals("11"))//NPC 선물 아이템 설정 GUI
 			new npc.NPC_GUI().PresentInventoryClose(event);
 	}
 }

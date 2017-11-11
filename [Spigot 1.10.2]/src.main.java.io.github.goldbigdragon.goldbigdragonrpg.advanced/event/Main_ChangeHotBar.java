@@ -58,7 +58,7 @@ public class Main_ChangeHotBar implements Listener
 							}
 							else if(nowlore.contains("환생"))
 							{
-								if(nowlore.contains( " + ")==true)
+								if(nowlore.contains(" + "))
 								{
 								  	YamlLoader configYaml = new YamlLoader();
 								    configYaml.getConfig("config.yml");
@@ -74,11 +74,11 @@ public class Main_ChangeHotBar implements Listener
 										SoundEffect.SP(player, Sound.ENTITY_FIREWORK_LAUNCH, 1.0F, 1.2F);
 										SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
 										effect.SendPacket PS = new effect.SendPacket();
-										PS.sendTitleSubTitle(player,"\'"+ChatColor.YELLOW+"■ [ Rebirth ] ■"+"\'",  "\'"+ChatColor.YELLOW+"[레벨 및 경험치가 초기화 되었습니다!]"+"\'", (byte)1, (byte)5, (byte)1);
+										PS.sendTitleSubTitle(player,"\'§e■ [ Rebirth ] ■\'",  "\'§e[레벨 및 경험치가 초기화 되었습니다!]\'", (byte)1, (byte)5, (byte)1);
 									}
 									else
 									{
-										player.sendMessage(ChatColor.RED + "[SYSTEM] : 서버 시스템에 맞지 않아 환생을 할 수 없습니다!");
+										player.sendMessage("§c[SYSTEM] : 서버 시스템에 맞지 않아 환생을 할 수 없습니다!");
 										SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 									}
 								}
@@ -120,7 +120,7 @@ public class Main_ChangeHotBar implements Listener
 					}
 					else if(item.getItemMeta().getLore().size() == 4)
 					{
-						if(item.getItemMeta().getLore().get(3).equals(ChatColor.YELLOW + "[클릭시 퀵슬롯에서 삭제]"))
+						if(item.getItemMeta().getLore().get(3).equals("§e[클릭시 퀵슬롯에서 삭제]"))
 						{
 							byte PrevSlot = (byte)event.getPreviousSlot();
 							
@@ -142,7 +142,7 @@ public class Main_ChangeHotBar implements Listener
 								
 							if(PlayerSkillRank ==0)
 							{
-								player.sendMessage(ChatColor.RED + "[스킬] : 해당 스킬은 삭제된 스킬입니다!");
+								player.sendMessage("§c[스킬] : 해당 스킬은 삭제된 스킬입니다!");
 								player.getInventory().setItem(NewSlot, new ItemStack(0));
 								return;
 							}
@@ -298,8 +298,8 @@ public class Main_ChangeHotBar implements Listener
 							}
 							if(Useable == false && DistrictWeapon.equalsIgnoreCase("없음")==false)
 							{
-								player.sendMessage(ChatColor.RED + "[스킬] : 현재 무기로는 스킬을 사용할 수 없습니다!");
-								player.sendMessage(ChatColor.RED + "필요 무기 타입 : "+DistrictWeapon);
+								player.sendMessage("§c[스킬] : 현재 무기로는 스킬을 사용할 수 없습니다!");
+								player.sendMessage("§c필요 무기 타입 : "+DistrictWeapon);
 								return;
 							}
 							if(Command.equalsIgnoreCase("null") == false)
@@ -333,9 +333,9 @@ public class Main_ChangeHotBar implements Listener
 									}
 									else
 									{
-										player.sendMessage(ChatColor.RED+"[스킬] : MagicSpells플러그인에 해당 스펠이 존재하지 않습니다! 관리자에게 문의하세요!");
-										player.sendMessage(ChatColor.RED+"존재하지 않는 스펠 이름 : " + ChatColor.YELLOW + Spell);
-										player.sendMessage(ChatColor.RED+"존재하지 않는 스펠이 등록된 스킬 : " + ChatColor.YELLOW + Skillname +" "+PlayerSkillRank+"랭크" );
+										player.sendMessage("§c[스킬] : MagicSpells플러그인에 해당 스펠이 존재하지 않습니다! 관리자에게 문의하세요!");
+										player.sendMessage("§c존재하지 않는 스펠 이름 : §e"+ Spell);
+										player.sendMessage("§c존재하지 않는 스펠이 등록된 스킬 : §e"+ Skillname +" "+PlayerSkillRank+"랭크" );
 										
 										SoundEffect.SP(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.9F);
 									}

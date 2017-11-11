@@ -12,7 +12,7 @@ public class _WarpGUIManager
 	
 	public void ClickRouting(InventoryClickEvent event, String SubjectCode)
 	{
-		if(SubjectCode.compareTo("00")==0)//况橇 格废GUI
+		if(SubjectCode.equals("00"))//况橇 格废GUI
 			new warp.Warp_GUI().WarpListGUIInventoryclick(event);
 	}
 }

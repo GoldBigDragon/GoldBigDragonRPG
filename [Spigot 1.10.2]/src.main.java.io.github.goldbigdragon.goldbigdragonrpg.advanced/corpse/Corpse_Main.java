@@ -120,7 +120,7 @@ public class Corpse_Main
 		        stand.setRemoveWhenFarAway(false);
 		        stand.setGravity(false);
 		        stand.setArms(true);
-		        stand.setCustomName(ChatColor.RED+""+ChatColor.BLACK+"h");
+		        stand.setCustomName("§c§0h");
 		        ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short)SkullType.PLAYER.ordinal());
 		        SkullMeta meta = (SkullMeta) head.getItemMeta();
 		        meta.setDisplayName(name);
@@ -143,7 +143,7 @@ public class Corpse_Main
 		        stand.setRemoveWhenFarAway(false);
 		        stand.setGravity(false);
 		        stand.setArms(true);
-		        stand.setCustomName(ChatColor.RED+""+ChatColor.BLACK+"b");
+		        stand.setCustomName("§c§0b");
 		        stand.setItemInHand(item);
 		        stand.setRightArmPose(new EulerAngle(55f,0,0));
 		        AL.add(stand);
@@ -155,7 +155,7 @@ public class Corpse_Main
 		        stand.setRemoveWhenFarAway(false);
 		        stand.setGravity(false);
 		        stand.setArms(true);
-		        stand.setCustomName(ChatColor.RED+""+ChatColor.BLACK+"b");
+		        stand.setCustomName("§c§0b");
 		        stand.setItemInHand(item);
 		        stand.setRightArmPose(new EulerAngle(55f,0,0));
 		        AL.add(stand);
@@ -167,7 +167,7 @@ public class Corpse_Main
 		        stand.setRemoveWhenFarAway(false);
 		        stand.setGravity(false);
 		        stand.setArms(true);
-		        stand.setCustomName(ChatColor.RED+""+ChatColor.BLACK+"b");
+		        stand.setCustomName("§c§0b");
 		        stand.setItemInHand(item);
 		        stand.setRightArmPose(new EulerAngle(0 ,1.5d, 0.2d));
 		        AL.add(stand);

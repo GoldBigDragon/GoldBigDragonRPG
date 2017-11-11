@@ -46,8 +46,8 @@ public class Human {
 	int itemInHand;
 	private UUID uuid;
 
-	public static ArrayList<Location> locations = new ArrayList<Location>();
-	public static ArrayList<Human> humans = new ArrayList<Human>();
+	public static ArrayList<Location> locations = new ArrayList<>();
+	public static ArrayList<Human> humans = new ArrayList<>();
 
 	@SuppressWarnings("rawtypes")
 	private void setPrivateField(Class type, Object object, String name, Object value) {

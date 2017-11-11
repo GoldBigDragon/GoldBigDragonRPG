@@ -1,6 +1,6 @@
 ﻿name: GoldBigDragonRPG
 main: main.Main
-version: 20170708
+version: 20171112
 description: Mabinogi!!!
 commands:
   경주:

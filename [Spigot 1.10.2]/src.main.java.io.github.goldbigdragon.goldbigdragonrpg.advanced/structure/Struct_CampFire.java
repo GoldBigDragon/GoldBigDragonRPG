@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -25,8 +24,8 @@ public class Struct_CampFire extends Util_GUI
 		String UniqueCode = "§0§0§d§0§f§r";
 		BoardCode = BoardCode.replace("§", "&");
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§c§0모닥불");
-		Stack2("§9§l불 끄기", 326, 0, 1, Arrays.asList(ChatColor.WHITE+"모닥불의 불을 끕니다."), 3, inv);
-		Stack2("§c§l불 지피기", 259, 0, 1, Arrays.asList(ChatColor.WHITE+"모닥불에 불을 지핍니다.","",ChatColor.YELLOW+"[막대기 10개 필요]",ChatColor.BLACK+BoardCode), 5, inv);
+		Stack2("§9§l불 끄기", 326, 0, 1, Arrays.asList("§f모닥불의 불을 끕니다."), 3, inv);
+		Stack2("§c§l불 지피기", 259, 0, 1, Arrays.asList("§f모닥불에 불을 지핍니다.","","§e[막대기 10개 필요]","§0"+BoardCode), 5, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -57,7 +56,7 @@ public class Struct_CampFire extends Util_GUI
 				if(new util.Util_Player().deleteItem(player, item, 10)==false)
 				{
 					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.RED+"[SYSTEM] : 불을 지피기 위해 필요한 막대기 개수가 모자랍니다!");
+					player.sendMessage("§c[SYSTEM] : 불을 지피기 위해 필요한 막대기 개수가 모자랍니다!");
 					return;
 				}
 				else
@@ -70,7 +69,7 @@ public class Struct_CampFire extends Util_GUI
 			for(int count = 0; count < e.length; count++)
 				if(((Entity)e[count]).getType()==EntityType.ARMOR_STAND)
 					if(((Entity)e[count]).getCustomName()!=null)
-						if(((Entity)e[count]).getCustomName().compareTo(CampFireName)==0)
+						if(((Entity)e[count]).getCustomName().equals(CampFireName))
 							{
 								if(event.getSlot()==3)
 									((Entity)e[count]).setFireTicks(0);

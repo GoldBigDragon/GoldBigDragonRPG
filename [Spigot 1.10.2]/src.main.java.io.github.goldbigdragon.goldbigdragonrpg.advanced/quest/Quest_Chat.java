@@ -12,8 +12,6 @@ import user.UserData_Object;
 import util.Util_Chat;
 import util.YamlLoader;
 
-
-
 public class Quest_Chat extends Util_Chat
 {
 	
@@ -55,13 +53,13 @@ public class Quest_Chat extends Util_Chat
 			    		Example = "플레이어 변수 ％ B";
 			    		break;
 			    	}
-					player.sendMessage(ChatColor.GREEN + "[퀘스트] : "+ChatColor.YELLOW+Example+ChatColor.GREEN+" 에서 "+ChatColor.YELLOW+"B"+ChatColor.GREEN+" 값에 들어갈 수는 몇 인가요?");
+					player.sendMessage("§a[퀘스트] : §e"+Example+"§a 에서 §eB§a 값에 들어갈 수는 몇 인가요?");
 			    	if(Integer.parseInt(message) <= 2)
-						player.sendMessage(ChatColor.GRAY + "(최소 -1000 ~ 최대 20000)");
+						player.sendMessage("§7(최소 -1000 ~ 최대 20000)");
 			    	else
-						player.sendMessage(ChatColor.GRAY + "(최소 1 ~ 최대 100)");
-					player.sendMessage(ChatColor.GRAY + "(계산 결과 -2000 이하거나 40000 이상일 경우 각각 -2000과 40000으로 고정)");
-					player.sendMessage(ChatColor.GRAY + "(저장 타입이  Integer이므로, 결과 값이 너무 크거나 작으면 이상한 값이 나올수도 있음)");
+						player.sendMessage("§7(최소 1 ~ 최대 100)");
+					player.sendMessage("§7(계산 결과 -2000 이하거나 40000 이상일 경우 각각 -2000과 40000으로 고정)");
+					player.sendMessage("§7(저장 타입이  Integer이므로, 결과 값이 너무 크거나 작으면 이상한 값이 나올수도 있음)");
 				}
 	    	}
 	    	return;
@@ -77,7 +75,7 @@ public class Quest_Chat extends Util_Chat
 		        		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Comparison", u.getInt(player, (byte)1));
 			    		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Value", Integer.parseInt(message));
 		    	    	questYaml.saveConfig();
-		    			player.sendMessage(ChatColor.GREEN+"[퀘스트] : 계산 공식 설정이 완료되었습니다!");
+		    			player.sendMessage("§a[퀘스트] : 계산 공식 설정이 완료되었습니다!");
 		    			QGUI.FixQuestGUI(player, (short) 0, u.getString(player, (byte)2));
 		    	    	u.clearAll(player);
 					}
@@ -92,7 +90,7 @@ public class Quest_Chat extends Util_Chat
 		        		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Comparison", u.getInt(player, (byte)1));
 			    		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Value", Integer.parseInt(message));
 		    	    	questYaml.saveConfig();
-		    			player.sendMessage(ChatColor.GREEN+"[퀘스트] : 계산 공식 설정이 완료되었습니다!");
+		    			player.sendMessage("§a[퀘스트] : 계산 공식 설정이 완료되었습니다!");
 		    			QGUI.FixQuestGUI(player, (short) 0, u.getString(player, (byte)2));
 		    	    	u.clearAll(player);
 					}
@@ -110,7 +108,7 @@ public class Quest_Chat extends Util_Chat
 	    		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Min", u.getInt(player, (byte)2));
 	    		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Max", Integer.parseInt(message));
     	    	questYaml.saveConfig();
-    			player.sendMessage(ChatColor.GREEN+"[퀘스트] : IF문 설정이 완료되었습니다!");
+    			player.sendMessage("§a[퀘스트] : IF문 설정이 완료되었습니다!");
     			QGUI.FixQuestGUI(player, (short) 0, u.getString(player, (byte)2));
     	    	u.clearAll(player);
 			}
@@ -133,12 +131,12 @@ public class Quest_Chat extends Util_Chat
 		    		u.setInt(player, (byte)2, Integer.parseInt(message));
 		    		questYaml.saveConfig();
 			    	u.setString(player, (byte)1, "IFMVS");
-					player.sendMessage(ChatColor.GREEN + "[퀘스트] : "+ChatColor.YELLOW+Integer.parseInt(message)+" <= 플레이어 변수 <= B"+ChatColor.GREEN+" 에서 "+ChatColor.YELLOW+"C"+ChatColor.GREEN+" 값에 들어갈 수는 몇 인가요?");
-					player.sendMessage(ChatColor.GRAY + "(최소 "+Integer.parseInt(message)+" ~ 최대 40000)");
+					player.sendMessage("§a[퀘스트] : §e"+Integer.parseInt(message)+" <= 플레이어 변수 <= B§a 에서 §eC§a 값에 들어갈 수는 몇 인가요?");
+					player.sendMessage("§7(최소 "+Integer.parseInt(message)+" ~ 최대 40000)");
 		    		return;
 		    	}
     	    	questYaml.saveConfig();
-    			player.sendMessage(ChatColor.GREEN+"[퀘스트] : IF문 설정이 완료되었습니다!");
+    			player.sendMessage("§a[퀘스트] : IF문 설정이 완료되었습니다!");
     			QGUI.FixQuestGUI(player, (short) 0, u.getString(player, (byte)2));
     	    	u.clearAll(player);
 			}
@@ -174,12 +172,12 @@ public class Quest_Chat extends Util_Chat
 		    		break;
 		    	case 7:
 		    		Example = "C <= 플레이어 변수 <= B";
-					player.sendMessage(ChatColor.GREEN + "[퀘스트] : "+ChatColor.YELLOW+Example+ChatColor.GREEN+" 에서 "+ChatColor.YELLOW+"C"+ChatColor.GREEN+" 값에 들어갈 수는 몇 인가요?");
-					player.sendMessage(ChatColor.GRAY + "(최소 -2000 ~ 최대 40000)");
+					player.sendMessage("§a[퀘스트] : §e"+Example+"§a 에서 §eC§a 값에 들어갈 수는 몇 인가요?");
+					player.sendMessage("§7(최소 -2000 ~ 최대 40000)");
 		    		return;
 		    	}
-				player.sendMessage(ChatColor.GREEN + "[퀘스트] : "+ChatColor.YELLOW+Example+ChatColor.GREEN+" 에서 "+ChatColor.YELLOW+"B"+ChatColor.GREEN+" 값에 들어갈 수는 몇 인가요?");
-				player.sendMessage(ChatColor.GRAY + "(최소 -2000 ~ 최대 40000)");
+				player.sendMessage("§a[퀘스트] : §e"+Example+"§a 에서 §eB§a 값에 들어갈 수는 몇 인가요?");
+				player.sendMessage("§7(최소 -2000 ~ 최대 40000)");
 			}
     	}
     	return;
@@ -192,7 +190,7 @@ public class Quest_Chat extends Util_Chat
 	        		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Type", "VarChange");
 	        		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Value", Integer.parseInt(message));
 	    	    	questYaml.saveConfig();
-	    			player.sendMessage(ChatColor.GREEN+"[퀘스트] : 변수 변경 설정이 완료되었습니다!");
+	    			player.sendMessage("§a[퀘스트] : 변수 변경 설정이 완료되었습니다!");
 	    			QGUI.FixQuestGUI(player, (short) 0, u.getString(player, (byte)2));
 	    	    	u.clearAll(player);
 				}
@@ -215,21 +213,21 @@ public class Quest_Chat extends Util_Chat
 	        			questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Choice."+count+".Var", u.getInt(player, (byte)(count+2)));
 	        		}
 	    	    	questYaml.saveConfig();
-	    			player.sendMessage(ChatColor.GREEN+"[퀘스트] : 선택지가 성공적으로 등록되었습니다!");
+	    			player.sendMessage("§a[퀘스트] : 선택지가 성공적으로 등록되었습니다!");
 	    			QGUI.FixQuestGUI(player, (short) 0, u.getString(player, (byte)2));
 	    	    	u.clearAll(player);
 	    		}
 	    		else
 	    		{
 			    	u.setString(player, (byte)1, "SCL");
-			    	player.sendMessage(ChatColor.GREEN + "[퀘스트] : "+(u.getInt(player, (byte)1)+1)+"번째 선택에 적힐 말을 입력 하세요!");
-					player.sendMessage(ChatColor.GOLD + "%enter%"+ChatColor.WHITE + " - 한줄 띄워 쓰기 -");
-					player.sendMessage(ChatColor.GOLD + "%player%"+ChatColor.WHITE + " - 플레이어 지칭하기 -");
-					player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
-					ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
-							ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
-					ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c" +
-							ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
+			    	player.sendMessage("§a[퀘스트] : "+(u.getInt(player, (byte)1)+1)+"번째 선택에 적힐 말을 입력 하세요!");
+					player.sendMessage("§6%enter%§f - 한줄 띄워 쓰기 -");
+					player.sendMessage("§6%player%§f - 플레이어 지칭하기 -");
+					player.sendMessage("§f§l&l §0&0 §1&1 §2&2 "+
+					"§3&3 §4&4 §5&5 " +
+							"§6&6 §7&7 §8&8 " +
+					"§9&9 §a&a §b&b §c&c" +
+							"§d&d §e&e §f&f");
 	    		}
 			}
 			
@@ -240,8 +238,8 @@ public class Quest_Chat extends Util_Chat
 			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			u.setString(player, (byte)(u.getInt(player, (byte)1)+4), event.getMessage());
 	    	u.setString(player, (byte)1, "SCV");
-			player.sendMessage(ChatColor.GREEN + "[퀘스트] : "+(u.getInt(player, (byte)1)+1)+"번 선택지를 고를 경우, 플레이어 변수는 몇으로 변환시킬까요?");
-			player.sendMessage(ChatColor.GRAY + "(최소 -1000 ~ 최대 30000)");
+			player.sendMessage("§a[퀘스트] : "+(u.getInt(player, (byte)1)+1)+"번 선택지를 고를 경우, 플레이어 변수는 몇으로 변환시킬까요?");
+			player.sendMessage("§7(최소 -1000 ~ 최대 30000)");
     	}
     	return;
     	case "CS"://ChoiceSize
@@ -251,14 +249,14 @@ public class Quest_Chat extends Util_Chat
 				u.setInt(player, (byte)0, Integer.parseInt(message));
 				u.setInt(player, (byte)1, 0);
 		    	u.setString(player, (byte)1, "SCL");
-		    	player.sendMessage(ChatColor.GREEN + "[퀘스트] : 1번째 선택에 적힐 말을 입력 하세요!");
-				player.sendMessage(ChatColor.GOLD + "%enter%"+ChatColor.WHITE + " - 한줄 띄워 쓰기 -");
-				player.sendMessage(ChatColor.GOLD + "%player%"+ChatColor.WHITE + " - 플레이어 지칭하기 -");
-				player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
-				ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
-						ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
-				ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c" +
-						ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
+		    	player.sendMessage("§a[퀘스트] : 1번째 선택에 적힐 말을 입력 하세요!");
+				player.sendMessage("§6%enter%§f - 한줄 띄워 쓰기 -");
+				player.sendMessage("§6%player%§f - 플레이어 지칭하기 -");
+				player.sendMessage("§f§l&l §0&0 §1&1 §2&2 "+
+				"§3&3 §4&4 §5&5 " +
+						"§6&6 §7&7 §8&8 " +
+				"§9&9 §a&a §b&b §c&c" +
+						"§d&d §e&e §f&f");
 			}
 	    	return;
     	case "Whisper":
@@ -269,7 +267,7 @@ public class Quest_Chat extends Util_Chat
 	    		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Type", u.getString(player, (byte)1));
 		    	questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Message", event.getMessage());
 		    	questYaml.saveConfig();
-				player.sendMessage(ChatColor.GREEN+"[퀘스트] : 대사가 성공적으로 등록되었습니다!");
+				player.sendMessage("§a[퀘스트] : 대사가 성공적으로 등록되었습니다!");
 				QGUI.FixQuestGUI(player, (short) 0, u.getString(player, (byte)2));
 		    	u.clearAll(player);
 	    	}
@@ -278,9 +276,9 @@ public class Quest_Chat extends Util_Chat
 			if(isIntMinMax(message, player, 1, Integer.MAX_VALUE))
 			{
 				event.Main_Interact I = new event.Main_Interact();
-				if(I.SetItemDefaultName(Short.parseShort(message),(byte)0).compareTo("지정되지 않은 아이템")==0)
+				if(I.SetItemDefaultName(Short.parseShort(message),(byte)0).equals("지정되지 않은 아이템"))
 				{
-					player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 아이템은 존재하지 않습니다!");
+					player.sendMessage("§c[SYSTEM] : 해당 아이템은 존재하지 않습니다!");
 	  				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 	  				return;
 				}
@@ -290,7 +288,7 @@ public class Quest_Chat extends Util_Chat
 				questYaml.set(QuestName+".FlowChart."+size+".ID", Integer.parseInt(message));
 				questYaml.saveConfig();
 		    	u.setString(player, (byte)1, "BPDATA");
-		    	player.sendMessage(ChatColor.GREEN + "[퀘스트] : 설치 될 블록 DATA를 입력 해 주세요!");
+		    	player.sendMessage("§a[퀘스트] : 설치 될 블록 DATA를 입력 해 주세요!");
 			}
 	    	return;
     	case "BPDATA"://BlockPlaceDATA
@@ -307,8 +305,8 @@ public class Quest_Chat extends Util_Chat
 			}
 	    	return;
     	case "Script":
-	    	u.setString(player, (byte)3,ChatColor.WHITE + event.getMessage());
-			player.sendMessage(ChatColor.GREEN+"[퀘스트] : 해당 대사를 말할 NPC를 우클릭 하세요.");
+	    	u.setString(player, (byte)3,"§f"+ event.getMessage());
+			player.sendMessage("§a[퀘스트] : 해당 대사를 말할 NPC를 우클릭 하세요.");
 	    	return;
     	case "Visit":
     		YamlLoader areaListYaml = new YamlLoader();
@@ -319,15 +317,15 @@ public class Quest_Chat extends Util_Chat
 			{
 				
 				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-				player.sendMessage(ChatColor.RED + "[SYSTEM] : 생성된 영역이 없습니다!");
+				player.sendMessage("§c[SYSTEM] : 생성된 영역이 없습니다!");
 				u.clearAll(player);
 				return;
 			}
 			for(int count =0; count <arealist.length;count++)
 			{
-				if(event.getMessage().compareTo(arealist[count])==0)
+				if(event.getMessage().equals(arealist[count]))
 				{
-					player.sendMessage(ChatColor.GREEN+"[퀘스트] : "+ChatColor.YELLOW + arealist[count] + ChatColor.GREEN+" 지역을 방문하도록 등록 되었습니다!");
+					player.sendMessage("§a[퀘스트] : §e"+ arealist[count] + "§a 지역을 방문하도록 등록 되었습니다!");
 
 					Set<String> b4 = questYaml.getConfigurationSection(u.getString(player, (byte)2)+".FlowChart").getKeys(false);
 					
@@ -339,13 +337,13 @@ public class Quest_Chat extends Util_Chat
 					u.clearAll(player);
 					return;
 				}
-				player.sendMessage(ChatColor.GREEN +"  "+ arealist[count]);
+				player.sendMessage("§a  "+ arealist[count]);
 			}
-			player.sendMessage(ChatColor.GREEN + "┌────────영역 목록────────┐");
+			player.sendMessage("§a┌────────영역 목록────────┐");
 			for(int count =0; count <arealist.length;count++)
-				player.sendMessage(ChatColor.GREEN +"  "+ arealist[count]);
-			player.sendMessage(ChatColor.GREEN + "└────────영역 목록────────┘");
-			player.sendMessage(ChatColor.DARK_AQUA + "[퀘스트] : 방문해야 할 영역 이름을 적어 주세요!");
+				player.sendMessage("§a  "+ arealist[count]);
+			player.sendMessage("§a└────────영역 목록────────┘");
+			player.sendMessage("§3[퀘스트] : 방문해야 할 영역 이름을 적어 주세요!");
 	    	return;
     	case "Hunt":
 			if(isIntMinMax(event.getMessage(), player, 1, Integer.MAX_VALUE))
@@ -371,7 +369,7 @@ public class Quest_Chat extends Util_Chat
 				questYaml.set(u.getString(player, (byte)2)+".FlowChart."+Flownumber+".Monster."+Monsternumber+".MonsterName", u.getString(player, (byte)3));
 				questYaml.set(u.getString(player, (byte)2)+".FlowChart."+Flownumber+".Monster."+Monsternumber+".Amount", Integer.parseInt(event.getMessage()));
 				questYaml.saveConfig();
-				player.sendMessage(ChatColor.GREEN + "[퀘스트] : " + ChatColor.YELLOW + QGUI.SkullType(u.getString(player, (byte)3)) + ChatColor.GREEN + " (을)를 " + ChatColor.YELLOW + Integer.parseInt(event.getMessage())+ ChatColor.GREEN +" 마리 사냥하도록 설정되었습니다!");
+				player.sendMessage("§a[퀘스트] : §e"+ QGUI.SkullType(u.getString(player, (byte)3)) + "§a (을)를 §e"+ Integer.parseInt(event.getMessage())+ "§a 마리 사냥하도록 설정되었습니다!");
 
 				if(u.getInt(player, (byte)2) < 17)
 					QGUI.KeepGoing(player, u.getString(player, (byte)2), (short) Flownumber, (short) Monsternumber,false);
@@ -383,19 +381,19 @@ public class Quest_Chat extends Util_Chat
     	case "Harvest":
 	    	if(u.getString(player, (byte)3)!=null)
 	    	{
-	    		if(ChatColor.stripColor(event.getMessage()).compareTo("x")==0 ||ChatColor.stripColor(event.getMessage()).compareTo("X")==0 ||
-	    				ChatColor.stripColor(event.getMessage()).compareTo("o")==0 ||ChatColor.stripColor(event.getMessage()).compareTo("O")==0)
+	    		if(ChatColor.stripColor(event.getMessage()).equals("x") ||ChatColor.stripColor(event.getMessage()).equals("X") ||
+	    				ChatColor.stripColor(event.getMessage()).equals("o") ||ChatColor.stripColor(event.getMessage()).equals("O"))
 	    		{
-		    		if(ChatColor.stripColor(event.getMessage()).compareTo("x")==0 ||ChatColor.stripColor(event.getMessage()).compareTo("X")==0)
+		    		if(ChatColor.stripColor(event.getMessage()).equals("x") ||ChatColor.stripColor(event.getMessage()).equals("X"))
 		    			u.setBoolean(player, (byte)1, false);
 		    		else
 		    			u.setBoolean(player, (byte)1, true);
 					u.setString(player, (byte)3,null);
-			    	player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 블록을 얼마나 채집해야 할지 설정하세요! ("+ChatColor.YELLOW + "1"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+"개)");
+			    	player.sendMessage("§a[SYSTEM] : 블록을 얼마나 채집해야 할지 설정하세요! (§e1§a ~ §e"+Integer.MAX_VALUE+"§a개)");
 	    		}
 	    		else
 	    		{
-    				player.sendMessage(ChatColor.RED + "[SYSTEM] : x혹은 o를 입력 해  주세요.");
+    				player.sendMessage("§c[SYSTEM] : x혹은 o를 입력 해  주세요.");
       				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 	    		}
   				return;
@@ -429,9 +427,9 @@ public class Quest_Chat extends Util_Chat
     				questYaml.saveConfig();
     				
     				if(u.getBoolean(player, (byte)1) == false)
-    					player.sendMessage(ChatColor.GREEN + "[퀘스트] : 아이템 ID가 " + ChatColor.YELLOW + u.getInt(player, (byte)1) +ChatColor.GREEN + " 인 모든 블록을 " + ChatColor.YELLOW + Integer.parseInt(event.getMessage())+ ChatColor.GREEN +" 개 채집하도록 설정되었습니다!");
+    					player.sendMessage("§a[퀘스트] : 아이템 ID가 §e"+ u.getInt(player, (byte)1) +"§a 인 모든 블록을 §e"+ Integer.parseInt(event.getMessage())+ "§a 개 채집하도록 설정되었습니다!");
     				else
-    					player.sendMessage(ChatColor.GREEN + "[퀘스트] : 아이템 코드 " + ChatColor.YELLOW + u.getInt(player, (byte)1) +  ":"+ u.getInt(player, (byte)2) + ChatColor.GREEN + " 인 블록을 " + ChatColor.YELLOW + Integer.parseInt(event.getMessage())+ ChatColor.GREEN +" 개 채집하도록 설정되었습니다!");
+    					player.sendMessage("§a[퀘스트] : 아이템 코드 §e"+ u.getInt(player, (byte)1) + ":"+ u.getInt(player, (byte)2) + "§a 인 블록을 §e"+ Integer.parseInt(event.getMessage())+ "§a 개 채집하도록 설정되었습니다!");
 
     				if(u.getInt(player, (byte)2) < 17)
     					QGUI.KeepGoing(player, u.getString(player, (byte)2), (short) Flownumber, (short) BlockNumber,true);

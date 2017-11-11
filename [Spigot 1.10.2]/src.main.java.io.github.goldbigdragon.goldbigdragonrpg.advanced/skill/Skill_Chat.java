@@ -10,8 +10,6 @@ import user.UserData_Object;
 import util.Util_Chat;
 import util.YamlLoader;
 
-
-
 public class Skill_Chat extends Util_Chat
 {
 	public void SkillTypeChatting(PlayerChatEvent event)
@@ -41,7 +39,7 @@ public class Skill_Chat extends Util_Chat
 			Message.replace("\"", "");
 			Message.replace("\'", "");
 			Message.replace("\\", "");
-			if(Message.compareTo("")==0||Message == null)
+			if(Message.equals("")||Message == null)
 				Message = "이름없는 스킬";
 			SkillList.set(Message+".ID",403);
 			SkillList.set(Message+".DATA",0);
@@ -49,7 +47,7 @@ public class Skill_Chat extends Util_Chat
 			SkillList.set(Message+".SkillRank."+1+".Command","null");
 			SkillList.set(Message+".SkillRank."+1+".BukkitPermission",false);
 			SkillList.set(Message+".SkillRank."+1+".MagicSpells","null");
-			SkillList.set(Message+".SkillRank."+1+".Lore",ChatColor.GRAY + "     [설명 없음]     ");
+			SkillList.set(Message+".SkillRank."+1+".Lore","§7     [설명 없음]     ");
 			SkillList.set(Message+".SkillRank."+1+".AffectStat","없음");
 			SkillList.set(Message+".SkillRank."+1+".DistrictWeapon","없음");
 			SkillList.saveConfig();
@@ -61,9 +59,9 @@ public class Skill_Chat extends Util_Chat
 			if(isIntMinMax(Message, player, 1, 2267))
 			{
 				event.Main_Interact I = new event.Main_Interact();
-				if(I.SetItemDefaultName(Short.parseShort(Message),(byte)0).compareTo("지정되지 않은 아이템")==0)
+				if(I.SetItemDefaultName(Short.parseShort(Message),(byte)0).equals("지정되지 않은 아이템"))
 				{
-					player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 아이템은 존재하지 않습니다!");
+					player.sendMessage("§c[SYSTEM] : 해당 아이템은 존재하지 않습니다!");
 	  				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 	  				return;
 				}
@@ -72,7 +70,7 @@ public class Skill_Chat extends Util_Chat
 				u.setType(player, "Skill");
 				u.setString(player, (byte)1, "CSD");
 				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.LIGHT_PURPLE+"[스킬] : 스킬 아이콘의 DATA값을 입력 해 주세요!!");
+				player.sendMessage("§d[스킬] : 스킬 아이콘의 DATA값을 입력 해 주세요!!");
 			}
 			return;
 		case "CSD" ://ChangeSkillData
@@ -83,7 +81,7 @@ public class Skill_Chat extends Util_Chat
 				u.setType(player, "Skill");
 				u.setString(player, (byte)1, "CSA");
 				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.LIGHT_PURPLE+"[스킬] : 스킬 아이콘의 개수를 입력 해 주세요!!");
+				player.sendMessage("§d[스킬] : 스킬 아이콘의 개수를 입력 해 주세요!!");
 			}
 			return;
 		case "CSA" ://ChangeSkillAmount
@@ -112,8 +110,8 @@ public class Skill_Chat extends Util_Chat
 				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".NeedLevel",Integer.parseInt(Message));
 				SkillList.saveConfig();
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				player.sendMessage(ChatColor.LIGHT_PURPLE+"[스킬] : 스킬을 배울 수 있는 누적 레벨을 설정해 주세요!");
-				player.sendMessage(ChatColor.LIGHT_PURPLE+"[제한 없음 : 0] [최대 : "+Integer.MAX_VALUE+"]");
+				player.sendMessage("§d[스킬] : 스킬을 배울 수 있는 누적 레벨을 설정해 주세요!");
+				player.sendMessage("§d[제한 없음 : 0] [최대 : "+Integer.MAX_VALUE+"]");
 				u.setType(player, "Skill");
 				u.setString(player, (byte)1, "NeedRealLV");
 				u.setString(player, (byte)2, u.getString(player, (byte)2));

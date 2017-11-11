@@ -52,14 +52,14 @@ public class Dungeon_Main
 		
 		ItemStack item = new ItemStack(292);
 		ItemMeta im = item.getItemMeta();
-		im.setDisplayName(ChatColor.GREEN+""+ChatColor.BLACK+""+ChatColor.GREEN+""+"§f§l[보상 상자 열쇠]");
-		im.setLore(Arrays.asList("",ChatColor.WHITE+"보상 상자를 열 수 있는",ChatColor.WHITE+"낡은 열쇠이다."));
+		im.setDisplayName("§a§0§a§f§l[보상 상자 열쇠]");
+		im.setLore(Arrays.asList("","§f보상 상자를 열 수 있는","§f낡은 열쇠이다."));
 		im.addEnchant(Enchantment.DURABILITY, 6000, true);
 		item.setItemMeta(im);
 
-		if(Main_ServerOption.PartyJoiner.containsKey(player))
+		if(Main_ServerOption.partyJoiner.containsKey(player))
 		{
-			Player[] partyMember = Main_ServerOption.Party.get(Main_ServerOption.PartyJoiner.get(player)).getMember();
+			Player[] partyMember = Main_ServerOption.party.get(Main_ServerOption.partyJoiner.get(player)).getMember();
 			for(int count = 0; count < partyMember.length; count++)
 			{
 				Long target = Main_ServerOption.PlayerList.get(partyMember[count].getUniqueId().toString()).getDungeon_UTC();
@@ -111,9 +111,9 @@ public class Dungeon_Main
 		int SoundTrack = dungeonOptionYaml.getInt("BGM.BOSS");
 		
 		otherplugins.NoteBlockAPIMain NBAPIM = new otherplugins.NoteBlockAPIMain();
-		if(Main_ServerOption.PartyJoiner.containsKey(player))
+		if(Main_ServerOption.partyJoiner.containsKey(player))
 		{
-			Player[] partyMember = Main_ServerOption.Party.get(Main_ServerOption.PartyJoiner.get(player)).getMember();
+			Player[] partyMember = Main_ServerOption.party.get(Main_ServerOption.partyJoiner.get(player)).getMember();
 			for(int count = 0; count < partyMember.length; count++)
 			{
 				if(Main_ServerOption.PlayerList.get(partyMember[count].getUniqueId().toString()).isBgmOn())
@@ -184,8 +184,8 @@ public class Dungeon_Main
 	{
 		ItemStack item = new ItemStack(292);
 		ItemMeta im = item.getItemMeta();
-		im.setDisplayName(ChatColor.GREEN+""+ChatColor.BLACK+""+ChatColor.GREEN+""+"§f§l[던전 룸 열쇠]");
-		im.setLore(Arrays.asList("",ChatColor.WHITE+"던전 룸을 열 수 있는",ChatColor.WHITE+"낡은 열쇠이다."));
+		im.setDisplayName("§a§0§a§f§l[던전 룸 열쇠]");
+		im.setLore(Arrays.asList("","§f던전 룸을 열 수 있는","§f낡은 열쇠이다."));
 		im.addEnchant(Enchantment.DURABILITY, 6000, true);
 		item.setItemMeta(im);
 		if(isDrop)
@@ -195,8 +195,8 @@ public class Dungeon_Main
 		
 		item = new ItemStack(292);
 		im = item.getItemMeta();
-		im.setDisplayName(ChatColor.GREEN+""+ChatColor.BLACK+""+ChatColor.GREEN+""+"§f§l[보상 상자 열쇠]");
-		im.setLore(Arrays.asList("",ChatColor.WHITE+"보상 상자를 열 수 있는",ChatColor.WHITE+"낡은 열쇠이다."));
+		im.setDisplayName("§a§0§a§f§l[보상 상자 열쇠]");
+		im.setLore(Arrays.asList("","§f보상 상자를 열 수 있는","§f낡은 열쇠이다."));
 		im.addEnchant(Enchantment.DURABILITY, 6000, true);
 		item.setItemMeta(im);
 		new util.Util_Player().dropItem(player, item, true);
@@ -318,8 +318,8 @@ public class Dungeon_Main
     			Location blockLoc = new Location(loc.getWorld(), loc.getX(), loc.getY()+1, loc.getZ());
 				ItemStack item = new ItemStack(292);
 				ItemMeta im = item.getItemMeta();
-				im.setDisplayName(ChatColor.GREEN+""+ChatColor.BLACK+""+ChatColor.GREEN+""+"§f§l[던전 룸 열쇠]");
-				im.setLore(Arrays.asList("",ChatColor.WHITE+"던전 룸을 열 수 있는",ChatColor.WHITE+"낡은 열쇠이다."));
+				im.setDisplayName("§a§0§a§f§l[던전 룸 열쇠]");
+				im.setLore(Arrays.asList("","§f던전 룸을 열 수 있는","§f낡은 열쇠이다."));
 				im.addEnchant(Enchantment.DURABILITY, 6000, true);
 				item.setItemMeta(im);
 				new event.Main_ItemDrop().CustomItemDrop(blockLoc, item);
@@ -385,19 +385,19 @@ public class Dungeon_Main
 				{
 			        Sign SignBlock = (Sign) event.getClickedBlock().getLocation().add(0, 10, 0).getBlock().getState();
 			        String GridImage = SignBlock.getLine(1);
-					if(GridImage.compareTo("▲")==0||GridImage.compareTo("▼")==0||GridImage.compareTo("▶")==0||GridImage.compareTo("◀")==0||GridImage.compareTo("♠")==0)
+					if(GridImage.equals("▲")||GridImage.equals("▼")||GridImage.equals("▶")||GridImage.equals("◀")||GridImage.equals("♠"))
 					{
 						ItemStack item = new ItemStack(292);
 						ItemMeta im = item.getItemMeta();
-						im.setDisplayName(ChatColor.GREEN+""+ChatColor.BLACK+""+ChatColor.GREEN+""+"§f§l[던전 룸 열쇠]");
-						im.setLore(Arrays.asList("",ChatColor.WHITE+"던전 룸을 열 수 있는",ChatColor.WHITE+"낡은 열쇠이다."));
+						im.setDisplayName("§a§0§a§f§l[던전 룸 열쇠]");
+						im.setLore(Arrays.asList("","§f던전 룸을 열 수 있는","§f낡은 열쇠이다."));
 						im.addEnchant(Enchantment.DURABILITY, 6000, true);
 						item.setItemMeta(im);
 						if(new util.Util_Player().deleteItem(event.getPlayer(), item, 1))
 						{
 				        	Location loc = event.getClickedBlock().getLocation();
-							String Title = "\'"+ChatColor.BLUE+"\'";
-							String SubTitle  = "\'" +ChatColor.WHITE +"던전 룸 열쇠를 사용하여 문을 열었다.\'";
+							String Title = "\'§9\'";
+							String SubTitle  = "\'§f던전 룸 열쇠를 사용하여 문을 열었다.\'";
 				        	new effect.SendPacket().sendTitleSubTitle(event.getPlayer(), Title, SubTitle, (byte)1, (byte)2, (byte)1);
 							IronDoorOpening(loc);
 					        switch(GridImage)
@@ -465,15 +465,15 @@ public class Dungeon_Main
 						}
 						else
 						{
-							String Title = "\'"+ChatColor.BLUE+"\'";
-							String SubTitle  = "\'" +ChatColor.WHITE +"문을 열기 위해서는 열쇠가 필요할 것 같다...\'";
+							String Title = "\'§9\'";
+							String SubTitle  = "\'§f문을 열기 위해서는 열쇠가 필요할 것 같다...\'";
 				        	new effect.SendPacket().sendTitleSubTitle(event.getPlayer(), Title, SubTitle, (byte)1, (byte)2, (byte)1);
 						}
 					}
 					else
 					{
-						String Title = "\'"+ChatColor.BLUE+"\'";
-						String SubTitle  = "\'" +ChatColor.WHITE +"열쇠로 열 수 있는 문이 아닌 것 같다...\'";
+						String Title = "\'§9\'";
+						String SubTitle  = "\'§f열쇠로 열 수 있는 문이 아닌 것 같다...\'";
 			        	new effect.SendPacket().sendTitleSubTitle(event.getPlayer(), Title, SubTitle, (byte)1, (byte)2, (byte)1);
 			        	return;
 					}
@@ -487,8 +487,8 @@ public class Dungeon_Main
 			block.setType(Material.AIR);
 			ItemStack item = new ItemStack(292);
 			ItemMeta im = item.getItemMeta();
-			im.setDisplayName(ChatColor.GREEN+""+ChatColor.BLACK+""+ChatColor.GREEN+""+"§f§l[던전 룸 열쇠]");
-			im.setLore(Arrays.asList("",ChatColor.WHITE+"던전 룸을 열 수 있는",ChatColor.WHITE+"낡은 열쇠이다."));
+			im.setDisplayName("§a§0§a§f§l[던전 룸 열쇠]");
+			im.setLore(Arrays.asList("","§f던전 룸을 열 수 있는","§f낡은 열쇠이다."));
 			im.addEnchant(Enchantment.DURABILITY, 6000, true);
 			item.setItemMeta(im);
 			SoundEffect.SL(block.getLocation().add(0,2,0), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.5F, 1.8F);
@@ -506,8 +506,8 @@ public class Dungeon_Main
 	        Player player = event.getPlayer();
 			ItemStack item = new ItemStack(292);
 			ItemMeta im = item.getItemMeta();
-			im.setDisplayName(ChatColor.GREEN+""+ChatColor.BLACK+""+ChatColor.GREEN+""+"§f§l[보상 상자 열쇠]");
-			im.setLore(Arrays.asList("",ChatColor.WHITE+"보상 상자를 열 수 있는",ChatColor.WHITE+"낡은 열쇠이다."));
+			im.setDisplayName("§a§0§a§f§l[보상 상자 열쇠]");
+			im.setLore(Arrays.asList("","§f보상 상자를 열 수 있는","§f낡은 열쇠이다."));
 			im.addEnchant(Enchantment.DURABILITY, 6000, true);
 			item.setItemMeta(im);
 			if(new util.Util_Player().deleteItem(player, item, 1))
@@ -680,7 +680,7 @@ public class Dungeon_Main
         		Mob.add(MobList[new util.Util_Number().RandomNum(0, MobList.length-1)]);
     		if(MobList.length > 0)
     		{
-            	if(GridImage.compareTo("◇")==0)
+            	if(GridImage.equals("◇"))
             	{
         			SoundEffect.SL(loc, Sound.BLOCK_CHEST_OPEN, 1.3F, 1.8F);
             		MC.SpawnMob(loc, dungeonMonsterYaml.getString(ListName+"."+Mob.get(0)),(byte)-1,null, (char) -1, false);
@@ -771,25 +771,25 @@ public class Dungeon_Main
             		*/
             	}
     		}
-    		else if(GridImage.compareTo("◇")!=0)
+    		else if(!GridImage.equals("◇"))
     		{
     			Location blockLoc = new Location(block.getWorld(), block.getLocation().getX(), block.getLocation().getY()+1, block.getLocation().getZ());
 				ItemStack item = new ItemStack(292);
 				ItemMeta im = item.getItemMeta();
-				im.setDisplayName(ChatColor.GREEN+""+ChatColor.BLACK+""+ChatColor.GREEN+""+"§f§l[던전 룸 열쇠]");
-				im.setLore(Arrays.asList("",ChatColor.WHITE+"던전 룸을 열 수 있는",ChatColor.WHITE+"낡은 열쇠이다."));
+				im.setDisplayName("§a§0§a§f§l[던전 룸 열쇠]");
+				im.setLore(Arrays.asList("","§f던전 룸을 열 수 있는","§f낡은 열쇠이다."));
 				im.addEnchant(Enchantment.DURABILITY, 6000, true);
 				item.setItemMeta(im);
 				new event.Main_ItemDrop().CustomItemDrop(blockLoc, item);
     		}
     	}
-		else if(GridImage.compareTo("◇")!=0)
+		else if(!GridImage.equals("◇"))
 		{
 			Location blockLoc = new Location(block.getWorld(), block.getLocation().getX(), block.getLocation().getY()+1, block.getLocation().getZ());
 			ItemStack item = new ItemStack(292);
 			ItemMeta im = item.getItemMeta();
-			im.setDisplayName(ChatColor.GREEN+""+ChatColor.BLACK+""+ChatColor.GREEN+""+"§f§l[던전 룸 열쇠]");
-			im.setLore(Arrays.asList("",ChatColor.WHITE+"던전 룸을 열 수 있는",ChatColor.WHITE+"낡은 열쇠이다."));
+			im.setDisplayName("§a§0§a§f§l[던전 룸 열쇠]");
+			im.setLore(Arrays.asList("","§f던전 룸을 열 수 있는","§f낡은 열쇠이다."));
 			im.addEnchant(Enchantment.DURABILITY, 6000, true);
 			item.setItemMeta(im);
 			new event.Main_ItemDrop().CustomItemDrop(blockLoc, item);
@@ -881,7 +881,7 @@ public class Dungeon_Main
 			dungeonMonsterYaml.getConfig("Dungeon/Dungeon/"+DungeonName+"/Monster.yml");
         	String[] MobList = null;
         	String ListName = "Normal";
-	        if(GridImage.compareTo("◎")==0)
+	        if(GridImage.equals("◎"))
 	        {
 	        	if(dungeonMonsterYaml.getConfigurationSection("SubBoss").getKeys(false).size()==0)
 	        		if(dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).size()==0)

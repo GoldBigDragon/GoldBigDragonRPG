@@ -26,7 +26,7 @@ import net.minecraft.server.v1_10_R1.PathfinderGoalSelector;
 
 public class CreatureGuardian extends EntityGuardian
 {
-	public CreatureGuardian(World world, String AI)
+	public CreatureGuardian(World world, String ai)
 	{
 		super(world);
 	    try
@@ -39,17 +39,17 @@ public class CreatureGuardian extends EntityGuardian
 		    bField.set(this.targetSelector, Sets.newLinkedHashSet());
 		    cField.set(this.goalSelector, Sets.newLinkedHashSet());
 		    cField.set(this.targetSelector, Sets.newLinkedHashSet());
-		    if(AI.compareTo("무뇌아")!=0)
+		    if(!ai.equals("무뇌아"))
 		    {
 			    this.goalSelector.a(5, new PathfinderGoalMoveTowardsRestriction(this, 1.0D));
 			    this.goalSelector.a(7, new PathfinderGoalRandomStroll(this, 1.0D));
 			    this.goalSelector.a(8, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
 			    this.goalSelector.a(8, new PathfinderGoalRandomLookaround(this));
-			    if(AI.compareTo("동물")!=0)
+			    if(!ai.equals("동물"))
 			    {
 		    		this.goalSelector.a(3, new PathfinderGoalMeleeAttack(this, 1.0D, false));
 			        this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, true));
-				    if(AI.compareTo("선공")==0)
+				    if(ai.equals("선공"))
 				    	this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityHuman.class, true, true));
 			    }
 			    else
@@ -60,12 +60,12 @@ public class CreatureGuardian extends EntityGuardian
 		return;
 	}
 	
-	public static Object spawn(Location location, String AI)
+	public static Object spawn(Location location, String ai)
 	{
 		World mcWorld = (World) ((CraftWorld) location.getWorld()).getHandle();
-		final CreatureGuardian customEntity = new CreatureGuardian(mcWorld, AI);
+		final CreatureGuardian customEntity = new CreatureGuardian(mcWorld, ai);
 		customEntity.setLocation(location.getX(), location.getY(),location.getZ(), location.getYaw(), location.getPitch());
-		if(location.getWorld().getName().compareTo("Dungeon")==0)
+		if(location.getWorld().getName().equals("Dungeon"))
 			((CraftLivingEntity) customEntity.getBukkitEntity()).setRemoveWhenFarAway(false);
 		mcWorld.addEntity(customEntity, SpawnReason.CUSTOM);
 		return customEntity.getBukkitEntity();

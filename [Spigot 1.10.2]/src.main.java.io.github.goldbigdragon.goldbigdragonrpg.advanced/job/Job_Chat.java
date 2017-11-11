@@ -46,7 +46,7 @@ public class Job_Chat extends Util_Chat
 			}
 			else
 			{
-				player.sendMessage(ChatColor.RED + "[카테고리] : 이미 존재하는 카테고리 이름입니다!");
+				player.sendMessage("§c[카테고리] : 이미 존재하는 카테고리 이름입니다!");
 				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			}
 			return;
@@ -96,7 +96,7 @@ public class Job_Chat extends Util_Chat
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JNS");
 				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick2+ChatColor.LIGHT_PURPLE +"의 승급 필요 "+main.Main_ServerOption.STR+"을 설정하세요.");
+				player.sendMessage("§d[직업] : §e"+JobNick2+"§d의 승급 필요 "+main.Main_ServerOption.statSTR+"을 설정하세요.");
 			}
 			return;
 		case "JNS" : 
@@ -109,7 +109,7 @@ public class Job_Chat extends Util_Chat
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JND");
 				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick2+ChatColor.LIGHT_PURPLE +"의 승급 필요 "+main.Main_ServerOption.DEX+"를 설정하세요.");
+				player.sendMessage("§d[직업] : §e"+JobNick2+"§d의 승급 필요 "+main.Main_ServerOption.statDEX+"를 설정하세요.");
 			}
 			return;
 		case "JND" : 
@@ -122,7 +122,7 @@ public class Job_Chat extends Util_Chat
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JNI");
 				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick2+ChatColor.LIGHT_PURPLE +"의 승급 필요 "+main.Main_ServerOption.INT+"을 설정하세요.");
+				player.sendMessage("§d[직업] : §e"+JobNick2+"§d의 승급 필요 "+main.Main_ServerOption.statINT+"을 설정하세요.");
 			}
 			return;
 		case "JNI" : 
@@ -135,7 +135,7 @@ public class Job_Chat extends Util_Chat
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JNW");
 				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick2+ChatColor.LIGHT_PURPLE +"의 승급 필요 "+main.Main_ServerOption.WILL+"를 설정하세요.");
+				player.sendMessage("§d[직업] : §e"+JobNick2+"§d의 승급 필요 "+main.Main_ServerOption.statWILL+"를 설정하세요.");
 			}
 			return;
 		case "JNW" : 
@@ -148,7 +148,7 @@ public class Job_Chat extends Util_Chat
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JNLU");
 				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick2+ChatColor.LIGHT_PURPLE +"의 승급 필요 "+main.Main_ServerOption.LUK+"을 설정하세요.");
+				player.sendMessage("§d[직업] : §e"+JobNick2+"§d의 승급 필요 "+main.Main_ServerOption.statLUK+"을 설정하세요.");
 			}
 			return;
 		case "JNLU" : 
@@ -161,7 +161,7 @@ public class Job_Chat extends Util_Chat
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JNPJ");
 				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : 어떤 직업이"+ChatColor.YELLOW +JobNick2+ChatColor.LIGHT_PURPLE +" 로 승급 가능하게 할까요?");
+				player.sendMessage("§d[직업] : 어떤 직업이§e"+JobNick2+"§d 로 승급 가능하게 할까요?");
 				
 				Object[] Job2 = jobYaml.getConfigurationSection("MapleStory").getKeys(false).toArray();
 				for(int count = 0; count < Job2.length; count++)
@@ -169,11 +169,11 @@ public class Job_Chat extends Util_Chat
 					Object[] a = jobYaml.getConfigurationSection("MapleStory."+Job2[count].toString()).getKeys(false).toArray();
 					for(int counter=0;counter<a.length;counter++)
 					{
-						if(a[counter].toString().compareTo(JobNick2)!=0)
-						player.sendMessage(ChatColor.LIGHT_PURPLE + " "+Job2[count].toString()+" ━ "+ChatColor.YELLOW + a[counter].toString());
+						if(!a[counter].toString().equals(JobNick2))
+						player.sendMessage("§d "+Job2[count].toString()+" ━ §e"+ a[counter].toString());
 					}
 				}
-				player.sendMessage(ChatColor.LIGHT_PURPLE + " 이전 직업이 무엇이든 상관 없을 경우 ━ "+ChatColor.YELLOW + "없음");
+				player.sendMessage("§d 이전 직업이 무엇이든 상관 없을 경우 ━ §e없음");
 			}
 			return;
 		case "JNPJ" : 
@@ -181,14 +181,14 @@ public class Job_Chat extends Util_Chat
 			String JobNick2 = u.getString(player, (byte)3);
 			Object[] Job2 = jobYaml.getConfigurationSection("MapleStory").getKeys(false).toArray();
 			boolean checked = false;
-			if(Message.compareTo("없음")!=0)
+			if(!Message.equals("없음"))
 			{
 				for(int count = 0; count < Job2.length; count++)
 				{
 					Object[] a = jobYaml.getConfigurationSection("MapleStory."+Job2[count].toString()).getKeys(false).toArray();
 					for(int counter=0;counter<a.length;counter++)
 					{
-						if(a[counter].toString().compareTo(ChatColor.stripColor(Message))==0)
+						if(a[counter].toString().equals(ChatColor.stripColor(Message)))
 						{
 							checked = true;
 							break;
@@ -200,7 +200,7 @@ public class Job_Chat extends Util_Chat
 				checked = true;
 			if(checked == true)
 			{
-				if(Message.compareTo("없음")!=0)
+				if(!Message.equals("없음"))
 					jobYaml.set("MapleStory."+JobName3+"."+JobNick2+".PrevJob",ChatColor.stripColor(Message));
 				else
 					jobYaml.set("MapleStory."+JobName3+"."+JobNick2+".PrevJob","null");
@@ -209,7 +209,7 @@ public class Job_Chat extends Util_Chat
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JNICONID");
 				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick2+ChatColor.LIGHT_PURPLE +" 를 나타내는 아이콘 ID는 무엇인가요?");
+				player.sendMessage("§d[직업] : §e"+JobNick2+"§d 를 나타내는 아이콘 ID는 무엇인가요?");
 			}
 			else
 			{
@@ -219,20 +219,20 @@ public class Job_Chat extends Util_Chat
 					Object[] a = jobYaml.getConfigurationSection("MapleStory."+Job1[count].toString()).getKeys(false).toArray();
 					for(int counter=0;counter<a.length;counter++)
 					{
-						if(a[counter].toString().compareTo(JobNick2)!=0)
-						player.sendMessage(ChatColor.LIGHT_PURPLE + " "+Job2[count].toString()+" ━ "+ChatColor.YELLOW + a[counter].toString());
+						if(!a[counter].toString().equals(JobNick2))
+						player.sendMessage("§d "+Job2[count].toString()+" ━ §e"+ a[counter].toString());
 					}
 				}
-				player.sendMessage(ChatColor.LIGHT_PURPLE + " 이전 직업이 무엇이든 상관 없을 경우 ━ "+ChatColor.YELLOW + "없음");
+				player.sendMessage("§d 이전 직업이 무엇이든 상관 없을 경우 ━ §e없음");
 			}
 			return;
 		case "JNICONID" : 
 			if(isIntMinMax(Message, player, 1, 2267))
 			{
 				event.Main_Interact I = new event.Main_Interact();
-				if(I.SetItemDefaultName(Short.parseShort(Message),(byte)0).compareTo("지정되지 않은 아이템")==0)
+				if(I.SetItemDefaultName(Short.parseShort(Message),(byte)0).equals("지정되지 않은 아이템"))
 				{
-					player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 아이템은 존재하지 않습니다!");
+					player.sendMessage("§c[SYSTEM] : 해당 아이템은 존재하지 않습니다!");
 					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 	  				return;
 				}
@@ -243,7 +243,7 @@ public class Job_Chat extends Util_Chat
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JNICONDATA");
 				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick3+ChatColor.LIGHT_PURPLE +" 를 나타내는 아이콘 DATA는 무엇인가요?");
+				player.sendMessage("§d[직업] : §e"+JobNick3+"§d 를 나타내는 아이콘 DATA는 무엇인가요?");
 			}
 			return;
 		case "JNICONDATA" : 
@@ -256,7 +256,7 @@ public class Job_Chat extends Util_Chat
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JNICONAMOUNT");
 				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.LIGHT_PURPLE + "[직업] : "+ChatColor.YELLOW +JobNick3+ChatColor.LIGHT_PURPLE +" 를 나타내는 아이콘 갯수는 몇 개인가요?");
+				player.sendMessage("§d[직업] : §e"+JobNick3+"§d 를 나타내는 아이콘 갯수는 몇 개인가요?");
 			}
 			return;
 		case "JNICONAMOUNT" : 

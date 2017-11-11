@@ -16,8 +16,6 @@ import main.Main_ServerOption;
 import servertick.ServerTick_Main;
 import util.YamlLoader;
 
-
-
 public class User_Command
 {
 	public void onCommand(Player player, String[] args, String string)
@@ -37,7 +35,7 @@ public class User_Command
 				{
 					case "P_EC"://Player Exchange
 					{
-						if(STSO.getString((byte)1).compareTo(player.getName())==0)
+						if(STSO.getString((byte)1).equals(player.getName()))
 						{
 							SoundEffect.SP(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.7F);
 							SoundEffect.SP(Bukkit.getServer().getPlayer(STSO.getString((byte)1)), Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.7F);
@@ -63,7 +61,7 @@ public class User_Command
 				{
 					case "P_EC"://Player Exchange
 					{
-						if(STSO.getString((byte)1).compareTo(player.getName())==0)
+						if(STSO.getString((byte)1).equals(player.getName()))
 						{
 							servertick.ServerTask_Player SP = new servertick.ServerTask_Player();
 							SP.Cancel(STSO.getTick(), (short) 0);
@@ -80,13 +78,13 @@ public class User_Command
   			if(args.length == 0)
   			{
 			 	SoundEffect.SP(player, org.bukkit.Sound.BLOCK_LAVA_POP, 0.8F, 1.8F);
-			 	player.sendMessage(ChatColor.YELLOW + "[현재 소지 금액] " + ChatColor.WHITE+ChatColor.BOLD +"" +Money + " "+Main_ServerOption.Money);
-			 	player.sendMessage(ChatColor.GOLD + "/돈 꺼내기 [금액]"+ChatColor.WHITE+" 해당 금액 만큼 돈을 아이템으로 꺼냅니다.");
-			 	player.sendMessage(ChatColor.GOLD + "/돈 랭킹 [닉네임]"+ChatColor.WHITE+" 해당 플레이어의 랭킹을 확인합니다.");
+			 	player.sendMessage("§e[현재 소지 금액] §f§l" +Money + " "+Main_ServerOption.money);
+			 	player.sendMessage("§6/돈 꺼내기 [금액]§f 해당 금액 만큼 돈을 아이템으로 꺼냅니다.");
+			 	player.sendMessage("§6/돈 랭킹 [닉네임]§f 해당 플레이어의 랭킹을 확인합니다.");
   				if(player.isOp()==true)
-	  				player.sendMessage(ChatColor.AQUA + "/돈 주기 [금액] [플레이어]"+ChatColor.WHITE+" 해당 금액 만큼 플레이어에게 돈을 줍니니다."+"§b§l(관리자)");
+	  				player.sendMessage("§b/돈 주기 [금액] [플레이어]§f 해당 금액 만큼 플레이어에게 돈을 줍니니다.§b§l(관리자)");
   			}
-  			else if(args.length == 2&&args[0].compareTo("꺼내기")==0)
+  			else if(args.length == 2&&args[0].equals("꺼내기"))
   			{
 				try
 				{
@@ -121,7 +119,7 @@ public class User_Command
 									Icon_Meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
 									Icon_Meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 									Icon_Meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
-									Icon_Meta.setDisplayName(Main_ServerOption.Money);
+									Icon_Meta.setDisplayName(Main_ServerOption.money);
 									StringBuffer MoneyString = new StringBuffer();
 									short Mok = 0;
 									if(money==100000000||money==10000000||money==1000000||
@@ -210,36 +208,36 @@ public class User_Command
 											MoneyString.append(Mok);
 										}
 									}
-									Icon_Meta.setLore(Arrays.asList(ChatColor.YELLOW+"[돈]             "+ChatColor.WHITE+"[일반]",ChatColor.WHITE+""+ChatColor.BOLD+args[1]+" "+Main_ServerOption.Money,ChatColor.GRAY+"("+MoneyString.toString()+" "+ChatColor.stripColor(Main_ServerOption.Money)+")","",ChatColor.GRAY+"우 클릭시 내 계좌로",ChatColor.GRAY+"입금됩니다."));
+									Icon_Meta.setLore(Arrays.asList("§e[돈]             §f[일반]","§f§l"+args[1]+" "+Main_ServerOption.money,"§7("+MoneyString.toString()+" "+ChatColor.stripColor(Main_ServerOption.money)+")","","§7우 클릭시 내 계좌로","§7입금됩니다."));
 									Icon.setItemMeta(Icon_Meta);
 									player.getInventory().addItem(Icon);
 									SoundEffect.SP(player, org.bukkit.Sound.BLOCK_LAVA_POP, 2.0F, 1.7F);
-									player.sendMessage(ChatColor.GREEN + "[System] : "+ChatColor.WHITE+""+ChatColor.BOLD+args[1]+" "+Main_ServerOption.Money+ChatColor.GREEN+" 을(를) 꺼냈습니다!");
+									player.sendMessage("§a[System] : §f§l"+args[1]+" "+Main_ServerOption.money+"§a 을(를) 꺼냈습니다!");
 									return;
 								}
 							}
 							SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-							player.sendMessage(ChatColor.RED + "[System] : 인벤토리 공간이 부족합니다!");
+							player.sendMessage("§c[System] : 인벤토리 공간이 부족합니다!");
 						}
 						else
 						{
-							player.sendMessage(ChatColor.RED + "[SYSTEM] : 현재 보유 금액을 초과하는 값입니다!");
+							player.sendMessage("§c[SYSTEM] : 현재 보유 금액을 초과하는 값입니다!");
 							SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 						}
 					}
 					else
 					{
-						player.sendMessage(ChatColor.RED + "[SYSTEM] : 최소 "+ChatColor.YELLOW +""+1+ChatColor.RED+", 최대 "+ChatColor.YELLOW+""+100000000+ChatColor.RED+" 이하의 숫자를 입력하세요!");
+						player.sendMessage("§c[SYSTEM] : 최소 §e"+1+"§c, 최대 §e"+100000000+"§c 이하의 숫자를 입력하세요!");
 						SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 					}
 				}
 				catch(NumberFormatException e)
 				{
-					player.sendMessage(ChatColor.RED + "[SYSTEM] : 정수 형태의 값(숫자)을 입력하세요. ("+ChatColor.YELLOW +""+1+ChatColor.RED+" ~ "+ChatColor.YELLOW+""+100000000+ChatColor.RED+")");
+					player.sendMessage("§c[SYSTEM] : 정수 형태의 값(숫자)을 입력하세요. (§e"+1+"§c ~ §e"+100000000+"§c)");
 					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 				}
   			}
-  			else if(args.length == 3&&args[0].compareTo("주기")==0&&player.isOp())
+  			else if(args.length == 3&&args[0].equals("주기")&&player.isOp())
   			{
   				if(Bukkit.getServer().getPlayer(args[2]) != null)
   				{
@@ -276,7 +274,7 @@ public class User_Command
 										Icon_Meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
 										Icon_Meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 										Icon_Meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
-										Icon_Meta.setDisplayName(Main_ServerOption.Money);
+										Icon_Meta.setDisplayName(Main_ServerOption.money);
 										StringBuffer MoneyString = new StringBuffer();
 										short Mok = 0;
 										if(money==100000000||money==10000000||money==1000000||
@@ -365,45 +363,45 @@ public class User_Command
 												MoneyString.append(Mok);
 											}
 										}
-										Icon_Meta.setLore(Arrays.asList(ChatColor.YELLOW+"[돈]             "+ChatColor.WHITE+"[일반]",ChatColor.WHITE+""+ChatColor.BOLD+args[1]+" "+Main_ServerOption.Money,ChatColor.GRAY+"("+MoneyString.toString()+" "+ChatColor.stripColor(Main_ServerOption.Money)+")","",ChatColor.GRAY+"우 클릭시 내 계좌로",ChatColor.GRAY+"입금됩니다."));
+										Icon_Meta.setLore(Arrays.asList("§e[돈]             §f[일반]","§f§l"+args[1]+" "+Main_ServerOption.money,"§7("+MoneyString.toString()+" "+ChatColor.stripColor(Main_ServerOption.money)+")","","§7우 클릭시 내 계좌로","§7입금됩니다."));
 										Icon.setItemMeta(Icon_Meta);
 										target.getInventory().addItem(Icon);
 										SoundEffect.SP(target, org.bukkit.Sound.BLOCK_LAVA_POP, 2.0F, 1.7F);
-										target.sendMessage(ChatColor.GREEN + "[System] : 관리자로 부터 "+ChatColor.WHITE+""+ChatColor.BOLD+args[1]+" "+Main_ServerOption.Money+ChatColor.GREEN+" 을(를) 받았습니다!");
+										target.sendMessage("§a[System] : 관리자로 부터 §f§l"+args[1]+" "+Main_ServerOption.money+"§a 을(를) 받았습니다!");
 										SoundEffect.SP(player, org.bukkit.Sound.BLOCK_LAVA_POP, 2.0F, 1.7F);
-										player.sendMessage(ChatColor.GREEN + "[System] : "+target.getName()+"에게 "+ChatColor.WHITE+""+ChatColor.BOLD+args[1]+" "+Main_ServerOption.Money+ChatColor.GREEN+" 을(를) 주었습니다!");
+										player.sendMessage("§a[System] : "+target.getName()+"에게 §f§l"+args[1]+" "+Main_ServerOption.money+"§a 을(를) 주었습니다!");
 										return;
 									}
 								}
 								SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-								player.sendMessage(ChatColor.RED + "[System] : 인벤토리 공간이 부족합니다!");
+								player.sendMessage("§c[System] : 인벤토리 공간이 부족합니다!");
 								return;
 							}
 							else
 							{
-								player.sendMessage(ChatColor.RED + "[SYSTEM] : 최소 "+ChatColor.YELLOW +""+1+ChatColor.RED+", 최대 "+ChatColor.YELLOW+""+100000000+ChatColor.RED+" 이하의 숫자를 입력하세요!");
+								player.sendMessage("§c[SYSTEM] : 최소 §e"+1+"§c, 최대 §e"+100000000+"§c 이하의 숫자를 입력하세요!");
 								SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 							}
 						}
 						catch(NumberFormatException e)
 						{
-							player.sendMessage(ChatColor.RED + "[SYSTEM] : 정수 형태의 값(숫자)을 입력하세요. ("+ChatColor.YELLOW +""+1+ChatColor.RED+" ~ "+ChatColor.YELLOW+""+100000000+ChatColor.RED+")");
+							player.sendMessage("§c[SYSTEM] : 정수 형태의 값(숫자)을 입력하세요. (§e"+1+"§c ~ §e"+100000000+"§c)");
 							SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 						}
 	  				}
 	  				else
 	  				{
-						player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 플레이어는 접속중이 아닙니다!");
+						player.sendMessage("§c[SYSTEM] : 해당 플레이어는 접속중이 아닙니다!");
 						SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 	  				}
   				}
   				else
   				{
-					player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 플레이어는 접속중이 아닙니다!");
+					player.sendMessage("§c[SYSTEM] : 해당 플레이어는 접속중이 아닙니다!");
 					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
   				}
   			}
-  			else if(args[0].compareTo("랭킹")==0)
+  			else if(args[0].equals("랭킹"))
   			{
     		  	YamlLoader YAML = new YamlLoader();
     			YAML.getConfig("Ranking/money.yml");
@@ -415,7 +413,7 @@ public class User_Command
 	  	  					player.sendMessage("§e§l┼─[§a§l"+ (YAML.getInt("NameSet."+args[1]+".Rank")+1) +"§e§l] §f§l"+args[1]+ " §6("+YAML.getLong("NameSet."+args[1]+".Money")+")");
 	  	  				else
 	  	  				{
-	  						player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 플레이어에 대한 자료가 없습니다!");
+	  						player.sendMessage("§c[SYSTEM] : 해당 플레이어에 대한 자료가 없습니다!");
 	  						SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 	  	  				}
 	  				}
@@ -432,18 +430,18 @@ public class User_Command
 				}
 				else
 				{
-					player.sendMessage(ChatColor.RED + "[SYSTEM] : 랭킹을 불러 올 수가 없습니다! 잠시 후 다시 시도 해 주시길 바랍니다.");
+					player.sendMessage("§c[SYSTEM] : 랭킹을 불러 올 수가 없습니다! 잠시 후 다시 시도 해 주시길 바랍니다.");
 					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 				}
   			}
   			else
   			{
   				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
-  				player.sendMessage(ChatColor.GOLD + "/돈"+ChatColor.WHITE+" 현재 자신이 보유한 금액을 확인합니다.");
-  				player.sendMessage(ChatColor.GOLD + "/돈 꺼내기 [금액]"+ChatColor.WHITE+" 해당 금액 만큼 돈을 아이템으로 꺼냅니다.");
-			 	player.sendMessage(ChatColor.GOLD + "/돈 랭킹 [닉네임]"+ChatColor.WHITE+" 해당 플레이어의 랭킹을 확인합니다.");
+  				player.sendMessage("§6/돈§f 현재 자신이 보유한 금액을 확인합니다.");
+  				player.sendMessage("§6/돈 꺼내기 [금액]§f 해당 금액 만큼 돈을 아이템으로 꺼냅니다.");
+			 	player.sendMessage("§6/돈 랭킹 [닉네임]§f 해당 플레이어의 랭킹을 확인합니다.");
   				if(player.isOp()==true)
-	  				player.sendMessage(ChatColor.AQUA + "/돈 주기 [금액] [플레이어]"+ChatColor.WHITE+" 해당 금액 만큼 플레이어에게 돈을 줍니니다."+"§b§l(관리자)");
+	  				player.sendMessage("§b/돈 주기 [금액] [플레이어]§f 해당 금액 만큼 플레이어에게 돈을 줍니니다.§b§l(관리자)");
   			}
   		}
   		return;

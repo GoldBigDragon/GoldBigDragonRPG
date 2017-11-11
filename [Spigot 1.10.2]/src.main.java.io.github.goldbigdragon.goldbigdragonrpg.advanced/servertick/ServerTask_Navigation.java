@@ -7,7 +7,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import effect.SoundEffect;
-import net.md_5.bungee.api.ChatColor;
 
 public class ServerTask_Navigation
 {
@@ -49,12 +48,12 @@ public class ServerTask_Navigation
 				if(DestinationLoc.getWorld()!=SourceLoc.getWorld())
 				{
 					effect.SendPacket PS = new effect.SendPacket();
-					if(DestinationLoc.getWorld().getName().compareTo("world_nether")==0)
-						PS.sendTitleSubTitle(player, "\'"+ChatColor.YELLOW+""+"\'", "\'"+ChatColor.YELLOW+"["+ChatColor.RED+"네더(지옥) 월드"+ChatColor.YELLOW+"로 이동하세요.]"+"\'", (byte)1, (byte)1, (byte)1);
-					else if(DestinationLoc.getWorld().getName().compareTo("world_the_end")==0)
-						PS.sendTitleSubTitle(player, "\'"+ChatColor.YELLOW+""+"\'", "\'"+ChatColor.YELLOW+"["+ChatColor.GRAY+"엔더 월드"+ChatColor.YELLOW+"로 이동하세요.]"+"\'", (byte)1, (byte)1, (byte)1);
+					if(DestinationLoc.getWorld().getName().equals("world_nether"))
+						PS.sendTitleSubTitle(player, "\'§e\'", "\'§e[§c네더(지옥) 월드§e로 이동하세요.]\'", (byte)1, (byte)1, (byte)1);
+					else if(DestinationLoc.getWorld().getName().equals("world_the_end"))
+						PS.sendTitleSubTitle(player, "\'§e\'", "\'§e[§7엔더 월드§e로 이동하세요.]\'", (byte)1, (byte)1, (byte)1);
 					else
-						PS.sendTitleSubTitle(player, "\'"+ChatColor.YELLOW+""+"\'", "\'"+ChatColor.YELLOW+"["+ChatColor.WHITE+DestinationLoc.getWorld().getName()+ChatColor.YELLOW+" 월드로 이동하세요.]"+"\'", (byte)1, (byte)1, (byte)1);
+						PS.sendTitleSubTitle(player, "\'§e\'", "\'§e[§f"+DestinationLoc.getWorld().getName()+"§e 월드로 이동하세요.]\'", (byte)1, (byte)1, (byte)1);
 					STSO.setTick(STSO.getTick()+Tick);
 					ServerTick_Main.Schedule.put(STSO.getTick()+Tick, STSO);
 					return;
@@ -390,7 +389,7 @@ public class ServerTask_Navigation
 	{
 		effect.SendPacket PS = new effect.SendPacket();
 		SoundEffect.SP(player, Sound.BLOCK_NOTE_PLING, 1.0F, 1.0F);
-		PS.sendTitleSubTitle(player, "\'"+ChatColor.YELLOW+"도착하였습니다!"+"\'", "\'"+ChatColor.WHITE+"[네비게이션을 초기화 합니다.]"+"\'", (byte)1, (byte)1, (byte)1);
+		PS.sendTitleSubTitle(player, "\'§e도착하였습니다!\'", "\'§f[네비게이션을 초기화 합니다.]\'", (byte)1, (byte)1, (byte)1);
 
 		for(int count = 0; count < ServerTick_Main.NaviUsingList.size();count++)
 		{

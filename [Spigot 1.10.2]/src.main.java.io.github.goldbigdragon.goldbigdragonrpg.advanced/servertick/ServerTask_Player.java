@@ -28,7 +28,7 @@ public class ServerTask_Player
 			Location loc = user.getLocation();
 			String[] savedLoc = ServerTick_Main.Schedule.get(UTC).getString((byte)1).split(",");
 			boolean isCancel = false;
-			if(loc.getWorld().getName().compareTo(savedLoc[0])!=0)
+			if(!loc.getWorld().getName().equals(savedLoc[0]))
 				isCancel = true;
 			else if(loc.getBlockX() != Integer.parseInt(savedLoc[1])
 					|| loc.getBlockY() != Integer.parseInt(savedLoc[2])
@@ -87,8 +87,8 @@ public class ServerTask_Player
 				fast = (float) (ServerTick_Main.Schedule.get(UTC).getCount()/10.0);
 			SoundEffect.SP(caller, Sound.BLOCK_NOTE_PLING, 0.8F, fast);
 			SoundEffect.SP(target, Sound.BLOCK_NOTE_PLING, 0.8F, fast);
-			PS.sendTitleSubTitle(caller, "\'"+ChatColor.YELLOW+"[교환 신청]"+"\'", "\'"+TimerBar(ServerTick_Main.Schedule.get(UTC).getCount(), 10)+"\'", (byte)1, (byte)0, (byte)1);
-			PS.sendTitleSubTitle(target, "\'"+ChatColor.YELLOW+"[교환 신청]"+"\'", "\'"+TimerBar(ServerTick_Main.Schedule.get(UTC).getCount(), 10)+"\'", (byte)1, (byte)0, (byte)1);
+			PS.sendTitleSubTitle(caller, "\'§e[교환 신청]\'", "\'"+TimerBar(ServerTick_Main.Schedule.get(UTC).getCount(), 10)+"\'", (byte)1, (byte)0, (byte)1);
+			PS.sendTitleSubTitle(target, "\'§e[교환 신청]\'", "\'"+TimerBar(ServerTick_Main.Schedule.get(UTC).getCount(), 10)+"\'", (byte)1, (byte)0, (byte)1);
 			long tick = ServerTick_Main.Schedule.get(UTC).getTick()+1500;
 			ServerTick_Main.Schedule.get(UTC).setCount(ServerTick_Main.Schedule.get(UTC).getCount()+1);
 			ServerTick_Main.Schedule.get(UTC).setTick(tick);
@@ -125,13 +125,13 @@ public class ServerTask_Player
 		{
 			case 0 ://교환 신청자 - 교환 취소 메시지
 			{
-				Receiver.sendMessage(ChatColor.RED+"[교환] : 상대가 교환을 취소하였습니다.");
+				Receiver.sendMessage("§c[교환] : 상대가 교환을 취소하였습니다.");
 				SoundEffect.SP(Receiver, Sound.ENTITY_VILLAGER_NO, 1.2F, 1.1F);
 			}
 			break;
 			case 1 ://교환 상대 - 교환 취소 메시지
 			{
-				Receiver.sendMessage(ChatColor.RED+"[교환] : 교환이 취소되었습니다.");
+				Receiver.sendMessage("§c[교환] : 교환이 취소되었습니다.");
 				SoundEffect.SP(Receiver, Sound.ENTITY_VILLAGER_NO, 1.2F, 1.1F);
 			}
 			break;
@@ -140,7 +140,7 @@ public class ServerTask_Player
 	
 	public String TimerBar(int PassedSec, int MaxWaittingTime)
 	{
-		String TimerBar = ChatColor.DARK_RED+"";
+		String TimerBar = "§4";
 		int Calculator = 0;
 		if(PassedSec == MaxWaittingTime)
 		{
@@ -204,7 +204,7 @@ public class ServerTask_Player
 					break;
 				}
 			}
-			new admin.Gamble_GUI().SlotMachine_RollingGUI(STSO.getString((byte)0), ItemID, false, STSO.getString((byte)1));
+			new admin.Gamble_GUI().slotMachineRollingGui(STSO.getString((byte)0), ItemID, false, STSO.getString((byte)1));
 
 			if(count<5)
 			{
@@ -238,7 +238,7 @@ public class ServerTask_Player
 			ID[1] = (short) STSO.getInt((byte)1);
 			ID[2] = (short) STSO.getInt((byte)2);
 			
-			new admin.Gamble_GUI().SlotMachine_RollingGUI(STSO.getString((byte)0), ID , true, STSO.getString((byte)1));
+			new admin.Gamble_GUI().slotMachineRollingGui(STSO.getString((byte)0), ID , true, STSO.getString((byte)1));
 			
 			if(Bukkit.getServer().getPlayer(STSO.getString((byte)0)) != null)
 			{
@@ -311,10 +311,10 @@ public class ServerTask_Player
 						else
 							Present = GambleConfig.getString(MachineNumber+".0");
 					}
-					if(Present.compareTo("null")==0)
+					if(Present.equals("null"))
 					{
 						SoundEffect.SP(player, Sound.ENTITY_IRONGOLEM_HURT, 0.8F, 0.9F);
-						player.sendMessage(ChatColor.RED+"[슬롯 머신] : 꽝! 다음 기회에...");
+						player.sendMessage("§c[슬롯 머신] : 꽝! 다음 기회에...");
 					}
 					else
 					{
@@ -323,9 +323,9 @@ public class ServerTask_Player
 						String Grade = PresentList.getString(Present+".Grade");
 						SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
 						if(LuckyStar)
-							Bukkit.broadcastMessage(ChatColor.GREEN+"[슬롯 머신] : "+ChatColor.YELLOW+""+ChatColor.BOLD+player.getName()+ChatColor.GREEN+"님께서 "+ChatColor.YELLOW+""+ChatColor.BOLD+Present+" "+Grade+ChatColor.GREEN+" 상품에 당첨되셨습니다!");
+							Bukkit.broadcastMessage("§a[슬롯 머신] : §e§l"+player.getName()+"§a님께서 §e§l"+Present+" "+Grade+"§a 상품에 당첨되셨습니다!");
 						else
-							player.sendMessage(ChatColor.GREEN+"[슬롯 머신] : "+ChatColor.YELLOW+""+ChatColor.BOLD+Present+" "+Grade+ChatColor.GREEN+" 상품에 당첨되셨습니다!");
+							player.sendMessage("§a[슬롯 머신] : §e§l"+Present+" "+Grade+"§a 상품에 당첨되셨습니다!");
 
 						if(PresentList.contains(Present+".Present"))
 						{

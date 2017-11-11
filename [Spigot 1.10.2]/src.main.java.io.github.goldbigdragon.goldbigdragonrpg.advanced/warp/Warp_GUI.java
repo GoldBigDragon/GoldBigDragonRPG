@@ -14,8 +14,6 @@ import user.UserData_Object;
 import util.Util_GUI;
 import util.YamlLoader;
 
-
-
 public class Warp_GUI extends Util_GUI
 {
 	public void WarpListGUI(Player player, int page)
@@ -49,35 +47,35 @@ public class Warp_GUI extends Util_GUI
 				if(player.isOp() == true)
 				{
 					if(OnlyOpUse == true)
-						Stack(ChatColor.WHITE+TelePortTitle, 345, 0, 1,Arrays.asList(ChatColor.DARK_AQUA+"월드 : "+ChatColor.WHITE+""+ChatColor.BOLD+world,
-							ChatColor.DARK_AQUA+"x 좌표 : "+ChatColor.WHITE+""+ChatColor.BOLD+x
-							,ChatColor.DARK_AQUA+"y 좌표 : "+ChatColor.WHITE+""+ChatColor.BOLD+y
-							,ChatColor.DARK_AQUA+"z 좌표 : "+ChatColor.WHITE+""+ChatColor.BOLD+z
-							,ChatColor.DARK_GRAY+"시선 : "+ChatColor.GRAY+""+ChatColor.BOLD+pitch
-							,ChatColor.DARK_GRAY+"방향 : "+ChatColor.GRAY+""+ChatColor.BOLD+yaw
+						Stack("§f"+TelePortTitle, 345, 0, 1,Arrays.asList("§3월드 : §f§l"+world,
+							"§3x 좌표 : §f§l"+x
+							,"§3y 좌표 : §f§l"+y
+							,"§3z 좌표 : §f§l"+z
+							,"§8시선 : §7§l"+pitch
+							,"§8방향 : §7§l"+yaw
 							,""
-							,ChatColor.BLUE+"[오직 OP만 명령어로 이동 가능합니다.]","",ChatColor.YELLOW+"[좌 클릭시 해당 위치로 워프합니다.]",ChatColor.YELLOW+"[Shift + 좌 클릭시 권한을 변경합니다.]",ChatColor.RED+"[Shift + 우 클릭시 해당 워프를 삭제합니다.]"), loc, inv);
+							,"§9[오직 OP만 명령어로 이동 가능합니다.]","","§e[좌 클릭시 해당 위치로 워프합니다.]","§e[Shift + 좌 클릭시 권한을 변경합니다.]","§c[Shift + 우 클릭시 해당 워프를 삭제합니다.]"), loc, inv);
 					else
-						Stack(ChatColor.WHITE+TelePortTitle, 345, 0, 1,Arrays.asList(ChatColor.DARK_AQUA+"월드 : "+ChatColor.WHITE+""+ChatColor.BOLD+world,
-							ChatColor.DARK_AQUA+"x 좌표 : "+ChatColor.WHITE+""+ChatColor.BOLD+x
-							,ChatColor.DARK_AQUA+"y 좌표 : "+ChatColor.WHITE+""+ChatColor.BOLD+y
-							,ChatColor.DARK_AQUA+"z 좌표 : "+ChatColor.WHITE+""+ChatColor.BOLD+z
-							,ChatColor.DARK_GRAY+"시선 : "+ChatColor.GRAY+""+ChatColor.BOLD+pitch
-							,ChatColor.DARK_GRAY+"방향 : "+ChatColor.GRAY+""+ChatColor.BOLD+yaw
+						Stack("§f"+TelePortTitle, 345, 0, 1,Arrays.asList("§3월드 : §f§l"+world,
+							"§3x 좌표 : §f§l"+x
+							,"§3y 좌표 : §f§l"+y
+							,"§3z 좌표 : §f§l"+z
+							,"§8시선 : §7§l"+pitch
+							,"§8방향 : §7§l"+yaw
 							,""
-							,ChatColor.GREEN+"[일반 유저도 명령어로 이동 가능합니다.]","",ChatColor.YELLOW+"[좌 클릭시 해당 위치로 워프합니다.]",ChatColor.YELLOW+"[Shift + 좌 클릭시 권한을 변경합니다.]",ChatColor.RED+"[Shift + 우 클릭시 해당 워프를 삭제합니다.]"), loc, inv);
+							,"§a[일반 유저도 명령어로 이동 가능합니다.]","","§e[좌 클릭시 해당 위치로 워프합니다.]","§e[Shift + 좌 클릭시 권한을 변경합니다.]","§c[Shift + 우 클릭시 해당 워프를 삭제합니다.]"), loc, inv);
 					loc++;
 				}
 				else
 				{
 					if(OnlyOpUse == false)
-						Stack(ChatColor.WHITE+TelePortTitle, 345, 0, 1,Arrays.asList(ChatColor.DARK_AQUA+"월드 : "+ChatColor.WHITE+""+ChatColor.BOLD+world,
-							ChatColor.DARK_AQUA+"x 좌표 : "+ChatColor.WHITE+""+ChatColor.BOLD+x
-							,ChatColor.DARK_AQUA+"y 좌표 : "+ChatColor.WHITE+""+ChatColor.BOLD+y
-							,ChatColor.DARK_AQUA+"z 좌표 : "+ChatColor.WHITE+""+ChatColor.BOLD+z
-							,ChatColor.DARK_GRAY+"시선 : "+ChatColor.GRAY+""+ChatColor.BOLD+pitch
-							,ChatColor.DARK_GRAY+"방향 : "+ChatColor.GRAY+""+ChatColor.BOLD+yaw
-							,"",ChatColor.YELLOW+"[좌 클릭시 해당 위치로 워프합니다.]"), loc, inv);
+						Stack("§f"+TelePortTitle, 345, 0, 1,Arrays.asList("§3월드 : §f§l"+world,
+							"§3x 좌표 : §f§l"+x
+							,"§3y 좌표 : §f§l"+y
+							,"§3z 좌표 : §f§l"+z
+							,"§8시선 : §7§l"+pitch
+							,"§8방향 : §7§l"+yaw
+							,"","§e[좌 클릭시 해당 위치로 워프합니다.]"), loc, inv);
 					loc++;
 				}
 			}
@@ -91,14 +89,14 @@ public class Warp_GUI extends Util_GUI
 					int z = (int) Bukkit.getServer().getWorld(worldname[a]).getSpawnLocation().getZ();
 					short pitch = (short) Bukkit.getServer().getWorld(worldname[a]).getSpawnLocation().getPitch();
 					short yaw = (short) Bukkit.getServer().getWorld(worldname[a]).getSpawnLocation().getYaw();
-					Stack(ChatColor.WHITE+world, 2, 0, 1,Arrays.asList(ChatColor.DARK_AQUA+"월드 : "+ChatColor.WHITE+""+ChatColor.BOLD+world,
-							ChatColor.DARK_AQUA+"x 스폰 좌표 : "+ChatColor.WHITE+""+ChatColor.BOLD+x
-							,ChatColor.DARK_AQUA+"y 스폰 좌표 : "+ChatColor.WHITE+""+ChatColor.BOLD+y
-							,ChatColor.DARK_AQUA+"z 스폰 좌표 : "+ChatColor.WHITE+""+ChatColor.BOLD+z
-							,ChatColor.DARK_GRAY+"시선 : "+ChatColor.GRAY+""+ChatColor.BOLD+pitch
-							,ChatColor.DARK_GRAY+"방향 : "+ChatColor.GRAY+""+ChatColor.BOLD+yaw
+					Stack("§f"+world, 2, 0, 1,Arrays.asList("§3월드 : §f§l"+world,
+							"§3x 스폰 좌표 : §f§l"+x
+							,"§3y 스폰 좌표 : §f§l"+y
+							,"§3z 스폰 좌표 : §f§l"+z
+							,"§8시선 : §7§l"+pitch
+							,"§8방향 : §7§l"+yaw
 							,""
-							,ChatColor.BLUE+"[오직 OP만 명령어로 이동 가능합니다.]","",ChatColor.YELLOW+"[좌 클릭시 해당 월드로 워프합니다.]"), loc, inv);
+							,"§9[오직 OP만 명령어로 이동 가능합니다.]","","§e[좌 클릭시 해당 월드로 워프합니다.]"), loc, inv);
 					a++;
 					loc++;
 				}
@@ -107,14 +105,14 @@ public class Warp_GUI extends Util_GUI
 		}
 		
 		if(TelePortList.length-(page*44)>45)
-			Stack("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+			Stack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+			Stack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
 		if(player.isOp() == true)
-			Stack("§f§l새 워프", 339,0,1,Arrays.asList(ChatColor.GRAY + "새로운 워프 지점을 생성합니다."), 49, inv);
-		Stack("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 53, inv);
+			Stack("§f§l새 워프", 339,0,1,Arrays.asList("§7새로운 워프 지점을 생성합니다."), 49, inv);
+		Stack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -135,7 +133,7 @@ public class Warp_GUI extends Util_GUI
 			if(slot == 45)
 			{
 				if(player.isOp())
-					new admin.OPbox_GUI().OPBoxGUI_Main(player, (byte) 2);
+					new admin.OPbox_GUI().opBoxGuiMain(player, (byte) 2);
 				else
 					new user.ETC_GUI().ETCGUI_Main(player);
 			}
@@ -146,7 +144,7 @@ public class Warp_GUI extends Util_GUI
 			else if(slot == 49 && player.isOp())//워프 생성
 			{
 				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[워프] : 새 워프지점 이름을 적어 주세요!");
+				player.sendMessage("§3[워프] : 새 워프지점 이름을 적어 주세요!");
 				UserData_Object u = new UserData_Object();
 				u.setType(player, "Teleport");
 				u.setString(player, (byte)1, "NW");

@@ -41,7 +41,7 @@ public class NPC_Chat extends Util_Chat
 				u.setInt(player, (byte)0, Integer.parseInt(Message));
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 				u.setString(player, (byte)4,"SaleSetting2");
-				player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 몇 % 세일을 하실건가요? (0 ~ 100 사이 값)");
+				player.sendMessage("§3[NPC] : 몇 % 세일을 하실건가요? (0 ~ 100 사이 값)");
 			}
 			return;
 		case "SaleSetting2":
@@ -95,8 +95,8 @@ public class NPC_Chat extends Util_Chat
 				npcScriptYaml.saveConfig();
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.closeInventory();
-				player.sendMessage(ChatColor.DARK_AQUA+"[대사] : 그렇다면 최대 몇의 호감도가 필요한가요?");
-				player.sendMessage(ChatColor.GREEN + "("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+				player.sendMessage("§3[대사] : 그렇다면 최대 몇의 호감도가 필요한가요?");
+				player.sendMessage("§a(§e0§a ~ §e"+Integer.MAX_VALUE+"§a)");
 				u.setType(player, "NPC");
 				u.setString(player, (byte)4,"NPC_TNL2");
 			}
@@ -155,7 +155,7 @@ public class NPC_Chat extends Util_Chat
 		case "WDN"://WarpDisplayName
 			npcScriptYaml.set("Job.WarpList."+u.getInt(player, (byte)4)+".DisplayName",event.getMessage());
 			npcScriptYaml.saveConfig();
-			player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : "+ChatColor.YELLOW+event.getMessage()+ChatColor.DARK_AQUA+" 워프 지점의 이동 비용을 입력 하세요!");
+			player.sendMessage("§3[NPC] : §e"+event.getMessage()+"§3 워프 지점의 이동 비용을 입력 하세요!");
 			u.setString(player, (byte)4,"WC");
 			return;
 		case "WC"://WarpCost
@@ -173,8 +173,8 @@ public class NPC_Chat extends Util_Chat
 			{
 				npcScriptYaml.set("Job.FixRate",Integer.parseInt(ChatColor.stripColor(event.getMessage())));
 				npcScriptYaml.saveConfig();
-				player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 이 NPC의 수리 성공률은 "+ChatColor.WHITE+ChatColor.stripColor(event.getMessage())+"%"+ChatColor.DARK_AQUA+"가 되었습니다!");
-				player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : NPC의 아이템 내구도 10포인트당 수리 비용을 입력 하세요! ");
+				player.sendMessage("§3[NPC] : 이 NPC의 수리 성공률은 §f"+ChatColor.stripColor(event.getMessage())+"%§3가 되었습니다!");
+				player.sendMessage("§3[NPC] : NPC의 아이템 내구도 10포인트당 수리 비용을 입력 하세요! ");
 
 				u.setType(player, "NPC");
 				u.setString(player, (byte)4, "10Point");
@@ -195,8 +195,8 @@ public class NPC_Chat extends Util_Chat
 			{
 				npcScriptYaml.set("Job.GoodRate",Integer.parseInt(ChatColor.stripColor(event.getMessage())));
 				npcScriptYaml.saveConfig();
-				player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 이 NPC의 버프 성공률은 "+ChatColor.WHITE+ChatColor.stripColor(event.getMessage())+"%"+ChatColor.DARK_AQUA+"가 되었습니다!");
-				player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : NPC의 최대 버프 세기를 설정해 주세요. ");
+				player.sendMessage("§3[NPC] : 이 NPC의 버프 성공률은 §f"+ChatColor.stripColor(event.getMessage())+"%§3가 되었습니다!");
+				player.sendMessage("§3[NPC] : NPC의 최대 버프 세기를 설정해 주세요. ");
 
 				u.setType(player, "NPC");
 				u.setString(player, (byte)4, "BuffMaxStrog");
@@ -208,8 +208,8 @@ public class NPC_Chat extends Util_Chat
 			{
 				npcScriptYaml.set("Job.BuffMaxStrog",Integer.parseInt(ChatColor.stripColor(event.getMessage())));
 				npcScriptYaml.saveConfig();
-				player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 이 NPC의 최대 버프 세기는 "+ChatColor.WHITE+ChatColor.stripColor(event.getMessage())+ChatColor.DARK_AQUA+"가 되었습니다!");
-				player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : NPC의 버프 시간을 설정해 주세요. (초 단위)");
+				player.sendMessage("§3[NPC] : 이 NPC의 최대 버프 세기는 §f"+ChatColor.stripColor(event.getMessage())+"§3가 되었습니다!");
+				player.sendMessage("§3[NPC] : NPC의 버프 시간을 설정해 주세요. (초 단위)");
 
 				u.setType(player, "NPC");
 				u.setString(player, (byte)4, "BuffTime");
@@ -220,8 +220,8 @@ public class NPC_Chat extends Util_Chat
 			{
 				npcScriptYaml.set("Job.BuffTime",Integer.parseInt(ChatColor.stripColor(event.getMessage())));
 				npcScriptYaml.saveConfig();
-				player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 이 NPC의 최대 버프 시간은 "+ChatColor.WHITE+ChatColor.stripColor(event.getMessage())+ChatColor.DARK_AQUA+"가 되었습니다!");
-				player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : NPC의 복채 비용을 설정해 주세요. ");
+				player.sendMessage("§3[NPC] : 이 NPC의 최대 버프 시간은 §f"+ChatColor.stripColor(event.getMessage())+"§3가 되었습니다!");
+				player.sendMessage("§3[NPC] : NPC의 복채 비용을 설정해 주세요. ");
 
 				u.setType(player, "NPC");
 				u.setString(player, (byte)4, "Deal");
@@ -232,8 +232,8 @@ public class NPC_Chat extends Util_Chat
 			{
 				npcScriptYaml.set("Job.SuccessRate",Integer.parseInt(ChatColor.stripColor(event.getMessage())));
 				npcScriptYaml.saveConfig();
-				player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 이 NPC의 룬 장착 성공률은 "+ChatColor.WHITE+ChatColor.stripColor(event.getMessage())+"%"+ChatColor.DARK_AQUA+"가 되었습니다!");
-				player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : NPC의 룬 장착 비용을 입력 하세요! ");
+				player.sendMessage("§3[NPC] : 이 NPC의 룬 장착 성공률은 §f"+ChatColor.stripColor(event.getMessage())+"%§3가 되었습니다!");
+				player.sendMessage("§3[NPC] : NPC의 룬 장착 비용을 입력 하세요! ");
 
 				u.setType(player, "NPC");
 				u.setString(player, (byte)4, "Deal");
@@ -262,11 +262,11 @@ public class NPC_Chat extends Util_Chat
 				Object[] a = jobYaml.getConfigurationSection("MapleStory."+Job[count].toString()).getKeys(false).toArray();
 				for(int counter=0;counter<a.length;counter++)
 				{
-					if(a[counter].toString().compareTo(Message)==0 && a[counter].toString().compareTo(configYaml.getString("Server.DefaultJob"))!=0)
+					if(a[counter].toString().equals(Message) &&!a[counter].toString().equals(configYaml.getString("Server.DefaultJob")))
 						isExitJob = true;
 				}
 			}
-			if(isExitJob == true)
+			if(isExitJob)
 			{
 				npcScriptYaml.getConfig("NPC/NPCData/"+ u.getString(player, (byte)2) +".yml");
 				npcScriptYaml.removeKey("Job");
@@ -278,14 +278,14 @@ public class NPC_Chat extends Util_Chat
 			}
 			else
 			{
-				player.sendMessage(ChatColor.LIGHT_PURPLE + "[NPC] : 이 NPC는 어떤 직업으로 전직 시켜 주는 교관인가요?");
+				player.sendMessage("§d[NPC] : 이 NPC는 어떤 직업으로 전직 시켜 주는 교관인가요?");
 				for(int count = 0; count < Job.length; count++)
 				{
 					Object[] a = jobYaml.getConfigurationSection("MapleStory."+Job[count].toString()).getKeys(false).toArray();
 					for(int counter=0;counter<a.length;counter++)
 					{
-						if(a[counter].toString().compareTo(configYaml.getString("Server.DefaultJob"))!=0)
-							player.sendMessage(ChatColor.LIGHT_PURPLE + " "+Job[count].toString()+" ━ "+ChatColor.YELLOW + a[counter].toString());
+						if(!a[counter].toString().equals(configYaml.getString("Server.DefaultJob")))
+							player.sendMessage("§d "+Job[count].toString()+" ━ §e"+ a[counter].toString());
 					}
 				}
 			}

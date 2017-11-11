@@ -3,13 +3,10 @@ package npc;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 
 import effect.SoundEffect;
 import user.UserData_Object;
 import util.YamlLoader;
-
-
 
 public class NPC_Main
 {
@@ -47,11 +44,11 @@ public class NPC_Main
 			byte randomScript = (byte) new util.Util_Number().RandomNum(0, 2);
 			String[] script = new String[1];
 			if(randomScript == 0)
-				script[0] = ChatColor.GRAY + "....";
+				script[0] = "§7....";
 			if(randomScript == 1)
-				script[0] = ChatColor.GRAY + "(할 말이 없는것 같다.)";
+				script[0] = "§7(할 말이 없는것 같다.)";
 			if(randomScript == 2)
-				script[0] = ChatColor.GRAY + "....?";
+				script[0] = "§7....?";
 			return script;
 		}
 
@@ -95,7 +92,7 @@ public class NPC_Main
 					playerSkillYaml.set("Mabinogi."+Categori+"."+Skillname, 1);
 					playerSkillYaml.saveConfig();
 					SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.LIGHT_PURPLE+""+ChatColor.BOLD+"[새로운 스킬을 획득 하였습니다!] "+"§e§l"+ChatColor.UNDERLINE+Skillname);
+					player.sendMessage("§d§l[새로운 스킬을 획득 하였습니다!] §e§l"+ChatColor.UNDERLINE+Skillname);
 				}
 				else
 				{
@@ -108,11 +105,11 @@ public class NPC_Main
 			String[] script = new String[1];
 			randomScript = (byte) new util.Util_Number().RandomNum(0, 2);
 			if(randomScript == 0)
-				script[0] = ChatColor.GRAY + "....";
+				script[0] = "§7....";
 			if(randomScript == 1)
-				script[0] = ChatColor.GRAY + "(할 말이 없는것 같다.)";
+				script[0] = "§7(할 말이 없는것 같다.)";
 			if(randomScript == 2)
-				script[0] = ChatColor.GRAY + "....?";
+				script[0] = "§7....?";
 			return script;
 		}
 

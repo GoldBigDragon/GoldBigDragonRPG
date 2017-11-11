@@ -10,12 +10,9 @@ import user.UserData_Object;
 import util.Util_Chat;
 import util.YamlLoader;
 
-
-
 public class OPbox_Chat extends Util_Chat
 {
-
-	public void SystemTypeChatting(PlayerChatEvent event)
+	public void systemTypeChatting(PlayerChatEvent event)
 	{
 		UserData_Object u = new UserData_Object();
 		Player player = event.getPlayer();
@@ -40,26 +37,26 @@ public class OPbox_Chat extends Util_Chat
 					case "RO_S_H":
 						configYaml.set("Death.Spawn_Home.SetHealth", message+"%");
 						u.setString(player, (byte)1, "RO_S_E");
-						player.sendMessage(ChatColor.GREEN+"[부활] : 마지막 마을에서 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"경험치"+ChatColor.GREEN+"를 잃어버리도록 하겠습니까?");
-						player.sendMessage(ChatColor.GRAY + "(최소 0 ~ 최대 100)");
+						player.sendMessage("§a[부활] : 마지막 마을에서 부활할 경우, 몇 %의 §e경험치§a를 잃어버리도록 하겠습니까?");
+						player.sendMessage("§7(최소 0 ~ 최대 100)");
 						break;
 					case "RO_T_H":
 						configYaml.set("Death.Spawn_Here.SetHealth", message+"%");
 						u.setString(player, (byte)1, "RO_T_E");
-						player.sendMessage(ChatColor.GREEN+"[부활] : 제자리에서 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"경험치"+ChatColor.GREEN+"를 잃어버리도록 하겠습니까?");
-						player.sendMessage(ChatColor.GRAY + "(최소 0 ~ 최대 100)");
+						player.sendMessage("§a[부활] : 제자리에서 부활할 경우, 몇 %의 §e경험치§a를 잃어버리도록 하겠습니까?");
+						player.sendMessage("§7(최소 0 ~ 최대 100)");
 						break;
 					case "RO_H_H":
 						configYaml.set("Death.Spawn_Help.SetHealth", message+"%");
 						u.setString(player, (byte)1, "RO_H_E");
-						player.sendMessage(ChatColor.GREEN+"[부활] : 도움을 받아 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"경험치"+ChatColor.GREEN+"를 잃어버리도록 하겠습니까?");
-						player.sendMessage(ChatColor.GRAY + "(최소 0 ~ 최대 100)");
+						player.sendMessage("§a[부활] : 도움을 받아 부활할 경우, 몇 %의 §e경험치§a를 잃어버리도록 하겠습니까?");
+						player.sendMessage("§7(최소 0 ~ 최대 100)");
 						break;
 					case "RO_I_H":
 						configYaml.set("Death.Spawn_Item.SetHealth", message+"%");
 						u.setString(player, (byte)1, "RO_I_E");
-						player.sendMessage(ChatColor.GREEN+"[부활] : 아이템을 사용하여 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"경험치"+ChatColor.GREEN+"를 잃어버리도록 하겠습니까?");
-						player.sendMessage(ChatColor.GRAY + "(최소 0 ~ 최대 100)");
+						player.sendMessage("§a[부활] : 아이템을 사용하여 부활할 경우, 몇 %의 §e경험치§a를 잃어버리도록 하겠습니까?");
+						player.sendMessage("§7(최소 0 ~ 최대 100)");
 						break;
 				}
 				configYaml.saveConfig();
@@ -77,26 +74,26 @@ public class OPbox_Chat extends Util_Chat
 					case "RO_S_E":
 						configYaml.set("Death.Spawn_Home.PenaltyEXP", message+"%");
 						u.setString(player, (byte)1, "RO_S_M");
-						player.sendMessage(ChatColor.GREEN+"[부활] : 마지막 마을에서 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"돈"+ChatColor.GREEN+"을 잃어버리도록 하겠습니까?");
-						player.sendMessage(ChatColor.GRAY + "(최소 0 ~ 최대 100)");
+						player.sendMessage("§a[부활] : 마지막 마을에서 부활할 경우, 몇 %의 §e돈§a을 잃어버리도록 하겠습니까?");
+						player.sendMessage("§7(최소 0 ~ 최대 100)");
 						break;
 					case "RO_T_E":
 						configYaml.set("Death.Spawn_Here.PenaltyEXP", message+"%");
 						u.setString(player, (byte)1, "RO_T_M");
-						player.sendMessage(ChatColor.GREEN+"[부활] : 제자리에서 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"돈"+ChatColor.GREEN+"을 잃어버리도록 하겠습니까?");
-						player.sendMessage(ChatColor.GRAY + "(최소 0 ~ 최대 100)");
+						player.sendMessage("§a[부활] : 제자리에서 부활할 경우, 몇 %의 §e돈§a을 잃어버리도록 하겠습니까?");
+						player.sendMessage("§7(최소 0 ~ 최대 100)");
 						break;
 					case "RO_H_E":
 						configYaml.set("Death.Spawn_Help.PenaltyEXP", message+"%");
 						u.setString(player, (byte)1, "RO_H_M");
-						player.sendMessage(ChatColor.GREEN+"[부활] : 도움을 받아 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"돈"+ChatColor.GREEN+"을 잃어버리도록 하겠습니까?");
-						player.sendMessage(ChatColor.GRAY + "(최소 0 ~ 최대 100)");
+						player.sendMessage("§a[부활] : 도움을 받아 부활할 경우, 몇 %의 §e돈§a을 잃어버리도록 하겠습니까?");
+						player.sendMessage("§7(최소 0 ~ 최대 100)");
 						break;
 					case "RO_I_E":
 						configYaml.set("Death.Spawn_Item.PenaltyEXP", message+"%");
 						u.setString(player, (byte)1, "RO_I_M");
-						player.sendMessage(ChatColor.GREEN+"[부활] : 아이템을 사용하여 부활할 경우, 몇 %의 "+ChatColor.YELLOW+"돈"+ChatColor.GREEN+"을 잃어버리도록 하겠습니까?");
-						player.sendMessage(ChatColor.GRAY + "(최소 0 ~ 최대 100)");
+						player.sendMessage("§a[부활] : 아이템을 사용하여 부활할 경우, 몇 %의 §e돈§a을 잃어버리도록 하겠습니까?");
+						player.sendMessage("§7(최소 0 ~ 최대 100)");
 						break;
 				}
 				configYaml.saveConfig();
@@ -126,7 +123,7 @@ public class OPbox_Chat extends Util_Chat
 				}
 				configYaml.saveConfig();
 				u.clearAll(player);
-				new admin.OPbox_GUI().OPBoxGUI_Death(player);
+				new admin.OPbox_GUI().opBoxGuiDeath(player);
 			}
 			return;
 		case "CCP"://ChangeChatPrefix
@@ -134,7 +131,7 @@ public class OPbox_Chat extends Util_Chat
 			configYaml.set("Server.ChatPrefix", event.getMessage());
 			configYaml.saveConfig();
 			u.clearAll(player);
-			new admin.OPbox_GUI().OPBoxGUI_Setting(player);
+			new admin.OPbox_GUI().opBoxGuiSetting(player);
 			return;
 		case "BMT"://BroadcastMessageTick
 			if(isIntMinMax(message, player, 1, 3600))
@@ -142,7 +139,7 @@ public class OPbox_Chat extends Util_Chat
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				configYaml.set("Server.BroadCastSecond", Integer.parseInt(message));
 				configYaml.saveConfig();
-				new admin.OPbox_GUI().OPBoxGUI_BroadCast(player, (byte) 0);
+				new admin.OPbox_GUI().opBoxGuiBroadCast(player, (byte) 0);
 				u.clearAll(player);
 			}
 			return;
@@ -150,30 +147,30 @@ public class OPbox_Chat extends Util_Chat
 			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			YamlLoader broadcastYaml = new YamlLoader();
 			broadcastYaml.getConfig("BroadCast.yml");
-			broadcastYaml.set(u.getInt(player, (byte)0)+"", ChatColor.WHITE+event.getMessage());
+			broadcastYaml.set(u.getInt(player, (byte)0)+"", "§f"+event.getMessage());
 			broadcastYaml.saveConfig();
 			u.clearAll(player);
-			new admin.OPbox_GUI().OPBoxGUI_BroadCast(player, (byte) 0);
+			new admin.OPbox_GUI().opBoxGuiBroadCast(player, (byte) 0);
 			return;
 		case "JM"://JoinMessage
 			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			if(message.compareTo("없음")==0)
+			if(message.equals("없음"))
 				configYaml.set("Server.JoinMessage", null);
 			else
-				configYaml.set("Server.JoinMessage", ChatColor.WHITE+event.getMessage());
+				configYaml.set("Server.JoinMessage", "§f"+event.getMessage());
 			configYaml.saveConfig();
 			u.clearAll(player);
-			new admin.OPbox_GUI().OPBoxGUI_Setting(player);
+			new admin.OPbox_GUI().opBoxGuiSetting(player);
 			return;
 		case "QM"://QuitMessage
 			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			if(message.compareTo("없음")==0)
+			if(message.equals("없음"))
 				configYaml.set("Server.QuitMessage", null);
 			else
-				configYaml.set("Server.QuitMessage", ChatColor.WHITE+event.getMessage());
+				configYaml.set("Server.QuitMessage", "§f"+event.getMessage());
 			configYaml.saveConfig();
 			u.clearAll(player);
-			new admin.OPbox_GUI().OPBoxGUI_Setting(player);
+			new admin.OPbox_GUI().opBoxGuiSetting(player);
 			return;
 		case "CSN"://ChangeStatName
 			{
@@ -223,21 +220,21 @@ public class OPbox_Chat extends Util_Chat
 					configYaml.set("Server.MagicDamage", message);
 					break;
 				case "화폐":
-					String Pa = event.getMessage();
-					Pa.replace(".", "");
-					Pa.replace(":", "");
-					Pa.replace(" ", "");
-					configYaml.set("Server.MoneyName", Pa);
+					String pa = event.getMessage();
+					pa.replace(".", "");
+					pa.replace(":", "");
+					pa.replace(" ", "");
+					configYaml.set("Server.MoneyName", pa);
 					configYaml.saveConfig();
 					u.clearAll(player);
-					main.Main_ServerOption.Money = Pa;
-					new admin.OPbox_GUI().OPBoxGUI_Money(player);
+					main.Main_ServerOption.money = pa;
+					new admin.OPbox_GUI().opBoxGUIMoney(player);
 					return;
 				}
 				configYaml.saveConfig();
 				u.clearAll(player);
-				player.sendMessage(ChatColor.GREEN + "[System] : 변경된 내용은 서버 안전을 위해, 서버 리로드 이후 일괄 적용됩니다.");
-				new admin.OPbox_GUI().OPBoxGUI_StatChange(player);
+				player.sendMessage("§a[System] : 변경된 내용은 서버 안전을 위해, 서버 리로드 이후 일괄 적용됩니다.");
+				new admin.OPbox_GUI().opBoxGuiStatChange(player);
 			}
 			return;
 	
@@ -246,11 +243,11 @@ public class OPbox_Chat extends Util_Chat
 				if(isIntMinMax(message, player, 1000, 100000000))
 				{
 					int value = Integer.parseInt(message);
-					main.Main_ServerOption.MaxDropMoney = value;
+					main.Main_ServerOption.maxDropMoney = value;
 					configYaml.set("Server.Max_Drop_Money",value);
 					configYaml.saveConfig();
 					u.clearAll(player);
-					new admin.OPbox_GUI().OPBoxGUI_Money(player);
+					new admin.OPbox_GUI().opBoxGUIMoney(player);
 				}
 			}
 			return;
@@ -258,9 +255,9 @@ public class OPbox_Chat extends Util_Chat
 			{
 				if(isIntMinMax(message, player, 1, Integer.MAX_VALUE))
 				{
-					if(new event.Main_Interact().SetItemDefaultName(Short.parseShort(message),(byte)0).compareTo("지정되지 않은 아이템")==0)
+					if(new event.Main_Interact().SetItemDefaultName(Short.parseShort(message),(byte)0).equals("지정되지 않은 아이템"))
 					{
-						player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 아이템은 존재하지 않습니다!");
+						player.sendMessage("§c[SYSTEM] : 해당 아이템은 존재하지 않습니다!");
 		  				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		  				return;
 					}
@@ -293,7 +290,7 @@ public class OPbox_Chat extends Util_Chat
 						break;
 					}
 					configYaml.saveConfig();
-					player.sendMessage(ChatColor.DARK_AQUA+"[System] : 화폐 모양으로 설정할 아이템 DATA를 입력 해 주세요!");
+					player.sendMessage("§3[System] : 화폐 모양으로 설정할 아이템 DATA를 입력 해 주세요!");
 					u.setString(player, (byte)1, "CMDATA");
 				}
 			}
@@ -332,7 +329,7 @@ public class OPbox_Chat extends Util_Chat
 					}
 					configYaml.saveConfig();
 					u.clearAll(player);
-					new admin.OPbox_GUI().OPBoxGUI_Money(player);
+					new admin.OPbox_GUI().opBoxGUIMoney(player);
 				}
 			}
 			return;

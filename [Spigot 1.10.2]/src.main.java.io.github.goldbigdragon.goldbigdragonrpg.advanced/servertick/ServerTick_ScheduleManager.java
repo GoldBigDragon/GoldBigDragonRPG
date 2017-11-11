@@ -5,8 +5,6 @@ import org.bukkit.Bukkit;
 import dungeon.Dungeon_ScheduleObject;
 import util.YamlLoader;
 
-
-
 public class ServerTick_ScheduleManager
 {
 	public void saveCategoriFile()

@@ -39,13 +39,13 @@ public class UserSkill_GUI extends Util_GUI
 				short SkillAmount= (short) PlayerSkillList.getConfigurationSection("MapleStory."+a[count].toString()+".Skill").getKeys(false).size();
 				if(count > a.length || loc >= 45) break;
 			
-				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + JobName,  340,0,1,Arrays.asList(ChatColor.DARK_AQUA+"스킬 개수 : " + ChatColor.WHITE+SkillAmount +ChatColor.DARK_AQUA+" 개"), loc, inv);
+				Stack2("§f§l" + JobName,  340,0,1,Arrays.asList("§3스킬 개수 : §f"+SkillAmount +"§3 개"), loc, inv);
 				loc++;
 			}
 			if(a.length-(page*44)>45)
-				Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+				Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 			if(page!=0)
-				Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+				Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 		}
 		else
 		{
@@ -60,17 +60,17 @@ public class UserSkill_GUI extends Util_GUI
 				short SkillAmount= (short) PlayerSkillList.getConfigurationSection("Mabinogi."+Categori[count].toString()).getKeys(false).size();
 				if(count > Categori.length || loc >= 45) break;
 			
-				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + CategoriName,  340,0,1,Arrays.asList(ChatColor.DARK_AQUA+"스킬 개수 : " + ChatColor.WHITE+SkillAmount +ChatColor.DARK_AQUA+" 개"), loc, inv);
+				Stack2("§f§l" + CategoriName,  340,0,1,Arrays.asList("§3스킬 개수 : §f"+SkillAmount +"§3 개"), loc, inv);
 				loc++;
 			}
 			if(Categori.length-(page*44)>45)
-				Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+				Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 			if(page!=0)
-				Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+				Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 		}
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -99,57 +99,57 @@ public class UserSkill_GUI extends Util_GUI
 				byte IConAmount = (byte) AllSkillList.getInt(a[count]+".Amount");
 				if(count > a.length || loc >= 45) break;
 			
-				String Skilllore = ChatColor.DARK_AQUA+"스킬 랭크 : " +SkillRank +" / "+SkillMaxRank+"%enter%"+AllSkillList.getString(a[count]+".SkillRank."+SkillRank+".Lore");
-				Skilllore = Skilllore +"%enter%%enter%"+ChatColor.YELLOW + "[좌 클릭시 단축키 등록]";
+				String Skilllore = "§3스킬 랭크 : " +SkillRank +" / "+SkillMaxRank+"%enter%"+AllSkillList.getString(a[count]+".SkillRank."+SkillRank+".Lore");
+				Skilllore = Skilllore +"%enter%%enter%§e[좌 클릭시 단축키 등록]";
 
 				if(SkillRank<SkillMaxRank)
 				{
-					Skilllore = Skilllore +"%enter%"+ ChatColor.YELLOW + "[Shift + 좌 클릭시 랭크 업]%enter%";
+					Skilllore = Skilllore +"%enter%§e[Shift + 좌 클릭시 랭크 업]%enter%";
 					if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint() < AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint"))
 					{
-						Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "필요 스킬 포인트 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint");
-						Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "현재 스킬 포인트 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint();
+						Skilllore = Skilllore +"%enter%§c필요 스킬 포인트 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint");
+						Skilllore = Skilllore +"%enter%§c현재 스킬 포인트 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint();
 					}
 					else
 					{
-						Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "필요 스킬 포인트 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint");
-						Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "현재 스킬 포인트 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint();
+						Skilllore = Skilllore +"%enter%§a필요 스킬 포인트 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint");
+						Skilllore = Skilllore +"%enter%§a현재 스킬 포인트 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint();
 					}
 					if(AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel") > 0)
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level() < AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel"))
 						{
-							Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "최소 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel");
-							Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "현재 레벨 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level();
+							Skilllore = Skilllore +"%enter%§c최소 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel");
+							Skilllore = Skilllore +"%enter%§c현재 레벨 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level();
 						}
 						else
 						{
-							Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "최소 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel");
-							Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "현재 레벨 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level();
+							Skilllore = Skilllore +"%enter%§a최소 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel");
+							Skilllore = Skilllore +"%enter%§a현재 레벨 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level();
 						}
 					if(AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel") > 0)
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel() < AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel"))
 						{
-							Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "최소 누적 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel");
-							Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "현재 누적 레벨 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel();
+							Skilllore = Skilllore +"%enter%§c최소 누적 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel");
+							Skilllore = Skilllore +"%enter%§c현재 누적 레벨 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel();
 						}
 						else
 						{
-							Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "최소 누적 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel");
-							Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "현재 누적 레벨 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel();
+							Skilllore = Skilllore +"%enter%§a최소 누적 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel");
+							Skilllore = Skilllore +"%enter%§a현재 누적 레벨 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel();
 						}
 				}
 				
 				String[] scriptA = Skilllore.split("%enter%");
 				for(int counter = 0; counter < scriptA.length; counter++)
 					scriptA[counter] =  scriptA[counter];
-				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + a[count],  IConID,IConDATA,IConAmount,Arrays.asList(scriptA), loc, inv);
+				Stack2("§f§l" + a[count],  IConID,IConDATA,IConAmount,Arrays.asList(scriptA), loc, inv);
 				
 				loc++;
 			}
 			if(a.length-(page*44)>45)
-				Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+				Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 			if(page!=0)
-				Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+				Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
 		}
 		else
@@ -167,59 +167,59 @@ public class UserSkill_GUI extends Util_GUI
 				byte IConAmount = (byte) AllSkillList.getInt(a[count]+".Amount");
 				if(count > a.length || loc >= 45) break;
 			
-				String Skilllore = ChatColor.DARK_AQUA+"스킬 랭크 : " +SkillRank +" / "+SkillMaxRank+"%enter%"+AllSkillList.getString(a[count]+".SkillRank."+SkillRank+".Lore");
-				Skilllore = Skilllore +"%enter%%enter%"+ChatColor.YELLOW + "[좌 클릭시 단축키 등록]";
+				String Skilllore = "§3스킬 랭크 : " +SkillRank +" / "+SkillMaxRank+"%enter%"+AllSkillList.getString(a[count]+".SkillRank."+SkillRank+".Lore");
+				Skilllore = Skilllore +"%enter%%enter%§e[좌 클릭시 단축키 등록]";
 
 				if(SkillRank<SkillMaxRank)
 				{
-					Skilllore = Skilllore +"%enter%"+ ChatColor.YELLOW + "[Shift + 좌 클릭시 랭크 업]%enter%";
+					Skilllore = Skilllore +"%enter%§e[Shift + 좌 클릭시 랭크 업]%enter%";
 					if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint() < AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint"))
 					{
-						Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "필요 스킬 포인트 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint");
-						Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "현재 스킬 포인트 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint();
+						Skilllore = Skilllore +"%enter%§c필요 스킬 포인트 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint");
+						Skilllore = Skilllore +"%enter%§c현재 스킬 포인트 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint();
 					}
 					else
 					{
-						Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "필요 스킬 포인트 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint");
-						Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "현재 스킬 포인트 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint();
+						Skilllore = Skilllore +"%enter%§a필요 스킬 포인트 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".SkillPoint");
+						Skilllore = Skilllore +"%enter%§a현재 스킬 포인트 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint();
 					}
 					if(AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel") > 0)
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level() < AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel"))
 						{
-							Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "최소 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel");
-							Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "현재 레벨 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level();
+							Skilllore = Skilllore +"%enter%§c최소 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel");
+							Skilllore = Skilllore +"%enter%§c현재 레벨 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level();
 						}
 						else
 						{
-							Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "최소 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel");
-							Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "현재 레벨 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level();
+							Skilllore = Skilllore +"%enter%§a최소 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedLevel");
+							Skilllore = Skilllore +"%enter%§a현재 레벨 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level();
 						}
 					if(AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel") > 0)
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel() < AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel"))
 						{
-							Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "최소 누적 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel");
-							Skilllore = Skilllore +"%enter%"+ ChatColor.RED + "현재 누적 레벨 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel();
+							Skilllore = Skilllore +"%enter%§c최소 누적 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel");
+							Skilllore = Skilllore +"%enter%§c현재 누적 레벨 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel();
 						}
 						else
 						{
-							Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "최소 누적 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel");
-							Skilllore = Skilllore +"%enter%"+ ChatColor.GREEN + "현재 누적 레벨 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel();
+							Skilllore = Skilllore +"%enter%§a최소 누적 레벨 : "+AllSkillList.getInt(a[count]+".SkillRank."+(SkillRank+1)+".NeedRealLevel");
+							Skilllore = Skilllore +"%enter%§a현재 누적 레벨 : "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel();
 						}
 				}
 				String[] scriptA = Skilllore.split("%enter%");
 				for(int counter = 0; counter < scriptA.length; counter++)
 					scriptA[counter] =  scriptA[counter];
-				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + a[count],  IConID,IConDATA,IConAmount,Arrays.asList(scriptA), loc, inv);
+				Stack2("§f§l" + a[count],  IConID,IConDATA,IConAmount,Arrays.asList(scriptA), loc, inv);
 				
 				loc++;
 			}
 			if(a.length-(page*44)>45)
-				Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+				Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 			if(page!=0)
-				Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+				Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 		}
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK + CategoriName), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+""+isMabinogi), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+ CategoriName), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+isMabinogi), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -231,13 +231,13 @@ public class UserSkill_GUI extends Util_GUI
 		for(int count = 0;count < 9;count++)
 		{
 			if(player.getInventory().getItem(count) == null)
-				Stack2("§3§l|||||||||||||||||||||[빈 슬롯]|||||||||||||||||||||", 160,9,1,Arrays.asList("",ChatColor.YELLOW +""+ChatColor.BOLD+ "[클릭시 핫바에 등록 됩니다]"),count, inv);
+				Stack2("§3§l|||||||||||||||||||||[빈 슬롯]|||||||||||||||||||||", 160,9,1,Arrays.asList("","§e§l[클릭시 핫바에 등록 됩니다]"),count, inv);
 			else
-				Stack2("§c§l||||||||||||||||||||||||||[사용중]||||||||||||||||||||||||||", 160,14,1,Arrays.asList("",ChatColor.RED + ""+ChatColor.BOLD+"[이 곳에는 등록할 수 없습니다]"),count, inv);
+				Stack2("§c§l||||||||||||||||||||||||||[사용중]||||||||||||||||||||||||||", 160,14,1,Arrays.asList("","§c§l[이 곳에는 등록할 수 없습니다]"),count, inv);
 		}
 		
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK+""+isMabinogi), 9, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+""+Skillname,ChatColor.BLACK+CategoriName), 17, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+isMabinogi), 9, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+Skillname,"§0"+CategoriName), 17, inv);
 		player.openInventory(inv);
 	}
 	
@@ -341,13 +341,13 @@ public class UserSkill_GUI extends Util_GUI
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level() < AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".NeedLevel"))
 						{
 							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-							player.sendMessage(ChatColor.RED + "[스킬] : 레벨이 부족합니다!");
+							player.sendMessage("§c[스킬] : 레벨이 부족합니다!");
 							return;
 						}
 						else if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel() < AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".NeedRealLevel"))
 						{
 							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-							player.sendMessage(ChatColor.RED + "[스킬] : 누적 레벨이 부족합니다!");
+							player.sendMessage("§c[스킬] : 누적 레벨이 부족합니다!");
 							return;
 						}
 						else if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint() >= AllSkillList.getInt(SkillName+".SkillRank."+(SkillRank+1)+".SkillPoint"))
@@ -386,16 +386,16 @@ public class UserSkill_GUI extends Util_GUI
 							p.setHealth(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_HP());
 							
 							if(SkillRank!=SkillMaxRank-1)
-								player.sendMessage(ChatColor.GREEN + "[스킬] : "+ChatColor.YELLOW+SkillName+ChatColor.GREEN+" 스킬의 "+ChatColor.YELLOW+"랭크가 상승"+ChatColor.GREEN+"하였습니다!");
+								player.sendMessage("§a[스킬] : §e"+SkillName+"§a 스킬의 §e랭크가 상승§a하였습니다!");
 							else
-								player.sendMessage(ChatColor.DARK_PURPLE + "[스킬] : "+ChatColor.YELLOW+SkillName+ChatColor.DARK_PURPLE+" 스킬을 "+ChatColor.YELLOW+"마스터"+ChatColor.DARK_PURPLE+"하였습니다!");
+								player.sendMessage("§5[스킬] : §e"+SkillName+"§5 스킬을 §e마스터§5하였습니다!");
 							
 							SkillListGUI(player, page, isMabinogi, CategoriName);
 						}
 						else
 						{
 							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-							player.sendMessage(ChatColor.RED + "[스킬] : 스텟 포인트가 부족합니다!");
+							player.sendMessage("§c[스킬] : 스텟 포인트가 부족합니다!");
 						}
 					}
 					else
@@ -433,14 +433,14 @@ public class UserSkill_GUI extends Util_GUI
 					int IconID = AllSkillList.getInt(Skillname+".ID");
 					byte IconDATA = (byte) AllSkillList.getInt(Skillname+".DATA");
 					byte IconAmount = (byte) AllSkillList.getInt(Skillname+".Amount");
-					String lore = ChatColor.WHITE + ""+CategoriName+"%enter%"+ChatColor.WHITE + ""+Skillname+"%enter%%enter%"+ChatColor.YELLOW + "[클릭시 퀵슬롯에서 삭제]%enter%";
+					String lore = "§f"+CategoriName+"%enter%§f"+Skillname+"%enter%%enter%§e[클릭시 퀵슬롯에서 삭제]%enter%";
 					String[] scriptA = lore.split("%enter%");
 					for(int counter = 0; counter < scriptA.length; counter++)
 						scriptA[counter] =  scriptA[counter];
 					
 					ItemStack Icon = new MaterialData(IconID, (byte) IconDATA).toItemStack(IconAmount);
 					ItemMeta Icon_Meta = Icon.getItemMeta();
-					Icon_Meta.setDisplayName(ChatColor.GREEN + "     [스킬 단축키]     ");
+					Icon_Meta.setDisplayName("§a     [스킬 단축키]     ");
 					Icon_Meta.setLore(Arrays.asList(scriptA));
 					Icon.setItemMeta(Icon_Meta);
 					player.getInventory().setItem(event.getSlot(), Icon);

@@ -80,7 +80,7 @@ public class Battle_Main implements Listener
 							{
 								if(projectile.isCustomNameVisible()==true)
 								{
-									if(projectile.getCustomName().compareTo("§c§l[불 화살]")==0)
+									if(projectile.getCustomName().equals("§c§l[불 화살]"))
 										DamageSetter(event,"R_A_F",(Entity) projectile.getShooter(), true);
 									else
 										DamageSetter(event,"R_A",(Entity) projectile.getShooter(), true);
@@ -171,8 +171,8 @@ public class Battle_Main implements Listener
 					event.setCancelled(true);
 					return;
 				}
-				if(main.Main_ServerOption.PartyJoiner.containsKey(player)&&main.Main_ServerOption.PartyJoiner.containsKey(target))
-					if(main.Main_ServerOption.PartyJoiner.get(player).equals(main.Main_ServerOption.PartyJoiner.get(target)))
+				if(main.Main_ServerOption.partyJoiner.containsKey(player)&&main.Main_ServerOption.partyJoiner.containsKey(target))
+					if(main.Main_ServerOption.partyJoiner.get(player).equals(main.Main_ServerOption.partyJoiner.get(target)))
 					{
 						event.setCancelled(true);
 						return;
@@ -206,7 +206,7 @@ public class Battle_Main implements Listener
 	    	Damage = Damage-1;
 	    	Player player = (Player)Attacker;
 	    	if(main.Main_ServerOption.PlayerUseSpell.containsKey(player))
-	    		if(main.Main_ServerOption.PlayerUseSpell.get(player).compareTo("us")==0)
+	    		if(main.Main_ServerOption.PlayerUseSpell.get(player).equals("us"))
 	    		{
 	    			if(player.isOnline())
 	    				Alert(player, event.getEntity(), (int)event.getDamage());
@@ -230,7 +230,7 @@ public class Battle_Main implements Listener
 			}
 			else
 			{
-				if(AttackType.compareTo("R_A_F")==0)
+				if(AttackType.equals("R_A_F"))
 					Damage = Damage+(Damage/2);
 				Damage = Battle_Calculator.damagerand(Attacker, Battle_Calculator.returnRangeDamageValue(Attacker, Attacker_Stat[1], Damage, true),
 						Battle_Calculator.returnRangeDamageValue(Attacker, Attacker_Stat[1], Damage, false), Attacker_Stat[8]);
@@ -271,7 +271,7 @@ public class Battle_Main implements Listener
 				Player player = (Player)Attacker;
 				if(player.isOnline())
 					if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isAlert_Critical() == true)
-						t.sendTitleSubTitle(player, "\'\'", "\'"+ChatColor.YELLOW + "크리티컬 히트!\'", (byte)1, (byte)0, (byte)1);
+						t.sendTitleSubTitle(player, "\'\'", "\'§e크리티컬 히트!\'", (byte)1, (byte)0, (byte)1);
 			}
 			SoundEffect.SL(event.getEntity().getLocation(), Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, (float)0.5, (float)2.0);
 			SoundEffect.SL(event.getEntity().getLocation(), Sound.ENTITY_GENERIC_EXPLODE, (float)0.5, (float)1.7);
@@ -291,9 +291,9 @@ public class Battle_Main implements Listener
 			Damage =(int)(Damage*((100-Defender_Stat[1])/10)/10);
 		else
 			Damage =(int)(Damage-Defender_Stat[1]);
-		if(Damage <= 0 || (100-Defender_Stat[1])<=0/*보호�? 100 ?��?��?�� 경우*/)
+		if(Damage <= 0 || (100-Defender_Stat[1])<=0/*보호가 100 이상일 경우*/)
 		{
-			if(AttackType.compareTo("R_S")!=0)//?��?��?��
+			if(!AttackType.equals("R_S"))
 			{
 				if(Attacker instanceof Player)
 				{
@@ -465,11 +465,11 @@ public class Battle_Main implements Listener
 		SoundEffect.SL(defenser.getLocation(), Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, (float)1.0, (float)0.7);
 	    SendPacket t = new SendPacket();
 
-		if (a == 1) t.sendActionBar(player, ChatColor.RED +""+ChatColor.BOLD+ "이 공격은 전혀 통하지 않는다!");
-		else if (a == 2) t.sendActionBar(player, ChatColor.RED +""+ChatColor.BOLD+ "자세를 흐트릴 수 없다!");
-		else if (a == 3) t.sendActionBar(player, ChatColor.RED +""+ChatColor.BOLD+ "충격이 분산되었다!");
-		else if (a == 4) t.sendActionBar(player, ChatColor.RED +""+ChatColor.BOLD+ "이 공격으로는 쓰러뜨릴 수 없을 것 같다!");
-		else if (a == 5) t.sendActionBar(player, ChatColor.RED +""+ChatColor.BOLD+ "적의 자세를 흐트릴 수 없다!");
+		if (a == 1) t.sendActionBar(player, "§c§l이 공격은 전혀 통하지 않는다!");
+		else if (a == 2) t.sendActionBar(player, "§c§l자세를 흐트릴 수 없다!");
+		else if (a == 3) t.sendActionBar(player, "§c§l충격이 분산되었다!");
+		else if (a == 4) t.sendActionBar(player, "§c§l이 공격으로는 쓰러뜨릴 수 없을 것 같다!");
+		else if (a == 5) t.sendActionBar(player, "§c§l적의 자세를 흐트릴 수 없다!");
 		return;
 	}
 
@@ -478,7 +478,7 @@ public class Battle_Main implements Listener
 	    SendPacket t = new SendPacket();
 
 		if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isAlert_Damage() == true)
-			t.sendActionBar(player, ChatColor.RED+""+ChatColor.BOLD+Damage + "데미지!");
+			t.sendActionBar(player, "§c§l"+Damage + "데미지!");
 		if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isAlert_MobHealth() == true)
 		{
 			if(defenser instanceof LivingEntity)
@@ -487,7 +487,7 @@ public class Battle_Main implements Listener
 				Damageable getouter = (Damageable)defenser2;
 				int health = (int)getouter.getHealth() - Damage;
 				int Mahealth = (int)getouter.getMaxHealth();
-				StringBuffer HealthBar = new StringBuffer(ChatColor.RED+"");
+				StringBuffer HealthBar = new StringBuffer("§c");
 
 				if(health <= 0)
 					health = 1;
@@ -507,7 +507,7 @@ public class Battle_Main implements Listener
 				for(int count = 0; count<10-healthCount;count++)
 					HealthBar.append("■");
 				
-				String Title  = "\'" +ChatColor.DARK_RED +""+ChatColor.BOLD+"[ "+ChatColor.RED +""+ChatColor.BOLD+  health  +ChatColor.DARK_RED +""+ChatColor.BOLD+" / "+ChatColor.RED +""+ChatColor.BOLD+ Mahealth+ChatColor.DARK_RED +""+ChatColor.BOLD+ " ]\'";
+				String Title  = "\'§4§l[ §c§l"+  health  +"§4§l / §c§l"+ Mahealth+"§4§l ]\'";
 				t.sendTitleSubTitle(player, HealthBar.toString(), Title, (byte)0, (byte)0, (byte)1);
 			}
 		}

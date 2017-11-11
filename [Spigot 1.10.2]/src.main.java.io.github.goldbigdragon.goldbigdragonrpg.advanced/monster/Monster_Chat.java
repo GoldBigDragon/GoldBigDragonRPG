@@ -59,10 +59,10 @@ public class Monster_Chat extends Util_Chat
 			message = message.replace(".", "");
 			for(int count = 0; count < monsterlist.length;count++)
 	    	{
-	    		if(monsterlist[count].compareTo(message)==0)
+	    		if(monsterlist[count].equals(message))
 	    		{
 				  	SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-			    	player.sendMessage(ChatColor.RED+"[SYSTEM] : 해당 이름의 몬스터는 이미 존재합니다!");
+			    	player.sendMessage("§c[SYSTEM] : 해당 이름의 몬스터는 이미 존재합니다!");
 			    	return;
 	    		}
 	    	}
@@ -72,7 +72,7 @@ public class Monster_Chat extends Util_Chat
 		  	main.Main_ServerOption.MonsterNameMatching.put(message, message);
 		  	main.Main_ServerOption.MonsterList.put(message, new monster.Monster_Object(message, message, 15, 20, 1, 10, 10, 10, 10, 10, 10, 0, 0, 0, 0));
 		  	
-	    	player.sendMessage(ChatColor.GREEN+"[SYSTEM] : "+ChatColor.YELLOW+message+ChatColor.GREEN+" 몬스터 생성 완료! (추가 설정을 해 주세요)");
+	    	player.sendMessage("§a[SYSTEM] : §e"+message+"§a 몬스터 생성 완료! (추가 설정을 해 주세요)");
 			SoundEffect.SP(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.8F);
 			MGUI.MonsterOptionSettingGUI(player, message);
 			u.clearAll(player);
@@ -108,9 +108,9 @@ public class Monster_Chat extends Util_Chat
 			{
 				monsterListYaml.set(u.getString(player, (byte)2)+"."+u.getString(player, (byte)1), Integer.parseInt(message));
 				monsterListYaml.saveConfig();
-				if(u.getString(player, (byte)1).compareTo("EXP")==0)
+				if(u.getString(player, (byte)1).equals("EXP"))
 					main.Main_ServerOption.MonsterList.get(u.getString(player, (byte)2)).setEXP(Integer.parseInt(message));
-				else if(u.getString(player, (byte)1).compareTo("LUK")==0)
+				else if(u.getString(player, (byte)1).equals("LUK"))
 					main.Main_ServerOption.MonsterList.get(u.getString(player, (byte)2)).setLUK(Integer.parseInt(message));
 				else
 					main.Main_ServerOption.MonsterList.get(u.getString(player, (byte)2)).setMPRO(Integer.parseInt(message));
@@ -138,8 +138,8 @@ public class Monster_Chat extends Util_Chat
 				monsterListYaml.saveConfig();
 				main.Main_ServerOption.MonsterList.get(u.getString(player, (byte)2)).setMinMoney(Integer.parseInt(message));
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.GREEN+"[몬스터] : 해당 몬스터가 드랍하는 최대 골드량을 설정해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"("+message+" ~ "+Integer.MAX_VALUE+")");
+				player.sendMessage("§a[몬스터] : 해당 몬스터가 드랍하는 최대 골드량을 설정해 주세요!");
+				player.sendMessage("§3("+message+" ~ "+Integer.MAX_VALUE+")");
 				u.setString(player, (byte)1, "MAX_Money");
 			}
 			return;
@@ -150,9 +150,9 @@ public class Monster_Chat extends Util_Chat
 				monsterListYaml.saveConfig();
 				main.Main_ServerOption.MonsterList.get(u.getString(player, (byte)2)).setSTR(Integer.parseInt(message));
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.GRAY+"("+main.Main_ServerOption.DEX+"는 몬스터의 원거리 공격력을 상승시켜 줍니다.)");
-				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 "+main.Main_ServerOption.DEX+"를 설정해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(1 ~ "+Integer.MAX_VALUE+")");
+				player.sendMessage("§7("+main.Main_ServerOption.statDEX+"는 몬스터의 원거리 공격력을 상승시켜 줍니다.)");
+				player.sendMessage("§a[몬스터] : 몬스터의 "+main.Main_ServerOption.statDEX+"를 설정해 주세요!");
+				player.sendMessage("§3(1 ~ "+Integer.MAX_VALUE+")");
 				u.setString(player, (byte)1, "DEX");
 			}
 			return;
@@ -163,9 +163,9 @@ public class Monster_Chat extends Util_Chat
 				monsterListYaml.saveConfig();
 				main.Main_ServerOption.MonsterList.get(u.getString(player, (byte)2)).setDEX(Integer.parseInt(message));
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.GRAY+"("+main.Main_ServerOption.INT+"은 몬스터의 폭발 공격력을 상승시켜 줍니다.)");
-				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 "+main.Main_ServerOption.INT+"을 설정해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(1 ~ "+Integer.MAX_VALUE+")");
+				player.sendMessage("§7("+main.Main_ServerOption.statINT+"은 몬스터의 폭발 공격력을 상승시켜 줍니다.)");
+				player.sendMessage("§a[몬스터] : 몬스터의 "+main.Main_ServerOption.statINT+"을 설정해 주세요!");
+				player.sendMessage("§3(1 ~ "+Integer.MAX_VALUE+")");
 				u.setString(player, (byte)1, "INT");
 			}
 			return;
@@ -176,9 +176,9 @@ public class Monster_Chat extends Util_Chat
 				monsterListYaml.saveConfig();
 				main.Main_ServerOption.MonsterList.get(u.getString(player, (byte)2)).setINT(Integer.parseInt(message));
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.GRAY+"("+main.Main_ServerOption.WILL+"는 몬스터의 크리티컬 확률을 상승시켜 줍니다.)");
-				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 "+main.Main_ServerOption.WILL+"를 설정해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(1 ~ "+Integer.MAX_VALUE+")");
+				player.sendMessage("§7("+main.Main_ServerOption.statWILL+"는 몬스터의 크리티컬 확률을 상승시켜 줍니다.)");
+				player.sendMessage("§a[몬스터] : 몬스터의 "+main.Main_ServerOption.statWILL+"를 설정해 주세요!");
+				player.sendMessage("§3(1 ~ "+Integer.MAX_VALUE+")");
 				u.setString(player, (byte)1, "WILL");
 			}
 			return;
@@ -189,9 +189,9 @@ public class Monster_Chat extends Util_Chat
 				monsterListYaml.saveConfig();
 				main.Main_ServerOption.MonsterList.get(u.getString(player, (byte)2)).setWILL(Integer.parseInt(message));
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.GRAY+"("+main.Main_ServerOption.LUK+"은 몬스터의 크리티컬 확률을 크게 상승시켜 줍니다.)");
-				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 "+main.Main_ServerOption.LUK+"을 설정해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(1 ~ "+Integer.MAX_VALUE+")");
+				player.sendMessage("§7("+main.Main_ServerOption.statLUK+"은 몬스터의 크리티컬 확률을 크게 상승시켜 줍니다.)");
+				player.sendMessage("§a[몬스터] : 몬스터의 "+main.Main_ServerOption.statLUK+"을 설정해 주세요!");
+				player.sendMessage("§3(1 ~ "+Integer.MAX_VALUE+")");
 				u.setString(player, (byte)1, "LUK");
 			}
 			return;
@@ -202,9 +202,9 @@ public class Monster_Chat extends Util_Chat
 				monsterListYaml.saveConfig();
 				main.Main_ServerOption.MonsterList.get(u.getString(player, (byte)2)).setDEF(Integer.parseInt(message));
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.GRAY+"(보호는 몬스터의 물리 저항력을 상승시켜 줍니다.)");
-				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 보호를 설정해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(1 ~ "+Integer.MAX_VALUE+")");
+				player.sendMessage("§7(보호는 몬스터의 물리 저항력을 상승시켜 줍니다.)");
+				player.sendMessage("§a[몬스터] : 몬스터의 보호를 설정해 주세요!");
+				player.sendMessage("§3(1 ~ "+Integer.MAX_VALUE+")");
 				u.setString(player, (byte)1, "Protect");
 			}
 			return;
@@ -215,9 +215,9 @@ public class Monster_Chat extends Util_Chat
 				monsterListYaml.saveConfig();
 				main.Main_ServerOption.MonsterList.get(u.getString(player, (byte)2)).setPRO(Integer.parseInt(message));
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.GRAY+"(마법 방어는 몬스터의 마법 방어력을 상승시켜 줍니다.)");
-				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 마법 방어를 설정해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(1 ~ "+Integer.MAX_VALUE+")");
+				player.sendMessage("§7(마법 방어는 몬스터의 마법 방어력을 상승시켜 줍니다.)");
+				player.sendMessage("§a[몬스터] : 몬스터의 마법 방어를 설정해 주세요!");
+				player.sendMessage("§3(1 ~ "+Integer.MAX_VALUE+")");
 				u.setString(player, (byte)1, "Magic_DEF");
 			}
 			return;
@@ -228,9 +228,9 @@ public class Monster_Chat extends Util_Chat
 				monsterListYaml.saveConfig();
 				main.Main_ServerOption.MonsterList.get(u.getString(player, (byte)2)).setMDEF(Integer.parseInt(message));
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.GRAY+"(마법 보호는 몬스터의 마법 저항력을 상승시켜 줍니다.)");
-				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 마법 보호를 설정해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(1 ~ "+Integer.MAX_VALUE+")");
+				player.sendMessage("§7(마법 보호는 몬스터의 마법 저항력을 상승시켜 줍니다.)");
+				player.sendMessage("§a[몬스터] : 몬스터의 마법 보호를 설정해 주세요!");
+				player.sendMessage("§3(1 ~ "+Integer.MAX_VALUE+")");
 				u.setString(player, (byte)1, "Magic_Protect");
 			}
 			return;
@@ -240,9 +240,9 @@ public class Monster_Chat extends Util_Chat
 				monsterListYaml.set(u.getString(player, (byte)2)+"."+u.getString(player, (byte)1), Integer.parseInt(message));
 				monsterListYaml.saveConfig();
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.GRAY+"(확률 계산 : 1000 = 100%, 1 = 0.1%)");
-				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 갑옷 드랍률을 설정해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ 1000)");
+				player.sendMessage("§7(확률 계산 : 1000 = 100%, 1 = 0.1%)");
+				player.sendMessage("§a[몬스터] : 몬스터의 갑옷 드랍률을 설정해 주세요!");
+				player.sendMessage("§3(0 ~ 1000)");
 				u.setString(player, (byte)1, "Chest.DropChance");
 			}
 			return;
@@ -252,9 +252,9 @@ public class Monster_Chat extends Util_Chat
 				monsterListYaml.set(u.getString(player, (byte)2)+"."+u.getString(player, (byte)1), Integer.parseInt(message));
 				monsterListYaml.saveConfig();
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.GRAY+"(확률 계산 : 1000 = 100%, 1 = 0.1%)");
-				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 바지 드랍률을 설정해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ 1000)");
+				player.sendMessage("§7(확률 계산 : 1000 = 100%, 1 = 0.1%)");
+				player.sendMessage("§a[몬스터] : 몬스터의 바지 드랍률을 설정해 주세요!");
+				player.sendMessage("§3(0 ~ 1000)");
 				u.setString(player, (byte)1, "Leggings.DropChance");
 			}
 			return;
@@ -264,9 +264,9 @@ public class Monster_Chat extends Util_Chat
 				monsterListYaml.set(u.getString(player, (byte)2)+"."+u.getString(player, (byte)1), Integer.parseInt(message));
 				monsterListYaml.saveConfig();
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.GRAY+"(확률 계산 : 1000 = 100%, 1 = 0.1%)");
-				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 부츠 드랍률을 설정해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ 1000)");
+				player.sendMessage("§7(확률 계산 : 1000 = 100%, 1 = 0.1%)");
+				player.sendMessage("§a[몬스터] : 몬스터의 부츠 드랍률을 설정해 주세요!");
+				player.sendMessage("§3(0 ~ 1000)");
 				u.setString(player, (byte)1, "Boots.DropChance");
 			}
 			return;
@@ -276,9 +276,9 @@ public class Monster_Chat extends Util_Chat
 				monsterListYaml.set(u.getString(player, (byte)2)+"."+u.getString(player, (byte)1), Integer.parseInt(message));
 				monsterListYaml.saveConfig();
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.GRAY+"(확률 계산 : 1000 = 100%, 1 = 0.1%)");
-				player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 무기 드랍률을 설정해 주세요!");
-				player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ 1000)");
+				player.sendMessage("§7(확률 계산 : 1000 = 100%, 1 = 0.1%)");
+				player.sendMessage("§a[몬스터] : 몬스터의 무기 드랍률을 설정해 주세요!");
+				player.sendMessage("§3(0 ~ 1000)");
 				u.setString(player, (byte)1, "Hand.DropChance");
 			}
 			return;

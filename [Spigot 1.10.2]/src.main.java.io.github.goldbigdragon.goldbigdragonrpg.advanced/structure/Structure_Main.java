@@ -95,30 +95,30 @@ public class Structure_Main
 		STSO.setInt((byte)7, (int) RSLock.getBlock().getData());//레드 스톤 블록 위치의 원래 블록 DATA
 
 		
-		player.sendMessage(ChatColor.YELLOW+"[SYSTEM] : 구조물 설치가 되지 않을 경우, 서버 설정에서 커맨드 블록 사용을 활성화 시켜 주세요!");
+		player.sendMessage("§e[SYSTEM] : 구조물 설치가 되지 않을 경우, 서버 설정에서 커맨드 블록 사용을 활성화 시켜 주세요!");
 		servertick.ServerTick_Main.Schedule.put(servertick.ServerTick_Main.nowUTC, STSO);
 	}
 	
 	public String getCMD(String StructureName, int LineNumber, String StructureCode, String Direction)
 	{
-		if(StructureName.compareTo("PB")==0)
+		if(StructureName.equals("PB"))
 			return new Struct_PostBox().CreatePostBox(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
-		else if(StructureName.compareTo("B")==0)
+		else if(StructureName.equals("B"))
 			return new Struct_Board().CreateBoard(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
-		else if(StructureName.compareTo("TB")==0)
+		else if(StructureName.equals("TB"))
 			return new Struct_TradeBoard().CreateTradeBoard(LineNumber,StructureCode,(byte) Byte.parseByte(Direction));
-		else if(StructureName.compareTo("CF")==0)
+		else if(StructureName.equals("CF"))
 			return new Struct_CampFire().CreateCampFire(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
 
-		else if(StructureName.compareTo("A_M")==0)
+		else if(StructureName.equals("A_M"))
 			return new Struct_Altar().CreateMossyAltar(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
-		else if(StructureName.compareTo("A_GoldBigDragon")==0)
+		else if(StructureName.equals("A_GoldBigDragon"))
 			return new Struct_Altar().CreateGoldBigDragon1(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
-		else if(StructureName.compareTo("A_SH")==0)
+		else if(StructureName.equals("A_SH"))
 			return new Struct_Altar().CreateStoneHenge(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
-		else if(StructureName.compareTo("A_AB")==0)
+		else if(StructureName.equals("A_AB"))
 			return new Struct_Altar().CreateAtonomicBoard(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
-		else if(StructureName.compareTo("A_TEST")==0)
+		else if(StructureName.equals("A_TEST"))
 			return new Struct_Altar().CreateTestAltar(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
 		return "null";
 	}
@@ -148,27 +148,27 @@ public class Structure_Main
 		
 
 		String Structrue = ChatColor.stripColor(StructureName);
-		if(Structrue.compareTo("[우편함]")==0)
+		if(Structrue.equals("[우편함]"))
 		{
 			SoundEffect.SP(player, Sound.BLOCK_CHEST_OPEN, 0.8F, 1.0F);
 			new Struct_PostBox().PostBoxMainGUI(player, (byte) 0);
 		}
-		else if(Structrue.compareTo("[게시판]")==0)
+		else if(Structrue.equals("[게시판]"))
 		{
 			SoundEffect.SP(player, Sound.ENTITY_ZOMBIE_ATTACK_DOOR_WOOD, 0.5F, 1.8F);
 			new Struct_Board().BoardMainGUI(player,StructureName, (byte) 0);
 		}
-		else if(Structrue.compareTo("[거래 게시판]")==0)
+		else if(Structrue.equals("[거래 게시판]"))
 		{
 			SoundEffect.SP(player, Sound.ENTITY_VILLAGER_AMBIENT, 1.0F, 1.0F);
 			new Struct_TradeBoard().TradeBoardMainGUI(player, (byte)0, (byte)0);
 		}
-		else if(Structrue.compareTo("[모닥불]")==0)
+		else if(Structrue.equals("[모닥불]"))
 		{
 			SoundEffect.SP(player, Sound.BLOCK_FIRE_AMBIENT, 2.0F, 1.0F);
 			new Struct_CampFire().CampFireMainGUI(player, StructureName);
 		}
-		else if(Structrue.compareTo("[제단]")==0)
+		else if(Structrue.equals("[제단]"))
 		{
 			SoundEffect.SP(player, Sound.AMBIENT_CAVE, 1.2F, 1.2F);
 			new dungeon.Dungeon_GUI().AltarUseGUI(player, StructureName);

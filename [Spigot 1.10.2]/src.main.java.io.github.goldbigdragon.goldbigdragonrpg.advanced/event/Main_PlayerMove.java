@@ -19,7 +19,7 @@ public class Main_PlayerMove implements Listener
 		if(new corpse.Corpse_Main().DeathCapture(player,false))
 			return;
 
-		if(player.getLocation().getWorld().getName().compareTo("Dungeon")!=0)
+		if(!player.getLocation().getWorld().getName().equals("Dungeon"))
 		{
 			if(main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getDungeon_Enter() != null)
 			{
@@ -33,7 +33,7 @@ public class Main_PlayerMove implements Listener
 					main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setETC_CurrentArea("null");
 				area.Area_Main A = new area.Area_Main();
 				String Area = A.getAreaName(event.getPlayer())[0];
-				if(main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getETC_CurrentArea().compareTo(Area) != 0)
+				if(!main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getETC_CurrentArea().equals(Area))
 				{
 					main.Main_ServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setETC_CurrentArea(Area);
 					main.Main_ServerOption.PlayerCurrentArea.put(player, Area);
@@ -61,9 +61,9 @@ public class Main_PlayerMove implements Listener
 						String[] startedQuestList = playerQuestYaml.getConfigurationSection("Started").getKeys(false).toArray(new String[0]);
 						for(int count = 0; count < startedQuestList.length; count++)
 						{
-							if(playerQuestYaml.getString("Started."+startedQuestList[count]+".Type").compareTo("Visit")==0)
+							if(playerQuestYaml.getString("Started."+startedQuestList[count]+".Type").equals("Visit"))
 							{
-								if(playerQuestYaml.getString("Started."+startedQuestList[count]+".AreaName").compareTo(Area)==0)
+								if(playerQuestYaml.getString("Started."+startedQuestList[count]+".AreaName").equals(Area))
 									{
 										playerQuestYaml.set("Started."+startedQuestList[count]+".Type",questYaml.getString(startedQuestList[count]+".FlowChart."+(playerQuestYaml.getInt("Started."+startedQuestList[count]+".Flow")+1)+".Type"));
 										playerQuestYaml.set("Started."+startedQuestList[count]+".Flow",playerQuestYaml.getInt("Started."+startedQuestList[count]+".Flow")+1);

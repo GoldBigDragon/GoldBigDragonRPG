@@ -40,27 +40,27 @@ public class Monster_GUI extends Util_GUI
 			String MonsterName =a[count].toString();
 			String Lore=null;
 			
-			Lore = "%enter%"+"§f§l 이름 : "+ChatColor.WHITE+monsterListYaml.getString(MonsterName+".Name")+"%enter%";
-			Lore = Lore+"§f§l 타입 : "+ChatColor.WHITE+monsterListYaml.getString(MonsterName+".Type")+"%enter%";
-			Lore = Lore+"§f§l 스폰 바이옴 : "+ChatColor.WHITE+monsterListYaml.getString(MonsterName+".Biome")+"%enter%";
-			Lore = Lore+"§c§l 생명력 : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".HP")+"%enter%";
-			Lore = Lore+"§b§l 경험치 : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".EXP")+"%enter%";
-			Lore = Lore+"§e§l 드랍 금액 : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".MIN_Money")+" ~ "+monsterListYaml.getInt(MonsterName+".MAX_Money")+"%enter%";
-			Lore = Lore+"§c§l "+Main_ServerOption.STR+" : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".STR")
-			+ChatColor.GRAY+ " [물공 : " + Battle_Calculator.CombatDamageGet(null, 0, monsterListYaml.getInt(MonsterName+".STR"), true) + " ~ " + Battle_Calculator.CombatDamageGet(null, 0, monsterListYaml.getInt(MonsterName+".STR"), false) + "]%enter%";
-			Lore = Lore+"§a§l "+Main_ServerOption.DEX+" : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".DEX")
-			+ChatColor.GRAY+ " [활공 : " + Battle_Calculator.returnRangeDamageValue(null, monsterListYaml.getInt(MonsterName+".DEX"), 0, true) + " ~ " + Battle_Calculator.returnRangeDamageValue(null, monsterListYaml.getInt(MonsterName+".DEX"), 0, false) + "]%enter%";
-			Lore = Lore+"§9§l "+Main_ServerOption.INT+" : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".INT")
-			+ChatColor.GRAY+ " [폭공 : " + (monsterListYaml.getInt(MonsterName+".INT")/4)+ " ~ "+(int)(monsterListYaml.getInt(MonsterName+".INT")/2.5)+"]%enter%";
-			Lore = Lore+"§7§l "+Main_ServerOption.WILL+" : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".WILL")
-			+ChatColor.GRAY+ " [크리 : " + Battle_Calculator.getCritical(null,monsterListYaml.getInt(MonsterName+".LUK"), (int)monsterListYaml.getInt(MonsterName+".WILL"),0) + " %]%enter%";
-			Lore = Lore+"§e§l "+Main_ServerOption.LUK+" : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".LUK")
-			+ChatColor.GRAY+ " [크리 : " + Battle_Calculator.getCritical(null,monsterListYaml.getInt(MonsterName+".LUK"), (int)monsterListYaml.getInt(MonsterName+".WILL"),0) + " %]%enter%";
-			Lore = Lore+"§7§l 방어 : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".DEF")+"%enter%";
-			Lore = Lore+"§b§l 보호 : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".Protect")+"%enter%";
-			Lore = Lore+"§9§l 마법 방어 : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".Magic_DEF")+"%enter%";
-			Lore = Lore+"§1§l 마법 보호 : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".Magic_Protect")+"%enter%";
-			Lore = Lore+"%enter%"+"§e§l[Shift + 좌 클릭시 스폰알 지급]"+"%enter%"+"§c§l[Shift + 우 클릭시 몬스터 제거]";
+			Lore = "%enter%§f§l 이름 : §f"+monsterListYaml.getString(MonsterName+".Name")+"%enter%";
+			Lore = Lore+"§f§l 타입 : §f"+monsterListYaml.getString(MonsterName+".Type")+"%enter%";
+			Lore = Lore+"§f§l 스폰 바이옴 : §f"+monsterListYaml.getString(MonsterName+".Biome")+"%enter%";
+			Lore = Lore+"§c§l 생명력 : §f"+monsterListYaml.getInt(MonsterName+".HP")+"%enter%";
+			Lore = Lore+"§b§l 경험치 : §f"+monsterListYaml.getInt(MonsterName+".EXP")+"%enter%";
+			Lore = Lore+"§e§l 드랍 금액 : §f"+monsterListYaml.getInt(MonsterName+".MIN_Money")+" ~ "+monsterListYaml.getInt(MonsterName+".MAX_Money")+"%enter%";
+			Lore = Lore+"§c§l "+Main_ServerOption.statSTR+" : §f"+monsterListYaml.getInt(MonsterName+".STR")
+			+"§7 [물공 : " + Battle_Calculator.CombatDamageGet(null, 0, monsterListYaml.getInt(MonsterName+".STR"), true) + " ~ " + Battle_Calculator.CombatDamageGet(null, 0, monsterListYaml.getInt(MonsterName+".STR"), false) + "]%enter%";
+			Lore = Lore+"§a§l "+Main_ServerOption.statDEX+" : §f"+monsterListYaml.getInt(MonsterName+".DEX")
+			+"§7 [활공 : " + Battle_Calculator.returnRangeDamageValue(null, monsterListYaml.getInt(MonsterName+".DEX"), 0, true) + " ~ " + Battle_Calculator.returnRangeDamageValue(null, monsterListYaml.getInt(MonsterName+".DEX"), 0, false) + "]%enter%";
+			Lore = Lore+"§9§l "+Main_ServerOption.statINT+" : §f"+monsterListYaml.getInt(MonsterName+".INT")
+			+"§7 [폭공 : " + (monsterListYaml.getInt(MonsterName+".INT")/4)+ " ~ "+(int)(monsterListYaml.getInt(MonsterName+".INT")/2.5)+"]%enter%";
+			Lore = Lore+"§7§l "+Main_ServerOption.statWILL+" : §f"+monsterListYaml.getInt(MonsterName+".WILL")
+			+"§7 [크리 : " + Battle_Calculator.getCritical(null,monsterListYaml.getInt(MonsterName+".LUK"), (int)monsterListYaml.getInt(MonsterName+".WILL"),0) + " %]%enter%";
+			Lore = Lore+"§e§l "+Main_ServerOption.statLUK+" : §f"+monsterListYaml.getInt(MonsterName+".LUK")
+			+"§7 [크리 : " + Battle_Calculator.getCritical(null,monsterListYaml.getInt(MonsterName+".LUK"), (int)monsterListYaml.getInt(MonsterName+".WILL"),0) + " %]%enter%";
+			Lore = Lore+"§7§l 방어 : §f"+monsterListYaml.getInt(MonsterName+".DEF")+"%enter%";
+			Lore = Lore+"§b§l 보호 : §f"+monsterListYaml.getInt(MonsterName+".Protect")+"%enter%";
+			Lore = Lore+"§9§l 마법 방어 : §f"+monsterListYaml.getInt(MonsterName+".Magic_DEF")+"%enter%";
+			Lore = Lore+"§1§l 마법 보호 : §f"+monsterListYaml.getInt(MonsterName+".Magic_Protect")+"%enter%";
+			Lore = Lore+"%enter%§e§l[Shift + 좌 클릭시 스폰알 지급]%enter%§c§l[Shift + 우 클릭시 몬스터 제거]";
 
 			String[] scriptA = Lore.split("%enter%");
 			for(int counter = 0; counter < scriptA.length; counter++)
@@ -102,18 +102,18 @@ public class Monster_GUI extends Util_GUI
 				//case "휴먼" : id=379; data = 3; break;
 			}
 			
-			Stack(ChatColor.WHITE+MonsterName, id, data, 1,Arrays.asList(scriptA), loc, inv);
+			Stack("§f"+MonsterName, id, data, 1,Arrays.asList(scriptA), loc, inv);
 			loc++;
 		}
 		
 		if(a.length-(page*44)>45)
-			Stack("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+			Stack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+			Stack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack("§f§l새 몬스터", 339,0,1,Arrays.asList(ChatColor.GRAY + "새로운 몬스터를 생성합니다."), 49, inv);
-		Stack("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 53, inv);
+		Stack("§f§l새 몬스터", 339,0,1,Arrays.asList("§7새로운 몬스터를 생성합니다."), 49, inv);
+		Stack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -126,40 +126,40 @@ public class Monster_GUI extends Util_GUI
 		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0몬스터 설정");
 
 		String Lore=null;			
-		Lore = "%enter%"+"§f§l 이름 : "+ChatColor.WHITE+monsterListYaml.getString(MonsterName+".Name")+"%enter%";
-		Lore = Lore+"§f§l 타입 : "+ChatColor.WHITE+monsterListYaml.getString(MonsterName+".Type")+"%enter%";
-		Lore = Lore+"§f§l 스폰 바이옴 : "+ChatColor.WHITE+monsterListYaml.getString(MonsterName+".Biome")+"%enter%";
-		Lore = Lore+"§c§l 생명력 : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".HP")+"%enter%";
-		Lore = Lore+"§b§l 경험치 : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".EXP")+"%enter%";
-		Lore = Lore+"§e§l 드랍 금액 : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".MIN_Money")+" ~ "+monsterListYaml.getInt(MonsterName+".MAX_Money")+"%enter%";
-		Lore = Lore+"§c§l "+Main_ServerOption.STR+" : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".STR")
-		+ChatColor.GRAY+ " [물공 : " + Battle_Calculator.CombatDamageGet(null, 0, monsterListYaml.getInt(MonsterName+".STR"), true) + " ~ " + Battle_Calculator.CombatDamageGet(null, 0, monsterListYaml.getInt(MonsterName+".STR"), false) + "]%enter%";
-		Lore = Lore+"§a§l "+Main_ServerOption.DEX+" : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".DEX")
-		+ChatColor.GRAY+ " [활공 : " + Battle_Calculator.returnRangeDamageValue(null, monsterListYaml.getInt(MonsterName+".DEX"), 0, true) + " ~ " + Battle_Calculator.returnRangeDamageValue(null, monsterListYaml.getInt(MonsterName+".DEX"), 0, false) + "]%enter%";
-		Lore = Lore+"§9§l "+Main_ServerOption.INT+" : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".INT")
-		+ChatColor.GRAY+ " [폭공 : " + (monsterListYaml.getInt(MonsterName+".INT")/4)+ " ~ "+(int)(monsterListYaml.getInt(MonsterName+".INT")/2.5)+"]%enter%";
-		Lore = Lore+"§7§l "+Main_ServerOption.WILL+" : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".WILL")
-		+ChatColor.GRAY+ " [크리 : " + Battle_Calculator.getCritical(null,monsterListYaml.getInt(MonsterName+".LUK"), (int)monsterListYaml.getInt(MonsterName+".WILL"),0) + " %]%enter%";
-		Lore = Lore+"§e§l "+Main_ServerOption.LUK+" : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".LUK")
-		+ChatColor.GRAY+ " [크리 : " + Battle_Calculator.getCritical(null,monsterListYaml.getInt(MonsterName+".LUK"), (int)monsterListYaml.getInt(MonsterName+".WILL"),0) + " %]%enter%";
-		Lore = Lore+"§7§l 방어 : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".DEF")+"%enter%";
-		Lore = Lore+"§b§l 보호 : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".Protect")+"%enter%";
-		Lore = Lore+"§9§l 마법 방어 : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".Magic_DEF")+"%enter%";
-		Lore = Lore+"§1§l 마법 보호 : "+ChatColor.WHITE+monsterListYaml.getInt(MonsterName+".Magic_Protect")+"%enter%";
+		Lore = "%enter%§f§l 이름 : §f"+monsterListYaml.getString(MonsterName+".Name")+"%enter%";
+		Lore = Lore+"§f§l 타입 : §f"+monsterListYaml.getString(MonsterName+".Type")+"%enter%";
+		Lore = Lore+"§f§l 스폰 바이옴 : §f"+monsterListYaml.getString(MonsterName+".Biome")+"%enter%";
+		Lore = Lore+"§c§l 생명력 : §f"+monsterListYaml.getInt(MonsterName+".HP")+"%enter%";
+		Lore = Lore+"§b§l 경험치 : §f"+monsterListYaml.getInt(MonsterName+".EXP")+"%enter%";
+		Lore = Lore+"§e§l 드랍 금액 : §f"+monsterListYaml.getInt(MonsterName+".MIN_Money")+" ~ "+monsterListYaml.getInt(MonsterName+".MAX_Money")+"%enter%";
+		Lore = Lore+"§c§l "+Main_ServerOption.statSTR+" : §f"+monsterListYaml.getInt(MonsterName+".STR")
+		+"§7 [물공 : " + Battle_Calculator.CombatDamageGet(null, 0, monsterListYaml.getInt(MonsterName+".STR"), true) + " ~ " + Battle_Calculator.CombatDamageGet(null, 0, monsterListYaml.getInt(MonsterName+".STR"), false) + "]%enter%";
+		Lore = Lore+"§a§l "+Main_ServerOption.statDEX+" : §f"+monsterListYaml.getInt(MonsterName+".DEX")
+		+"§7 [활공 : " + Battle_Calculator.returnRangeDamageValue(null, monsterListYaml.getInt(MonsterName+".DEX"), 0, true) + " ~ " + Battle_Calculator.returnRangeDamageValue(null, monsterListYaml.getInt(MonsterName+".DEX"), 0, false) + "]%enter%";
+		Lore = Lore+"§9§l "+Main_ServerOption.statINT+" : §f"+monsterListYaml.getInt(MonsterName+".INT")
+		+"§7 [폭공 : " + (monsterListYaml.getInt(MonsterName+".INT")/4)+ " ~ "+(int)(monsterListYaml.getInt(MonsterName+".INT")/2.5)+"]%enter%";
+		Lore = Lore+"§7§l "+Main_ServerOption.statWILL+" : §f"+monsterListYaml.getInt(MonsterName+".WILL")
+		+"§7 [크리 : " + Battle_Calculator.getCritical(null,monsterListYaml.getInt(MonsterName+".LUK"), (int)monsterListYaml.getInt(MonsterName+".WILL"),0) + " %]%enter%";
+		Lore = Lore+"§e§l "+Main_ServerOption.statLUK+" : §f"+monsterListYaml.getInt(MonsterName+".LUK")
+		+"§7 [크리 : " + Battle_Calculator.getCritical(null,monsterListYaml.getInt(MonsterName+".LUK"), (int)monsterListYaml.getInt(MonsterName+".WILL"),0) + " %]%enter%";
+		Lore = Lore+"§7§l 방어 : §f"+monsterListYaml.getInt(MonsterName+".DEF")+"%enter%";
+		Lore = Lore+"§b§l 보호 : §f"+monsterListYaml.getInt(MonsterName+".Protect")+"%enter%";
+		Lore = Lore+"§9§l 마법 방어 : §f"+monsterListYaml.getInt(MonsterName+".Magic_DEF")+"%enter%";
+		Lore = Lore+"§1§l 마법 보호 : §f"+monsterListYaml.getInt(MonsterName+".Magic_Protect")+"%enter%";
 
 		
 		String[] scriptA = Lore.split("%enter%");
 		for(int counter = 0; counter < scriptA.length; counter++)
 			scriptA[counter] =  " "+scriptA[counter];
 
-		Stack2(ChatColor.RED + "[    몬스터    ]", 52,0,1,null, 9, inv);
-		Stack2(ChatColor.RED + "[    몬스터    ]", 52,0,1,null, 10, inv);
-		Stack2(ChatColor.RED + "[    몬스터    ]", 52,0,1,null, 11, inv);
-		Stack2(ChatColor.RED + "[    몬스터    ]", 52,0,1,null, 18, inv);
-		Stack2(ChatColor.RED + "[    몬스터    ]", 52,0,1,null, 20, inv);
-		Stack2(ChatColor.RED + "[    몬스터    ]", 52,0,1,null, 27, inv);
-		Stack2(ChatColor.RED + "[    몬스터    ]", 52,0,1,null, 28, inv);
-		Stack2(ChatColor.RED + "[    몬스터    ]", 52,0,1,null, 29, inv);
+		Stack2("§c[    몬스터    ]", 52,0,1,null, 9, inv);
+		Stack2("§c[    몬스터    ]", 52,0,1,null, 10, inv);
+		Stack2("§c[    몬스터    ]", 52,0,1,null, 11, inv);
+		Stack2("§c[    몬스터    ]", 52,0,1,null, 18, inv);
+		Stack2("§c[    몬스터    ]", 52,0,1,null, 20, inv);
+		Stack2("§c[    몬스터    ]", 52,0,1,null, 27, inv);
+		Stack2("§c[    몬스터    ]", 52,0,1,null, 28, inv);
+		Stack2("§c[    몬스터    ]", 52,0,1,null, 29, inv);
 		int id = 383;
 		byte data = 0;
 		String Type = monsterListYaml.getString(MonsterName+".Type");
@@ -200,11 +200,11 @@ public class Monster_GUI extends Util_GUI
 			//case "휴먼" : id=379; data=3;break;
 		}
 
-		Stack2(ChatColor.WHITE + MonsterName, id,data,1,Arrays.asList(scriptA), 19, inv);
+		Stack2("§f"+ MonsterName, id,data,1,Arrays.asList(scriptA), 19, inv);
 		
 		
-		Stack2(ChatColor.DARK_AQUA + "[    이름 변경    ]", 421,0,1,Arrays.asList(ChatColor.WHITE+"몬스터의 이름을",ChatColor.WHITE+"변경합니다.","",ChatColor.WHITE+"[    현재 이름    ]"," "+ChatColor.WHITE+monsterListYaml.getString(MonsterName+".Name"),""), 13, inv);
-		Stack2(ChatColor.DARK_AQUA + "[    타입 변경    ]", 383,0,1,Arrays.asList(ChatColor.WHITE+"몬스터의 타입을",ChatColor.WHITE+"변경합니다.","",ChatColor.WHITE+"[    현재 타입    ]"," "+ChatColor.WHITE+monsterListYaml.getString(MonsterName+".Type"),""), 14, inv);
+		Stack2("§3[    이름 변경    ]", 421,0,1,Arrays.asList("§f몬스터의 이름을","§f변경합니다.","","§f[    현재 이름    ]"," §f"+monsterListYaml.getString(MonsterName+".Name"),""), 13, inv);
+		Stack2("§3[    타입 변경    ]", 383,0,1,Arrays.asList("§f몬스터의 타입을","§f변경합니다.","","§f[    현재 타입    ]"," §f"+monsterListYaml.getString(MonsterName+".Type"),""), 14, inv);
 
 		data = 0;
 		switch(monsterListYaml.getString(MonsterName+".Biome"))
@@ -227,44 +227,44 @@ public class Monster_GUI extends Util_GUI
 		default : id=166;break;
 		}
 		
-		Stack2(ChatColor.DARK_AQUA + "[ 스폰 바이옴 변경 ]", id,data,1,Arrays.asList(ChatColor.WHITE+"몬스터가 등장하는",ChatColor.WHITE+"바이옴을 변경합니다.","",ChatColor.WHITE+"[    등장 바이옴    ]"," "+ChatColor.WHITE+monsterListYaml.getString(MonsterName+".Biome"),""), 15, inv);
-		Stack2(ChatColor.DARK_AQUA + "[    생명력 변경    ]", 351,1,1,Arrays.asList(ChatColor.WHITE+"몬스터의 생명력을",ChatColor.WHITE+"변경합니다.","",ChatColor.WHITE+"[    현재 생명력    ]"," "+ChatColor.WHITE+""+monsterListYaml.getInt(MonsterName+".HP"),""), 16, inv);
-		Stack2(ChatColor.DARK_AQUA + "[    경험치 변경    ]", 384,0,1,Arrays.asList(ChatColor.WHITE+"몬스터 사냥시 얻는",ChatColor.WHITE+"경험치 량을 변경합니다.","",ChatColor.WHITE+"[    현재 경험치    ]"," "+ChatColor.WHITE+""+monsterListYaml.getInt(MonsterName+".EXP"),""), 22, inv);
-		Stack2(ChatColor.DARK_AQUA + "[  드랍 금액 변경  ]", 266,0,1,Arrays.asList(ChatColor.WHITE+"몬스터 사냥시 얻는",ChatColor.WHITE+"금액을 변경합니다.","",ChatColor.WHITE+"[    현재 금액    ]"," "+ChatColor.WHITE+""+monsterListYaml.getInt(MonsterName+".MIN_Money")+" ~ "+monsterListYaml.getInt(MonsterName+".MAX_Money"),""), 23, inv);
-		Stack2(ChatColor.DARK_AQUA + "[    장비 변경    ]", 307,0,1,Arrays.asList(ChatColor.WHITE+"몬스터의 장비를",ChatColor.WHITE+"설정 합니다.","",ChatColor.YELLOW+"[    좌클릭시 변경    ]",""), 24, inv);
-		Stack2(ChatColor.DARK_AQUA + "[  장비 드랍률 변경  ]", 54,0,1,Arrays.asList(ChatColor.WHITE+"몬스터 사냥시 드랍되는",ChatColor.WHITE+"장비 확룰을 변경합니다.","",ChatColor.WHITE+"[    현재 드랍률    ]"," "+ChatColor.WHITE+"머리 : "+monsterListYaml.getInt(MonsterName+".Head.DropChance")/10.0+"%"
-				," "+ChatColor.WHITE+"갑옷 : "+monsterListYaml.getInt(MonsterName+".Chest.DropChance")/10.0+"%"
-				," "+ChatColor.WHITE+"바지 : "+monsterListYaml.getInt(MonsterName+".Leggings.DropChance")/10.0+"%"
-				," "+ChatColor.WHITE+"신발 : "+monsterListYaml.getInt(MonsterName+".Boots.DropChance")/10.0+"%"
-				," "+ChatColor.WHITE+"무기 : "+monsterListYaml.getInt(MonsterName+".Hand.DropChance")/10.0+"%","",ChatColor.YELLOW+"[    좌클릭시 변경   ]",""), 25, inv);
-		Stack2(ChatColor.DARK_AQUA + "[  몬스터 스텟 변경  ]", 399,0,1,Arrays.asList(ChatColor.WHITE+"몬스터의 기본 스텟을",ChatColor.WHITE+"변경합니다.",""), 31, inv);
-		Stack2(ChatColor.DARK_AQUA + "[  몬스터 방어 변경  ]", 310,0,1,Arrays.asList(ChatColor.WHITE+"몬스터의 방어 및 보호를",ChatColor.WHITE+"변경합니다.",""), 32, inv);
+		Stack2("§3[ 스폰 바이옴 변경 ]", id,data,1,Arrays.asList("§f몬스터가 등장하는","§f바이옴을 변경합니다.","","§f[    등장 바이옴    ]"," §f"+monsterListYaml.getString(MonsterName+".Biome"),""), 15, inv);
+		Stack2("§3[    생명력 변경    ]", 351,1,1,Arrays.asList("§f몬스터의 생명력을","§f변경합니다.","","§f[    현재 생명력    ]"," §f"+monsterListYaml.getInt(MonsterName+".HP"),""), 16, inv);
+		Stack2("§3[    경험치 변경    ]", 384,0,1,Arrays.asList("§f몬스터 사냥시 얻는","§f경험치 량을 변경합니다.","","§f[    현재 경험치    ]"," §f"+monsterListYaml.getInt(MonsterName+".EXP"),""), 22, inv);
+		Stack2("§3[  드랍 금액 변경  ]", 266,0,1,Arrays.asList("§f몬스터 사냥시 얻는","§f금액을 변경합니다.","","§f[    현재 금액    ]"," §f"+monsterListYaml.getInt(MonsterName+".MIN_Money")+" ~ "+monsterListYaml.getInt(MonsterName+".MAX_Money"),""), 23, inv);
+		Stack2("§3[    장비 변경    ]", 307,0,1,Arrays.asList("§f몬스터의 장비를","§f설정 합니다.","","§e[    좌클릭시 변경    ]",""), 24, inv);
+		Stack2("§3[  장비 드랍률 변경  ]", 54,0,1,Arrays.asList("§f몬스터 사냥시 드랍되는","§f장비 확룰을 변경합니다.","","§f[    현재 드랍률    ]"," §f머리 : "+monsterListYaml.getInt(MonsterName+".Head.DropChance")/10.0+"%"
+				," §f갑옷 : "+monsterListYaml.getInt(MonsterName+".Chest.DropChance")/10.0+"%"
+				," §f바지 : "+monsterListYaml.getInt(MonsterName+".Leggings.DropChance")/10.0+"%"
+				," §f신발 : "+monsterListYaml.getInt(MonsterName+".Boots.DropChance")/10.0+"%"
+				," §f무기 : "+monsterListYaml.getInt(MonsterName+".Hand.DropChance")/10.0+"%","","§e[    좌클릭시 변경   ]",""), 25, inv);
+		Stack2("§3[  몬스터 스텟 변경  ]", 399,0,1,Arrays.asList("§f몬스터의 기본 스텟을","§f변경합니다.",""), 31, inv);
+		Stack2("§3[  몬스터 방어 변경  ]", 310,0,1,Arrays.asList("§f몬스터의 방어 및 보호를","§f변경합니다.",""), 32, inv);
 		
-		Lore = ChatColor.WHITE+"몬스터의 AI를 변경합니다.%enter%%enter%"+ChatColor.WHITE+"[    현재 AI    ]%enter%"+ChatColor.WHITE+monsterListYaml.getString(MonsterName+".AI")+"%enter%%enter%";
-		if(Type.compareTo("초대형슬라임")==0||Type.compareTo("특대슬라임")==0||Type.compareTo("큰슬라임")==0||
-		Type.compareTo("보통슬라임")==0||Type.compareTo("작은슬라임")==0||Type.compareTo("큰마그마큐브")==0||Type.compareTo("특대마그마큐브")==0||Type.compareTo("보통마그마큐브")==0||
-		Type.compareTo("마그마큐브")==0||Type.compareTo("작은마그마큐브")==0||Type.compareTo("가스트")==0||Type.compareTo("위더")==0
-		||Type.compareTo("엔더드래곤")==0||Type.compareTo("셜커")==0||Type.compareTo("양")==0||Type.compareTo("소")==0
-		||Type.compareTo("돼지")==0||Type.compareTo("말")==0||Type.compareTo("박쥐")==0||Type.compareTo("토끼")==0
-		||Type.compareTo("오셀롯")==0||Type.compareTo("늑대")==0||Type.compareTo("닭")==0||Type.compareTo("버섯소")==0
-		||Type.compareTo("오징어")==0||Type.compareTo("주민")==0||Type.compareTo("눈사람")==0||Type.compareTo("골렘")==0
+		Lore = "§f몬스터의 AI를 변경합니다.%enter%%enter%§f[    현재 AI    ]%enter%§f"+monsterListYaml.getString(MonsterName+".AI")+"%enter%%enter%";
+		if(Type.equals("초대형슬라임")||Type.equals("특대슬라임")||Type.equals("큰슬라임")||
+		Type.equals("보통슬라임")||Type.equals("작은슬라임")||Type.equals("큰마그마큐브")||Type.equals("특대마그마큐브")||Type.equals("보통마그마큐브")||
+		Type.equals("마그마큐브")||Type.equals("작은마그마큐브")||Type.equals("가스트")||Type.equals("위더")
+		||Type.equals("엔더드래곤")||Type.equals("셜커")||Type.equals("양")||Type.equals("소")
+		||Type.equals("돼지")||Type.equals("말")||Type.equals("박쥐")||Type.equals("토끼")
+		||Type.equals("오셀롯")||Type.equals("늑대")||Type.equals("닭")||Type.equals("버섯소")
+		||Type.equals("오징어")||Type.equals("주민")||Type.equals("눈사람")||Type.equals("골렘")
 		)
-		Lore = Lore + ChatColor.RED + "[현재 선택 된 몬스터 타입은%enter%"+ChatColor.RED+"무조건 근접 AI만을 사용합니다.]";
+		Lore = Lore + "§c[현재 선택 된 몬스터 타입은%enter%§c무조건 근접 AI만을 사용합니다.]";
 		else
 		{
 			switch(monsterListYaml.getString(MonsterName+".AI"))
 			{
 			case "일반 행동" :
-				Lore = Lore+ChatColor.WHITE+"일반적인 행동을 합니다.%enter%";
+				Lore = Lore+"§f일반적인 행동을 합니다.%enter%";
 				break;
 			case "선공" :
-				Lore = Lore+ChatColor.WHITE+"무조건 선제 공격을합니다.%enter%";break;
+				Lore = Lore+"§f무조건 선제 공격을합니다.%enter%";break;
 			case "비선공" :
-				Lore = Lore+ChatColor.WHITE+"공격받기 전에는 공격하지 않습니다.%enter%";break;
+				Lore = Lore+"§f공격받기 전에는 공격하지 않습니다.%enter%";break;
 			case "무뇌아" :
-				Lore = Lore+ChatColor.WHITE+"공격및 이동을 하지 않습니다.%enter%";break;
+				Lore = Lore+"§f공격및 이동을 하지 않습니다.%enter%";break;
 			case "동물" :
-				Lore = Lore+ChatColor.WHITE+"공격받을 경우 도망치기 바쁘며,%enter%"+ChatColor.WHITE+"절대로 공격하지 않습니다.%enter%";break;
+				Lore = Lore+"§f공격받을 경우 도망치기 바쁘며,%enter%§f절대로 공격하지 않습니다.%enter%";break;
 			}
 		}
 		
@@ -273,11 +273,11 @@ public class Monster_GUI extends Util_GUI
 			scriptA[counter] =  " "+scriptA[counter];
 		
 		
-		Stack2(ChatColor.DARK_AQUA + "[  몬스터 AI 변경  ]", 137,0,1,Arrays.asList(scriptA), 33, inv);
-		Stack2(ChatColor.DARK_AQUA + "[    포션 효과    ]", 373,0,1,Arrays.asList(ChatColor.WHITE+"몬스터에게 포션 효과를",ChatColor.WHITE+"부여합니다.",""), 34, inv);
+		Stack2("§3[  몬스터 AI 변경  ]", 137,0,1,Arrays.asList(scriptA), 33, inv);
+		Stack2("§3[    포션 효과    ]", 373,0,1,Arrays.asList("§f몬스터에게 포션 효과를","§f부여합니다.",""), 34, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+MonsterName), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+MonsterName), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -288,30 +288,30 @@ public class Monster_GUI extends Util_GUI
 		String UniqueCode = "§0§0§8§0§2§r";
 		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0몬스터 포션");
 		
-		Stack2(ChatColor.DARK_AQUA + "[  재생  ]", 373,8193,1,Arrays.asList(ChatColor.WHITE+"[  포션 농도  ]",ChatColor.YELLOW+" "+monsterListYaml.getInt(MonsterName+".Potion.Regenerate")), 10, inv);
-		Stack2(ChatColor.DARK_AQUA + "[  독  ]", 373,8196,1,Arrays.asList(ChatColor.WHITE+"[  포션 농도  ]",ChatColor.YELLOW+" "+monsterListYaml.getInt(MonsterName+".Potion.Poison")), 11, inv);
-		Stack2(ChatColor.DARK_AQUA + "[  신속  ]", 373,8194,1,Arrays.asList(ChatColor.WHITE+"[  포션 농도  ]",ChatColor.YELLOW+" "+monsterListYaml.getInt(MonsterName+".Potion.Speed")), 12, inv);
-		Stack2(ChatColor.DARK_AQUA + "[  구속  ]", 373,8234,1,Arrays.asList(ChatColor.WHITE+"[  포션 농도  ]",ChatColor.YELLOW+" "+monsterListYaml.getInt(MonsterName+".Potion.Slow")), 13, inv);
-		Stack2(ChatColor.DARK_AQUA + "[  힘  ]", 373,8201,1,Arrays.asList(ChatColor.WHITE+"[  포션 농도  ]",ChatColor.YELLOW+" "+monsterListYaml.getInt(MonsterName+".Potion.Strength")), 14, inv);
-		Stack2(ChatColor.DARK_AQUA + "[  나약함  ]", 373,8232,1,Arrays.asList(ChatColor.WHITE+"[  포션 농도  ]",ChatColor.YELLOW+" "+monsterListYaml.getInt(MonsterName+".Potion.Weak")), 15, inv);
-		Stack2(ChatColor.DARK_AQUA + "[  도약  ]", 373,8267,1,Arrays.asList(ChatColor.WHITE+"[  포션 농도  ]",ChatColor.YELLOW+" "+monsterListYaml.getInt(MonsterName+".Potion.JumpBoost")), 16, inv);
+		Stack2("§3[  재생  ]", 373,8193,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Regenerate")), 10, inv);
+		Stack2("§3[  독  ]", 373,8196,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Poison")), 11, inv);
+		Stack2("§3[  신속  ]", 373,8194,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Speed")), 12, inv);
+		Stack2("§3[  구속  ]", 373,8234,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Slow")), 13, inv);
+		Stack2("§3[  힘  ]", 373,8201,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Strength")), 14, inv);
+		Stack2("§3[  나약함  ]", 373,8232,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Weak")), 15, inv);
+		Stack2("§3[  도약  ]", 373,8267,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.JumpBoost")), 16, inv);
 
 		if(monsterListYaml.getInt(MonsterName+".Potion.FireRegistance")!=0)
-			Stack2(ChatColor.DARK_AQUA + "[  화염 저항  ]", 373,8227,1,Arrays.asList(ChatColor.GREEN+"[  포션 적용  ]"), 19, inv);
+			Stack2("§3[  화염 저항  ]", 373,8227,1,Arrays.asList("§a[  포션 적용  ]"), 19, inv);
 		else
-			Stack2(ChatColor.DARK_AQUA + "[  화염 저항  ]", 166,0,1,Arrays.asList(ChatColor.RED+"[  포션 미적용  ]"), 19, inv);
+			Stack2("§3[  화염 저항  ]", 166,0,1,Arrays.asList("§c[  포션 미적용  ]"), 19, inv);
 		if(monsterListYaml.getInt(MonsterName+".Potion.WaterBreath")!=0)
-			Stack2(ChatColor.DARK_AQUA + "[  수중 호홉  ]", 373,8237,1,Arrays.asList(ChatColor.GREEN+"[  포션 적용  ]"), 20, inv);
+			Stack2("§3[  수중 호홉  ]", 373,8237,1,Arrays.asList("§a[  포션 적용  ]"), 20, inv);
 		else
-			Stack2(ChatColor.DARK_AQUA + "[  수중 호홉  ]", 166,0,1,Arrays.asList(ChatColor.RED+"[  포션 미적용  ]"), 20, inv);
+			Stack2("§3[  수중 호홉  ]", 166,0,1,Arrays.asList("§c[  포션 미적용  ]"), 20, inv);
 		if(monsterListYaml.getInt(MonsterName+".Potion.Invisible")!=0)
-			Stack2(ChatColor.DARK_AQUA + "[  투명  ]", 373,8238,1,Arrays.asList(ChatColor.GREEN+"[  포션 적용  ]"), 21, inv);
+			Stack2("§3[  투명  ]", 373,8238,1,Arrays.asList("§a[  포션 적용  ]"), 21, inv);
 		else
-			Stack2(ChatColor.DARK_AQUA + "[  투명  ]", 166,0,1,Arrays.asList(ChatColor.RED+"[  포션 미적용  ]"), 21, inv);
+			Stack2("§3[  투명  ]", 166,0,1,Arrays.asList("§c[  포션 미적용  ]"), 21, inv);
 			
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+MonsterName), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+MonsterName), 53, inv);
 		player.openInventory(inv);
 	}
 
@@ -326,41 +326,41 @@ public class Monster_GUI extends Util_GUI
 			monsterListYaml.getItemStack(mob + ".Head.Item").equals(new ItemStack(Material.AIR))==false)
 			inv.setItem(0, monsterListYaml.getItemStack(mob + ".Head.Item"));
 		else
-			Stack(ChatColor.WHITE + "머리", 302,(byte)0,(byte)1,Arrays.asList(ChatColor.GRAY + "이곳에 아이템을 넣어 주세요."), (byte)0, inv);
+			Stack("§f머리", 302,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)0, inv);
 
 		if(monsterListYaml.contains(mob + ".Chest.Item")==true&&
 				monsterListYaml.getItemStack(mob + ".Chest.Item").equals(new ItemStack(Material.AIR))==false)
 			inv.setItem(1, monsterListYaml.getItemStack(mob + ".Chest.Item"));
 		else
-			Stack(ChatColor.WHITE + "갑옷", 303,(byte)0,(byte)1,Arrays.asList(ChatColor.GRAY + "이곳에 아이템을 넣어 주세요."), (byte)1, inv);
+			Stack("§f갑옷", 303,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)1, inv);
 
 		if(monsterListYaml.contains(mob + ".Leggings.Item")==true&&
 				monsterListYaml.getItemStack(mob + ".Leggings.Item").equals(new ItemStack(Material.AIR))==false)
 			inv.setItem(2, monsterListYaml.getItemStack(mob + ".Leggings.Item"));
 		else
-			Stack(ChatColor.WHITE + "바지", 304,(byte)0,(byte)1,Arrays.asList(ChatColor.GRAY + "이곳에 아이템을 넣어 주세요."), (byte)2, inv);
+			Stack("§f바지", 304,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)2, inv);
 
 		if(monsterListYaml.contains(mob + ".Boots.Item")==true&&
 		monsterListYaml.getItemStack(mob + ".Boots.Item").equals(new ItemStack(Material.AIR))==false)
 			inv.setItem(3, monsterListYaml.getItemStack(mob + ".Boots.Item"));
 		else
-			Stack(ChatColor.WHITE + "부츠", 305,(byte)0,(byte)1,Arrays.asList(ChatColor.GRAY + "이곳에 아이템을 넣어 주세요."), (byte)3, inv);
+			Stack("§f부츠", 305,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)3, inv);
 
 		if(monsterListYaml.contains(mob + ".Hand.Item")==true&&
 		monsterListYaml.getItemStack(mob + ".Hand.Item").equals(new ItemStack(Material.AIR))==false)
 			inv.setItem(4, monsterListYaml.getItemStack(mob + ".Hand.Item"));
 		else
-			Stack(ChatColor.WHITE + "오른손", 267,(byte)0,(byte)1,Arrays.asList(ChatColor.GRAY + "이곳에 아이템을 넣어 주세요."), (byte)4, inv);
+			Stack("§f오른손", 267,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)4, inv);
 
 		if(monsterListYaml.contains(mob + ".OffHand.Item")==true&&
 		monsterListYaml.getItemStack(mob + ".OffHand.Item").equals(new ItemStack(Material.AIR))==false)
 			inv.setItem(5, monsterListYaml.getItemStack(mob + ".OffHand.Item"));
 		else
-			Stack(ChatColor.WHITE + "왼손", 267,(byte)0,(byte)1,Arrays.asList(ChatColor.GRAY + "이곳에 아이템을 넣어 주세요."), (byte)5, inv);
+			Stack("§f왼손", 267,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)5, inv);
 		
-		Stack(ChatColor.WHITE + mob, 416,(byte)0,(byte)1,Arrays.asList(ChatColor.GRAY + mob+"의 현재 장비입니다." ), (byte)8, inv);
-		Stack(ChatColor.WHITE + "", 30,(byte)0,(byte)1,Arrays.asList(ChatColor.GRAY +"이곳에는 아이템을",ChatColor.GRAY +"올려두지 마세요."), (byte)7, inv);
-		Stack(ChatColor.WHITE + "", 30,(byte)0,(byte)1,Arrays.asList(ChatColor.GRAY +"이곳에는 아이템을",ChatColor.GRAY +"올려두지 마세요."), (byte)6, inv);
+		Stack("§f"+ mob, 416,(byte)0,(byte)1,Arrays.asList("§8"+ mob+"의 현재 장비입니다." ), (byte)8, inv);
+		Stack("§f", 30,(byte)0,(byte)1,Arrays.asList("§7이곳에는 아이템을","§7올려두지 마세요."), (byte)7, inv);
+		Stack("§f", 30,(byte)0,(byte)1,Arrays.asList("§7이곳에는 아이템을","§7올려두지 마세요."), (byte)6, inv);
 		
 		player.openInventory(inv);
 		return;
@@ -377,8 +377,8 @@ public class Monster_GUI extends Util_GUI
 		Stack2("§a§l[크리퍼]", 289,0,1,null, 3, inv);
 		Stack2("§a§l[번개 크리퍼]", 289,0,1,null, 4, inv);
 		Stack2("§f§l[스켈레톤]", 352,0,1,null, 5, inv);
-		Stack2("§8§l[위더 스켈레톤]", 263,0,1,null, 6, inv);
-		Stack2("§8§l[위더]", 399,0,1,null, 7, inv);
+		Stack2("§7§l[위더 스켈레톤]", 263,0,1,null, 6, inv);
+		Stack2("§7§l[위더]", 399,0,1,null, 7, inv);
 		Stack2("§7§l[거미]", 287,0,1,null, 8, inv);
 		Stack2("§7§l[동굴거미]", 287,0,2,null, 9, inv);
 		Stack2("§a§l[작은 슬라임]", 341,0,1,null, 10, inv);
@@ -391,7 +391,7 @@ public class Monster_GUI extends Util_GUI
 		Stack2("§7§l[큰 마그마큐브]", 378,0,1,null, 17, inv);
 		Stack2("§7§l[특대 마그마큐브]", 378,0,1,null, 18, inv);
 		Stack2("§7§l[초대형 마그마큐브]", 378,0,1,null, 19, inv);
-		Stack2("§8§l[박쥐]", 362,0,1,null, 20, inv);
+		Stack2("§7§l[박쥐]", 362,0,1,null, 20, inv);
 		Stack2("§f§l[가스트]", 370,0,1,null, 21, inv);
 		Stack2("§e§l[블레이즈]", 369,0,1,null, 22, inv);
 		Stack2("§7§l[좀벌레]", 1,0,1,null, 23, inv);
@@ -399,15 +399,15 @@ public class Monster_GUI extends Util_GUI
 		Stack2("§a§l[주민]", 388,0,1,null, 25, inv);
 		Stack2("§5§l[마녀]", 438,0,1,null, 26, inv);
 		Stack2("§3§l[가디언]", 409,0,1,null, 27, inv);
-		Stack2("§8§l[엔더맨]", 368,0,1,null, 28, inv);
+		Stack2("§7§l[엔더맨]", 368,0,1,null, 28, inv);
 		Stack2("§5§l[셜커]", 443,0,1,null, 29, inv);
-		Stack2("§8§l[엔더드래곤]", 122,0,1,null, 30, inv);
+		Stack2("§7§l[엔더드래곤]", 122,0,1,null, 30, inv);
 		Stack2("§d§l[돼지]", 319,0,1,null, 31, inv);
 		Stack2("§f§l[양]", 423,0,1,null, 32, inv);
 		Stack2("§7§l[소]", 363,0,1,null, 33, inv);
 		Stack2("§c§l[버섯 소]", 40,0,1,null, 34, inv);
 		Stack2("§f§l[닭]", 365,0,1,null, 35, inv);
-		Stack2("§8§l[오징어]", 351,0,1,null, 36, inv);
+		Stack2("§7§l[오징어]", 351,0,1,null, 36, inv);
 		Stack2("§7§l[늑대]", 280,0,1,null, 37, inv);
 		Stack2("§e§l[오셀롯]", 349,0,1,null, 38, inv);
 		Stack2("§f§l[눈사람]", 332,0,1,null, 39, inv);
@@ -417,8 +417,8 @@ public class Monster_GUI extends Util_GUI
 		Stack2("§6§l[말]", 417,0,1,null, 43, inv);
 		Stack2("§5§l[엔더 크리스탈]", 426,0,1,null, 44, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+MonsterName), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+MonsterName), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -439,13 +439,13 @@ public class Monster_GUI extends Util_GUI
 			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 			if(slot == 45)//이전 목록
-				new OPbox_GUI().OPBoxGUI_Main(player, (byte) 1);
+				new OPbox_GUI().opBoxGuiMain(player, (byte) 1);
 			else if(slot == 48)//이전 페이지
 				MonsterListGUI(player, page-1);
 			else if(slot == 49)//새 몬스터
 			{
 				player.closeInventory();
-				player.sendMessage(ChatColor.GREEN+"[몬스터] : 새로운 몬스터 이름을 지어 주세요!");
+				player.sendMessage("§a[몬스터] : 새로운 몬스터 이름을 지어 주세요!");
 				UserData_Object u = new UserData_Object();
 				u.setType(player, "Monster");
 				u.setString(player, (byte)1, "NM");
@@ -496,37 +496,37 @@ public class Monster_GUI extends Util_GUI
 				YamlLoader monsterListYaml = new YamlLoader();
 				monsterListYaml.getConfig("Monster/MonsterList.yml");
 				String Type = monsterListYaml.getString(MonsterName+".Biome");
-				if(Type.compareTo("NULL")==0)
+				if(Type.equals("NULL"))
 					monsterListYaml.set(MonsterName+".Biome", "BEACH");
-				else if(Type.compareTo("BEACH")==0)
+				else if(Type.equals("BEACH"))
 					monsterListYaml.set(MonsterName+".Biome", "DESERT");
-				else if(Type.compareTo("DESERT")==0)
+				else if(Type.equals("DESERT"))
 					monsterListYaml.set(MonsterName+".Biome", "EXTREME_HILLS");
-				else if(Type.compareTo("EXTREME_HILLS")==0)
+				else if(Type.equals("EXTREME_HILLS"))
 					monsterListYaml.set(MonsterName+".Biome", "FOREST");
-				else if(Type.compareTo("FOREST")==0)
+				else if(Type.equals("FOREST"))
 					monsterListYaml.set(MonsterName+".Biome", "HELL");
-				else if(Type.compareTo("HELL")==0)
+				else if(Type.equals("HELL"))
 					monsterListYaml.set(MonsterName+".Biome", "JUNGLE");
-				else if(Type.compareTo("JUNGLE")==0)
+				else if(Type.equals("JUNGLE"))
 					monsterListYaml.set(MonsterName+".Biome", "MESA");
-				else if(Type.compareTo("MESA")==0)
+				else if(Type.equals("MESA"))
 					monsterListYaml.set(MonsterName+".Biome", "OCEAN");
-				else if(Type.compareTo("OCEAN")==0)
+				else if(Type.equals("OCEAN"))
 					monsterListYaml.set(MonsterName+".Biome", "PLAINS");
-				else if(Type.compareTo("PLAINS")==0)
+				else if(Type.equals("PLAINS"))
 					monsterListYaml.set(MonsterName+".Biome", "RIVER");
-				else if(Type.compareTo("RIVER")==0)
+				else if(Type.equals("RIVER"))
 					monsterListYaml.set(MonsterName+".Biome", "SAVANNA");
-				else if(Type.compareTo("SAVANNA")==0)
+				else if(Type.equals("SAVANNA"))
 					monsterListYaml.set(MonsterName+".Biome", "SKY");
-				else if(Type.compareTo("SKY")==0)
+				else if(Type.equals("SKY"))
 					monsterListYaml.set(MonsterName+".Biome", "SMALL_MOUNTAINS");
-				else if(Type.compareTo("SMALL_MOUNTAINS")==0)
+				else if(Type.equals("SMALL_MOUNTAINS"))
 					monsterListYaml.set(MonsterName+".Biome", "SWAMPLAND");
-				else if(Type.compareTo("SWAMPLAND")==0)
+				else if(Type.equals("SWAMPLAND"))
 					monsterListYaml.set(MonsterName+".Biome", "TAIGA");
-				else if(Type.compareTo("TAIGA")==0)
+				else if(Type.equals("TAIGA"))
 					monsterListYaml.set(MonsterName+".Biome", "NULL");
 				else
 					monsterListYaml.set(MonsterName+".Biome", "NULL");
@@ -538,15 +538,15 @@ public class Monster_GUI extends Util_GUI
 				YamlLoader monsterListYaml = new YamlLoader();
 				monsterListYaml.getConfig("Monster/MonsterList.yml");
 				String Type = monsterListYaml.getString(MonsterName+".AI");
-				if(Type.compareTo("일반 행동")==0)
+				if(Type.equals("일반 행동"))
 					monsterListYaml.set(MonsterName+".AI", "선공");
-				else if(Type.compareTo("선공")==0)
+				else if(Type.equals("선공"))
 					monsterListYaml.set(MonsterName+".AI", "비선공");
-				else if(Type.compareTo("비선공")==0)
+				else if(Type.equals("비선공"))
 					monsterListYaml.set(MonsterName+".AI", "동물");
-				else if(Type.compareTo("동물")==0)
+				else if(Type.equals("동물"))
 					monsterListYaml.set(MonsterName+".AI", "무뇌아");
-				else if(Type.compareTo("무뇌아")==0)
+				else if(Type.equals("무뇌아"))
 					monsterListYaml.set(MonsterName+".AI", "일반 행동");
 				else
 					monsterListYaml.set(MonsterName+".AI", "일반 행동");
@@ -568,51 +568,51 @@ public class Monster_GUI extends Util_GUI
 				u.setString(player, (byte)2, ChatColor.stripColor(event.getInventory().getItem(19).getItemMeta().getDisplayName()));
 				if(slot==13)//몹 이름 변경
 				{
-					player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 보여주는 이름을 설정하세요!");
-					player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
-					ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
-							ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
-					ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
-							ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
+					player.sendMessage("§a[몬스터] : 몬스터의 보여주는 이름을 설정하세요!");
+					player.sendMessage("§f§l&l §0&0 §1&1 §2&2 "+
+					"§3&3 §4&4 §5&5 " +
+							"§6&6 §7&7 §8&8 " +
+					"§9&9 §a&a §b&b §c&c " +
+							"§d&d §e&e §f&f");
 					u.setString(player, (byte)1, "CN");
 				}
 				else if(slot == 16)//생명력 변경
 				{
-					player.sendMessage(ChatColor.GREEN+"[몬스터] : 해당 몬스터의 생명력을 설정 해 주세요!");
-					player.sendMessage(ChatColor.DARK_AQUA+"(1 ~ "+Integer.MAX_VALUE+")");
+					player.sendMessage("§a[몬스터] : 해당 몬스터의 생명력을 설정 해 주세요!");
+					player.sendMessage("§3(1 ~ "+Integer.MAX_VALUE+")");
 					u.setString(player, (byte)1, "HP");
 				}
 				else if(slot == 22)//경험치 변경
 				{
-					player.sendMessage(ChatColor.GREEN+"[몬스터] : 해당 몬스터의 경험치를 설정 해 주세요!");
-					player.sendMessage(ChatColor.DARK_AQUA+"(1 ~ "+Integer.MAX_VALUE+")");
+					player.sendMessage("§a[몬스터] : 해당 몬스터의 경험치를 설정 해 주세요!");
+					player.sendMessage("§3(1 ~ "+Integer.MAX_VALUE+")");
 					u.setString(player, (byte)1, "EXP");
 				}
 				else if(slot == 23)//드랍 금액 변경
 				{
-					player.sendMessage(ChatColor.GREEN+"[몬스터] : 해당 몬스터가 드랍하는 최소 골드량을 설정해 주세요!");
-					player.sendMessage(ChatColor.DARK_AQUA+"(1 ~ "+Integer.MAX_VALUE+")");
+					player.sendMessage("§a[몬스터] : 해당 몬스터가 드랍하는 최소 골드량을 설정해 주세요!");
+					player.sendMessage("§3(1 ~ "+Integer.MAX_VALUE+")");
 					u.setString(player, (byte)1, "MIN_Money");
 				}
 				else if(slot == 25)//장비 드랍률 변경
 				{
-					player.sendMessage(ChatColor.GRAY+"(확률 계산 : 1000 = 100%, 1 = 0.1%)");
-					player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 투구 드랍률을 설정해 주세요!");
-					player.sendMessage(ChatColor.DARK_AQUA+"(0 ~ 1000)");
+					player.sendMessage("§7(확률 계산 : 1000 = 100%, 1 = 0.1%)");
+					player.sendMessage("§a[몬스터] : 몬스터의 투구 드랍률을 설정해 주세요!");
+					player.sendMessage("§3(0 ~ 1000)");
 					u.setString(player, (byte)1, "Head.DropChance");
 				}
 				else if(slot == 31)//몬스터 스텟 변경
 				{
-					player.sendMessage(ChatColor.GRAY+"("+Main_ServerOption.STR+"은 몬스터의 물리 공격력을 상승시켜 줍니다.)");
-					player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 "+Main_ServerOption.STR+"을 설정해 주세요!");
-					player.sendMessage(ChatColor.DARK_AQUA+"(1 ~ "+Integer.MAX_VALUE+")");
+					player.sendMessage("§7("+Main_ServerOption.statSTR+"은 몬스터의 물리 공격력을 상승시켜 줍니다.)");
+					player.sendMessage("§a[몬스터] : 몬스터의 "+Main_ServerOption.statSTR+"을 설정해 주세요!");
+					player.sendMessage("§3(1 ~ "+Integer.MAX_VALUE+")");
 					u.setString(player, (byte)1, "STR");
 				}
 				else if(slot == 32)//몬스터 방어 변경
 				{
-					player.sendMessage(ChatColor.GRAY+"(물리방어는 몬스터의 물리적인 방어력을 상승시켜 줍니다.)");
-					player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 물리 방어력을 설정해 주세요!");
-					player.sendMessage(ChatColor.DARK_AQUA+"(1 ~ "+Integer.MAX_VALUE+")");
+					player.sendMessage("§7(물리방어는 몬스터의 물리적인 방어력을 상승시켜 줍니다.)");
+					player.sendMessage("§a[몬스터] : 몬스터의 물리 방어력을 설정해 주세요!");
+					player.sendMessage("§3(1 ~ "+Integer.MAX_VALUE+")");
 					u.setString(player, (byte)1, "DEF");
 				}
 			}
@@ -648,44 +648,44 @@ public class Monster_GUI extends Util_GUI
 				u.setString(player, (byte)3, MonsterName);
 				if(slot == 10)
 				{
-					player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 재생 효과는 몇 으로 설정하실건가요?");
-					player.sendMessage(ChatColor.YELLOW+"(0 ~ 100)");
+					player.sendMessage("§a[몬스터] : 몬스터의 재생 효과는 몇 으로 설정하실건가요?");
+					player.sendMessage("§e(0 ~ 100)");
 					u.setString(player, (byte)2, "Regenerate");
 				}
 				else if(slot == 11)
 				{
-					player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 독 효과는 몇 으로 설정하실건가요?");
-					player.sendMessage(ChatColor.YELLOW+"(0 ~ 100)");
+					player.sendMessage("§a[몬스터] : 몬스터의 독 효과는 몇 으로 설정하실건가요?");
+					player.sendMessage("§e(0 ~ 100)");
 					u.setString(player, (byte)2, "Poision");
 				}
 				else if(slot == 12)
 				{
-					player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 신속 효과는 몇 으로 설정하실건가요?");
-					player.sendMessage(ChatColor.YELLOW+"(0 ~ 100)");
+					player.sendMessage("§a[몬스터] : 몬스터의 신속 효과는 몇 으로 설정하실건가요?");
+					player.sendMessage("§e(0 ~ 100)");
 					u.setString(player, (byte)2, "Speed");
 				}
 				else if(slot == 13)
 				{
-					player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 구속 효과는 몇 으로 설정하실건가요?");
-					player.sendMessage(ChatColor.YELLOW+"(0 ~ 100)");
+					player.sendMessage("§a[몬스터] : 몬스터의 구속 효과는 몇 으로 설정하실건가요?");
+					player.sendMessage("§e(0 ~ 100)");
 					u.setString(player, (byte)2, "Slow");
 				}
 				else if(slot == 14)
 				{
-					player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 힘 효과는 몇 으로 설정하실건가요?");
-					player.sendMessage(ChatColor.YELLOW+"(0 ~ 100)");
+					player.sendMessage("§a[몬스터] : 몬스터의 힘 효과는 몇 으로 설정하실건가요?");
+					player.sendMessage("§e(0 ~ 100)");
 					u.setString(player, (byte)2, "Strength");
 				}
 				else if(slot == 15)
 				{
-					player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 나약함 효과는 몇 으로 설정하실건가요?");
-					player.sendMessage(ChatColor.YELLOW+"(0 ~ 100)");
+					player.sendMessage("§a[몬스터] : 몬스터의 나약함 효과는 몇 으로 설정하실건가요?");
+					player.sendMessage("§e(0 ~ 100)");
 					u.setString(player, (byte)2, "Weak");
 				}
 				else if(slot == 16)
 				{
-					player.sendMessage(ChatColor.GREEN+"[몬스터] : 몬스터의 도약 효과는 몇 으로 설정하실건가요?");
-					player.sendMessage(ChatColor.YELLOW+"(0 ~ 100)");
+					player.sendMessage("§a[몬스터] : 몬스터의 도약 효과는 몇 으로 설정하실건가요?");
+					player.sendMessage("§e(0 ~ 100)");
 					u.setString(player, (byte)2, "Jump");
 				}
 			}
@@ -727,7 +727,7 @@ public class Monster_GUI extends Util_GUI
 			event.setCancelled(true);
 		else if(event.getCurrentItem().hasItemMeta())
 			if(event.getCurrentItem().getItemMeta().hasLore())
-				if(event.getCurrentItem().getItemMeta().getLore().get(0).equals(ChatColor.GRAY + "이곳에 아이템을 넣어 주세요."))
+				if(event.getCurrentItem().getItemMeta().getLore().get(0).equals("§7이곳에 아이템을 넣어 주세요."))
 					event.getInventory().remove(event.getCurrentItem());
 		return;
 	}
@@ -738,33 +738,33 @@ public class Monster_GUI extends Util_GUI
 
 		monsterListYaml.getConfig("Monster/MonsterList.yml");
 		String MonsterName = ChatColor.stripColor(event.getInventory().getItem(8).getItemMeta().getDisplayName().toString());
-		if(event.getInventory().getItem(0)==new util.Util_GUI().getItemStack(ChatColor.WHITE + "머리", 302,0,1,Arrays.asList(ChatColor.GRAY + "이곳에 아이템을 넣어 주세요.")))
+		if(event.getInventory().getItem(0)==new util.Util_GUI().getItemStack("§f머리", 302,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
 			monsterListYaml.set(MonsterName+".Head.Item", null);
 		else
 			monsterListYaml.set(MonsterName+".Head.Item", event.getInventory().getItem(0));
 		
-		if(event.getInventory().getItem(1)==new util.Util_GUI().getItemStack(ChatColor.WHITE + "갑옷", 303,0,1,Arrays.asList(ChatColor.GRAY + "이곳에 아이템을 넣어 주세요.")))
+		if(event.getInventory().getItem(1)==new util.Util_GUI().getItemStack("§f갑옷", 303,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
 					monsterListYaml.set(MonsterName+".Chest.Item", null);
 		else
 			monsterListYaml.set(MonsterName+".Chest.Item", event.getInventory().getItem(1));
-		if(event.getInventory().getItem(2)==new util.Util_GUI().getItemStack(ChatColor.WHITE + "바지", 304,0,1,Arrays.asList(ChatColor.GRAY + "이곳에 아이템을 넣어 주세요.")))
+		if(event.getInventory().getItem(2)==new util.Util_GUI().getItemStack("§f바지", 304,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
 			monsterListYaml.set(MonsterName+".Leggings.Item", null);
 		else
 			monsterListYaml.set(MonsterName+".Leggings.Item", event.getInventory().getItem(2));
-		if(event.getInventory().getItem(1)==new util.Util_GUI().getItemStack(ChatColor.WHITE + "부츠", 305,0,1,Arrays.asList(ChatColor.GRAY + "이곳에 아이템을 넣어 주세요.")))
+		if(event.getInventory().getItem(1)==new util.Util_GUI().getItemStack("§f부츠", 305,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
 			monsterListYaml.set(MonsterName+".Boots.Item", null);
 		else
 			monsterListYaml.set(MonsterName+".Boots.Item", event.getInventory().getItem(3));
-		if(event.getInventory().getItem(4)==new util.Util_GUI().getItemStack(ChatColor.WHITE + "무기", 267,0,1,Arrays.asList(ChatColor.GRAY + "이곳에 아이템을 넣어 주세요.")))
+		if(event.getInventory().getItem(4)==new util.Util_GUI().getItemStack("§f무기", 267,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
 			monsterListYaml.set(MonsterName+".Hand.Item", null);
 		else
 			monsterListYaml.set(MonsterName+".Hand.Item", event.getInventory().getItem(4));
-		if(event.getInventory().getItem(5)==new util.Util_GUI().getItemStack(ChatColor.WHITE + "무기", 267,0,1,Arrays.asList(ChatColor.GRAY + "이곳에 아이템을 넣어 주세요.")))
+		if(event.getInventory().getItem(5)==new util.Util_GUI().getItemStack("§f무기", 267,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
 			monsterListYaml.set(MonsterName+".OffHand.Item", null);
 		else
 			monsterListYaml.set(MonsterName+".OffHand.Item", event.getInventory().getItem(5));
 		monsterListYaml.saveConfig();
-		event.getPlayer().sendMessage(ChatColor.GREEN + "[SYSTEM] : 아이템 설정이 저장되었습니다.");
+		event.getPlayer().sendMessage("§a[SYSTEM] : 아이템 설정이 저장되었습니다.");
 		return;
 	}
 

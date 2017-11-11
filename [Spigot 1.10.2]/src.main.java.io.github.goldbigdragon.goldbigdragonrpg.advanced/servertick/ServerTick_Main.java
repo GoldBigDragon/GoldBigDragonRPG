@@ -21,8 +21,6 @@ import main.Main;
 import user.User_Object;
 import util.YamlLoader;
 
-
-
 class Object_RankingSet
 {
 	String stringValue;
@@ -104,7 +102,7 @@ public class ServerTick_Main
 					player = PlayerList.next();
 					uo = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString());
 					CCM.asyncDeathCapture(player);
-	        		if(player.getLocation().getWorld().getName().compareTo("Dungeon")!=0)
+	        		if(!player.getLocation().getWorld().getName().equals("Dungeon"))
 	        		{
 	        			if(uo.getDungeon_Enter() != null)
 	        			{
@@ -117,7 +115,7 @@ public class ServerTick_Main
 	        				if(uo.getETC_CurrentArea()==null)
 	        					uo.setETC_CurrentArea("null");
 	        				Area = A.getAreaName(player)[0];
-	        				if(uo.getETC_CurrentArea().compareTo(Area) != 0)
+	        				if(!uo.getETC_CurrentArea().equals(Area))
 	        				{
 	        					AreaList.getConfig("Area/AreaList.yml");
 	        					//레벨 제한 확인
@@ -203,9 +201,9 @@ public class ServerTick_Main
 		        						for(int count = 0; count < b.length; count++)
 		        						{
 		        							QuestName = (String) b[count];
-		        							if(PlayerQuestList.getString("Started."+QuestName+".Type").compareTo("Visit")==0)
+		        							if(PlayerQuestList.getString("Started."+QuestName+".Type").equals("Visit"))
 		        							{
-		        								if(PlayerQuestList.getString("Started."+QuestName+".AreaName").compareTo(Area)==0)
+		        								if(PlayerQuestList.getString("Started."+QuestName+".AreaName").equals(Area))
 	        									{
 	        										PlayerQuestList.set("Started."+QuestName+".Type",QuestList.getString(QuestName+".FlowChart."+(PlayerQuestList.getInt("Started."+QuestName+".Flow")+1)+".Type"));
 	        										PlayerQuestList.set("Started."+QuestName+".Flow",PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);

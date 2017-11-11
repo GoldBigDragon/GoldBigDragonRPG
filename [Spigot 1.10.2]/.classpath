@@ -3,9 +3,9 @@
 	<classpathentry kind="src" path="src.main.java.io.github.goldbigdragon.goldbigdragonrpg.advanced"/>
 	<classpathentry kind="src" path="library"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/[서버팩] [1.10.2]/plugins/Citizens.jar"/>
-	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/[서버팩] [1.10.2]/plugins/MagicSpells.jar"/>
-	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/[서버팩] [1.10.2]/spigot-latest.jar"/>
-	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/[서버팩] [1.10.2]/plugins/Vault.jar"/>
+	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/GBDRPG1.10.2 연구용/[서버팩] [1.10.2]/plugins/Citizens.jar"/>
+	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/GBDRPG1.10.2 연구용/[서버팩] [1.10.2]/plugins/MagicSpells.jar"/>
+	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/GBDRPG1.10.2 연구용/[서버팩] [1.10.2]/spigot-latest.jar"/>
+	<classpathentry kind="lib" path="C:/Users/GoldBigDragon/Downloads/GBDRPG1.10.2 연구용/[서버팩] [1.10.2]/plugins/Vault.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

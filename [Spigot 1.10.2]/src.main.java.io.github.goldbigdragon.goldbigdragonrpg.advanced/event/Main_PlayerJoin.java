@@ -28,7 +28,7 @@ public class Main_PlayerJoin implements Listener
 	  	else
 	  		new job.Job_Main().PlayerFixAllSkillAndJobYML(player);
 
-	  	if(player.getLocation().getWorld().getName().compareTo("Dungeon")==0)
+	  	if(player.getLocation().getWorld().getName().equals("Dungeon"))
 		{
 			new util.Util_Player().teleportToCurrentArea(player, true);
 			new dungeon.Dungeon_Main().EraseAllDungeonKey(player, false);

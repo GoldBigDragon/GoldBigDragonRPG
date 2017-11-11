@@ -54,58 +54,57 @@ public class Area_Main
 	  	YamlLoader areaYaml = new YamlLoader();
 		areaYaml.getConfig("Area/AreaList.yml");
 		
-		if(areaYaml.contains(name) == true)
+		if(areaYaml.contains(name))
 		{
 			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-			player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 이름은 이미 등록되어 있습니다!");
+			player.sendMessage("§c[SYSTEM] : 해당 이름은 이미 등록되어 있습니다!");
 			return;
 		}
 		
-		if(loc1.getWorld().equals(loc2.getWorld()) == false)
+		if(!loc1.getWorld().equals(loc2.getWorld()))
 		{
 			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-			player.sendMessage(ChatColor.RED + "[SYSTEM] : 서로 다른 월드간은 영역 지정을 할 수 없습니다!");
+			player.sendMessage("§c[SYSTEM] : 서로 다른 월드간은 영역 지정을 할 수 없습니다!");
 			return;
 		}
-		loc1.add(1, 0, 0);
-		loc2.add(0, 0, 1);
 		areaYaml.set(name+".World", loc1.getWorld().getName());
-		if(loc1.getX() > loc2.getX())
+		int minX = (int)loc1.getX();
+		int minY = (int)loc1.getY();
+		int minZ = (int)loc1.getZ();
+		int maxX = (int)loc2.getX();
+		int maxY = (int)loc2.getY();
+		int maxZ = (int)loc2.getZ();
+		int temp = 0;
+		if(minX > maxX)
 		{
-			areaYaml.set(name+".X.Min", loc2.getX());
-			areaYaml.set(name+".X.Max", loc1.getX());
-			areaYaml.set(name+".SpawnLocation.X", loc2.getX());
+			temp = maxX;
+			maxX = minX;
+			minX = temp;
 		}
-		else
+		if(minY > maxY)
 		{
-			areaYaml.set(name+".X.Min", loc1.getX());
-			areaYaml.set(name+".X.Max", loc2.getX());
-			areaYaml.set(name+".SpawnLocation.X", loc1.getX());
+			temp = maxY;
+			maxY = minY;
+			minY = temp;
 		}
-		if(loc1.getY() > loc2.getY())
+		if(minZ > maxZ)
 		{
-			areaYaml.set(name+".Y.Min", loc2.getY());
-			areaYaml.set(name+".Y.Max", loc1.getY());
-			areaYaml.set(name+".SpawnLocation.Y", loc2.getY());
+			temp = maxZ;
+			maxZ = minZ;
+			minZ = temp;
 		}
-		else
-		{
-			areaYaml.set(name+".Y.Min", loc1.getY());
-			areaYaml.set(name+".Y.Max", loc2.getY());
-			areaYaml.set(name+".SpawnLocation.Y", loc1.getY());
-		}
-		if(loc1.getZ() > loc2.getZ())
-		{
-			areaYaml.set(name+".Z.Min", loc2.getZ());
-			areaYaml.set(name+".Z.Max", loc1.getZ());
-			areaYaml.set(name+".SpawnLocation.Z", loc2.getZ());
-		}
-		else
-		{
-			areaYaml.set(name+".Z.Min", loc1.getZ());
-			areaYaml.set(name+".Z.Max", loc2.getZ());
-			areaYaml.set(name+".SpawnLocation.Z", loc1.getZ());
-		}
+		maxX++;
+		maxZ++;
+		areaYaml.set(name+".X.Min", minX);
+		areaYaml.set(name+".X.Max", maxX);
+		areaYaml.set(name+".SpawnLocation.X", minX);
+		areaYaml.set(name+".Y.Min", minY);
+		areaYaml.set(name+".Y.Max", maxY);
+		areaYaml.set(name+".SpawnLocation.Y", minY);
+		areaYaml.set(name+".Z.Min", minZ);
+		areaYaml.set(name+".Z.Max", maxZ);
+		areaYaml.set(name+".SpawnLocation.Z", minZ);
+
 		areaYaml.set(name+".SpawnLocation.Pitch", 0);
 		areaYaml.set(name+".SpawnLocation.Yaw", 0);
 		areaYaml.set(name+".Name", name);
@@ -135,18 +134,18 @@ public class Area_Main
 		areaYaml.saveConfig();
 		
 		SoundEffect.SP(player, org.bukkit.Sound.ENTITY_CHICKEN_EGG, 2.0F, 1.7F);
-		player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 지정 구역 등록 성공!");
+		player.sendMessage("§a[SYSTEM] : 지정 구역 등록 성공!");
 		area.Area_GUI AGUI = new area.Area_GUI();
-		AGUI.AreaSettingGUI(player, name);
+		AGUI.areaSettingGui(player, name);
 
 		area.Area_Object AO = new area.Area_Object();
 		AO.AreaName = name;
-		AO.minX = areaYaml.getInt(name+".X.Min");
-		AO.maxX = areaYaml.getInt(name+".X.Max");
-		AO.minY = areaYaml.getInt(name+".Y.Min");
-		AO.maxY = areaYaml.getInt(name+".Y.Max");
-		AO.minZ = areaYaml.getInt(name+".Z.Min");
-		AO.maxZ = areaYaml.getInt(name+".Z.Max");
+		AO.minX = minX;
+		AO.maxX = maxX;
+		AO.minY = minY;
+		AO.maxY = maxY;
+		AO.minZ = minZ;
+		AO.maxZ = maxZ;
 		if(main.Main_ServerOption.AreaList.containsKey(areaYaml.getString(name+".World")))
 		{
 			ArrayList<area.Area_Object> areaList = main.Main_ServerOption.AreaList.get(areaYaml.getString(name+".World"));
@@ -175,7 +174,7 @@ public class Area_Main
 			ArrayList<area.Area_Object> areaList = main.Main_ServerOption.AreaList.get(areaYaml.getString(name+".World"));
 			for(int count = 0; count < areaList.size(); count ++)
 			{
-				if(areaList.get(count).toString().compareTo(name)==0)
+				if(areaList.get(count).toString().equals(name))
 				{
 					areaList.remove(count);
 					break;
@@ -213,12 +212,12 @@ public class Area_Main
 			areaYaml.removeKey(name);
 			areaYaml.saveConfig();
 			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_CHICKEN_EGG, 2.0F, 1.7F);
-			player.sendMessage(ChatColor.RED + "[SYSTEM] : 지정 구역 삭제 성공!");
+			player.sendMessage("§c[SYSTEM] : 지정 구역 삭제 성공!");
 		}
 		else
 		{
 			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-			player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 이름의 구역은 존재하지 않습니다!");
+			player.sendMessage("§c[SYSTEM] : 해당 이름의 구역은 존재하지 않습니다!");
 		}
 		return;
 	}
@@ -235,13 +234,13 @@ public class Area_Main
 			case 0:
 				{
 					areaYaml.set(AreaName+".Name", string);
-					player.sendMessage(ChatColor.GREEN + "[SYSTEM] : " + ChatColor.YELLOW + AreaName+ChatColor.GREEN+" 영역의 이름이 "+ChatColor.YELLOW + string+ChatColor.GREEN+ " 으로 변경 되었습니다!");
+					player.sendMessage("§a[SYSTEM] : §e"+ AreaName+"§a 영역의 이름이 §e"+ string+"§a 으로 변경 되었습니다!");
 				}
 				break;
 			case 1:
 				{
 					areaYaml.set(AreaName+".Description", string);
-					player.sendMessage(ChatColor.GREEN + "[SYSTEM] : " + ChatColor.YELLOW + AreaName+ChatColor.GREEN+" 영역의 설명이 "+ChatColor.YELLOW + string+ChatColor.GREEN+ " 으로 변경 되었습니다!");
+					player.sendMessage("§a[SYSTEM] : §e"+ AreaName+"§a 영역의 설명이 §e"+ string+"§a 으로 변경 되었습니다!");
 				}
 				break;
 			}
@@ -250,7 +249,7 @@ public class Area_Main
 		else
 		{
 			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-			player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 이름의 구역은 존재하지 않습니다!");
+			player.sendMessage("§c[SYSTEM] : 해당 이름의 구역은 존재하지 않습니다!");
 		}
 		return;
 	}

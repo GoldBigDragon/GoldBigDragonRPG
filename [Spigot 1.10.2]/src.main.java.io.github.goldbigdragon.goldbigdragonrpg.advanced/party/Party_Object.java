@@ -5,10 +5,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import effect.SoundEffect;
-import net.md_5.bungee.api.ChatColor;
 import util.YamlLoader;
-
-
 
 public class Party_Object
 {
@@ -28,8 +25,8 @@ public class Party_Object
 		this.PartyMember = new String[this.PartyCapacity];
 		this.PartyMember[0] = player.getName();
 		
-		main.Main_ServerOption.PartyJoiner.put(player, CreateTime);
-		main.Main_ServerOption.Party.put(CreateTime, this);
+		main.Main_ServerOption.partyJoiner.put(player, CreateTime);
+		main.Main_ServerOption.party.put(CreateTime, this);
 	}
 	
 	public Party_Object(Long CreateTime, String Leader,
@@ -78,7 +75,7 @@ public class Party_Object
 								a++;
 							}
 						}
-						PartyBroadCastMessage(ChatColor.GREEN+"[파티] : 최대 파티원 수가 "+ChatColor.YELLOW+""+ChatColor.BOLD+Capacity+"명"+ChatColor.GREEN+"으로 변경되었습니다!",null);
+						PartyBroadCastMessage("§a[파티] : 최대 파티원 수가 §e§l"+Capacity+"명§a으로 변경되었습니다!",null);
 						PartyBroadCastSound(Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F,null);
 					}
 					else
@@ -100,13 +97,13 @@ public class Party_Object
 			if(this.PartyLock == false)
 			{
 				this.PartyLock = true;
-				PartyBroadCastMessage(ChatColor.RED+"[파티] : 더이상 파티 모집을 하지 않습니다!",null);
+				PartyBroadCastMessage("§c[파티] : 더이상 파티 모집을 하지 않습니다!",null);
 				PartyBroadCastSound(Sound.BLOCK_ANVIL_LAND, 1.0F, 1.0F,null);
 			}
 			else
 			{
 				this.PartyLock = false;
-				PartyBroadCastMessage(ChatColor.GREEN+"[파티] : 파티 모집을 시작 합니다!",null);
+				PartyBroadCastMessage("§a[파티] : 파티 모집을 시작 합니다!",null);
 				PartyBroadCastSound(Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F,null);
 			}
 		}
@@ -119,7 +116,7 @@ public class Party_Object
 		if(player.getName().equals(this.Leader))
 		{
 			this.PartyPassword = Message;
-			PartyBroadCastMessage(ChatColor.YELLOW+"[파티] : 암호가 새로 설정되었습니다!",null);
+			PartyBroadCastMessage("§e[파티] : 암호가 새로 설정되었습니다!",null);
 			PartyBroadCastSound(Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F,null);
 		}
 		else
@@ -128,7 +125,7 @@ public class Party_Object
 	
 	public void JoinParty(Player player)
 	{
-		if(main.Main_ServerOption.PartyJoiner.containsKey(player) == false)
+		if(main.Main_ServerOption.partyJoiner.containsKey(player) == false)
 			if(this.PartyCapacity > getPartyMembers())
 				if(this.PartyLock == false)
 					if(this.PartyPassword == null)
@@ -138,12 +135,12 @@ public class Party_Object
 							{
 								if(player.isOnline())
 								{
-									player.sendMessage(ChatColor.GREEN + "[파티] : 파티에 가입 하였습니다!");
+									player.sendMessage("§a[파티] : 파티에 가입 하였습니다!");
 									SoundEffect.SP(player, Sound.BLOCK_WOODEN_DOOR_OPEN, 1.1F, 1.0F);
 								}
 								this.PartyMember[count] = player.getName();
-								main.Main_ServerOption.PartyJoiner.put(player, this.CreateTime);
-								PartyBroadCastMessage(ChatColor.GREEN+"[파티] : "+ChatColor.YELLOW+""+ChatColor.BOLD+player.getName()+ChatColor.GREEN+"님께서 파티에 가입하셨습니다!",player);
+								main.Main_ServerOption.partyJoiner.put(player, this.CreateTime);
+								PartyBroadCastMessage("§a[파티] : §e§l"+player.getName()+"§a님께서 파티에 가입하셨습니다!",player);
 								PartyBroadCastSound(Sound.BLOCK_WOODEN_DOOR_OPEN, 1.1F, 1.0F,player);
 								return;
 							}
@@ -162,21 +159,21 @@ public class Party_Object
 
 	public void QuitParty(Player player)
 	{
-		main.Main_ServerOption.PartyJoiner.remove(player);
+		main.Main_ServerOption.partyJoiner.remove(player);
 		if(player.isOnline())
 		{
-			player.sendMessage(ChatColor.RED + "[파티] : 파티를 탈퇴하였습니다!");
+			player.sendMessage("§c[파티] : 파티를 탈퇴하였습니다!");
 			SoundEffect.SP(player, Sound.BLOCK_WOODEN_DOOR_CLOSE, 1.1F, 1.0F);
 		}
 		if(getPartyMembers() == 1)
 		{
-			main.Main_ServerOption.Party.remove(this.CreateTime);
+			main.Main_ServerOption.party.remove(this.CreateTime);
 			return;
 		}
 		for(int count = 0; count < this.PartyCapacity; count++)
 			if(this.PartyMember[count] == player.getName()||this.PartyMember[count].equals(player.getName()))
 			{
-				PartyBroadCastMessage(ChatColor.RED+"[파티] : "+ChatColor.YELLOW+""+ChatColor.BOLD+player.getName()+ChatColor.RED+"님께서 파티를 탈퇴하셨습니다!",player);
+				PartyBroadCastMessage("§c[파티] : §e§l"+player.getName()+"§c님께서 파티를 탈퇴하셨습니다!",player);
 				PartyBroadCastSound(Sound.BLOCK_WOODEN_DOOR_CLOSE, 1.1F, 1.0F,player);
 				for(int counter = count; counter < this.PartyCapacity-1; counter++)
 					this.PartyMember[counter] = this.PartyMember[counter+1];
@@ -198,14 +195,14 @@ public class Party_Object
 	{
 		if(getPartyMembers() == 1)
 		{
-			main.Main_ServerOption.Party.remove(this.CreateTime);
+			main.Main_ServerOption.party.remove(this.CreateTime);
 			return;
 		}
 		for(int count = 0; count < this.PartyCapacity; count++)
 			if(this.PartyMember[count]!=null)
-				if(this.PartyMember[count].compareTo(playerName) == 0)
+				if(this.PartyMember[count].equals(playerName))
 				{
-					PartyBroadCastMessage(ChatColor.RED+"[파티] : "+ChatColor.YELLOW+""+ChatColor.BOLD+playerName+ChatColor.RED+"님께서 파티를 탈퇴하셨습니다!",null);
+					PartyBroadCastMessage("§c[파티] : §e§l"+playerName+"§c님께서 파티를 탈퇴하셨습니다!",null);
 					PartyBroadCastSound(Sound.BLOCK_WOODEN_DOOR_CLOSE, 1.1F, 1.0F,null);
 					for(int counter = count; counter < this.PartyCapacity-1; counter++)
 						this.PartyMember[counter] = this.PartyMember[counter+1];
@@ -226,7 +223,7 @@ public class Party_Object
 	public void ChangeLeader(Player player)
 	{
 		this.Leader = player.getName();
-		PartyBroadCastMessage(ChatColor.YELLOW+"[파티] : "+ChatColor.YELLOW+""+ChatColor.BOLD+player.getName()+ChatColor.YELLOW+"님께서 파티 리더가 되셨습니다!",null);
+		PartyBroadCastMessage("§e[파티] : §e§l"+player.getName()+"§e님께서 파티 리더가 되셨습니다!",null);
 		PartyBroadCastSound(Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.5F,null);
 	}
 	
@@ -258,7 +255,7 @@ public class Party_Object
 		if(player.getName().equals(this.Leader))
 		{
 			this.Title = Message;
-			PartyBroadCastMessage(ChatColor.YELLOW+"[파티] : 파티 제목이 변경되었습니다!",null);
+			PartyBroadCastMessage("§e[파티] : 파티 제목이 변경되었습니다!",null);
 			PartyBroadCastSound(Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F,null);
 		}
 		else
@@ -375,41 +372,41 @@ public class Party_Object
 		switch(num)
 		{
 		case 1:
-			player.sendMessage(ChatColor.RED + "[파티] : 당신은 파티 리더가 아닙니다!");
+			player.sendMessage("§c[파티] : 당신은 파티 리더가 아닙니다!");
 			return;
 		case 2:
-			player.sendMessage(ChatColor.RED + "[파티] : 최대 인원수를 현재 파티 인원 수 보다 적게할 수 없습니다!");
+			player.sendMessage("§c[파티] : 최대 인원수를 현재 파티 인원 수 보다 적게할 수 없습니다!");
 			return;
 		case 3:
 			{
 				YamlLoader configYaml = new YamlLoader();
 				configYaml.getConfig("config.yml");
-				player.sendMessage(ChatColor.RED + "[파티] : 최대 파티 인원 수 : " +"§e§l"+configYaml.getInt("Party.MaxPartyUnit")+"명");
+				player.sendMessage("§c[파티] : 최대 파티 인원 수 : §e§l"+configYaml.getInt("Party.MaxPartyUnit")+"명");
 			}
 			return;
 		case 4:
-			player.sendMessage(ChatColor.RED + "[파티] : 파티 인원이 다 찼습니다!");
+			player.sendMessage("§c[파티] : 파티 인원이 다 찼습니다!");
 			return;
 		case 5:
-			player.sendMessage(ChatColor.RED + "[파티] : 해당 파티는 더이상 파티원을 모집하지 않습니다!");
+			player.sendMessage("§c[파티] : 해당 파티는 더이상 파티원을 모집하지 않습니다!");
 			return;
 		case 6:
-			player.sendMessage(ChatColor.RED + "[파티] : 당신은 이미 다른 파티에 참여 중입니다!");
+			player.sendMessage("§c[파티] : 당신은 이미 다른 파티에 참여 중입니다!");
 			return;
 		case 7:
-			player.sendMessage(ChatColor.RED + "[파티] : 자기 자신은 강퇴 시킬 수 없습니다!");
+			player.sendMessage("§c[파티] : 자기 자신은 강퇴 시킬 수 없습니다!");
 			return;
 		case 8:
-			player.sendMessage(ChatColor.RED + "[파티] : 해당 플레이어는 파티원이 아닙니다!");
+			player.sendMessage("§c[파티] : 해당 플레이어는 파티원이 아닙니다!");
 			return;
 		case 9:
-			player.sendMessage(ChatColor.RED + "[파티] : 당신은 이미 파티 리더입니다!");
+			player.sendMessage("§c[파티] : 당신은 이미 파티 리더입니다!");
 			return;
 		case 10:
-			player.sendMessage(ChatColor.RED + "[파티] : 파티 인원은 최소 2명 이상이어야 합니다!");
+			player.sendMessage("§c[파티] : 파티 인원은 최소 2명 이상이어야 합니다!");
 			return;
 		case 11:
-			player.sendMessage(ChatColor.RED + "[파티] : 해당 플레이어는 파티원이 아닙니다!");
+			player.sendMessage("§c[파티] : 해당 플레이어는 파티원이 아닙니다!");
 			return;
 		}
 	}

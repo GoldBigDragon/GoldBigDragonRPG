@@ -1,12 +1,8 @@
 package quest;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import util.YamlLoader;
-
-
-
 
 public class Quest_Config
 {
@@ -35,7 +31,7 @@ public class Quest_Config
 	    YamlLoader newbieQuestListYaml = new YamlLoader();
 	    newbieQuestListYaml.getConfig("ETC/NewBie.yml");
 		String QuestName = newbieQuestListYaml.getString("FirstQuest");
-		if(QuestName.compareTo("null") != 0)
+		if(!QuestName.equals("null"))
 		{
 		    YamlLoader questListYaml = new YamlLoader();
 			questListYaml.getConfig("Quest/QuestList.yml");
@@ -46,25 +42,25 @@ public class Quest_Config
 					String QuestType = questListYaml.getString(QuestName+".FlowChart.0.Type");
 					playerQuestListYaml.set("Started."+QuestName+".Flow", 0);
 					playerQuestListYaml.set("Started."+QuestName+".Type", QuestType);
-					if(QuestType.compareTo("Visit")==0)
+					if(QuestType.equals("Visit"))
 						playerQuestListYaml.set("Started."+QuestName+".AreaName", questListYaml.getString(QuestName+".FlowChart.0.AreaName"));
-					else if(QuestType.compareTo("Hunt")==0)
+					else if(QuestType.equals("Hunt"))
 					{
 						Object[] MobList = questListYaml.getConfigurationSection(QuestName+".FlowChart.0.Monster").getKeys(false).toArray();
 						for(int counter = 0; counter < MobList.length; counter++)
 							playerQuestListYaml.set("Started."+QuestName+".Hunt."+counter,0);
 					}
-					else if(QuestType.compareTo("Harvest")==0)
+					else if(QuestType.equals("Harvest"))
 					{
 						Object[] BlockList = questListYaml.getConfigurationSection(QuestName+".FlowChart.0.Block").getKeys(false).toArray();
 						for(int counter = 0; counter < BlockList.length; counter++)
 							playerQuestListYaml.set("Started."+QuestName+".Block."+counter,0);
 					}
 					playerQuestListYaml.saveConfig();
-					player.sendMessage(ChatColor.YELLOW+"[Äù½ºÆ®] : »õ·Î¿î Äù½ºÆ®°¡ µµÂøÇß½À´Ï´Ù! " +ChatColor.GOLD+""+ChatColor.BOLD+"/Äù½ºÆ®");
-					if(QuestType.compareTo("Nevigation")==0||QuestType.compareTo("Whisper")==0||
-					QuestType.compareTo("BroadCast")==0||QuestType.compareTo("BlockPlace")==0||
-					QuestType.compareTo("VarChange")==0||QuestType.compareTo("TelePort")==0)
+					player.sendMessage("¡×e[Äù½ºÆ®] : »õ·Î¿î Äù½ºÆ®°¡ µµÂøÇß½À´Ï´Ù! ¡×6¡×l/Äù½ºÆ®");
+					if(QuestType.equals("Nevigation")||QuestType.equals("Whisper")||
+					QuestType.equals("BroadCast")||QuestType.equals("BlockPlace")||
+					QuestType.equals("VarChange")||QuestType.equals("TelePort"))
 						new quest.Quest_GUI().QuestRouter(player, QuestName);
 				}
 			}

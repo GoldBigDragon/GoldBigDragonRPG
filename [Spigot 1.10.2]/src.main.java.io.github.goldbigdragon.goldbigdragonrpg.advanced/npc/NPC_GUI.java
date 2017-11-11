@@ -37,9 +37,9 @@ public class NPC_GUI extends Util_GUI
 		String UniqueCode = "§0§0§7§0§0§r";
 		Inventory inv = Bukkit.createInventory(null, 27, UniqueCode + "§0[NPC] "+ChatColor.stripColor(NPCname));
 		UserData_Object u = new UserData_Object();
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "대화를 한다", 340,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"에게",ChatColor.GRAY + "대화를 합니다."), 10, inv);
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "거래를 한다", 371,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"에게",ChatColor.GRAY + "거래를 요청합니다."), 12, inv);
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "퀘스트", 386,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"에게",ChatColor.GRAY + "도울 일이 없는지",ChatColor.GRAY + "물어봅니다."), 14, inv);
+		Stack2("§f§l대화를 한다", 340,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7에게","§7대화를 합니다."), 10, inv);
+		Stack2("§f§l거래를 한다", 371,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7에게","§7거래를 요청합니다."), 12, inv);
+		Stack2("§f§l퀘스트", 386,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7에게","§7도울 일이 없는지","§7물어봅니다."), 14, inv);
 
 		YamlLoader playerNPCYaml = new YamlLoader();
     	if(playerNPCYaml.isExit("NPC/PlayerData/"+player.getUniqueId()+".yml")==false)
@@ -51,11 +51,11 @@ public class NPC_GUI extends Util_GUI
     	}
     	else
     		playerNPCYaml.getConfig("NPC/PlayerData/"+player.getUniqueId()+".yml");
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "선물하기", 54,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"에게",ChatColor.GRAY + "자신이 가지고 있는",ChatColor.GRAY + "아이템을 선물합니다.",ChatColor.GRAY + "(NPC와의 호감도 상승)","",
-				ChatColor.LIGHT_PURPLE+"[현재 호감도]","§c§l ♥ "+ChatColor.WHITE+""+ChatColor.BOLD+playerNPCYaml.getInt(u.getNPCuuid(player)+".love") + " / 1000"), 16, inv);
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "나가기", 324,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"와의",ChatColor.GRAY + "대화를 종료합니다.",ChatColor.BLACK + u.getNPCuuid(player)), 26, inv);
+		Stack2("§f§l선물하기", 54,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7에게","§7자신이 가지고 있는","§7아이템을 선물합니다.","§7(NPC와의 호감도 상승)","",
+				"§d[현재 호감도]","§c§l ♥ §f§l"+playerNPCYaml.getInt(u.getNPCuuid(player)+".love") + " / 1000"), 16, inv);
+		Stack2("§f§l나가기", 324,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와의","§7대화를 종료합니다.","§0"+ u.getNPCuuid(player)), 26, inv);
 		if(player.isOp())
-			Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "GUI 비 활성화", 166,0,1,Arrays.asList(ChatColor.GRAY +"이 NPC는 GoldBigDragonRPG의",ChatColor.GRAY + "NPC GUI 화면을 사용하지 않게 합니다.",""), 8, inv);
+			Stack2("§f§lGUI 비 활성화", 166,0,1,Arrays.asList("§7이 NPC는 GoldBigDragonRPG의","§7NPC GUI 화면을 사용하지 않게 합니다.",""), 8, inv);
 
 		YamlLoader NPCscript = new YamlLoader();
 		NPCscript.getConfig("NPC/NPCData/"+ u.getNPCuuid(player)  +".yml");
@@ -120,13 +120,13 @@ public class NPC_GUI extends Util_GUI
 		switch(NPCscript.getString("Job.Type"))
 		{
 		case "BlackSmith":
-				Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "대장장이", 145,0,1,Arrays.asList(ChatColor.GRAY+"손에 든 무기 및 도구, 방어구를",ChatColor.GRAY+"정해진 확률과 가격에 수리 해 줍니다.","",ChatColor.DARK_AQUA +"수리 성공률 : "+ChatColor.WHITE +NPCscript.getInt("Job.FixRate")+ChatColor.DARK_AQUA +" %",ChatColor.GREEN + "내구도 10 당 가격 : "+ChatColor.YELLOW +""+NPCscript.getInt("Job.10PointFixDeal")+" "+ChatColor.GREEN+Main_ServerOption.Money,"",ChatColor.YELLOW + "[좌 클릭시 무기 수리화면 이동]",ChatColor.RED+"[일반 아이템 수리 실패시]",ChatColor.RED+" - 수리 성공과 상관 없이 골드 소모",ChatColor.RED+"[커스텀 아이템 수리 실패시]",ChatColor.RED+" - 최대 내구도 감소"), 4, inv);
+				Stack2("§6§l대장장이", 145,0,1,Arrays.asList("§7손에 든 무기 및 도구, 방어구를","§7정해진 확률과 가격에 수리 해 줍니다.","","§3수리 성공률 : §f" +NPCscript.getInt("Job.FixRate")+"§3 %","§a내구도 10 당 가격 : §e"+NPCscript.getInt("Job.10PointFixDeal")+" "+ChatColor.GREEN+Main_ServerOption.money,"","§e[좌 클릭시 무기 수리화면 이동]","§c[일반 아이템 수리 실패시]","§c - 수리 성공과 상관 없이 골드 소모","§c[커스텀 아이템 수리 실패시]","§c - 최대 내구도 감소"), 4, inv);
 			break;
 		case "Shaman":
-			Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "주술사",381,0,1,Arrays.asList(ChatColor.GRAY+"플레이어에게 랜덤한 포션 효과를",ChatColor.GRAY+"지정 금액을 받고 부여해 줍니다.",ChatColor.AQUA+"버프 성공률 : "+ChatColor.WHITE + NPCscript.getInt("Job.GoodRate") + ChatColor.DARK_AQUA+"%",ChatColor.AQUA+"버프 시간 : "+ChatColor.WHITE + NPCscript.getInt("Job.BuffTime")+ChatColor.DARK_AQUA+" 초",ChatColor.GREEN+"복채 비용 : "+ChatColor.WHITE+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+Main_ServerOption.Money,ChatColor.YELLOW + "[좌 클릭시 점 치기]",ChatColor.RED+"[버프 실패시]",ChatColor.RED+" - 성공과 상관없이 골드 소모",ChatColor.RED+" - 버프 시간동안 너프 효과"), 4, inv);
+			Stack2("§6§l주술사",381,0,1,Arrays.asList("§7플레이어에게 랜덤한 포션 효과를","§7지정 금액을 받고 부여해 줍니다.","§b버프 성공률 : §f" + NPCscript.getInt("Job.GoodRate") + "§3%","§b버프 시간 : §f" + NPCscript.getInt("Job.BuffTime")+"§3 초","§a복채 비용 : §f"+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+Main_ServerOption.money,"§e[좌 클릭시 점 치기]","§c[버프 실패시]","§c - 성공과 상관없이 골드 소모","§c - 버프 시간동안 너프 효과"), 4, inv);
 		break;
 		case "Healer":
-			Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "힐러", 373,8261,1,Arrays.asList(ChatColor.GRAY+"힐러는 지정 금액을 받고",ChatColor.GRAY + "플레이어의 생명력 회복 및",ChatColor.GRAY+"각종 너프 효과를 제거해 줍니다.",ChatColor.GREEN+"치료 비용 : "+ChatColor.WHITE+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+Main_ServerOption.Money,ChatColor.YELLOW + "[좌 클릭시 치료 받기]"), 4, inv);
+			Stack2("§6§l힐러", 373,8261,1,Arrays.asList("§7힐러는 지정 금액을 받고","§7플레이어의 생명력 회복 및","§7각종 너프 효과를 제거해 줍니다.","§a치료 비용 : §f"+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+Main_ServerOption.money,"§e[좌 클릭시 치료 받기]"), 4, inv);
 		break;
 		case "Master":
 			YamlLoader JobList = new YamlLoader();
@@ -168,59 +168,59 @@ public class NPC_GUI extends Util_GUI
 						int NeedLUK = JobList.getInt("MapleStory."+Job[count].toString()+"."+a[counter]+".NeedLUK");
 						String PrevJob = JobList.getString("MapleStory."+Job[count].toString()+"."+a[counter]+".PrevJob");
 
-						String lore = "%enter%"+"§9§l   ["+NPCscript.getString("Job.Job")+" 전직]   %enter%"+ChatColor.GRAY+"%enter%"+ChatColor.GRAY + "     [전직 조건]     %enter%%enter%";
+						String lore = "%enter%§9§l   ["+NPCscript.getString("Job.Job")+" 전직]   %enter%§7%enter%§7     [전직 조건]     %enter%%enter%";
 
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level()<NeedLV)
-							lore = lore + ChatColor.RED+"필요 레벨 : "+NeedLV+"%enter%";
+							lore = lore + "§c필요 레벨 : "+NeedLV+"%enter%";
 						else
-							lore = lore + ChatColor.AQUA+"필요 레벨 : "+NeedLV+"%enter%";
+							lore = lore + "§b필요 레벨 : "+NeedLV+"%enter%";
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR()<NeedSTR)
-							lore = lore + ChatColor.RED+"필요 "+Main_ServerOption.STR+" : "+NeedSTR+"%enter%";
+							lore = lore + "§c필요 "+Main_ServerOption.statSTR+" : "+NeedSTR+"%enter%";
 						else
-							lore = lore + ChatColor.AQUA+"필요 "+Main_ServerOption.STR+" : "+NeedSTR+"%enter%";
+							lore = lore + "§b필요 "+Main_ServerOption.statSTR+" : "+NeedSTR+"%enter%";
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX()<NeedDEX)
-							lore = lore + ChatColor.RED+"필요 "+Main_ServerOption.DEX+" : "+NeedDEX+"%enter%";
+							lore = lore + "§c필요 "+Main_ServerOption.statDEX+" : "+NeedDEX+"%enter%";
 						else
-							lore = lore + ChatColor.AQUA+"필요 "+Main_ServerOption.DEX+" : "+NeedDEX+"%enter%";
+							lore = lore + "§b필요 "+Main_ServerOption.statDEX+" : "+NeedDEX+"%enter%";
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT()<NeedINT)
-							lore = lore + ChatColor.RED+"필요 "+Main_ServerOption.INT+" : "+NeedINT+"%enter%";
+							lore = lore + "§c필요 "+Main_ServerOption.statINT+" : "+NeedINT+"%enter%";
 						else
-							lore = lore + ChatColor.AQUA+"필요 "+Main_ServerOption.INT+" : "+NeedINT+"%enter%";
+							lore = lore + "§b필요 "+Main_ServerOption.statINT+" : "+NeedINT+"%enter%";
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL()<NeedWILL)
-							lore = lore + ChatColor.RED+"필요 "+Main_ServerOption.WILL+" : "+NeedWILL+"%enter%";
+							lore = lore + "§c필요 "+Main_ServerOption.statWILL+" : "+NeedWILL+"%enter%";
 						else
-							lore = lore + ChatColor.AQUA+"필요 "+Main_ServerOption.WILL+" : "+NeedWILL+"%enter%";
+							lore = lore + "§b필요 "+Main_ServerOption.statWILL+" : "+NeedWILL+"%enter%";
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK()<NeedLUK)
-							lore = lore + ChatColor.RED+"필요 "+Main_ServerOption.LUK+" : "+NeedLUK+"%enter%";
+							lore = lore + "§c필요 "+Main_ServerOption.statLUK+" : "+NeedLUK+"%enter%";
 						else
-							lore = lore + ChatColor.AQUA+"필요 "+Main_ServerOption.LUK+" : "+NeedLUK+"%enter%";
+							lore = lore + "§b필요 "+Main_ServerOption.statLUK+" : "+NeedLUK+"%enter%";
 						if(PrevJob.equalsIgnoreCase("null")==false)
 						{
 							if(PlayerJob.getString("Job.Type").equalsIgnoreCase(PrevJob)==false)
-								lore = lore + ChatColor.RED+"이전 직업 : "+PrevJob+"%enter%";
+								lore = lore + "§c이전 직업 : "+PrevJob+"%enter%";
 							else
-								lore = lore + ChatColor.AQUA+"이전 직업 : "+PrevJob+"%enter%";
+								lore = lore + "§b이전 직업 : "+PrevJob+"%enter%";
 						}
 						
-						lore = lore + "%enter%"+ChatColor.YELLOW + "[좌 클릭시 전직]";
+						lore = lore + "%enter%§e[좌 클릭시 전직]";
 						
 						String[] scriptA = lore.split("%enter%");
 						for(int county = 0; county < scriptA.length; county++)
 							scriptA[county] =  scriptA[county];
 						
-						Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "전직 교관", ID,DATA,Amount,Arrays.asList(scriptA), 4, inv);
+						Stack2("§6§l전직 교관", ID,DATA,Amount,Arrays.asList(scriptA), 4, inv);
 					}
 				}
 			}
 			break;
 		case "Warper":
-			Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "공간 이동술사", 368,0,1,Arrays.asList(ChatColor.GRAY+"공간 이동술사는 일정 금액을 받고",ChatColor.GRAY + "플레이어를 특정 지역으로 이동시켜 줍니다.",ChatColor.GREEN+"등록된 지역 : "+ChatColor.WHITE+NPCscript.getConfigurationSection("Job.WarpList").getKeys(false).size()+ChatColor.GREEN+" 구역","",ChatColor.YELLOW + "[좌 클릭시 워프 목록 열람]"), 4, inv);
+			Stack2("§6§l공간 이동술사", 368,0,1,Arrays.asList("§7공간 이동술사는 일정 금액을 받고","§7플레이어를 특정 지역으로 이동시켜 줍니다.","§a등록된 지역 : §f"+NPCscript.getConfigurationSection("Job.WarpList").getKeys(false).size()+"§a 구역","","§e[좌 클릭시 워프 목록 열람]"), 4, inv);
 		break;
 		case "Upgrader":
-			Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "개조 장인", 417,0,1,Arrays.asList(ChatColor.GRAY+"개조 장인은 일정 금액을 받고",ChatColor.GRAY + "개조 장인만이 알고 있는",ChatColor.GRAY+"개조 레시피를 참고하여",ChatColor.GRAY+"현재 손에 든 무기를",ChatColor.GRAY+"개조 시켜 줍니다.",ChatColor.GREEN+"이용 가능한 개조식 : "+ChatColor.WHITE+NPCscript.getConfigurationSection("Job.UpgradeRecipe").getKeys(false).size()+ChatColor.GREEN+" 가지","",ChatColor.YELLOW + "[좌 클릭시 개조 레시피 열람]"), 4, inv);
+			Stack2("§6§l개조 장인", 417,0,1,Arrays.asList("§7개조 장인은 일정 금액을 받고","§7개조 장인만이 알고 있는","§7개조 레시피를 참고하여","§7현재 손에 든 무기를","§7개조 시켜 줍니다.","§a이용 가능한 개조식 : §f"+NPCscript.getConfigurationSection("Job.UpgradeRecipe").getKeys(false).size()+"§a 가지","","§e[좌 클릭시 개조 레시피 열람]"), 4, inv);
 		break;
 		case "Rune":
-			Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "룬 세공사", 351,10,1,Arrays.asList(ChatColor.GRAY+"룬 세공사는 일정 금액을 받고",ChatColor.GRAY + "가지고 있는 룬을 세공하여",ChatColor.GRAY+"현재 손에 든 무기에",ChatColor.GRAY+"비어있는 룬 소켓이 있다면",ChatColor.GRAY+"룬을 장착 시켜 줍니다.","",ChatColor.GREEN+"룬 세공 성공률 : "+ChatColor.WHITE +NPCscript.getInt("Job.SuccessRate")+ChatColor.DARK_AQUA +"%",ChatColor.GREEN + "룬 세공 가격 : "+ChatColor.YELLOW +""+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+Main_ServerOption.Money,"",ChatColor.YELLOW + "[좌 클릭시 룬 세공]"), 4, inv);
+			Stack2("§6§l룬 세공사", 351,10,1,Arrays.asList("§7룬 세공사는 일정 금액을 받고","§7가지고 있는 룬을 세공하여","§7현재 손에 든 무기에","§7비어있는 룬 소켓이 있다면","§7룬을 장착 시켜 줍니다.","","§a룬 세공 성공률 : §f" +NPCscript.getInt("Job.SuccessRate")+"§3%","§a룬 세공 가격 : §e"+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+Main_ServerOption.money,"","§e[좌 클릭시 룬 세공]"), 4, inv);
 		break;
 		}
 		
@@ -229,16 +229,16 @@ public class NPC_GUI extends Util_GUI
 			switch(NPCscript.getString("Job.Type"))
 			{
 			case "null":
-				Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "직업 설정", 403,0,1,Arrays.asList(ChatColor.GRAY + "이 NPC에게는 아직 직업이 없습니다!",ChatColor.GRAY + "직업을 가지면 다양한 기능을 제공합니다.","",ChatColor.YELLOW + "[클릭시 직업 설정]"), 4, inv);
+				Stack2("§6§l직업 설정", 403,0,1,Arrays.asList("§7이 NPC에게는 아직 직업이 없습니다!","§7직업을 가지면 다양한 기능을 제공합니다.","","§e[클릭시 직업 설정]"), 4, inv);
 				break;
 			case "BlackSmith":
-					Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "대장장이", 145,0,1,Arrays.asList(ChatColor.GRAY+"플레이어의 무기 및 도구, 방어구를",ChatColor.GRAY+"정해진 확률과 가격에 수리 해 줍니다.","",ChatColor.DARK_AQUA +"수리 성공률 : "+ChatColor.WHITE +NPCscript.getInt("Job.FixRate")+ChatColor.DARK_AQUA +" %",ChatColor.GREEN + "내구도 10 당 가격 : "+ChatColor.YELLOW +""+NPCscript.getInt("Job.10PointFixDeal")+" "+Main_ServerOption.Money,"",ChatColor.RED+"[일반 아이템 수리 실패시]",ChatColor.RED+" - 수리 성공과 상관 없이 "+Main_ServerOption.Money+ChatColor.RED+" 소모",ChatColor.RED+"[커스텀 아이템 수리 실패시]",ChatColor.RED+" - 최대 내구도 감소","",ChatColor.YELLOW + "[좌 클릭시 무기 수리화면 이동]",ChatColor.RED+ "[우 클릭시 직업 변경]"), 4, inv);
+					Stack2("§6§l대장장이", 145,0,1,Arrays.asList("§7플레이어의 무기 및 도구, 방어구를","§7정해진 확률과 가격에 수리 해 줍니다.","","§3수리 성공률 : §f" +NPCscript.getInt("Job.FixRate")+"§3 %","§a내구도 10 당 가격 : §e"+NPCscript.getInt("Job.10PointFixDeal")+" "+Main_ServerOption.money,"","§c[일반 아이템 수리 실패시]","§c - 수리 성공과 상관 없이 "+Main_ServerOption.money+"§c 소모","§c[커스텀 아이템 수리 실패시]","§c - 최대 내구도 감소","","§e[좌 클릭시 무기 수리화면 이동]","§c[우 클릭시 직업 변경]"), 4, inv);
 				break;
 			case "Shaman":
-				Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "주술사",381,0,1,Arrays.asList(ChatColor.GRAY+"플레이어에게 랜덤한 포션 효과를",ChatColor.GRAY+"지정 금액을 받고 부여해 줍니다.","",ChatColor.AQUA+"버프 성공률 : "+ChatColor.WHITE + NPCscript.getInt("Job.GoodRate") + ChatColor.DARK_AQUA+"%",ChatColor.AQUA+"버프 시간 : "+ChatColor.WHITE + NPCscript.getInt("Job.BuffTime")+ChatColor.DARK_AQUA+" 초",ChatColor.GREEN+"복채 비용 : "+ChatColor.WHITE+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+Main_ServerOption.Money,ChatColor.RED+"[버프 실패시]",ChatColor.RED+" - 성공과 상관없이 골드 소모",ChatColor.RED+" - 버프 시간동안 너프 효과","",ChatColor.YELLOW + "[좌 클릭시 점 치기]",ChatColor.RED+ "[우 클릭시 직업 변경]"), 4, inv);
+				Stack2("§6§l주술사",381,0,1,Arrays.asList("§7플레이어에게 랜덤한 포션 효과를","§7지정 금액을 받고 부여해 줍니다.","","§b버프 성공률 : §f" + NPCscript.getInt("Job.GoodRate") + "§3%","§b버프 시간 : §f" + NPCscript.getInt("Job.BuffTime")+"§3 초","§a복채 비용 : §f"+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+Main_ServerOption.money,"§c[버프 실패시]","§c - 성공과 상관없이 골드 소모","§c - 버프 시간동안 너프 효과","","§e[좌 클릭시 점 치기]","§c[우 클릭시 직업 변경]"), 4, inv);
 			break;
 			case "Healer":
-				Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "힐러", 373,8261,1,Arrays.asList(ChatColor.GRAY+"힐러는 지정 금액을 받고",ChatColor.GRAY + "플레이어의 생명력 회복 및",ChatColor.GRAY+"각종 너프 효과를 제거해 줍니다.",ChatColor.GREEN+"치료 비용 : "+ChatColor.WHITE+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+Main_ServerOption.Money,"",ChatColor.YELLOW + "[좌 클릭시 치료 받기]",ChatColor.RED+ "[우 클릭시 직업 변경]"), 4, inv);
+				Stack2("§6§l힐러", 373,8261,1,Arrays.asList("§7힐러는 지정 금액을 받고","§7플레이어의 생명력 회복 및","§7각종 너프 효과를 제거해 줍니다.","§a치료 비용 : §f"+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+Main_ServerOption.money,"","§e[좌 클릭시 치료 받기]","§c[우 클릭시 직업 변경]"), 4, inv);
 			break;
 			case "Master":
 				YamlLoader JobList = new YamlLoader();
@@ -265,70 +265,70 @@ public class NPC_GUI extends Util_GUI
 							int NeedWILL = JobList.getInt("MapleStory."+Job[count]+"."+a[counter]+".NeedWILL");
 							int NeedLUK = JobList.getInt("MapleStory."+Job[count]+"."+a[counter]+".NeedLUK");
 							PrevJob = JobList.getString("MapleStory."+Job[count]+"."+a[counter]+".PrevJob");						
-							lore = "%enter%"+"§9§l   ["+NPCscript.getString("Job.Job")+" 전직]   %enter%"+ChatColor.GRAY+"%enter%"+ChatColor.GRAY + "     [전직 조건]     %enter%%enter%";
+							lore = "%enter%§9§l   ["+NPCscript.getString("Job.Job")+" 전직]   %enter%§7%enter%§7     [전직 조건]     %enter%%enter%";
 							
 							if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level()<NeedLV)
-								lore = lore + ChatColor.RED+"필요 레벨 : "+NeedLV+"%enter%";
+								lore = lore + "§c필요 레벨 : "+NeedLV+"%enter%";
 							else
-								lore = lore + ChatColor.AQUA+"필요 레벨 : "+NeedLV+"%enter%";
+								lore = lore + "§b필요 레벨 : "+NeedLV+"%enter%";
 							if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR()<NeedSTR)
-								lore = lore + ChatColor.RED+"필요 "+Main_ServerOption.STR+" : "+NeedSTR+"%enter%";
+								lore = lore + "§c필요 "+Main_ServerOption.statSTR+" : "+NeedSTR+"%enter%";
 							else
-								lore = lore + ChatColor.AQUA+"필요 "+Main_ServerOption.STR+" : "+NeedSTR+"%enter%";
+								lore = lore + "§b필요 "+Main_ServerOption.statSTR+" : "+NeedSTR+"%enter%";
 							if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX()<NeedDEX)
-								lore = lore + ChatColor.RED+"필요 "+Main_ServerOption.DEX+" : "+NeedDEX+"%enter%";
+								lore = lore + "§c필요 "+Main_ServerOption.statDEX+" : "+NeedDEX+"%enter%";
 							else
-								lore = lore + ChatColor.AQUA+"필요 "+Main_ServerOption.DEX+" : "+NeedDEX+"%enter%";
+								lore = lore + "§b필요 "+Main_ServerOption.statDEX+" : "+NeedDEX+"%enter%";
 							if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT()<NeedINT)
-								lore = lore + ChatColor.RED+"필요 "+Main_ServerOption.INT+" : "+NeedINT+"%enter%";
+								lore = lore + "§c필요 "+Main_ServerOption.statINT+" : "+NeedINT+"%enter%";
 							else
-								lore = lore + ChatColor.AQUA+"필요 "+Main_ServerOption.INT+" : "+NeedINT+"%enter%";
+								lore = lore + "§b필요 "+Main_ServerOption.statINT+" : "+NeedINT+"%enter%";
 							if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL()<NeedWILL)
-								lore = lore + ChatColor.RED+"필요 "+Main_ServerOption.WILL+" : "+NeedWILL+"%enter%";
+								lore = lore + "§c필요 "+Main_ServerOption.statWILL+" : "+NeedWILL+"%enter%";
 							else
-								lore = lore + ChatColor.AQUA+"필요 "+Main_ServerOption.WILL+" : "+NeedWILL+"%enter%";
+								lore = lore + "§b필요 "+Main_ServerOption.statWILL+" : "+NeedWILL+"%enter%";
 							if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK()<NeedLUK)
-								lore = lore + ChatColor.RED+"필요 "+Main_ServerOption.LUK+" : "+NeedLUK+"%enter%";
+								lore = lore + "§c필요 "+Main_ServerOption.statLUK+" : "+NeedLUK+"%enter%";
 							else
-								lore = lore + ChatColor.AQUA+"필요 "+Main_ServerOption.LUK+" : "+NeedLUK+"%enter%";
+								lore = lore + "§b필요 "+Main_ServerOption.statLUK+" : "+NeedLUK+"%enter%";
 
 							if(PrevJob.equalsIgnoreCase("null")==false)
 							{
 								if(PlayerJob.getString("Job.Type").equalsIgnoreCase(PrevJob)==false)
-									lore = lore + ChatColor.RED+"이전 직업 : "+PrevJob+"%enter%";
+									lore = lore + "§c이전 직업 : "+PrevJob+"%enter%";
 								else
-									lore = lore + ChatColor.AQUA+"이전 직업 : "+PrevJob+"%enter%";
+									lore = lore + "§b이전 직업 : "+PrevJob+"%enter%";
 							}
 							
-							lore = lore + "%enter%"+ChatColor.YELLOW + "[좌 클릭시 전직]%enter%"+ChatColor.RED + "[우 클릭시 직업 변경]";
+							lore = lore + "%enter%§e[좌 클릭시 전직]%enter%§c[우 클릭시 직업 변경]";
 							
 							String[] scriptA = lore.split("%enter%");
 							for(int county = 0; county < scriptA.length; county++)
 								scriptA[county] =  scriptA[county];
 							
-							Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "전직 교관", ID,DATA,Amount,Arrays.asList(scriptA), 4, inv);
+							Stack2("§6§l전직 교관", ID,DATA,Amount,Arrays.asList(scriptA), 4, inv);
 						}
 					}
 				}
 				break;
 			case "Warper":
-				Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "공간 이동술사", 368,0,1,Arrays.asList(ChatColor.GRAY+"공간 이동술사는 일정 금액을 받고",ChatColor.GRAY + "플레이어를 특정 지역으로 이동시켜 줍니다.",ChatColor.GREEN+"등록된 지역 : "+ChatColor.WHITE+NPCscript.getConfigurationSection("Job.WarpList").getKeys(false).size()+ChatColor.GREEN+" 구역","",ChatColor.YELLOW + "[좌 클릭시 워프 목록 열람]",ChatColor.RED + "[우 클릭시 직업 변경]"), 4, inv);
+				Stack2("§6§l공간 이동술사", 368,0,1,Arrays.asList("§7공간 이동술사는 일정 금액을 받고","§7플레이어를 특정 지역으로 이동시켜 줍니다.","§a등록된 지역 : §f"+NPCscript.getConfigurationSection("Job.WarpList").getKeys(false).size()+"§a 구역","","§e[좌 클릭시 워프 목록 열람]","§c[우 클릭시 직업 변경]"), 4, inv);
 			break;
 			case "Upgrader":
-				Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "개조 장인", 417,0,1,Arrays.asList(ChatColor.GRAY+"개조 장인은 일정 금액을 받고",ChatColor.GRAY + "개조 장인만이 알고 있는",ChatColor.GRAY+"개조 레시피를 참고하여",ChatColor.GRAY+"현재 손에 든 무기를",ChatColor.GRAY+"개조 시켜 줍니다.",ChatColor.GREEN+"이용 가능한 개조식 : "+ChatColor.WHITE+NPCscript.getConfigurationSection("Job.UpgradeRecipe").getKeys(false).size()+ChatColor.GREEN+" 가지","",ChatColor.YELLOW + "[좌 클릭시 개조 레시피 열람]",ChatColor.RED + "[우 클릭시 직업 변경]"), 4, inv);
+				Stack2("§6§l개조 장인", 417,0,1,Arrays.asList("§7개조 장인은 일정 금액을 받고","§7개조 장인만이 알고 있는","§7개조 레시피를 참고하여","§7현재 손에 든 무기를","§7개조 시켜 줍니다.","§a이용 가능한 개조식 : §f"+NPCscript.getConfigurationSection("Job.UpgradeRecipe").getKeys(false).size()+"§a 가지","","§e[좌 클릭시 개조 레시피 열람]","§c[우 클릭시 직업 변경]"), 4, inv);
 			break;
 			case "Rune":
-				Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "룬 세공사", 351,10,1,Arrays.asList(ChatColor.GRAY+"룬 세공사는 일정 금액을 받고",ChatColor.GRAY + "가지고 있는 룬을 세공하여",ChatColor.GRAY+"현재 손에 든 무기에",ChatColor.GRAY+"비어있는 룬 소켓이 있다면",ChatColor.GRAY+"룬을 장착 시켜 줍니다.","",ChatColor.GREEN+"룬 세공 성공률 : "+ChatColor.WHITE +NPCscript.getInt("Job.SuccessRate")+ChatColor.DARK_AQUA +"%",ChatColor.GREEN + "룬 세공 가격 : "+ChatColor.YELLOW +""+NPCscript.getInt("Job.Deal")+" "+Main_ServerOption.Money,"",ChatColor.YELLOW + "[좌 클릭시 룬 세공]",ChatColor.RED + "[우 클릭시 직업 변경]"), 4, inv);
+				Stack2("§6§l룬 세공사", 351,10,1,Arrays.asList("§7룬 세공사는 일정 금액을 받고","§7가지고 있는 룬을 세공하여","§7현재 손에 든 무기에","§7비어있는 룬 소켓이 있다면","§7룬을 장착 시켜 줍니다.","","§a룬 세공 성공률 : §f" +NPCscript.getInt("Job.SuccessRate")+"§3%","§a룬 세공 가격 : §e"+NPCscript.getInt("Job.Deal")+" "+Main_ServerOption.money,"","§e[좌 클릭시 룬 세공]","§c[우 클릭시 직업 변경]"), 4, inv);
 			break;
 			}
-			Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "대화 수정", 403,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"와 대화를 할 시",ChatColor.GRAY + "플레이어에게 보일 대사를",ChatColor.GRAY + "추가/삭제/수정 합니다."), 19, inv);
-			Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "거래 수정", 403,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"의",ChatColor.GRAY + "거래 품목을 좌클릭시",ChatColor.GRAY + "해당 아이템을 지급 받으며,",ChatColor.GRAY + "거래 품목을 우클릭시",ChatColor.GRAY + "해당 아이템은 구입/판매 중지됩니다.","",ChatColor.WHITE + "[구매/판매할 아이템 등록 명령어]",ChatColor.GOLD+""+ChatColor.BOLD + "/상점 [구매/판매] [가격]"), 21, inv);
-			Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "퀘스트 수정", 403,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"의",ChatColor.GRAY + "퀘스트 내용을 수정합니다."), 23, inv);
-			Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "선물 수정", 403,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"에게 플레이어가",ChatColor.GRAY + "주는 선물에 따라 상승하는",ChatColor.GRAY+"호감도 상승 수치를 수정합니다."), 25, inv);
+			Stack2("§6§l대화 수정", 403,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와 대화를 할 시","§7플레이어에게 보일 대사를","§7추가/삭제/수정 합니다."), 19, inv);
+			Stack2("§6§l거래 수정", 403,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7의","§7거래 품목을 좌클릭시","§7해당 아이템을 지급 받으며,","§7거래 품목을 우클릭시","§7해당 아이템은 구입/판매 중지됩니다.","","§f[구매/판매할 아이템 등록 명령어]","§6§l/상점 [구매/판매] [가격]"), 21, inv);
+			Stack2("§6§l퀘스트 수정", 403,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7의","§7퀘스트 내용을 수정합니다."), 23, inv);
+			Stack2("§6§l선물 수정", 403,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7에게 플레이어가","§7주는 선물에 따라 상승하는","§7호감도 상승 수치를 수정합니다."), 25, inv);
 			if(NPCscript.getBoolean("Sale.Enable"))
-				Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "세일 설정", 38,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"와의 친밀도가 높을 경우",ChatColor.GRAY + "상점 판매 물품을 세일 해 줍니다.","",ChatColor.GREEN + "호감도 "+NPCscript.getInt("Sale.Minlove") + "이상시 " +NPCscript.getInt("Sale.discount")+"% 세일","", ChatColor.RED+"[Shift + 우 클릭시 제거]"), 7, inv);
+				Stack2("§6§l세일 설정", 38,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와의 친밀도가 높을 경우","§7상점 판매 물품을 세일 해 줍니다.","","§a호감도 "+NPCscript.getInt("Sale.Minlove") + "이상시 " +NPCscript.getInt("Sale.discount")+"% 세일","", "§c[Shift + 우 클릭시 제거]"), 7, inv);
 			else
-				Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "세일 설정", 38,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"와의 친밀도가 높을 경우",ChatColor.GRAY + "상점 판매 물품을 세일 해 줍니다.","",ChatColor.YELLOW + "[좌 클릭시 설정]"), 7, inv);
+				Stack2("§6§l세일 설정", 38,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와의 친밀도가 높을 경우","§7상점 판매 물품을 세일 해 줍니다.","","§e[좌 클릭시 설정]"), 7, inv);
 				
 		}
 		
@@ -356,35 +356,35 @@ public class NPC_GUI extends Util_GUI
 			a = (short) NPCscript.getConfigurationSection("Shop.Sell").getKeys(false).size();
 			
 			if(isEditMode == false)
-				Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 0, inv);
+				Stack2("§b     [구입]     ", 160,11,1,null, 0, inv);
 			else
-				Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,Arrays.asList(ChatColor.BLACK + "-1"), 0, inv);
+				Stack2("§b     [구입]     ", 160,11,1,Arrays.asList("§0-1"), 0, inv);
 				
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 1, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 2, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 3, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 4, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 5, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 6, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 7, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,Arrays.asList(ChatColor.BLACK + ""+page), 8, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 9, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 18, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 17, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 26, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 27, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 36, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 35, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 36, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 37, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 38, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 39, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 40, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 41, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 42, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 43, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 44, inv);
-			Stack2(ChatColor.RED +"   [물품 판매]   ", 160,14,1,null, 49, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 1, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 2, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 3, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 4, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 5, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 6, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 7, inv);
+			Stack2("§b     [구입]     ", 160,11,1,Arrays.asList("§0"+page), 8, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 9, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 18, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 17, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 26, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 27, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 36, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 35, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 36, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 37, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 38, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 39, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 40, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 41, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 42, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 43, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 44, inv);
+			Stack2("§c   [물품 판매]   ", 160,14,1,null, 49, inv);
 			byte loc=0;
 			boolean Sale = NPCscript.getBoolean("Sale.Enable");
 			int discount = 0;
@@ -426,15 +426,15 @@ public class NPC_GUI extends Util_GUI
 						if(isEditMode == false)
 						{
 							if(price >= main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money())
-								lore[lore.length-2] = ChatColor.RED+"[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]";
+								lore[lore.length-2] = "§c[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.money)+"]";
 							else
-								lore[lore.length-2] = ChatColor.AQUA+"[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]";
-							lore[lore.length-1] = ChatColor.WHITE+"[소지금 : " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]";
+								lore[lore.length-2] = "§b[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.money)+"]";
+							lore[lore.length-1] = "§f[소지금 : " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + " "+ChatColor.stripColor(Main_ServerOption.money)+"]";
 						}
 						else
 						{
-							lore[lore.length-2] = ChatColor.WHITE+"[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]";
-							lore[lore.length-1] = ChatColor.BLACK +""+ count;
+							lore[lore.length-2] = "§f[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.money)+"]";
+							lore[lore.length-1] = "§0"+ count;
 						}
 						IM.setLore(Arrays.asList(lore));
 					}
@@ -445,15 +445,15 @@ public class NPC_GUI extends Util_GUI
 						if(isEditMode == false)
 						{
 							if(price >= main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money())
-								lore[1] = ChatColor.RED+"[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]";
+								lore[1] = "§c[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.money)+"]";
 							else
-								lore[1] = ChatColor.AQUA+"[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]";
-							lore[2] = ChatColor.WHITE+"[소지금 : " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]";
+								lore[1] = "§b[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.money)+"]";
+							lore[2] = "§f[소지금 : " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + " "+ChatColor.stripColor(Main_ServerOption.money)+"]";
 						}
 						else
 						{
-							lore[1] = ChatColor.WHITE+"[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]";
-							lore[2] = ChatColor.BLACK +""+ count;
+							lore[1] = "§f[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.money)+"]";
+							lore[2] = "§0"+ count;
 						}
 						IM.setLore(Arrays.asList(lore));
 					}
@@ -464,18 +464,18 @@ public class NPC_GUI extends Util_GUI
 					{
 						if(price >= main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money())
 						{
-							List<String> l = Arrays.asList("",ChatColor.RED+"[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]",ChatColor.WHITE + "[소지금 : " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]");
+							List<String> l = Arrays.asList("","§c[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.money)+"]","§f[소지금 : " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + " "+ChatColor.stripColor(Main_ServerOption.money)+"]");
 							IM.setLore(l);
 						}
 						else
 						{
-							List<String> l = Arrays.asList("",ChatColor.AQUA+"[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]",ChatColor.WHITE + "[소지금 : " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]");
+							List<String> l = Arrays.asList("","§b[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.money)+"]","§f[소지금 : " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + " "+ChatColor.stripColor(Main_ServerOption.money)+"]");
 							IM.setLore(l);
 						}
 					}
 					else
 					{
-						List<String> l = Arrays.asList("",ChatColor.WHITE+"[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]",ChatColor.BLACK +""+ count);
+						List<String> l = Arrays.asList("","§f[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.money)+"]","§0"+ count);
 						IM.setLore(l);
 					}
 				}
@@ -490,9 +490,9 @@ public class NPC_GUI extends Util_GUI
 				loc++;
 			}
 			if(a-(page*20)>21)
-				Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다.", ChatColor.GRAY + "페이지 : " + (page+2)), 50, inv);
+				Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다.", "§7페이지 : " + (page+2)), 50, inv);
 				if(page!=0)
-				Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다.", ChatColor.GRAY + "페이지 : " + (page)), 48, inv);
+				Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다.", "§7페이지 : " + (page)), 48, inv);
 			
 		}
 		else
@@ -500,34 +500,34 @@ public class NPC_GUI extends Util_GUI
 			a = (short) NPCscript.getConfigurationSection("Shop.Buy").getKeys(false).toArray().length;
 
 			if(isEditMode == false)
-				Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 0, inv);
+				Stack2("§c     [판매]     ", 160,14,1,null, 0, inv);
 			else
-				Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,Arrays.asList(ChatColor.BLACK + "-1"), 0, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 1, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 2, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 3, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 4, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 5, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 6, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 7, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,Arrays.asList(ChatColor.BLACK + ""+page), 8, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 9, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 18, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 17, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 26, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 27, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 36, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 35, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 36, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 37, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 38, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 39, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 40, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 41, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 42, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 43, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 44, inv);
-			Stack2(ChatColor.AQUA +"   [물품 구매]   ", 160,11,1,null, 49, inv);
+				Stack2("§c     [판매]     ", 160,14,1,Arrays.asList("§0-1"), 0, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 1, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 2, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 3, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 4, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 5, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 6, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 7, inv);
+			Stack2("§c     [판매]     ", 160,14,1,Arrays.asList("§0"+page), 8, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 9, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 18, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 17, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 26, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 27, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 36, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 35, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 36, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 37, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 38, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 39, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 40, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 41, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 42, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 43, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 44, inv);
+			Stack2("§b   [물품 구매]   ", 160,11,1,null, 49, inv);
 			byte loc=0;
 			for(int count = page*21; count < a; count++)
 			{
@@ -547,13 +547,13 @@ public class NPC_GUI extends Util_GUI
 
 						if(isEditMode == false)
 						{
-							lore[lore.length-2] = ChatColor.AQUA+"[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]";
-							lore[lore.length-1] = ChatColor.WHITE+"[소지금 : " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]";
+							lore[lore.length-2] = "§b[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.money)+"]";
+							lore[lore.length-1] = "§f[소지금 : " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + " "+ChatColor.stripColor(Main_ServerOption.money)+"]";
 						}
 						else
 						{
-							lore[lore.length-2] = ChatColor.WHITE+"[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]";
-							lore[lore.length-1] = ChatColor.BLACK +""+ count;
+							lore[lore.length-2] = "§f[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.money)+"]";
+							lore[lore.length-1] = "§0"+ count;
 						}
 						IM.setLore(Arrays.asList(lore));
 					}
@@ -564,13 +564,13 @@ public class NPC_GUI extends Util_GUI
 						
 						if(isEditMode == false)
 						{
-							lore[1] = ChatColor.AQUA+"[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]";
-							lore[2] = ChatColor.WHITE+"[소지금 : " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]";
+							lore[1] = "§b[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.money)+"]";
+							lore[2] = "§f[소지금 : " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + " "+ChatColor.stripColor(Main_ServerOption.money)+"]";
 						}
 						else
 						{
-							lore[1] = ChatColor.WHITE+"[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]";
-							lore[2] = ChatColor.BLACK +""+ count;
+							lore[1] = "§f[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.money)+"]";
+							lore[2] = "§0"+ count;
 						}
 						IM.setLore(Arrays.asList(lore));
 					}
@@ -579,9 +579,9 @@ public class NPC_GUI extends Util_GUI
 				{
 					List<String> l =null;
 					if(isEditMode == false)
-						l = Arrays.asList("",ChatColor.AQUA+"[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]",ChatColor.WHITE + "[소지금 : " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]");
+						l = Arrays.asList("","§b[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.money)+"]","§f[소지금 : " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + " "+ChatColor.stripColor(Main_ServerOption.money)+"]");
 					else
-						l = Arrays.asList("",ChatColor.WHITE+"[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.Money)+"]",ChatColor.BLACK +""+ count);
+						l = Arrays.asList("","§f[가격 : " + price + " "+ChatColor.stripColor(Main_ServerOption.money)+"]","§0"+ count);
 					IM.setLore(l);
 				}
 				item.setItemMeta(IM);
@@ -595,14 +595,14 @@ public class NPC_GUI extends Util_GUI
 				loc++;
 			}
 			if(a-(page*20)>21)
-				Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다.", ChatColor.GRAY + "페이지 : " + (page+2)), 50, inv);
+				Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다.", "§7페이지 : " + (page+2)), 50, inv);
 				if(page!=0)
-				Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다.", ChatColor.GRAY + "페이지 : " + (page)), 48, inv);
+				Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다.", "§7페이지 : " + (page)), 48, inv);
 		}
 
 	
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + u.getNPCuuid(player)), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ u.getNPCuuid(player)), 53, inv);
 
 		player.openInventory(inv);
 	}
@@ -613,14 +613,14 @@ public class NPC_GUI extends Util_GUI
 		String UniqueCode = "§0§0§7§0§2§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0[NPC] "+ChatColor.stripColor(NPCname));
 
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "개인적인 대화", 340,0,1,Arrays.asList(ChatColor.GRAY + "사소한 이야깃 거리를 물어봅니다."), 2, inv);
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "근처의 소문", 340,0,1,Arrays.asList(ChatColor.GRAY + "최근 들리는 소문에 대해 물어봅니다."), 4, inv);
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "스킬에 대하여", 340,0,1,Arrays.asList(ChatColor.GRAY + "스킬에 대하여 물어봅니다."), 6, inv);
+		Stack2("§f§l개인적인 대화", 340,0,1,Arrays.asList("§7사소한 이야깃 거리를 물어봅니다."), 2, inv);
+		Stack2("§f§l근처의 소문", 340,0,1,Arrays.asList("§7최근 들리는 소문에 대해 물어봅니다."), 4, inv);
+		Stack2("§f§l스킬에 대하여", 340,0,1,Arrays.asList("§7스킬에 대하여 물어봅니다."), 6, inv);
 		if(TalkType != -1)
 		if(strings != null)
-			Stack2(ChatColor.YELLOW +""+ChatColor.BOLD + " "+NPCname, 386,0,1,Arrays.asList(new npc.NPC_Main().getScript(player, TalkType)),(int) TalkType, inv);
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "이전 메뉴", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 메뉴로 돌아갑니다."), 0, inv);
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "나가기", 324,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"와의",ChatColor.GRAY + "대화를 종료합니다.",ChatColor.BLACK + u.getNPCuuid(player)), 8, inv);
+			Stack2("§e§l "+NPCname, 386,0,1,Arrays.asList(new npc.NPC_Main().getScript(player, TalkType)),(int) TalkType, inv);
+		Stack2("§f§l이전 메뉴", 323,0,1,Arrays.asList("§7이전 메뉴로 돌아갑니다."), 0, inv);
+		Stack2("§f§l나가기", 324,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와의","§7대화를 종료합니다.","§0"+ u.getNPCuuid(player)), 8, inv);
 		
 		player.openInventory(inv);
 	}
@@ -665,56 +665,56 @@ public class NPC_GUI extends Util_GUI
 			if(count > a.length || loc >= 45) break;
 
 			String[] Temp = new String[12];
-			Temp[0] = ChatColor.WHITE+"퀘스트 구성 요소 : "+QuestFlow.size()+"개";
+			Temp[0] = "§f퀘스트 구성 요소 : "+QuestFlow.size()+"개";
 			int lorecount = 2;
 			if(QuestList.getInt(QuestName + ".Need.LV")!=0)
 			{
-				Temp[lorecount] = ChatColor.RED+"레벨 제한 : " + QuestList.getInt(QuestName + ".Need.LV") + " 이상";
+				Temp[lorecount] = "§c레벨 제한 : " + QuestList.getInt(QuestName + ".Need.LV") + " 이상";
 				lorecount = lorecount+1;
 			}
 			if(QuestList.getInt(QuestName + ".Need.Love")!=0)
 			{
-				Temp[lorecount] = ChatColor.RED + "친밀도 제한 : " + QuestList.getInt(QuestName + ".Need.Love") + " 이상";
+				Temp[lorecount] = "§c친밀도 제한 : " + QuestList.getInt(QuestName + ".Need.Love") + " 이상";
 				lorecount = lorecount+1;
 			}
 			if(QuestList.getInt(QuestName + ".Need.STR")!=0)
 			{
-				Temp[lorecount] = ChatColor.RED + ""+Main_ServerOption.STR+" 제한 : " + QuestList.getInt(QuestName + ".Need.STR") + " 이상";
+				Temp[lorecount] = "§c"+Main_ServerOption.statSTR+" 제한 : " + QuestList.getInt(QuestName + ".Need.STR") + " 이상";
 				lorecount = lorecount+1;
 			}
 			if(QuestList.getInt(QuestName + ".Need.DEX")!=0)
 			{
-				Temp[lorecount] = ChatColor.RED + ""+Main_ServerOption.DEX+" 제한 : " + QuestList.getInt(QuestName + ".Need.DEX") + " 이상";
+				Temp[lorecount] = "§c"+Main_ServerOption.statDEX+" 제한 : " + QuestList.getInt(QuestName + ".Need.DEX") + " 이상";
 				lorecount = lorecount+1;
 			}
 			if(QuestList.getInt(QuestName + ".Need.INT")!=0)
 			{
-				Temp[lorecount] = ChatColor.RED + ""+Main_ServerOption.INT+" 제한 : " + QuestList.getInt(QuestName + ".Need.INT") + " 이상";
+				Temp[lorecount] = "§c"+Main_ServerOption.statINT+" 제한 : " + QuestList.getInt(QuestName + ".Need.INT") + " 이상";
 				lorecount = lorecount+1;
 			}
 			if(QuestList.getInt(QuestName + ".Need.WILL")!=0)
 			{
-				Temp[lorecount] = ChatColor.RED + ""+Main_ServerOption.WILL+" 제한 : " + QuestList.getInt(QuestName + ".Need.WILL") + " 이상";
+				Temp[lorecount] = "§c"+Main_ServerOption.statWILL+" 제한 : " + QuestList.getInt(QuestName + ".Need.WILL") + " 이상";
 				lorecount = lorecount+1;
 			}
 			if(QuestList.getInt(QuestName + ".Need.LUK")!=0)
 			{
-				Temp[lorecount] = ChatColor.RED + ""+Main_ServerOption.LUK+" 제한 : " + QuestList.getInt(QuestName + ".Need.LUK" )+ " 이상";
+				Temp[lorecount] = "§c"+Main_ServerOption.statLUK+" 제한 : " + QuestList.getInt(QuestName + ".Need.LUK" )+ " 이상";
 				lorecount = lorecount+1;
 			}
 			if(QuestList.getInt(QuestName + ".Server.Limit")==-1)
 			{
-				Temp[lorecount] = ChatColor.RED + "[퀘스트 수행인원 마감]";
+				Temp[lorecount] = "§c[퀘스트 수행인원 마감]";
 				lorecount = lorecount+1;
 			}
 			if(QuestList.getInt(QuestName + ".Server.Limit")==0)
 			{
-				Temp[lorecount] = ChatColor.GREEN + "[퀘스트 수행에 제한 없음]";
+				Temp[lorecount] = "§a[퀘스트 수행에 제한 없음]";
 				lorecount = lorecount+1;
 			}
 			if(QuestList.getInt(QuestName + ".Server.Limit")>0)
 			{
-				Temp[lorecount] = ChatColor.DARK_AQUA + "퀘스트 수행 가능 인원 : " + QuestList.getInt(QuestName + ".Server.Limit")+ " 명 남음";
+				Temp[lorecount] = "§3퀘스트 수행 가능 인원 : " + QuestList.getInt(QuestName + ".Server.Limit")+ " 명 남음";
 				lorecount = lorecount+1;
 			}
 			if(QuestList.getString(QuestName + ".Need.PrevQuest") != null && QuestList.getString(QuestName + ".Need.PrevQuest").equalsIgnoreCase("null") == false)
@@ -726,7 +726,7 @@ public class NPC_GUI extends Util_GUI
 				}
 				else
 				{
-					Temp[lorecount] = ChatColor.RED + "필수 완료 퀘스트 : " + QuestList.getString(QuestName + ".Need.PrevQuest");
+					Temp[lorecount] = "§c필수 완료 퀘스트 : " + QuestList.getString(QuestName + ".Need.PrevQuest");
 					lorecount = lorecount+1;
 				}
 			}
@@ -734,9 +734,9 @@ public class NPC_GUI extends Util_GUI
 			Temp[lorecount] = "";
 			lorecount = lorecount+1;
 			if(isExit == true)
-				Temp[lorecount] = ChatColor.GREEN+"[등록 된 퀘스트]";
+				Temp[lorecount] = "§a[등록 된 퀘스트]";
 			else
-				Temp[lorecount] = ChatColor.RED+"[등록 되지 않은 퀘스트]";
+				Temp[lorecount] = "§c[등록 되지 않은 퀘스트]";
 			lorecount = lorecount+1;
 			
 			String[] lore = new String[lorecount];
@@ -747,36 +747,36 @@ public class NPC_GUI extends Util_GUI
 			switch(QuestType)
 			{
 			case "N" :
-				lore[1] = ChatColor.DARK_AQUA+"퀘스트 타입 : 일반 퀘스트";
-				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + QuestName, 340,0,1,Arrays.asList(lore), loc, inv);
+				lore[1] = "§3퀘스트 타입 : 일반 퀘스트";
+				Stack2("§f§l" + QuestName, 340,0,1,Arrays.asList(lore), loc, inv);
 				break;
 			case "R" :
-				lore[1] =ChatColor.DARK_AQUA+"퀘스트 타입 : 반복 퀘스트";
-				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + QuestName, 386,0,1,Arrays.asList(lore), loc, inv);
+				lore[1] ="§3퀘스트 타입 : 반복 퀘스트";
+				Stack2("§f§l" + QuestName, 386,0,1,Arrays.asList(lore), loc, inv);
 				break;
 			case "D" :
-				lore[1] =ChatColor.DARK_AQUA+"퀘스트 타입 : 일일 퀘스트";
-				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + QuestName, 403,0,1,Arrays.asList(lore), loc, inv);
+				lore[1] ="§3퀘스트 타입 : 일일 퀘스트";
+				Stack2("§f§l" + QuestName, 403,0,1,Arrays.asList(lore), loc, inv);
 				break;
 			case "W" :
-				lore[1] =ChatColor.DARK_AQUA+"퀘스트 타입 : 일주 퀘스트";
-				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + QuestName, 403,0,7,Arrays.asList(lore), loc, inv);
+				lore[1] ="§3퀘스트 타입 : 일주 퀘스트";
+				Stack2("§f§l" + QuestName, 403,0,7,Arrays.asList(lore), loc, inv);
 				break;
 			case "M" :
-				lore[1] =ChatColor.DARK_AQUA+"퀘스트 타입 : 한달 퀘스트";
-				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + QuestName, 403,0,31,Arrays.asList(lore), loc, inv);
+				lore[1] ="§3퀘스트 타입 : 한달 퀘스트";
+				Stack2("§f§l" + QuestName, 403,0,31,Arrays.asList(lore), loc, inv);
 				break;
 			}
 			loc++;
 		}
 		
 		if(a.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		//Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + u.getNPCuuid(player)), 53, inv);
+		//Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ u.getNPCuuid(player)), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -869,73 +869,73 @@ public class NPC_GUI extends Util_GUI
 						if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == true)
 						{
 							if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel() >= QuestList.getInt(QuestName + ".Need.LV"))
-								Temp[lorecount] = ChatColor.GREEN+"레벨 제한 : " + QuestList.getInt(QuestName + ".Need.LV") + " 이상";
+								Temp[lorecount] = "§a레벨 제한 : " + QuestList.getInt(QuestName + ".Need.LV") + " 이상";
 							else
-								Temp[lorecount] = ChatColor.RED+"레벨 제한 : " + QuestList.getInt(QuestName + ".Need.LV") + " 이상";
+								Temp[lorecount] = "§c레벨 제한 : " + QuestList.getInt(QuestName + ".Need.LV") + " 이상";
 						}
 						else
 						{
 							if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level() >= QuestList.getInt(QuestName + ".Need.LV"))
-								Temp[lorecount] = ChatColor.GREEN+"레벨 제한 : " + QuestList.getInt(QuestName + ".Need.LV") + " 이상";
+								Temp[lorecount] = "§a레벨 제한 : " + QuestList.getInt(QuestName + ".Need.LV") + " 이상";
 							else
-								Temp[lorecount] = ChatColor.RED+"레벨 제한 : " + QuestList.getInt(QuestName + ".Need.LV") + " 이상";
+								Temp[lorecount] = "§c레벨 제한 : " + QuestList.getInt(QuestName + ".Need.LV") + " 이상";
 						}
 						lorecount++;
 					}
 					if(QuestList.getInt(QuestName + ".Need.Love")!=0)
 					{
 						if(PlayerNPC.getInt(u.getNPCuuid(player)+".love") >= QuestList.getInt(QuestName + ".Need.Love"))
-							Temp[lorecount] = ChatColor.GREEN + "호감도 제한 : " + QuestList.getInt(QuestName + ".Need.Love") + " 이상";
+							Temp[lorecount] = "§a호감도 제한 : " + QuestList.getInt(QuestName + ".Need.Love") + " 이상";
 						else
-							Temp[lorecount] = ChatColor.RED + "호감도 제한 : " + QuestList.getInt(QuestName + ".Need.Love") + " 이상";
+							Temp[lorecount] = "§c호감도 제한 : " + QuestList.getInt(QuestName + ".Need.Love") + " 이상";
 						lorecount++;
 					}
 					if(QuestList.getInt(QuestName + ".Need.STR")!=0)
 					{
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR() >= QuestList.getInt(QuestName + ".Need.STR"))
-							Temp[lorecount] = ChatColor.GREEN + ""+Main_ServerOption.STR+" 제한 : " + QuestList.getInt(QuestName + ".Need.STR") + " 이상";
+							Temp[lorecount] = "§a"+Main_ServerOption.statSTR+" 제한 : " + QuestList.getInt(QuestName + ".Need.STR") + " 이상";
 						else
-							Temp[lorecount] = ChatColor.RED + ""+Main_ServerOption.STR+" 제한 : " + QuestList.getInt(QuestName + ".Need.STR") + " 이상";
+							Temp[lorecount] = "§c"+Main_ServerOption.statSTR+" 제한 : " + QuestList.getInt(QuestName + ".Need.STR") + " 이상";
 						lorecount++;
 					}
 					if(QuestList.getInt(QuestName + ".Need.DEX")!=0)
 					{
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX() >= QuestList.getInt(QuestName + ".Need.DEX"))
-							Temp[lorecount] = ChatColor.GREEN + ""+Main_ServerOption.DEX+" 제한 : " + QuestList.getInt(QuestName + ".Need.DEX") + " 이상";
+							Temp[lorecount] = "§a"+Main_ServerOption.statDEX+" 제한 : " + QuestList.getInt(QuestName + ".Need.DEX") + " 이상";
 						else
-							Temp[lorecount] = ChatColor.RED + ""+Main_ServerOption.DEX+" 제한 : " + QuestList.getInt(QuestName + ".Need.DEX") + " 이상";
+							Temp[lorecount] = "§c"+Main_ServerOption.statDEX+" 제한 : " + QuestList.getInt(QuestName + ".Need.DEX") + " 이상";
 						lorecount++;
 					}
 					if(QuestList.getInt(QuestName + ".Need.INT")!=0)
 					{
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT() >= QuestList.getInt(QuestName + ".Need.INT"))
-							Temp[lorecount] = ChatColor.GREEN + ""+Main_ServerOption.INT+" 제한 : " + QuestList.getInt(QuestName + ".Need.INT") + " 이상";
+							Temp[lorecount] = "§a"+Main_ServerOption.statINT+" 제한 : " + QuestList.getInt(QuestName + ".Need.INT") + " 이상";
 						else
-							Temp[lorecount] = ChatColor.RED + ""+Main_ServerOption.INT+" 제한 : " + QuestList.getInt(QuestName + ".Need.INT") + " 이상";
+							Temp[lorecount] = "§c"+Main_ServerOption.statINT+" 제한 : " + QuestList.getInt(QuestName + ".Need.INT") + " 이상";
 						lorecount++;
 					}
 					if(QuestList.getInt(QuestName + ".Need.WILL")!=0)
 					{
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL() >= QuestList.getInt(QuestName + ".Need.WILL"))
-							Temp[lorecount] = ChatColor.GREEN + ""+Main_ServerOption.WILL+" 제한 : " + QuestList.getInt(QuestName + ".Need.WILL") + " 이상";
+							Temp[lorecount] = "§a"+Main_ServerOption.statWILL+" 제한 : " + QuestList.getInt(QuestName + ".Need.WILL") + " 이상";
 						else
-							Temp[lorecount] = ChatColor.RED + ""+Main_ServerOption.WILL+" 제한 : " + QuestList.getInt(QuestName + ".Need.WILL") + " 이상";
+							Temp[lorecount] = "§c"+Main_ServerOption.statWILL+" 제한 : " + QuestList.getInt(QuestName + ".Need.WILL") + " 이상";
 						lorecount++;
 					}
 					if(QuestList.getInt(QuestName + ".Need.LUK")!=0)
 					{
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK() >= QuestList.getInt(QuestName + ".Need.LUK"))
-							Temp[lorecount] = ChatColor.GREEN + ""+Main_ServerOption.LUK+" 제한 : " + QuestList.getInt(QuestName + ".Need.LUK" )+ " 이상";
+							Temp[lorecount] = "§a"+Main_ServerOption.statLUK+" 제한 : " + QuestList.getInt(QuestName + ".Need.LUK" )+ " 이상";
 						else
-							Temp[lorecount] = ChatColor.RED + ""+Main_ServerOption.LUK+" 제한 : " + QuestList.getInt(QuestName + ".Need.LUK" )+ " 이상";
+							Temp[lorecount] = "§c"+Main_ServerOption.statLUK+" 제한 : " + QuestList.getInt(QuestName + ".Need.LUK" )+ " 이상";
 						lorecount++;
 					}
 					if(QuestList.getInt(QuestName + ".Server.Limit")!=0)
 					{
 						if(QuestList.getInt(QuestName + ".Server.Limit")==-1)
-							Temp[lorecount] = ChatColor.RED + "더이상 퀘스트를 수행할 수 없습니다.";
+							Temp[lorecount] = "§c더이상 퀘스트를 수행할 수 없습니다.";
 						else
-							Temp[lorecount] = ChatColor.GREEN + "퀘스트 수행 가능 인원 : " + QuestList.getInt(QuestName + ".Server.Limit")+ " 명 남음";
+							Temp[lorecount] = "§a퀘스트 수행 가능 인원 : " + QuestList.getInt(QuestName + ".Server.Limit")+ " 명 남음";
 						lorecount++;
 					}
 					
@@ -952,16 +952,16 @@ public class NPC_GUI extends Util_GUI
 					case "N" :
 						if(PlayerHas.toString().contains(QuestName) == false && PlayerFinished.toString().contains(QuestName) == false)
 						{
-							lore[0] =ChatColor.WHITE+"[일반 퀘스트]";
-							Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + QuestName, 340,0,1,Arrays.asList(lore), loc, inv);
+							lore[0] ="§f[일반 퀘스트]";
+							Stack2("§f§l" + QuestName, 340,0,1,Arrays.asList(lore), loc, inv);
 							loc++;
 						}
 						break;
 					case "R" :
 						if(PlayerHas.toString().contains(QuestName) == false)
 						{
-							lore[0] =ChatColor.WHITE+"[반복 퀘스트]";
-							Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + QuestName, 386,0,1,Arrays.asList(lore), loc, inv);
+							lore[0] ="§f[반복 퀘스트]";
+							Stack2("§f§l" + QuestName, 386,0,1,Arrays.asList(lore), loc, inv);
 							loc++;
 						}
 						break;
@@ -979,15 +979,15 @@ public class NPC_GUI extends Util_GUI
 										Long ClearTime = PlayerQuestList.getLong("Ended."+e[counter]+".ClearTime") + (86400000) ;
 										if(ClearTime < ETC.getNowUTC())
 										{
-											lore[0] =ChatColor.WHITE+"[일일 퀘스트]";
-											Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + QuestName, 403,0,1,Arrays.asList(lore), loc, inv);
+											lore[0] ="§f[일일 퀘스트]";
+											Stack2("§f§l" + QuestName, 403,0,1,Arrays.asList(lore), loc, inv);
 											loc++;
 										}
 										else
 										{
 											ClearTime = PlayerQuestList.getLong("Ended."+e[counter]+".ClearTime") + (86400000) - ETC.getNowUTC() ;
 											ClearTime = ClearTime/1000;
-											lore[0] =ChatColor.WHITE+"[일일 퀘스트]";
+											lore[0] ="§f[일일 퀘스트]";
 											String[] timelore = new String[lore.length+3];
 											for(int counter2=0;counter2 < lore.length;counter2++)
 												timelore[counter2] = lore[counter2];
@@ -1001,15 +1001,15 @@ public class NPC_GUI extends Util_GUI
 											ClearTime = ClearTime-(60*min);
 											
 											timelore[lore.length]="";
-											timelore[lore.length+1] = ChatColor.RED + "[퀘스트 대기 시간]";
+											timelore[lore.length+1] = "§c[퀘스트 대기 시간]";
 											if(hour>0)
-												timelore[lore.length+2] = ChatColor.RED +""+hour+" 시간 " ;
+												timelore[lore.length+2] = "§c"+hour+" 시간 " ;
 											if(min>0)
 												timelore[lore.length+2] =timelore[lore.length+2] + min+" 분 " ;
 											if(ClearTime>0)
 												timelore[lore.length+2] =timelore[lore.length+2] + ClearTime+" 초 " ;
 											
-											Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + QuestName, 403,0,1,Arrays.asList(timelore), loc, inv);
+											Stack2("§f§l" + QuestName, 403,0,1,Arrays.asList(timelore), loc, inv);
 											loc++;
 										}
 									}
@@ -1017,8 +1017,8 @@ public class NPC_GUI extends Util_GUI
 							}
 							else
 							{
-								lore[0] =ChatColor.WHITE+"[일일 퀘스트]";
-								Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + QuestName, 403,0,1,Arrays.asList(lore), loc, inv);
+								lore[0] ="§f[일일 퀘스트]";
+								Stack2("§f§l" + QuestName, 403,0,1,Arrays.asList(lore), loc, inv);
 								loc++;
 							}
 						}
@@ -1037,15 +1037,15 @@ public class NPC_GUI extends Util_GUI
 										Long ClearTime = PlayerQuestList.getLong("Ended."+e[counter]+".ClearTime") + (604800000) ;
 										if(ClearTime < ETC.getNowUTC())
 										{
-											lore[0] =ChatColor.WHITE+"[주간 퀘스트]";
-											Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + QuestName, 403,0,7,Arrays.asList(lore), loc, inv);
+											lore[0] ="§f[주간 퀘스트]";
+											Stack2("§f§l" + QuestName, 403,0,7,Arrays.asList(lore), loc, inv);
 											loc++;
 										}
 										else
 										{
 											ClearTime = PlayerQuestList.getLong("Ended."+e[counter]+".ClearTime") + (604800000) - ETC.getNowUTC() ;
 											ClearTime = ClearTime/1000;
-											lore[0] =ChatColor.WHITE+"[주간 퀘스트]";
+											lore[0] ="§f[주간 퀘스트]";
 											String[] timelore = new String[lore.length+3];
 											for(int counter2=0;counter2 < lore.length;counter2++)
 												timelore[counter2] = lore[counter2];
@@ -1063,9 +1063,9 @@ public class NPC_GUI extends Util_GUI
 											ClearTime = ClearTime-(60*min);
 											
 											timelore[lore.length]="";
-											timelore[lore.length+1] = ChatColor.RED + "[퀘스트 대기 시간]";
+											timelore[lore.length+1] = "§c[퀘스트 대기 시간]";
 											if(hour>0)
-												timelore[lore.length+2] = ChatColor.RED +""+day+" 일 " ;
+												timelore[lore.length+2] = "§c"+day+" 일 " ;
 											if(hour>0)
 												timelore[lore.length+2] = timelore[lore.length+2] +""+hour+" 시간 " ;
 											if(min>0)
@@ -1073,7 +1073,7 @@ public class NPC_GUI extends Util_GUI
 											if(ClearTime>0)
 												timelore[lore.length+2] =timelore[lore.length+2] + ClearTime+" 초 " ;
 											
-											Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + QuestName, 403,0,7,Arrays.asList(timelore), loc, inv);
+											Stack2("§f§l" + QuestName, 403,0,7,Arrays.asList(timelore), loc, inv);
 											loc++;
 										}
 									}
@@ -1081,8 +1081,8 @@ public class NPC_GUI extends Util_GUI
 							}
 							else
 							{
-								lore[0] =ChatColor.WHITE+"[주간 퀘스트]";
-								Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + QuestName, 403,0,7,Arrays.asList(lore), loc, inv);
+								lore[0] ="§f[주간 퀘스트]";
+								Stack2("§f§l" + QuestName, 403,0,7,Arrays.asList(lore), loc, inv);
 								loc++;
 							}
 						}
@@ -1101,15 +1101,15 @@ public class NPC_GUI extends Util_GUI
 										Long ClearTime = (PlayerQuestList.getLong("Ended."+e[counter]+".ClearTime") + Long.parseLong("2678400000")) ;
 										if(ClearTime < ETC.getNowUTC())
 										{
-											lore[0] =ChatColor.WHITE+"[월간 퀘스트]";
-											Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + QuestName, 403,0,31,Arrays.asList(lore), loc, inv);
+											lore[0] ="§f[월간 퀘스트]";
+											Stack2("§f§l" + QuestName, 403,0,31,Arrays.asList(lore), loc, inv);
 											loc++;
 										}
 										else
 										{
 											ClearTime = PlayerQuestList.getLong("Ended."+e[counter]+".ClearTime") + Long.parseLong("2678400000") - ETC.getNowUTC() ;
 											ClearTime = ClearTime/1000;
-											lore[0] =ChatColor.WHITE+"[월간 퀘스트]";
+											lore[0] ="§f[월간 퀘스트]";
 											String[] timelore = new String[lore.length+3];
 											for(int counter2=0;counter2 < lore.length;counter2++)
 												timelore[counter2] = lore[counter2];
@@ -1127,9 +1127,9 @@ public class NPC_GUI extends Util_GUI
 											ClearTime = ClearTime-(60*min);
 											
 											timelore[lore.length]="";
-											timelore[lore.length+1] = ChatColor.RED + "[퀘스트 대기 시간]";
+											timelore[lore.length+1] = "§c[퀘스트 대기 시간]";
 											if(hour>0)
-												timelore[lore.length+2] = ChatColor.RED +""+day+" 일 " ;
+												timelore[lore.length+2] = "§c"+day+" 일 " ;
 											if(hour>0)
 												timelore[lore.length+2] = timelore[lore.length+2] +""+hour+" 시간 " ;
 											if(min>0)
@@ -1137,7 +1137,7 @@ public class NPC_GUI extends Util_GUI
 											if(ClearTime>0)
 												timelore[lore.length+2] =timelore[lore.length+2] + ClearTime+" 초 " ;
 											
-											Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + QuestName, 403,0,31,Arrays.asList(timelore), loc, inv);
+											Stack2("§f§l" + QuestName, 403,0,31,Arrays.asList(timelore), loc, inv);
 											loc++;
 										}
 									}
@@ -1145,8 +1145,8 @@ public class NPC_GUI extends Util_GUI
 							}
 							else
 							{
-								lore[0] =ChatColor.WHITE+"[월간 퀘스트]";
-								Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + QuestName, 403,0,31,Arrays.asList(lore), loc, inv);
+								lore[0] ="§f[월간 퀘스트]";
+								Stack2("§f§l" + QuestName, 403,0,31,Arrays.asList(lore), loc, inv);
 								loc++;
 							}
 						}
@@ -1162,12 +1162,12 @@ public class NPC_GUI extends Util_GUI
 		}
 		
 		if(a.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		//Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK + u.getNPCuuid(player)), 53, inv);
+		//Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ u.getNPCuuid(player)), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -1177,17 +1177,17 @@ public class NPC_GUI extends Util_GUI
 		String UniqueCode = "§0§0§7§0§5§r";
 		Inventory inv = Bukkit.createInventory(null, 27, UniqueCode + "§0NPC 직업 선택");
 
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "직업 없음", 397,3,1,Arrays.asList(ChatColor.GRAY + "NPC의 직업을 없앱니다."), 1, inv);
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "대장장이", 145,0,1,Arrays.asList(ChatColor.GRAY + "무기, 도구, 방어구 등등",ChatColor.GRAY+"금속으로 제작된 물건을 고칩니다."), 2, inv);
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "주술사", 116,0,1,Arrays.asList(ChatColor.GRAY + "플레이어에게 랜덤 버프를 겁니다."), 3, inv);
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "힐러", 373,8261,1,Arrays.asList(ChatColor.GRAY + "플레이어를 빠르게 치료해 줍니다."), 4, inv);
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "전직 교관", 314,0,1,Arrays.asList(ChatColor.GRAY + "플레이어가 전직 조건에 부합할 경우",ChatColor.GRAY+"플레이어를 특정 직업으로 전직 시켜줍니다.","",ChatColor.RED+"이 기능은 서버 시스템이",ChatColor.RED+"메이플 스토리일 경우만 사용 가능합니다."), 5, inv);
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "공간 이동술사", 368,0,1,Arrays.asList(ChatColor.GRAY + "특정 위치로 텔레포트 시켜줍니다."), 6, inv);
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "개조 장인", 417,0,1,Arrays.asList(ChatColor.GRAY + "아이템을 개조 해 줍니다."), 7, inv);
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "룬 세공사", 351,10,1,Arrays.asList(ChatColor.GRAY + "아이템에 룬을 장착 시켜줍니다."), 10, inv);
+		Stack2("§f§l직업 없음", 397,3,1,Arrays.asList("§7NPC의 직업을 없앱니다."), 1, inv);
+		Stack2("§f§l대장장이", 145,0,1,Arrays.asList("§7무기, 도구, 방어구 등등","§7금속으로 제작된 물건을 고칩니다."), 2, inv);
+		Stack2("§f§l주술사", 116,0,1,Arrays.asList("§7플레이어에게 랜덤 버프를 겁니다."), 3, inv);
+		Stack2("§f§l힐러", 373,8261,1,Arrays.asList("§7플레이어를 빠르게 치료해 줍니다."), 4, inv);
+		Stack2("§f§l전직 교관", 314,0,1,Arrays.asList("§7플레이어가 전직 조건에 부합할 경우","§7플레이어를 특정 직업으로 전직 시켜줍니다.","","§c이 기능은 서버 시스템이","§c메이플 스토리일 경우만 사용 가능합니다."), 5, inv);
+		Stack2("§f§l공간 이동술사", 368,0,1,Arrays.asList("§7특정 위치로 텔레포트 시켜줍니다."), 6, inv);
+		Stack2("§f§l개조 장인", 417,0,1,Arrays.asList("§7아이템을 개조 해 줍니다."), 7, inv);
+		Stack2("§f§l룬 세공사", 351,10,1,Arrays.asList("§7아이템에 룬을 장착 시켜줍니다."), 10, inv);
 
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "이전 메뉴", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 메뉴로 돌아갑니다.",ChatColor.BLACK + NPCname), 18, inv);
-		Stack2(ChatColor.WHITE +""+ChatColor.BOLD + "나가기", 324,0,1,Arrays.asList(ChatColor.YELLOW + ""+ChatColor.stripColor(NPCname)+ChatColor.GRAY +"와의",ChatColor.GRAY + "대화를 종료합니다.",ChatColor.BLACK + u.getNPCuuid(player)), 26, inv);
+		Stack2("§f§l이전 메뉴", 323,0,1,Arrays.asList("§7이전 메뉴로 돌아갑니다.","§0"+ NPCname), 18, inv);
+		Stack2("§f§l나가기", 324,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와의","§7대화를 종료합니다.","§0"+ u.getNPCuuid(player)), 26, inv);
 		
 		player.openInventory(inv);
 	}
@@ -1236,25 +1236,25 @@ public class NPC_GUI extends Util_GUI
 			if(count > WarpList.length || loc >= 45) break;
 
 			if(player.isOp() == true)
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + NPCConfig.getString("Job.WarpList."+count+".DisplayName"), 368,0,1,Arrays.asList("",
-					ChatColor.YELLOW + "워프 비용 : "+ChatColor.WHITE + "" +NPCConfig.getInt("Job.WarpList."+count+".Cost")+" "+Main_ServerOption.Money
-					,"",ChatColor.YELLOW+"[좌 클릭시 해당 지역으로 이동]",ChatColor.RED+"[Shift + 우클릭시 영역 삭제]"), loc, inv);
+			Stack2("§f§l" + NPCConfig.getString("Job.WarpList."+count+".DisplayName"), 368,0,1,Arrays.asList("",
+					"§e워프 비용 : §f" +NPCConfig.getInt("Job.WarpList."+count+".Cost")+" "+Main_ServerOption.money
+					,"","§e[좌 클릭시 해당 지역으로 이동]","§c[Shift + 우클릭시 영역 삭제]"), loc, inv);
 			else
-				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + NPCConfig.getString("Job.WarpList."+count+".DisplayName"), 368,0,1,Arrays.asList("",
-						ChatColor.YELLOW + "워프 비용 : "+ChatColor.WHITE + "" +NPCConfig.getInt("Job.WarpList."+count+".Cost") +" "+Main_ServerOption.Money
-						,"",ChatColor.YELLOW+"[좌 클릭시 해당 지역으로 이동]"), loc, inv);
+				Stack2("§f§l" + NPCConfig.getString("Job.WarpList."+count+".DisplayName"), 368,0,1,Arrays.asList("",
+						"§e워프 비용 : §f" +NPCConfig.getInt("Job.WarpList."+count+".Cost") +" "+Main_ServerOption.money
+						,"","§e[좌 클릭시 해당 지역으로 이동]"), loc, inv);
 			loc++;
 		}
 		
 		if(WarpList.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
 		if(player.isOp() == true)
-			Stack2("§f§l새 워프", 381,0,1,Arrays.asList(ChatColor.GRAY + "새로운 워프 지점을 생성합니다.","",ChatColor.YELLOW+"[영역을 설정한 지역만 등록 가능합니다.]"), 49, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+NPCname), 53, inv);
+			Stack2("§f§l새 워프", 381,0,1,Arrays.asList("§7새로운 워프 지점을 생성합니다.","","§e[영역을 설정한 지역만 등록 가능합니다.]"), 49, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -1281,22 +1281,22 @@ public class NPC_GUI extends Util_GUI
 			int MaxXLoc = AreaConfig.getInt(AreaName+".X.Max");
 			short MaxYLoc = (short) AreaConfig.getInt(AreaName+".Y.Max");
 			int MaxZLoc = AreaConfig.getInt(AreaName+".Z.Max");
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + AreaName, 395,0,1,Arrays.asList(
-					ChatColor.DARK_AQUA+"월드 : "+world,ChatColor.DARK_AQUA+"X 영역 : "+MinXLoc+" ~ " + MaxXLoc
-					,ChatColor.DARK_AQUA+"Y 영역 : "+MinYLoc+" ~ " + MaxYLoc
-					,ChatColor.DARK_AQUA+"Z 영역 : "+MinZLoc+" ~ " + MaxZLoc
-					,"",ChatColor.YELLOW+"[좌 클릭시 워프 추가]"), loc, inv);
+			Stack2("§f§l" + AreaName, 395,0,1,Arrays.asList(
+					"§3월드 : "+world,"§3X 영역 : "+MinXLoc+" ~ " + MaxXLoc
+					,"§3Y 영역 : "+MinYLoc+" ~ " + MaxYLoc
+					,"§3Z 영역 : "+MinZLoc+" ~ " + MaxZLoc
+					,"","§e[좌 클릭시 워프 추가]"), loc, inv);
 			
 			loc++;
 		}
 		
 		if(AreaList.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+NPCname), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -1319,70 +1319,70 @@ public class NPC_GUI extends Util_GUI
 			String RecipeName = UpgradeAbleList[count].toString();
 			
 			String Lore=null;
-			if(UpgradeRecipe.getString(RecipeName+".Only").compareTo("null")==0)
-				Lore = ChatColor.WHITE+"[모든 장비]%enter%%enter%";
+			if(UpgradeRecipe.getString(RecipeName+".Only").equals("null"))
+				Lore = "§f[모든 장비]%enter%%enter%";
 			else
 				Lore = UpgradeRecipe.getString(RecipeName+".Only")+"%enter%%enter%";
 
 			if(UpgradeRecipe.getInt(RecipeName+".MaxDurability") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 내구도 : "+UpgradeRecipe.getInt(RecipeName+".MaxDurability")+"%enter%";
+				Lore = Lore+"§3 ▲ 최대 내구도 : "+UpgradeRecipe.getInt(RecipeName+".MaxDurability")+"%enter%";
 			else if(UpgradeRecipe.getInt(RecipeName+".MaxDurability") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최대 내구도 : "+UpgradeRecipe.getInt(RecipeName+".MaxDurability")+"%enter%";
+				Lore = Lore+"§c ▼ 최대 내구도 : "+UpgradeRecipe.getInt(RecipeName+".MaxDurability")+"%enter%";
 			if(UpgradeRecipe.getInt(RecipeName+".MinDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 "+Main_ServerOption.Damage+" : "+UpgradeRecipe.getInt(RecipeName+".MinDamage")+"%enter%";
+				Lore = Lore+"§3 ▲ 최소 "+Main_ServerOption.damage+" : "+UpgradeRecipe.getInt(RecipeName+".MinDamage")+"%enter%";
 			else if(UpgradeRecipe.getInt(RecipeName+".MinDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최소 "+Main_ServerOption.Damage+" : "+UpgradeRecipe.getInt(RecipeName+".MinDamage")+"%enter%";
+				Lore = Lore+"§c ▼ 최소 "+Main_ServerOption.damage+" : "+UpgradeRecipe.getInt(RecipeName+".MinDamage")+"%enter%";
 			if(UpgradeRecipe.getInt(RecipeName+".MaxDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 "+Main_ServerOption.Damage+" : "+UpgradeRecipe.getInt(RecipeName+".MaxDamage")+"%enter%";
+				Lore = Lore+"§3 ▲ 최대 "+Main_ServerOption.damage+" : "+UpgradeRecipe.getInt(RecipeName+".MaxDamage")+"%enter%";
 			else if(UpgradeRecipe.getInt(RecipeName+".MaxDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최대 "+Main_ServerOption.Damage+" : "+UpgradeRecipe.getInt(RecipeName+".MaxDamage")+"%enter%";
+				Lore = Lore+"§c ▼ 최대 "+Main_ServerOption.damage+" : "+UpgradeRecipe.getInt(RecipeName+".MaxDamage")+"%enter%";
 			if(UpgradeRecipe.getInt(RecipeName+".MinMaDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 "+Main_ServerOption.MagicDamage+" : "+UpgradeRecipe.getInt(RecipeName+".MinMaDamage")+"%enter%";
+				Lore = Lore+"§3 ▲ 최소 "+Main_ServerOption.magicDamage+" : "+UpgradeRecipe.getInt(RecipeName+".MinMaDamage")+"%enter%";
 			else if(UpgradeRecipe.getInt(RecipeName+".MinMaDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최소 "+Main_ServerOption.MagicDamage+" : "+UpgradeRecipe.getInt(RecipeName+".MinMaDamage")+"%enter%";
+				Lore = Lore+"§c ▼ 최소 "+Main_ServerOption.magicDamage+" : "+UpgradeRecipe.getInt(RecipeName+".MinMaDamage")+"%enter%";
 			if(UpgradeRecipe.getInt(RecipeName+".MaxMaDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 "+Main_ServerOption.MagicDamage+" : "+UpgradeRecipe.getInt(RecipeName+".MaxMaDamage")+"%enter%";
+				Lore = Lore+"§3 ▲ 최대 "+Main_ServerOption.magicDamage+" : "+UpgradeRecipe.getInt(RecipeName+".MaxMaDamage")+"%enter%";
 			else if(UpgradeRecipe.getInt(RecipeName+".MaxMaDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최대 "+Main_ServerOption.MagicDamage+" : "+UpgradeRecipe.getInt(RecipeName+".MaxMaDamage")+"%enter%";
+				Lore = Lore+"§c ▼ 최대 "+Main_ServerOption.magicDamage+" : "+UpgradeRecipe.getInt(RecipeName+".MaxMaDamage")+"%enter%";
 			if(UpgradeRecipe.getInt(RecipeName+".DEF") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 방어 : "+UpgradeRecipe.getInt(RecipeName+".DEF")+"%enter%";
+				Lore = Lore+"§3 ▲ 방어 : "+UpgradeRecipe.getInt(RecipeName+".DEF")+"%enter%";
 			else if(UpgradeRecipe.getInt(RecipeName+".DEF") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 방어 : "+UpgradeRecipe.getInt(RecipeName+".DEF")+"%enter%";
+				Lore = Lore+"§c ▼ 방어 : "+UpgradeRecipe.getInt(RecipeName+".DEF")+"%enter%";
 			if(UpgradeRecipe.getInt(RecipeName+".Protect") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 보호 : "+UpgradeRecipe.getInt(RecipeName+".Protect")+"%enter%";
+				Lore = Lore+"§3 ▲ 보호 : "+UpgradeRecipe.getInt(RecipeName+".Protect")+"%enter%";
 			else if(UpgradeRecipe.getInt(RecipeName+".Protect") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 보호 : "+UpgradeRecipe.getInt(RecipeName+".Protect")+"%enter%";
+				Lore = Lore+"§c ▼ 보호 : "+UpgradeRecipe.getInt(RecipeName+".Protect")+"%enter%";
 			if(UpgradeRecipe.getInt(RecipeName+".MaDEF") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 마법 방어 : "+UpgradeRecipe.getInt(RecipeName+".MaDEF")+"%enter%";
+				Lore = Lore+"§3 ▲ 마법 방어 : "+UpgradeRecipe.getInt(RecipeName+".MaDEF")+"%enter%";
 			else if(UpgradeRecipe.getInt(RecipeName+".MaDEF") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 마법 방어 : "+UpgradeRecipe.getInt(RecipeName+".MaDEF")+"%enter%";
+				Lore = Lore+"§c ▼ 마법 방어 : "+UpgradeRecipe.getInt(RecipeName+".MaDEF")+"%enter%";
 			if(UpgradeRecipe.getInt(RecipeName+".MaProtect") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 마법 보호 : "+UpgradeRecipe.getInt(RecipeName+".MaProtect")+"%enter%";
+				Lore = Lore+"§3 ▲ 마법 보호 : "+UpgradeRecipe.getInt(RecipeName+".MaProtect")+"%enter%";
 			else if(UpgradeRecipe.getInt(RecipeName+".MaProtect") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 마법 보호 : "+UpgradeRecipe.getInt(RecipeName+".MaProtect")+"%enter%";
+				Lore = Lore+"§c ▼ 마법 보호 : "+UpgradeRecipe.getInt(RecipeName+".MaProtect")+"%enter%";
 			if(UpgradeRecipe.getInt(RecipeName+".Balance") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 밸런스 : "+UpgradeRecipe.getInt(RecipeName+".Balance")+"%enter%";
+				Lore = Lore+"§3 ▲ 밸런스 : "+UpgradeRecipe.getInt(RecipeName+".Balance")+"%enter%";
 			else if(UpgradeRecipe.getInt(RecipeName+".Balance") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 밸런스 : "+UpgradeRecipe.getInt(RecipeName+".Balance")+"%enter%";
+				Lore = Lore+"§c ▼ 밸런스 : "+UpgradeRecipe.getInt(RecipeName+".Balance")+"%enter%";
 			if(UpgradeRecipe.getInt(RecipeName+".Critical") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 크리티컬 : "+UpgradeRecipe.getInt(RecipeName+".Critical")+"%enter%";
+				Lore = Lore+"§3 ▲ 크리티컬 : "+UpgradeRecipe.getInt(RecipeName+".Critical")+"%enter%";
 			else if(UpgradeRecipe.getInt(RecipeName+".Critical") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 크리티컬 : "+UpgradeRecipe.getInt(RecipeName+".Critical")+"%enter%";
+				Lore = Lore+"§c ▼ 크리티컬 : "+UpgradeRecipe.getInt(RecipeName+".Critical")+"%enter%";
 			
 			Lore = Lore+"%enter%"+UpgradeRecipe.getString(RecipeName+".Lore")+"%enter%%enter%";
 
-			Lore = Lore+ChatColor.YELLOW+" ▶ 개조 횟수 : "+ChatColor.WHITE+UpgradeRecipe.getInt(RecipeName+".UpgradeAbleLevel")+ChatColor.YELLOW+" 회째 개조 가능%enter%";
-			Lore = Lore+ChatColor.YELLOW+" ▶ 필요 숙련도 : "+ChatColor.WHITE+UpgradeRecipe.getInt(RecipeName+".DecreaseProficiency")+"%enter% ";
+			Lore = Lore+"§e ▶ 개조 횟수 : §f"+UpgradeRecipe.getInt(RecipeName+".UpgradeAbleLevel")+"§e 회째 개조 가능%enter%";
+			Lore = Lore+"§e ▶ 필요 숙련도 : §f"+UpgradeRecipe.getInt(RecipeName+".DecreaseProficiency")+"%enter% ";
 
-			Lore = Lore+"%enter%"+"§c§l개조 비용 : "+NPCConfig.getInt("Job.UpgradeRecipe."+RecipeName)+" "+Main_ServerOption.Money+"%enter% " ;
+			Lore = Lore+"%enter%§c§l개조 비용 : "+NPCConfig.getInt("Job.UpgradeRecipe."+RecipeName)+" "+Main_ServerOption.money+"%enter% " ;
 
 			if(playerMoney < NPCConfig.getInt("Job.UpgradeRecipe."+RecipeName+".Cost"))
-				Lore = Lore+"§c§l현재 금액 : " +playerMoney+" "+Main_ServerOption.Money+"%enter%";
+				Lore = Lore+"§c§l현재 금액 : " +playerMoney+" "+Main_ServerOption.money+"%enter%";
 			else
-				Lore = Lore+"§b§l현재 금액 : " +playerMoney+" "+Main_ServerOption.Money+"%enter%";
+				Lore = Lore+"§b§l현재 금액 : " +playerMoney+" "+Main_ServerOption.money+"%enter%";
 				
 			if(player.isOp() == true)
-				Lore = Lore+"%enter%"+ChatColor.RED+"[Shift + 우 클릭시 개조식 제거]%enter% ";
+				Lore = Lore+"%enter%§c[Shift + 우 클릭시 개조식 제거]%enter% ";
 			
 			String[] scriptA = Lore.split("%enter%");
 			for(int counter = 0; counter < scriptA.length; counter++)
@@ -1390,20 +1390,20 @@ public class NPC_GUI extends Util_GUI
 			
 			
 			if(count > UpgradeAbleList.length || loc >= 45) break;
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + RecipeName, 395,0,1,Arrays.asList(scriptA), loc, inv);
+			Stack2("§f§l" + RecipeName, 395,0,1,Arrays.asList(scriptA), loc, inv);
 			
 			loc++;
 		}
 		
 		if(UpgradeAbleList.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
 		if(player.isOp() == true)
-			Stack2("§f§l개조식 추가", 386,0,1,Arrays.asList(ChatColor.GRAY + "현재 개조 장인이 새로운",ChatColor.GRAY+"개조 레시피를 알게 합니다."), 49, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+NPCname), 53, inv);
+			Stack2("§f§l개조식 추가", 386,0,1,Arrays.asList("§7현재 개조 장인이 새로운","§7개조 레시피를 알게 합니다."), 49, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -1423,78 +1423,78 @@ public class NPC_GUI extends Util_GUI
 			if(count > a.length || loc >= 45) break;
 			String ItemName =a[count].toString();
 			String Lore=null;
-			if(RecipeList.getString(ItemName+".Only").compareTo("null")==0)
-				Lore = ChatColor.WHITE+"[모든 장비]%enter%%enter%";
+			if(RecipeList.getString(ItemName+".Only").equals("null"))
+				Lore = "§f[모든 장비]%enter%%enter%";
 			else
 				Lore = RecipeList.getString(ItemName+".Only")+"%enter%%enter%";
 
 			if(RecipeList.getInt(ItemName+".MaxDurability") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 내구도 : "+RecipeList.getInt(ItemName+".MaxDurability")+"%enter%";
+				Lore = Lore+"§3 ▲ 최대 내구도 : "+RecipeList.getInt(ItemName+".MaxDurability")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".MaxDurability") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최대 내구도 : "+RecipeList.getInt(ItemName+".MaxDurability")+"%enter%";
+				Lore = Lore+"§c ▼ 최대 내구도 : "+RecipeList.getInt(ItemName+".MaxDurability")+"%enter%";
 			if(RecipeList.getInt(ItemName+".MinDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 "+Main_ServerOption.Damage+" : "+RecipeList.getInt(ItemName+".MinDamage")+"%enter%";
+				Lore = Lore+"§3 ▲ 최소 "+Main_ServerOption.damage+" : "+RecipeList.getInt(ItemName+".MinDamage")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".MinDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최소 "+Main_ServerOption.Damage+" : "+RecipeList.getInt(ItemName+".MinDamage")+"%enter%";
+				Lore = Lore+"§c ▼ 최소 "+Main_ServerOption.damage+" : "+RecipeList.getInt(ItemName+".MinDamage")+"%enter%";
 			if(RecipeList.getInt(ItemName+".MaxDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 "+Main_ServerOption.Damage+" : "+RecipeList.getInt(ItemName+".MaxDamage")+"%enter%";
+				Lore = Lore+"§3 ▲ 최대 "+Main_ServerOption.damage+" : "+RecipeList.getInt(ItemName+".MaxDamage")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".MaxDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최대 "+Main_ServerOption.Damage+" : "+RecipeList.getInt(ItemName+".MaxDamage")+"%enter%";
+				Lore = Lore+"§c ▼ 최대 "+Main_ServerOption.damage+" : "+RecipeList.getInt(ItemName+".MaxDamage")+"%enter%";
 			if(RecipeList.getInt(ItemName+".MinMaDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최소 "+Main_ServerOption.MagicDamage+" : "+RecipeList.getInt(ItemName+".MinMaDamage")+"%enter%";
+				Lore = Lore+"§3 ▲ 최소 "+Main_ServerOption.magicDamage+" : "+RecipeList.getInt(ItemName+".MinMaDamage")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".MinMaDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최소 "+Main_ServerOption.MagicDamage+" : "+RecipeList.getInt(ItemName+".MinMaDamage")+"%enter%";
+				Lore = Lore+"§c ▼ 최소 "+Main_ServerOption.magicDamage+" : "+RecipeList.getInt(ItemName+".MinMaDamage")+"%enter%";
 			if(RecipeList.getInt(ItemName+".MaxMaDamage") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 최대 "+Main_ServerOption.MagicDamage+" : "+RecipeList.getInt(ItemName+".MaxMaDamage")+"%enter%";
+				Lore = Lore+"§3 ▲ 최대 "+Main_ServerOption.magicDamage+" : "+RecipeList.getInt(ItemName+".MaxMaDamage")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".MaxMaDamage") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 최대 "+Main_ServerOption.MagicDamage+" : "+RecipeList.getInt(ItemName+".MaxMaDamage")+"%enter%";
+				Lore = Lore+"§c ▼ 최대 "+Main_ServerOption.magicDamage+" : "+RecipeList.getInt(ItemName+".MaxMaDamage")+"%enter%";
 			if(RecipeList.getInt(ItemName+".DEF") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 방어 : "+RecipeList.getInt(ItemName+".DEF")+"%enter%";
+				Lore = Lore+"§3 ▲ 방어 : "+RecipeList.getInt(ItemName+".DEF")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".DEF") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 방어 : "+RecipeList.getInt(ItemName+".DEF")+"%enter%";
+				Lore = Lore+"§c ▼ 방어 : "+RecipeList.getInt(ItemName+".DEF")+"%enter%";
 			if(RecipeList.getInt(ItemName+".Protect") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 보호 : "+RecipeList.getInt(ItemName+".Protect")+"%enter%";
+				Lore = Lore+"§3 ▲ 보호 : "+RecipeList.getInt(ItemName+".Protect")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".Protect") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 보호 : "+RecipeList.getInt(ItemName+".Protect")+"%enter%";
+				Lore = Lore+"§c ▼ 보호 : "+RecipeList.getInt(ItemName+".Protect")+"%enter%";
 			if(RecipeList.getInt(ItemName+".MaDEF") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 마법 방어 : "+RecipeList.getInt(ItemName+".MaDEF")+"%enter%";
+				Lore = Lore+"§3 ▲ 마법 방어 : "+RecipeList.getInt(ItemName+".MaDEF")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".MaDEF") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 마법 방어 : "+RecipeList.getInt(ItemName+".MaDEF")+"%enter%";
+				Lore = Lore+"§c ▼ 마법 방어 : "+RecipeList.getInt(ItemName+".MaDEF")+"%enter%";
 			if(RecipeList.getInt(ItemName+".MaProtect") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 마법 보호 : "+RecipeList.getInt(ItemName+".MaProtect")+"%enter%";
+				Lore = Lore+"§3 ▲ 마법 보호 : "+RecipeList.getInt(ItemName+".MaProtect")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".MaProtect") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 마법 보호 : "+RecipeList.getInt(ItemName+".MaProtect")+"%enter%";
+				Lore = Lore+"§c ▼ 마법 보호 : "+RecipeList.getInt(ItemName+".MaProtect")+"%enter%";
 			if(RecipeList.getInt(ItemName+".Balance") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 밸런스 : "+RecipeList.getInt(ItemName+".Balance")+"%enter%";
+				Lore = Lore+"§3 ▲ 밸런스 : "+RecipeList.getInt(ItemName+".Balance")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".Balance") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 밸런스 : "+RecipeList.getInt(ItemName+".Balance")+"%enter%";
+				Lore = Lore+"§c ▼ 밸런스 : "+RecipeList.getInt(ItemName+".Balance")+"%enter%";
 			if(RecipeList.getInt(ItemName+".Critical") > 0)
-				Lore = Lore+ChatColor.DARK_AQUA+" ▲ 크리티컬 : "+RecipeList.getInt(ItemName+".Critical")+"%enter%";
+				Lore = Lore+"§3 ▲ 크리티컬 : "+RecipeList.getInt(ItemName+".Critical")+"%enter%";
 			else if(RecipeList.getInt(ItemName+".Critical") < 0)
-				Lore = Lore+ChatColor.RED+" ▼ 크리티컬 : "+RecipeList.getInt(ItemName+".Critical")+"%enter%";
+				Lore = Lore+"§c ▼ 크리티컬 : "+RecipeList.getInt(ItemName+".Critical")+"%enter%";
 			
 			Lore = Lore+"%enter%"+RecipeList.getString(ItemName+".Lore")+"%enter%%enter%";
 
-			Lore = Lore+ChatColor.YELLOW+" ▶ 개조 횟수 : "+ChatColor.WHITE+RecipeList.getInt(ItemName+".UpgradeAbleLevel")+ChatColor.YELLOW+" 회째 개조 가능%enter%";
-			Lore = Lore+ChatColor.YELLOW+" ▶ 필요 숙련도 : "+ChatColor.WHITE+RecipeList.getInt(ItemName+".DecreaseProficiency")+"%enter% ";
+			Lore = Lore+"§e ▶ 개조 횟수 : §f"+RecipeList.getInt(ItemName+".UpgradeAbleLevel")+"§e 회째 개조 가능%enter%";
+			Lore = Lore+"§e ▶ 필요 숙련도 : §f"+RecipeList.getInt(ItemName+".DecreaseProficiency")+"%enter% ";
 
-			Lore = Lore+"%enter%"+ChatColor.YELLOW+"[좌 클릭시 개조식 등록]%enter%";
+			Lore = Lore+"%enter%§e[좌 클릭시 개조식 등록]%enter%";
 
 			String[] scriptA = Lore.split("%enter%");
 			for(int counter = 0; counter < scriptA.length; counter++)
 				scriptA[counter] =  " "+scriptA[counter];
 			
-			Stack(ChatColor.WHITE+ItemName, 395, 0, 1,Arrays.asList(scriptA), loc, inv);
+			Stack("§f"+ItemName, 395, 0, 1,Arrays.asList(scriptA), loc, inv);
 			loc++;
 		}
 		
 		if(a.length-(page*44)>45)
-			Stack("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+			Stack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+			Stack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+NPCname), 53, inv);
+		Stack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -1506,34 +1506,34 @@ public class NPC_GUI extends Util_GUI
 
 		YamlLoader NPCscript = new YamlLoader();
 		NPCscript.getConfig("NPC/NPCData/"+ u.getNPCuuid(player)  +".yml");
-		Stack2(ChatColor.BLUE+"", 160,7,1,null, 0, inv);
-		Stack2(ChatColor.BLUE+"", 160,7,1,null, 1, inv);
-		Stack2(ChatColor.BLUE+"", 160,7,1,null, 2, inv);
-		Stack2(ChatColor.BLUE+"", 160,7,1,null, 9, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 10, inv);
-		Stack2(ChatColor.BLUE+"", 160,7,1,null,11, inv);
-		Stack2(ChatColor.BLUE+"", 160,7,1,null,18, inv);
-		Stack2(ChatColor.BLUE+"", 160,7,1,null,19, inv);
-		Stack2(ChatColor.BLUE+"", 160,7,1,null,20, inv);
+		Stack2("§9", 160,7,1,null, 0, inv);
+		Stack2("§9", 160,7,1,null, 1, inv);
+		Stack2("§9", 160,7,1,null, 2, inv);
+		Stack2("§9", 160,7,1,null, 9, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 10, inv);
+		Stack2("§9", 160,7,1,null,11, inv);
+		Stack2("§9", 160,7,1,null,18, inv);
+		Stack2("§9", 160,7,1,null,19, inv);
+		Stack2("§9", 160,7,1,null,20, inv);
 		
-		Stack2(ChatColor.BLUE+""+ChatColor.BOLD + "[룬을 올려 놓으세요]", 160,11,1,null, 3, inv);
-		Stack2(ChatColor.BLUE+""+ChatColor.BOLD + "[룬을 올려 놓으세요]", 160,11,1,null, 4, inv);
-		Stack2(ChatColor.BLUE+""+ChatColor.BOLD + "[룬을 올려 놓으세요]", 160,11,1,null, 5, inv);
-		Stack2(ChatColor.BLUE+""+ChatColor.BOLD + "[룬을 올려 놓으세요]", 160,11,1,null, 12, inv);
-		Stack2(ChatColor.BLUE+""+ChatColor.BOLD + "[룬을 올려 놓으세요]", 160,11,1,null,14, inv);
-		Stack2(ChatColor.BLUE+""+ChatColor.BOLD + "[룬을 올려 놓으세요]", 160,11,1,null,21, inv);
-		Stack2(ChatColor.BLUE+""+ChatColor.BOLD + "[룬을 올려 놓으세요]", 160,11,1,null,22, inv);
-		Stack2(ChatColor.BLUE+""+ChatColor.BOLD + "[룬을 올려 놓으세요]", 160,11,1,null,23, inv);
+		Stack2("§9§l[룬을 올려 놓으세요]", 160,11,1,null, 3, inv);
+		Stack2("§9§l[룬을 올려 놓으세요]", 160,11,1,null, 4, inv);
+		Stack2("§9§l[룬을 올려 놓으세요]", 160,11,1,null, 5, inv);
+		Stack2("§9§l[룬을 올려 놓으세요]", 160,11,1,null, 12, inv);
+		Stack2("§9§l[룬을 올려 놓으세요]", 160,11,1,null,14, inv);
+		Stack2("§9§l[룬을 올려 놓으세요]", 160,11,1,null,21, inv);
+		Stack2("§9§l[룬을 올려 놓으세요]", 160,11,1,null,22, inv);
+		Stack2("§9§l[룬을 올려 놓으세요]", 160,11,1,null,23, inv);
 		
-		Stack2(ChatColor.BLUE+"", 160,7,1,null, 6, inv);
-		Stack2(ChatColor.BLUE+"", 160,7,1,null, 7, inv);
-		Stack2(ChatColor.BLUE+"", 160,7,1,null, 8, inv);
-		Stack2(ChatColor.BLUE+"", 160,7,1,null, 15, inv);
-		Stack2("§b§l[     룬 장착     ]", 145,0,1,Arrays.asList("",ChatColor.GREEN+"룬 세공 성공률 : "+ChatColor.WHITE +NPCscript.getInt("Job.SuccessRate")+ChatColor.GREEN +"%",ChatColor.GREEN + "룬 세공 가격 : "+ChatColor.YELLOW +""+NPCscript.getInt("Job.Deal")+Main_ServerOption.Money), 16, inv);
-		Stack2(ChatColor.BLUE+"", 160,7,1,null,17, inv);
-		Stack2(ChatColor.BLUE+"", 160,7,1,null,24, inv);
-		Stack2(ChatColor.BLUE+"", 160,7,1,null,25, inv);
-		Stack2(ChatColor.BLUE+"", 160,7,1,Arrays.asList(ChatColor.BLACK+NPCname),26, inv);
+		Stack2("§9", 160,7,1,null, 6, inv);
+		Stack2("§9", 160,7,1,null, 7, inv);
+		Stack2("§9", 160,7,1,null, 8, inv);
+		Stack2("§9", 160,7,1,null, 15, inv);
+		Stack2("§b§l[     룬 장착     ]", 145,0,1,Arrays.asList("","§a룬 세공 성공률 : §f" +NPCscript.getInt("Job.SuccessRate")+"§a%","§a룬 세공 가격 : §e"+NPCscript.getInt("Job.Deal")+Main_ServerOption.money), 16, inv);
+		Stack2("§9", 160,7,1,null,17, inv);
+		Stack2("§9", 160,7,1,null,24, inv);
+		Stack2("§9", 160,7,1,null,25, inv);
+		Stack2("§9", 160,7,1,Arrays.asList("§0"+NPCname),26, inv);
 		player.openInventory(inv);
 	}
 	
@@ -1578,13 +1578,13 @@ public class NPC_GUI extends Util_GUI
 			switch(TalkType)
 			{
 			case "NT"://NatureTalk
-				Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("NatureTalk."+(count+1)+".love")+" ~ "+NPCConfig.getInt("NatureTalk."+(count+1)+".loveMax")+"%enter%%enter%"+ChatColor.YELLOW+"[등록된 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("NatureTalk."+(count+1)+".Script");
+				Lore = "%enter%§d[필요 호감도]%enter%§f"+NPCConfig.getInt("NatureTalk."+(count+1)+".love")+" ~ "+NPCConfig.getInt("NatureTalk."+(count+1)+".loveMax")+"%enter%%enter%§e[등록된 대사]%enter%§f"+NPCConfig.getString("NatureTalk."+(count+1)+".Script");
 				break;
 			case "NN"://NearbyNews
-				Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("NearByNEWS."+(count+1)+".love")+" ~ "+NPCConfig.getInt("NearByNEWS."+(count+1)+".loveMax")+"%enter%%enter%"+ChatColor.YELLOW+"[등록된 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("NearByNEWS."+(count+1)+".Script");
+				Lore = "%enter%§d[필요 호감도]%enter%§f"+NPCConfig.getInt("NearByNEWS."+(count+1)+".love")+" ~ "+NPCConfig.getInt("NearByNEWS."+(count+1)+".loveMax")+"%enter%%enter%§e[등록된 대사]%enter%§f"+NPCConfig.getString("NearByNEWS."+(count+1)+".Script");
 				break;
 			case "AS"://AboutSkill
-				Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("AboutSkills."+(count+1)+".love")+" ~ "+NPCConfig.getInt("AboutSkills."+(count+1)+".loveMax")+"%enter%%enter%"+ChatColor.YELLOW+"[스킬 전수 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+(count+1)+".Script")+"%enter%%enter%"+ChatColor.YELLOW+"[전수 이후 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+(count+1)+".AlreadyGetScript")+"%enter%%enter%"+ChatColor.YELLOW+"[배울 수 있는 스킬]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+(count+1)+".giveSkill")+"%enter%"+ChatColor.RED+"[서버 시스템이 마비노기 일 경우만 습득 합니다.]";
+				Lore = "%enter%§d[필요 호감도]%enter%§f"+NPCConfig.getInt("AboutSkills."+(count+1)+".love")+" ~ "+NPCConfig.getInt("AboutSkills."+(count+1)+".loveMax")+"%enter%%enter%§e[스킬 전수 대사]%enter%§f"+NPCConfig.getString("AboutSkills."+(count+1)+".Script")+"%enter%%enter%§e[전수 이후 대사]%enter%§f"+NPCConfig.getString("AboutSkills."+(count+1)+".AlreadyGetScript")+"%enter%%enter%§e[배울 수 있는 스킬]%enter%§f"+NPCConfig.getString("AboutSkills."+(count+1)+".giveSkill")+"%enter%§c[서버 시스템이 마비노기 일 경우만 습득 합니다.]";
 				break;
 			}
 			
@@ -1592,34 +1592,34 @@ public class NPC_GUI extends Util_GUI
 			for(int counter = 0; counter < scriptA.length; counter++)
 				scriptA[counter] =  " "+scriptA[counter];
 			
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD +""+ (count+1), 386,0,1,Arrays.asList(scriptA), loc, inv);
+			Stack2("§f§l"+ (count+1), 386,0,1,Arrays.asList(scriptA), loc, inv);
 			
 			loc=loc+1;
 		}
 		
 		if(TalkList.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
-		Stack2("§f§l[대사 추가]", 403,0,1,Arrays.asList(ChatColor.GRAY + "대사를 추가 시킵니다."), 49, inv);
+			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+		Stack2("§f§l[대사 추가]", 403,0,1,Arrays.asList("§7대사를 추가 시킵니다."), 49, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
 		switch(TalkType)
 		{
 		case "NT"://NatureTalk
-			Stack2("§f§l[근처의 소문]", 340,0,1,Arrays.asList(ChatColor.GRAY + "다른 주제의 대사를 설정합니다."), 46, inv);
-			Stack2("§f§l[스킬에 관하여]", 340,0,1,Arrays.asList(ChatColor.GRAY + "다른 주제의 대사를 설정합니다."), 52, inv);
+			Stack2("§f§l[근처의 소문]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 46, inv);
+			Stack2("§f§l[스킬에 관하여]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 52, inv);
 			break;
 		case "NN"://NearbyNews
-			Stack2("§f§l[스킬에 관하여]", 340,0,1,Arrays.asList(ChatColor.GRAY + "다른 주제의 대사를 설정합니다."), 46, inv);
-			Stack2("§f§l[개인적인 대화]", 340,0,1,Arrays.asList(ChatColor.GRAY + "다른 주제의 대사를 설정합니다."), 52, inv);
+			Stack2("§f§l[스킬에 관하여]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 46, inv);
+			Stack2("§f§l[개인적인 대화]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 52, inv);
 			break;
 		case "AS"://AboutSkill
-			Stack2("§f§l[개인적인 대화]", 340,0,1,Arrays.asList(ChatColor.GRAY + "다른 주제의 대사를 설정합니다."), 46, inv);
-			Stack2("§f§l[근처의 소문]", 340,0,1,Arrays.asList(ChatColor.GRAY + "다른 주제의 대사를 설정합니다."), 52, inv);
+			Stack2("§f§l[개인적인 대화]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 46, inv);
+			Stack2("§f§l[근처의 소문]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 52, inv);
 			break;
 		}
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK+TalkType), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+NPCname), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+TalkType), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -1635,13 +1635,13 @@ public class NPC_GUI extends Util_GUI
 		switch(TalkType)
 		{
 		case "NT"://NatureTalk
-			Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("NatureTalk."+TalkNumber+".love")+" ~ "+NPCConfig.getInt("NatureTalk."+TalkNumber+".loveMax")+"%enter%%enter%"+ChatColor.YELLOW+"[등록된 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("NatureTalk."+TalkNumber+".Script");
+			Lore = "%enter%§d[필요 호감도]%enter%§f"+NPCConfig.getInt("NatureTalk."+TalkNumber+".love")+" ~ "+NPCConfig.getInt("NatureTalk."+TalkNumber+".loveMax")+"%enter%%enter%§e[등록된 대사]%enter%§f"+NPCConfig.getString("NatureTalk."+TalkNumber+".Script");
 			break;
 		case "NN"://NearbyNews
-			Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("NearByNEWS."+TalkNumber+".love")+" ~ "+NPCConfig.getInt("NearByNEWS."+TalkNumber+".loveMax")+"%enter%%enter%"+ChatColor.YELLOW+"[등록된 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("NearByNEWS."+TalkNumber+".Script");
+			Lore = "%enter%§d[필요 호감도]%enter%§f"+NPCConfig.getInt("NearByNEWS."+TalkNumber+".love")+" ~ "+NPCConfig.getInt("NearByNEWS."+TalkNumber+".loveMax")+"%enter%%enter%§e[등록된 대사]%enter%§f"+NPCConfig.getString("NearByNEWS."+TalkNumber+".Script");
 			break;
 		case "AS"://AboutSkill
-			Lore = "%enter%"+ChatColor.LIGHT_PURPLE+"[필요 호감도]%enter%"+ChatColor.WHITE+""+NPCConfig.getInt("AboutSkills."+TalkNumber+".love")+" ~ "+NPCConfig.getInt("AboutSkills."+TalkNumber+".loveMax")+"%enter%%enter%"+ChatColor.YELLOW+"[스킬 전수 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+TalkNumber+".Script")+"%enter%%enter%"+ChatColor.YELLOW+"[전수 이후 대사]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+TalkNumber+".AlreadyGetScript")+"%enter%%enter%"+ChatColor.YELLOW+"[배울 수 있는 스킬]%enter%"+ChatColor.WHITE+""+NPCConfig.getString("AboutSkills."+TalkNumber+".giveSkill")+"%enter%"+ChatColor.RED+"[서버 시스템이 마비노기 일 경우만 습득 합니다.]";
+			Lore = "%enter%§d[필요 호감도]%enter%§f"+NPCConfig.getInt("AboutSkills."+TalkNumber+".love")+" ~ "+NPCConfig.getInt("AboutSkills."+TalkNumber+".loveMax")+"%enter%%enter%§e[스킬 전수 대사]%enter%§f"+NPCConfig.getString("AboutSkills."+TalkNumber+".Script")+"%enter%%enter%§e[전수 이후 대사]%enter%§f"+NPCConfig.getString("AboutSkills."+TalkNumber+".AlreadyGetScript")+"%enter%%enter%§e[배울 수 있는 스킬]%enter%§f"+NPCConfig.getString("AboutSkills."+TalkNumber+".giveSkill")+"%enter%§c[서버 시스템이 마비노기 일 경우만 습득 합니다.]";
 			break;
 		}
 			
@@ -1649,49 +1649,49 @@ public class NPC_GUI extends Util_GUI
 			for(int counter = 0; counter < scriptA.length; counter++)
 				scriptA[counter] =  " "+scriptA[counter];
 
-			Stack2(ChatColor.AQUA + "[     대사     ]", 160,3,1,null, 0, inv);
-			Stack2(ChatColor.AQUA + "[     대사     ]", 160,3,1,null, 1, inv);
-			Stack2(ChatColor.AQUA + "[     대사     ]", 160,3,1,null, 2, inv);
-			Stack2(ChatColor.AQUA + "[     대사     ]", 160,3,1,null, 9, inv);
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD +""+ TalkNumber, 386,0,1,Arrays.asList(scriptA), 10, inv);
-			Stack2(ChatColor.AQUA + "[     대사     ]", 160,3,1,null, 11, inv);
-			Stack2(ChatColor.AQUA + "[     대사     ]", 160,3,1,null, 18, inv);
-			Stack2(ChatColor.AQUA + "[     대사     ]", 160,3,1,null, 19, inv);
-			Stack2(ChatColor.AQUA + "[     대사     ]", 160,3,1,null, 20, inv);
+			Stack2("§b[     대사     ]", 160,3,1,null, 0, inv);
+			Stack2("§b[     대사     ]", 160,3,1,null, 1, inv);
+			Stack2("§b[     대사     ]", 160,3,1,null, 2, inv);
+			Stack2("§b[     대사     ]", 160,3,1,null, 9, inv);
+			Stack2("§f§l"+ TalkNumber, 386,0,1,Arrays.asList(scriptA), 10, inv);
+			Stack2("§b[     대사     ]", 160,3,1,null, 11, inv);
+			Stack2("§b[     대사     ]", 160,3,1,null, 18, inv);
+			Stack2("§b[     대사     ]", 160,3,1,null, 19, inv);
+			Stack2("§b[     대사     ]", 160,3,1,null, 20, inv);
 			
 
-			Stack2(ChatColor.GRAY + "[     옵션     ]", 160,7,1,null, 3, inv);
-			Stack2(ChatColor.GRAY + "[     옵션     ]", 160,7,1,null, 4, inv);
-			Stack2(ChatColor.GRAY + "[     옵션     ]", 160,7,1,null, 5, inv);
-			Stack2(ChatColor.GRAY + "[     옵션     ]", 160,7,1,null, 6, inv);
-			Stack2(ChatColor.GRAY + "[     옵션     ]", 160,7,1,null, 7, inv);
-			Stack2(ChatColor.GRAY + "[     옵션     ]", 160,7,1,null, 8, inv);
-			Stack2(ChatColor.GRAY + "[     옵션     ]", 160,7,1,null, 12, inv);
-			Stack2(ChatColor.GRAY + "[     옵션     ]", 160,7,1,null, 17, inv);
-			Stack2(ChatColor.GRAY + "[     옵션     ]", 160,7,1,null, 21, inv);
-			Stack2(ChatColor.GRAY + "[     옵션     ]", 160,7,1,null, 22, inv);
-			Stack2(ChatColor.GRAY + "[     옵션     ]", 160,7,1,null, 23, inv);
-			Stack2(ChatColor.GRAY + "[     옵션     ]", 160,7,1,null, 24, inv);
-			Stack2(ChatColor.GRAY + "[     옵션     ]", 160,7,1,null, 25, inv);
-			Stack2(ChatColor.GRAY + "[     옵션     ]", 160,7,1,null, 26, inv);
+			Stack2("§7[     옵션     ]", 160,7,1,null, 3, inv);
+			Stack2("§7[     옵션     ]", 160,7,1,null, 4, inv);
+			Stack2("§7[     옵션     ]", 160,7,1,null, 5, inv);
+			Stack2("§7[     옵션     ]", 160,7,1,null, 6, inv);
+			Stack2("§7[     옵션     ]", 160,7,1,null, 7, inv);
+			Stack2("§7[     옵션     ]", 160,7,1,null, 8, inv);
+			Stack2("§7[     옵션     ]", 160,7,1,null, 12, inv);
+			Stack2("§7[     옵션     ]", 160,7,1,null, 17, inv);
+			Stack2("§7[     옵션     ]", 160,7,1,null, 21, inv);
+			Stack2("§7[     옵션     ]", 160,7,1,null, 22, inv);
+			Stack2("§7[     옵션     ]", 160,7,1,null, 23, inv);
+			Stack2("§7[     옵션     ]", 160,7,1,null, 24, inv);
+			Stack2("§7[     옵션     ]", 160,7,1,null, 25, inv);
+			Stack2("§7[     옵션     ]", 160,7,1,null, 26, inv);
 			
 
 			switch(TalkType)
 			{
 			case "NT"://NatureTalk
 			case "NN"://NearbyNews
-				Stack2(ChatColor.LIGHT_PURPLE + "[     호감도     ]", 38,0,1,null, 13, inv);
-				Stack2(ChatColor.WHITE + "[     대 사     ]", 386,0,1,null, 14, inv);
+				Stack2("§d[     호감도     ]", 38,0,1,null, 13, inv);
+				Stack2("§f[     대 사     ]", 386,0,1,null, 14, inv);
 				break;
 			case "AS"://AboutSkill
-				Stack2(ChatColor.LIGHT_PURPLE + "[     호감도     ]", 38,0,1,null, 13, inv);
-				Stack2(ChatColor.WHITE + "[     대 사 1     ]", 386,0,1,null, 14, inv);
-				Stack2(ChatColor.DARK_AQUA + "[     스킬     ]", 403,0,1,null, 15, inv);
-				Stack2(ChatColor.WHITE + "[     대 사 2     ]", 386,0,1,null, 16, inv);
+				Stack2("§d[     호감도     ]", 38,0,1,null, 13, inv);
+				Stack2("§f[     대 사 1     ]", 386,0,1,null, 14, inv);
+				Stack2("§3[     스킬     ]", 403,0,1,null, 15, inv);
+				Stack2("§f[     대 사 2     ]", 386,0,1,null, 16, inv);
 				break;
 			}
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK+TalkType), 27, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+NPCname), 35, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+TalkType), 27, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 35, inv);
 		player.openInventory(inv);
 	}
 	
@@ -1712,18 +1712,18 @@ public class NPC_GUI extends Util_GUI
 			if(count > Skills.length || loc >= 45) break;
 			if(RealSkills.contains(Skills[count].toString())==true)
 			{
-				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD +""+ Skills[count], RealSkills.getInt(Skills[count].toString()+".ID"),RealSkills.getInt(Skills[count].toString()+".DATA"),RealSkills.getInt(Skills[count].toString()+".Amount"),Arrays.asList("",ChatColor.GREEN+ "[최대 랭크]",ChatColor.WHITE+""+RealSkills.getConfigurationSection(Skills[count].toString()+".SkillRank").getKeys(false).size()), loc, inv);
+				Stack2("§f§l"+ Skills[count], RealSkills.getInt(Skills[count].toString()+".ID"),RealSkills.getInt(Skills[count].toString()+".DATA"),RealSkills.getInt(Skills[count].toString()+".Amount"),Arrays.asList("","§a[최대 랭크]","§f"+RealSkills.getConfigurationSection(Skills[count].toString()+".SkillRank").getKeys(false).size()), loc, inv);
 				loc++;
 			}
 		}
 		
 		if(Skills.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK+""+TalkNumber), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+NPCname), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+TalkNumber), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
 		player.openInventory(inv);
 	}
 
@@ -1738,97 +1738,97 @@ public class NPC_GUI extends Util_GUI
 			itemName = new event.Main_Interact().SetItemDefaultName((short)item.getTypeId(), item.getData().getData());
 		if(isItemBuy)
 		{
-			inv = Bukkit.createInventory(null, 54, UniqueCode + "§0[NPC]"+ChatColor.BLUE+ChatColor.BOLD+" 물품 구매");
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,Arrays.asList(ChatColor.BLACK+""+value), 0, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,Arrays.asList(ChatColor.BLACK+""+count), 1, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 2, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 3, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 4, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 5, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 6, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 7, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 8, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 9, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 18, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 17, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 26, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 27, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 36, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 35, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 36, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 37, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 38, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 39, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 40, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 41, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 42, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 43, inv);
-			Stack2(ChatColor.AQUA +"     [구입]     ", 160,11,1,null, 44, inv);
-			Stack2("§b§l[물품 구매]", 54,0,1,Arrays.asList(itemName+ChatColor.WHITE+ChatColor.BOLD+"×"+item.getAmount()+ChatColor.WHITE+" 아이템을",ChatColor.WHITE+"총 "+ ChatColor.YELLOW+ChatColor.BOLD+count +ChatColor.WHITE+ " 개 구매합니다."
-					,"",ChatColor.WHITE+"가격 : "+ChatColor.YELLOW+ value*count + " "+ChatColor.GOLD + Main_ServerOption.Money, ChatColor.WHITE+"소지금 : "+ChatColor.WHITE+ChatColor.BOLD+Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()+" "+Main_ServerOption.Money), 49, inv);
+			inv = Bukkit.createInventory(null, 54, UniqueCode + "§0[NPC]§9§l 물품 구매");
+			Stack2("§b     [구입]     ", 160,11,1,Arrays.asList("§0"+value), 0, inv);
+			Stack2("§b     [구입]     ", 160,11,1,Arrays.asList("§0"+count), 1, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 2, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 3, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 4, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 5, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 6, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 7, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 8, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 9, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 18, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 17, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 26, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 27, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 36, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 35, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 36, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 37, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 38, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 39, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 40, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 41, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 42, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 43, inv);
+			Stack2("§b     [구입]     ", 160,11,1,null, 44, inv);
+			Stack2("§b§l[물품 구매]", 54,0,1,Arrays.asList(itemName+"§f§l×"+item.getAmount()+"§f 아이템을","§f총 §e"+ChatColor.BOLD+count +"§f 개 구매합니다."
+					,"","§f가격 : §e"+ value*count + " §6"+ Main_ServerOption.money, "§f소지금 : §f"+ChatColor.BOLD+Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()+" "+Main_ServerOption.money), 49, inv);
 		}
 		else
 		{
-			inv = Bukkit.createInventory(null, 54, UniqueCode + "§0[NPC]"+ChatColor.RED+ChatColor.BOLD+" 물품 판매");
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,Arrays.asList(ChatColor.BLACK+""+value), 0, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,Arrays.asList(ChatColor.BLACK+""+count), 1, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 2, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 3, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 4, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 5, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 6, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 7, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 8, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 9, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 18, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 17, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 26, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 27, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 36, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 35, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 36, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 37, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 38, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 39, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 40, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 41, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 42, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 43, inv);
-			Stack2(ChatColor.RED +"     [판매]     ", 160,14,1,null, 44, inv);
-			Stack2("§c§l[물품 판매]", 54,0,1,Arrays.asList(itemName+ChatColor.WHITE+ChatColor.BOLD+"×"+item.getAmount()+ChatColor.WHITE+" 아이템을",ChatColor.WHITE+"총 "+ ChatColor.YELLOW+ChatColor.BOLD+count +ChatColor.WHITE+ " 개 판매합니다."
-					,"",ChatColor.WHITE+"가격 : "+ChatColor.YELLOW+ value*count + " "+ChatColor.GOLD + Main_ServerOption.Money, ChatColor.WHITE+"소지금 : "+ChatColor.WHITE+ChatColor.BOLD+Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()+" "+Main_ServerOption.Money), 49, inv);
+			inv = Bukkit.createInventory(null, 54, UniqueCode + "§0[NPC]§c§l 물품 판매");
+			Stack2("§c     [판매]     ", 160,14,1,Arrays.asList("§0"+value), 0, inv);
+			Stack2("§c     [판매]     ", 160,14,1,Arrays.asList("§0"+count), 1, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 2, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 3, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 4, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 5, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 6, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 7, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 8, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 9, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 18, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 17, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 26, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 27, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 36, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 35, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 36, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 37, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 38, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 39, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 40, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 41, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 42, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 43, inv);
+			Stack2("§c     [판매]     ", 160,14,1,null, 44, inv);
+			Stack2("§c§l[물품 판매]", 54,0,1,Arrays.asList(itemName+"§f§l×"+item.getAmount()+"§f 아이템을","§f총 §e"+ChatColor.BOLD+count +"§f 개 판매합니다."
+					,"","§f가격 : §e"+ value*count + " §6"+ Main_ServerOption.money, "§f소지금 : §f"+ChatColor.BOLD+Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()+" "+Main_ServerOption.money), 49, inv);
 		}
 
-		Stack2(ChatColor.RED +""+ ChatColor.BOLD+"     [개수 - 64]     ", 374,0,64,Arrays.asList("",ChatColor.WHITE+"현재 총 "+ ChatColor.YELLOW+ChatColor.BOLD+count +ChatColor.WHITE+ " 개"), 19, inv);
-		Stack2(ChatColor.RED +""+ ChatColor.BOLD+"     [개수 - 10]     ", 374,0,10,Arrays.asList("",ChatColor.WHITE+"현재 총 "+ ChatColor.YELLOW+ChatColor.BOLD+count +ChatColor.WHITE+ " 개"), 20, inv);
-		Stack2(ChatColor.RED +""+ ChatColor.BOLD+"     [개수 - 1]     ", 374,0,1,Arrays.asList("",ChatColor.WHITE+"현재 총 "+ ChatColor.YELLOW+ChatColor.BOLD+count +ChatColor.WHITE+ " 개"), 21, inv);
+		Stack2("§c§l     [개수 - 64]     ", 374,0,64,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 19, inv);
+		Stack2("§c§l     [개수 - 10]     ", 374,0,10,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 20, inv);
+		Stack2("§c§l     [개수 - 1]     ", 374,0,1,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 21, inv);
 
-		Stack2(ChatColor.RED +""+ ChatColor.BOLD+"     [최소한]     ", 325,0,1,Arrays.asList("",ChatColor.WHITE+"현재 총 "+ ChatColor.YELLOW+ChatColor.BOLD+count +ChatColor.WHITE+ " 개"), 13, inv);
+		Stack2("§c§l     [최소한]     ", 325,0,1,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 13, inv);
 		ItemStackStack(item, 22, inv);
-		Stack2(ChatColor.AQUA +""+ ChatColor.BOLD+"     [최대한]     ", 326,0,1,Arrays.asList("",ChatColor.WHITE+"현재 총 "+ ChatColor.YELLOW+ChatColor.BOLD+count +ChatColor.WHITE+ " 개"), 31, inv);
-		Stack2(ChatColor.AQUA +""+ ChatColor.BOLD+"     [개수 + 1]     ", 373,0,1,Arrays.asList("",ChatColor.WHITE+"현재 총 "+ ChatColor.YELLOW+ChatColor.BOLD+count +ChatColor.WHITE+ " 개"), 23, inv);
-		Stack2(ChatColor.AQUA +""+ ChatColor.BOLD+"     [개수 + 10]     ", 373,0,10,Arrays.asList("",ChatColor.WHITE+"현재 총 "+ ChatColor.YELLOW+ChatColor.BOLD+count +ChatColor.WHITE+ " 개"), 24, inv);
-		Stack2(ChatColor.AQUA +""+ ChatColor.BOLD+"     [개수 + 64]     ", 373,0,64,Arrays.asList("",ChatColor.WHITE+"현재 총 "+ ChatColor.YELLOW+ChatColor.BOLD+count +ChatColor.WHITE+ " 개"), 25, inv);
+		Stack2("§b§l     [최대한]     ", 326,0,1,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 31, inv);
+		Stack2("§b§l     [개수 + 1]     ", 373,0,1,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 23, inv);
+		Stack2("§b§l     [개수 + 10]     ", 373,0,10,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 24, inv);
+		Stack2("§b§l     [개수 + 64]     ", 373,0,64,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 25, inv);
 		
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+NPCname), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
 		player.openInventory(inv);
 	}
 	
 	public void ItemFix(Player player, String NPCname, int successRate, int value)
 	{
 		String UniqueCode = "§0§0§7§0§f§r";
-		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0[NPC]"+ChatColor.BLACK+ChatColor.BOLD+" 수리할 장비를 선택 하세요.");
-		Stack2("§f§l이전 목록"+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK+""+successRate,ChatColor.BLACK+""+value), 0, inv);
-		Stack2("§f§l닫기"+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+NPCname), 8, inv);
+		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0[NPC]§0§l 수리할 장비를 선택 하세요.");
+		Stack2("§f§l이전 목록§0§e"+ChatColor.RED, 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+successRate,"§0"+value), 0, inv);
+		Stack2("§f§l닫기§0§e"+ChatColor.RED, 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 8, inv);
 
-		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 265,0,1,null, 1, inv);
-		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 265,0,1,null, 2, inv);
-		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 265,0,1,null, 3, inv);
-		Stack2(ChatColor.GOLD +""+ChatColor.BOLD + "[장비 수리]"+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 145,0,1,Arrays.asList(ChatColor.GRAY+"인벤토리 속 내구도가 닳은 장비를",ChatColor.GRAY+"정해진 확률과 가격에 수리 해 줍니다.","",ChatColor.DARK_AQUA +"수리 성공률 : "+ChatColor.WHITE +successRate+ChatColor.DARK_AQUA +" %",ChatColor.GREEN + "내구도 10 당 가격 : "+ChatColor.YELLOW +""+value+" "+ChatColor.GREEN+Main_ServerOption.Money,"",ChatColor.RED+"[일반 아이템 수리 실패시]",ChatColor.RED+" - 수리 성공과 상관 없이 골드 소모",ChatColor.RED+"[커스텀 아이템 수리 실패시]",ChatColor.RED+" - 최대 내구도 감소"), 4, inv);
-		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 265,0,1,null, 5, inv);
-		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 265,0,1,null, 6, inv);
-		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 265,0,1,null, 7, inv);
+		Stack2("§0§e"+ChatColor.RED, 265,0,1,null, 1, inv);
+		Stack2("§0§e"+ChatColor.RED, 265,0,1,null, 2, inv);
+		Stack2("§0§e"+ChatColor.RED, 265,0,1,null, 3, inv);
+		Stack2("§6§l[장비 수리]§0§e"+ChatColor.RED, 145,0,1,Arrays.asList("§7인벤토리 속 내구도가 닳은 장비를","§7정해진 확률과 가격에 수리 해 줍니다.","","§3수리 성공률 : §f" +successRate+"§3 %","§a내구도 10 당 가격 : §e"+value+" "+ChatColor.GREEN+Main_ServerOption.money,"","§c[일반 아이템 수리 실패시]","§c - 수리 성공과 상관 없이 골드 소모","§c[커스텀 아이템 수리 실패시]","§c - 최대 내구도 감소"), 4, inv);
+		Stack2("§0§e"+ChatColor.RED, 265,0,1,null, 5, inv);
+		Stack2("§0§e"+ChatColor.RED, 265,0,1,null, 6, inv);
+		Stack2("§0§e"+ChatColor.RED, 265,0,1,null, 7, inv);
 		player.openInventory(inv);
 	}
 	
@@ -1836,29 +1836,29 @@ public class NPC_GUI extends Util_GUI
 	{
 		String UniqueCode = "§0§0§7§1§0§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0[NPC] 선물 가능 아이템 목록");
-		Stack2("§f§l이전 목록"+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 0, inv);
-		Stack2("§f§l닫기"+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+NPCname), 8, inv);
+		Stack2("§f§l이전 목록§0§e"+ChatColor.RED, 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
+		Stack2("§f§l닫기§0§e"+ChatColor.RED, 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 8, inv);
 
 		YamlLoader NPCConfig = new YamlLoader();
 		NPCConfig.getConfig("NPC/NPCData/"+new UserData_Object().getNPCuuid(player)+".yml");
 		
-		Stack2(ChatColor.WHITE+"기타 아이템", 138,0,1,Arrays.asList(ChatColor.GRAY + "정해진 아이템 외의 다른",ChatColor.GRAY+"아이템을 주었을 때의",ChatColor.GRAY+"호감도 상승량을 설정합니다.","",ChatColor.GREEN+"호감도 : " + NPCConfig.getInt("Present.1.love")), 1, inv);
+		Stack2("§f기타 아이템", 138,0,1,Arrays.asList("§7정해진 아이템 외의 다른","§7아이템을 주었을 때의","§7호감도 상승량을 설정합니다.","","§a호감도 : " + NPCConfig.getInt("Present.1.love")), 1, inv);
 
 		for(int count = 2; count < 8; count++)
 		{
 			if(NPCConfig.getItemStack("Present."+count+".item") == null)
-				Stack2(ChatColor.RED+"[정해지지 않은 선물]", 166,0,1,Arrays.asList(ChatColor.YELLOW +""+ChatColor.BOLD+ "[클릭시 선물 지정]"), count, inv);
+				Stack2("§c[정해지지 않은 선물]", 166,0,1,Arrays.asList("§e§l[클릭시 선물 지정]"), count, inv);
 			else
 			{
 				ItemStack item = NPCConfig.getItemStack("Present."+count+".item");
 				ItemMeta im = item.getItemMeta();
 				if(im.hasLore() == false)
-					im.setLore(Arrays.asList("",ChatColor.GREEN+"호감도 : " + NPCConfig.getInt("Present."+count+".love")));
+					im.setLore(Arrays.asList("","§a호감도 : " + NPCConfig.getInt("Present."+count+".love")));
 				else
 				{
 					List<String> lore = item.getItemMeta().getLore();
 					lore.add(lore.size(), "");
-					lore.add(lore.size(),ChatColor.GREEN+"호감도 : " + NPCConfig.getInt("Present."+count+".love"));
+					lore.add(lore.size(),"§a호감도 : " + NPCConfig.getInt("Present."+count+".love"));
 					im.setLore(lore);
 				}
 				item.setItemMeta(im);
@@ -1874,26 +1874,26 @@ public class NPC_GUI extends Util_GUI
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0[NPC] 선물 아이템을 올려 주세요");
 		if(isSettingMode)
 		{
-			Stack2("§f§l선물 등록"+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 389,0,1,Arrays.asList(ChatColor.GRAY + "이 아이템으로 설정합니다.",ChatColor.BLACK+""+isSettingMode), 0, inv);
+			Stack2("§f§l선물 등록§0§e"+ChatColor.RED, 389,0,1,Arrays.asList("§7이 아이템으로 설정합니다.","§0"+isSettingMode), 0, inv);
 
 			YamlLoader NPCConfig = new YamlLoader();
 			NPCConfig.getConfig("NPC/NPCData/"+new UserData_Object().getNPCuuid(player)+".yml");
 			ItemStack item = NPCConfig.getItemStack("Present."+number+".item");
 			if(item != null)
 				ItemStackStack(item, 4, inv);
-			Stack2("§f§l닫기"+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+NPCname), 8, inv);
+			Stack2("§f§l닫기§0§e"+ChatColor.RED, 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 8, inv);
 		}
 		else
 		{
-			Stack2("§f§l이전 목록"+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK+""+isSettingMode), 0, inv);
-			Stack2("§f§l선물 주기"+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 54,0,1,Arrays.asList(ChatColor.GRAY + "올려둔 아이템을 선물합니다.",ChatColor.BLACK+NPCname), 8, inv);
+			Stack2("§f§l이전 목록§0§e"+ChatColor.RED, 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+isSettingMode), 0, inv);
+			Stack2("§f§l선물 주기§0§e"+ChatColor.RED, 54,0,1,Arrays.asList("§7올려둔 아이템을 선물합니다.","§0"+NPCname), 8, inv);
 		}
-		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 160,5,1,Arrays.asList(ChatColor.BLACK + ""+number), 1, inv);
-		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 160,5,1,null, 2, inv);
-		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 160,5,1,null, 3, inv);
-		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 160,5,1,null, 5, inv);
-		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 160,5,1,null, 6, inv);
-		Stack2(""+ChatColor.BLACK+ChatColor.YELLOW+ChatColor.RED, 160,5,1,null, 7, inv);
+		Stack2("§0§e"+ChatColor.RED, 160,5,1,Arrays.asList("§0"+number), 1, inv);
+		Stack2("§0§e"+ChatColor.RED, 160,5,1,null, 2, inv);
+		Stack2("§0§e"+ChatColor.RED, 160,5,1,null, 3, inv);
+		Stack2("§0§e"+ChatColor.RED, 160,5,1,null, 5, inv);
+		Stack2("§0§e"+ChatColor.RED, 160,5,1,null, 6, inv);
+		Stack2("§0§e"+ChatColor.RED, 160,5,1,null, 7, inv);
 		player.openInventory(inv);
 	}
 
@@ -1945,12 +1945,12 @@ public class NPC_GUI extends Util_GUI
 				{
 					NPCscript.removeKey("Quest."+ (a.length-1));
 					SoundEffect.SP(player, Sound.BLOCK_LAVA_POP, 1.0F, 0.8F);
-					player.sendMessage(ChatColor.RED + "[SYSTEM] : 퀘스트 제거 완료!");
+					player.sendMessage("§c[SYSTEM] : 퀘스트 제거 완료!");
 				}
 				else
 				{
 					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
-					player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 퀘스트 등록 완료!");
+					player.sendMessage("§a[SYSTEM] : 퀘스트 등록 완료!");
 					NPCscript.set("Quest."+a.length, QuestName);
 				}
 				NPCscript.saveConfig();
@@ -1991,14 +1991,14 @@ public class NPC_GUI extends Util_GUI
 					if(event.getCurrentItem().getItemMeta().getLore().get(counter).contains("대기") == true)
 					{
 						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
-						player.sendMessage(ChatColor.RED + "[퀘스트] : 오늘은 더이상 퀘스트를 진행할 수 없습니다!");
+						player.sendMessage("§c[퀘스트] : 오늘은 더이상 퀘스트를 진행할 수 없습니다!");
 						return;
 					}
 				}
 				if(QuestList.getInt(QuestName+".Server.Limit") == -1)
 				{
 					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
-					player.sendMessage(ChatColor.RED + "[퀘스트] : 더이상 이 퀘스트는 수행 할 수 없습니다!");
+					player.sendMessage("§c[퀘스트] : 더이상 이 퀘스트는 수행 할 수 없습니다!");
 					return;
 				}
 				else
@@ -2059,28 +2059,28 @@ public class NPC_GUI extends Util_GUI
 								else
 								{
 									SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
-									player.sendMessage(ChatColor.RED+"[퀘스트] : 이전 퀘스트를 진행하지 않아 퀘스트를 수행할 수 없습니다!");
+									player.sendMessage("§c[퀘스트] : 이전 퀘스트를 진행하지 않아 퀘스트를 수행할 수 없습니다!");
 									return;
 								}
 							}
 							else
 							{
 								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
-								player.sendMessage(ChatColor.RED+"[퀘스트] : 호감도가 부족하여 퀘스트를 수행할 수 없습니다!");
+								player.sendMessage("§c[퀘스트] : 호감도가 부족하여 퀘스트를 수행할 수 없습니다!");
 								return;
 							}
 						}
 						else
 						{
 							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
-							player.sendMessage(ChatColor.RED+"[퀘스트] : 스텟이 부족하여 퀘스트를 수행할 수 없습니다!");
+							player.sendMessage("§c[퀘스트] : 스텟이 부족하여 퀘스트를 수행할 수 없습니다!");
 							return;
 						}
 					}
 					else
 					{
 						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
-						player.sendMessage(ChatColor.RED+"[퀘스트] : 수행 가능한 레벨이 아닙니다!");
+						player.sendMessage("§c[퀘스트] : 수행 가능한 레벨이 아닙니다!");
 						return;
 					}
 				}
@@ -2109,16 +2109,16 @@ public class NPC_GUI extends Util_GUI
 			DNPC.set(u.getNPCuuid(player).toString(), true);
 			DNPC.saveConfig();
 			player.closeInventory();
-			player.sendMessage(ChatColor.YELLOW+"[NPC] : 해당 NPC는 GUI화면을 사용하지 않게 되었습니다!");
-			player.sendMessage(ChatColor.GOLD+"/gui사용"+ChatColor.WHITE+" 명령어 입력 후, NPC 클릭시, 다시 활성화 됩니다.");
+			player.sendMessage("§e[NPC] : 해당 NPC는 GUI화면을 사용하지 않게 되었습니다!");
+			player.sendMessage("§6/gui사용§f 명령어 입력 후, NPC 클릭시, 다시 활성화 됩니다.");
 		}
 		else if(slot == 4)//직업 아이콘
 		{
 			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			String Case = (ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-			if(Case.compareTo("대장장이")==0 || Case.compareTo("룬 세공사")==0 || Case.compareTo("주술사")==0 ||
-					Case.compareTo("힐러")==0 || Case.compareTo("전직 교관")==0 || Case.compareTo("공간 이동술사")==0 ||
-					Case.compareTo("개조 장인")==0)
+			if(Case.equals("대장장이") || Case.equals("룬 세공사") || Case.equals("주술사") ||
+					Case.equals("힐러") || Case.equals("전직 교관") || Case.equals("공간 이동술사") ||
+					Case.equals("개조 장인"))
 			{
 				if(event.getClick().isLeftClick() == true)
 				{
@@ -2133,17 +2133,17 @@ public class NPC_GUI extends Util_GUI
 					util.Util_Number n = new util.Util_Number();
 
 					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-					if(Case.compareTo("룬 세공사")==0)
+					if(Case.equals("룬 세공사"))
 						RuneEquipGUI(player, NPCname);
-					else if(Case.compareTo("개조 장인")==0)
+					else if(Case.equals("개조 장인"))
 						UpgraderGUI(player, (short) 0,NPCname);
-					else if(Case.compareTo("공간 이동술사")==0)
+					else if(Case.equals("공간 이동술사"))
 						WarpMainGUI(player, 0,NPCname);
-					else if(Case.compareTo("개조 장인")==0)
+					else if(Case.equals("개조 장인"))
 						UpgraderGUI(player, (short) 0,NPCname);
-					else if(Case.compareTo("대장장이")==0)
+					else if(Case.equals("대장장이"))
 						ItemFix(player, NPCname, Integer.parseInt(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(3).split(" ")[3])), Integer.parseInt(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(4).split(" ")[5])));
-					else if(Case.compareTo("주술사")==0)
+					else if(Case.equals("주술사"))
 					{
 						util.ETC ETC = new util.ETC();
 						YamlLoader Config = new YamlLoader();
@@ -2152,13 +2152,13 @@ public class NPC_GUI extends Util_GUI
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_BuffCoolTime()+(Config.getInt("NPC.Shaman.BuffCoolTime")*1000) > ETC.getNowUTC())
 						{
 							SoundEffect.SP(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-							player.sendMessage(ChatColor.RED + "[SYSTEM] : "+ChatColor.WHITE+((main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_BuffCoolTime()+(Config.getInt("NPC.Shaman.BuffCoolTime")*1000) -ETC.getNowUTC())/1000)+ChatColor.RED+"초 후 이용 가능합니다!");
+							player.sendMessage("§c[SYSTEM] : §f"+((main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_BuffCoolTime()+(Config.getInt("NPC.Shaman.BuffCoolTime")*1000) -ETC.getNowUTC())/1000)+"§c초 후 이용 가능합니다!");
 							return;
 						}
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() < NPCscript.getInt("Job.Deal"))
 						{
 							SoundEffect.SP(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-							player.sendMessage(ChatColor.RED + "[SYSTEM] : 복채 비용이 부족합니다!");
+							player.sendMessage("§c[SYSTEM] : 복채 비용이 부족합니다!");
 							return;
 						}
 						else
@@ -2199,7 +2199,7 @@ public class NPC_GUI extends Util_GUI
 									break;
 								case 6:
 									SoundEffect.SP(player,Sound.BLOCK_ANVIL_LAND, 1.0F, 1.8F);
-									player.sendMessage("§f§l[單刀直入] 흔들리지 않는 신념은 적의 살을 베어내고, 철근같은 "+Main_ServerOption.WILL+"는 적의 뼈를 바스러 뜨리리...");
+									player.sendMessage("§f§l[單刀直入] 흔들리지 않는 신념은 적의 살을 베어내고, 철근같은 "+Main_ServerOption.statWILL+"는 적의 뼈를 바스러 뜨리리...");
 									PottionBuff.givePotionEffect(player,PotionEffectType.INCREASE_DAMAGE, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")));
 									break;
 								case 7:
@@ -2268,7 +2268,7 @@ public class NPC_GUI extends Util_GUI
 						NPCscript.set("Job.BuffTime",60);
 						NPCscript.set("Job.Deal",500);
 					}
-					else if(Case.compareTo("힐러")==0)
+					else if(Case.equals("힐러"))
 					{
 						Damageable getouter = (Damageable)player;
 						int a = (int)getouter.getHealth();
@@ -2279,13 +2279,13 @@ public class NPC_GUI extends Util_GUI
 								player.hasPotionEffect(PotionEffectType.WEAKNESS)||player.hasPotionEffect(PotionEffectType.WITHER))==false)
 						{
 							SoundEffect.SP(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-							player.sendMessage(ChatColor.DARK_AQUA+"[SYSTEM] : 당신은 치료받을 필요가 없습니다!");
+							player.sendMessage("§3[SYSTEM] : 당신은 치료받을 필요가 없습니다!");
 							return;
 						}
 						if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() < NPCscript.getInt("Job.Deal"))
 						{
 							SoundEffect.SP(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-							player.sendMessage(ChatColor.RED + "[SYSTEM] : 치료 비용이 부족합니다!");
+							player.sendMessage("§c[SYSTEM] : 치료 비용이 부족합니다!");
 						}
 						else
 						{
@@ -2302,10 +2302,10 @@ public class NPC_GUI extends Util_GUI
 							player.removePotionEffect(PotionEffectType.WEAKNESS);
 							player.removePotionEffect(PotionEffectType.WITHER);
 					  		main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MoneyAndEXP(-1 * NPCscript.getInt("Job.Deal"), 0, false);
-							player.sendMessage(ChatColor.DARK_AQUA+"[SYSTEM] : 당신은 깨끗이 치료되었습니다!");
+							player.sendMessage("§3[SYSTEM] : 당신은 깨끗이 치료되었습니다!");
 						}
 					}
-					else if(Case.compareTo("전직 교관")==0)
+					else if(Case.equals("전직 교관"))
 					{
 						YamlLoader JobList = new YamlLoader();
 						JobList.getConfig("Skill/JobList.yml");
@@ -2316,7 +2316,7 @@ public class NPC_GUI extends Util_GUI
 							Object[] q = JobList.getConfigurationSection("MapleStory."+Job[count].toString()).getKeys(false).toArray();
 							for(int counter=0;counter<q.length;counter++)
 							{
-								if(q[counter].toString().compareTo(NPCscript.getString("Job.Job"))==0)
+								if(q[counter].toString().equals(NPCscript.getString("Job.Job")))
 								{
 									PlayerJob.getConfig("Skill/PlayerData/"+player.getUniqueId().toString()+".yml");
 									int NeedLV = JobList.getInt("MapleStory."+Job[count].toString()+"."+q[counter].toString()+".NeedLV");
@@ -2334,16 +2334,16 @@ public class NPC_GUI extends Util_GUI
 									(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL()>=NeedWILL)&&
 									(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK()>=NeedLUK))
 									{
-										if(PrevJob.compareTo("null")!=0)
+										if(!PrevJob.equals("null"))
 										{
-											if(PlayerJob.getString("Job.Type").compareTo(PrevJob)!=0)
+											if(!PlayerJob.getString("Job.Type").equals(PrevJob))
 											{
-												player.sendMessage(ChatColor.RED + "[전직] : 당신의 직업으로는 전직 할 수 없는 대상입니다.");
+												player.sendMessage("§c[전직] : 당신의 직업으로는 전직 할 수 없는 대상입니다.");
 												SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 												return;	
 											}
 										}
-										if(NPCscript.getString("Job.Job").compareTo(PlayerJob.getString("Job.Type"))!=0)
+										if(!NPCscript.getString("Job.Job").equals(PlayerJob.getString("Job.Type")))
 										{
 											//플레이어 전직함
 											PlayerJob.set("Job.Root", Job[count].toString());
@@ -2354,17 +2354,17 @@ public class NPC_GUI extends Util_GUI
 											job.Job_Main J = new job.Job_Main();
 											J.FixPlayerJobList(player);
 											player.closeInventory();
-											Bukkit.broadcastMessage("§a§l["+ChatColor.YELLOW+""+ChatColor.BOLD+player.getName()+"§a§l님께서 "+ChatColor.YELLOW+""+ChatColor.BOLD+NPCscript.getString("Job.Job")+"§a§l 승급에 성공 하셨습니다!]");
+											Bukkit.broadcastMessage("§a§l[§e§l"+player.getName()+"§a§l님께서 §e§l"+NPCscript.getString("Job.Job")+"§a§l 승급에 성공 하셨습니다!]");
 										}
 										else
 										{
-											player.sendMessage(ChatColor.RED + "[전직] : 현재 직업으로 전직 할 수 없습니다!");
+											player.sendMessage("§c[전직] : 현재 직업으로 전직 할 수 없습니다!");
 											SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 										}
 									}
 									else
 									{
-										player.sendMessage(ChatColor.RED + "[전직] : 당신의 스텟은 전직 요건에 맞지 않습니다.");
+										player.sendMessage("§c[전직] : 당신의 스텟은 전직 요건에 맞지 않습니다.");
 										SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 									}
 								}
@@ -2372,7 +2372,7 @@ public class NPC_GUI extends Util_GUI
 						}
 					}
 				}
-				else if(event.getClick().isRightClick() == true && player.isOp() == true)
+				else if(event.getClick().isRightClick()&& player.isOp())
 				{
 					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 					NPCjobGUI(player,NPCname);
@@ -2403,7 +2403,7 @@ public class NPC_GUI extends Util_GUI
 					u.setString(player, (byte)2,NPCname);
 					u.setString(player, (byte)3,u.getNPCuuid(player));
 					u.setString(player, (byte)4,"SaleSetting1");
-					player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 세일을 시작 할 최소 호감도를 입력 해 주세요! (-1000 ~ 1000 사이 값)");
+					player.sendMessage("§3[NPC] : 세일을 시작 할 최소 호감도를 입력 해 주세요! (-1000 ~ 1000 사이 값)");
 					player.closeInventory();
 				}
 			}
@@ -2700,7 +2700,7 @@ public class NPC_GUI extends Util_GUI
 						NPCscript.set("Job.10PointFixDeal",500);
 						NPCscript.saveConfig();
 						u.setString(player, (byte)4,"FixRate");
-						player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 이 NPC의 수리 성공률을 입력 해 주세요! (1~100 사이 값)");
+						player.sendMessage("§3[NPC] : 이 NPC의 수리 성공률을 입력 해 주세요! (1~100 사이 값)");
 					}
 					else if(slot == 3)//주술사
 					{
@@ -2711,7 +2711,7 @@ public class NPC_GUI extends Util_GUI
 						NPCscript.set("Job.Deal",500);
 						NPCscript.saveConfig();
 						u.setString(player, (byte)4,"GoodRate");
-						player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 이 NPC의 버프 성공률을 입력 해 주세요! (1~100 사이 값)");
+						player.sendMessage("§3[NPC] : 이 NPC의 버프 성공률을 입력 해 주세요! (1~100 사이 값)");
 					}
 					else if(slot == 4)//힐러
 					{
@@ -2719,7 +2719,7 @@ public class NPC_GUI extends Util_GUI
 						NPCscript.set("Job.Deal",500);
 						NPCscript.saveConfig();
 						u.setString(player, (byte)4,"Deal");
-						player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 이 NPC의 치료 비용을 입력 해 주세요!");
+						player.sendMessage("§3[NPC] : 이 NPC의 치료 비용을 입력 해 주세요!");
 					}
 					else if(slot == 5)//전직 교관
 					{
@@ -2734,19 +2734,19 @@ public class NPC_GUI extends Util_GUI
 							{
 								u.clearAll(player);
 								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-								player.sendMessage(ChatColor.RED + "[NPC] : 전직 가능한 직업이 없습니다! " + ChatColor.YELLOW+"/오피박스"+ChatColor.RED+" 명령어를 사용하여 직업군을 만드십시요!");
+								player.sendMessage("§c[NPC] : 전직 가능한 직업이 없습니다! §e/오피박스§c 명령어를 사용하여 직업군을 만드십시요!");
 								return;
 							}
 							u.setString(player, (byte)4,"NPCJL");
 
-							player.sendMessage(ChatColor.LIGHT_PURPLE + "[NPC] : 이 NPC는 어떤 직업으로 전직 시켜 주는 교관인가요?");
+							player.sendMessage("§d[NPC] : 이 NPC는 어떤 직업으로 전직 시켜 주는 교관인가요?");
 							for(int count = 0; count < Job.length; count++)
 							{
 								Object[] a = JobList.getConfigurationSection("MapleStory."+Job[count].toString()).getKeys(false).toArray();
 								for(int counter=0;counter<a.length;counter++)
 								{
 									if(a[counter].toString().equalsIgnoreCase(Config.getString("Server.DefaultJob"))==false)
-										player.sendMessage(ChatColor.LIGHT_PURPLE + " "+Job[count].toString()+" ━ "+ChatColor.YELLOW + a[counter].toString());
+										player.sendMessage("§d "+Job[count].toString()+" ━ §e"+ a[counter].toString());
 								}
 							}
 						}
@@ -2754,7 +2754,7 @@ public class NPC_GUI extends Util_GUI
 						{
 							u.clearAll(player);
 							SoundEffect.SP(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-							player.sendMessage(ChatColor.RED + "[NPC] : 직업 기능을 사용하시려면"+ChatColor.YELLOW+" /오피박스"+ChatColor.RED + " 에서 게임 시스템을 '메이플 스토리'로 변경해 주시길 바랍니다.");
+							player.sendMessage("§c[NPC] : 직업 기능을 사용하시려면§e /오피박스§c 에서 게임 시스템을 '메이플 스토리'로 변경해 주시길 바랍니다.");
 						}
 					}
 					else if(slot == 10)//룬 세공사
@@ -2764,7 +2764,7 @@ public class NPC_GUI extends Util_GUI
 						NPCscript.set("Job.Deal",5000);
 						NPCscript.saveConfig();
 						u.setString(player, (byte)4,"SuccessRate");
-						player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 이 NPC의 룬 장착 성공률을 입력 해 주세요! (1~100 사이 값)");
+						player.sendMessage("§3[NPC] : 이 NPC의 룬 장착 성공률을 입력 해 주세요! (1~100 사이 값)");
 					}
 				}
 			}
@@ -2802,7 +2802,7 @@ public class NPC_GUI extends Util_GUI
 					util.ETC ETC = new util.ETC();
 					if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_AttackTime()+15000 >= ETC.getSec())
 					{
-						player.sendMessage(ChatColor.RED+"[이동 불가] : "+ChatColor.YELLOW+((main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_AttackTime()+15000 - ETC.getSec())/1000)+ChatColor.RED+" 초 후에 이동 가능합니다!");
+						player.sendMessage("§c[이동 불가] : §e"+((main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_AttackTime()+15000 - ETC.getSec())/1000)+"§c 초 후에 이동 가능합니다!");
 						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 						return;
 					}
@@ -2822,7 +2822,7 @@ public class NPC_GUI extends Util_GUI
 					else
 					{
 						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-						player.sendMessage(ChatColor.RED+"[워프] : 텔레포트 비용이 부족합니다!");
+						player.sendMessage("§c[워프] : 텔레포트 비용이 부족합니다!");
 					}
 				}
 				else if(event.isRightClick()==true&&event.isShiftClick()==true&&player.isOp()==true)
@@ -2881,7 +2881,7 @@ public class NPC_GUI extends Util_GUI
 				u.setString(player, (byte)3,u.getNPCuuid(player));
 				u.setString(player, (byte)2,NPCname);
 				u.setInt(player, (byte)4, number);
-				player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 해당 워프 지점의 이름을 설정해 주세요!");
+				player.sendMessage("§3[NPC] : 해당 워프 지점의 이름을 설정해 주세요!");
 				player.closeInventory();
 			}
 		}
@@ -3035,10 +3035,10 @@ public class NPC_GUI extends Util_GUI
 									UpgradeRecipe.getConfig("Item/Upgrade.yml");
 									String Type = ChatColor.stripColor(UpgradeRecipe.getString(RecipeName+".Only"));
 									if(Type.equals(PlayerWeaponType)||
-											((Type.compareTo("[근접 무기]")==0&&PlayerWeaponType.compareTo("[한손 검]")==0)||(Type.compareTo("[근접 무기]")==0&&PlayerWeaponType.compareTo("[양손 검]")==0)||
-											(Type.compareTo("[근접 무기]")==0&&PlayerWeaponType.compareTo("[도끼]")==0)||(Type.compareTo("[원거리 무기]")==0&&PlayerWeaponType.compareTo("[활]")==0)||
-											(Type.compareTo("[원거리 무기]")==0&&PlayerWeaponType.compareTo("[석궁]")==0)||(Type.compareTo("[마법 무기]")==0&&PlayerWeaponType.compareTo("[원드]")==0)||
-											(Type.compareTo("[마법 무기]")==0&&PlayerWeaponType.compareTo("[스태프]")==0)))
+											((Type.equals("[근접 무기]")&&PlayerWeaponType.equals("[한손 검]"))||(Type.equals("[근접 무기]")&&PlayerWeaponType.equals("[양손 검]"))||
+											(Type.equals("[근접 무기]")&&PlayerWeaponType.equals("[도끼]"))||(Type.equals("[원거리 무기]")&&PlayerWeaponType.equals("[활]"))||
+											(Type.equals("[원거리 무기]")&&PlayerWeaponType.equals("[석궁]"))||(Type.equals("[마법 무기]")&&PlayerWeaponType.equals("[원드]"))||
+											(Type.equals("[마법 무기]")&&PlayerWeaponType.equals("[스태프]"))))
 									{
 										if(playerMaxUpgradeLevel!=-1&&playerNowUpgradeLevel!=-1&&UpgradeLevel==playerNowUpgradeLevel)
 										{
@@ -3078,54 +3078,54 @@ public class NPC_GUI extends Util_GUI
 													player.getInventory().setItemInMainHand(item);
 													player.closeInventory();
 													SoundEffect.SP(player, Sound.BLOCK_ANVIL_USE, 1.0F, 0.8F);
-													player.sendMessage(ChatColor.DARK_AQUA + "[개조] : 개조가 완료되었습니다!");
+													player.sendMessage("§3[개조] : 개조가 완료되었습니다!");
 												}
 												else
 												{
 													SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-													player.sendMessage(ChatColor.RED+"[개조] : 숙련도가 부족합니다!");
+													player.sendMessage("§c[개조] : 숙련도가 부족합니다!");
 												}
 											}
 											else
 											{
 												SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-												player.sendMessage(ChatColor.RED+"[개조] : 더이상 개조할 수 없습니다!");
+												player.sendMessage("§c[개조] : 더이상 개조할 수 없습니다!");
 											}
 										}
 										else
 										{
 											SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-											player.sendMessage(ChatColor.RED+"[개조] : 개조 레벨이 맞지 않습니다!");
+											player.sendMessage("§c[개조] : 개조 레벨이 맞지 않습니다!");
 										}
 									}
 									else
 									{
 										SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-										player.sendMessage(ChatColor.RED+"[개조] : 개조 가능한 무기 타입이 아닙니다!");
+										player.sendMessage("§c[개조] : 개조 가능한 무기 타입이 아닙니다!");
 									}
 								}
 								else
 								{
 									SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-									player.sendMessage(ChatColor.RED+"[개조] : 개조 비용이 부족합니다!");
+									player.sendMessage("§c[개조] : 개조 비용이 부족합니다!");
 								}
 							}
 							else
 							{
 								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-								player.sendMessage(ChatColor.RED+"[개조] : 현재 손에 들고 있는 아이템은  개조가 불가능 합니다!");
+								player.sendMessage("§c[개조] : 현재 손에 들고 있는 아이템은  개조가 불가능 합니다!");
 							}
 						}
 						else
 						{
 							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-							player.sendMessage(ChatColor.RED+"[개조] : 현재 손에 들고 있는 아이템은  개조가 불가능 합니다!");
+							player.sendMessage("§c[개조] : 현재 손에 들고 있는 아이템은  개조가 불가능 합니다!");
 						}
 					}
 					else
 					{
 						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-						player.sendMessage(ChatColor.RED+"[개조] : 아이템을 손에 장착하고 있어야 합니다!");
+						player.sendMessage("§c[개조] : 아이템을 손에 장착하고 있어야 합니다!");
 					}
 				}
 				else if(event.isRightClick()==true && event.isShiftClick()==true&&player.isOp()==true)
@@ -3169,7 +3169,7 @@ public class NPC_GUI extends Util_GUI
 				String RecipeName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
 				NPCConfig.set("Job.UpgradeRecipe."+RecipeName, 2147483647);
 				player.sendMessage("[NPC] : 선택한 개조식의 개조 비용을 입력 해 주세요!");
-				player.sendMessage(ChatColor.GREEN + "("+ChatColor.YELLOW +"0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+				player.sendMessage("§a(§e0§a ~ §e"+Integer.MAX_VALUE+"§a)");
 				u.setType(player, "NPC");
 				u.setString(player, (byte)4,"NUC");
 				u.setString(player, (byte)6,RecipeName);
@@ -3233,19 +3233,19 @@ public class NPC_GUI extends Util_GUI
 			Option = "마나";
 			break;
 		case "STR":
-			Option = ""+Main_ServerOption.STR+"";
+			Option = ""+Main_ServerOption.statSTR+"";
 			break;
 		case "DEX":
-			Option = ""+Main_ServerOption.DEX+"";
+			Option = ""+Main_ServerOption.statDEX+"";
 			break;
 		case "INT":
-			Option = ""+Main_ServerOption.INT+"";
+			Option = ""+Main_ServerOption.statINT+"";
 			break;
 		case "WILL":
-			Option = ""+Main_ServerOption.WILL+"";
+			Option = ""+Main_ServerOption.statWILL+"";
 			break;
 		case "LUK":
-			Option = ""+Main_ServerOption.LUK+"";
+			Option = ""+Main_ServerOption.statLUK+"";
 			break;
 		}
 		ItemMeta IM = item.getItemMeta();
@@ -3253,10 +3253,10 @@ public class NPC_GUI extends Util_GUI
 		for(int count = 0; count < Lore.size(); count++)
 		{
 			String SliceOfLore = Lore.get(count);
-			if(SliceOfLore.contains(Option) == true||(SliceOfLore.contains(Main_ServerOption.Damage)&&!(SliceOfLore.contains("마법"))&&(Option.compareTo("소댐")==0))||
-					(SliceOfLore.contains(Main_ServerOption.Damage)&&!(SliceOfLore.contains("마법"))&&(Option.compareTo("맥댐")==0))||(SliceOfLore.contains(Main_ServerOption.MagicDamage)&&(Option.compareTo("마소댐")==0))||
-					(SliceOfLore.contains(Main_ServerOption.MagicDamage)&&(Option.compareTo("마맥댐")==0))
-					||(Option.compareTo("현재내구도")==0&&SliceOfLore.contains("내구도")))
+			if(SliceOfLore.contains(Option) == true||(SliceOfLore.contains(Main_ServerOption.damage)&&!(SliceOfLore.contains("마법"))&&(Option.equals("소댐")))||
+					(SliceOfLore.contains(Main_ServerOption.damage)&&!(SliceOfLore.contains("마법"))&&(Option.equals("맥댐")))||(SliceOfLore.contains(Main_ServerOption.magicDamage)&&(Option.equals("마소댐")))||
+					(SliceOfLore.contains(Main_ServerOption.magicDamage)&&(Option.equals("마맥댐")))
+					||(Option.equals("현재내구도")&&SliceOfLore.contains("내구도")))
 			{
 				String WillBeLore=" ";
 				if(SliceOfLore.contains(" : ") == true)
@@ -3264,61 +3264,61 @@ public class NPC_GUI extends Util_GUI
 					switch(Option)
 					{
 					case "현재내구도":
-						if(SliceOfLore.contains("내구도")&&!SliceOfLore.contains(Main_ServerOption.Damage))
+						if(SliceOfLore.contains("내구도")&&!SliceOfLore.contains(Main_ServerOption.damage))
 						{
 							int low = Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[0]));
 							int max = Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[1]));
 							if((low+PlusOption)  <= max)
-								WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ChatColor.WHITE+(low+ PlusOption)  + " / "+ max;
+								WillBeLore = SliceOfLore.split(" : ")[0] + " : §f"+(low+ PlusOption) + " / "+ max;
 							else
-								WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ChatColor.WHITE+max  + " / "+ max;
+								WillBeLore = SliceOfLore.split(" : ")[0] + " : §f"+max + " / "+ max;
 						}
 						break;
 					case "내구도":
-						if(SliceOfLore.contains("내구도")&&!SliceOfLore.contains(Main_ServerOption.Damage))
+						if(SliceOfLore.contains("내구도")&&!SliceOfLore.contains(Main_ServerOption.damage))
 						{
 							if(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[0])) <= (Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[1])) + PlusOption))
-								WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ChatColor.WHITE+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[0])) + " / "+ (Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[1])) + PlusOption);
+								WillBeLore = SliceOfLore.split(" : ")[0] + " : §f"+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[0])) + " / "+ (Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[1])) + PlusOption);
 							else if((Integer.parseInt(SliceOfLore.split(" : ")[1].split(" / ")[1]) + PlusOption) != 0)
-								WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ ChatColor.WHITE+(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[1])) + PlusOption) + " / "+ (Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[1])) + PlusOption);
+								WillBeLore = SliceOfLore.split(" : ")[0] + " : §f"+(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[1])) + PlusOption) + " / "+ (Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[1])) + PlusOption);
 							else
-								WillBeLore = SliceOfLore.split(" : ")[0] + ChatColor.WHITE+" : 0 / 0";
+								WillBeLore = SliceOfLore.split(" : ")[0] + "§f : 0 / 0";
 						}
 						break;
 					case "소댐":
-						if(SliceOfLore.contains(Main_ServerOption.Damage))
+						if(SliceOfLore.contains(Main_ServerOption.damage))
 						{
 							if(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0])) + PlusOption > 0)
-								WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ChatColor.WHITE+(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0]))+ PlusOption)+ " ~ "+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1]));
+								WillBeLore = SliceOfLore.split(" : ")[0] + " : §f"+(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0]))+ PlusOption)+ " ~ "+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1]));
 							else
-								WillBeLore = SliceOfLore.split(" : ")[0] +ChatColor.WHITE+ " : 0 ~ "+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1]));
+								WillBeLore = SliceOfLore.split(" : ")[0] +"§f : 0 ~ "+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1]));
 						}
 						break;
 					case "마소댐":
-						if(SliceOfLore.contains(Main_ServerOption.MagicDamage))
+						if(SliceOfLore.contains(Main_ServerOption.magicDamage))
 						{
 							if(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0])) + PlusOption > 0)
-								WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ChatColor.WHITE+(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0]))+ PlusOption)+ " ~ "+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1]));
+								WillBeLore = SliceOfLore.split(" : ")[0] + " : §f"+(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0]))+ PlusOption)+ " ~ "+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1]));
 							else
-								WillBeLore = SliceOfLore.split(" : ")[0] +ChatColor.WHITE+ " : 0 ~ "+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1]));
+								WillBeLore = SliceOfLore.split(" : ")[0] +"§f : 0 ~ "+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1]));
 						}
 						break;
 					case "맥댐":
-						if(SliceOfLore.contains(Main_ServerOption.Damage))
+						if(SliceOfLore.contains(Main_ServerOption.damage))
 						{
 							if(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1])) + PlusOption > 0)
-								WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ChatColor.WHITE+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0])) + " ~ "+ (Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1])) + PlusOption);
+								WillBeLore = SliceOfLore.split(" : ")[0] + " : §f"+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0])) + " ~ "+ (Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1])) + PlusOption);
 							else
-								WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ChatColor.WHITE+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0])) + " ~ 0";
+								WillBeLore = SliceOfLore.split(" : ")[0] + " : §f"+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0])) + " ~ 0";
 						}
 						break;
 					case "마맥댐":
-						if(SliceOfLore.contains(Main_ServerOption.MagicDamage))
+						if(SliceOfLore.contains(Main_ServerOption.magicDamage))
 						{
 							if(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1])) + PlusOption > 0)
-								WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ChatColor.WHITE+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0])) + " ~ "+ (Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1])) + PlusOption);
+								WillBeLore = SliceOfLore.split(" : ")[0] + " : §f"+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0])) + " ~ "+ (Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[1])) + PlusOption);
 							else
-								WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ChatColor.WHITE+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0])) + " ~ 0";
+								WillBeLore = SliceOfLore.split(" : ")[0] + " : §f"+Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" ~ ")[0])) + " ~ 0";
 						}
 						break;
 					case "숙련도":
@@ -3328,14 +3328,14 @@ public class NPC_GUI extends Util_GUI
 							str = format.format((Float.parseFloat(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split("%")[0]))-PlusOption));
 						else
 							str = "0.0";
-						WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ChatColor.WHITE+str +"%"+ChatColor.WHITE+"";
+						WillBeLore = SliceOfLore.split(" : ")[0] + " : §f"+str +"%§f";
 						break;
 					case "개조":
-						WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ ChatColor.WHITE+(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[0]))+ 1) + " / "+ (Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[1])));
+						WillBeLore = SliceOfLore.split(" : ")[0] + " : §f"+(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[0]))+ 1) + " / "+ (Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1].split(" / ")[1])));
 						break;
 					default:
 						if(!SliceOfLore.contains("내구도"))
-							WillBeLore = SliceOfLore.split(" : ")[0] + " : "+ChatColor.WHITE+(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1])) + PlusOption);
+							WillBeLore = SliceOfLore.split(" : ")[0] + " : §f"+(Integer.parseInt(ChatColor.stripColor(SliceOfLore.split(" : ")[1])) + PlusOption);
 						break;
 					}
 					Lore.set(count, WillBeLore);
@@ -3348,19 +3348,19 @@ public class NPC_GUI extends Util_GUI
 		switch(Option)
 		{
 		case "소댐":
-			Lore.add(2, ChatColor.WHITE+" "+Main_ServerOption.Damage+" : " + PlusOption + " ~ 0");
+			Lore.add(2, "§f "+Main_ServerOption.damage+" : " + PlusOption + " ~ 0");
 			break;
 		case "마소댐":
-			Lore.add(3, ChatColor.WHITE+" "+Main_ServerOption.MagicDamage+" : " + PlusOption + " ~ 0");
+			Lore.add(3, "§f "+Main_ServerOption.magicDamage+" : " + PlusOption + " ~ 0");
 			break;
 		case "맥댐":
-			Lore.add(2, ChatColor.WHITE+" "+Main_ServerOption.Damage+" : 0 ~ "+PlusOption);
+			Lore.add(2, "§f "+Main_ServerOption.damage+" : 0 ~ "+PlusOption);
 			break;
 		case "마맥댐":
-			Lore.add(3, ChatColor.WHITE+" "+Main_ServerOption.MagicDamage+" : 0 ~ "+PlusOption);
+			Lore.add(3, "§f "+Main_ServerOption.magicDamage+" : 0 ~ "+PlusOption);
 			break;
 		default:
-			Lore.add(4, " " +ChatColor.WHITE+ Option + " : " + PlusOption);
+			Lore.add(4, " §f"+ Option + " : " + PlusOption);
 			break;
 		}
 		IM.setLore(Lore);
@@ -3374,7 +3374,7 @@ public class NPC_GUI extends Util_GUI
 		Player player = (Player) event.getWhoClicked();
 		
 
-		if(event.getClickedInventory().getTitle().compareTo("container.inventory") != 0)
+		if(!event.getClickedInventory().getTitle().equals("container.inventory"))
 		{
 			if(slot != 13)
 				event.setCancelled(true);
@@ -3479,15 +3479,15 @@ public class NPC_GUI extends Util_GUI
 															HP = Integer.parseInt(Rune.split(" : ")[1]);
 														else if(Rune.contains("마나"))
 															MP = Integer.parseInt(Rune.split(" : ")[1]);
-														else if(Rune.contains(""+Main_ServerOption.STR+""))
+														else if(Rune.contains(""+Main_ServerOption.statSTR+""))
 															STR = Integer.parseInt(Rune.split(" : ")[1]);
-														else if(Rune.contains(""+Main_ServerOption.DEX+""))
+														else if(Rune.contains(""+Main_ServerOption.statDEX+""))
 															DEX = Integer.parseInt(Rune.split(" : ")[1]);
-														else if(Rune.contains(""+Main_ServerOption.INT+""))
+														else if(Rune.contains(""+Main_ServerOption.statINT+""))
 															INT = Integer.parseInt(Rune.split(" : ")[1]);
-														else if(Rune.contains(""+Main_ServerOption.WILL+""))
+														else if(Rune.contains(""+Main_ServerOption.statWILL+""))
 															WILL = Integer.parseInt(Rune.split(" : ")[1]);
-														else if(Rune.contains(""+Main_ServerOption.LUK+""))
+														else if(Rune.contains(""+Main_ServerOption.statLUK+""))
 															LUK = Integer.parseInt(Rune.split(" : ")[1]);
 													}
 												}
@@ -3519,10 +3519,10 @@ public class NPC_GUI extends Util_GUI
 																		if(k != EmptyCircle)
 																			Circle = Circle+Lore.split(" ")[k]+" ";
 																		else
-																			Circle = Circle+ChatColor.BLUE+"● ";
+																			Circle = Circle+"§9● ";
 																	}
 																	Lore =  item.getItemMeta().getLore().get(count).split(" : ")[0] + " : " + Circle;
-																	player.sendMessage(ChatColor.BLUE+"[룬 세공] : 아이템에 룬을 장착하였습니다!");
+																	player.sendMessage("§9[룬 세공] : 아이템에 룬을 장착하였습니다!");
 																	SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 0.5F);
 																	Success = true;
 																}
@@ -3533,11 +3533,11 @@ public class NPC_GUI extends Util_GUI
 																		if(k != EmptyCircle)
 																			Circle = Circle+Lore.split(" ")[k]+" ";
 																		else
-																			Circle = Circle+ChatColor.RED+"× ";
+																			Circle = Circle+"§c× ";
 																	}
 																	Lore =  item.getItemMeta().getLore().get(count).split(" : ")[0] + " : " + Circle;
-																	player.sendMessage(ChatColor.RED+"[룬 세공] : 룬 세공 실패!!!");
-																	player.sendMessage(ChatColor.RED+"[아이템의 룬 슬롯이 파괴되었습니다!]");
+																	player.sendMessage("§c[룬 세공] : 룬 세공 실패!!!");
+																	player.sendMessage("§c[아이템의 룬 슬롯이 파괴되었습니다!]");
 																	SoundEffect.SP(player, Sound.BLOCK_ANVIL_BREAK, 1.0F, 1.1F);
 																}
 																if(event.getInventory().getItem(13).getAmount()==1)
@@ -3613,55 +3613,55 @@ public class NPC_GUI extends Util_GUI
 														}
 													}
 												}
-												player.sendMessage(ChatColor.RED+"[룬 세공] : 룬을 장착 시킬 수 있는 여유 슬롯이 없습니다!");
+												player.sendMessage("§c[룬 세공] : 룬을 장착 시킬 수 있는 여유 슬롯이 없습니다!");
 												SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 											}
 											else
 											{
-												player.sendMessage(ChatColor.RED+"[룬 세공] : 소지금이 부족합니다!");
+												player.sendMessage("§c[룬 세공] : 소지금이 부족합니다!");
 												SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 											}
 										}
 										else
 										{
-											player.sendMessage(ChatColor.RED+"[룬 세공] : 룬을 장착시킬 수 없는 아이템 입니다!");
+											player.sendMessage("§c[룬 세공] : 룬을 장착시킬 수 없는 아이템 입니다!");
 											SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 										}
 										
 									}
 									else
 									{
-										player.sendMessage(ChatColor.RED+"[룬 세공] : 룬을 장착시킬 수 없는 아이템 입니다!");
+										player.sendMessage("§c[룬 세공] : 룬을 장착시킬 수 없는 아이템 입니다!");
 										SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 									}
 								}
 								else
 								{
-									player.sendMessage(ChatColor.RED+"[룬 세공] : 손에 아이템을 장착하고 있어야 합니다!");
+									player.sendMessage("§c[룬 세공] : 손에 아이템을 장착하고 있어야 합니다!");
 									SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 								}
 							}
 							else
 							{
-								player.sendMessage(ChatColor.RED+"[룬 세공] : 재료로 올린 아이템은 룬이 아닙니다!");
+								player.sendMessage("§c[룬 세공] : 재료로 올린 아이템은 룬이 아닙니다!");
 								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 							}
 						}
 						else
 						{
-							player.sendMessage(ChatColor.RED+"[룬 세공] : 재료로 올린 아이템은 룬이 아닙니다!");
+							player.sendMessage("§c[룬 세공] : 재료로 올린 아이템은 룬이 아닙니다!");
 							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 						}
 					}
 					else
 					{
-						player.sendMessage(ChatColor.RED+"[룬 세공] : 재료로 올린 아이템은 룬이 아닙니다!");
+						player.sendMessage("§c[룬 세공] : 재료로 올린 아이템은 룬이 아닙니다!");
 						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 					}
 				}
 				else
 				{
-					player.sendMessage(ChatColor.RED+"[룬 세공] : 장착 시킬 룬을 올려 주세요!");
+					player.sendMessage("§c[룬 세공] : 장착 시킬 룬을 올려 주세요!");
 					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				}
 			}
@@ -3689,9 +3689,9 @@ public class NPC_GUI extends Util_GUI
 				MainGUI(player, NPCname, player.isOp());
 			else if(slot == 46)//대화 타입 변경
 			{
-				if(TalkType.compareTo("NT")==0)
+				if(TalkType.equals("NT"))
 					NPCTalkGUI(player, (short) 0, NPCname, "NN");
-				else if(TalkType.compareTo("NN")==0)
+				else if(TalkType.equals("NN"))
 					NPCTalkGUI(player, (short) 0, NPCname, "AS");
 				else
 					NPCTalkGUI(player, (short) 0, NPCname, "NT");
@@ -3704,24 +3704,24 @@ public class NPC_GUI extends Util_GUI
 				UserData_Object u = new UserData_Object();
 				YamlLoader NPCConfig = new YamlLoader();
 				NPCConfig.getConfig("NPC/NPCData/"+u.getNPCuuid(player)+".yml");
-				if(TalkType.compareTo("NT")==0)
+				if(TalkType.equals("NT"))
 				{
 					number = (short) (NPCConfig.getConfigurationSection("NatureTalk").getKeys(false).toArray().length+1);
 					NPCConfig.set("NatureTalk."+number+".love", 0);
-					NPCConfig.set("NatureTalk."+number+".Script", ChatColor.WHITE+"대사 없음");
+					NPCConfig.set("NatureTalk."+number+".Script", "§f대사 없음");
 				}
-				else if(TalkType.compareTo("NN")==0)
+				else if(TalkType.equals("NN"))
 				{
 					number = (short) (NPCConfig.getConfigurationSection("NearByNEWS").getKeys(false).toArray().length+1);
 					NPCConfig.set("NearByNEWS."+number+".love", 0);
-					NPCConfig.set("NearByNEWS."+number+".Script", ChatColor.WHITE+"대사 없음");
+					NPCConfig.set("NearByNEWS."+number+".Script", "§f대사 없음");
 				}
 				else
 				{
 					number = (short) (NPCConfig.getConfigurationSection("AboutSkills").getKeys(false).toArray().length+1);
 					NPCConfig.set("AboutSkills."+number+".love", 0);
 					NPCConfig.set("AboutSkills."+number+".giveSkill", "null");
-					NPCConfig.set("AboutSkills."+number+".Script", ChatColor.WHITE+"대사 없음");
+					NPCConfig.set("AboutSkills."+number+".Script", "§f대사 없음");
 					NPCConfig.set("AboutSkills."+number+".AlreadyGetScript", "대사 없음");
 				}
 				NPCConfig.saveConfig();
@@ -3731,9 +3731,9 @@ public class NPC_GUI extends Util_GUI
 				NPCTalkGUI(player, (short) (page+1), NPCname, TalkType);
 			else if(slot == 52)//타입 변경
 			{
-				if(TalkType.compareTo("NT")==0)
+				if(TalkType.equals("NT"))
 					NPCTalkGUI(player, (short) 0, NPCname, "AS");
-				else if(TalkType.compareTo("NN")==0)
+				else if(TalkType.equals("NN"))
 					NPCTalkGUI(player, (short) 0, NPCname, "NT");
 				else
 					NPCTalkGUI(player, (short) 0, NPCname, "NN");
@@ -3830,22 +3830,22 @@ public class NPC_GUI extends Util_GUI
 						else
 						{
 							SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-							player.sendMessage(ChatColor.RED+"[SYSTEM] : 등록 가능한 스킬이 없습니다!");
+							player.sendMessage("§c[SYSTEM] : 등록 가능한 스킬이 없습니다!");
 						}
 					}
 					else
 					{
 						SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-						player.sendMessage(ChatColor.RED+"[SYSTEM] : 등록 가능한 스킬이 없습니다!");
+						player.sendMessage("§c[SYSTEM] : 등록 가능한 스킬이 없습니다!");
 					}
 				}
 				else
 				{
 					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-					player.sendMessage(ChatColor.RED+"[SYSTEM] : 서버 시스템이 마비노기 형식이 아닙니다!");
+					player.sendMessage("§c[SYSTEM] : 서버 시스템이 마비노기 형식이 아닙니다!");
 				}
 			}
-			else
+			else if(slot==13||slot==14||slot==16)
 			{
 				player.closeInventory();
 				UserData_Object u = new UserData_Object();
@@ -3856,8 +3856,8 @@ public class NPC_GUI extends Util_GUI
 				u.setString(player, (byte)6,number+"");
 				if(slot == 13)//호감도
 				{
-					player.sendMessage(ChatColor.DARK_AQUA+"[대사] : 이 대사를 보기 위해서는 최소 몇의 호감도가 필요한가요?");
-					player.sendMessage(ChatColor.GREEN + "("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+")");
+					player.sendMessage("§3[대사] : 이 대사를 보기 위해서는 최소 몇의 호감도가 필요한가요?");
+					player.sendMessage("§a(§e0§a ~ §e"+Integer.MAX_VALUE+"§a)");
 					u.setString(player, (byte)4,"NPC_TNL");
 				}
 				else
@@ -3865,21 +3865,21 @@ public class NPC_GUI extends Util_GUI
 
 					if(slot == 14)//대사1
 					{
-						player.sendMessage(ChatColor.DARK_AQUA+"[대사] : NPC가 할 대사를 입력해 주세요!");
+						player.sendMessage("§3[대사] : NPC가 할 대사를 입력해 주세요!");
 						u.setString(player, (byte)4,"NPC_TS");
 					}
 					else if(slot == 16)//대사2
 					{
-						player.sendMessage(ChatColor.DARK_AQUA+"[대사] : 플레이어에게 스킬을 전수한 뒤, NPC가 할 대사를 입력해 주세요!");
+						player.sendMessage("§3[대사] : 플레이어에게 스킬을 전수한 뒤, NPC가 할 대사를 입력해 주세요!");
 						u.setString(player, (byte)4,"NPC_TS2");
 					}
-					player.sendMessage(ChatColor.GOLD + "%enter%"+ChatColor.WHITE + " - 한줄 띄워 쓰기 -");
-					player.sendMessage(ChatColor.GOLD + "%player%"+ChatColor.WHITE + " - 플레이어 지칭하기 -");
-					player.sendMessage(ChatColor.WHITE + ""+ChatColor.BOLD + "&l " + ChatColor.BLACK + "&0 "+ChatColor.DARK_BLUE+"&1 "+ChatColor.DARK_GREEN+"&2 "+
-					ChatColor.DARK_AQUA + "&3 " +ChatColor.DARK_RED + "&4 " + ChatColor.DARK_PURPLE + "&5 " +
-							ChatColor.GOLD + "&6 " + ChatColor.GRAY + "&7 " + ChatColor.DARK_GRAY + "&8 " +
-					ChatColor.BLUE + "&9 " + ChatColor.GREEN + "&a " + ChatColor.AQUA + "&b " + ChatColor.RED + "&c " +
-							ChatColor.LIGHT_PURPLE + "&d " + ChatColor.YELLOW + "&e "+ChatColor.WHITE + "&f");
+					player.sendMessage("§6%enter%§f - 한줄 띄워 쓰기 -");
+					player.sendMessage("§6%player%§f - 플레이어 지칭하기 -");
+					player.sendMessage("§f§l&l §0&0 §1&1 §2&2 "+
+					"§3&3 §4&4 §5&5 " +
+							"§6&6 §7&7 §8&8 " +
+					"§9&9 §a&a §b&b §c&c " +
+							"§d&d §e&e §f&f");
 				}
 			}
 		}
@@ -3958,7 +3958,7 @@ public class NPC_GUI extends Util_GUI
 								if(new util.Util_Player().giveItem(player, item)==false)
 								{
 									SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
-									player.sendMessage(ChatColor.RED+"[구매 실패] : 인벤토리가 부족하여 "+(count-counter)+"개를 구매하지 못하였습니다!");
+									player.sendMessage("§c[구매 실패] : 인벤토리가 부족하여 "+(count-counter)+"개를 구매하지 못하였습니다!");
 									Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_Money(Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() - (counter*value));
 									return;
 								}
@@ -3969,7 +3969,7 @@ public class NPC_GUI extends Util_GUI
 						else
 						{
 							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
-							player.sendMessage(ChatColor.RED+"[구매 실패] : "+Main_ServerOption.Money+ChatColor.RED+"가 부족하여 구매할 수 없습니다!");
+							player.sendMessage("§c[구매 실패] : "+Main_ServerOption.money+"§c가 부족하여 구매할 수 없습니다!");
 						}
 					}
 					else if(slot == 31)
@@ -4041,7 +4041,7 @@ public class NPC_GUI extends Util_GUI
 						if(new util.Util_Player().deleteItem(player, item, count)==false)
 						{
 							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
-							player.sendMessage(ChatColor.RED+"[판매 실패] : 물품이 부족하여 판매하지 못하였습니다!");
+							player.sendMessage("§c[판매 실패] : 물품이 부족하여 판매하지 못하였습니다!");
 							return;
 						}
 						else
@@ -4123,7 +4123,7 @@ public class NPC_GUI extends Util_GUI
 		
 		Player player = (Player) event.getWhoClicked();
 
-		if(event.getClickedInventory().getTitle().compareTo("container.inventory") == 0)
+		if(event.getClickedInventory().getTitle().equals("container.inventory"))
 		{
 			ItemStack clickedItem = event.getCurrentItem();
 			short ItemID = (short) clickedItem.getTypeId();
@@ -4155,7 +4155,7 @@ public class NPC_GUI extends Util_GUI
 					if(nowDurability == 0)
 					{
 						SoundEffect.SP(player,Sound.BLOCK_ANVIL_LAND, 0.8F, 1.6F);
-						player.sendMessage(ChatColor.DARK_AQUA + "[수리] : 해당 무기는 수리받을 필요가 없습니다.");
+						player.sendMessage("§3[수리] : 해당 무기는 수리받을 필요가 없습니다.");
 						return;
 					}
 					
@@ -4168,7 +4168,7 @@ public class NPC_GUI extends Util_GUI
 					if(playerMoney < point10need*FixPrice ||playerMoney < ((point1success*FixPrice)/10))
 					{
 						SoundEffect.SP(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-						player.sendMessage(ChatColor.RED + "[SYSTEM] : 수리 비용이 부족합니다!");
+						player.sendMessage("§c[SYSTEM] : 수리 비용이 부족합니다!");
 						return;
 					}
 					
@@ -4184,15 +4184,15 @@ public class NPC_GUI extends Util_GUI
 					}
 					if(point10success==0 && point1success==0)
 					{
-						player.sendMessage(ChatColor.RED + "[수리] : 완전 수리 실패!");
+						player.sendMessage("§c[수리] : 완전 수리 실패!");
 						SoundEffect.SP(player,Sound.BLOCK_ANVIL_BREAK, 1.2F, 1.0F);
 						return;
 					}
 					SoundEffect.SP(player,Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 					if(point10success == point10need && point1success ==point1need)
-						player.sendMessage(ChatColor.DARK_AQUA + "[수리] : 수리 대성공!");
+						player.sendMessage("§3[수리] : 수리 대성공!");
 					if(point10success != point10need || point1success !=point1need)
-						player.sendMessage(ChatColor.YELLOW + "[수리] : "+ChatColor.WHITE+((point10success*10)+point1success)+ChatColor.YELLOW+" 포인트 수리 성공, "+ChatColor.WHITE+((point10need-(point10success))*10+(point1need-point1success))+ChatColor.YELLOW+" 포인트 수리 실패 ");
+						player.sendMessage("§e[수리] : §f"+((point10success*10)+point1success)+"§e 포인트 수리 성공, §f"+((point10need-(point10success))*10+(point1need-point1success))+"§e 포인트 수리 실패 ");
 
 					clickedItem.setDurability((short) (clickedItem.getDurability()-((point10success*10)+point1success)));
 			  		main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MoneyAndEXP(-1 * ((point10need*FixPrice)+((point1need*FixPrice)/10)), 0, false);
@@ -4214,7 +4214,7 @@ public class NPC_GUI extends Util_GUI
 					if(nowDurability == Maxdurability)
 					{
 						SoundEffect.SP(player,Sound.BLOCK_ANVIL_LAND, 0.8F, 1.6F);
-						player.sendMessage(ChatColor.DARK_AQUA + "[수리] : 해당 무기는 수리받을 필요가 없습니다.");
+						player.sendMessage("§3[수리] : 해당 무기는 수리받을 필요가 없습니다.");
 						return;
 					}
 					
@@ -4227,7 +4227,7 @@ public class NPC_GUI extends Util_GUI
 					if(playerMoney < point10need*FixPrice ||playerMoney < ((point1success*FixPrice)/10))
 					{
 						SoundEffect.SP(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-						player.sendMessage(ChatColor.RED + "[SYSTEM] : 수리 비용이 부족합니다!");
+						player.sendMessage("§c[SYSTEM] : 수리 비용이 부족합니다!");
 						return;
 					}
 					
@@ -4243,14 +4243,14 @@ public class NPC_GUI extends Util_GUI
 					}
 					if(point10success==0 && point1success==0)
 					{
-						player.sendMessage(ChatColor.RED + "[수리] : 완전 수리 실패!");
+						player.sendMessage("§c[수리] : 완전 수리 실패!");
 						SoundEffect.SP(player,Sound.BLOCK_ANVIL_BREAK, 1.2F, 1.0F);
 					}
 					SoundEffect.SP(player,Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 					if(point10success == point10need && point1success ==point1need)
-						player.sendMessage(ChatColor.DARK_AQUA + "[수리] : 수리 대성공!");
+						player.sendMessage("§3[수리] : 수리 대성공!");
 					if((point10success != point10need || point1success !=point1need)&&(point10success!=0 || point1success!=0))
-						player.sendMessage(ChatColor.YELLOW + "[수리] : "+ChatColor.WHITE+((point10success*10)+point1success)+ChatColor.YELLOW+" 포인트 수리 성공, "+ChatColor.WHITE+((point10need-(point10success))*10+(point1need-point1success))+ChatColor.YELLOW+" 포인트 수리 실패 ");
+						player.sendMessage("§e[수리] : §f"+((point10success*10)+point1success)+"§e 포인트 수리 성공, §f"+((point10need-(point10success))*10+(point1need-point1success))+"§e 포인트 수리 실패 ");
 
 					if(clickedItem.hasItemMeta() == true)
 					{
@@ -4264,7 +4264,7 @@ public class NPC_GUI extends Util_GUI
 									String[] Lore = ChatColor.stripColor(Meta.getLore().get(count)).split(" : ");
 									String[] SubLore = Lore[1].split(" / ");
 									List<String> PLore = Meta.getLore();
-									PLore.set(count,ChatColor.WHITE+ Lore[0] + " : "+(Integer.parseInt(SubLore[0])+((point10success*10)+point1success))+" / "+(Integer.parseInt(SubLore[1])-(((point10need-point10success)*10)+(point1need-point1success))));
+									PLore.set(count,"§f"+ Lore[0] + " : "+(Integer.parseInt(SubLore[0])+((point10success*10)+point1success))+" / "+(Integer.parseInt(SubLore[1])-(((point10need-point10success)*10)+(point1need-point1success))));
 									Meta.setLore(PLore);
 									clickedItem.setItemMeta(Meta);
 								}
@@ -4277,7 +4277,7 @@ public class NPC_GUI extends Util_GUI
 			else
 			{
 				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.8F, 1.0F);
-				player.sendMessage(ChatColor.RED + "[SYSTEM] : 수리 할 수 없는 물건입니다!");
+				player.sendMessage("§c[SYSTEM] : 수리 할 수 없는 물건입니다!");
 			}
 		}
 		else
@@ -4306,7 +4306,7 @@ public class NPC_GUI extends Util_GUI
 		
 		
 		String NPCname = ChatColor.stripColor(event.getInventory().getItem(8).getItemMeta().getLore().get(1)); 
-		if(ChatColor.stripColor(event.getInventory().getName()).compareTo("[NPC] 선물 아이템을 올려 주세요")==0)
+		if(ChatColor.stripColor(event.getInventory().getName()).equals("[NPC] 선물 아이템을 올려 주세요"))
 		{
 			int number = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(1).getItemMeta().getLore().get(0)));
 			boolean isSettingMode = Boolean.parseBoolean(ChatColor.stripColor(event.getInventory().getItem(0).getItemMeta().getLore().get(1)));
@@ -4350,7 +4350,7 @@ public class NPC_GUI extends Util_GUI
 							u.setString(player, (byte)3,u.getNPCuuid(player));
 							u.setString(player, (byte)4,"PresentLove");
 							u.setInt(player, (byte)0, number);
-							player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 해당 아이템을 줄 때 상승하는 호감도 수치를 입력 해 주세요! (-1000 ~ 1000 사이 값)");
+							player.sendMessage("§3[NPC] : 해당 아이템을 줄 때 상승하는 호감도 수치를 입력 해 주세요! (-1000 ~ 1000 사이 값)");
 							player.closeInventory();
 						}
 						else
@@ -4416,12 +4416,12 @@ public class NPC_GUI extends Util_GUI
 										if(love >= 0)
 										{
 											SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
-											player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+ChatColor.YELLOW+NPCname+ChatColor.GREEN+"의 호감도가 "+ChatColor.YELLOW+love+ChatColor.GREEN+" 상승하였습니다!");
+											player.sendMessage("§a[SYSTEM] : §e"+NPCname+"§a의 호감도가 §e"+love+"§a 상승하였습니다!");
 										}
 										else
 										{
 											SoundEffect.SP(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.8F);
-											player.sendMessage(ChatColor.RED + "[SYSTEM] : "+ChatColor.YELLOW+NPCname+ChatColor.RED+"의 호감도가 "+ChatColor.YELLOW+(love*-1)+ChatColor.RED+" 하락 하였습니다!");
+											player.sendMessage("§c[SYSTEM] : §e"+NPCname+"§c의 호감도가 §e"+(love*-1)+"§c 하락 하였습니다!");
 										}
 										return;
 									}
@@ -4446,19 +4446,19 @@ public class NPC_GUI extends Util_GUI
 								if(love >= 0)
 								{
 									SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
-									player.sendMessage(ChatColor.GREEN + "[SYSTEM] : "+ChatColor.YELLOW+NPCname+ChatColor.GREEN+"의 호감도가 "+ChatColor.YELLOW+love+ChatColor.GREEN+" 상승하였습니다!");
+									player.sendMessage("§a[SYSTEM] : §e"+NPCname+"§a의 호감도가 §e"+love+"§a 상승하였습니다!");
 								}
 								else
 								{
 									SoundEffect.SP(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.8F);
-									player.sendMessage(ChatColor.RED + "[SYSTEM] : "+ChatColor.YELLOW+NPCname+ChatColor.RED+"의 호감도가 "+ChatColor.YELLOW+(love*-1)+ChatColor.RED+" 하락 하였습니다!");
+									player.sendMessage("§c[SYSTEM] : §e"+NPCname+"§c의 호감도가 §e"+(love*-1)+"§c 하락 하였습니다!");
 								}
 								return;
 							}
 							else
 							{
 								SoundEffect.SP(player, Sound.ENTITY_ITEMFRAME_REMOVE_ITEM, 1.0F, 1.8F);
-								player.sendMessage(ChatColor.YELLOW + "[SYSTEM] : "+ChatColor.GOLD+NPCname+ChatColor.YELLOW+"는 선물을 사양하였다.");
+								player.sendMessage("§e[SYSTEM] : §6"+NPCname+"§e는 선물을 사양하였다.");
 							}
 						}
 						else
@@ -4493,7 +4493,7 @@ public class NPC_GUI extends Util_GUI
 					u.setString(player, (byte)3,u.getNPCuuid(player));
 					u.setString(player, (byte)4,"PresentLove");
 					u.setInt(player, (byte)0, 1);
-					player.sendMessage(ChatColor.DARK_AQUA + "[NPC] : 아무 아이템이나 줄 때 상승하는 호감도 수치를 입력 해 주세요! (-1000 ~ 1000 사이 값)");
+					player.sendMessage("§3[NPC] : 아무 아이템이나 줄 때 상승하는 호감도 수치를 입력 해 주세요! (-1000 ~ 1000 사이 값)");
 					player.closeInventory();
 				}
 				else

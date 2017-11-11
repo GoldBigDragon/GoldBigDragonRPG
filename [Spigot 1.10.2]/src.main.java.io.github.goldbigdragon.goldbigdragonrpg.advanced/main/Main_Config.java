@@ -43,7 +43,7 @@ public class Main_Config
 		  	configYaml.set("Server.INT", "지력");
 		  	configYaml.set("Server.WILL", "의지");
 		  	configYaml.set("Server.LUK", "행운");
-		  	configYaml.set("Server.MoneyName", ChatColor.GOLD+""+ChatColor.BOLD+"Gold");
+		  	configYaml.set("Server.MoneyName", "§6§lGold");
 		  	configYaml.set("Server.AntiExplode", true);
 
 		  	configYaml.set("Death.SystemOn", true);
@@ -61,8 +61,8 @@ public class Main_Config
 		  	configYaml.set("Death.Spawn_Item.PenaltConfigoney", "0%");
 		  	configYaml.set("Death.Track", -1);
 
-		  	configYaml.set("Quest.AcceptMessage", ChatColor.GREEN+"[퀘스트] : " + ChatColor.YELLOW+"%QuestName%"+ChatColor.GREEN+" 퀘스트를 받았습니다!");
-		  	configYaml.set("Quest.ClearMessage", ChatColor.DARK_AQUA+"[퀘스트] : "+ ChatColor.YELLOW + "%QuestName%"+ChatColor.DARK_AQUA+" 퀘스트를 완료하셨습니다!");
+		  	configYaml.set("Quest.AcceptMessage", "§a[퀘스트] : §e%QuestName%§a 퀘스트를 받았습니다!");
+		  	configYaml.set("Quest.ClearMessage", "§3[퀘스트] : §e%QuestName%§3 퀘스트를 완료하셨습니다!");
 
 		  	configYaml.set("NPC.Shaman.BuffCoolTime", 600);
 		  	
@@ -246,17 +246,17 @@ public class Main_Config
 		if(configYaml.contains("Server.MabinogiMoneySystem"))
 			main.Main_ServerOption.MoneySystem = configYaml.getBoolean("Server.MabinogiMoneySystem");
 		if(configYaml.contains("Server.STR"))
-			main.Main_ServerOption.STR = configYaml.getString("Server.STR");
+			main.Main_ServerOption.statSTR = configYaml.getString("Server.STR");
 		if(configYaml.contains("Server.DEX"))
-			main.Main_ServerOption.DEX = configYaml.getString("Server.DEX");
+			main.Main_ServerOption.statDEX = configYaml.getString("Server.DEX");
 		if(configYaml.contains("Server.INT"))
-			main.Main_ServerOption.INT = configYaml.getString("Server.INT");
+			main.Main_ServerOption.statINT = configYaml.getString("Server.INT");
 		if(configYaml.contains("Server.WILL"))
-			main.Main_ServerOption.WILL = configYaml.getString("Server.WILL");
+			main.Main_ServerOption.statWILL = configYaml.getString("Server.WILL");
 		if(configYaml.contains("Server.LUK"))
-			main.Main_ServerOption.LUK = configYaml.getString("Server.LUK");
+			main.Main_ServerOption.statLUK = configYaml.getString("Server.LUK");
 		if(configYaml.contains("Server.MoneyName"))
-			main.Main_ServerOption.Money = configYaml.getString("Server.MoneyName");
+			main.Main_ServerOption.money = configYaml.getString("Server.MoneyName");
 		if(configYaml.contains("Server.STR_Lore"))
 			main.Main_ServerOption.STR_Lore = configYaml.getString("Server.STR_Lore");
 		if(configYaml.contains("Server.DEX_Lore"))
@@ -292,9 +292,9 @@ public class Main_Config
 		if(configYaml.contains("Server.Money.6.DATA"))
 			main.Main_ServerOption.Money6DATA = (byte) configYaml.getInt("Server.Money.6.DATA");
 		if(configYaml.contains("Server.Damage"))
-			main.Main_ServerOption.Damage = configYaml.getString("Server.Damage");
+			main.Main_ServerOption.damage = configYaml.getString("Server.Damage");
 		if(configYaml.contains("Server.MagicDamage"))
-			main.Main_ServerOption.MagicDamage = configYaml.getString("Server.MagicDamage");
+			main.Main_ServerOption.magicDamage = configYaml.getString("Server.MagicDamage");
 		if(configYaml.contains("Server.AntiExplode"))
 			main.Main_ServerOption.AntiExplode = configYaml.getBoolean("Server.AntiExplode");
 		if(configYaml.contains("Death.ReviveItem"))
@@ -314,24 +314,24 @@ public class Main_Config
 		}
 		
 		
-		main.Main_ServerOption.MaxLevel = configYaml.getInt("MaxStat.Level");
-		main.Main_ServerOption.MaxSTR = configYaml.getInt("MaxStat.STR");
-		main.Main_ServerOption.MaxDEX = configYaml.getInt("MaxStat.DEX");
-		main.Main_ServerOption.MaxINT = configYaml.getInt("MaxStat.INT");
-		main.Main_ServerOption.MaxWILL = configYaml.getInt("MaxStat.WILL");
-		main.Main_ServerOption.MaxLUK = configYaml.getInt("MaxStat.LUK");
+		main.Main_ServerOption.maxLevel = configYaml.getInt("MaxStat.Level");
+		main.Main_ServerOption.maxSTR = configYaml.getInt("MaxStat.STR");
+		main.Main_ServerOption.maxDEX = configYaml.getInt("MaxStat.DEX");
+		main.Main_ServerOption.maxINT = configYaml.getInt("MaxStat.INT");
+		main.Main_ServerOption.maxWILL = configYaml.getInt("MaxStat.WILL");
+		main.Main_ServerOption.maxLUK = configYaml.getInt("MaxStat.LUK");
 		main.Main_ServerOption.PVP = configYaml.getBoolean("Server.PVP");
-		main.Main_ServerOption.MaxDropMoney = configYaml.getLong("Server.Max_Drop_Money");
-		main.Main_ServerOption.EXPShareDistance = configYaml.getInt("Party.EXPShareDistance");
+		main.Main_ServerOption.maxDropMoney = configYaml.getLong("Server.Max_Drop_Money");
+		main.Main_ServerOption.expShareDistance = configYaml.getInt("Party.EXPShareDistance");
 
-		main.Main_ServerOption.Event_SkillPoint = (byte) configYaml.getInt("Event.Multiple_Level_Up_SkillPoint");
-		main.Main_ServerOption.Event_StatPoint = (byte) configYaml.getInt("Event.Multiple_Level_Up_StatPoint");
-		main.Main_ServerOption.Event_DropChance = (byte) configYaml.getInt("Event.DropChance");
-		main.Main_ServerOption.Event_Exp = (byte) configYaml.getInt("Event.Multiple_EXP_Get");
-		main.Main_ServerOption.Event_Proficiency = (byte) configYaml.getInt("Event.Multiple_Proficiency_Get");
+		main.Main_ServerOption.eventSkillPoint = (byte) configYaml.getInt("Event.Multiple_Level_Up_SkillPoint");
+		main.Main_ServerOption.eventStatPoint = (byte) configYaml.getInt("Event.Multiple_Level_Up_StatPoint");
+		main.Main_ServerOption.eventDropChance = (byte) configYaml.getInt("Event.DropChance");
+		main.Main_ServerOption.eventExp = (byte) configYaml.getInt("Event.Multiple_EXP_Get");
+		main.Main_ServerOption.eventProficiency = (byte) configYaml.getInt("Event.Multiple_Proficiency_Get");
 		
-		main.Main_ServerOption.LevelUpPerSkillPoint = (byte) configYaml.getInt("Server.Level_Up_SkillPoint");
-		main.Main_ServerOption.LevelUpPerStatPoint = (byte) configYaml.getInt("Server.Level_Up_StatPoint");
+		main.Main_ServerOption.levelUpPerSkillPoint = (byte) configYaml.getInt("Server.Level_Up_SkillPoint");
+		main.Main_ServerOption.levelUpPerStatPoint = (byte) configYaml.getInt("Server.Level_Up_StatPoint");
 		
 		main.Main_ServerOption.dualWeapon = configYaml.getBoolean("Server.LeftHandWeaponDamageEnable");
 		

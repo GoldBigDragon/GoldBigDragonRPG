@@ -64,15 +64,15 @@ public class Dungeon_Creater
 		for(int count = 0;count<3;count++)
 		{
 			seed = new Dungeon_SeedMaker().CreateSeed(DungeonSize, new String[DungeonSize*DungeonSize], new int[DungeonSize*DungeonSize], Maze_Level, DungeonType);
-			if(seed.compareTo("null")!=0)
+			if(!seed.equals("null"))
 				break;
 		}
-		if(seed.compareTo("null")==0||seed==null)
-			player.sendMessage(ChatColor.RED+"[SYSTEM] : 시드 생성 실패!");
+		if(seed.equals("null")||seed==null)
+			player.sendMessage("§c[SYSTEM] : 시드 생성 실패!");
 		else
 		{
-			player.sendMessage(ChatColor.GREEN+"[SYSTEM] : 시드 생성 완료!");
-			player.sendMessage(ChatColor.YELLOW+"[시드] "+ChatColor.WHITE+seed);
+			player.sendMessage("§a[SYSTEM] : 시드 생성 완료!");
+			player.sendMessage("§e[시드] §f"+seed);
 		}
 	}
 
@@ -87,14 +87,14 @@ public class Dungeon_Creater
 		    F1.mkdir();
 		    F2.mkdir();
 		    F3.mkdir();
-			player.sendMessage(ChatColor.RED+"["+ChatColor.YELLOW+DungeonType+ChatColor.RED+"던전 타입 데이터가 없습니다! 관리자에게 문의하세요!]");
-			player.sendMessage(ChatColor.GRAY+"(plugins/GoldBigDragonRPG/Dungeon/Schematic/"+DungeonType+" 경로 아래에 그에 맞는 schematic 파일을 넣어 주세요!)");
+			player.sendMessage("§c[§e"+DungeonType+"§c던전 타입 데이터가 없습니다! 관리자에게 문의하세요!]");
+			player.sendMessage("§7(plugins/GoldBigDragonRPG/Dungeon/Schematic/"+DungeonType+" 경로 아래에 그에 맞는 schematic 파일을 넣어 주세요!)");
 			return false;
       	}
     	if(fileCheck(DungeonType)==false)
     	{
-			player.sendMessage(ChatColor.RED+"["+ChatColor.YELLOW+DungeonType+ChatColor.RED+"던전 타입 데이터가 없습니다! 관리자에게 문의하세요!]");
-			player.sendMessage(ChatColor.GRAY+"(plugins/GoldBigDragonRPG/Dungeon/Schematic/"+DungeonType+" 경로 아래에 그에 맞는 schematic 파일을 넣어 주세요!)");
+			player.sendMessage("§c[§e"+DungeonType+"§c던전 타입 데이터가 없습니다! 관리자에게 문의하세요!]");
+			player.sendMessage("§7(plugins/GoldBigDragonRPG/Dungeon/Schematic/"+DungeonType+" 경로 아래에 그에 맞는 schematic 파일을 넣어 주세요!)");
 			return false;
     	}
     	
@@ -102,19 +102,19 @@ public class Dungeon_Creater
 		for(int count = 0;count<3;count++)
 		{
 			seed = new Dungeon_SeedMaker().CreateSeed(DungeonSize, new String[DungeonSize*DungeonSize], new int[DungeonSize*DungeonSize], Maze_Level, DungeonType);
-			if(seed.compareTo("null")!=0)
+			if(!seed.equals("null"))
 				break;
 		}
-		if(seed.compareTo("null")==0)
+		if(seed.equals("null"))
 		{
-			player.sendMessage(ChatColor.WHITE+"(왠일인지 아무 일도 일어나지 않았다... 다시 시도해 보자.)");
+			player.sendMessage("§f(왠일인지 아무 일도 일어나지 않았다... 다시 시도해 보자.)");
 			return false;
 		}
 
 	  	ArrayList<String> list = seedGet(seed, DungeonSize, false);
 	  	if(list == null)
 	  	{
-			player.sendMessage(ChatColor.WHITE+"(왠일인지 아무 일도 일어나지 않았다... 다시 시도해 보자.)");
+			player.sendMessage("§f(왠일인지 아무 일도 일어나지 않았다... 다시 시도해 보자.)");
 			return false;
 	  	}
 	  	
@@ -135,7 +135,7 @@ public class Dungeon_Creater
     	list = seedGet(seed, DungeonSize, true);
 	  	if(list == null)
 	  	{
-			player.sendMessage(ChatColor.WHITE+"(왠일인지 아무 일도 일어나지 않았다... 다시 시도해 보자.)");
+			player.sendMessage("§f(왠일인지 아무 일도 일어나지 않았다... 다시 시도해 보자.)");
 			return false;
 	  	}
     	for(int count2=0; count2 < list.size(); count2++)
@@ -170,7 +170,7 @@ public class Dungeon_Creater
     		for(int count = 0; count < nearPartyMember.size(); count++)
     		{
     			new dungeon.Dungeon_Main().EraseAllDungeonKey(nearPartyMember.get(count), false);
-    			new effect.SendPacket().sendTitle(nearPartyMember.get(count),"\'"+ChatColor.WHITE+"대기실\'", (byte)1, (byte)0, (byte)1);
+    			new effect.SendPacket().sendTitle(nearPartyMember.get(count),"\'§f대기실\'", (byte)1, (byte)0, (byte)1);
 				nearPartyMember.get(count).teleport(new Location(Bukkit.getWorld("Dungeon"), -87, 31, -87));
     			DSO.addDungeonMaker(nearPartyMember.get(count).getName());
     			main.Main_ServerOption.PlayerList.get(nearPartyMember.get(count).getUniqueId().toString()).setDungeon_Enter(DungeonName);
@@ -184,7 +184,7 @@ public class Dungeon_Creater
     	{
 			new dungeon.Dungeon_Main().EraseAllDungeonKey(player, false);
 			player.teleport(new Location(Bukkit.getWorld("Dungeon"), -87, 31, -87));
-			new effect.SendPacket().sendTitle(player,"\'"+ChatColor.WHITE+"대기실\'", (byte)1, (byte)0, (byte)1);
+			new effect.SendPacket().sendTitle(player,"\'§f대기실\'", (byte)1, (byte)0, (byte)1);
     		DSO.addDungeonMaker(player.getName());
 			main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setDungeon_Enter(DungeonName);
 			main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).setDungeon_UTC(UTC);

@@ -14,131 +14,130 @@ import util.YamlLoader;
 
 public class Area_Chat extends Util_Chat
 {
-	public void AreaTypeChatting(PlayerChatEvent event)
+	public void areaTypeChatting(PlayerChatEvent event)
 	{
 		UserData_Object u = new UserData_Object();
-		
 		Player player = event.getPlayer();
 	  	YamlLoader areaYaml = new YamlLoader();
 		areaYaml.getConfig("Area/AreaList.yml");
 		event.setCancelled(true);
-		area.Area_GUI AGUI = new area.Area_GUI();
-		String Message = ChatColor.stripColor(event.getMessage());
+		area.Area_GUI areaGui = new area.Area_GUI();
+		String message = ChatColor.stripColor(event.getMessage());
 		String subType = u.getString(player, (byte)2);
-		if(subType.compareTo("ARR")==0)//AreaRegenBlock
+		if(subType.equals("ARR"))//AreaRegenBlock
 		{
-			if(isIntMinMax(Message, player, 1, 3600))
+			if(isIntMinMax(message, player, 1, 3600))
 			{
-				areaYaml.set(u.getString(player, (byte)3)+".RegenBlock", Integer.parseInt(Message));
+				areaYaml.set(u.getString(player, (byte)3)+".RegenBlock", Integer.parseInt(message));
     			areaYaml.saveConfig();
     			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				AGUI.AreaSettingGUI(player, u.getString(player, (byte)3));
+				areaGui.areaSettingGui(player, u.getString(player, (byte)3));
     			u.clearAll(player);
 			}
 		}
-		else if(subType.compareTo("AMSC")==0)//AreaMonsterSpawnCount
+		else if(subType.equals("AMSC"))//AreaMonsterSpawnCount
 		{
-			if(isIntMinMax(Message, player, 1, 100))
+			if(isIntMinMax(message, player, 1, 100))
 			{
-				areaYaml.set(u.getString(player, (byte)3)+".MonsterSpawnRule."+u.getString(player, (byte)1)+".count", Integer.parseInt(Message));
+				areaYaml.set(u.getString(player, (byte)3)+".MonsterSpawnRule."+u.getString(player, (byte)1)+".count", Integer.parseInt(message));
     			areaYaml.saveConfig();
     			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				u.setString(player, (byte)2, "AMSMC");
-				player.sendMessage(ChatColor.GREEN+"[영역] : 반경 20블록 이내 엔티티가 몇 마리 미만일 동안 스폰 할까요?");
-				player.sendMessage(ChatColor.YELLOW+"(최소 1마리 ~ 최대 300마리)");
+				player.sendMessage("§a[영역] : 반경 20블록 이내 엔티티가 몇 마리 미만일 동안 스폰 할까요?");
+				player.sendMessage("§e(최소 1마리 ~ 최대 300마리)");
 			}
 		}
-		else if(subType.compareTo("AMSMC")==0)//AreaMonsterSpawnMaximumCount
+		else if(subType.equals("AMSMC"))//AreaMonsterSpawnMaximumCount
 		{
-			if(isIntMinMax(Message, player, 1, 300))
+			if(isIntMinMax(message, player, 1, 300))
 			{
-				areaYaml.set(u.getString(player, (byte)3)+".MonsterSpawnRule."+u.getString(player, (byte)1)+".max", Integer.parseInt(Message));
+				areaYaml.set(u.getString(player, (byte)3)+".MonsterSpawnRule."+u.getString(player, (byte)1)+".max", Integer.parseInt(message));
     			areaYaml.saveConfig();
     			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				u.setString(player, (byte)2, "AMST");
-				player.sendMessage(ChatColor.GREEN+"[영역] : 몇 초마다 스폰되게 할까요?");
-				player.sendMessage(ChatColor.YELLOW+"(최소 1초 ~ 최대 7200초(2시간))");
+				player.sendMessage("§a[영역] : 몇 초마다 스폰되게 할까요?");
+				player.sendMessage("§e(최소 1초 ~ 최대 7200초(2시간))");
 			}
 		}
-		else if(subType.compareTo("AMST")==0)//AreaMonsterSpawnTimer
+		else if(subType.equals("AMST"))//AreaMonsterSpawnTimer
 		{
-			if(isIntMinMax(Message, player, 1, 7200))
+			if(isIntMinMax(message, player, 1, 7200))
 			{
-				areaYaml.set(u.getString(player, (byte)3)+".MonsterSpawnRule."+u.getString(player, (byte)1)+".timer", Integer.parseInt(Message));
+				areaYaml.set(u.getString(player, (byte)3)+".MonsterSpawnRule."+u.getString(player, (byte)1)+".timer", Integer.parseInt(message));
     			areaYaml.saveConfig();
     			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
     			u.setString(player, (byte)2, "AMSM");
-				player.sendMessage(ChatColor.GREEN+"[영역] : 특별히 스폰 하고 싶은 몬스터가 있나요?");
-				player.sendMessage(ChatColor.YELLOW+"(O 혹은 X로 대답하세요!)");
+				player.sendMessage("§a[영역] : 특별히 스폰 하고 싶은 몬스터가 있나요?");
+				player.sendMessage("§e(O 혹은 X로 대답하세요!)");
 			}
 		}
-		else if(subType.compareTo("AMSM")==0)//AreaMonsterSpawnMonster
+		else if(subType.equals("AMSM"))//AreaMonsterSpawnMonster
 		{
-			byte answer = askOX(Message, player);
+			byte answer = askOX(message, player);
 			if(answer!=-1)
 			{
 				if(answer==0)
 				{
 	    			SoundEffect.SP(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.0F);
-	    			AGUI.AreaMonsterSpawnSettingGUI(player, (short) 0, u.getString(player, (byte)3));
-	    			String AreaName =u.getString(player, (byte)3);
-	    			new area.Area_Main().AreaMonsterSpawnAdd(AreaName, u.getString(player, (byte)1));
+	    			areaGui.areaMonsterSpawnSettingGui(player, (short) 0, u.getString(player, (byte)3));
+	    			String areaName =u.getString(player, (byte)3);
+	    			new area.Area_Main().AreaMonsterSpawnAdd(areaName, u.getString(player, (byte)1));
 				}
 				else
 				{
 					SoundEffect.SP(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.7F);
-					AGUI.AreaSpawnSpecialMonsterListGUI(player, (short) 0, u.getString(player, (byte)3),u.getString(player, (byte)1));
+					areaGui.areaSpawnSpecialMonsterListGui(player, (short) 0, u.getString(player, (byte)3),u.getString(player, (byte)1));
 				}
     			u.clearAll(player);
 			}
 		}
-		else if(subType.compareTo("Priority")==0)//영역 우선순위 설정
+		else if(subType.equals("Priority"))//영역 우선순위 설정
 		{
-			if(isIntMinMax(Message, player, 0, 100))
+			if(isIntMinMax(message, player, 0, 100))
 			{
-    			areaYaml.set(u.getString(player, (byte)3)+".Priority", Integer.parseInt(Message));
+    			areaYaml.set(u.getString(player, (byte)3)+".Priority", Integer.parseInt(message));
     			areaYaml.saveConfig();
     			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-    			AGUI.AreaSettingGUI(player, u.getString(player, (byte)3));
+    			areaGui.areaSettingGui(player, u.getString(player, (byte)3));
     			u.clearAll(player);
 			}
 		}
-		else if(subType.compareTo("MinNLR")==0)//MinNowLevelRestrict
+		else if(subType.equals("MinNLR"))//MinNowLevelRestrict
 		{
-			if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
+			if(isIntMinMax(message, player, 0, Integer.MAX_VALUE))
 			{
-    			areaYaml.set(u.getString(player, (byte)3)+".Restrict.MinNowLevel", Integer.parseInt(Message));
+    			areaYaml.set(u.getString(player, (byte)3)+".Restrict.MinNowLevel", Integer.parseInt(message));
     			areaYaml.saveConfig();
     			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-    			if(Integer.parseInt(Message) == 0)
+    			if(Integer.parseInt(message) == 0)
     			{
     				YamlLoader configYaml = new YamlLoader();
     				configYaml.getConfig("config.yml");
         			if(configYaml.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System")==true)
         			{
             			u.setString(player, (byte)2, "MinRLR");
-        				player.sendMessage(ChatColor.GREEN + "[영역] : "+ChatColor.YELLOW+u.getString(player, (byte)3)+ChatColor.GREEN+" 영역의 입장에 필요한 최소 누적 레벨을 입력 하세요!"+ChatColor.GRAY + " (0 입력시 제한 없음)");
+        				player.sendMessage("§a[영역] : §e"+u.getString(player, (byte)3)+"§a 영역의 입장에 필요한 최소 누적 레벨을 입력 하세요!§7 (0 입력시 제한 없음)");
         			}
         			else
         			{
             			areaYaml.set(u.getString(player, (byte)3)+".Restrict.MaxNowLevel", 0);
             			areaYaml.saveConfig();
-            			AGUI.AreaSettingGUI(player, u.getString(player, (byte)3));
+            			areaGui.areaSettingGui(player, u.getString(player, (byte)3));
             			u.clearAll(player);
         			}
     			}
     			else
     			{
         			u.setString(player, (byte)2, "MaxNLR");
-    				player.sendMessage(ChatColor.GREEN + "[영역] : "+ChatColor.YELLOW+u.getString(player, (byte)3)+ChatColor.GREEN+" 영역의 입장에 필요한 최대 레벨을 입력 하세요!"+ChatColor.GRAY + " ("+Message+" 이상)");
+    				player.sendMessage("§a[영역] : §e"+u.getString(player, (byte)3)+"§a 영역의 입장에 필요한 최대 레벨을 입력 하세요!§7 ("+message+" 이상)");
     			}
 			}
 		}
-		else if(subType.compareTo("MaxNLR")==0)//MaxNowLevelRestrict
+		else if(subType.equals("MaxNLR"))//MaxNowLevelRestrict
 		{
-			if(isIntMinMax(Message, player, areaYaml.getInt(u.getString(player, (byte)3)+".Restrict.MinNowLevel"), Integer.MAX_VALUE))
+			if(isIntMinMax(message, player, areaYaml.getInt(u.getString(player, (byte)3)+".Restrict.MinNowLevel"), Integer.MAX_VALUE))
 			{
-    			areaYaml.set(u.getString(player, (byte)3)+".Restrict.MaxNowLevel", Integer.parseInt(Message));
+    			areaYaml.set(u.getString(player, (byte)3)+".Restrict.MaxNowLevel", Integer.parseInt(message));
     			areaYaml.saveConfig();
     			YamlLoader configYaml = new YamlLoader();
     			configYaml.getConfig("config.yml");
@@ -146,44 +145,44 @@ public class Area_Chat extends Util_Chat
     			if(configYaml.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System")==true)
     			{
         			u.setString(player, (byte)2, "MinRLR");
-    				player.sendMessage(ChatColor.GREEN + "[영역] : "+ChatColor.YELLOW+u.getString(player, (byte)3)+ChatColor.GREEN+" 영역의 입장에 필요한 최소 누적 레벨을 입력 하세요!"+ChatColor.GRAY + " (0 입력시 제한 없음)");
+    				player.sendMessage("§a[영역] : §e"+u.getString(player, (byte)3)+"§a 영역의 입장에 필요한 최소 누적 레벨을 입력 하세요!§7 (0 입력시 제한 없음)");
     			}
     			else
     			{
-        			AGUI.AreaSettingGUI(player, u.getString(player, (byte)3));
+        			areaGui.areaSettingGui(player, u.getString(player, (byte)3));
         			u.clearAll(player);
     			}
 			}
 		}
-		else if(subType.compareTo("MinRLR")==0)//MinRealLevelRestrict
+		else if(subType.equals("MinRLR"))//MinRealLevelRestrict
 		{
-			if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
+			if(isIntMinMax(message, player, 0, Integer.MAX_VALUE))
 			{
-    			areaYaml.set(u.getString(player, (byte)3)+".Restrict.MinRealLevel", Integer.parseInt(Message));
+    			areaYaml.set(u.getString(player, (byte)3)+".Restrict.MinRealLevel", Integer.parseInt(message));
     			areaYaml.saveConfig();
     			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-    			if(Integer.parseInt(Message) == 0)
+    			if(Integer.parseInt(message) == 0)
     			{
         			areaYaml.set(u.getString(player, (byte)3)+".Restrict.MaxRealLevel", 0);
         			areaYaml.saveConfig();
-        			AGUI.AreaSettingGUI(player, u.getString(player, (byte)3));
+        			areaGui.areaSettingGui(player, u.getString(player, (byte)3));
         			u.clearAll(player);
     			}
     			else
     			{
         			u.setString(player, (byte)2, "MaxRLR");
-    				player.sendMessage(ChatColor.GREEN + "[영역] : "+ChatColor.YELLOW+u.getString(player, (byte)3)+ChatColor.GREEN+" 영역의 입장에 필요한 최대 누적 레벨을 입력 하세요!"+ChatColor.GRAY + " ("+Message+" 이상)");
+    				player.sendMessage("§a[영역] : §e"+u.getString(player, (byte)3)+"§a 영역의 입장에 필요한 최대 누적 레벨을 입력 하세요!§7 ("+message+" 이상)");
     			}
 			}
 		}
-		else if(subType.compareTo("MaxRLR")==0)//MaxRealLevelRestrict
+		else if(subType.equals("MaxRLR"))//MaxRealLevelRestrict
 		{
-			if(isIntMinMax(Message, player, areaYaml.getInt(u.getString(player, (byte)3)+".Restrict.MinRealLevel"), Integer.MAX_VALUE))
+			if(isIntMinMax(message, player, areaYaml.getInt(u.getString(player, (byte)3)+".Restrict.MinRealLevel"), Integer.MAX_VALUE))
 			{
-    			areaYaml.set(u.getString(player, (byte)3)+".Restrict.MaxRealLevel", Integer.parseInt(Message));
+    			areaYaml.set(u.getString(player, (byte)3)+".Restrict.MaxRealLevel", Integer.parseInt(message));
     			areaYaml.saveConfig();
     			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-    			AGUI.AreaSettingGUI(player, u.getString(player, (byte)3));
+    			areaGui.areaSettingGui(player, u.getString(player, (byte)3));
     			u.clearAll(player);
 			}
 		}

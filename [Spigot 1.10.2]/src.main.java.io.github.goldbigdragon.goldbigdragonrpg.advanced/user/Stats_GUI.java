@@ -18,8 +18,6 @@ import skill.UserSkill_GUI;
 import util.Util_GUI;
 import util.YamlLoader;
 
-
-
 public class Stats_GUI extends Util_GUI
 {
 	//스텟 GUI창의 1 페이지를 구성해 주는 메소드//
@@ -31,49 +29,49 @@ public class Stats_GUI extends Util_GUI
 		
 		Inventory inv = Bukkit.createInventory(null, 45, UniqueCode + "§0스텟");
 
-		Stack2(ChatColor.WHITE + "스텟", 160,4,1,Arrays.asList(ChatColor.GRAY + "스텟을 확인합니다."), 0, inv);
-		Stack2(ChatColor.WHITE + "스킬", 403,0,1,Arrays.asList(ChatColor.GRAY + "스킬을 확인합니다."), 9, inv);
-		Stack2(ChatColor.WHITE + "퀘스트", 358,0,1,Arrays.asList(ChatColor.GRAY + "현재 진행중인 퀘스트를 확인합니다."), 18, inv);
-		Stack2(ChatColor.WHITE + "옵션", 145,0,1,Arrays.asList(ChatColor.GRAY + "기타 설정을 합니다."), 27, inv);
-		Stack2(ChatColor.WHITE + "기타", 354,0,1,Arrays.asList(ChatColor.GRAY + "기타 내용을 확인합니다."), 36, inv);
+		Stack2("§f스텟", 160,4,1,Arrays.asList("§7스텟을 확인합니다."), 0, inv);
+		Stack2("§f스킬", 403,0,1,Arrays.asList("§7스킬을 확인합니다."), 9, inv);
+		Stack2("§f퀘스트", 358,0,1,Arrays.asList("§7현재 진행중인 퀘스트를 확인합니다."), 18, inv);
+		Stack2("§f옵션", 145,0,1,Arrays.asList("§7기타 설정을 합니다."), 27, inv);
+		Stack2("§f기타", 354,0,1,Arrays.asList("§7기타 내용을 확인합니다."), 36, inv);
 		
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 1, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 7, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 10, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 16, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 19, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 25, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 28, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 34, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 37, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 43, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 1, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 7, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 10, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 16, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 19, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 25, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 28, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 34, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 37, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 43, inv);
 		
 		ItemStack EXIT = new ItemStack(Material.WOOD_DOOR, 1);
 		ItemMeta EXIT_BUTTON = EXIT.getItemMeta();
-		EXIT_BUTTON.setDisplayName(ChatColor.WHITE  + "" + ChatColor.BOLD + "닫기");
-		EXIT_BUTTON.setLore(Arrays.asList(ChatColor.GRAY + "창을 닫습니다."));
+		EXIT_BUTTON.setDisplayName("§f§l닫기");
+		EXIT_BUTTON.setLore(Arrays.asList("§7창을 닫습니다."));
 		EXIT.setItemMeta(EXIT_BUTTON);
 		inv.setItem(26, EXIT);
 
 		int StatPoint = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_StatPoint();
 		if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == true)
 		{
-			Stack2(ChatColor.GREEN + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + "상태"+ChatColor.GREEN + "]", 397,3,1,
-					Arrays.asList(ChatColor.WHITE + "[레벨] : " +ChatColor.BOLD + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level(),
-							ChatColor.WHITE + "[누적 레벨] : " +ChatColor.BOLD + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel(),
-							ChatColor.WHITE + "[경험치] : " + ChatColor.BOLD + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_EXP() + " / " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxEXP(),
-							ChatColor.AQUA + "[스킬 포인트] : " + ChatColor.WHITE + ChatColor.BOLD + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint()), 13, inv);
+			Stack2("§a    [§f§l상태§a]", 397,3,1,
+					Arrays.asList("§f[레벨] : §l" + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level(),
+							"§f[누적 레벨] : §l" + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel(),
+							"§f[경험치] : §l" + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_EXP() + " / " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxEXP(),
+							"§b[스킬 포인트] : §f" + ChatColor.BOLD + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint()), 13, inv);
 		}
 		else
 		{
 		    YamlLoader PlayerSkillYML = new YamlLoader();
 			PlayerSkillYML.getConfig("Skill/PlayerData/"+player.getUniqueId()+".yml");
-			Stack2(ChatColor.GREEN + "       [" + ChatColor.WHITE +""+ChatColor.BOLD + "상태"+ChatColor.GREEN + "]", 397,3,1,
-					Arrays.asList(ChatColor.WHITE + "[레벨] : " +ChatColor.BOLD + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level(),
-							ChatColor.WHITE + "[직업] : " +ChatColor.BOLD + PlayerSkillYML.getString("Job.Type"),
-							ChatColor.WHITE + "[경험치] : " + ChatColor.BOLD + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_EXP() + " / " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxEXP(),
-							ChatColor.GREEN + "[스텟 포인트] : " + ChatColor.WHITE + ChatColor.BOLD + StatPoint,
-							ChatColor.AQUA + "[스킬 포인트] : " + ChatColor.WHITE + ChatColor.BOLD + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint()), 13, inv);
+			Stack2("§a       [§f§l상태§a]", 397,3,1,
+					Arrays.asList("§f[레벨] : §l" + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level(),
+							"§f[직업] : §l" + PlayerSkillYML.getString("Job.Type"),
+							"§f[경험치] : §l" + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_EXP() + " / " + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxEXP(),
+							"§a[스텟 포인트] : §f" + ChatColor.BOLD + StatPoint,
+							"§b[스킬 포인트] : §f" + ChatColor.BOLD + main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint()), 13, inv);
 		}
 		
 		int DefaultDamage = 0;
@@ -81,7 +79,7 @@ public class Stats_GUI extends Util_GUI
 		{
 			if(player.getInventory().getItemInMainHand().getItemMeta().hasLore() == true)
 			{
-				if(player.getInventory().getItemInMainHand().getItemMeta().getLore().toString().contains(main.Main_ServerOption.Damage+" : ") == true)
+				if(player.getInventory().getItemInMainHand().getItemMeta().getLore().toString().contains(main.Main_ServerOption.damage+" : ") == true)
 				{
 					switch(player.getInventory().getItemInMainHand().getType())
 					{
@@ -125,125 +123,125 @@ public class Stats_GUI extends Util_GUI
 		}
 		int EquipmentStat = Battle_Calculator.getPlayerEquipmentStat(player, "STR", false, null)[0];
 		int PlayerStat = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR();
-		if(PlayerStat > main.Main_ServerOption.MaxSTR)
-			PlayerStat = main.Main_ServerOption.MaxSTR;
-		String Additional = ChatColor.RED +""+ChatColor.BOLD+(Battle_Calculator.CombatDamageGet(player,DefaultDamage,PlayerStat, true)) + " ~ " + (Battle_Calculator.CombatDamageGet(player,DefaultDamage, PlayerStat, false));
+		if(PlayerStat > main.Main_ServerOption.maxSTR)
+			PlayerStat = main.Main_ServerOption.maxSTR;
+		String Additional = "§c§l"+(Battle_Calculator.CombatDamageGet(player,DefaultDamage,PlayerStat, true)) + " ~ " + (Battle_Calculator.CombatDamageGet(player,DefaultDamage, PlayerStat, false));
 		String CurrentStat;
 		if(EquipmentStat == 0)
-			CurrentStat = ChatColor.WHITE +""+ChatColor.BOLD +""+ PlayerStat;
+			CurrentStat = "§f§l"+ PlayerStat;
 		else if(EquipmentStat > 0)
-			CurrentStat = ChatColor.YELLOW +""+ChatColor.BOLD +""+ (PlayerStat + EquipmentStat) +ChatColor.WHITE + "("+ PlayerStat +")";
+			CurrentStat = "§e§l"+ (PlayerStat + EquipmentStat) +"§f("+ PlayerStat +")";
 		else
-			CurrentStat = ChatColor.RED +""+ChatColor.BOLD +""+(PlayerStat + EquipmentStat) +ChatColor.WHITE + "("+ PlayerStat+")";
+			CurrentStat = "§c§l"+(PlayerStat + EquipmentStat) +"§f("+ PlayerStat+")";
 		String lore = main.Main_ServerOption.STR_Lore;
-		lore = LineUp(CurrentStat, (byte) (main.Main_ServerOption.STR.length()+20))+"%enter%"+lore.replace("%stat%", main.Main_ServerOption.STR)
-				+"%enter%"+ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 근접 공격력]%enter%"+LineUp(Additional, (byte) 24);
+		lore = LineUp(CurrentStat, (byte) (main.Main_ServerOption.statSTR.length()+20))+"%enter%"+lore.replace("%stat%", main.Main_ServerOption.statSTR)
+				+"%enter%§b§l[추가 근접 공격력]%enter%"+LineUp(Additional, (byte) 24);
 		
-		Stack2(ChatColor.DARK_RED + LineUp(ChatColor.RED+"[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+main.Main_ServerOption.STR+""+ChatColor.DARK_RED + "]", (byte) 24), 267,0,1,
+		Stack2("§4"+ LineUp("§c[§f§l"+main.Main_ServerOption.statSTR+"§4]", (byte) 24), 267,0,1,
 				Arrays.asList(lore.split("%enter%")), 20, inv);
 
 		int DEX = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX();
 		EquipmentStat=Battle_Calculator.getPlayerEquipmentStat(player, "DEX", false, null)[0];
-		if(DEX > main.Main_ServerOption.MaxDEX)
-			DEX = main.Main_ServerOption.MaxDEX;
+		if(DEX > main.Main_ServerOption.maxDEX)
+			DEX = main.Main_ServerOption.maxDEX;
 		Additional = "§c§l" + Battle_Calculator.returnRangeDamageValue(player, DEX, 0, true) + " ~ " + Battle_Calculator.returnRangeDamageValue(player, DEX, 0, false);
 		if(EquipmentStat == 0)
-			CurrentStat = ChatColor.WHITE +""+ChatColor.BOLD +""+ DEX;
+			CurrentStat = "§f§l"+ DEX;
 		else if(EquipmentStat > 0)
-			CurrentStat = ChatColor.YELLOW +""+ChatColor.BOLD +""+ (DEX + EquipmentStat) +ChatColor.WHITE + "("+ DEX+")";
+			CurrentStat = "§e§l"+ (DEX + EquipmentStat) +"§f("+ DEX+")";
 		else
-			CurrentStat = ChatColor.RED +""+ChatColor.BOLD +""+(DEX + EquipmentStat) +ChatColor.WHITE + "("+ DEX+")";
+			CurrentStat = "§c§l"+(DEX + EquipmentStat) +"§f("+ DEX+")";
 
 		lore = main.Main_ServerOption.DEX_Lore;
-		lore = LineUp(CurrentStat, (byte) (main.Main_ServerOption.DEX.length()+20))+"%enter%"+lore.replace("%stat%", main.Main_ServerOption.DEX)
-					+"%enter%"+ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 원거리 공격력]%enter%"+LineUp(Additional, (byte) 24);
+		lore = LineUp(CurrentStat, (byte) (main.Main_ServerOption.statDEX.length()+20))+"%enter%"+lore.replace("%stat%", main.Main_ServerOption.statDEX)
+					+"%enter%§b§l[추가 원거리 공격력]%enter%"+LineUp(Additional, (byte) 24);
 			
-		Stack2(LineUp(ChatColor.GREEN+"[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+main.Main_ServerOption.DEX+""+ChatColor.GREEN + "]", (byte) 24), 261,0,1,
+		Stack2(LineUp("§a[§f§l"+main.Main_ServerOption.statDEX+"§a]", (byte) 24), 261,0,1,
 				Arrays.asList(lore.split("%enter%")), 21, inv);
 		
 		int INT = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT();
-		if(INT > main.Main_ServerOption.MaxINT)
-			INT = main.Main_ServerOption.MaxINT;
+		if(INT > main.Main_ServerOption.maxINT)
+			INT = main.Main_ServerOption.maxINT;
 		EquipmentStat=Battle_Calculator.getPlayerEquipmentStat(player, "INT", false, null)[0];
 		Additional = "§c§l" + ((INT+Battle_Calculator.getPlayerEquipmentStat(player, "INT", false, null)[0])*0.6+100) + " %";
 		if(EquipmentStat == 0)
-			CurrentStat = ChatColor.WHITE +""+ChatColor.BOLD +""+ INT;
+			CurrentStat = "§f§l"+ INT;
 		else if(EquipmentStat > 0)
-			CurrentStat = ChatColor.YELLOW +""+ChatColor.BOLD +""+ (INT + EquipmentStat) +ChatColor.WHITE + "("+ INT+")";
+			CurrentStat = "§e§l"+ (INT + EquipmentStat) +"§f("+ INT+")";
 		else
-			CurrentStat = ChatColor.RED +""+ChatColor.BOLD +""+(INT + EquipmentStat) +ChatColor.WHITE + "("+ INT +")";
+			CurrentStat = "§c§l"+(INT + EquipmentStat) +"§f("+ INT +")";
 
 		lore = main.Main_ServerOption.INT_Lore;
-		lore = LineUp(CurrentStat, (byte) (main.Main_ServerOption.INT.length()+20))+"%enter%"+lore.replace("%stat%", main.Main_ServerOption.INT)
-					+"%enter%"+ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 스킬 공격력]%enter%"+LineUp(Additional, (byte) 24);
+		lore = LineUp(CurrentStat, (byte) (main.Main_ServerOption.statINT.length()+20))+"%enter%"+lore.replace("%stat%", main.Main_ServerOption.statINT)
+					+"%enter%§b§l[추가 스킬 공격력]%enter%"+LineUp(Additional, (byte) 24);
 			
-		Stack2(LineUp(ChatColor.AQUA + "[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+main.Main_ServerOption.INT+""+ChatColor.AQUA + "]",(byte) 24), 369,0,1,
+		Stack2(LineUp("§b[§f§l"+main.Main_ServerOption.statINT+"§b]",(byte) 24), 369,0,1,
 				Arrays.asList(lore.split("%enter%")), 22, inv);
 
 		int WILL = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL();
-		if(WILL > main.Main_ServerOption.MaxWILL)
-			WILL = main.Main_ServerOption.MaxWILL;
+		if(WILL > main.Main_ServerOption.maxWILL)
+			WILL = main.Main_ServerOption.maxWILL;
 		EquipmentStat=Battle_Calculator.getPlayerEquipmentStat(player, "WILL", false, null)[0];
 		Additional = "§c§l" + ((WILL+Battle_Calculator.getPlayerEquipmentStat(player, "WILL", false, null)[0])*0.6+100) + " %";
 		if(EquipmentStat == 0)
-			CurrentStat = ChatColor.WHITE +""+ChatColor.BOLD +""+ WILL;
+			CurrentStat = "§f§l"+ WILL;
 		else if(EquipmentStat > 0)
-			CurrentStat = ChatColor.YELLOW +""+ChatColor.BOLD +""+ (WILL + EquipmentStat) +ChatColor.WHITE + "("+ WILL+")";
+			CurrentStat = "§e§l"+ (WILL + EquipmentStat) +"§f("+ WILL+")";
 		else
-			CurrentStat = ChatColor.RED +""+ChatColor.BOLD +""+(WILL + EquipmentStat) +ChatColor.WHITE + "("+ WILL+")";
+			CurrentStat = "§c§l"+(WILL + EquipmentStat) +"§f("+ WILL+")";
 
 		lore = main.Main_ServerOption.WILL_Lore;
-		lore = LineUp(CurrentStat, (byte) (main.Main_ServerOption.WILL.length()+20))+"%enter%"+lore.replace("%stat%", main.Main_ServerOption.WILL)
-					+"%enter%"+ChatColor.AQUA + "" + ChatColor.BOLD +"[추가 스킬 공격력]%enter%"+LineUp(Additional, (byte) 24);
+		lore = LineUp(CurrentStat, (byte) (main.Main_ServerOption.statWILL.length()+20))+"%enter%"+lore.replace("%stat%", main.Main_ServerOption.statWILL)
+					+"%enter%§b§l[추가 스킬 공격력]%enter%"+LineUp(Additional, (byte) 24);
 			
-		Stack2(LineUp(ChatColor.GRAY + "[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+main.Main_ServerOption.WILL+""+ChatColor.GRAY + "]",(byte) 24), 370,0,1,
+		Stack2(LineUp("§7[§f§l"+main.Main_ServerOption.statWILL+"§7]",(byte) 24), 370,0,1,
 				Arrays.asList(lore.split("%enter%")), 23, inv);
 		
 		int LUK = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK();
-		if(LUK > main.Main_ServerOption.MaxLUK)
-			LUK = main.Main_ServerOption.MaxLUK;
+		if(LUK > main.Main_ServerOption.maxLUK)
+			LUK = main.Main_ServerOption.maxLUK;
 		EquipmentStat=Battle_Calculator.getPlayerEquipmentStat(player, "LUK", false, null)[0];
 		if(EquipmentStat == 0)
-			CurrentStat = ChatColor.WHITE +""+ChatColor.BOLD +""+ LUK;
+			CurrentStat = "§f§l"+ LUK;
 		else if(EquipmentStat > 0)
-			CurrentStat = ChatColor.YELLOW +""+ChatColor.BOLD +""+ (LUK + EquipmentStat) +ChatColor.WHITE + "("+ LUK+")";
+			CurrentStat = "§e§l"+ (LUK + EquipmentStat) +"§f("+ LUK+")";
 		else
-			CurrentStat = ChatColor.RED +""+ChatColor.BOLD +""+(LUK + EquipmentStat) +ChatColor.WHITE + "("+ LUK+")";
+			CurrentStat = "§c§l"+(LUK + EquipmentStat) +"§f("+ LUK+")";
 
 		lore = main.Main_ServerOption.LUK_Lore;
-		lore = LineUp(CurrentStat, (byte) (main.Main_ServerOption.LUK.length()+20))+"%enter%"+lore.replace("%stat%", main.Main_ServerOption.LUK)
+		lore = LineUp(CurrentStat, (byte) (main.Main_ServerOption.statLUK.length()+20))+"%enter%"+lore.replace("%stat%", main.Main_ServerOption.statLUK)
 					+"%enter%";
 			
-		Stack2(LineUp(ChatColor.YELLOW + "[" + ChatColor.WHITE +""+ChatColor.BOLD + ""+main.Main_ServerOption.LUK+""+ChatColor.YELLOW + "]",(byte) 24), 322,0,1,
+		Stack2(LineUp("§e[§f§l"+main.Main_ServerOption.statLUK+"§e]",(byte) 24), 322,0,1,
 				Arrays.asList(lore.split("%enter%")), 24, inv);
 
 
 		if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == false)
 		{
-			Stack2(ChatColor.GOLD + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + ""+main.Main_ServerOption.STR+" 상승"+ChatColor.GOLD + "]", 399,0,1,
-					Arrays.asList(ChatColor.GRAY + ""+main.Main_ServerOption.STR+" 스텟을 한단계 상승 시킵니다.",ChatColor.GRAY + "남은 스텟 포인트 : "+StatPoint), 29, inv);
-			Stack2(ChatColor.GOLD + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + ""+main.Main_ServerOption.DEX+" 상승"+ChatColor.GOLD + "]", 399,0,1,
-					Arrays.asList(ChatColor.GRAY + ""+main.Main_ServerOption.DEX+" 스텟을 한단계 상승 시킵니다.",ChatColor.GRAY + "남은 스텟 포인트 : "+StatPoint), 30, inv);
-			Stack2(ChatColor.GOLD + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + ""+main.Main_ServerOption.INT+" 상승"+ChatColor.GOLD + "]", 399,0,1,
-					Arrays.asList(ChatColor.GRAY + ""+main.Main_ServerOption.INT+" 스텟을 한단계 상승 시킵니다.",ChatColor.GRAY + "남은 스텟 포인트 : "+StatPoint), 31, inv);
-			Stack2(ChatColor.GOLD + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + ""+main.Main_ServerOption.WILL+" 상승"+ChatColor.GOLD + "]", 399,0,1,
-					Arrays.asList(ChatColor.GRAY + ""+main.Main_ServerOption.WILL+" 스텟을 한단계 상승 시킵니다.",ChatColor.GRAY + "남은 스텟 포인트 : "+StatPoint), 32, inv);
-			Stack2(ChatColor.GOLD + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + ""+main.Main_ServerOption.LUK+" 상승"+ChatColor.GOLD + "]", 399,0,1,
-					Arrays.asList(ChatColor.GRAY + ""+main.Main_ServerOption.LUK+" 스텟을 한단계 상승 시킵니다.",ChatColor.GRAY + "남은 스텟 포인트 : "+StatPoint), 33, inv);
+			Stack2("§6    [§f§l"+main.Main_ServerOption.statSTR+" 상승§6]", 399,0,1,
+					Arrays.asList("§7"+main.Main_ServerOption.statSTR+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+StatPoint), 29, inv);
+			Stack2("§6    [§f§l"+main.Main_ServerOption.statDEX+" 상승§6]", 399,0,1,
+					Arrays.asList("§7"+main.Main_ServerOption.statDEX+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+StatPoint), 30, inv);
+			Stack2("§6    [§f§l"+main.Main_ServerOption.statINT+" 상승§6]", 399,0,1,
+					Arrays.asList("§7"+main.Main_ServerOption.statINT+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+StatPoint), 31, inv);
+			Stack2("§6    [§f§l"+main.Main_ServerOption.statWILL+" 상승§6]", 399,0,1,
+					Arrays.asList("§7"+main.Main_ServerOption.statWILL+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+StatPoint), 32, inv);
+			Stack2("§6    [§f§l"+main.Main_ServerOption.statLUK+" 상승§6]", 399,0,1,
+					Arrays.asList("§7"+main.Main_ServerOption.statLUK+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+StatPoint), 33, inv);
 		}
-		Stack2(ChatColor.GRAY + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + "방어"+ChatColor.GRAY + "]", 307,0,1,
-				Arrays.asList(ChatColor.WHITE + "물리 방어 : "+ChatColor.WHITE +(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEF()+Battle_Calculator.getPlayerEquipmentStat(player, "방어", false, null)[0]),
-						ChatColor.GRAY + "추가 물리 보호 : "+ChatColor.WHITE + (main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Protect()+Battle_Calculator.getPlayerEquipmentStat(player, "보호", false, null)[0]),
-						ChatColor.AQUA + "추가 마법 방어 : "+ChatColor.WHITE + (main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Magic_DEF()+Battle_Calculator.getMagicDEF(player,INT)),
-						ChatColor.DARK_AQUA + "추가 마법 보호 : "+ChatColor.WHITE + (main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Magic_Protect()+Battle_Calculator.getMagicProtect(player, INT))), 38, inv);
+		Stack2("§7    [§f§l방어§7]", 307,0,1,
+				Arrays.asList("§f물리 방어 : §f" +(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEF()+Battle_Calculator.getPlayerEquipmentStat(player, "방어", false, null)[0]),
+						"§7추가 물리 보호 : §f" + (main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Protect()+Battle_Calculator.getPlayerEquipmentStat(player, "보호", false, null)[0]),
+						"§b추가 마법 방어 : §f" + (main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Magic_DEF()+Battle_Calculator.getMagicDEF(player,INT)),
+						"§3추가 마법 보호 : §f" + (main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Magic_Protect()+Battle_Calculator.getMagicProtect(player, INT))), 38, inv);
 
-		Stack2(ChatColor.RED + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + "관통"+ChatColor.RED + "]", 409,0,1,
-				Arrays.asList(ChatColor.RED + "추가 물리 방어 관통 : "+ChatColor.WHITE + (main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEFcrash()+Battle_Calculator.getDEFcrash(player, DEX)),
-						ChatColor.BLUE + "추가 마법 방어 관통 : "+ChatColor.WHITE + (main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MagicDEFcrash()+Battle_Calculator.getMagicDEFcrash(player, INT))), 39, inv);
+		Stack2("§c    [§f§l관통§c]", 409,0,1,
+				Arrays.asList("§c추가 물리 방어 관통 : §f" + (main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEFcrash()+Battle_Calculator.getDEFcrash(player, DEX)),
+						"§9추가 마법 방어 관통 : §f" + (main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MagicDEFcrash()+Battle_Calculator.getMagicDEFcrash(player, INT))), 39, inv);
 		
-		Stack2(ChatColor.GREEN + "    [" + ChatColor.WHITE +""+ChatColor.BOLD + "기회"+ChatColor.GREEN + "]", 377,0,1,
-				Arrays.asList(ChatColor.GREEN + "추가 밸런스 : "+ChatColor.WHITE + Battle_Calculator.getBalance(player, DEX, main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Balance())+"%",
-						ChatColor.YELLOW + "추가 크리티컬 : "+ChatColor.WHITE + Battle_Calculator.getCritical(player,LUK, WILL,main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Critical())+"%"), 42, inv);
+		Stack2("§a    [§f§l기회§a]", 377,0,1,
+				Arrays.asList("§a추가 밸런스 : §f" + Battle_Calculator.getBalance(player, DEX, main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Balance())+"%",
+						"§e추가 크리티컬 : §f" + Battle_Calculator.getCritical(player,LUK, WILL,main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Critical())+"%"), 42, inv);
 		
 		player.openInventory(inv);
 	}
@@ -273,15 +271,15 @@ public class Stats_GUI extends Util_GUI
 					{
 						boolean isOk = false;
 						if(slot == 29)
-							isOk = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR() < main.Main_ServerOption.MaxSTR;
+							isOk = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR() < main.Main_ServerOption.maxSTR;
 						else if(slot == 30)
-							isOk = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX() < main.Main_ServerOption.MaxDEX;
+							isOk = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX() < main.Main_ServerOption.maxDEX;
 						else if(slot == 31)
-							isOk = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT() < main.Main_ServerOption.MaxINT;
+							isOk = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT() < main.Main_ServerOption.maxINT;
 						else if(slot == 32)
-							isOk = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL() < main.Main_ServerOption.MaxWILL;
+							isOk = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL() < main.Main_ServerOption.maxWILL;
 						else if(slot == 33)
-							isOk = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK() < main.Main_ServerOption.MaxLUK;
+							isOk = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK() < main.Main_ServerOption.maxLUK;
 						
 						if(isOk)
 						{

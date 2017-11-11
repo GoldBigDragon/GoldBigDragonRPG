@@ -20,8 +20,6 @@ import user.UserData_Object;
 import util.Util_GUI;
 import util.YamlLoader;
 
-
-
 public class Struct_TradeBoard extends Util_GUI
 {
 	
@@ -29,13 +27,13 @@ public class Struct_TradeBoard extends Util_GUI
 	{
 		YamlLoader Board = new YamlLoader();
 		Board.getConfig("Structure/UserShopBoard.yml");
-		String Color = ChatColor.BLUE+"";
+		String Color = "§9";
 		if(ShopType==1)
-			Color=ChatColor.RED+"";
+			Color="§c";
 		else if(ShopType==2)
-			Color=ChatColor.DARK_GREEN+"";
+			Color="§2";
 		String UniqueCode = "§0§0§d§0§7§r";
-		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode +""+Color+""+ChatColor.BOLD +""+ "거래 게시판 : "+(page+1));
+		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode +""+Color+"§l거래 게시판 : "+(page+1));
 		
 		if(Board.contains("Buy")==false)
 		{
@@ -67,17 +65,17 @@ public class Struct_TradeBoard extends Util_GUI
 		else
 			Stack2("§e§l[거래 타입 변경]", 54,0,1,Arrays.asList("","§9§l[현재 거래 타입]","§9§l[    구매    ]"), 46, inv);
 
-		Stack2("§7§l[물품 검색]", 345,0,1,Arrays.asList(ChatColor.GRAY+"등록된 물품을 검색합니다.","","§c§l[GoldBigDragonRPG 버전 업 필요]"), 52, inv);
+		Stack2("§7§l[물품 검색]", 345,0,1,Arrays.asList("§7등록된 물품을 검색합니다.","","§c§l[GoldBigDragonRPG 버전 업 필요]"), 52, inv);
 		
 
 		for(int count2 = 0; count2 < 9; count2++)
-			Stack2(ChatColor.RED + " ", 160,data,1,Arrays.asList(""), count2, inv);
+			Stack2("§c ", 160,data,1,Arrays.asList(""), count2, inv);
 		for(int count2 = 35; count2 < 45; count2++)
-			Stack2(ChatColor.RED + " ", 160,data,1,Arrays.asList(""), count2, inv);
+			Stack2("§c ", 160,data,1,Arrays.asList(""), count2, inv);
 		for(int count2 = 9; count2 < 45; count2=(byte) (count2+9))
-			Stack2(ChatColor.RED + " ", 160,data,1,Arrays.asList(""), count2, inv);
+			Stack2("§c ", 160,data,1,Arrays.asList(""), count2, inv);
 		for(int count2 = 17; count2 < 53; count2=(byte) (count2+9))
-			Stack2(ChatColor.RED + " ", 160,data,1,Arrays.asList(""), count2, inv);
+			Stack2("§c ", 160,data,1,Arrays.asList(""), count2, inv);
 
 		byte loc=10;
 		
@@ -93,7 +91,7 @@ public class Struct_TradeBoard extends Util_GUI
 			{
 				Object[] PlayerList = Board.getConfigurationSection(ShopTypeString+"."+ItemList[count].toString()).getKeys(false).toArray();
 				for(int count3 = PlayerList.length-1; count3 >= 0; count3--)
-					if(PlayerList[count3].toString().compareTo("Item")!=0)
+					if(!PlayerList[count3].toString().equals("Item"))
 					{
 						AddItem.add(ItemList[count].toString());
 						AddPlayer.add(PlayerList[count3].toString());
@@ -111,7 +109,7 @@ public class Struct_TradeBoard extends Util_GUI
 				{
 					int getoff = ((PlayerList.length-1)+Added)-((page*21)+21);
 					for(int count3 = PlayerList.length-1-getoff; count3 >= 0; count3--)
-						if(PlayerList[count3].toString().compareTo("Item")!=0)
+						if(!PlayerList[count3].toString().equals("Item"))
 						{
 							AddItem.add(ItemList[count].toString());
 							AddPlayer.add(PlayerList[count3].toString());
@@ -122,7 +120,7 @@ public class Struct_TradeBoard extends Util_GUI
 							break;
 						PlayerList = Board.getConfigurationSection(ShopTypeString+"."+ItemList[count2].toString()).getKeys(false).toArray();
 						for(int count3 = PlayerList.length-1; count3 >= 0; count3--)
-							if(PlayerList[count3].toString().compareTo("Item")!=0)
+							if(!PlayerList[count3].toString().equals("Item"))
 							{
 								AddItem.add(ItemList[count2].toString());
 								AddPlayer.add(PlayerList[count3].toString());
@@ -144,7 +142,7 @@ public class Struct_TradeBoard extends Util_GUI
 
 					if((PlayerList.length-1)+Added >= Board.getInt(ShopTypeString+"Registered")+((page*21)+21))
 					{
-						if(PlayerList[count2].toString().compareTo("Item")!=0)
+						if(!PlayerList[count2].toString().equals("Item"))
 						{
 							if(AddItem.size()<Board.getInt(ShopTypeString+"Registered")-(page*21))
 							{
@@ -208,27 +206,27 @@ public class Struct_TradeBoard extends Util_GUI
 				Memo.add("");
 				if(ShopType==0)
 				{
-					Memo.add(ChatColor.BLUE+"판매자 : " + ChatColor.WHITE + RegisteredUser);
-					Memo.add(ChatColor.BLUE+"1개당 "+ChatColor.WHITE+Price+" "+main.Main_ServerOption.Money);
-					Memo.add(ChatColor.BLUE+"재고 : "+ChatColor.WHITE+Amount+ChatColor.BLUE+" 개");
+					Memo.add("§9판매자 : §f" + RegisteredUser);
+					Memo.add("§91개당 §f"+Price+" "+main.Main_ServerOption.money);
+					Memo.add("§9재고 : §f"+Amount+"§9 개");
 				}
 				else if(ShopType==1)
 				{
-					Memo.add(ChatColor.BLUE+"구매자 : " + ChatColor.WHITE + RegisteredUser);
-					Memo.add(ChatColor.BLUE+"1개당 "+ChatColor.WHITE+Price+" "+main.Main_ServerOption.Money);
-					Memo.add(ChatColor.BLUE+"필요 수량 : "+ChatColor.WHITE+Amount+ChatColor.BLUE+" 개");
+					Memo.add("§9구매자 : §f" + RegisteredUser);
+					Memo.add("§91개당 §f"+Price+" "+main.Main_ServerOption.money);
+					Memo.add("§9필요 수량 : §f"+Amount+"§9 개");
 				}
 				else if(ShopType==2)
 				{
-					Memo.add(ChatColor.BLUE+"교환자 : " + ChatColor.WHITE + RegisteredUser);
-					Memo.add(ChatColor.BLUE+"교환 물품 : "+ Temp);
-					Memo.add(ChatColor.BLUE+"필요 수량 : "+ChatColor.WHITE+Amount+ChatColor.BLUE+" 개");
+					Memo.add("§9교환자 : §f" + RegisteredUser);
+					Memo.add("§9교환 물품 : "+ Temp);
+					Memo.add("§9필요 수량 : §f"+Amount+"§9 개");
 				}
 				if(ShopType==2)
 				{
 					String Transer = AddItem.get(count);
 					Transer = Transer.replace('§','&');
-					Memo.add(ChatColor.BLACK+Transer);
+					Memo.add("§0"+Transer);
 				}
 				else
 					Memo.add("");
@@ -252,11 +250,11 @@ public class Struct_TradeBoard extends Util_GUI
 			if(Board.getInt("ExchangeRegistered")>(21*page)+21)
 				showNextPage=true;
 		if(showNextPage)
-		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§e§l[거래 메뉴]", 386,0,1,Arrays.asList(ChatColor.GRAY + "거래 물품을 등록하거나",ChatColor.GRAY + "자신이 등록한 물품을 봅니다."), 49, inv);
+		Stack2("§e§l[거래 메뉴]", 386,0,1,Arrays.asList("§7거래 물품을 등록하거나","§7자신이 등록한 물품을 봅니다."), 49, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -267,12 +265,12 @@ public class Struct_TradeBoard extends Util_GUI
 		Board.getConfig("Structure/UserShopBoard.yml");
 		String UniqueCode = "§0§0§d§0§8§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0거래 게시판 설정");
-		Stack2("§f§l[판매 수수료]", 266,0,1,Arrays.asList(ChatColor.GRAY + "물품 판매 수수료를 설정합니다.","",ChatColor.BLUE+"[현재 수수료]",ChatColor.WHITE+"판매 가격의 "+Board.getInt("SellCommission")+"%"), 1, inv);
-		Stack2("§f§l[등록 수수료]", 54,0,1,Arrays.asList(ChatColor.GRAY + "물품 등록 수수료를 설정합니다.","",ChatColor.BLUE+"[현재 수수료]",ChatColor.WHITE+"등록시 "+Board.getInt("RegisterCommission")+" "+main.Main_ServerOption.Money+ChatColor.WHITE+" 필요"), 2, inv);
-		Stack2("§f§l[등록 물품 제한]", 397,3,1,Arrays.asList(ChatColor.GRAY + "1인당 등록 가능한 물품 수를 제한합니다.","",ChatColor.BLUE+"[현재 최대 개수]",ChatColor.WHITE+""+Board.getInt("LimitPerPlayer")+" 개"), 3, inv);
+		Stack2("§f§l[판매 수수료]", 266,0,1,Arrays.asList("§7물품 판매 수수료를 설정합니다.","","§9[현재 수수료]","§f판매 가격의 "+Board.getInt("SellCommission")+"%"), 1, inv);
+		Stack2("§f§l[등록 수수료]", 54,0,1,Arrays.asList("§7물품 등록 수수료를 설정합니다.","","§9[현재 수수료]","§f등록시 "+Board.getInt("RegisterCommission")+" "+main.Main_ServerOption.money+"§f 필요"), 2, inv);
+		Stack2("§f§l[등록 물품 제한]", 397,3,1,Arrays.asList("§71인당 등록 가능한 물품 수를 제한합니다.","","§9[현재 최대 개수]","§f"+Board.getInt("LimitPerPlayer")+" 개"), 3, inv);
 		//
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 0, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 8, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 8, inv);
 		player.openInventory(inv);
 	}
 	
@@ -281,13 +279,13 @@ public class Struct_TradeBoard extends Util_GUI
 		String UniqueCode = "§0§0§d§0§9§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0거래 게시판 메뉴");
 
-		Stack2("§9§l[물품 판매]", 54,0,1,Arrays.asList(ChatColor.GRAY + "자신이 현재 가지고 있는 아이템을", ChatColor.GRAY + "등록하여 판매합니다."), 1, inv);
-		Stack2("§c§l[물품 구매]", 130,0,1,Arrays.asList(ChatColor.GRAY + "구매하고 싶은 아이템을 등록하여", ChatColor.GRAY + "구매합니다."), 3, inv);
-		Stack2("§a§l[물품 교환]", 388,0,1,Arrays.asList(ChatColor.GRAY + "자신이 원하는 아이템과 자신의", ChatColor.GRAY + "아이템을 등록하여 교환합니다."), 5, inv);
-		Stack2("§3§l[등록 확인]", 386,0,1,Arrays.asList(ChatColor.GRAY + "거래 게시판에 등록한 아이템을", ChatColor.GRAY + "확인하거나 등록을 취소합니다.","","§c§l[GoldBigDragonRPG 버전 업 필요]"), 7, inv);
+		Stack2("§9§l[물품 판매]", 54,0,1,Arrays.asList("§7자신이 현재 가지고 있는 아이템을", "§7등록하여 판매합니다."), 1, inv);
+		Stack2("§c§l[물품 구매]", 130,0,1,Arrays.asList("§7구매하고 싶은 아이템을 등록하여", "§7구매합니다."), 3, inv);
+		Stack2("§a§l[물품 교환]", 388,0,1,Arrays.asList("§7자신이 원하는 아이템과 자신의", "§7아이템을 등록하여 교환합니다."), 5, inv);
+		Stack2("§3§l[등록 확인]", 386,0,1,Arrays.asList("§7거래 게시판에 등록한 아이템을", "§7확인하거나 등록을 취소합니다.","","§c§l[GoldBigDragonRPG 버전 업 필요]"), 7, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 0, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 8, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 8, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -296,7 +294,7 @@ public class Struct_TradeBoard extends Util_GUI
 	{
 		String UniqueCode = "§0§0§d§0§a§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0판매할 아이템을 고르세요");
-		Stack2(ChatColor.RED + "" +ChatColor.RED + "" +"§c§l[판매 취소]", 166,0,1,Arrays.asList(ChatColor.GRAY + "아이템 판매를 취소합니다."), 4, inv);
+		Stack2("§c§c§c§l[판매 취소]", 166,0,1,Arrays.asList("§7아이템 판매를 취소합니다."), 4, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -305,9 +303,9 @@ public class Struct_TradeBoard extends Util_GUI
 	{
 		String UniqueCode = "§0§0§d§0§b§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0구매할 아이템을 고르세요");
-		Stack2(ChatColor.RED + "" +ChatColor.RED + "" +"§f§l[일반 아이템]", 2,0,1,Arrays.asList(ChatColor.GRAY + "일반 아이템 중에서 고릅니다."), 2, inv);
-		Stack2(ChatColor.RED + "" +ChatColor.RED + "" +"§c§l[구매 취소]", 166,0,1,Arrays.asList(ChatColor.GRAY + "아이템 구매를 취소합니다."), 4, inv);
-		//Stack2(ChatColor.RED + "" +ChatColor.RED + "" +"§b§l[특수 아이템]", 384,0,1,Arrays.asList(ChatColor.GRAY + "특수 아이템 중에서 고릅니다."), 6, inv);
+		Stack2("§c§c§f§l[일반 아이템]", 2,0,1,Arrays.asList("§7일반 아이템 중에서 고릅니다."), 2, inv);
+		Stack2("§c§c§c§l[구매 취소]", 166,0,1,Arrays.asList("§7아이템 구매를 취소합니다."), 4, inv);
+		//Stack2("§c§c§b§l[특수 아이템]", 384,0,1,Arrays.asList("§7특수 아이템 중에서 고릅니다."), 6, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -316,8 +314,8 @@ public class Struct_TradeBoard extends Util_GUI
 	{
 		String UniqueCode = "§0§0§d§0§c§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0받고싶은 아이템을 고르세요");
-		Stack2(ChatColor.RED + "" +ChatColor.RED + "" +"§f§l[일반 아이템]", 2,0,1,Arrays.asList(ChatColor.GRAY + "일반 아이템 중에서 고릅니다."), 2, inv);
-		Stack2(ChatColor.RED + "" +ChatColor.RED + "" +"§c§l[구매 취소]", 166,0,1,Arrays.asList(ChatColor.GRAY + "아이템 구매를 취소합니다."), 4, inv);
+		Stack2("§c§c§f§l[일반 아이템]", 2,0,1,Arrays.asList("§7일반 아이템 중에서 고릅니다."), 2, inv);
+		Stack2("§c§c§c§l[구매 취소]", 166,0,1,Arrays.asList("§7아이템 구매를 취소합니다."), 4, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -326,7 +324,7 @@ public class Struct_TradeBoard extends Util_GUI
 	{
 		String UniqueCode = "§0§0§d§0§d§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0내가 줄 아이템을 고르세요");
-		Stack2(ChatColor.RED + "" +ChatColor.RED + "" +"§c§l[판매 취소]", 166,0,1,Arrays.asList(ChatColor.GRAY + "아이템 판매를 취소합니다."), 4, inv);
+		Stack2("§c§c§c§l[판매 취소]", 166,0,1,Arrays.asList("§7아이템 판매를 취소합니다."), 4, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -348,10 +346,10 @@ public class Struct_TradeBoard extends Util_GUI
 		}
 		
 		if(getNormalItem(count+1)!=null)
-		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+""+ShopType), 53, inv);
+		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ShopType), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -456,7 +454,7 @@ public class Struct_TradeBoard extends Util_GUI
 			
 			if(event.isRightClick()&&event.isShiftClick())
 			{
-				if(RegisterUUID.compareTo(player.getUniqueId().toString())==0)
+				if(RegisterUUID.equals(player.getUniqueId().toString()))
 				{
 					YamlLoader Board = new YamlLoader();
 					Board.getConfig("Structure/UserShopBoard.yml");
@@ -476,18 +474,18 @@ public class Struct_TradeBoard extends Util_GUI
 								ItemStack item = Board.getItemStack(ShopTypeString+"."+ItemName+"."+RegisterUUID+".GiveItem");
 								item.setAmount(Board.getInt(ShopTypeString+"."+ItemName+"."+RegisterUUID+".GiveItemAmount"));
 								new Struct_PostBox().SendPost_Server(RegisterUUID, "[물품 회수]", "[물품 회수]", "거래 게시판에 등록하였던 물품을 회수하였습니다.", item);
-								player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 물품 등록을 취소하였습니다! [우편함을 확인하세요!]");
+								player.sendMessage("§a[거래 게시판] : 물품 등록을 취소하였습니다! [우편함을 확인하세요!]");
 							}
 							else
 							{
 								ItemStack item = Board.getItemStack(ShopTypeString+"."+ItemName+".Item");
 								item.setAmount(Board.getInt(ShopTypeString+"."+ItemName+"."+RegisterUUID+".Amount"));
 								new Struct_PostBox().SendPost_Server(RegisterUUID, "[물품 회수]", "[물품 회수]", "거래 게시판에 등록하였던 물품을 회수하였습니다.", item);
-								player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 물품 등록을 취소하였습니다! [우편함을 확인하세요!]");
+								player.sendMessage("§a[거래 게시판] : 물품 등록을 취소하였습니다! [우편함을 확인하세요!]");
 							}
 						}
 						else
-							player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 물품 구매를 취소하였습니다!");
+							player.sendMessage("§a[거래 게시판] : 물품 구매를 취소하였습니다!");
 						if(Board.getConfigurationSection(ShopTypeString+"."+ItemName).getKeys(false).size()==2)
 							Board.removeKey(ShopTypeString+"."+ItemName);
 						else
@@ -501,7 +499,7 @@ public class Struct_TradeBoard extends Util_GUI
 				else
 				{
 					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.RED+"[거래 게시판] : 자신이 등록한 물품만 등록 철회할 수 있습니다!");
+					player.sendMessage("§c[거래 게시판] : 자신이 등록한 물품만 등록 철회할 수 있습니다!");
 					return;
 				}
 			}
@@ -530,15 +528,15 @@ public class Struct_TradeBoard extends Util_GUI
 					
 					u.setInt(player, (byte)0, Board.getInt(ShopTypeString+"."+ItemName+"."+RegisterUUID+".Amount"));
 					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.YELLOW+"[거래 게시판] : 얼마나 필요하신가요? (0 입력시 물품 구매 취소)");
-					player.sendMessage(ChatColor.YELLOW+"[물품 재고 : "+Board.getInt(ShopTypeString+"."+ItemName+"."+RegisterUUID+".Amount")+" 개]");
-					player.sendMessage(ChatColor.YELLOW+"[1개당 "+Board.getInt(ShopTypeString+"."+ItemName+"."+RegisterUUID+".Price")+" "+main.Main_ServerOption.Money+ChatColor.YELLOW+"]");
+					player.sendMessage("§e[거래 게시판] : 얼마나 필요하신가요? (0 입력시 물품 구매 취소)");
+					player.sendMessage("§e[물품 재고 : "+Board.getInt(ShopTypeString+"."+ItemName+"."+RegisterUUID+".Amount")+" 개]");
+					player.sendMessage("§e[1개당 "+Board.getInt(ShopTypeString+"."+ItemName+"."+RegisterUUID+".Price")+" "+main.Main_ServerOption.money+"§e]");
 					player.closeInventory();
 				}
 				else
 				{
 					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.RED+"[거래 게시판] : 소지금이 부족하여 물품을 구매할 수 없습니다!");
+					player.sendMessage("§c[거래 게시판] : 소지금이 부족하여 물품을 구매할 수 없습니다!");
 					return;
 				}
 			}
@@ -565,7 +563,7 @@ public class Struct_TradeBoard extends Util_GUI
 				if(itemcount==0)
 				{
 					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.RED+"[거래 게시판] : 해당 물건을 가지고 있지 않습니다!");
+					player.sendMessage("§c[거래 게시판] : 해당 물건을 가지고 있지 않습니다!");
 					return;
 				}
 				UserData_Object u = new UserData_Object();
@@ -586,9 +584,9 @@ public class Struct_TradeBoard extends Util_GUI
 					itemcount=(short) Board.getInt(ShopTypeString+"."+ItemName+"."+RegisterUUID+".Amount");
 				u.setInt(player, (byte)0, itemcount);
 				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-				player.sendMessage(ChatColor.YELLOW+"[거래 게시판] : 얼마나 판매 하실건가요? (0 입력시 물품 판매 취소)");
-				player.sendMessage(ChatColor.YELLOW+"[최대 "+itemcount+" 개 판매 가능]");
-				player.sendMessage(ChatColor.YELLOW+"[1개당 "+Board.getInt(ShopTypeString+"."+ItemName+"."+RegisterUUID+".Price")+" "+main.Main_ServerOption.Money+ChatColor.YELLOW+"]");
+				player.sendMessage("§e[거래 게시판] : 얼마나 판매 하실건가요? (0 입력시 물품 판매 취소)");
+				player.sendMessage("§e[최대 "+itemcount+" 개 판매 가능]");
+				player.sendMessage("§e[1개당 "+Board.getInt(ShopTypeString+"."+ItemName+"."+RegisterUUID+".Price")+" "+main.Main_ServerOption.money+"§e]");
 				player.closeInventory();
 			}
 
@@ -603,7 +601,7 @@ public class Struct_TradeBoard extends Util_GUI
 				if(Board.contains("Exchange."+ItemName+"."+RegisterUUID)==false)
 				{
 					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-					player.sendMessage(ChatColor.RED+"[거래 게시판] : 거래 정보가 바뀌었습니다! 재 시도 해 주시길 바랍니다!");
+					player.sendMessage("§c[거래 게시판] : 거래 정보가 바뀌었습니다! 재 시도 해 주시길 바랍니다!");
 					u.clearAll(player);
 					return;
 				}
@@ -627,14 +625,14 @@ public class Struct_TradeBoard extends Util_GUI
 					if(itemcount<needAmount)
 					{
 						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-						player.sendMessage(ChatColor.RED+"[거래 게시판] : 물건을 충분히 가지고 있지 않습니다!");
+						player.sendMessage("§c[거래 게시판] : 물건을 충분히 가지고 있지 않습니다!");
 						u.clearAll(player);
 						return;
 					}
 					if(needAmount > Board.getInt("Exchange."+ItemName+"."+RegisterUUID+".WantItemAmount"))
 					{
 						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-						player.sendMessage(ChatColor.RED+"[거래 게시판] : 거래 정보가 바뀌었습니다! 재 시도 해 주시길 바랍니다!");
+						player.sendMessage("§c[거래 게시판] : 거래 정보가 바뀌었습니다! 재 시도 해 주시길 바랍니다!");
 						player.closeInventory();
 						u.clearAll(player);
 						return;
@@ -704,7 +702,7 @@ public class Struct_TradeBoard extends Util_GUI
 						}
 					}
 					TradeBoardMainGUI(player, (byte) page, ShopType);
-					player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 교환 완료! 우편함을 확인 해 주세요!");
+					player.sendMessage("§a[거래 게시판] : 교환 완료! 우편함을 확인 해 주세요!");
 				}
 				
 			}
@@ -727,17 +725,17 @@ public class Struct_TradeBoard extends Util_GUI
 			if(event.getSlot()==1)
 			{
 				u.setString(player, (byte)1, "SellCommission");
-				player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 판매 수수료를 몇 %로 하시겠습니까? (0 ~ 100)");
+				player.sendMessage("§a[거래 게시판] : 판매 수수료를 몇 %로 하시겠습니까? (0 ~ 100)");
 			}
 			if(event.getSlot()==2)
 			{
 				u.setString(player, (byte)1, "RegisterCommission");
-				player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 등록 수수료를 몇 "+main.Main_ServerOption.Money+ChatColor.GREEN+"로 하시겠습니까? (0 ~ 2백만)");
+				player.sendMessage("§a[거래 게시판] : 등록 수수료를 몇 "+main.Main_ServerOption.money+"§a로 하시겠습니까? (0 ~ 2백만)");
 			}
 			if(event.getSlot()==3)
 			{
 				u.setString(player, (byte)1, "LimitPerPlayer");
-				player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 1인당 최대 몇 개까지 등록 가능하게 하시겠습니까? (1 ~ 100)");
+				player.sendMessage("§a[거래 게시판] : 1인당 최대 몇 개까지 등록 가능하게 하시겠습니까? (1 ~ 100)");
 			}
 		}
 		
@@ -770,7 +768,7 @@ public class Struct_TradeBoard extends Util_GUI
 				if(USRL.getInt(player.getUniqueId().toString())>=Board.getInt("LimitPerPlayer"))
 				{
 					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.RED+"[거래 게시판] : 당신은 더 이상 등록할 수 없습니다! (최대 "+Board.getInt("LimitPerPlayer")+"개만 등록 가능합니다.)");
+					player.sendMessage("§c[거래 게시판] : 당신은 더 이상 등록할 수 없습니다! (최대 "+Board.getInt("LimitPerPlayer")+"개만 등록 가능합니다.)");
 					return;
 				}
 			}
@@ -787,15 +785,15 @@ public class Struct_TradeBoard extends Util_GUI
 
 			if(event.getSlot()==1)
 			{
-				player.sendMessage(ChatColor.YELLOW+"[거래 게시판] : 거래 게시판을 통해 물품을 판매할 경우 아래와 같은 등록 비용과 판매 수수료가 붙습니다.");
-				player.sendMessage(ChatColor.YELLOW+"[판매 수수료] : "+Board.getInt("SellCommission")+" %");
+				player.sendMessage("§e[거래 게시판] : 거래 게시판을 통해 물품을 판매할 경우 아래와 같은 등록 비용과 판매 수수료가 붙습니다.");
+				player.sendMessage("§e[판매 수수료] : "+Board.getInt("SellCommission")+" %");
 			}
 			if(event.getSlot()==3)
-				player.sendMessage(ChatColor.YELLOW+"[거래 게시판] : 거래 게시판을 통해 물품을 구매할 경우 아래와 같은 등록 비용이 붙습니다.");
+				player.sendMessage("§e[거래 게시판] : 거래 게시판을 통해 물품을 구매할 경우 아래와 같은 등록 비용이 붙습니다.");
 			if(event.getSlot()==5)
-				player.sendMessage(ChatColor.YELLOW+"[거래 게시판] : 거래 게시판을 통해 물품을 교환할 경우 아래와 같은 등록 비용이 붙습니다.");
-			player.sendMessage(ChatColor.YELLOW+"[등록 수수료] : "+Board.getInt("RegisterCommission")+ " "+new main.Main_ServerOption().Money);
-			player.sendMessage(ChatColor.YELLOW+"[거래 게시판] : 그래도 계속 하시겠습니까? (네 / 아니오)");
+				player.sendMessage("§e[거래 게시판] : 거래 게시판을 통해 물품을 교환할 경우 아래와 같은 등록 비용이 붙습니다.");
+			player.sendMessage("§e[등록 수수료] : "+Board.getInt("RegisterCommission")+ " "+new main.Main_ServerOption().money);
+			player.sendMessage("§e[거래 게시판] : 그래도 계속 하시겠습니까? (네 / 아니오)");
 		}
 		switch (event.getSlot())
 		{
@@ -825,16 +823,16 @@ public class Struct_TradeBoard extends Util_GUI
 				ItemStack item = event.getCurrentItem();
 				if(item.hasItemMeta())
 					if(item.getItemMeta().hasDisplayName())
-						if(item.getItemMeta().getDisplayName().compareTo(ChatColor.RED + "" +ChatColor.RED + "" +"§c§l[판매 취소]")==0)
+						if(item.getItemMeta().getDisplayName().equals("§c§c§c§l[판매 취소]"))
 							u.clearAll(player);
-				if(u.getString(player, (byte)0).compareTo("SelectItem")==0)
+				if(u.getString(player, (byte)0).equals("SelectItem"))
 				{
 					u.setItemStack(player, item);
 					u.setString(player, (byte)0, "SetPrice");
 					if(item.getAmount()!=1)
-						player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 1개당 얼마에 판매 되기를 원하시나요?");
+						player.sendMessage("§a[거래 게시판] : 1개당 얼마에 판매 되기를 원하시나요?");
 					else
-						player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 얼마에 판매 되기를 원하시나요?");
+						player.sendMessage("§a[거래 게시판] : 얼마에 판매 되기를 원하시나요?");
 				}
 				else
 					u.clearAll(player);
@@ -857,15 +855,15 @@ public class Struct_TradeBoard extends Util_GUI
 				if(event.getSlot()==4)
 					if(item.hasItemMeta())
 						if(item.getItemMeta().hasDisplayName())
-							if(item.getItemMeta().getDisplayName().compareTo(ChatColor.RED + "" +ChatColor.RED + "" +"§c§l[구매 취소]")==0)
+							if(item.getItemMeta().getDisplayName().equals("§c§c§c§l[구매 취소]"))
 								u.clearAll(player);
-				if(u.getString(player, (byte)0).compareTo("SelectItem")==0)
+				if(u.getString(player, (byte)0).equals("SelectItem"))
 				{
 					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 					if(event.getSlot()==2)
 						if(item.hasItemMeta())
 							if(item.getItemMeta().hasDisplayName())
-								if(item.getItemMeta().getDisplayName().compareTo(ChatColor.RED + "" +ChatColor.RED + "" +"§f§l[일반 아이템]")==0)
+								if(item.getItemMeta().getDisplayName().equals("§c§c§f§l[일반 아이템]"))
 								{
 									SelectNormalItemGUI(player, (byte)0, (byte)3);
 									return;
@@ -875,7 +873,7 @@ public class Struct_TradeBoard extends Util_GUI
 					u.setItemStack(player, item);
 					item.setAmount(amount);
 					u.setString(player, (byte)0, "SetNeedAmount");
-					player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 얼마나 구매하실건가요? (1 ~ 1000)");
+					player.sendMessage("§a[거래 게시판] : 얼마나 구매하실건가요? (1 ~ 1000)");
 				}
 				else
 					u.clearAll(player);
@@ -918,9 +916,9 @@ public class Struct_TradeBoard extends Util_GUI
 				u.setString(player, (byte)0, "SetNeedAmount");
 				u.setBoolean(player, (byte)1, true);
 				if(ShopType==3)
-					player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 얼마나 구매하실건가요? (1 ~ 1000)");
+					player.sendMessage("§a[거래 게시판] : 얼마나 구매하실건가요? (1 ~ 1000)");
 				else if(ShopType==5)
-					player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 해당 아이템이 얼마나 필요한가요? (1 ~ 1000)");
+					player.sendMessage("§a[거래 게시판] : 해당 아이템이 얼마나 필요한가요? (1 ~ 1000)");
 					
 				return;
 		}
@@ -938,15 +936,15 @@ public class Struct_TradeBoard extends Util_GUI
 			if(event.getSlot()==4)
 				if(item.hasItemMeta())
 					if(item.getItemMeta().hasDisplayName())
-						if(item.getItemMeta().getDisplayName().compareTo(ChatColor.RED + "" +ChatColor.RED + "" +"§c§l[구매 취소]")==0)
+						if(item.getItemMeta().getDisplayName().equals("§c§c§c§l[구매 취소]"))
 							u.clearAll(player);
-			if(u.getString(player, (byte)0).compareTo("SelectItem")==0)
+			if(u.getString(player, (byte)0).equals("SelectItem"))
 			{
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 				if(event.getSlot()==2)
 					if(item.hasItemMeta())
 						if(item.getItemMeta().hasDisplayName())
-							if(item.getItemMeta().getDisplayName().compareTo(ChatColor.RED + "" +ChatColor.RED + "" +"§f§l[일반 아이템]")==0)
+							if(item.getItemMeta().getDisplayName().equals("§c§c§f§l[일반 아이템]"))
 							{
 								SelectNormalItemGUI(player, (byte)0, (byte)5);
 								return;
@@ -957,7 +955,7 @@ public class Struct_TradeBoard extends Util_GUI
 				u.setType(player, "TradeBoard");
 				u.setInt(player, (byte) 2, amount);
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 당신은 무엇을 주실건가요?");
+				player.sendMessage("§a[거래 게시판] : 당신은 무엇을 주실건가요?");
 				u.setString(player, (byte)0, "SetMyItem");
 				new Struct_TradeBoard().SelectExchangeItem_MyGUI(player);
 				item.setAmount(1);
@@ -985,9 +983,9 @@ public class Struct_TradeBoard extends Util_GUI
 			if(event.getSlot()==4)
 				if(item.hasItemMeta())
 					if(item.getItemMeta().hasDisplayName())
-						if(item.getItemMeta().getDisplayName().compareTo(ChatColor.RED + "" +ChatColor.RED + "" +"§c§l[구매 취소]")==0)
+						if(item.getItemMeta().getDisplayName().equals("§c§c§c§l[구매 취소]"))
 							u.clearAll(player);
-			if(u.getString(player, (byte)0).compareTo("SetMyItem")==0)
+			if(u.getString(player, (byte)0).equals("SetMyItem"))
 			{
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 
@@ -997,7 +995,7 @@ public class Struct_TradeBoard extends Util_GUI
 				{
 					u.clearAll(player);
 					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
-					player.sendMessage(ChatColor.RED+"[거래 게시판] : 등록 수수료가 부족합니다! 재 등록 해 주세요!");
+					player.sendMessage("§c[거래 게시판] : 등록 수수료가 부족합니다! 재 등록 해 주세요!");
 					return;
 				}
 				ItemStack itemAmountOne = u.getItemStack(player);
@@ -1023,7 +1021,7 @@ public class Struct_TradeBoard extends Util_GUI
 				{
 					u.clearAll(player);
 					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
-					player.sendMessage(ChatColor.RED+"[거래 게시판] : 동일 상품을 이미 등록하셨습니다!");
+					player.sendMessage("§c[거래 게시판] : 동일 상품을 이미 등록하셨습니다!");
 					return;
 				}
 				if(Board.contains("Exchange."+ItemName)==false)
@@ -1045,7 +1043,7 @@ public class Struct_TradeBoard extends Util_GUI
 				u.clearAll(player);
 				player.closeInventory();
 				SoundEffect.SP(player, Sound.BLOCK_CHEST_OPEN, 1.0F, 1.8F);
-				player.sendMessage(ChatColor.GREEN+"[거래 게시판] : 등록이 완료되었습니다!");
+				player.sendMessage("§a[거래 게시판] : 등록이 완료되었습니다!");
 				player.getInventory().setItem(event.getSlot(), null);
 				return;
 			}

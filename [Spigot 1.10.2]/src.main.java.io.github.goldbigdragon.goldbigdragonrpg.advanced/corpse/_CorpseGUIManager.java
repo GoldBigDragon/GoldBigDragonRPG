@@ -12,7 +12,7 @@ public class _CorpseGUIManager
 	
 	public void ClickRouting(InventoryClickEvent event, String SubjectCode)
 	{
-		if(SubjectCode.compareTo("00")==0)//부활 방법 선택 창
+		if(SubjectCode.equals("00"))//부활 방법 선택 창
 			new corpse.Corpse_GUI().ReviveSelectClick(event);
 	}
 }

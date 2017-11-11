@@ -65,7 +65,7 @@ public class Dungeon_ScheduleObject
 				{
 					if(player.isOnline())
 					{
-						if(player.getLocation().getWorld().getName().compareTo("Dungeon")==0)
+						if(player.getLocation().getWorld().getName().equals("Dungeon"))
 						{
 							player.sendMessage("§c§l[SYSTEM] : 던전 생성자가 던전을 떠나, 던전 입장이 취소되었습니다!");
 						  	YamlLoader dungeonPlayerYaml = new YamlLoader();
@@ -101,7 +101,7 @@ public class Dungeon_ScheduleObject
 		}
 		if(leader.isOnline())
 		{
-			if(leader.getLocation().getWorld().getName().compareTo("Dungeon")!=0)
+			if(!leader.getLocation().getWorld().getName().equals("Dungeon"))
 			{
 				CancelDungeonCreate();
 				return;
@@ -120,10 +120,10 @@ public class Dungeon_ScheduleObject
 				Player p = Bukkit.getServer().getPlayer(DungeonMaker.get(count));
 				if(p.isOnline())
 				{
-					if(p.getLocation().getWorld().getName().compareTo("Dungeon")==0)
+					if(p.getLocation().getWorld().getName().equals("Dungeon"))
 					{
-						String Title = "\'"+ChatColor.BLUE+"[던전 생성]\'";
-						String SubTitle  = "\'" +ChatColor.DARK_BLUE + "[ "+ChatColor.BLUE +  index  +ChatColor.DARK_BLUE +" / "+ChatColor.BLUE+ total+ChatColor.DARK_BLUE+" ]\'";
+						String Title = "\'§9[던전 생성]\'";
+						String SubTitle  = "\'§1[ §9"+  index  +"§1 / §9"+ total+"§1 ]\'";
 						new effect.SendPacket().sendTitleSubTitle(Bukkit.getServer().getPlayer(DungeonMaker.get(count)),Title, SubTitle, (byte)0, (byte)0, (byte)1);
 					}
 				}
@@ -137,9 +137,9 @@ public class Dungeon_ScheduleObject
 					Player p = Bukkit.getServer().getPlayer(DungeonMaker.get(count));
 					if(p.isOnline())
 					{
-						if(p.getLocation().getWorld().getName().compareTo("Dungeon")==0)
+						if(p.getLocation().getWorld().getName().equals("Dungeon"))
 						{
-							String Title  = "\'" +ChatColor.WHITE +DungeonName+ "\'";
+							String Title  = "\'§f" +DungeonName+ "\'";
 							new effect.SendPacket().sendTitle(p,Title, (byte)2, (byte)3, (byte)2);
 						}
 					}

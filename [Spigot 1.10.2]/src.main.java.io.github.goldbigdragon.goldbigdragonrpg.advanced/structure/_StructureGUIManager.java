@@ -21,13 +21,13 @@ public class _StructureGUIManager
 		String Striped = ChatColor.stripColor(event.getInventory().getName().toString());
 		if(event.getInventory().getType()==InventoryType.CHEST)
 		{
-			if(!(Striped.compareTo("보낼 아이템")==0
+			if(!(Striped.equals("보낼 아이템")
 			))
 				event.setCancelled(true);
 		}
-		if(InventoryName.compareTo("우편함")==0)
+		if(InventoryName.equals("우편함"))
 			new Struct_PostBox().PostBoxMainGUIClick(event);
-		else if(InventoryName.compareTo("보낼 아이템")==0)
+		else if(InventoryName.equals("보낼 아이템"))
 			new Struct_PostBox().ItemPutterGUIClick(event);
 		else if(InventoryName.contains("게시판"))
 		{
@@ -48,17 +48,17 @@ public class _StructureGUIManager
 					new Struct_Board().BoardMainGUIClick(event);
 			}
 		}
-		else if(InventoryName.compareTo("판매할 아이템을 고르세요")==0)
+		else if(InventoryName.equals("판매할 아이템을 고르세요"))
 			new Struct_TradeBoard().SelectSellItemGUIClick(event);
-		else if(InventoryName.compareTo("구매할 아이템을 고르세요")==0)
+		else if(InventoryName.equals("구매할 아이템을 고르세요"))
 			new Struct_TradeBoard().SelectBuyItemGUIClick(event);
 		else if(InventoryName.contains("일반 아이템"))
 			new Struct_TradeBoard().SelectNormalItemGUIClick(event);
-		else if(InventoryName.compareTo("받고싶은 아이템을 고르세요")==0)
+		else if(InventoryName.equals("받고싶은 아이템을 고르세요"))
 			new Struct_TradeBoard().SelectExchangeItem_YouGUIClick(event);
-		else if(InventoryName.compareTo("내가 줄 아이템을 고르세요")==0)
+		else if(InventoryName.equals("내가 줄 아이템을 고르세요"))
 			new Struct_TradeBoard().SelectExchangeItem_MyGUIClick(event);
-		else if(InventoryName.compareTo("모닥불")==0)
+		else if(InventoryName.equals("모닥불"))
 			new Struct_CampFire().CampFireGUIClick(event);
 	}
 	
@@ -67,9 +67,9 @@ public class _StructureGUIManager
 		UserData_Object u = new UserData_Object();
 		Player player = (Player)event.getPlayer();
 		
-		if(InventoryName.compareTo("보낼 아이템")==0)
+		if(InventoryName.equals("보낼 아이템"))
 			new Struct_PostBox().ItemPutterGUIClose(event);
-		else if(InventoryName.compareTo("판매할 아이템을 고르세요")==0||InventoryName.compareTo("구매할 아이템을 고르세요")==0)
+		else if(InventoryName.equals("판매할 아이템을 고르세요")||InventoryName.equals("구매할 아이템을 고르세요"))
 		{
 			if(u.getItemStack((Player)event.getPlayer())==null)
 				u.clearAll(player);
@@ -81,43 +81,43 @@ public class _StructureGUIManager
 	
 	public void ClickRouting(InventoryClickEvent event, String SubjectCode)
 	{
-		if(SubjectCode.compareTo("00")==0)//전체 개체 목록
+		if(SubjectCode.equals("00"))//전체 개체 목록
 			new structure.Structure_GUI().StructureListGUIClick(event);
-		else if(SubjectCode.compareTo("01")==0)//개체 타입 선택
+		else if(SubjectCode.equals("01"))//개체 타입 선택
 			new structure.Structure_GUI().SelectStructureTypeGUIClick(event);
-		else if(SubjectCode.compareTo("02")==0)//개체 방향 선택
+		else if(SubjectCode.equals("02"))//개체 방향 선택
 			new structure.Structure_GUI().SelectStructureDirectionGUIClick(event);
-		else if(SubjectCode.compareTo("03")==0)//우편함 메인
+		else if(SubjectCode.equals("03"))//우편함 메인
 			new structure.Struct_PostBox().PostBoxMainGUIClick(event);
-		else if(SubjectCode.compareTo("04")==0)//우편함 아이템 배송
+		else if(SubjectCode.equals("04"))//우편함 아이템 배송
 			new structure.Struct_PostBox().ItemPutterGUIClick(event);
-		else if(SubjectCode.compareTo("05")==0)//게시판 목록
+		else if(SubjectCode.equals("05"))//게시판 목록
 			new structure.Struct_Board().BoardMainGUIClick(event);
-		else if(SubjectCode.compareTo("06")==0)//게시판 설정
+		else if(SubjectCode.equals("06"))//게시판 설정
 			new structure.Struct_Board().BoardSettingGUIClick(event);
-		else if(SubjectCode.compareTo("07")==0)//거래 게시판 목록
+		else if(SubjectCode.equals("07"))//거래 게시판 목록
 			new structure.Struct_TradeBoard().TradeBoardMainGUIClick(event);
-		else if(SubjectCode.compareTo("08")==0)//거래 게시판 설정
+		else if(SubjectCode.equals("08"))//거래 게시판 설정
 			new structure.Struct_TradeBoard().TradeBoardSettingGUIClick(event);
-		else if(SubjectCode.compareTo("09")==0)//거래 게시판 메뉴
+		else if(SubjectCode.equals("09"))//거래 게시판 메뉴
 			new structure.Struct_TradeBoard().SelectTradeTypeGUIClick(event);
-		else if(SubjectCode.compareTo("0a")==0)//판매할 아이템 선택
+		else if(SubjectCode.equals("0a"))//판매할 아이템 선택
 			new structure.Struct_TradeBoard().SelectSellItemGUIClick(event);
-		else if(SubjectCode.compareTo("0b")==0)//구매할 아이템 선택
+		else if(SubjectCode.equals("0b"))//구매할 아이템 선택
 			new structure.Struct_TradeBoard().SelectBuyItemGUIClick(event);
-		else if(SubjectCode.compareTo("0c")==0)//교환시 내가 받을 아이템 선택
+		else if(SubjectCode.equals("0c"))//교환시 내가 받을 아이템 선택
 			new structure.Struct_TradeBoard().SelectExchangeItem_YouGUIClick(event);
-		else if(SubjectCode.compareTo("0d")==0)//교환시 내가 줄 아이템 선택
+		else if(SubjectCode.equals("0d"))//교환시 내가 줄 아이템 선택
 			new structure.Struct_TradeBoard().SelectExchangeItem_MyGUIClick(event);
-		else if(SubjectCode.compareTo("0e")==0)//일반 아이템 목록
+		else if(SubjectCode.equals("0e"))//일반 아이템 목록
 			new structure.Struct_TradeBoard().SelectNormalItemGUIClick(event);
-		else if(SubjectCode.compareTo("0f")==0)//모닥불
+		else if(SubjectCode.equals("0f"))//모닥불
 			new structure.Struct_CampFire().CampFireGUIClick(event);
 	}
 	
 	public void CloseRouting(InventoryCloseEvent event, String SubjectCode)
 	{
-		if(SubjectCode.compareTo("04")==0)//우편함 아이템 배송
+		if(SubjectCode.equals("04"))//우편함 아이템 배송
 			new structure.Struct_PostBox().ItemPutterGUIClose(event);
 	}
 }

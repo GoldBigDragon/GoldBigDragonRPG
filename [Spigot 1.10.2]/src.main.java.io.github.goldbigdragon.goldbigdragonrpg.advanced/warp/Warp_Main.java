@@ -1,7 +1,6 @@
 package warp;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
@@ -10,8 +9,6 @@ import effect.PottionBuff;
 import effect.SoundEffect;
 import util.YamlLoader;
 
-
-
 public class Warp_Main
 {
 	public void CreateNewTeleportSpot(Player player, String TeleportName)
@@ -19,7 +16,7 @@ public class Warp_Main
 		if(player.isOp() == false)
 		{
 			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-			player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
+			player.sendMessage("§c[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
 			return;
 		}
 		else
@@ -30,7 +27,7 @@ public class Warp_Main
 			if(TeleportList.contains(TeleportName))
 			{
 				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-				player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 워프 지점은 이미 등록되어 있습니다!");
+				player.sendMessage("§c[SYSTEM] : 해당 워프 지점은 이미 등록되어 있습니다!");
 				return;
 			}
 			
@@ -44,7 +41,7 @@ public class Warp_Main
 			TeleportList.saveConfig();
 			
 			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_CHICKEN_EGG, 2.0F, 1.7F);
-			player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 현재 위치로 워프 지점이 등록되었습니다!");
+			player.sendMessage("§a[SYSTEM] : 현재 위치로 워프 지점이 등록되었습니다!");
 			
 			return;
 	      }
@@ -61,12 +58,12 @@ public class Warp_Main
 				if(TeleportList.getBoolean(TeleportSpotName+".OnlyOpUse") == true)
 				{
 					TeleportList.set(TeleportSpotName+".OnlyOpUse", false);
-					player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 해당 지역은 일반 유저도 워프할 수 있게 되었습니다!");
+					player.sendMessage("§a[SYSTEM] : 해당 지역은 일반 유저도 워프할 수 있게 되었습니다!");
 				}
 				else
 				{
 					TeleportList.set(TeleportSpotName+".OnlyOpUse", true);
-					player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 지역은 일반 유저가 워프할 수 없게 되었습니다!");
+					player.sendMessage("§c[SYSTEM] : 해당 지역은 일반 유저가 워프할 수 없게 되었습니다!");
 					
 				}
 				TeleportList.saveConfig();
@@ -75,14 +72,14 @@ public class Warp_Main
 			else
 			{
 				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-		  		player.sendMessage(ChatColor.RED+"[SYSTEM] : 해당 이름으로 등록된 워프 지점이 없습니다!");
+		  		player.sendMessage("§c[SYSTEM] : 해당 이름으로 등록된 워프 지점이 없습니다!");
 			}
 	  		return;
 		}
 		else
 		{
 			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-			player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
+			player.sendMessage("§c[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
 			return;	
 		}
 	}
@@ -93,7 +90,7 @@ public class Warp_Main
 		if(player.isOp() == false)
 		{
 			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-			player.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
+			player.sendMessage("§c[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
 			return;
 		}
 		else
@@ -114,12 +111,12 @@ public class Warp_Main
 				TeleportList.saveConfig();
 
 				SoundEffect.SP(player,org.bukkit.Sound.ENTITY_ITEM_PICKUP,0.7F,1.0F);
-	    		player.sendMessage(ChatColor.GREEN+"[SYSTEM] : "+ChatColor.YELLOW+TeleportName+ChatColor.GREEN+" 워프 지점을 성공적으로 삭제하였습니다!");
+	    		player.sendMessage("§a[SYSTEM] : §e"+TeleportName+"§a 워프 지점을 성공적으로 삭제하였습니다!");
 			}
 			else
 			{
 				SoundEffect.SP(player,org.bukkit.Sound.ENTITY_ITEM_BREAK,0.7F,1.0F);
-		  		player.sendMessage(ChatColor.RED+"[SYSTEM] : 해당 이름으로 등록된 워프 지점이 없습니다!");
+		  		player.sendMessage("§c[SYSTEM] : 해당 이름으로 등록된 워프 지점이 없습니다!");
 			}
 		}
 		return;
@@ -136,7 +133,7 @@ public class Warp_Main
 			if(TeleportList.getBoolean(TeleportSpotName+".OnlyOpUse")== true  && player.isOp() == false)
 			{
 				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-				player.sendMessage(ChatColor.RED+"[SYSTEM] : 해당 구역은 제한된 지역입니다!");
+				player.sendMessage("§c[SYSTEM] : 해당 구역은 제한된 지역입니다!");
 				return;
 			}
 			else
@@ -163,13 +160,13 @@ public class Warp_Main
 				else
 				{
 					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-					player.sendMessage(ChatColor.RED+"[SYSTEM] : 월드간 이동은 관리자만 허용됩니다!");
+					player.sendMessage("§c[SYSTEM] : 월드간 이동은 관리자만 허용됩니다!");
 				}
 				return;
 			}
 		}
 		SoundEffect.SP(player,org.bukkit.Sound.ENTITY_ITEM_BREAK,0.7F,1.0F);
-  		player.sendMessage(ChatColor.RED+"[SYSTEM] : 해당 이름으로 등록된 워프 지점이 없습니다!");
+  		player.sendMessage("§c[SYSTEM] : 해당 이름으로 등록된 워프 지점이 없습니다!");
 		return;
 	}
 }

@@ -20,7 +20,7 @@ public class UseableItem_Main
 	public void UseAbleItemUse(Player player, String type)
 	{
 		ItemStack item = player.getInventory().getItemInMainHand();
-		if(type.compareTo("귀환서")==0)
+		if(type.equals("귀환서"))
 		{
 			if(ServerTick_Main.PlayerTaskList.containsKey(player.getName())==true)
 			{
@@ -31,7 +31,7 @@ public class UseableItem_Main
 			util.ETC ETC = new util.ETC();
 			if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_AttackTime() >= ETC.getSec())
 			{
-				player.sendMessage(ChatColor.RED+"[이동 불가] : "+ChatColor.YELLOW+((main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_AttackTime()+15000 - ETC.getSec())/1000)+ChatColor.RED+" 초 후에 이동 가능합니다!");
+				player.sendMessage("§c[이동 불가] : §e"+((main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_AttackTime()+15000 - ETC.getSec())/1000)+"§c 초 후에 이동 가능합니다!");
 				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				return;
 			}
@@ -75,9 +75,9 @@ public class UseableItem_Main
 			SoundEffect.SP(player, Sound.BLOCK_CLOTH_BREAK, 0.7F, 0.5F);
 			SoundEffect.SP(player, Sound.BLOCK_PORTAL_TRAVEL, 0.6F, 1.4F);
 		}
-		else if(type.compareTo("주문서")==0)
+		else if(type.equals("주문서"))
 		{
-			if(item.getItemMeta().getDisplayName().compareTo("§2§3§4§3§3§l[스텟 초기화 주문서]")==0)
+			if(item.getItemMeta().getDisplayName().equals("§2§3§4§3§3§l[스텟 초기화 주문서]"))
 			{
 			  	YamlLoader configYaml = new YamlLoader();
 				configYaml.getConfig("config.yml");
@@ -108,7 +108,7 @@ public class UseableItem_Main
 				else
 				{
 					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.RED+"[System] : 메이플 스토리 시스템일 경우만 사용 가능합니다!");
+					player.sendMessage("§c[System] : 메이플 스토리 시스템일 경우만 사용 가능합니다!");
 				}
 				return;
 			}
@@ -159,15 +159,15 @@ public class UseableItem_Main
 						HP = Integer.parseInt(nowlore.split(" : ")[1]);
 					if(nowlore.contains("마나"))
 						MP = Integer.parseInt(nowlore.split(" : ")[1]);
-					if(nowlore.contains(Main_ServerOption.STR))
+					if(nowlore.contains(Main_ServerOption.statSTR))
 						STR = Integer.parseInt(nowlore.split(" : ")[1]);
-					if(nowlore.contains(Main_ServerOption.DEX))
+					if(nowlore.contains(Main_ServerOption.statDEX))
 						DEX = Integer.parseInt(nowlore.split(" : ")[1]);
-					if(nowlore.contains(Main_ServerOption.INT))
+					if(nowlore.contains(Main_ServerOption.statINT))
 						INT = Integer.parseInt(nowlore.split(" : ")[1]);
-					if(nowlore.contains(Main_ServerOption.WILL))
+					if(nowlore.contains(Main_ServerOption.statWILL))
 						WILL = Integer.parseInt(nowlore.split(" : ")[1]);
-					if(nowlore.contains(Main_ServerOption.LUK))
+					if(nowlore.contains(Main_ServerOption.statLUK))
 						LUK = Integer.parseInt(nowlore.split(" : ")[1]);
 				}
 			}
@@ -228,7 +228,7 @@ public class UseableItem_Main
 				player.sendMessage("§e§l[      능력치에 변화가 생겼습니다!      ]");
 			}
 		}
-		else if(type.compareTo("스킬북")==0)
+		else if(type.equals("스킬북"))
 		{
 		  	YamlLoader configYaml = new YamlLoader();
 			configYaml.getConfig("config.yml");
@@ -274,7 +274,7 @@ public class UseableItem_Main
 							else
 								player.getInventory().setItem(player.getInventory().getHeldItemSlot(), new ItemStack(0));
 							SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
-							player.sendMessage(ChatColor.LIGHT_PURPLE+""+ChatColor.BOLD+"[새로운 스킬을 획득 하였습니다!] "+"§e§l"+ChatColor.UNDERLINE+Skillname);
+							player.sendMessage("§d§l[새로운 스킬을 획득 하였습니다!] §e§l"+ChatColor.UNDERLINE+Skillname);
 							return;
 						}
 						else
@@ -305,7 +305,7 @@ public class UseableItem_Main
 				return;
 			}
 		}
-		else if(type.compareTo("소비")==0)
+		else if(type.equals("소비"))
 		{
 			int Health = 0;
 			int Mana = 0;
@@ -357,7 +357,7 @@ public class UseableItem_Main
 				player.setFoodLevel(player.getFoodLevel()+Food);
 			}
 		}
-		else if(type.compareTo("돈")==0)
+		else if(type.equals("돈"))
 		{
 			int money=Integer.parseInt(ChatColor.stripColor(item.getItemMeta().getLore().get(1).split(" ")[0]));
 			if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + money <= 2000000000)
@@ -371,13 +371,13 @@ public class UseableItem_Main
 				else
 					player.getInventory().setItem(player.getInventory().getHeldItemSlot(), new ItemStack(0));
 				SoundEffect.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.8F);
-				player.sendMessage(ChatColor.GREEN+"[SYSTEM] : "+ChatColor.WHITE+""+ChatColor.BOLD+money+" "+Main_ServerOption.Money+ChatColor.GREEN+" 입금 완료!");
-				player.sendMessage(ChatColor.GRAY+"(현재 "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()+ChatColor.stripColor(Main_ServerOption.Money)+" 보유중)");
+				player.sendMessage("§a[SYSTEM] : §f§l"+money+" "+Main_ServerOption.money+"§a 입금 완료!");
+				player.sendMessage("§7(현재 "+main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()+ChatColor.stripColor(Main_ServerOption.money)+" 보유중)");
 			}
 			else
 			{
 				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-				player.sendMessage(ChatColor.RED+"[System] : "+Main_ServerOption.Money+ChatColor.RED+" 을(를) 2000000000(20억)이상 가질 수 없습니다!");
+				player.sendMessage("§c[System] : "+Main_ServerOption.money+"§c 을(를) 2000000000(20억)이상 가질 수 없습니다!");
 			}
 		}
 		return;

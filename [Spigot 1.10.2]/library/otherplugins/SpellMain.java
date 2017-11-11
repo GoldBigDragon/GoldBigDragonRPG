@@ -65,15 +65,15 @@ public class SpellMain implements Listener
 				bonuspower = Battle_Calculator.MagicSpellsDamageBonus((int) p.getHealth())+Battle_Calculator.getPlayerEquipmentStat(player, "HP", false, null)[0];
 			else if(switchCheck.compareTo("¸¶³ª")==0)
 				bonuspower = Battle_Calculator.MagicSpellsDamageBonus(getPlayerMana(player))+Battle_Calculator.getPlayerEquipmentStat(player, "MP", false, null)[0];
-			else if(switchCheck.compareTo(Main_ServerOption.STR)==0)
+			else if(switchCheck.compareTo(Main_ServerOption.statSTR)==0)
 				bonuspower = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR()+Battle_Calculator.getPlayerEquipmentStat(player, "STR", false, null)[0];
-			else if(switchCheck.compareTo(Main_ServerOption.DEX)==0)
+			else if(switchCheck.compareTo(Main_ServerOption.statDEX)==0)
 				bonuspower = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX()+Battle_Calculator.getPlayerEquipmentStat(player, "DEX", false, null)[0];
-			else if(switchCheck.compareTo(Main_ServerOption.INT)==0)
+			else if(switchCheck.compareTo(Main_ServerOption.statINT)==0)
 				bonuspower = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT()+Battle_Calculator.getPlayerEquipmentStat(player, "INT", false, null)[0];
-			else if(switchCheck.compareTo(Main_ServerOption.WILL)==0)
+			else if(switchCheck.compareTo(Main_ServerOption.statWILL)==0)
 				bonuspower = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL()+Battle_Calculator.getPlayerEquipmentStat(player, "WILL", false, null)[0];
-			else if(switchCheck.compareTo(Main_ServerOption.LUK)==0)
+			else if(switchCheck.compareTo(Main_ServerOption.statLUK)==0)
 				bonuspower = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK()+Battle_Calculator.getPlayerEquipmentStat(player, "LUK", false, null)[0];
 			else
 				bonuspower = 0;

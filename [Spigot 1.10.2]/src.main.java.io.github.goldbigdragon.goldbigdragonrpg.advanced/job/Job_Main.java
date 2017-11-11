@@ -89,7 +89,7 @@ public class Job_Main
 			String[] Categori = jobYaml.getConfigurationSection("Mabinogi").getKeys(false).toArray(new String[0]);
 			for(int counter = 0; counter < Categori.length; counter++)
 			{
-				if(Categori[counter].compareTo("Added")!=0)
+				if(!Categori[counter].equals("Added"))
 				{
 					String[] Skills = jobYaml.getConfigurationSection("Mabinogi."+Categori[counter]).getKeys(false).toArray(new String[0]);
 					for(int countta = 0; countta < Skills.length; countta++)
@@ -153,7 +153,7 @@ public class Job_Main
 					playerSkillYaml.removeKey("Mabinogi."+PlayerCategori.get(count).toString());
 
 			for(int count = 0; count < Categori.size(); count++)
-				if(Categori.get(count).compareTo("Added") != 0)
+				if(!Categori.get(count).equals("Added"))
 					if(PlayerCategori.contains(Categori.get(count)) == false)
 						playerSkillYaml.createSection("Mabinogi."+Categori.get(count));
 			
@@ -164,7 +164,7 @@ public class Job_Main
 			//만일 카테고리에는 없지만 플레이어에게 스킬이 있다면 삭제해 주는 구문.
 			for(int count = 0; count < Categori.size(); count ++)
 			{
-				if(Categori.get(count).compareTo("Added") != 0)
+				if(!Categori.get(count).equals("Added"))
 				{
 					ArrayList<String> JobSkillList = new ArrayList<String>();
 					ArrayList<String> PlayerSkillList = new ArrayList<String>();
@@ -203,7 +203,7 @@ public class Job_Main
 			boolean isJobExit = false;
 			for(int counter = 0; counter < Jobs.length; counter++)
 				for(int count =0; count < jobYaml.getConfigurationSection("MapleStory."+Jobs[counter]).getKeys(false).size(); count++)
-					if(jobYaml.getConfigurationSection("MapleStory."+Jobs[counter]).getKeys(false).toArray()[count].toString().compareTo(playerSkillYaml.getString("Job.Type"))==0)
+					if(jobYaml.getConfigurationSection("MapleStory."+Jobs[counter]).getKeys(false).toArray()[count].toString().equals(playerSkillYaml.getString("Job.Type")))
 					{
 						isJobExit = true;
 						break;
@@ -235,7 +235,7 @@ public class Job_Main
 					}
 					for(int countta = 0; countta < SubJobs.length; countta++)
 					{
-						if(SubJobs[countta].compareTo(PlayerJob[count])==0)
+						if(SubJobs[countta].equals(PlayerJob[count]))
 						{
 							ArrayList<String> SubJobSkills = new ArrayList<String>();
 							ArrayList<String> PlayerJobSkills = new ArrayList<String>();

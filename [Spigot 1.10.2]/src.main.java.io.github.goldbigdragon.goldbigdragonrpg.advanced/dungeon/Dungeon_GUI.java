@@ -73,15 +73,15 @@ public final class Dungeon_GUI extends Util_GUI
 				DungeonOptionYML.getConfig("Dungeon/Dungeon/"+dungeonList[count]+"/Option.yml");
 				
 				Stack2("§f§l" + dungeonList[count], 52,0,1,Arrays.asList(
-				"",ChatColor.BLUE+"던전 형태 : "+ChatColor.WHITE+DungeonOptionYML.getString("Type.Name")
-				,ChatColor.BLUE+"던전 크기 : "+ChatColor.WHITE+DungeonOptionYML.getInt("Size")
-				,ChatColor.BLUE+"던전 밀집도 : "+ChatColor.WHITE+DungeonOptionYML.getInt("Maze_Level")
-				,ChatColor.BLUE+"레벨 제한 : "+ChatColor.WHITE+DungeonOptionYML.getInt("District.Level")+" 이상"
-				,ChatColor.BLUE+"누적 레벨 제한 : "+ChatColor.WHITE+DungeonOptionYML.getInt("District.RealLevel")+" 이상"
-				,"",ChatColor.BLUE+"[기본 클리어 보상]"
-				,ChatColor.BLUE+" - "+ChatColor.WHITE+DungeonOptionYML.getInt("Reward.Money")+" "+main.Main_ServerOption.Money
-				,ChatColor.BLUE+" - "+ChatColor.WHITE+DungeonOptionYML.getInt("Reward.EXP")+"§b§lEXP"
-				,"",ChatColor.YELLOW+"[좌 클릭시 던전 설정]",ChatColor.RED+"[Shift + 우클릭시 던전 삭제]"), loc, inv);
+				"","§9던전 형태 : §f"+DungeonOptionYML.getString("Type.Name")
+				,"§9던전 크기 : §f"+DungeonOptionYML.getInt("Size")
+				,"§9던전 밀집도 : §f"+DungeonOptionYML.getInt("Maze_Level")
+				,"§9레벨 제한 : §f"+DungeonOptionYML.getInt("District.Level")+" 이상"
+				,"§9누적 레벨 제한 : §f"+DungeonOptionYML.getInt("District.RealLevel")+" 이상"
+				,"","§9[기본 클리어 보상]"
+				,"§9 - §f"+DungeonOptionYML.getInt("Reward.Money")+" "+main.Main_ServerOption.money
+				,"§9 - §f"+DungeonOptionYML.getInt("Reward.EXP")+"§b§lEXP"
+				,"","§e[좌 클릭시 던전 설정]","§c[Shift + 우클릭시 던전 삭제]"), loc, inv);
 				
 				loc=loc+1;
 			}
@@ -105,32 +105,32 @@ public final class Dungeon_GUI extends Util_GUI
 				else
 					Time = "무제한";
 				if(dungeonYaml.getString(dungeonList[count]+".Dungeon")==null)
-					Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + dungeonList[count], dungeonYaml.getInt(dungeonList[count]+".ID"),dungeonYaml.getInt(dungeonList[count]+".DATA"),1,Arrays.asList(
-					"",ChatColor.BLUE+"연결된 던전 : "+ChatColor.WHITE+"없음",
-					ChatColor.BLUE+"입장 가능 인원 : "+ChatColor.WHITE+""+dungeonYaml.getInt(dungeonList[count]+".Capacity"),
-					ChatColor.BLUE+"유효 시간 : "+ChatColor.WHITE+""+Time,
-					"",ChatColor.YELLOW+"[좌 클릭시 통행증 설정]",ChatColor.YELLOW+"[Shift + 좌 클릭시 통행증 발급]",ChatColor.RED+"[Shift + 우클릭시 통행증 삭제]"), loc, inv);
+					Stack2("§f§l" + dungeonList[count], dungeonYaml.getInt(dungeonList[count]+".ID"),dungeonYaml.getInt(dungeonList[count]+".DATA"),1,Arrays.asList(
+					"","§9연결된 던전 : §f없음",
+					"§9입장 가능 인원 : §f"+dungeonYaml.getInt(dungeonList[count]+".Capacity"),
+					"§9유효 시간 : §f"+Time,
+					"","§e[좌 클릭시 통행증 설정]","§e[Shift + 좌 클릭시 통행증 발급]","§c[Shift + 우클릭시 통행증 삭제]"), loc, inv);
 				else
 				{
 				  	YamlLoader Dungeon = new YamlLoader();
 					Dungeon.getConfig("Dungeon/DungeonList.yml");
 					if(Dungeon.contains(dungeonYaml.getString(dungeonList[count]+".Dungeon")))
 					{
-						Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + dungeonList[count], dungeonYaml.getInt(dungeonList[count]+".ID"),dungeonYaml.getInt(dungeonList[count]+".DATA"),1,Arrays.asList(
-						"",ChatColor.BLUE+"연결된 던전 : "+ChatColor.WHITE+""+dungeonYaml.getString(dungeonList[count]+".Dungeon"),
-						ChatColor.BLUE+"입장 가능 인원 : "+ChatColor.WHITE+""+dungeonYaml.getInt(dungeonList[count]+".Capacity"),
-						ChatColor.BLUE+"유효 시간 : "+ChatColor.WHITE+""+Time,
-						"",ChatColor.YELLOW+"[좌 클릭시 통행증 설정]",ChatColor.YELLOW+"[Shift + 좌 클릭시 통행증 발급]",ChatColor.RED+"[Shift + 우클릭시 통행증 삭제]"), loc, inv);
+						Stack2("§f§l" + dungeonList[count], dungeonYaml.getInt(dungeonList[count]+".ID"),dungeonYaml.getInt(dungeonList[count]+".DATA"),1,Arrays.asList(
+						"","§9연결된 던전 : §f"+dungeonYaml.getString(dungeonList[count]+".Dungeon"),
+						"§9입장 가능 인원 : §f"+dungeonYaml.getInt(dungeonList[count]+".Capacity"),
+						"§9유효 시간 : §f"+Time,
+						"","§e[좌 클릭시 통행증 설정]","§e[Shift + 좌 클릭시 통행증 발급]","§c[Shift + 우클릭시 통행증 삭제]"), loc, inv);
 					}
 					else
 					{
 						dungeonYaml.set(dungeonList[count]+".Dungeon",null);
 						dungeonYaml.saveConfig();
-						Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + dungeonList[count], dungeonYaml.getInt(dungeonList[count]+".ID"),dungeonYaml.getInt(dungeonList[count]+".DATA"),1,Arrays.asList(
-						"",ChatColor.BLUE+"연결된 던전 : "+ChatColor.WHITE+"없음",
-						ChatColor.BLUE+"입장 가능 인원 : "+ChatColor.WHITE+""+dungeonYaml.getInt(dungeonList[count]+".Capacity"),
-						ChatColor.BLUE+"유효 시간 : "+ChatColor.WHITE+""+Time,
-						"",ChatColor.YELLOW+"[좌 클릭시 통행증 설정]",ChatColor.YELLOW+"[Shift + 좌 클릭시 통행증 발급]",ChatColor.RED+"[Shift + 우클릭시 통행증 삭제]"), loc, inv);
+						Stack2("§f§l" + dungeonList[count], dungeonYaml.getInt(dungeonList[count]+".ID"),dungeonYaml.getInt(dungeonList[count]+".DATA"),1,Arrays.asList(
+						"","§9연결된 던전 : §f없음",
+						"§9입장 가능 인원 : §f"+dungeonYaml.getInt(dungeonList[count]+".Capacity"),
+						"§9유효 시간 : §f"+Time,
+						"","§e[좌 클릭시 통행증 설정]","§e[Shift + 좌 클릭시 통행증 발급]","§c[Shift + 우클릭시 통행증 삭제]"), loc, inv);
 					}
 						
 				}
@@ -147,36 +147,36 @@ public final class Dungeon_GUI extends Util_GUI
 			for(int count = page*45; count < dungeonList.length;count++)
 			{
 				AltarCode = dungeonList[count];
-				Stack2(ChatColor.WHITE+dungeonYaml.getString(AltarCode+".Name"), dungeonYaml.getInt(AltarCode+".ID"),dungeonYaml.getInt(AltarCode+".DATA"),1,Arrays.asList(
-				"",ChatColor.BLUE+"[제단 위치]",
-				ChatColor.WHITE+" "+dungeonYaml.getString(AltarCode+".World"),
-				ChatColor.WHITE+" "+dungeonYaml.getInt(AltarCode+".X")+","+dungeonYaml.getInt(AltarCode+".Y")+","+dungeonYaml.getInt(AltarCode+".Z"),
-				"",ChatColor.YELLOW+"[좌 클릭시 제단 설정]",ChatColor.YELLOW+"[Shift + 좌 클릭시 제단 이동]",ChatColor.RED+"[Shift + 우클릭시 제단 철거]","",AltarCode), loc, inv);
+				Stack2("§f"+dungeonYaml.getString(AltarCode+".Name"), dungeonYaml.getInt(AltarCode+".ID"),dungeonYaml.getInt(AltarCode+".DATA"),1,Arrays.asList(
+				"","§9[제단 위치]",
+				"§f "+dungeonYaml.getString(AltarCode+".World"),
+				"§f "+dungeonYaml.getInt(AltarCode+".X")+","+dungeonYaml.getInt(AltarCode+".Y")+","+dungeonYaml.getInt(AltarCode+".Z"),
+				"","§e[좌 클릭시 제단 설정]","§e[Shift + 좌 클릭시 제단 이동]","§c[Shift + 우클릭시 제단 철거]","",AltarCode), loc, inv);
 				
 				loc=loc+1;
 			}
 		}
 		if(Type==52)
-			Stack2("§9§l[다음 항목]", 52,0,1,Arrays.asList(ChatColor.BLUE + "현재 항목 : "+ChatColor.WHITE+"던전","",ChatColor.YELLOW+"던전을 생성하기 위해서는",ChatColor.YELLOW+"아래의 3가지 구성물이 존재 해야 합니다.",ChatColor.YELLOW+"[던전, 통행증, 제단]"), 47, inv);
+			Stack2("§9§l[다음 항목]", 52,0,1,Arrays.asList("§9현재 항목 : §f던전","","§e던전을 생성하기 위해서는","§e아래의 3가지 구성물이 존재 해야 합니다.","§e[던전, 통행증, 제단]"), 47, inv);
 		else if(Type==358)
-			Stack2("§9§l[다음 항목]", 358,0,1,Arrays.asList(ChatColor.BLUE + "현재 항목 : "+ChatColor.WHITE+"통행증","",ChatColor.YELLOW+"던전을 생성하기 위해서는",ChatColor.YELLOW+"아래의 3가지 구성물이 존재 해야 합니다.",ChatColor.YELLOW+"[던전, 통행증, 제단]"), 47, inv);
+			Stack2("§9§l[다음 항목]", 358,0,1,Arrays.asList("§9현재 항목 : §f통행증","","§e던전을 생성하기 위해서는","§e아래의 3가지 구성물이 존재 해야 합니다.","§e[던전, 통행증, 제단]"), 47, inv);
 		else if(Type==120)
-			Stack2("§9§l[다음 항목]", 120,0,1,Arrays.asList(ChatColor.BLUE + "현재 항목 : "+ChatColor.WHITE+"제단","",ChatColor.YELLOW+"던전을 생성하기 위해서는",ChatColor.YELLOW+"아래의 3가지 구성물이 존재 해야 합니다.",ChatColor.YELLOW+"[던전, 통행증, 제단]"), 47, inv);
+			Stack2("§9§l[다음 항목]", 120,0,1,Arrays.asList("§9현재 항목 : §f제단","","§e던전을 생성하기 위해서는","§e아래의 3가지 구성물이 존재 해야 합니다.","§e[던전, 통행증, 제단]"), 47, inv);
 		
 		
 		if(dungeonList.length-(page*44)>45)
-		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
 		if(Type==52)
-			Stack2("§f§l던전 제작", 383,0,1,Arrays.asList(ChatColor.GRAY + "새로운 던전을 생성합니다."), 49, inv);
+			Stack2("§f§l던전 제작", 383,0,1,Arrays.asList("§7새로운 던전을 생성합니다."), 49, inv);
 		if(Type==358)
-			Stack2("§f§l통행증 제작", 386,0,1,Arrays.asList(ChatColor.GRAY + "새로운 통행증을 생성합니다."), 49, inv);
+			Stack2("§f§l통행증 제작", 386,0,1,Arrays.asList("§7새로운 통행증을 생성합니다."), 49, inv);
 		if(Type==120)
-			Stack2("§f§l제단 건설", 381,0,1,Arrays.asList(ChatColor.GRAY + "새로운 제단을 생성합니다.","","§c§l[제단은 무조건 남쪽을 바라봅니다.]"), 49, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 53, inv);
+			Stack2("§f§l제단 건설", 381,0,1,Arrays.asList("§7새로운 제단을 생성합니다.","","§c§l[제단은 무조건 남쪽을 바라봅니다.]"), 49, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -188,29 +188,29 @@ public final class Dungeon_GUI extends Util_GUI
 
 		String UniqueCode = "§0§0§a§0§1§r";
 		Inventory inv = Bukkit.createInventory(null, 45, UniqueCode + "§0던전 설정 : " +DungeonName);
-		Stack2("§f§l던전 타입", dungeonYaml.getInt("Type.ID"),dungeonYaml.getInt("Type.DATA"),1,Arrays.asList(ChatColor.GRAY + "현재 던전 타입 : "+dungeonYaml.getString("Type.Name")), 11, inv);
+		Stack2("§f§l던전 타입", dungeonYaml.getInt("Type.ID"),dungeonYaml.getInt("Type.DATA"),1,Arrays.asList("§7현재 던전 타입 : "+dungeonYaml.getString("Type.Name")), 11, inv);
 		
-		Stack2("§f§l던전 크기", 395,0,1,Arrays.asList(ChatColor.GRAY + "현재 던전 크기 : "+dungeonYaml.getInt("Size"),ChatColor.DARK_GRAY + "최소 : 5",ChatColor.DARK_GRAY + "최대 : 30"), 13, inv);
-		Stack2("§f§l던전 길이", 53,0,1,Arrays.asList(ChatColor.GRAY + "현재 미로 레벨 : "+dungeonYaml.getInt("Maze_Level"),"",ChatColor.YELLOW+"[영향 받는 항목]",ChatColor.YELLOW+" - 구슬방 출현 빈도",ChatColor.YELLOW+" - 던전 갈림길 개수",ChatColor.YELLOW+" - 던전 밀집도"), 15, inv);
+		Stack2("§f§l던전 크기", 395,0,1,Arrays.asList("§7현재 던전 크기 : "+dungeonYaml.getInt("Size"),"§8최소 : 5","§8최대 : 30"), 13, inv);
+		Stack2("§f§l던전 길이", 53,0,1,Arrays.asList("§7현재 미로 레벨 : "+dungeonYaml.getInt("Maze_Level"),"","§e[영향 받는 항목]","§e - 구슬방 출현 빈도","§e - 던전 갈림길 개수","§e - 던전 밀집도"), 15, inv);
 		
-		Stack2("§f§l던전 제한", 101,0,1,Arrays.asList(ChatColor.GRAY + "던전 입장 제한을 설정합니다.",ChatColor.RED+"레벨 제한 : " + ChatColor.GRAY+dungeonYaml.getInt("District.Level"),ChatColor.RED+"누적 레벨 제한 : " + ChatColor.GRAY+ dungeonYaml.getInt("District.RealLevel")), 20, inv);
-		Stack2("§f§l던전 보상", 266,0,1,Arrays.asList(ChatColor.GRAY + "던전 기본 보상을 설정합니다.",ChatColor.YELLOW+"보상 금액 : " + ChatColor.GRAY+dungeonYaml.getInt("Reward.Money"),ChatColor.AQUA+"보상 경험치 : " + ChatColor.GRAY+dungeonYaml.getInt("Reward.EXP")), 22, inv);
-		Stack2("§f§l던전 보상 상자", 54,0,1,Arrays.asList(ChatColor.GRAY + "던전 추가 보상을 설정합니다."), 24, inv);
-		Stack2("§f§l던전 몬스터", 383,0,1,Arrays.asList(ChatColor.GRAY + "던전 몬스터를 설정합니다."), 29, inv);
+		Stack2("§f§l던전 제한", 101,0,1,Arrays.asList("§7던전 입장 제한을 설정합니다.","§c레벨 제한 : §8"+dungeonYaml.getInt("District.Level"),"§c누적 레벨 제한 : §8"+ dungeonYaml.getInt("District.RealLevel")), 20, inv);
+		Stack2("§f§l던전 보상", 266,0,1,Arrays.asList("§7던전 기본 보상을 설정합니다.","§e보상 금액 : §8"+dungeonYaml.getInt("Reward.Money"),"§b보상 경험치 : §8"+dungeonYaml.getInt("Reward.EXP")), 22, inv);
+		Stack2("§f§l던전 보상 상자", 54,0,1,Arrays.asList("§7던전 추가 보상을 설정합니다."), 24, inv);
+		Stack2("§f§l던전 몬스터", 383,0,1,Arrays.asList("§7던전 몬스터를 설정합니다."), 29, inv);
 		
 		String lore = "";
 		otherplugins.NoteBlockAPIMain NBAPI = new otherplugins.NoteBlockAPIMain();
 		int tracknumber = dungeonYaml.getInt("BGM.Normal");
-		lore = " %enter%"+ChatColor.GRAY + "던전 BGM을 설정합니다.%enter% %enter%"+ChatColor.BLUE + "[클릭시 노트블록 사운드 설정]%enter% %enter%"+ChatColor.DARK_AQUA+"[트랙] "+ChatColor.BLUE +""+ tracknumber+"%enter%"
-		+ChatColor.DARK_AQUA+"[제목] "+ChatColor.BLUE +""+ NBAPI.getTitle(tracknumber)+"%enter%"
-		+ChatColor.DARK_AQUA+"[저자] "+ChatColor.BLUE+NBAPI.getAuthor(tracknumber)+"%enter%"+ChatColor.DARK_AQUA+"[설명] ";
+		lore = " %enter%§7던전 BGM을 설정합니다.%enter% %enter%§9[클릭시 노트블록 사운드 설정]%enter% %enter%§3[트랙] §9"+ tracknumber+"%enter%"
+		+"§3[제목] §9"+ NBAPI.getTitle(tracknumber)+"%enter%"
+		+"§3[저자] §9"+NBAPI.getAuthor(tracknumber)+"%enter%§3[설명] ";
 		
 		String Description = NBAPI.getDescription(tracknumber);
 		String lore2="";
 		int a = 0;
 		for(int count = 0; count <Description.toCharArray().length; count++)
 		{
-			lore2 = lore2+ChatColor.BLUE+Description.toCharArray()[count];
+			lore2 = lore2+"§9"+Description.toCharArray()[count];
 			a=a+1;
 			if(a >= 15)
 			{
@@ -219,20 +219,20 @@ public final class Dungeon_GUI extends Util_GUI
 			}
 		}
 		lore = lore + lore2;
-		Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[던전 배경음]", 2263,0,1,Arrays.asList(lore.split("%enter%")), 31, inv);
+		Stack2("§f§l[던전 배경음]", 2263,0,1,Arrays.asList(lore.split("%enter%")), 31, inv);
 
 		lore = "";
 		tracknumber = dungeonYaml.getInt("BGM.BOSS");
-		lore = " %enter%"+ChatColor.GRAY + "던전 BGM을 설정합니다.%enter% %enter%"+ChatColor.BLUE + "[클릭시 노트블록 사운드 설정]%enter% %enter%"+ChatColor.DARK_AQUA+"[트랙] "+ChatColor.BLUE +""+ tracknumber+"%enter%"
-		+ChatColor.DARK_AQUA+"[제목] "+ChatColor.BLUE +""+ NBAPI.getTitle(tracknumber)+"%enter%"
-		+ChatColor.DARK_AQUA+"[저자] "+ChatColor.BLUE+NBAPI.getAuthor(tracknumber)+"%enter%"+ChatColor.DARK_AQUA+"[설명] ";
+		lore = " %enter%§7던전 BGM을 설정합니다.%enter% %enter%§9[클릭시 노트블록 사운드 설정]%enter% %enter%§3[트랙] §9"+ tracknumber+"%enter%"
+		+"§3[제목] §9"+ NBAPI.getTitle(tracknumber)+"%enter%"
+		+"§3[저자] §9"+NBAPI.getAuthor(tracknumber)+"%enter%§3[설명] ";
 		
 		Description = NBAPI.getDescription(tracknumber);
 		lore2="";
 		a = 0;
 		for(int count = 0; count <Description.toCharArray().length; count++)
 		{
-			lore2 = lore2+ChatColor.BLUE+Description.toCharArray()[count];
+			lore2 = lore2+"§9"+Description.toCharArray()[count];
 			a=a+1;
 			if(a >= 15)
 			{
@@ -241,9 +241,9 @@ public final class Dungeon_GUI extends Util_GUI
 			}
 		}
 		lore = lore + lore2;
-		Stack2(ChatColor.WHITE + ""+ChatColor.BOLD+"[보스 배경음]", 2259,0,1,Arrays.asList(lore.split("%enter%")), 33, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 44, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 36, inv);
+		Stack2("§f§l[보스 배경음]", 2259,0,1,Arrays.asList(lore.split("%enter%")), 33, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 44, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 36, inv);
 
 		player.openInventory(inv);
 	}
@@ -256,12 +256,12 @@ public final class Dungeon_GUI extends Util_GUI
 		String UniqueCode = "§1§0§a§0§2§r";
 		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0던전 보상 : " +DungeonName);
 	
-		Stack2("§9§l[100% 확률]", 160,11,1,Arrays.asList("",ChatColor.WHITE+"100% 확률로 나올 아이템을",ChatColor.WHITE+"이 줄에 놓으시면 됩니다.",ChatColor.WHITE+"100% 확률로 이 줄에 있는",ChatColor.WHITE+"아이템 중, 하나가 나옵니다.",""), 0, inv);
-		Stack2("§a§l[90% 확률]", 160,5,1,Arrays.asList("",ChatColor.WHITE+"90% 확률로 나올 아이템을",ChatColor.WHITE+"이 줄에 놓으시면 됩니다.",ChatColor.WHITE+"90% 확률로 이 줄에 있는",ChatColor.WHITE+"아이템 중, 하나가 나옵니다.",""), 9, inv);
-		Stack2("§e§l[50% 확률]", 160,4,1,Arrays.asList("",ChatColor.WHITE+"50% 확률로 나올 아이템을",ChatColor.WHITE+"이 줄에 놓으시면 됩니다.",ChatColor.WHITE+"50% 확률로 이 줄에 있는",ChatColor.WHITE+"아이템 중, 하나가 나옵니다.",""), 18, inv);
-		Stack2("§6§l[10% 확률]", 160,1,1,Arrays.asList("",ChatColor.WHITE+"10% 확률로 나올 아이템을",ChatColor.WHITE+"이 줄에 놓으시면 됩니다.",ChatColor.WHITE+"10% 확률로 이 줄에 있는",ChatColor.WHITE+"아이템 중, 하나가 나옵니다.",""), 27, inv);
-		Stack2("§4§l[1% 확률]", 160,14,1,Arrays.asList("",ChatColor.WHITE+"1% 확률로 나올 아이템을",ChatColor.WHITE+"이 줄에 놓으시면 됩니다.",ChatColor.WHITE+"1% 확률로 이 줄에 있는",ChatColor.WHITE+"아이템 중, 하나가 나옵니다.",""), 36, inv);
-		Stack2("§8§l[0.1% 확률]", 160,10,1,Arrays.asList("",ChatColor.WHITE+"0.1% 확률로 나올 아이템을",ChatColor.WHITE+"이 줄에 놓으시면 됩니다.",ChatColor.WHITE+"0.1% 확률로 이 줄에 있는",ChatColor.WHITE+"아이템 중, 하나가 나옵니다.",""), 45, inv);
+		Stack2("§9§l[100% 확률]", 160,11,1,Arrays.asList("","§f100% 확률로 나올 아이템을","§f이 줄에 놓으시면 됩니다.","§f100% 확률로 이 줄에 있는","§f아이템 중, 하나가 나옵니다.",""), 0, inv);
+		Stack2("§a§l[90% 확률]", 160,5,1,Arrays.asList("","§f90% 확률로 나올 아이템을","§f이 줄에 놓으시면 됩니다.","§f90% 확률로 이 줄에 있는","§f아이템 중, 하나가 나옵니다.",""), 9, inv);
+		Stack2("§e§l[50% 확률]", 160,4,1,Arrays.asList("","§f50% 확률로 나올 아이템을","§f이 줄에 놓으시면 됩니다.","§f50% 확률로 이 줄에 있는","§f아이템 중, 하나가 나옵니다.",""), 18, inv);
+		Stack2("§6§l[10% 확률]", 160,1,1,Arrays.asList("","§f10% 확률로 나올 아이템을","§f이 줄에 놓으시면 됩니다.","§f10% 확률로 이 줄에 있는","§f아이템 중, 하나가 나옵니다.",""), 27, inv);
+		Stack2("§4§l[1% 확률]", 160,14,1,Arrays.asList("","§f1% 확률로 나올 아이템을","§f이 줄에 놓으시면 됩니다.","§f1% 확률로 이 줄에 있는","§f아이템 중, 하나가 나옵니다.",""), 36, inv);
+		Stack2("§7§l[0.1% 확률]", 160,10,1,Arrays.asList("","§f0.1% 확률로 나올 아이템을","§f이 줄에 놓으시면 됩니다.","§f0.1% 확률로 이 줄에 있는","§f아이템 중, 하나가 나옵니다.",""), 45, inv);
 
 		for(int count = 0; count < 8; count++)
 		{
@@ -289,14 +289,14 @@ public final class Dungeon_GUI extends Util_GUI
 		String UniqueCode = "§0§0§a§0§3§r";
 		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0던전 몬스터 : " +DungeonName);
 
-		Stack2("§4§l[BOSS]", 160,14,1,Arrays.asList("",ChatColor.WHITE+"보스방에서 나올 몬스터는",ChatColor.WHITE+"이 줄에서 설정합니다.",""), 0, inv);
-		Stack2("§6§l[부 보스]", 160,5,1,Arrays.asList("",ChatColor.WHITE+"보스방 앞에서 나올 몬스터는",ChatColor.WHITE+"이 줄에서 설정합니다.",""), 9, inv);
-		Stack2("§e§l[상급 몬스터]", 160,4,1,Arrays.asList("",ChatColor.WHITE+"일반 방에서 나올 매우 강한 몬스터는",ChatColor.WHITE+"이 줄에서 설정합니다.",""), 18, inv);
-		Stack2("§a§l[중급 몬스터]", 160,5,1,Arrays.asList("",ChatColor.WHITE+"일반 방에서 나올 강한 몬스터는",ChatColor.WHITE+"이 줄에서 설정합니다.",""), 27, inv);
-		Stack2("§9§l[하급 몬스터]", 160,11,1,Arrays.asList("",ChatColor.WHITE+"일반 방에서 나올 일반 몬스터는",ChatColor.WHITE+"이 줄에서 설정합니다.",""), 36, inv);
+		Stack2("§4§l[BOSS]", 160,14,1,Arrays.asList("","§f보스방에서 나올 몬스터는","§f이 줄에서 설정합니다.",""), 0, inv);
+		Stack2("§6§l[부 보스]", 160,5,1,Arrays.asList("","§f보스방 앞에서 나올 몬스터는","§f이 줄에서 설정합니다.",""), 9, inv);
+		Stack2("§e§l[상급 몬스터]", 160,4,1,Arrays.asList("","§f일반 방에서 나올 매우 강한 몬스터는","§f이 줄에서 설정합니다.",""), 18, inv);
+		Stack2("§a§l[중급 몬스터]", 160,5,1,Arrays.asList("","§f일반 방에서 나올 강한 몬스터는","§f이 줄에서 설정합니다.",""), 27, inv);
+		Stack2("§9§l[하급 몬스터]", 160,11,1,Arrays.asList("","§f일반 방에서 나올 일반 몬스터는","§f이 줄에서 설정합니다.",""), 36, inv);
 
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 53, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
 
 		String Type = "Boss";
 		for(int count2 = 0; count2 < 5; count2 ++)
@@ -318,63 +318,63 @@ public final class Dungeon_GUI extends Util_GUI
 			for(int count = 0; count < 8; count ++)
 			{
 				if(dungeonYaml.getString(Type+"."+count)==null)
-					Stack2("§f§l[없음]", 383, 0, 1,Arrays.asList("",ChatColor.YELLOW + "[좌 클릭시 등록]"), count+1+(count2*9), inv);
+					Stack2("§f§l[없음]", 383, 0, 1,Arrays.asList("","§e[좌 클릭시 등록]"), count+1+(count2*9), inv);
 				else
 				{
 					switch(dungeonYaml.getString(Type+"."+count))
 					{
 					case "놂좀비":
-						Stack2("§2§l[일반 좀비]", 397, 2, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§2§l[일반 좀비]", 397, 2, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂스켈레톤":
-						Stack2("§7§l[일반 스켈레톤]", 397, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§7§l[일반 스켈레톤]", 397, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂크리퍼":
-						Stack2("§a§l[일반 크리퍼]", 397, 4, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§a§l[일반 크리퍼]", 397, 4, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂거미":
-						Stack2("§7§l[일반 거미]", 287, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§7§l[일반 거미]", 287, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂동굴거미":
-						Stack2("§7§l[일반 동굴 거미]", 375, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§7§l[일반 동굴 거미]", 375, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂엔더맨":
-						Stack2("§8§l[일반 엔더맨]", 368, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§7§l[일반 엔더맨]", 368, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂슬라임":
-						Stack2("§a§l[일반 슬라임]", 341, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§a§l[일반 슬라임]", 341, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂마그마큐브":
-						Stack2("§e§l[일반 마그마 큐브]", 378, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§e§l[일반 마그마 큐브]", 378, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂마녀":
-						Stack2("§8§l[일반 마녀]", 438, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§7§l[일반 마녀]", 438, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂좀비피그맨":
-						Stack2("§d§l[일반 좀비 피그맨]", 283, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§d§l[일반 좀비 피그맨]", 283, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂블레이즈":
-						Stack2("§e§l[일반 블레이즈]", 369, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§e§l[일반 블레이즈]", 369, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂가스트":
-						Stack2("§f§l[일반 가스트]", 370, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;	
+						Stack2("§f§l[일반 가스트]", 370, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;	
 					case "놂가디언":
-						Stack2("§3§l[일반 수호자]", 410, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;	
+						Stack2("§3§l[일반 수호자]", 410, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;	
 					case "놂박쥐":
-						Stack2("§7§l[일반 박쥐]", 1, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;	
+						Stack2("§7§l[일반 박쥐]", 1, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;	
 					case "놂돼지":
-						Stack2("§d§l[일반 돼지]", 319, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;	
+						Stack2("§d§l[일반 돼지]", 319, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;	
 					case "놂양":
-						Stack2("§f§l[일반 양]", 423, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;	
+						Stack2("§f§l[일반 양]", 423, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;	
 					case "놂소":
-						Stack2("§7§l[일반 소]", 363, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;	
+						Stack2("§7§l[일반 소]", 363, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;	
 					case "놂닭":
-						Stack2("§f§l[일반 닭]", 365, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;	
+						Stack2("§f§l[일반 닭]", 365, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;	
 					case "놂오징어":
-						Stack2("§7§l[일반 오징어]", 351, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§7§l[일반 오징어]", 351, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂늑대":
-						Stack2("§f§l[일반 늑대]", 352, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§f§l[일반 늑대]", 352, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂버섯소":
-						Stack2("§c§l[일반 버섯소]", 40, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§c§l[일반 버섯소]", 40, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂오셀롯":
-						Stack2("§e§l[일반 오셀롯]", 349, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§e§l[일반 오셀롯]", 349, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂말":
-						Stack2("§6§l[일반 말]", 418, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§6§l[일반 말]", 418, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂토끼":
-						Stack2("§6§l[일반 토끼]", 411, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§6§l[일반 토끼]", 411, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂주민":
-						Stack2("§6§l[일반 주민]", 388, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§6§l[일반 주민]", 388, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					case "놂북극곰":
-						Stack2("§f§l[일반 북극곰]", 80, 0, 1,Arrays.asList(ChatColor.GRAY+"커스텀 몬스터가 아닌",ChatColor.GRAY+"일반 적인 몬스터입니다.","",ChatColor.YELLOW + "[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
+						Stack2("§f§l[일반 북극곰]", 80, 0, 1,Arrays.asList("§7커스텀 몬스터가 아닌","§7일반 적인 몬스터입니다.","","§e[좌 클릭시 변경]"), count+1+(count2*9), inv);break;
 					default:
 						YamlLoader monsterYaml = new YamlLoader();
 						monsterYaml.getConfig("Monster/MonsterList.yml");
@@ -385,25 +385,25 @@ public final class Dungeon_GUI extends Util_GUI
 						String[] monsterList = monsterYaml.getKeys().toArray(new String[0]);
 						for(int count3=0;count3 < monsterList.length;count3++)
 						{
-							if(monsterList[count3].compareTo(mobName)==0)
+							if(monsterList[count3].equals(mobName))
 							{
 								lore.clear();
 								lore.add("");
-								lore.add("§f§l 이름 : "+ChatColor.WHITE+monsterYaml.getString(mobName+".Name"));
-								lore.add("§f§l 타입 : "+ChatColor.WHITE+monsterYaml.getString(mobName+".Type"));
-								lore.add("§f§l 스폰 바이옴 : "+ChatColor.WHITE+monsterYaml.getString(mobName+".Biome"));
-								lore.add("§c§l 생명력 : "+ChatColor.WHITE+monsterYaml.getInt(mobName+".HP"));
-								lore.add("§b§l 경험치 : "+ChatColor.WHITE+monsterYaml.getInt(mobName+".EXP"));
-								lore.add("§e§l 드랍 금액 : "+ChatColor.WHITE+monsterYaml.getInt(mobName+".MIN_Money")+" ~ "+monsterYaml.getInt(mobName+".MAX_Money"));
-								lore.add("§c§l "+main.Main_ServerOption.STR+" : "+ChatColor.WHITE+monsterYaml.getInt(mobName+".STR")+ChatColor.GRAY+ " [물공 : " + Battle_Calculator.CombatDamageGet(null, 0, monsterYaml.getInt(mobName+".STR"), true) + " ~ " + Battle_Calculator.CombatDamageGet(null, 0, monsterYaml.getInt(mobName+".STR"), false) + "]");
-								lore.add("§a§l "+main.Main_ServerOption.DEX+" : "+ChatColor.WHITE+monsterYaml.getInt(mobName+".DEX")+ChatColor.GRAY+ " [활공 : " + Battle_Calculator.returnRangeDamageValue(null, monsterYaml.getInt(mobName+".DEX"), 0, true) + " ~ " + Battle_Calculator.returnRangeDamageValue(null, monsterYaml.getInt(mobName+".DEX"), 0, false) + "]");
-								lore.add("§3§l "+main.Main_ServerOption.INT+" : "+ChatColor.WHITE+monsterYaml.getInt(mobName+".INT")+ChatColor.GRAY+ " [폭공 : " + (monsterYaml.getInt(mobName+".INT")/4)+ " ~ "+(int)(monsterYaml.getInt(mobName+".INT")/2.5)+"]");
-								lore.add("§7§l "+main.Main_ServerOption.WILL+" : "+ChatColor.WHITE+monsterYaml.getInt(mobName+".WILL")+ChatColor.GRAY+ " [크리 : " + Battle_Calculator.getCritical(null,monsterYaml.getInt(mobName+".LUK"), (int)monsterYaml.getInt(mobName+".WILL"),0) + " %]");
-								lore.add("§e§l "+main.Main_ServerOption.LUK+" : "+ChatColor.WHITE+monsterYaml.getInt(mobName+".LUK")+ChatColor.GRAY+ " [크리 : " + Battle_Calculator.getCritical(null,monsterYaml.getInt(mobName+".LUK"), (int)monsterYaml.getInt(mobName+".WILL"),0) + " %]");
-								lore.add("§7§l 방어 : "+ChatColor.WHITE+monsterYaml.getInt(mobName+".DEF"));
-								lore.add("§b§l 보호 : "+ChatColor.WHITE+monsterYaml.getInt(mobName+".Protect"));
-								lore.add("§9§l 마법 방어 : "+ChatColor.WHITE+monsterYaml.getInt(mobName+".Magic_DEF"));
-								lore.add("§1§l 마법 보호 : "+ChatColor.WHITE+monsterYaml.getInt(mobName+".Magic_Protect"));
+								lore.add("§f§l 이름 : §f"+monsterYaml.getString(mobName+".Name"));
+								lore.add("§f§l 타입 : §f"+monsterYaml.getString(mobName+".Type"));
+								lore.add("§f§l 스폰 바이옴 : §f"+monsterYaml.getString(mobName+".Biome"));
+								lore.add("§c§l 생명력 : §f"+monsterYaml.getInt(mobName+".HP"));
+								lore.add("§b§l 경험치 : §f"+monsterYaml.getInt(mobName+".EXP"));
+								lore.add("§e§l 드랍 금액 : §f"+monsterYaml.getInt(mobName+".MIN_Money")+" ~ "+monsterYaml.getInt(mobName+".MAX_Money"));
+								lore.add("§c§l "+main.Main_ServerOption.statSTR+" : §f"+monsterYaml.getInt(mobName+".STR")+"§7 [물공 : " + Battle_Calculator.CombatDamageGet(null, 0, monsterYaml.getInt(mobName+".STR"), true) + " ~ " + Battle_Calculator.CombatDamageGet(null, 0, monsterYaml.getInt(mobName+".STR"), false) + "]");
+								lore.add("§a§l "+main.Main_ServerOption.statDEX+" : §f"+monsterYaml.getInt(mobName+".DEX")+"§7 [활공 : " + Battle_Calculator.returnRangeDamageValue(null, monsterYaml.getInt(mobName+".DEX"), 0, true) + " ~ " + Battle_Calculator.returnRangeDamageValue(null, monsterYaml.getInt(mobName+".DEX"), 0, false) + "]");
+								lore.add("§3§l "+main.Main_ServerOption.statINT+" : §f"+monsterYaml.getInt(mobName+".INT")+"§7 [폭공 : " + (monsterYaml.getInt(mobName+".INT")/4)+ " ~ "+(int)(monsterYaml.getInt(mobName+".INT")/2.5)+"]");
+								lore.add("§7§l "+main.Main_ServerOption.statWILL+" : §f"+monsterYaml.getInt(mobName+".WILL")+"§7 [크리 : " + Battle_Calculator.getCritical(null,monsterYaml.getInt(mobName+".LUK"), (int)monsterYaml.getInt(mobName+".WILL"),0) + " %]");
+								lore.add("§e§l "+main.Main_ServerOption.statLUK+" : §f"+monsterYaml.getInt(mobName+".LUK")+"§7 [크리 : " + Battle_Calculator.getCritical(null,monsterYaml.getInt(mobName+".LUK"), (int)monsterYaml.getInt(mobName+".WILL"),0) + " %]");
+								lore.add("§7§l 방어 : §f"+monsterYaml.getInt(mobName+".DEF"));
+								lore.add("§b§l 보호 : §f"+monsterYaml.getInt(mobName+".Protect"));
+								lore.add("§9§l 마법 방어 : §f"+monsterYaml.getInt(mobName+".Magic_DEF"));
+								lore.add("§1§l 마법 보호 : §f"+monsterYaml.getInt(mobName+".Magic_Protect"));
 								lore.add("");
 								lore.add("§e§l[좌 클릭시 변경]");
 								
@@ -442,7 +442,7 @@ public final class Dungeon_GUI extends Util_GUI
 									case "엔더드래곤" : id=122; break;
 									case "엔더크리스탈" : id=46; break;
 								}
-								Stack(ChatColor.WHITE+mobName, id, data, 1, lore, count+1+(count2*9), inv);
+								Stack("§f"+mobName, id, data, 1, lore, count+1+(count2*9), inv);
 								ItemMeta a = inv.getItem(count+1+(count2*9)).getItemMeta();
 								a.addEnchant(Enchantment.SILK_TOUCH, 3, true);
 								inv.getItem(count+1+(count2*9)).setItemMeta(a);
@@ -454,7 +454,7 @@ public final class Dungeon_GUI extends Util_GUI
 						{
 							dungeonYaml.set(Type+"."+count, null);
 							dungeonYaml.saveConfig();
-							Stack2("§f§l[없음]", 383, 0, 1,Arrays.asList("",ChatColor.YELLOW + "[좌 클릭시 등록]"), count+1+(count2*9), inv);
+							Stack2("§f§l[없음]", 383, 0, 1,Arrays.asList("","§e[좌 클릭시 등록]"), count+1+(count2*9), inv);
 						}
 					}
 				}
@@ -467,12 +467,12 @@ public final class Dungeon_GUI extends Util_GUI
 	{
 		String UniqueCode = "§0§0§a§0§4§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0던전 몬스터 : " +DungeonName);
-		Stack2("§c§l[없음]", 166,0,1,Arrays.asList(ChatColor.GRAY + "몬스터 설정을 하지 않습니다."), 2, inv);
-		Stack2("§f§l[일반]", 383,0,1,Arrays.asList(ChatColor.GRAY + "일반적인 몬스터 중 하나로 고릅니다."), 4, inv);
-		Stack2("§b§l[커스텀]", 52,0,1,Arrays.asList(ChatColor.GRAY + "커스텀 몬스터 중 하나로 고릅니다.","",ChatColor.RED+"[엔더 크리스탈 형태의 몬스터를",ChatColor.RED+"선택할 경우, 고장의 원인이 됩니다.]"), 6, inv);
+		Stack2("§c§l[없음]", 166,0,1,Arrays.asList("§7몬스터 설정을 하지 않습니다."), 2, inv);
+		Stack2("§f§l[일반]", 383,0,1,Arrays.asList("§7일반적인 몬스터 중 하나로 고릅니다."), 4, inv);
+		Stack2("§b§l[커스텀]", 52,0,1,Arrays.asList("§7커스텀 몬스터 중 하나로 고릅니다.","","§c[엔더 크리스탈 형태의 몬스터를","§c선택할 경우, 고장의 원인이 됩니다.]"), 6, inv);
 		
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+""+slot), 8, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 0, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+slot), 8, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
 		player.openInventory(inv);
 	}
 	
@@ -486,10 +486,10 @@ public final class Dungeon_GUI extends Util_GUI
 		Stack2("§a§l[크리퍼]",397,4,1,null, 2, inv);
 		Stack2("§7§l[거미]",287,0,1,null, 3, inv);
 		Stack2("§7§l[동굴 거미]",375,0,1,null, 4, inv);
-		Stack2("§8§l[엔더맨]",368,0,1,null, 5, inv);
+		Stack2("§7§l[엔더맨]",368,0,1,null, 5, inv);
 		Stack2("§a§l[슬라임]",341,0,1,null, 6, inv);
 		Stack2("§e§l[마그마 큐브]",378,0,1,null, 7, inv);
-		Stack2("§8§l[마녀]",438,0,1,null, 8, inv);
+		Stack2("§7§l[마녀]",438,0,1,null, 8, inv);
 		Stack2("§d§l[좀비 피그맨]",283,0,1,null, 9, inv);
 		Stack2("§e§l[블레이즈]",369,0,1,null, 10, inv);
 		Stack2("§f§l[가스트]",370,0,1,null, 11, inv);
@@ -508,8 +508,8 @@ public final class Dungeon_GUI extends Util_GUI
 		Stack2("§f§l[주민]",388,0,1,null, 24, inv);
 		Stack2("§f§l[북극곰]",80,0,1,null, 25, inv);
 
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+""+slot), 53, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK+Type), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+slot), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+Type), 45, inv);
 		player.openInventory(inv);
 	}
 	
@@ -529,21 +529,21 @@ public final class Dungeon_GUI extends Util_GUI
 			if(count > monsterList.length || loc >= 45) break;
 			lore.clear();
 			lore.add("");
-			lore.add("§f§l 이름 : "+ChatColor.WHITE+monsterYaml.getString(monsterList[count]+".Name"));
-			lore.add("§f§l 타입 : "+ChatColor.WHITE+monsterYaml.getString(monsterList[count]+".Type"));
-			lore.add("§f§l 스폰 바이옴 : "+ChatColor.WHITE+monsterYaml.getString(monsterList[count]+".Biome"));
-			lore.add("§c§l 생명력 : "+ChatColor.WHITE+monsterYaml.getInt(monsterList[count]+".HP"));
-			lore.add("§b§l 경험치 : "+ChatColor.WHITE+monsterYaml.getInt(monsterList[count]+".EXP"));
-			lore.add("§e§l 드랍 금액 : "+ChatColor.WHITE+monsterYaml.getInt(monsterList[count]+".MIN_Money")+" ~ "+monsterYaml.getInt(monsterList[count]+".MAX_Money"));
-			lore.add("§c§l "+main.Main_ServerOption.STR+" : "+ChatColor.WHITE+monsterYaml.getInt(monsterList[count]+".STR")+ChatColor.GRAY+ " [물공 : " + Battle_Calculator.CombatDamageGet(null, 0, monsterYaml.getInt(monsterList[count]+".STR"), true) + " ~ " + Battle_Calculator.CombatDamageGet(null, 0, monsterYaml.getInt(monsterList[count]+".STR"), false) + "]");
-			lore.add("§a§l "+main.Main_ServerOption.DEX+" : "+ChatColor.WHITE+monsterYaml.getInt(monsterList[count]+".DEX")+ChatColor.GRAY+ " [활공 : " + Battle_Calculator.returnRangeDamageValue(null, monsterYaml.getInt(monsterList[count]+".DEX"), 0, true) + " ~ " + Battle_Calculator.returnRangeDamageValue(null, monsterYaml.getInt(monsterList[count]+".DEX"), 0, false) + "]");
-			lore.add("§3§l "+main.Main_ServerOption.INT+" : "+ChatColor.WHITE+monsterYaml.getInt(monsterList[count]+".INT")+ChatColor.GRAY+ " [폭공 : " + (monsterYaml.getInt(monsterList[count]+".INT")/4)+ " ~ "+(int)(monsterYaml.getInt(monsterList[count]+".INT")/2.5)+"]");
-			lore.add("§7§l "+main.Main_ServerOption.WILL+" : "+ChatColor.WHITE+monsterYaml.getInt(monsterList[count]+".WILL")+ChatColor.GRAY+ " [크리 : " + Battle_Calculator.getCritical(null,monsterYaml.getInt(monsterList[count]+".LUK"), (int)monsterYaml.getInt(monsterList[count]+".WILL"),0) + " %]");
-			lore.add("§e§l "+main.Main_ServerOption.LUK+" : "+ChatColor.WHITE+monsterYaml.getInt(monsterList[count]+".LUK")+ChatColor.GRAY+ " [크리 : " + Battle_Calculator.getCritical(null,monsterYaml.getInt(monsterList[count]+".LUK"), (int)monsterYaml.getInt(monsterList[count]+".WILL"),0) + " %]");
-			lore.add("§7§l 방어 : "+ChatColor.WHITE+monsterYaml.getInt(monsterList[count]+".DEF"));
-			lore.add("§b§l 보호 : "+ChatColor.WHITE+monsterYaml.getInt(monsterList[count]+".Protect"));
-			lore.add("§9§l 마법 방어 : "+ChatColor.WHITE+monsterYaml.getInt(monsterList[count]+".Magic_DEF"));
-			lore.add("§1§l 마법 보호 : "+ChatColor.WHITE+monsterYaml.getInt(monsterList[count]+".Magic_Protect"));
+			lore.add("§f§l 이름 : §f"+monsterYaml.getString(monsterList[count]+".Name"));
+			lore.add("§f§l 타입 : §f"+monsterYaml.getString(monsterList[count]+".Type"));
+			lore.add("§f§l 스폰 바이옴 : §f"+monsterYaml.getString(monsterList[count]+".Biome"));
+			lore.add("§c§l 생명력 : §f"+monsterYaml.getInt(monsterList[count]+".HP"));
+			lore.add("§b§l 경험치 : §f"+monsterYaml.getInt(monsterList[count]+".EXP"));
+			lore.add("§e§l 드랍 금액 : §f"+monsterYaml.getInt(monsterList[count]+".MIN_Money")+" ~ "+monsterYaml.getInt(monsterList[count]+".MAX_Money"));
+			lore.add("§c§l "+main.Main_ServerOption.statSTR+" : §f"+monsterYaml.getInt(monsterList[count]+".STR")+"§7 [물공 : " + Battle_Calculator.CombatDamageGet(null, 0, monsterYaml.getInt(monsterList[count]+".STR"), true) + " ~ " + Battle_Calculator.CombatDamageGet(null, 0, monsterYaml.getInt(monsterList[count]+".STR"), false) + "]");
+			lore.add("§a§l "+main.Main_ServerOption.statDEX+" : §f"+monsterYaml.getInt(monsterList[count]+".DEX")+"§7 [활공 : " + Battle_Calculator.returnRangeDamageValue(null, monsterYaml.getInt(monsterList[count]+".DEX"), 0, true) + " ~ " + Battle_Calculator.returnRangeDamageValue(null, monsterYaml.getInt(monsterList[count]+".DEX"), 0, false) + "]");
+			lore.add("§3§l "+main.Main_ServerOption.statINT+" : §f"+monsterYaml.getInt(monsterList[count]+".INT")+"§7 [폭공 : " + (monsterYaml.getInt(monsterList[count]+".INT")/4)+ " ~ "+(int)(monsterYaml.getInt(monsterList[count]+".INT")/2.5)+"]");
+			lore.add("§7§l "+main.Main_ServerOption.statWILL+" : §f"+monsterYaml.getInt(monsterList[count]+".WILL")+"§7 [크리 : " + Battle_Calculator.getCritical(null,monsterYaml.getInt(monsterList[count]+".LUK"), (int)monsterYaml.getInt(monsterList[count]+".WILL"),0) + " %]");
+			lore.add("§e§l "+main.Main_ServerOption.statLUK+" : §f"+monsterYaml.getInt(monsterList[count]+".LUK")+"§7 [크리 : " + Battle_Calculator.getCritical(null,monsterYaml.getInt(monsterList[count]+".LUK"), (int)monsterYaml.getInt(monsterList[count]+".WILL"),0) + " %]");
+			lore.add("§7§l 방어 : §f"+monsterYaml.getInt(monsterList[count]+".DEF"));
+			lore.add("§b§l 보호 : §f"+monsterYaml.getInt(monsterList[count]+".Protect"));
+			lore.add("§9§l 마법 방어 : §f"+monsterYaml.getInt(monsterList[count]+".Magic_DEF"));
+			lore.add("§1§l 마법 보호 : §f"+monsterYaml.getInt(monsterList[count]+".Magic_Protect"));
 
 			int id = 383;
 			int data = 0;
@@ -581,17 +581,17 @@ public final class Dungeon_GUI extends Util_GUI
 				case "엔더크리스탈" : id=46; break;
 			}
 			
-			Stack(ChatColor.WHITE+monsterList[count], id, data, 1,lore, loc, inv);
+			Stack("§f"+monsterList[count], id, data, 1,lore, loc, inv);
 			loc=loc+1;
 		}
 		
 		if(monsterList.length-(page*44)>45)
-		Stack("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+		Stack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-		Stack("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+		Stack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK+Type), 45, inv);
-		Stack("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+""+slot,ChatColor.BLACK+DungeonName), 53, inv);
+		Stack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+Type), 45, inv);
+		Stack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+slot,"§0"+DungeonName), 53, inv);
 		player.openInventory(inv);
 	}
 
@@ -608,15 +608,15 @@ public final class Dungeon_GUI extends Util_GUI
 			else
 				model=0;
 			otherplugins.NoteBlockAPIMain NBAPI = new otherplugins.NoteBlockAPIMain();
-			String lore = " %enter%"+ChatColor.DARK_AQUA+"[트랙] "+ChatColor.BLUE +""+ count+"%enter%"
-			+ChatColor.DARK_AQUA+"[제목] "+ChatColor.BLUE +""+ NBAPI.getTitle(count)+"%enter%"
-			+ChatColor.DARK_AQUA+"[저자] "+ChatColor.BLUE+NBAPI.getAuthor(count)+"%enter%"+ChatColor.DARK_AQUA+"[설명] ";
+			String lore = " %enter%§3[트랙] §9"+ count+"%enter%"
+			+"§3[제목] §9"+ NBAPI.getTitle(count)+"%enter%"
+			+"§3[저자] §9"+NBAPI.getAuthor(count)+"%enter%§3[설명] ";
 			String Description = NBAPI.getDescription(count);
 			String lore2="";
 			int a = 0;
 			for(int counter = 0; counter <Description.toCharArray().length; counter++)
 			{
-				lore2 = lore2+ChatColor.BLUE+Description.toCharArray()[counter];
+				lore2 = lore2+"§9"+Description.toCharArray()[counter];
 				a=a+1;
 				if(a >= 15)
 				{
@@ -624,20 +624,20 @@ public final class Dungeon_GUI extends Util_GUI
 					lore2 = lore2+"%enter%      ";
 				}
 			}
-			lore = lore + lore2+"%enter% %enter%"+ChatColor.YELLOW+"[좌 클릭시 배경음 설정]";
+			lore = lore + lore2+"%enter% %enter%§e[좌 클릭시 배경음 설정]";
 			if(count > otherplugins.NoteBlockAPIMain.Musics.size() || loc >= 45) break;
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + count, 2256+model,0,1,Arrays.asList(lore.split("%enter%")), loc, inv);
+			Stack2("§f§l" + count, 2256+model,0,1,Arrays.asList(lore.split("%enter%")), loc, inv);
 			
 			loc=loc+1;
 		}
 		
 		if(otherplugins.NoteBlockAPIMain.Musics.size()-(page*44)>45)
-		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK+""+isBOSS), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+DungeonName), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+isBOSS), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+DungeonName), 53, inv);
 		player.openInventory(inv);
 	}
 	//DungeonGUI//
@@ -652,13 +652,13 @@ public final class Dungeon_GUI extends Util_GUI
 		String UniqueCode = "§0§0§a§0§8§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0통행증 설정");
 		if(dungeonYaml.getString(EnterCardName+".Dungeon")!= null)
-			Stack2("§f§l[통행증 연결 던전]", 52,0,1,Arrays.asList("",ChatColor.BLUE + "현재 이어진 던전 : "+ChatColor.WHITE+dungeonYaml.getString(EnterCardName+".Dungeon")), 2, inv);
+			Stack2("§f§l[통행증 연결 던전]", 52,0,1,Arrays.asList("","§9현재 이어진 던전 : §f"+dungeonYaml.getString(EnterCardName+".Dungeon")), 2, inv);
 		else
-			Stack2("§f§l[통행증 연결 던전]", 166,0,1,Arrays.asList("",ChatColor.BLUE + "현재 이어진 던전 : "+ChatColor.WHITE+"없음"), 2, inv);
+			Stack2("§f§l[통행증 연결 던전]", 166,0,1,Arrays.asList("","§9현재 이어진 던전 : §f없음"), 2, inv);
 			
-		Stack2("§f§l[통행증 형태 변경]", dungeonYaml.getInt(EnterCardName+".ID"),dungeonYaml.getInt(EnterCardName+".DATA"),1,Arrays.asList("",ChatColor.BLUE + "현재 아이템 타입 : "+ChatColor.WHITE+dungeonYaml.getInt(EnterCardName+".ID")+":"+ dungeonYaml.getInt(EnterCardName+".DATA"),"",ChatColor.YELLOW+"[F3 + H 입력시 타입 확인 가능]"), 3, inv);
-		Stack2("§f§l[통행증 형태 초기화]", 325,0,1,Arrays.asList("",ChatColor.WHITE + "통행증 형태가 나타나지 않을 때",ChatColor.WHITE+"누르면 초기화 해 줍니다."), 4, inv);
-		Stack2("§f§l[통행증 입장 인원]", 397,3,1,Arrays.asList("",ChatColor.BLUE + "입장 가능 인원 : "+ChatColor.WHITE+dungeonYaml.getInt(EnterCardName+".Capacity")+" 명"), 5, inv);
+		Stack2("§f§l[통행증 형태 변경]", dungeonYaml.getInt(EnterCardName+".ID"),dungeonYaml.getInt(EnterCardName+".DATA"),1,Arrays.asList("","§9현재 아이템 타입 : §f"+dungeonYaml.getInt(EnterCardName+".ID")+":"+ dungeonYaml.getInt(EnterCardName+".DATA"),"","§e[F3 + H 입력시 타입 확인 가능]"), 3, inv);
+		Stack2("§f§l[통행증 형태 초기화]", 325,0,1,Arrays.asList("","§f통행증 형태가 나타나지 않을 때","§f누르면 초기화 해 줍니다."), 4, inv);
+		Stack2("§f§l[통행증 입장 인원]", 397,3,1,Arrays.asList("","§9입장 가능 인원 : §f"+dungeonYaml.getInt(EnterCardName+".Capacity")+" 명"), 5, inv);
 
 		String Time = null;
 		if(dungeonYaml.getInt(EnterCardName.toString()+".Hour")!=-1)
@@ -671,10 +671,10 @@ public final class Dungeon_GUI extends Util_GUI
 		}
 		else
 			Time = "무제한";
-		Stack2("§f§l[통행증 유효 시간]", 347,0,1,Arrays.asList("",ChatColor.WHITE+Time), 6, inv);
+		Stack2("§f§l[통행증 유효 시간]", 347,0,1,Arrays.asList("","§f"+Time), 6, inv);
 
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+EnterCardName), 8, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 0, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+EnterCardName), 8, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
 
 		player.openInventory(inv);
 	}
@@ -694,27 +694,27 @@ public final class Dungeon_GUI extends Util_GUI
 			YamlLoader DungeonOptionYML = new YamlLoader();
 			DungeonOptionYML.getConfig("Dungeon/Dungeon/"+DungeonList[count]+"/Option.yml");
 			
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + DungeonList[count], 52,0,1,Arrays.asList(
-			"",ChatColor.BLUE+"던전 형태 : "+ChatColor.WHITE+DungeonOptionYML.getString("Type.Name")
-			,ChatColor.BLUE+"던전 크기 : "+ChatColor.WHITE+DungeonOptionYML.getInt("Size")
-			,ChatColor.BLUE+"던전 밀집도 : "+ChatColor.WHITE+DungeonOptionYML.getInt("Maze_Level")
-			,ChatColor.BLUE+"레벨 제한 : "+ChatColor.WHITE+DungeonOptionYML.getInt("District.Level")+" 이상"
-			,ChatColor.BLUE+"누적 레벨 제한 : "+ChatColor.WHITE+DungeonOptionYML.getInt("District.RealLevel")+" 이상"
-			,"",ChatColor.BLUE+"[기본 클리어 보상]"
-			,ChatColor.BLUE+" - "+ChatColor.WHITE+DungeonOptionYML.getInt("Reward.Money")+" "+main.Main_ServerOption.Money
-			,ChatColor.BLUE+" - "+ChatColor.WHITE+DungeonOptionYML.getInt("Reward.EXP")+"§b§lEXP"
-			,"",ChatColor.YELLOW+"[좌 클릭시 연결]"), loc, inv);
+			Stack2("§f§l" + DungeonList[count], 52,0,1,Arrays.asList(
+			"","§9던전 형태 : §f"+DungeonOptionYML.getString("Type.Name")
+			,"§9던전 크기 : §f"+DungeonOptionYML.getInt("Size")
+			,"§9던전 밀집도 : §f"+DungeonOptionYML.getInt("Maze_Level")
+			,"§9레벨 제한 : §f"+DungeonOptionYML.getInt("District.Level")+" 이상"
+			,"§9누적 레벨 제한 : §f"+DungeonOptionYML.getInt("District.RealLevel")+" 이상"
+			,"","§9[기본 클리어 보상]"
+			,"§9 - §f"+DungeonOptionYML.getInt("Reward.Money")+" "+main.Main_ServerOption.money
+			,"§9 - §f"+DungeonOptionYML.getInt("Reward.EXP")+"§b§lEXP"
+			,"","§e[좌 클릭시 연결]"), loc, inv);
 			
 			loc=loc+1;
 		}
 		
 		if(DungeonList.length-(page*44)>45)
-		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+EnterCardName), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+EnterCardName), 53, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -725,15 +725,15 @@ public final class Dungeon_GUI extends Util_GUI
 	{
 		String UniqueCode = "§0§0§a§0§a§r";
 		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0제단 형태");
-		Stack2("§2§l[이끼 낀 제단]", 48,0,1,Arrays.asList("",ChatColor.BLUE + "크기 : "+ChatColor.WHITE+"소형",ChatColor.BLUE+"예상 건축 시간 : "+ChatColor.WHITE+"13초","",ChatColor.GOLD+""+ChatColor.BOLD+"[     건축가     ]",ChatColor.WHITE+"GoldBigDragon [모두]"), 0, inv);
-		Stack2("§e§l[金泰龍]", 41,0,1,Arrays.asList("",ChatColor.BLUE + "크기 : "+ChatColor.WHITE+"대형",ChatColor.BLUE+"예상 건축 시간 : "+ChatColor.WHITE+"15분","",ChatColor.GOLD+""+ChatColor.BOLD+"[     건축가     ]",ChatColor.WHITE+"ComputerFairy [날개]",ChatColor.WHITE+"GoldBigDragon [용]"), 1, inv);
-		Stack2("§7§l[스톤 헨지]", 1,0,1,Arrays.asList("",ChatColor.BLUE + "크기 : "+ChatColor.WHITE+"소형",ChatColor.BLUE+"예상 건축 시간 : "+ChatColor.WHITE+"1분 5초","",ChatColor.GOLD+""+ChatColor.BOLD+"[     건축가     ]",ChatColor.WHITE+"GoldBigDragon [모두]"), 2, inv);
-		Stack2("§7§l[해부대]", 1,5,1,Arrays.asList("",ChatColor.BLUE + "크기 : "+ChatColor.WHITE+"소형",ChatColor.BLUE+"예상 건축 시간 : "+ChatColor.WHITE+"8초","",ChatColor.GOLD+""+ChatColor.BOLD+"[     건축가     ]",ChatColor.WHITE+"GoldBigDragon [모두]"), 3, inv);
+		Stack2("§2§l[이끼 낀 제단]", 48,0,1,Arrays.asList("","§9크기 : §f소형","§9예상 건축 시간 : §f13초","","§6§l[     건축가     ]","§fGoldBigDragon [모두]"), 0, inv);
+		Stack2("§e§l[金泰龍]", 41,0,1,Arrays.asList("","§9크기 : §f대형","§9예상 건축 시간 : §f15분","","§6§l[     건축가     ]","§fComputerFairy [날개]","§fGoldBigDragon [용]"), 1, inv);
+		Stack2("§7§l[스톤 헨지]", 1,0,1,Arrays.asList("","§9크기 : §f소형","§9예상 건축 시간 : §f1분 5초","","§6§l[     건축가     ]","§fGoldBigDragon [모두]"), 2, inv);
+		Stack2("§7§l[해부대]", 1,5,1,Arrays.asList("","§9크기 : §f소형","§9예상 건축 시간 : §f8초","","§6§l[     건축가     ]","§fGoldBigDragon [모두]"), 3, inv);
 		Stack2("§7§l[테스트용 제단]", 48,0,1,null, 44, inv);
 		
 		
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다."), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -747,26 +747,26 @@ public final class Dungeon_GUI extends Util_GUI
 		AltarList.getConfig("Dungeon/AltarList.yml");
 	  	YamlLoader AltarConfig = new YamlLoader();
 		AltarConfig.getConfig("Dungeon/Altar/"+AltarName+".yml");
-		Stack2("§f§l[이름 변경]", 421,0,1,Arrays.asList(ChatColor.GRAY+"제단의 이름을 변경합니다.","",ChatColor.BLUE+"[현재 제단 이름]",ChatColor.WHITE+AltarList.getString(AltarName+".Name")), 2, inv);
+		Stack2("§f§l[이름 변경]", 421,0,1,Arrays.asList("§7제단의 이름을 변경합니다.","","§9[현재 제단 이름]","§f"+AltarList.getString(AltarName+".Name")), 2, inv);
 		if(AltarConfig.getString("NormalDungeon")==null)
-			Stack2("§f§l[일반 던전]", 166,0,1,Arrays.asList(ChatColor.GRAY+"이 제단에 통행증을 제외한",ChatColor.GRAY+"아이템을 바쳤을 경우 생성되는",ChatColor.GRAY+"일반 던전을 설정합니다.","",ChatColor.BLUE+"[현재 설정된 일반 던전]",ChatColor.WHITE+"설정되지 않음"), 4, inv);
+			Stack2("§f§l[일반 던전]", 166,0,1,Arrays.asList("§7이 제단에 통행증을 제외한","§7아이템을 바쳤을 경우 생성되는","§7일반 던전을 설정합니다.","","§9[현재 설정된 일반 던전]","§f설정되지 않음"), 4, inv);
 		else
 		{
 		  	YamlLoader DungeonList = new YamlLoader();
 			DungeonList.getConfig("Dungeon/DungeonList.yml");
 			if(DungeonList.contains(AltarConfig.getString("NormalDungeon")))
-				Stack2("§f§l[일반 던전]", 52,0,1,Arrays.asList(ChatColor.GRAY+"제단에 통행증을 제외한",ChatColor.GRAY+"아이템을 바쳤을 경우 생성되는",ChatColor.GRAY+"일반 던전을 설정합니다.","",ChatColor.BLUE+"[현재 설정된 일반 던전]",ChatColor.WHITE+AltarConfig.getString("NormalDungeon")), 4, inv);
+				Stack2("§f§l[일반 던전]", 52,0,1,Arrays.asList("§7제단에 통행증을 제외한","§7아이템을 바쳤을 경우 생성되는","§7일반 던전을 설정합니다.","","§9[현재 설정된 일반 던전]","§f"+AltarConfig.getString("NormalDungeon")), 4, inv);
 			else
 			{
 				AltarConfig.set("NormalDungeon", null);
 				AltarConfig.saveConfig();
-				Stack2("§f§l[일반 던전]", 166,0,1,Arrays.asList(ChatColor.GRAY+"제단에 통행증을 제외한",ChatColor.GRAY+"아이템을 바쳤을 경우 생성되는",ChatColor.GRAY+"일반 던전을 설정합니다.","",ChatColor.BLUE+"[현재 설정된 일반 던전]",ChatColor.WHITE+"설정되지 않음"), 4, inv);
+				Stack2("§f§l[일반 던전]", 166,0,1,Arrays.asList("§7제단에 통행증을 제외한","§7아이템을 바쳤을 경우 생성되는","§7일반 던전을 설정합니다.","","§9[현재 설정된 일반 던전]","§f설정되지 않음"), 4, inv);
 			}
 		}
-		Stack2("§f§l[통행증 등록]", 358,0,1,Arrays.asList(ChatColor.GRAY+"제단에서 사용 가능한",ChatColor.GRAY+"통행증을 등록합니다.","",ChatColor.YELLOW+"[좌 클릭시 통행증 등록]"), 6, inv);
+		Stack2("§f§l[통행증 등록]", 358,0,1,Arrays.asList("§7제단에서 사용 가능한","§7통행증을 등록합니다.","","§e[좌 클릭시 통행증 등록]"), 6, inv);
 
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+AltarName), 8, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 0, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+AltarName), 8, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
 
 		player.openInventory(inv);
 		return;
@@ -787,27 +787,27 @@ public final class Dungeon_GUI extends Util_GUI
 		{
 			DungeonOptionYML.getConfig("Dungeon/Dungeon/"+DungeonList[count]+"/Option.yml");
 			
-			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + DungeonList[count], 52,0,1,Arrays.asList(
-			"",ChatColor.BLUE+"던전 형태 : "+ChatColor.WHITE+DungeonOptionYML.getString("Type.Name")
-			,ChatColor.BLUE+"던전 크기 : "+ChatColor.WHITE+DungeonOptionYML.getInt("Size")
-			,ChatColor.BLUE+"던전 밀집도 : "+ChatColor.WHITE+DungeonOptionYML.getInt("Maze_Level")
-			,ChatColor.BLUE+"레벨 제한 : "+ChatColor.WHITE+DungeonOptionYML.getInt("District.Level")+" 이상"
-			,ChatColor.BLUE+"누적 레벨 제한 : "+ChatColor.WHITE+DungeonOptionYML.getInt("District.RealLevel")+" 이상"
-			,"",ChatColor.BLUE+"[기본 클리어 보상]"
-			,ChatColor.BLUE+" - "+ChatColor.WHITE+DungeonOptionYML.getInt("Reward.Money")+" "+main.Main_ServerOption.Money
-			,ChatColor.BLUE+" - "+ChatColor.WHITE+DungeonOptionYML.getInt("Reward.EXP")+"§b§lEXP"
-			,"",ChatColor.YELLOW+"[좌 클릭시 연결]"), loc, inv);
+			Stack2("§f§l" + DungeonList[count], 52,0,1,Arrays.asList(
+			"","§9던전 형태 : §f"+DungeonOptionYML.getString("Type.Name")
+			,"§9던전 크기 : §f"+DungeonOptionYML.getInt("Size")
+			,"§9던전 밀집도 : §f"+DungeonOptionYML.getInt("Maze_Level")
+			,"§9레벨 제한 : §f"+DungeonOptionYML.getInt("District.Level")+" 이상"
+			,"§9누적 레벨 제한 : §f"+DungeonOptionYML.getInt("District.RealLevel")+" 이상"
+			,"","§9[기본 클리어 보상]"
+			,"§9 - §f"+DungeonOptionYML.getInt("Reward.Money")+" "+main.Main_ServerOption.money
+			,"§9 - §f"+DungeonOptionYML.getInt("Reward.EXP")+"§b§lEXP"
+			,"","§e[좌 클릭시 연결]"), loc, inv);
 			
 			loc=loc+1;
 		}
 		
 		if(DungeonList.length-(page*44)>45)
-		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",AltarName), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.",AltarName), 53, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -833,28 +833,28 @@ public final class Dungeon_GUI extends Util_GUI
 				if(EnterCard.contains(EnterCardList[count]))
 				{
 					if(EnterCard.getString(EnterCardList[count]+".Dungeon")==null)
-						Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + EnterCardList[count], EnterCard.getInt(EnterCardList[count]+".ID"),EnterCard.getInt(EnterCardList[count]+".DATA"),1,Arrays.asList(
-								"",ChatColor.BLUE+"연결된 던전 : "+ChatColor.WHITE+"없음",
-								ChatColor.BLUE+"입장 가능 인원 : "+ChatColor.WHITE+""+EnterCard.getInt(EnterCardList[count]+".Capacity"),
-								"",ChatColor.RED+"[Shift + 우클릭시 등록 해제]"), loc, inv);
+						Stack2("§f§l" + EnterCardList[count], EnterCard.getInt(EnterCardList[count]+".ID"),EnterCard.getInt(EnterCardList[count]+".DATA"),1,Arrays.asList(
+								"","§9연결된 던전 : §f없음",
+								"§9입장 가능 인원 : §f"+EnterCard.getInt(EnterCardList[count]+".Capacity"),
+								"","§c[Shift + 우클릭시 등록 해제]"), loc, inv);
 					else
 					{
 						Dungeon.getConfig("Dungeon/DungeonList.yml");
 						if(Dungeon.contains(EnterCard.getString(EnterCardList[count]+".Dungeon")))
 						{
-							Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + EnterCardList[count], EnterCard.getInt(EnterCardList[count]+".ID"),EnterCard.getInt(EnterCardList[count]+".DATA"),1,Arrays.asList(
-							"",ChatColor.BLUE+"연결된 던전 : "+ChatColor.WHITE+""+EnterCard.getString(EnterCardList[count]+".Dungeon"),
-							ChatColor.BLUE+"입장 가능 인원 : "+ChatColor.WHITE+""+EnterCard.getInt(EnterCardList[count]+".Capacity"),
-							"",ChatColor.RED+"[Shift + 우클릭시 등록 해제]"), loc, inv);
+							Stack2("§f§l" + EnterCardList[count], EnterCard.getInt(EnterCardList[count]+".ID"),EnterCard.getInt(EnterCardList[count]+".DATA"),1,Arrays.asList(
+							"","§9연결된 던전 : §f"+EnterCard.getString(EnterCardList[count]+".Dungeon"),
+							"§9입장 가능 인원 : §f"+EnterCard.getInt(EnterCardList[count]+".Capacity"),
+							"","§c[Shift + 우클릭시 등록 해제]"), loc, inv);
 						}
 						else
 						{
 							EnterCard.set(EnterCardList[count]+".Dungeon",null);
 							EnterCard.saveConfig();
-							Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + EnterCardList[count], EnterCard.getInt(EnterCardList[count]+".ID"),EnterCard.getInt(EnterCardList[count]+".DATA"),1,Arrays.asList(
-									"",ChatColor.BLUE+"연결된 던전 : "+ChatColor.WHITE+"없음",
-									ChatColor.BLUE+"입장 가능 인원 : "+ChatColor.WHITE+""+EnterCard.getInt(EnterCardList[count]+".Capacity"),
-									"",ChatColor.RED+"[Shift + 우클릭시 등록 해제]"), loc, inv);
+							Stack2("§f§l" + EnterCardList[count], EnterCard.getInt(EnterCardList[count]+".ID"),EnterCard.getInt(EnterCardList[count]+".DATA"),1,Arrays.asList(
+									"","§9연결된 던전 : §f없음",
+									"§9입장 가능 인원 : §f"+EnterCard.getInt(EnterCardList[count]+".Capacity"),
+									"","§c[Shift + 우클릭시 등록 해제]"), loc, inv);
 						}
 							
 					}
@@ -867,14 +867,14 @@ public final class Dungeon_GUI extends Util_GUI
 				}
 			}
 			if(EnterCardList.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 			if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 		}
 		
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l통행증 등록", 386,0,1,Arrays.asList(ChatColor.GRAY + "제단에 통행증을 등록합니다."), 49, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",AltarName), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l통행증 등록", 386,0,1,Arrays.asList("§7제단에 통행증을 등록합니다."), 49, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.",AltarName), 53, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -893,40 +893,40 @@ public final class Dungeon_GUI extends Util_GUI
 		for(int count = page*45; count < DungeonList.length;count++)
 		{
 			if(dungeonYaml.getString(DungeonList[count]+".Dungeon")==null)
-				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + DungeonList[count], dungeonYaml.getInt(DungeonList[count]+".ID"),dungeonYaml.getInt(DungeonList[count]+".DATA"),1,Arrays.asList(
-				"",ChatColor.BLUE+"연결된 던전 : "+ChatColor.WHITE+"없음",
-				ChatColor.BLUE+"입장 가능 인원 : "+ChatColor.WHITE+""+dungeonYaml.getInt(DungeonList[count]+".Capacity"),
-				"",ChatColor.YELLOW+"[좌 클릭시 통행증 등록]"), loc, inv);
+				Stack2("§f§l" + DungeonList[count], dungeonYaml.getInt(DungeonList[count]+".ID"),dungeonYaml.getInt(DungeonList[count]+".DATA"),1,Arrays.asList(
+				"","§9연결된 던전 : §f없음",
+				"§9입장 가능 인원 : §f"+dungeonYaml.getInt(DungeonList[count]+".Capacity"),
+				"","§e[좌 클릭시 통행증 등록]"), loc, inv);
 			else
 			{
 				Dungeon.getConfig("Dungeon/DungeonList.yml");
 				if(Dungeon.contains(dungeonYaml.getString(DungeonList[count]+".Dungeon")))
 				{
-					Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + DungeonList[count], dungeonYaml.getInt(DungeonList[count]+".ID"),dungeonYaml.getInt(DungeonList[count]+".DATA"),1,Arrays.asList(
-					"",ChatColor.BLUE+"연결된 던전 : "+ChatColor.WHITE+""+dungeonYaml.getString(DungeonList[count]+".Dungeon"),
-					ChatColor.BLUE+"입장 가능 인원 : "+ChatColor.WHITE+""+dungeonYaml.getInt(DungeonList[count]+".Capacity"),
-					"",ChatColor.YELLOW+"[좌 클릭시 통행증 등록]"), loc, inv);
+					Stack2("§f§l" + DungeonList[count], dungeonYaml.getInt(DungeonList[count]+".ID"),dungeonYaml.getInt(DungeonList[count]+".DATA"),1,Arrays.asList(
+					"","§9연결된 던전 : §f"+dungeonYaml.getString(DungeonList[count]+".Dungeon"),
+					"§9입장 가능 인원 : §f"+dungeonYaml.getInt(DungeonList[count]+".Capacity"),
+					"","§e[좌 클릭시 통행증 등록]"), loc, inv);
 				}
 				else
 				{
 					dungeonYaml.set(DungeonList[count]+".Dungeon",null);
 					dungeonYaml.saveConfig();
-					Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + DungeonList[count], dungeonYaml.getInt(DungeonList[count]+".ID"),dungeonYaml.getInt(DungeonList[count]+".DATA"),1,Arrays.asList(
-					"",ChatColor.BLUE+"연결된 던전 : "+ChatColor.WHITE+"없음",
-					ChatColor.BLUE+"입장 가능 인원 : "+ChatColor.WHITE+""+dungeonYaml.getInt(DungeonList[count]+".Capacity"),
-					"",ChatColor.YELLOW+"[좌 클릭시 통행증 등록]"), loc, inv);
+					Stack2("§f§l" + DungeonList[count], dungeonYaml.getInt(DungeonList[count]+".ID"),dungeonYaml.getInt(DungeonList[count]+".DATA"),1,Arrays.asList(
+					"","§9연결된 던전 : §f없음",
+					"§9입장 가능 인원 : §f"+dungeonYaml.getInt(DungeonList[count]+".Capacity"),
+					"","§e[좌 클릭시 통행증 등록]"), loc, inv);
 				}
 			}
 			loc=loc+1;
 		}
 		
 		if(DungeonList.length-(page*44)>45)
-		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "다음 페이지로 이동 합니다."), 50, inv);
+		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 페이지로 이동 합니다."), 48, inv);
+		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",AltarName), 53, inv);
+		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.",AltarName), 53, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -982,7 +982,7 @@ public final class Dungeon_GUI extends Util_GUI
 			int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
 			
 			if(slot == 45)//이전 목록
-				new OPbox_GUI().OPBoxGUI_Main(player, (byte) 3);
+				new OPbox_GUI().opBoxGuiMain(player, (byte) 3);
 			else if(slot == 47)//타입 변경
 			{
 				if(event.isLeftClick())
@@ -1008,11 +1008,11 @@ public final class Dungeon_GUI extends Util_GUI
 				DungeonListMainGUI(player, page-1,Type);
 			else if(slot == 49)//새 던전
 			{
-				if(main.Main_ServerOption.DungeonTheme.isEmpty())
+				if(main.Main_ServerOption.dungeonTheme.isEmpty())
 				{
 					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.RED+"[SYSTEM] : 생성 가능한 던전 테마를 찾을 수 없습니다!");
-					player.sendMessage(ChatColor.YELLOW+"(던전 테마 다운로드 : "+ChatColor.GOLD+"http://cafe.naver.com/goldbigdragon/56713"+ChatColor.YELLOW+")");
+					player.sendMessage("§c[SYSTEM] : 생성 가능한 던전 테마를 찾을 수 없습니다!");
+					player.sendMessage("§e(던전 테마 다운로드 : §6http://cafe.naver.com/goldbigdragon/56713§e)");
 					return;
 				}
 				UserData_Object u = new UserData_Object();
@@ -1022,19 +1022,19 @@ public final class Dungeon_GUI extends Util_GUI
 				{
 					u.setType(player, "DungeonMain");
 					u.setString(player, (byte)0, "ND");//NewDungeon
-					player.sendMessage(ChatColor.GREEN+"[던전] : 새로운 던전 이름을 입력 해 주세요!");
+					player.sendMessage("§a[던전] : 새로운 던전 이름을 입력 해 주세요!");
 				}
 				else if(Type == 358)
 				{
 					u.setType(player, "EnterCard");
 					u.setString(player, (byte)0, "NEC");//NewEnterCard
-					player.sendMessage(ChatColor.GREEN+"[던전] : 새로운 통행증 이름을 입력 해 주세요!");
+					player.sendMessage("§a[던전] : 새로운 통행증 이름을 입력 해 주세요!");
 				}
 				else if(Type == 120)
 				{
 					u.setType(player, "Altar");
 					u.setString(player, (byte)0, "NA_Q");//NewAlter_Question
-					player.sendMessage(ChatColor.GREEN+"[던전] : 현재 서 있는 위치에 제단을 세우시겠습니까? (네/아니오)");
+					player.sendMessage("§a[던전] : 현재 서 있는 위치에 제단을 세우시겠습니까? (네/아니오)");
 				}
 			}
 			else if(slot == 50)//다음 페이지
@@ -1103,7 +1103,7 @@ public final class Dungeon_GUI extends Util_GUI
 							
 							UseableTime = Today.get(Calendar.YEAR)+"년 "+Today.get(Calendar.MONTH)+"월 "+Today.get(Calendar.DATE)+"일 "+Today.get(Calendar.HOUR)+"시 "+Today.get(Calendar.MINUTE)+"분 "+Today.get(Calendar.SECOND)+"초 까지";
 						}
-						Icon_Meta.setLore(Arrays.asList("",ChatColor.RED+DungeonName,"",ChatColor.RED+"인원 : "+ChatColor.WHITE+dungeonYaml.getInt(DungeonName+".Capacity"),"",ChatColor.WHITE+""+UseableTime));
+						Icon_Meta.setLore(Arrays.asList("","§c"+DungeonName,"","§c인원 : §f"+dungeonYaml.getInt(DungeonName+".Capacity"),"","§f"+UseableTime));
 						Icon.setItemMeta(Icon_Meta);
 						player.getInventory().addItem(Icon);
 					}
@@ -1123,7 +1123,7 @@ public final class Dungeon_GUI extends Util_GUI
 						Object[] EntitiList = Bukkit.getServer().getWorld(dungeonYaml.getString(DungeonName+".World")).getNearbyEntities(loc, radius, radius, radius).toArray();
 						for(int count=0; count<EntitiList.length;count++)
 							if(((Entity)EntitiList[count]).getCustomName()!=null)
-								if(((Entity)EntitiList[count]).getCustomName().compareTo(DungeonName)==0)
+								if(((Entity)EntitiList[count]).getCustomName().equals(DungeonName))
 									((Entity)EntitiList[count]).remove();
 						dungeonYaml.removeKey(DungeonName);
 						dungeonYaml.saveConfig();
@@ -1164,28 +1164,28 @@ public final class Dungeon_GUI extends Util_GUI
 				DungeonListMainGUI(player, 0, 52);
 			else if(slot == 11)//던전 타입
 			{
-				if(main.Main_ServerOption.DungeonTheme.isEmpty())
+				if(main.Main_ServerOption.dungeonTheme.isEmpty())
 				{
 					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.RED+"[SYSTEM] : 던전 테마를 찾을 수 없습니다!");
-					player.sendMessage(ChatColor.YELLOW+"(던전 테마 다운로드 : "+ChatColor.GOLD+"http://cafe.naver.com/goldbigdragon/56713"+ChatColor.YELLOW+")");
+					player.sendMessage("§c[SYSTEM] : 던전 테마를 찾을 수 없습니다!");
+					player.sendMessage("§e(던전 테마 다운로드 : §6http://cafe.naver.com/goldbigdragon/56713§e)");
 					return;
 				}
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			  	YamlLoader dungeonYaml = new YamlLoader();
 				dungeonYaml.getConfig("Dungeon/Dungeon/"+DungeonName+"/Option.yml");
 				String DungeonTheme = dungeonYaml.getString("Type.Name");
-				if(main.Main_ServerOption.DungeonTheme.contains(DungeonTheme)==false)
-					dungeonYaml.set("Type.Name", main.Main_ServerOption.DungeonTheme.get(0));
+				if(main.Main_ServerOption.dungeonTheme.contains(DungeonTheme)==false)
+					dungeonYaml.set("Type.Name", main.Main_ServerOption.dungeonTheme.get(0));
 				else
 				{
-					for(int count = 0; count < main.Main_ServerOption.DungeonTheme.size(); count++)
-						if(main.Main_ServerOption.DungeonTheme.get(count).compareTo(DungeonTheme)==0)
+					for(int count = 0; count < main.Main_ServerOption.dungeonTheme.size(); count++)
+						if(main.Main_ServerOption.dungeonTheme.get(count).equals(DungeonTheme))
 						{
-							if(count+1 >= main.Main_ServerOption.DungeonTheme.size())
-								dungeonYaml.set("Type.Name", main.Main_ServerOption.DungeonTheme.get(0));
+							if(count+1 >= main.Main_ServerOption.dungeonTheme.size())
+								dungeonYaml.set("Type.Name", main.Main_ServerOption.dungeonTheme.get(0));
 							else
-								dungeonYaml.set("Type.Name", main.Main_ServerOption.DungeonTheme.get(count+1));
+								dungeonYaml.set("Type.Name", main.Main_ServerOption.dungeonTheme.get(count+1));
 						}
 				}
 				dungeonYaml.saveConfig();
@@ -1215,23 +1215,23 @@ public final class Dungeon_GUI extends Util_GUI
 				if(slot == 13)//던전 크기
 				{
 					u.setString(player, (byte)0, "DS");//DungeonSize
-					player.sendMessage(ChatColor.GREEN+"[던전] : 던전 크기를 입력 해 주세요! (최소 5 최대 50)");
+					player.sendMessage("§a[던전] : 던전 크기를 입력 해 주세요! (최소 5 최대 50)");
 				}
 				else if(slot == 15)//미로 레벨
 				{
 					u.setString(player, (byte)0, "DML");//DungeonMazeLevel
-					player.sendMessage(ChatColor.GREEN+"[던전] : 던전 미로 레벨을 입력 해 주세요! (최소 0 최대 10)");
-					player.sendMessage(ChatColor.YELLOW+"[주의] 미로 레벨이 높아지면 유저들이 빡칠수도 있음!");
+					player.sendMessage("§a[던전] : 던전 미로 레벨을 입력 해 주세요! (최소 0 최대 10)");
+					player.sendMessage("§e[주의] 미로 레벨이 높아지면 유저들이 빡칠수도 있음!");
 				}
 				else if(slot == 20)//레벨 제한
 				{
 					u.setString(player, (byte)0, "DDL");//DungeonDistrictLevel
-					player.sendMessage(ChatColor.GREEN+"[던전] : 던전 입장 가능 레벨을 입력 해 주세요!");
+					player.sendMessage("§a[던전] : 던전 입장 가능 레벨을 입력 해 주세요!");
 				}
 				else if(slot == 22)//돈, 경험치 보상 설정
 				{
 					u.setString(player, (byte)0, "DRM");//DungeonRewardMoney
-					player.sendMessage(ChatColor.GREEN+"[던전] : 던전 클리어 보상금을 입력 해 주세요!");
+					player.sendMessage("§a[던전] : 던전 클리어 보상금을 입력 해 주세요!");
 				}
 			}
 		}
@@ -1524,7 +1524,7 @@ public final class Dungeon_GUI extends Util_GUI
 				if(dungeonYaml.getKeys().size()==0)
 				{
 					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.RED+"[던전] : 생성된 던전이 없습니다! 던전을 먼저 만들고 오세요!");
+					player.sendMessage("§c[던전] : 생성된 던전이 없습니다! 던전을 먼저 만들고 오세요!");
 				}
 				else
 					EnterCardDungeonSettingGUI(player, 0, EnterCardName);
@@ -1549,17 +1549,17 @@ public final class Dungeon_GUI extends Util_GUI
 				if(slot == 3)//아이템 형태 설정
 				{
 					u.setString(player, (byte)0, "ECID");//EnterCardID
-					player.sendMessage(ChatColor.GREEN+"[통행증] : 통행증 아이템 타입 ID를 입력 해 주세요.");
+					player.sendMessage("§a[통행증] : 통행증 아이템 타입 ID를 입력 해 주세요.");
 				}
 				else if(slot == 5)//입장 인원 설정
 				{
 					u.setString(player, (byte)0, "ECC");//EnterCardCapacity
-					player.sendMessage(ChatColor.GREEN+"[통행증] : 필요 입장 인원 수를 입력 해 주세요.");
+					player.sendMessage("§a[통행증] : 필요 입장 인원 수를 입력 해 주세요.");
 				}
 				else if(slot == 6)//유효시간 설정
 				{
 					u.setString(player, (byte)0, "ECUH");//EnterCardUseableHour
-					player.sendMessage(ChatColor.GREEN+"[통행증] : 유효 시간을 입력 해 주세요. (최대 24시간, -1입력시 무제한)");
+					player.sendMessage("§a[통행증] : 유효 시간을 입력 해 주세요. (최대 24시간, -1입력시 무제한)");
 				}
 			}
 		}
@@ -1615,17 +1615,17 @@ public final class Dungeon_GUI extends Util_GUI
 				DungeonListMainGUI(player, 0, 120);
 			else
 			{
-				if(ServerTick_Main.ServerTask.compareTo("null")!=0)
+				if(!ServerTick_Main.ServerTask.equals("null"))
 				{
 					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-					player.sendMessage(ChatColor.RED+"[Server] : 현재 서버는 "+ChatColor.YELLOW+ServerTick_Main.ServerTask+ChatColor.RED+" 작업 중입니다.");
+					player.sendMessage("§c[Server] : 현재 서버는 §e"+ServerTick_Main.ServerTask+"§c 작업 중입니다.");
 					return;
 				}
 				player.closeInventory();
 			  	YamlLoader AltarList = new YamlLoader();
 				AltarList.getConfig("Dungeon/AltarList.yml");
-				String Code = ChatColor.BLACK+""+ChatColor.BOLD;
-				Code = Code+ChatColor.WHITE+"[제단]";
+				String Code = "§0§l";
+				Code = Code+"§f[제단]";
 				String Salt = Code;
 				int ID = 1;
 				int DATA = 0;
@@ -1709,7 +1709,7 @@ public final class Dungeon_GUI extends Util_GUI
 				u.setType(player, "Altar");
 				u.setString(player, (byte)0, "EAN");//EditAltarName
 				u.setString(player, (byte)1, AltarName);
-				player.sendMessage(ChatColor.GREEN+"[제단] : 제단 이름을 입력 해 주세요.");
+				player.sendMessage("§a[제단] : 제단 이름을 입력 해 주세요.");
 			}
 			else if(slot == 4)//일반 던전 설정
 				AltarDungeonSettingGUI(player, 0, AltarName);
@@ -1721,7 +1721,7 @@ public final class Dungeon_GUI extends Util_GUI
 	public void AltarUseGUIClick(InventoryClickEvent event)
 	{
 		if(event.getSlot()!=4)
-			if(ChatColor.stripColor(event.getClickedInventory().getName()).compareTo("제단에 물건을 바치면 던전으로 이동합니다")==0)
+			if(ChatColor.stripColor(event.getClickedInventory().getName()).equals("제단에 물건을 바치면 던전으로 이동합니다"))
 				event.setCancelled(true);
 	}
 	
@@ -1830,39 +1830,39 @@ public final class Dungeon_GUI extends Util_GUI
 		switch(randomNum)
 		{
 			case 0:
-				return ChatColor.BLACK+"";
+				return "§0";
 			case 1:
-				return ChatColor.DARK_BLUE+"";
+				return "§1";
 			case 2:
-				return ChatColor.DARK_GREEN+"";
+				return "§2";
 			case 3:
-				return ChatColor.DARK_AQUA+"";
+				return "§3";
 			case 4:
-				return ChatColor.DARK_RED+"";
+				return "§4";
 			case 5:
-				return ChatColor.DARK_PURPLE+"";
+				return "§5";
 			case 6:
-				return ChatColor.GOLD+"";
+				return "§6";
 			case 7:
-				return ChatColor.GRAY+"";
+				return "§7";
 			case 8:
-				return ChatColor.DARK_GRAY+"";
+				return "§8";
 			case 9:
-				return ChatColor.BLUE+"";
+				return "§9";
 			case 10:
-				return ChatColor.GREEN+"";
+				return "§a";
 			case 11:
-				return ChatColor.AQUA+"";
+				return "§b";
 			case 12:
-				return ChatColor.RED+"";
+				return "§c";
 			case 13:
-				return ChatColor.LIGHT_PURPLE+"";
+				return "§d";
 			case 14:
-				return ChatColor.YELLOW+"";
+				return "§e";
 			case 15:
-				return ChatColor.WHITE+"";
+				return "§f";
 		}
-		return ChatColor.BLACK+"";
+		return "§0";
 	}
 	//AltarGUI Click//
 	
@@ -1938,7 +1938,7 @@ public final class Dungeon_GUI extends Util_GUI
 		dungeonYaml.saveConfig();
 
 		SoundEffect.SP((Player) event.getPlayer(), Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
-		event.getPlayer().sendMessage(ChatColor.GREEN+"[던전] : 보상 설정 완료!");
+		event.getPlayer().sendMessage("§a[던전] : 보상 설정 완료!");
 	}
 	
 	public void AltarUSEGuiClose(InventoryCloseEvent event)
@@ -1959,21 +1959,21 @@ public final class Dungeon_GUI extends Util_GUI
 				if(new util.Util_Player().giveItem(player, item)==false)
 					new event.Main_ItemDrop().CustomItemDrop(player.getLocation(), item);
 				SoundEffect.SP(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.WHITE+"(이미 던전이 만들어 지고 있다...)");
+				player.sendMessage("§f(이미 던전이 만들어 지고 있다...)");
 				return;
 			}
 			if(item.hasItemMeta())
 			{
 				if(item.getItemMeta().hasDisplayName())
 				{
-					if(item.getItemMeta().getDisplayName().compareTo("§c§l[던전 통행증]")==0)
+					if(item.getItemMeta().getDisplayName().equals("§c§l[던전 통행증]"))
 					{
 						if(altarYaml.contains("EnterCard."+ChatColor.stripColor(item.getItemMeta().getLore().get(1))))
 						{
 							int capacity = Integer.parseInt(ChatColor.stripColor(item.getItemMeta().getLore().get(3)).split(" : ")[1]);
 							String time = ChatColor.stripColor(item.getItemMeta().getLore().get(item.getItemMeta().getLore().size()-1));
 							boolean canUse = false;
-							if(time.compareTo("[제한 시간 없음]")==0)
+							if(time.equals("[제한 시간 없음]"))
 								canUse = true;
 							else
 							{
@@ -2024,7 +2024,7 @@ public final class Dungeon_GUI extends Util_GUI
 									if(new util.Util_Player().giveItem(player, item)==false)
 										new event.Main_ItemDrop().CustomItemDrop(player.getLocation(), item);
 									SoundEffect.SP(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
-									player.sendMessage(ChatColor.WHITE+"(이 물건은 제물로 바칠 수 없는 듯 하다...)");
+									player.sendMessage("§f(이 물건은 제물로 바칠 수 없는 듯 하다...)");
 									return;
 								}
 							}
@@ -2033,7 +2033,7 @@ public final class Dungeon_GUI extends Util_GUI
 								if(new util.Util_Player().giveItem(player, item)==false)
 									new event.Main_ItemDrop().CustomItemDrop(player.getLocation(), item);
 								SoundEffect.SP(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
-								player.sendMessage(ChatColor.WHITE+"(던전 통행증의 유효시간이 지났다...)");
+								player.sendMessage("§f(던전 통행증의 유효시간이 지났다...)");
 								return;
 							}
 						}
@@ -2042,7 +2042,7 @@ public final class Dungeon_GUI extends Util_GUI
 							if(new util.Util_Player().giveItem(player, item)==false)
 								new event.Main_ItemDrop().CustomItemDrop(player.getLocation(), item);
 							SoundEffect.SP(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
-							player.sendMessage(ChatColor.WHITE+"(이 물건은 제물로 바칠 수 없는 듯 하다...)");
+							player.sendMessage("§f(이 물건은 제물로 바칠 수 없는 듯 하다...)");
 							return;
 						}
 					}
@@ -2061,7 +2061,7 @@ public final class Dungeon_GUI extends Util_GUI
 								if(new util.Util_Player().giveItem(player, item)==false)
 									new event.Main_ItemDrop().CustomItemDrop(player.getLocation(), item);
 								SoundEffect.SP(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
-								player.sendMessage(ChatColor.WHITE+"(이 물건은 제물로 바칠 수 없는 듯 하다...)");
+								player.sendMessage("§f(이 물건은 제물로 바칠 수 없는 듯 하다...)");
 								return;
 							}
 						}
@@ -2070,7 +2070,7 @@ public final class Dungeon_GUI extends Util_GUI
 							if(new util.Util_Player().giveItem(player, item)==false)
 								new event.Main_ItemDrop().CustomItemDrop(player.getLocation(), item);
 							SoundEffect.SP(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
-							player.sendMessage(ChatColor.WHITE+"(이 물건은 제물로 바칠 수 없는 듯 하다...)");
+							player.sendMessage("§f(이 물건은 제물로 바칠 수 없는 듯 하다...)");
 							return;
 						}
 					}
@@ -2090,7 +2090,7 @@ public final class Dungeon_GUI extends Util_GUI
 					if(new util.Util_Player().giveItem(player, item)==false)
 						new event.Main_ItemDrop().CustomItemDrop(player.getLocation(), item);
 					SoundEffect.SP(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
-					player.sendMessage(ChatColor.WHITE+"(이 물건은 제물로 바칠 수 없는 듯 하다...)");
+					player.sendMessage("§f(이 물건은 제물로 바칠 수 없는 듯 하다...)");
 					return;
 				}
 			}
@@ -2099,7 +2099,7 @@ public final class Dungeon_GUI extends Util_GUI
 				if(new util.Util_Player().giveItem(player, item)==false)
 					new event.Main_ItemDrop().CustomItemDrop(player.getLocation(), item);
 				SoundEffect.SP(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.WHITE+"(이 물건은 제물로 바칠 수 없는 듯 하다...)");
+				player.sendMessage("§f(이 물건은 제물로 바칠 수 없는 듯 하다...)");
 				return;
 			}
 		}
@@ -2107,16 +2107,16 @@ public final class Dungeon_GUI extends Util_GUI
 
 	private void PartyEnterDungeon(Player player, ItemStack item, String AltarName, int capacity, String DungeonName, int LvDistrict, int RealLvDistrict)
 	{
-		if(main.Main_ServerOption.PartyJoiner.containsKey(player))
+		if(main.Main_ServerOption.partyJoiner.containsKey(player))
 		{
 			
 			if(capacity!=-1)
-				if(main.Main_ServerOption.Party.get(main.Main_ServerOption.PartyJoiner.get(player)).getPartyMembers()!=capacity)
+				if(main.Main_ServerOption.party.get(main.Main_ServerOption.partyJoiner.get(player)).getPartyMembers()!=capacity)
 				{
 					if(new util.Util_Player().giveItem(player, item)==false)
 						new event.Main_ItemDrop().CustomItemDrop(player.getLocation(), item);
 					SoundEffect.SP(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
-					player.sendMessage(ChatColor.RED + "[던전] : 던전 입장 인원이 맞지 않습니다! ("+capacity+"명)");
+					player.sendMessage("§c[던전] : 던전 입장 인원이 맞지 않습니다! ("+capacity+"명)");
 					return;
 				}
 		  	YamlLoader AltarConfig = new YamlLoader();
@@ -2129,17 +2129,17 @@ public final class Dungeon_GUI extends Util_GUI
 				RealLvDistrict = dungeonYaml.getInt("District.RealLevel");
 			if(DungeonName!=null)
 				dungeonYaml.getConfig("Dungeon/Dungeon/"+DungeonName+"/Option.yml");
-			long UTC = main.Main_ServerOption.PartyJoiner.get(player);
-			if(main.Main_ServerOption.Party.get(UTC).getLeader().compareTo(player.getName())==0)
+			long UTC = main.Main_ServerOption.partyJoiner.get(player);
+			if(main.Main_ServerOption.party.get(UTC).getLeader().equals(player.getName()))
 			{
 				//파티원 추가하기//
 				ArrayList<Player> NearPartyMember = new ArrayList<Player>();
-				main.Main_ServerOption.Party.get(UTC).getMember();
-				for(int count = 0; count < main.Main_ServerOption.Party.get(UTC).getPartyMembers(); count++)
+				main.Main_ServerOption.party.get(UTC).getMember();
+				for(int count = 0; count < main.Main_ServerOption.party.get(UTC).getPartyMembers(); count++)
 				{
-					if(player.getWorld().getName().compareTo(main.Main_ServerOption.Party.get(UTC).getMember()[count].getWorld().getName())==0)
-						if(player.getLocation().distance(main.Main_ServerOption.Party.get(UTC).getMember()[count].getLocation()) < 11)
-							NearPartyMember.add(main.Main_ServerOption.Party.get(UTC).getMember()[count]);
+					if(player.getWorld().getName().equals(main.Main_ServerOption.party.get(UTC).getMember()[count].getWorld().getName()))
+						if(player.getLocation().distance(main.Main_ServerOption.party.get(UTC).getMember()[count].getLocation()) < 11)
+							NearPartyMember.add(main.Main_ServerOption.party.get(UTC).getMember()[count]);
 				}
 				for(int count = 0; count < NearPartyMember.size(); count++)
 				{
@@ -2148,8 +2148,8 @@ public final class Dungeon_GUI extends Util_GUI
 						if(new util.Util_Player().giveItem(player, item)==false)
 							new event.Main_ItemDrop().CustomItemDrop(player.getLocation(), item);
 						SoundEffect.SP(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
-						player.sendMessage(ChatColor.RED + "[던전] : 파티원 "+NearPartyMember.get(count).getName()+"님의 레벨이 낮아 던전에 입장할 수 없습니다!");
-						player.sendMessage(ChatColor.RED + "(레벨 제한 : "+dungeonYaml.getInt("District.Level")+")");
+						player.sendMessage("§c[던전] : 파티원 "+NearPartyMember.get(count).getName()+"님의 레벨이 낮아 던전에 입장할 수 없습니다!");
+						player.sendMessage("§c(레벨 제한 : "+dungeonYaml.getInt("District.Level")+")");
 						return;
 					}
 					if(main.Main_ServerOption.PlayerList.get(NearPartyMember.get(count).getUniqueId().toString()).getStat_RealLevel()<RealLvDistrict)
@@ -2157,8 +2157,8 @@ public final class Dungeon_GUI extends Util_GUI
 						if(new util.Util_Player().giveItem(player, item)==false)
 							new event.Main_ItemDrop().CustomItemDrop(player.getLocation(), item);
 						SoundEffect.SP(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
-						player.sendMessage(ChatColor.RED + "[던전] : 파티원 "+NearPartyMember.get(count).getName()+"님의 누적 레벨이 낮아 던전에 입장할 수 없습니다!");
-						player.sendMessage(ChatColor.RED + "(누적 레벨 제한 : "+dungeonYaml.getInt("District.RealLevel")+")");
+						player.sendMessage("§c[던전] : 파티원 "+NearPartyMember.get(count).getName()+"님의 누적 레벨이 낮아 던전에 입장할 수 없습니다!");
+						player.sendMessage("§c(누적 레벨 제한 : "+dungeonYaml.getInt("District.RealLevel")+")");
 						return;
 					}
 				}
@@ -2175,7 +2175,7 @@ public final class Dungeon_GUI extends Util_GUI
 				if(new util.Util_Player().giveItem(player, item)==false)
 					new event.Main_ItemDrop().CustomItemDrop(player.getLocation(), item);
 				SoundEffect.SP(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.RED+"[파티] : 파티의 리더만 제단에 물건을 바칠 수 있습니다!");
+				player.sendMessage("§c[파티] : 파티의 리더만 제단에 물건을 바칠 수 있습니다!");
 				return;
 			}
 		}
@@ -2203,8 +2203,8 @@ public final class Dungeon_GUI extends Util_GUI
 				if(new util.Util_Player().giveItem(player, item)==false)
 					new event.Main_ItemDrop().CustomItemDrop(player.getLocation(), item);
 				SoundEffect.SP(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.RED + "[던전] : 당신의 레벨이 낮아 던전에 입장할 수 없습니다!");
-				player.sendMessage(ChatColor.RED + "(레벨 제한 : "+dungeonYaml.getInt("District.Level")+")");
+				player.sendMessage("§c[던전] : 당신의 레벨이 낮아 던전에 입장할 수 없습니다!");
+				player.sendMessage("§c(레벨 제한 : "+dungeonYaml.getInt("District.Level")+")");
 				return;
 			}
 			if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel()<RealLvDistrict)
@@ -2212,8 +2212,8 @@ public final class Dungeon_GUI extends Util_GUI
 				if(new util.Util_Player().giveItem(player, item)==false)
 					new event.Main_ItemDrop().CustomItemDrop(player.getLocation(), item);
 				SoundEffect.SP(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
-				player.sendMessage(ChatColor.RED + "[던전] : 당신의 누적 레벨이 낮아 던전에 입장할 수 없습니다!");
-				player.sendMessage(ChatColor.RED + "(누적 레벨 제한 : "+dungeonYaml.getInt("District.RealLevel")+")");
+				player.sendMessage("§c[던전] : 당신의 누적 레벨이 낮아 던전에 입장할 수 없습니다!");
+				player.sendMessage("§c(누적 레벨 제한 : "+dungeonYaml.getInt("District.RealLevel")+")");
 				return;
 			}
 			if(new dungeon.Dungeon_Creater().CreateDungeon(player, dungeonYaml.getInt("Size"), dungeonYaml.getInt("Maze_Level"), dungeonYaml.getString("Type.Name"),DungeonName,null, AltarName, item)==false)
@@ -2229,7 +2229,7 @@ public final class Dungeon_GUI extends Util_GUI
 			if(new util.Util_Player().giveItem(player, item)==false)
 				new event.Main_ItemDrop().CustomItemDrop(player.getLocation(), item);
 			SoundEffect.SP(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
-			player.sendMessage(ChatColor.RED + "[던전] : 던전 입장 인원이 맞지 않습니다! ("+capacity+"명)");
+			player.sendMessage("§c[던전] : 던전 입장 인원이 맞지 않습니다! ("+capacity+"명)");
 			return;
 		}
 	}

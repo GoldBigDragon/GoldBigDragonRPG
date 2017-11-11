@@ -3,8 +3,6 @@ package structure;
 import util.Util_GUI;
 import util.YamlLoader;
 
-
-
 public class Struct_Altar extends Util_GUI
 {
 	

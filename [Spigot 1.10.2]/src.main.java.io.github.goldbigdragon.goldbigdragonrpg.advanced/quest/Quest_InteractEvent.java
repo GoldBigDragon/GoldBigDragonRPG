@@ -1,6 +1,5 @@
 package quest;
 
-import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -13,8 +12,6 @@ import effect.SoundEffect;
 import user.UserData_Object;
 import util.YamlLoader;
 
-
-
 public class Quest_InteractEvent
 {
 	public void EntityInteract(PlayerInteractEntityEvent event, String Type)
@@ -22,18 +19,18 @@ public class Quest_InteractEvent
 		Entity target = event.getRightClicked();
 		Player player = event.getPlayer();
     	event.setCancelled(true);
-    	if(Type.compareTo("Quest")==0)
+    	if(Type.equals("Quest"))
     	{
         	quest.Quest_GUI QGUI = new quest.Quest_GUI();
         	YamlLoader QuestConfig = new YamlLoader();
     		QuestConfig.getConfig("Quest/QuestList.yml");
         	UserData_Object u = new UserData_Object();
-    		if((u.getString(player,(byte)1).compareTo("Give")==0||u.getString(player,(byte)1).compareTo("Present")==0)
-    				||u.getString(player,(byte)1).compareTo("Hunt")==0
+    		if((u.getString(player,(byte)1).equals("Give")||u.getString(player,(byte)1).equals("Present"))
+    				||u.getString(player,(byte)1).equals("Hunt")
     				&&u.getString(player,(byte)3)!=null)
     		{
     			u.setType(player,"Quest");
-    			if(u.getString(player,(byte)1).compareTo("Hunt")==0)
+    			if(u.getString(player,(byte)1).equals("Hunt"))
     			{
     				if(target.getType() == EntityType.PLAYER)
     					u.setString(player, (byte)3, target.getName());
@@ -44,7 +41,7 @@ public class Quest_InteractEvent
     					else
         					u.setString(player, (byte)3, target.getCustomName());
     				}
-    		    	player.sendMessage(ChatColor.GREEN + "[SYSTEM] : " + ChatColor.YELLOW +QGUI.SkullType(u.getString(player,(byte)3))+ChatColor.GREEN + " 몬스터를 얼마나 사냥할지 설정하세요! ("+ChatColor.YELLOW + "0"+ChatColor.GREEN+" ~ "+ChatColor.YELLOW+""+Integer.MAX_VALUE+ChatColor.GREEN+"마리)");
+    		    	player.sendMessage("§a[SYSTEM] : §e"+QGUI.SkullType(u.getString(player,(byte)3))+"§a 몬스터를 얼마나 사냥할지 설정하세요! (§e0§a ~ §e"+Integer.MAX_VALUE+"§a마리)");
     		    	player.closeInventory();
     		    	return;
     			}
@@ -59,16 +56,16 @@ public class Quest_InteractEvent
     					u.setString(player, (byte)2, target.getCustomName());
     			}
     			SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_HORSE_ARMOR, 1.0F,1.2F);
-    			if(u.getString(player,(byte)1).compareTo("Give")==0)
+    			if(u.getString(player,(byte)1).equals("Give"))
     			{
-    		    	player.sendMessage(ChatColor.GREEN + "[SYSTEM] : NPC가 유저에게 받을 물건을 설정하세요!");
+    		    	player.sendMessage("§a[SYSTEM] : NPC가 유저에게 받을 물건을 설정하세요!");
     		    	player.closeInventory();
     		    	u.setBoolean(player, (byte)1, true);
     	    		QGUI.GetterItemSetingGUI(player, u.getString(player,(byte)3));
     			}
-    			else if(u.getString(player,(byte)1).compareTo("Present")==0)
+    			else if(u.getString(player,(byte)1).equals("Present"))
     			{
-    		    	player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 보상으로 줄 물건을 설정하세요!");
+    		    	player.sendMessage("§a[SYSTEM] : 보상으로 줄 물건을 설정하세요!");
     		    	player.closeInventory();
     		    	u.setBoolean(player, (byte)1, true);
     	    		QGUI.PresentItemSettingGUI(player, u.getString(player,(byte)3));
@@ -100,7 +97,7 @@ public class Quest_InteractEvent
 	    					QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+b+".NPCuuid", target.getUniqueId().toString());
 	    				}
 	    				SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
-	    		    	player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 성공적으로 등록되었습니다!");
+	    		    	player.sendMessage("§a[SYSTEM] : 성공적으로 등록되었습니다!");
 	    				QuestConfig.saveConfig();
 	    		    	QGUI.FixQuestGUI(player, (short) 0, u.getString(player,(byte)2));
 	    		    	u.clearAll(player);
@@ -125,7 +122,7 @@ public class Quest_InteractEvent
 	    				QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+c+".TargetNPCuuid", target.getUniqueId().toString());
 	    			}
 	    			SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
-	    	    	player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 성공적으로 등록되었습니다!");
+	    	    	player.sendMessage("§a[SYSTEM] : 성공적으로 등록되었습니다!");
 	    			QuestConfig.saveConfig();
 	    	    	QGUI.FixQuestGUI(player, (short) 0, u.getString(player,(byte)2));
 	    	    	u.clearAll(player);
@@ -147,7 +144,7 @@ public class Quest_InteractEvent
 		event.setCancelled(true);
 		if(event.getAction()==Action.LEFT_CLICK_BLOCK)
 		{
-			if(u.getString(player, (byte)1).compareTo("TelePort")==0)
+			if(u.getString(player, (byte)1).equals("TelePort"))
 			{
 				String QuestName = u.getString(player, (byte)3);
 		    	quest.Quest_GUI QGUI = new quest.Quest_GUI();
@@ -166,7 +163,7 @@ public class Quest_InteractEvent
 		    	QGUI.FixQuestGUI(player, (short) 0, QuestName);
 		    	u.clearAll(player);
 		    	SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
-		    	player.sendMessage(ChatColor.GREEN + "[SYSTEM] : 성공적으로 등록되었습니다!");
+		    	player.sendMessage("§a[SYSTEM] : 성공적으로 등록되었습니다!");
 		    	return;
 			}
 		}
@@ -175,15 +172,15 @@ public class Quest_InteractEvent
 			if(u.getString(player, (byte)1)!=null&&
 				u.getString(player, (byte)3)!=null)
 			{
-				if(u.getString(player, (byte)1).compareTo("Harvest")==0)
+				if(u.getString(player, (byte)1).equals("Harvest"))
 				{
 					u.setInt(player, (byte)1, block.getTypeId());
 					u.setInt(player, (byte)2,(int)block.getData());
-			    	player.sendMessage(ChatColor.GREEN + "[SYSTEM] : " + ChatColor.GREEN + "블록의 데이터까지 완벽히 같아야 하나요? ("+ChatColor.RED + "X"+ChatColor.GREEN +" 혹은 "+ChatColor.DARK_AQUA +"O"+ChatColor.GREEN +")");
+			    	player.sendMessage("§a[SYSTEM] : §a블록의 데이터까지 완벽히 같아야 하나요? (§cX§a 혹은 §3O§a)");
 			    	player.closeInventory();
 			    	return;
 				}
-				else if(u.getString(player, (byte)1).compareTo("BlockPlace")==0)
+				else if(u.getString(player, (byte)1).equals("BlockPlace"))
 				{
 					String QuestName = u.getString(player, (byte)2);
 					YamlLoader QuestConfig = new YamlLoader();
@@ -202,7 +199,7 @@ public class Quest_InteractEvent
 			    	u.setString(player, (byte)1, "BPID");
 			    	u.setInt(player, (byte)1, size);
 			    	SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
-			    	player.sendMessage(ChatColor.GREEN + "[퀘스트] : 설치 될 블록 ID를 입력 해 주세요!");
+			    	player.sendMessage("§a[퀘스트] : 설치 될 블록 ID를 입력 해 주세요!");
 					return;
 				}
 			}

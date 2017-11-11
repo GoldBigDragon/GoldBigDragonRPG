@@ -358,7 +358,7 @@ public class Dungeon_ServerTask
     			Player player = Bukkit.getPlayer(DSO.getDungeonMaker(count2));
     			if(player!=null)
     			{
-    				if(player.getLocation().getWorld().getName().compareTo("Dungeon")==0)
+    				if(player.getLocation().getWorld().getName().equals("Dungeon"))
     				{
         				player.teleport(loc);
         				new dungeon.Dungeon_Main().EraseAllDungeonKey(player, false);
@@ -376,7 +376,7 @@ public class Dungeon_ServerTask
         			Player player = Bukkit.getPlayer(DSO.getDungeonMaker(count2));
     				if(Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isBgmOn())
     				{
-        				if(player.getLocation().getWorld().getName().compareTo("Dungeon")==0)
+        				if(player.getLocation().getWorld().getName().equals("Dungeon"))
         				{
                 			new otherplugins.NoteBlockAPIMain().Stop(Bukkit.getPlayer(DSO.getDungeonMaker(count2)));
                 			new otherplugins.NoteBlockAPIMain().Play(Bukkit.getPlayer(DSO.getDungeonMaker(count2)),SoundTrack);		

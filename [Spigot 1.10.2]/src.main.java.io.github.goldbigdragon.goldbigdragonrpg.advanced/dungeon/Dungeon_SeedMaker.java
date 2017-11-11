@@ -826,10 +826,10 @@ public class Dungeon_SeedMaker
 		{
 			String Shape = Grid[RightPass.get(count)];
 			String KShape = KeyGrid[RightPass.get(count)];
-			if(Shape.compareTo("¡à")==0||Shape.compareTo("¡Þ")==0)
+			if(Shape.equals("¡à")||Shape.equals("¡Þ"))
 				key=key+1;
-			else if(Shape.compareTo("¡à")!=0&&Shape.compareTo("¡Þ")!=0
-				&&Shape.compareTo("£À")!=0)
+			else if(!Shape.equals("¡à")&&!Shape.equals("¡Þ")
+				&&!Shape.equals("£À"))
 			{
 				if(count-1 >= 0)
 				{
@@ -877,10 +877,10 @@ public class Dungeon_SeedMaker
 							if(KShape!=null)
 							{
 								Shape = Grid[RightPass.get(count-1)];
-								if(Shape.compareTo("¡à")!=0&&Shape.compareTo("¡Þ")!=0
-									&&Shape.compareTo("£À")!=0&&KShape.compareTo("¡ã")!=0
-									&&KShape.compareTo("¡å")!=0&&KShape.compareTo("¢¸")!=0
-									&&KShape.compareTo("¢º")!=0)
+								if(!Shape.equals("¡à")&&!Shape.equals("¡Þ")
+									&&!Shape.equals("£À")&&!KShape.equals("¡ã")
+									&&!KShape.equals("¡å")&&!KShape.equals("¢¸")
+									&&!KShape.equals("¢º"))
 									CanCreateThat=true;
 							}
 							else
@@ -909,8 +909,8 @@ public class Dungeon_SeedMaker
 			{
 				String Shape = KeyGrid[RightPass.get(count)];
 				if(Shape!=null)
-					if(Shape.compareTo("¡ã")==0&&Shape.compareTo("¡å")==0
-					&&Shape.compareTo("¢¸")==0&&Shape.compareTo("¢º")==0)
+					if(Shape.equals("¡ã")&&Shape.equals("¡å")
+					&&Shape.equals("¢¸")&&Shape.equals("¢º"))
 					{
 						TotalKeyRoom--;
 						KeyGrid[RightPass.get(count)]=null;

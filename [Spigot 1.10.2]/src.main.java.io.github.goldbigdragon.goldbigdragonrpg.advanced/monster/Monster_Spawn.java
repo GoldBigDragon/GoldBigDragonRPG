@@ -46,7 +46,7 @@ public class Monster_Spawn
 {
 	public void EntitySpawn(CreatureSpawnEvent event)
 	{
-		if(event.getLocation().getWorld().getName().compareTo("Dungeon") == 0)
+		if(event.getLocation().getWorld().getName().equals("Dungeon"))
 		{
 			if(event.getSpawnReason()== SpawnReason.NATURAL || event.getSpawnReason() == SpawnReason.CHUNK_GEN
 					|| event.getSpawnReason() == SpawnReason.MOUNT|| event.getSpawnReason() == SpawnReason.JOCKEY
@@ -176,92 +176,92 @@ public class Monster_Spawn
 		if(monsterYaml.getString(mob+".Name")!=null)
 		{
 			String AI = monsterYaml.getString(mob + ".AI");
-			if(!(AI.compareTo("선공")==0||AI.compareTo("비선공")==0||AI.compareTo("무뇌아")==0||AI.compareTo("동물")==0||AI.compareTo("일반 행동")==0))
+			if(!(AI.equals("선공")||AI.equals("비선공")||AI.equals("무뇌아")||AI.equals("동물")||AI.equals("일반 행동")))
 			{
 				monsterYaml.set(mob + ".AI", "일반 행동");
 				monsterYaml.saveConfig();
 			}
-			if(AI.compareTo("일반 행동")!=0)
+			if(!AI.equals("일반 행동"))
 			{
 				String CustomMobName = "CUSTOM"+mob;
 				int CustomMobID = getMonsterID(monsterYaml.getString(mob + ".Type"));
 				LivingEntity E = null;
-				if(Type.compareTo("좀비")==0)
+				if(Type.equals("좀비"))
 				{
 		  			new NMSUtils().registerEntity(CustomMobName, CustomMobID+ (Byte.MAX_VALUE + 1) * 2, CreatureZombie.class);
 		  			E = (CraftZombie) CreatureZombie.spawn(loc, AI);
 				}
-				else if(Type.compareTo("자이언트")==0)
+				else if(Type.equals("자이언트"))
 				{
 		  			new NMSUtils().registerEntity(CustomMobName, CustomMobID+ (Byte.MAX_VALUE + 1) * 2, CreatureGiant.class);
 		  			E = (Giant) CreatureGiant.spawn(loc, AI);
 				}
-				else if(Type.compareTo("스켈레톤")==0||Type.compareTo("네더스켈레톤")==0)
+				else if(Type.equals("스켈레톤")||Type.equals("네더스켈레톤"))
 				{
 		  			new NMSUtils().registerEntity(CustomMobName, CustomMobID+ (Byte.MAX_VALUE + 1) * 2, CreatureSkeleton.class);
 		  			E = (Skeleton) CreatureSkeleton.spawn(loc, AI);
 				}
-				else if(Type.compareTo("엔더맨")==0)
+				else if(Type.equals("엔더맨"))
 				{
 		  			new NMSUtils().registerEntity(CustomMobName, CustomMobID+ (Byte.MAX_VALUE + 1) * 2, CreatureEnderman.class);
 		  			E = (Enderman) CreatureEnderman.spawn(loc, AI);
 				}
-				else if(Type.compareTo("크리퍼")==0||Type.compareTo("번개크리퍼")==0)
+				else if(Type.equals("크리퍼")||Type.equals("번개크리퍼"))
 				{
 		  			new NMSUtils().registerEntity(CustomMobName, CustomMobID+ (Byte.MAX_VALUE + 1) * 2, CreatureCreeper.class);
 		  			E = (Creeper) CreatureCreeper.spawn(loc, AI);
 				}
-				else if(Type.compareTo("거미")==0)
+				else if(Type.equals("거미"))
 				{
 		  			new NMSUtils().registerEntity(CustomMobName, CustomMobID+ (Byte.MAX_VALUE + 1) * 2, CreatureSpider.class);
 		  			E = (Spider) CreatureSpider.spawn(loc, AI);
 				}
-				else if(Type.compareTo("동굴거미")==0)
+				else if(Type.equals("동굴거미"))
 				{
 		  			new NMSUtils().registerEntity(CustomMobName, CustomMobID+ (Byte.MAX_VALUE + 1) * 2, CreatureCaveSpider.class);
 		  			E = (CaveSpider) CreatureCaveSpider.spawn(loc, AI);
 				}
-				else if(Type.compareTo("좀벌레")==0)
+				else if(Type.equals("좀벌레"))
 				{
 		  			new NMSUtils().registerEntity(CustomMobName, CustomMobID+ (Byte.MAX_VALUE + 1) * 2, CreatureSilverFish.class);
 		  			E = (LivingEntity) CreatureSilverFish.spawn(loc, AI);
 				}
-				else if(Type.compareTo("엔더진드기")==0)
+				else if(Type.equals("엔더진드기"))
 				{
 		  			new NMSUtils().registerEntity(CustomMobName, CustomMobID+ (Byte.MAX_VALUE + 1) * 2, CreatureEnderMite.class);
 		  			E = (LivingEntity) CreatureEnderMite.spawn(loc, AI);
 				}
-				else if(Type.compareTo("블레이즈")==0)
+				else if(Type.equals("블레이즈"))
 				{
 		  			new NMSUtils().registerEntity(CustomMobName, CustomMobID+ (Byte.MAX_VALUE + 1) * 2, CreatureBlaze.class);
 		  			E = (Blaze) CreatureBlaze.spawn(loc, AI);
 				}
-				else if(Type.compareTo("좀비피그맨")==0)
+				else if(Type.equals("좀비피그맨"))
 				{
 		  			new NMSUtils().registerEntity(CustomMobName, CustomMobID+ (Byte.MAX_VALUE + 1) * 2, CreaturePigZombie.class);
 		  			E = (PigZombie) CreaturePigZombie.spawn(loc, AI);
 				}
-				else if(Type.compareTo("마녀")==0)
+				else if(Type.equals("마녀"))
 				{
 		  			new NMSUtils().registerEntity(CustomMobName, CustomMobID+ (Byte.MAX_VALUE + 1) * 2, CreatureWitch.class);
 		  			E = (Witch) CreatureWitch.spawn(loc, AI);
 				}
-				else if(Type.compareTo("위더")==0)
+				else if(Type.equals("위더"))
 				{
 		  			new NMSUtils().registerEntity(CustomMobName, CustomMobID+ (Byte.MAX_VALUE + 1) * 2, CreatureWither.class);
 		  			E = (Wither) CreatureWither.spawn(loc, AI);
 				}
-				else if(Type.compareTo("수호자")==0)
+				else if(Type.equals("수호자"))
 				{
 		  			new NMSUtils().registerEntity(CustomMobName, CustomMobID+ (Byte.MAX_VALUE + 1) * 2, CreatureGuardian.class);
 		  			E = (Guardian) CreatureGuardian.spawn(loc, AI);
 				}
-				else if(Type.compareTo("북극곰")==0)
+				else if(Type.equals("북극곰"))
 				{
 		  			new NMSUtils().registerEntity(CustomMobName, CustomMobID+ (Byte.MAX_VALUE + 1) * 2, CreaturePolarBear.class);
 		  			E = (PolarBear) CreaturePolarBear.spawn(loc, AI);
 				}
-				else if(Type.compareTo("엔더크리스탈")==0)
+				else if(Type.equals("엔더크리스탈"))
 					CreateCreature(Type, loc, mob, DungeonSpawning, XYZLoc, Group, isStayLive);
 				else
 				{
@@ -337,7 +337,7 @@ public class Monster_Spawn
 				Monster.getEquipment().setHelmet(Equip);
 				if(Equip.hasItemMeta()==true)
 					if(Equip.getItemMeta().hasLore()==true)
-						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).compareTo("이곳에 아이템을 넣어 주세요.")==0)
+						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
 							Monster.getEquipment().setHelmet(null);
 			}
 			Equip = monsterYaml.getItemStack(mob+".Chest.Item");
@@ -348,7 +348,7 @@ public class Monster_Spawn
 				Monster.getEquipment().setChestplate(Equip);
 				if(Equip.hasItemMeta()==true)
 					if(Equip.getItemMeta().hasLore()==true)
-						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).compareTo("이곳에 아이템을 넣어 주세요.")==0)
+						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
 							Monster.getEquipment().setChestplate(null);
 			}
 			Equip = monsterYaml.getItemStack(mob+".Leggings.Item");
@@ -359,7 +359,7 @@ public class Monster_Spawn
 				Monster.getEquipment().setLeggings(Equip);
 				if(Equip.hasItemMeta()==true)
 					if(Equip.getItemMeta().hasLore()==true)
-						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).compareTo("이곳에 아이템을 넣어 주세요.")==0)
+						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
 							Monster.getEquipment().setLeggings(null);
 			}
 			Equip = monsterYaml.getItemStack(mob+".Boots.Item");
@@ -370,7 +370,7 @@ public class Monster_Spawn
 				Monster.getEquipment().setBoots(Equip);
 				if(Equip.hasItemMeta()==true)
 					if(Equip.getItemMeta().hasLore()==true)
-						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).compareTo("이곳에 아이템을 넣어 주세요.")==0)
+						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
 							Monster.getEquipment().setBoots(null);
 			}
 			Equip = monsterYaml.getItemStack(mob+".Hand.Item");
@@ -381,7 +381,7 @@ public class Monster_Spawn
 				Monster.getEquipment().setItemInMainHand(Equip);
 				if(Equip.hasItemMeta()==true)
 					if(Equip.getItemMeta().hasLore()==true)
-						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).compareTo("이곳에 아이템을 넣어 주세요.")==0)
+						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
 								Monster.getEquipment().setItemInMainHand(null);
 			}
 			Equip = monsterYaml.getItemStack(mob+".OffHand.Item");
@@ -392,7 +392,7 @@ public class Monster_Spawn
 				Monster.getEquipment().setItemInOffHand(Equip);
 				if(Equip.hasItemMeta()==true)
 					if(Equip.getItemMeta().hasLore()==true)
-						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).compareTo("이곳에 아이템을 넣어 주세요.")==0)
+						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
 								Monster.getEquipment().setItemInOffHand(null);
 			}
 			YamlLoader configYaml = new YamlLoader();
@@ -624,12 +624,12 @@ public class Monster_Spawn
 	{
 		ItemStack Icon = new MaterialData(383, (byte) 0).toItemStack(1);
 		ItemMeta Icon_Meta = Icon.getItemMeta();
-		Icon_Meta.setDisplayName(ChatColor.RED+mob);
+		Icon_Meta.setDisplayName("§c"+mob);
 		Icon_Meta.addEnchant(Enchantment.DURABILITY, 1, true);
-		Icon_Meta.setLore(Arrays.asList(ChatColor.GRAY+mob+"스폰 에그"));
+		Icon_Meta.setLore(Arrays.asList("§8"+mob+"스폰 에그"));
 		Icon.setItemMeta(Icon_Meta);
 		player.getInventory().addItem(Icon);
-		player.sendMessage(ChatColor.YELLOW+"[SYSTEM] : "+ChatColor.GREEN+mob +ChatColor.YELLOW+ "스폰 에그를 얻었습니다!");
+		player.sendMessage("§e[SYSTEM] : "+ChatColor.GREEN+mob +"§e스폰 에그를 얻었습니다!");
 		return;
 	}
 	

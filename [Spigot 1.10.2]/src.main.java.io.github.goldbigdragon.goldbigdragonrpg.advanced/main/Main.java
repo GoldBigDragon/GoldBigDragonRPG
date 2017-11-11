@@ -111,7 +111,7 @@ public class Main extends JavaPlugin implements Listener
 		getServer().getPluginManager().registerEvents(new event.Main_ChangeHotBar(), this);
 		getServer().getPluginManager().registerEvents(new event.Main_PlayerJoin(), this);
 		new otherplugins.NoteBlockAPIMain(Main.plugin);
-		new Main_ServerOption().Initialize();
+		new Main_ServerOption().initialize();
 		
 		if(getServer().getPluginManager().getPlugin("Vault")!=null)
 		{
@@ -136,7 +136,7 @@ public class Main extends JavaPlugin implements Listener
 		Object[] players = Bukkit.getOnlinePlayers().toArray();
 		for(int count = 0; count < players.length; count++)
 			Main_ServerOption.PlayerList.get(((Player)players[count]).getUniqueId().toString()).saveAll();
-	  	Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[Clossing GoldBigDragon Advanced...]");
+	  	Bukkit.getConsoleSender().sendMessage("§c[Clossing GoldBigDragon Advanced...]");
 	  	return;
 	}
 	
@@ -146,14 +146,14 @@ public class Main extends JavaPlugin implements Listener
 		Player player = event.getPlayer();
 		
 	  	YamlLoader userYaml = new YamlLoader();
-		if(player.getLocation().getWorld().getName().compareTo("Dungeon")==0)
+		if(player.getLocation().getWorld().getName().equals("Dungeon"))
 			new dungeon.Dungeon_Main().EraseAllDungeonKey(player, true);
 		
 		if(new corpse.Corpse_Main().DeathCapture(player,false))
 			new corpse.Corpse_Main().RemoveCorpse(player.getName());
 		
-		if(Main_ServerOption.PartyJoiner.containsKey(player))
-			Main_ServerOption.Party.get(Main_ServerOption.PartyJoiner.get(player)).QuitParty(player);
+		if(Main_ServerOption.partyJoiner.containsKey(player))
+			Main_ServerOption.party.get(Main_ServerOption.partyJoiner.get(player)).QuitParty(player);
 		
 		new otherplugins.NoteBlockAPIMain().Stop(event.getPlayer());
 
@@ -206,7 +206,7 @@ public class Main extends JavaPlugin implements Listener
 		if(IT.hasItemMeta() == true)
 			if(IT.getItemMeta().hasLore() == true)
 				if(IT.getItemMeta().getLore().size() == 4)
-					if(IT.getItemMeta().getLore().get(3).equals(ChatColor.YELLOW+"[클릭시 퀵슬롯에서 삭제]")==true)
+					if(IT.getItemMeta().getLore().get(3).equals("§e[클릭시 퀵슬롯에서 삭제]")==true)
 						event.setCancelled(true);
 		return;
 	}
@@ -254,8 +254,8 @@ public class Main extends JavaPlugin implements Listener
 											{
 												new corpse.Corpse_Main().RemoveCorpse(Name);
 												player.updateInventory();
-												player.sendMessage(ChatColor.LIGHT_PURPLE+"[구조] : "+ChatColor.YELLOW+target.getName()+ChatColor.LIGHT_PURPLE+"님을 부활시켰습니다!");
-												target.sendMessage(ChatColor.LIGHT_PURPLE+"[부활] : "+ChatColor.YELLOW+player.getName()+ChatColor.LIGHT_PURPLE+"님에 의해 부활하였습니다!");
+												player.sendMessage("§d[구조] : §e"+target.getName()+"§d님을 부활시켰습니다!");
+												target.sendMessage("§d[부활] : §e"+player.getName()+"§d님에 의해 부활하였습니다!");
 												target.setGameMode(GameMode.SURVIVAL);
 												target.closeInventory();
 												Location l = target.getLocation();
@@ -273,7 +273,7 @@ public class Main extends JavaPlugin implements Listener
 											else
 											{
 												SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-												player.sendMessage(ChatColor.RED+"[SYSTEM] : 부활 아이템이 부족하여 부활시킬 수 없습니다!");
+												player.sendMessage("§c[SYSTEM] : 부활 아이템이 부족하여 부활시킬 수 없습니다!");
 												return;
 											}
 									  	}
@@ -296,7 +296,7 @@ public class Main extends JavaPlugin implements Listener
 															Name2 = AS.getItemInHand().getItemMeta().getDisplayName();
 														else if(AS.getHelmet().getType() != Material.AIR)
 															Name2 = AS.getHelmet().getItemMeta().getDisplayName();
-														if(Name.compareTo(Name2)==0)
+														if(Name.equals(Name2))
 															now.remove();
 													}
 												}
@@ -336,13 +336,13 @@ public class Main extends JavaPlugin implements Listener
 	@EventHandler
 	private void BlockBurnEvent(BlockBurnEvent event)
 	{
-		if(Main_ServerOption.AntiExplode || event.getBlock().getLocation().getWorld().getName().compareTo("Dungeon")==0)
+		if(Main_ServerOption.AntiExplode || event.getBlock().getLocation().getWorld().getName().equals("Dungeon"))
 			event.setCancelled(true);
 	}
 	@EventHandler
 	private void BlockIgniteEvent(BlockIgniteEvent event)
 	{
-		if((Main_ServerOption.AntiExplode || event.getBlock().getLocation().getWorld().getName().compareTo("Dungeon")==0)&&event.getIgnitingEntity()==null)
+		if((Main_ServerOption.AntiExplode || event.getBlock().getLocation().getWorld().getName().equals("Dungeon"))&&event.getIgnitingEntity()==null)
 			event.setCancelled(true);
 	}
 	
@@ -384,7 +384,7 @@ public class Main extends JavaPlugin implements Listener
 				else if(IT.hasItemMeta() == true)
 					if(IT.getItemMeta().hasLore() == true)
 						if(IT.getItemMeta().getLore().size() >= 4)
-							if(IT.getItemMeta().getLore().get(3).equals(ChatColor.YELLOW+"[클릭시 퀵슬롯에서 삭제]")==true)
+							if(IT.getItemMeta().getLore().get(3).equals("§e[클릭시 퀵슬롯에서 삭제]")==true)
 								Ilist.remove(count);
 				*/
 			}
@@ -427,7 +427,7 @@ public class Main extends JavaPlugin implements Listener
 							if(event.getPlayer().isOp() == false)
 							{
 								SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-								event.getPlayer().sendMessage(ChatColor.RED + "[SYSTEM] : " + ChatColor.YELLOW + Area[1] + ChatColor.RED + " 지역에 있는 작물은 손 댈 수없습니다!");
+								event.getPlayer().sendMessage("§c[SYSTEM] : §e"+ Area[1] + "§c 지역에 있는 작물은 손 댈 수없습니다!");
 							}
 							return;
 						}
@@ -456,14 +456,14 @@ public class Main extends JavaPlugin implements Listener
 	@EventHandler
 	private void EntityExplode(EntityExplodeEvent event)
 	{
-		if(Main_ServerOption.AntiExplode || event.getEntity().getLocation().getWorld().getName().compareTo("Dungeon")==0)
+		if(Main_ServerOption.AntiExplode || event.getEntity().getLocation().getWorld().getName().equals("Dungeon"))
 			event.blockList().clear();
 	}
 	
 	@EventHandler
 	private void ExplosionPrime(ExplosionPrimeEvent event)
 	{
-		if(event.getEntity().getLocation().getWorld().getName().compareTo("Dungeon")==0)
+		if(event.getEntity().getLocation().getWorld().getName().equals("Dungeon"))
 		{
 			if(event.getEntityType()==EntityType.ENDER_CRYSTAL || event.getEntityType()==EntityType.DRAGON_FIREBALL
 					|| event.getEntityType()==EntityType.FIREBALL || event.getEntityType()==EntityType.SMALL_FIREBALL)
@@ -481,7 +481,7 @@ public class Main extends JavaPlugin implements Listener
 	@EventHandler
 	private void onArrowHitBlock(ProjectileHitEvent event)
 	{
-		if(event.getEntity().getLocation().getWorld().getName().compareTo("Dungeon")==0)
+		if(event.getEntity().getLocation().getWorld().getName().equals("Dungeon"))
 		{
 			if(event.getEntity().getType()==EntityType.ARROW)
 			{
@@ -547,7 +547,7 @@ public class Main extends JavaPlugin implements Listener
 			{
 				if(event.getCurrentItem().getItemMeta().getLore().size() == 4)
 				{
-					if(event.getCurrentItem().getItemMeta().getLore().get(3).equals((ChatColor.YELLOW+"[클릭시 퀵슬롯에서 삭제]")))
+					if(event.getCurrentItem().getItemMeta().getLore().get(3).equals(("§e[클릭시 퀵슬롯에서 삭제]")))
 					{
 						event.setCancelled(true);
 						event.getWhoClicked().getInventory().setItem(event.getSlot(), null);
@@ -616,12 +616,12 @@ public class Main extends JavaPlugin implements Listener
 					if(player.isOp() == true)
 					{
 					 	SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_VILLAGER_YES, 1.0F, 1.8F);
-					    player.sendMessage(ChatColor.GREEN+"[NPC] : GUI를 활성화 시킬 NPC를 우클릭 하세요!");
+					    player.sendMessage("§a[NPC] : GUI를 활성화 시킬 NPC를 우클릭 하세요!");
 					    new UserData_Object().setInt(player, (byte) 4, 114);
 					}
 					else
 					{
-						talker.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
+						talker.sendMessage("§c[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
 						SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 					}
 					return true;
@@ -717,7 +717,7 @@ public class Main extends JavaPlugin implements Listener
 				  }
 				  else
 				  {
-					  talker.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
+					  talker.sendMessage("§c[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
 					  SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 				  }
 		  			return true;
@@ -746,7 +746,7 @@ public class Main extends JavaPlugin implements Listener
 		  			if(player.isOp() == true)
 		  			{
 		  				UserData_Object u = new UserData_Object();
-						if(u.getType(player)!=null&&u.getType(player).compareTo("Skill")==0)
+						if(u.getType(player)!=null&&u.getType(player).equals("Skill"))
 						{
 							if(u.getString(player, (byte)1).equalsIgnoreCase("SKC"))
 							{
@@ -770,14 +770,14 @@ public class Main extends JavaPlugin implements Listener
 						}
 						else
 						{
-		  					player.sendMessage(ChatColor.RED+"[스킬 설정] : 이 명령어는 스킬 설정시 사용됩니다!");
+		  					player.sendMessage("§c[스킬 설정] : 이 명령어는 스킬 설정시 사용됩니다!");
 							SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		  					return true;
 						}
 		  			}
 					else
 					{
-						talker.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
+						talker.sendMessage("§c[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
 						SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 					}
 					return true;
@@ -786,7 +786,7 @@ public class Main extends JavaPlugin implements Listener
 		}
 		else
 		{
-			if(string.compareTo("경주")==0||string.compareTo("giveexp")==0||string.compareTo("경험치주기")==0)
+			if(string.equals("경주")||string.equals("giveexp")||string.equals("경험치주기"))
 			{
 				if(args.length==2)
 				{
@@ -800,20 +800,20 @@ public class Main extends JavaPlugin implements Listener
 	  					}
 	  					catch(NumberFormatException e)
 	  					{
-	  					  	Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[SYSTEM] : 정수 형태의 값(숫자)을 입력하세요!");
+	  					  	Bukkit.getConsoleSender().sendMessage("§c[SYSTEM] : 정수 형태의 값(숫자)을 입력하세요!");
 		  					return true;
 	  					}
 	  					main.Main_ServerOption.PlayerList.get(target.getUniqueId().toString()).addStat_MoneyAndEXP(0, EXP, true);
-  					  	Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN+"[SYSTEM] : " + args[0] + "님에게 경험치 " + EXP + "을 지급하였습니다!");
+  					  	Bukkit.getConsoleSender().sendMessage("§a[SYSTEM] : " + args[0] + "님에게 경험치 " + EXP + "을 지급하였습니다!");
 	  				}
 	  				else
 	  				{
-					  	Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[SYSTEM] : 해당 플레이어는 접속중이 아닙니다!");
+					  	Bukkit.getConsoleSender().sendMessage("§c[SYSTEM] : 해당 플레이어는 접속중이 아닙니다!");
 	  				}
 				}
 				else
 				{
-					  	Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[SYSTEM] : /경주 [닉네임] [경험치]");
+					  	Bukkit.getConsoleSender().sendMessage("§c[SYSTEM] : /경주 [닉네임] [경험치]");
 				}
 			}
 		}

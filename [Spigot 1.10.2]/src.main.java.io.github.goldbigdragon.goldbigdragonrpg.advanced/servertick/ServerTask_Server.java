@@ -21,7 +21,7 @@ public class ServerTask_Server
 			if(ServerTick_Main.Schedule.get(UTC).getCount()==0)
 				CreateCommandBlock(new Location(Bukkit.getServer().getWorld(STSO.getString((byte)1)), STSO.getInt((byte)0), STSO.getInt((byte)1), STSO.getInt((byte)2)));
 			String CMD = new structure.Structure_Main().getCMD(STSO.getString((byte)0), STSO.getCount(),STSO.getString((byte)2),STSO.getString((byte)3));
-			if(CMD.compareTo("null")==0)
+			if(CMD.equals("null"))
 			{
 				ServerTick_Main.Schedule.remove(UTC);
 				ServerTick_Main.ServerTask="null";
@@ -32,13 +32,13 @@ public class ServerTask_Server
 				OriginalBlock.setData((byte) STSO.getInt((byte)7));
 				SetBlock(CommandLoc, OriginalBlock);
 
-				if(STSO.getString((byte)0).compareTo("CF")==0)
+				if(STSO.getString((byte)0).equals("CF"))
 				{
 					Object[] e = OriginalBlock.getLocation().getWorld().getNearbyEntities(OriginalBlock.getLocation(), 2, 2, 2).toArray();
 					for(int count = 0; count < e.length; count++)
 						if(((Entity)e[count]).getType()==EntityType.ARMOR_STAND)
 							if(((Entity)e[count]).getCustomName()!=null)
-								if(((Entity)e[count]).getCustomName().compareTo(STSO.getString((byte)2))==0)
+								if(((Entity)e[count]).getCustomName().equals(STSO.getString((byte)2)))
 									((Entity)e[count]).setFireTicks(25565);
 				}
 				

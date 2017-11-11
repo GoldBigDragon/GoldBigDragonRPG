@@ -5,9 +5,6 @@ import org.bukkit.inventory.ItemStack;
 
 import util.YamlLoader;
 
-
-
-
 public class UserData_Object
 {
 	public void UserDataInit(Player player)
@@ -42,7 +39,7 @@ public class UserData_Object
 		YamlLoader UserData = new YamlLoader();
 		UserData.getConfig("UserData/"+ player.getUniqueId()+".yml");
 		String Type = UserData.getString("Data.Type");
-		if(Type != null && Type.compareTo("MemorySection[path='Data.Type', root='YamlConfiguration']")!=0)
+		if(Type != null && !Type.equals("MemorySection[path='Data.Type', root='YamlConfiguration']"))
 			return Type;
 		else
 			return null;
@@ -100,7 +97,7 @@ public class UserData_Object
 		YamlLoader UserData = new YamlLoader();
 		UserData.getConfig("UserData/"+ player.getUniqueId()+".yml");
 		String Temp = UserData.getString("Data.Temp");
-		if(Temp!=null && Temp.isEmpty() == false && Temp.compareTo("MemorySection[path='Data.Temp', root='YamlConfiguration']")!=0)
+		if(Temp!=null && Temp.isEmpty() == false && !Temp.equals("MemorySection[path='Data.Temp', root='YamlConfiguration']"))
 			return Temp;
 		else
 			return null;

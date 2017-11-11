@@ -99,8 +99,8 @@ public class Main_ItemDrop
 		else
 		Item = new MaterialData(SO.Money6ID, (byte) SO.Money6DATA).toItemStack(1);
 		ItemMeta Item_Meta = Item.getItemMeta();
-		Item_Meta.setDisplayName(main.Main_ServerOption.Money+" 」f」f」f」l" + money);
-		Item_Meta.setLore(Arrays.asList(ChatColor.YELLOW +""+ money +" "+main.Main_ServerOption.Money,passmoney+""));
+		Item_Meta.setDisplayName(main.Main_ServerOption.money+" 」f」f」f」l" + money);
+		Item_Meta.setLore(Arrays.asList("」e"+ money +" "+main.Main_ServerOption.money,passmoney+""));
 		Item_Meta.addEnchant(org.bukkit.enchantments.Enchantment.LUCK, 500, true);
 		Item.setItemMeta(Item_Meta);
 		passmoney++;

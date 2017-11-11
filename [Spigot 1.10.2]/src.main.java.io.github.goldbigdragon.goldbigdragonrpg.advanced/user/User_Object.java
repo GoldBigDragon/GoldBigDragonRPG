@@ -1,16 +1,12 @@
 package user;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import effect.SoundEffect;
-import main.Main;
 import main.Main_ServerOption;
 import util.YamlLoader;
-
-
 
 public class User_Object
 {
@@ -159,7 +155,7 @@ public class User_Object
 				}
 				else
 				{
-					player.sendMessage(ChatColor.RED+"[System] : "+Main_ServerOption.Money+ChatColor.RED+" 을(를) 2000000000(20억)이상 가질 수 없습니다!");
+					player.sendMessage("§c[System] : "+Main_ServerOption.money+"§c 을(를) 2000000000(20억)이상 가질 수 없습니다!");
 					setStat_Money(2000000000);
 				}
 			}
@@ -171,13 +167,13 @@ public class User_Object
 		    boolean isLevelUp = false;
 		    YamlLoader levelYAML = new YamlLoader();
     		levelYAML.getConfig("Level.yml");
-		    int LevelUp_PerSkillPoint = Main_ServerOption.LevelUpPerSkillPoint * Main_ServerOption.Event_SkillPoint;
-		    int LevelUp_PerStatPoint = Main_ServerOption.LevelUpPerStatPoint * Main_ServerOption.Event_StatPoint;
+		    int LevelUp_PerSkillPoint = Main_ServerOption.levelUpPerSkillPoint * Main_ServerOption.eventSkillPoint;
+		    int LevelUp_PerStatPoint = Main_ServerOption.levelUpPerStatPoint * Main_ServerOption.eventStatPoint;
 			for(;;)
 			{
 				if(Stat_EXP < Stat_MaxEXP)
 					break;
-				else if(Main_ServerOption.MaxLevel <= Stat_Level || levelYAML.contains((Stat_Level+1)+"")==false)
+				else if(Main_ServerOption.maxLevel <= Stat_Level || levelYAML.contains((Stat_Level+1)+"")==false)
 				{
 					Stat_EXP = Stat_MaxEXP;
 					break;
@@ -196,22 +192,22 @@ public class User_Object
 					else if(Stat_MaxEXP <= 0)
 						Stat_MaxEXP = 100;
 
-					if(Main_ServerOption.MaxLevel <= Stat_Level)
+					if(Main_ServerOption.maxLevel <= Stat_Level)
 						new effect.SendPacket().sendActionBar(Bukkit.getPlayer(PlayerName), "§c§l[최대 레벨에 도달하여 더이상 레벨업 하실 수가 없습니다!]");
 				}
 			}
 			if(isLevelUp)
 			{
-				new effect.SendPacket().sendTitleSubTitle(Bukkit.getPlayer(PlayerName), "\'"+ChatColor.WHITE+"Level Up!\'", "\'"+ChatColor.WHITE + "레벨 " +ChatColor.YELLOW+ Stat_Level+ChatColor.WHITE + "이 되었습니다!\'", (byte)1, (byte)3, (byte)1);
+				new effect.SendPacket().sendTitleSubTitle(Bukkit.getPlayer(PlayerName), "\'§fLevel Up!\'", "\'§f레벨 §e"+ Stat_Level+"§f이 되었습니다!\'", (byte)1, (byte)3, (byte)1);
 				SoundEffect.SP(Bukkit.getPlayer(PlayerName), org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 1.5F, 1.8F);
 			}
 		}
 		if(isAlert && Alert_EXPget)
 		{
 			if(Money!=0&&EXP!=0)
-				new effect.SendPacket().sendActionBar(player, "§b§l[경험치] "+ EXP + " " + "§e§l["+ChatColor.WHITE+Main_ServerOption.Money+"§e§l] "+ Money);
+				new effect.SendPacket().sendActionBar(player, "§b§l[경험치] "+ EXP + " §e§l[§f"+Main_ServerOption.money+"§e§l] "+ Money);
 			else if(Money!=0)
-				new effect.SendPacket().sendActionBar(player, "§e§l["+ChatColor.WHITE+Main_ServerOption.Money+"§e§l] "+ Money);
+				new effect.SendPacket().sendActionBar(player, "§e§l[§f"+Main_ServerOption.money+"§e§l] "+ Money);
 			else
 				new effect.SendPacket().sendActionBar(player, "§b§l[경험치] "+ EXP);
 		}
@@ -363,8 +359,8 @@ public class User_Object
 	
 	public int getStat_STR()
 	{
-		if(Stat_STR > Main_ServerOption.MaxSTR)
-			return Main_ServerOption.MaxSTR;
+		if(Stat_STR > Main_ServerOption.maxSTR)
+			return Main_ServerOption.maxSTR;
 		else
 			return Stat_STR;
 	}
@@ -377,8 +373,8 @@ public class User_Object
 	
 	public int getStat_DEX()
 	{
-		if(Stat_DEX > Main_ServerOption.MaxDEX)
-			return Main_ServerOption.MaxDEX;
+		if(Stat_DEX > Main_ServerOption.maxDEX)
+			return Main_ServerOption.maxDEX;
 		else
 			return Stat_DEX;
 	}
@@ -391,8 +387,8 @@ public class User_Object
 	
 	public int getStat_INT()
 	{
-		if(Stat_INT > Main_ServerOption.MaxINT)
-			return Main_ServerOption.MaxINT;
+		if(Stat_INT > Main_ServerOption.maxINT)
+			return Main_ServerOption.maxINT;
 		else
 			return Stat_INT;
 	}
@@ -405,8 +401,8 @@ public class User_Object
 	
 	public int getStat_WILL()
 	{
-		if(Stat_WILL > Main_ServerOption.MaxWILL)
-			return Main_ServerOption.MaxWILL;
+		if(Stat_WILL > Main_ServerOption.maxWILL)
+			return Main_ServerOption.maxWILL;
 		else
 			return Stat_WILL;
 	}
@@ -419,8 +415,8 @@ public class User_Object
 	
 	public int getStat_LUK()
 	{
-		if(Stat_LUK > Main_ServerOption.MaxLUK)
-			return Main_ServerOption.MaxLUK;
+		if(Stat_LUK > Main_ServerOption.maxLUK)
+			return Main_ServerOption.maxLUK;
 		else
 			return Stat_LUK;
 	}
@@ -806,7 +802,7 @@ public class User_Object
 			{
 			  	YamlLoader Config = new YamlLoader();
 		    	Config.getConfig("config.yml");
-				if(PlayerJob.getString("Job.Type").compareTo(Config.getString("Server.DefaultJob"))==0)
+				if(PlayerJob.getString("Job.Type").equals(Config.getString("Server.DefaultJob")))
 					PlayerJob.set("Job.Root", Config.getString("Server.DefaultJob"));
 				else
 				{
@@ -819,7 +815,7 @@ public class User_Object
 						Object[] q = JobList.getConfigurationSection("MapleStory."+Job[count].toString()).getKeys(false).toArray();
 						for(int counter=0;counter<q.length;counter++)
 						{
-							if(q[counter].toString().compareTo(PlayerJob.getString("Job.Type"))==0)
+							if(q[counter].toString().equals(PlayerJob.getString("Job.Type")))
 							{
 								PlayerJob.set("Job.Root", Job[count].toString());
 								PlayerRootJob =  Job[count].toString();

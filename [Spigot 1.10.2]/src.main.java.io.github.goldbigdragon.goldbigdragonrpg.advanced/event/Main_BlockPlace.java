@@ -27,7 +27,7 @@ public class Main_BlockPlace implements Listener
 				event.setCancelled(true);
 			return;
 		}
-		if(event.getBlock().getLocation().getWorld().getName().compareTo("Dungeon")==0)
+		if(event.getBlock().getLocation().getWorld().getName().equals("Dungeon"))
 		{
 			if(event.getBlock().getType() != Material.TORCH)
 				event.setCancelled(true);
@@ -41,7 +41,7 @@ public class Main_BlockPlace implements Listener
 		{
 			event.setCancelled(true);
 			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-			player.sendMessage(ChatColor.RED + "[SYSTEM] : " + ChatColor.YELLOW + Area[1] + ChatColor.RED + " 지역 에서는 블록 설치가 불가능합니다!");
+			player.sendMessage("§c[SYSTEM] : §e"+ Area[1] + "§c 지역 에서는 블록 설치가 불가능합니다!");
 			return;
 		}
 		if(player.isOp()==false)

@@ -97,7 +97,7 @@ public class Monster_Kill
 		String name=entity.getCustomName();
 		if(name == null || ChatColor.stripColor(name).length() <= 0)
 			return getNormalName(entity);
-		if(entity.getLocation().getWorld().getName().compareTo("Dungeon")==0)
+		if(entity.getLocation().getWorld().getName().equals("Dungeon"))
 		{
 			if(name.length() >= 6)
 			{
@@ -273,8 +273,8 @@ public class Monster_Kill
 						loc.setY(loc.getY()+1);
 						item = new ItemStack(292);
 						ItemMeta im = item.getItemMeta();
-						im.setDisplayName(ChatColor.GREEN+""+ChatColor.BLACK+""+ChatColor.GREEN+""+"§f§l[던전 룸 열쇠]");
-						im.setLore(Arrays.asList("",ChatColor.WHITE+"던전 룸을 열 수 있는",ChatColor.WHITE+"낡은 열쇠이다."));
+						im.setDisplayName("§a§0§a§f§l[던전 룸 열쇠]");
+						im.setLore(Arrays.asList("","§f던전 룸을 열 수 있는","§f낡은 열쇠이다."));
 						im.addEnchant(Enchantment.DURABILITY, 6000, true);
 						item.setItemMeta(im);
 						new event.Main_ItemDrop().CustomItemDrop(loc, item);
@@ -311,7 +311,7 @@ public class Monster_Kill
 									boolean isChecked = false;
 									for(int count = 0; count < BossCount; count++)
 									{
-										if(isChecked==false&&dungeonYaml.getString("Boss."+count).compareTo(name)==0)
+										if(!isChecked&&dungeonYaml.getString("Boss."+count).equals(name))
 											isChecked = true;
 										else
 											BossList.add(dungeonYaml.getString("Boss."+count));
@@ -338,7 +338,7 @@ public class Monster_Kill
 	
 	public void MonsterKilling(EntityDeathEvent event)
 	{
-		if(event.getEntity().getLocation().getWorld().getName().compareTo("Dungeon")==0)
+		if(event.getEntity().getLocation().getWorld().getName().equals("Dungeon"))
 			DungeonKilled(event.getEntity(), false);
     	if(event.getEntity()!=null && event.getEntity().getKiller() != null)
     	{
@@ -349,7 +349,7 @@ public class Monster_Kill
 				{
 					Player player = (Player) Bukkit.getServer().getPlayer(event.getEntity().getKiller().getName());
 					if(main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).isAlert_MobHealth())
-					    new SendPacket().sendTitleSubTitle(player, "\'" +ChatColor.BLACK+"■■■■■■■■■■"+ "\'", "\'" +ChatColor.DARK_RED+""+ChatColor.BOLD+"[DEAD]"+ "\'", (byte)0, (byte)0, (byte)1);
+					    new SendPacket().sendTitleSubTitle(player, "\'§0■■■■■■■■■■\'", "\'§4§l[DEAD]\'", (byte)0, (byte)0, (byte)1);
     				Reward(event,player);
     				Quest(event, player);
 					return;
@@ -373,7 +373,7 @@ public class Monster_Kill
 				{
 					if(e.get(i).isDead() == false)
 					{
-						if(name.compareTo("爆死")!=0)
+						if(!name.equals("爆死"))
 						{
 							if(name.charAt(0)=='§'&&name.charAt(1)=='2'&&
 								name.charAt(2)=='§'&&name.charAt(3)=='0'&&
@@ -395,7 +395,7 @@ public class Monster_Kill
 	{
 		util.Util_Number N = new util.Util_Number();
 		byte amount = 1;
-		if(40 <= N.RandomNum(0, 100) * Main_ServerOption.Event_DropChance)
+		if(40 <= N.RandomNum(0, 100) * Main_ServerOption.eventDropChance)
 		{
 			int lucky = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK()/30;
 			if(lucky >= 10) lucky =10;
@@ -403,9 +403,9 @@ public class Monster_Kill
 			if(lucky >= N.RandomNum(0, 100))
 			{
 				int luckysize = N.RandomNum(0, 100);
-				if(luckysize <= 80){player.sendMessage(ChatColor.YELLOW +""+ChatColor.BOLD+ "[SYSTEM] : 럭키 피니시!");amount = 2;	SoundEffect.SP(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 0.5F, 0.9F);}
-				else if(luckysize <= 95){player.sendMessage(ChatColor.YELLOW +""+ChatColor.BOLD+ "[SYSTEM] : 빅 럭키 피니시!");amount = 5;	SoundEffect.SP(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 0.7F, 1.0F);}
-				else{player.sendMessage(ChatColor.YELLOW +""+ChatColor.BOLD+ "[SYSTEM] : 휴즈 럭키 피니시!");amount = 20;	SoundEffect.SP(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.1F);}
+				if(luckysize <= 80){player.sendMessage("§e§l[SYSTEM] : 럭키 피니시!");amount = 2;	SoundEffect.SP(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 0.5F, 0.9F);}
+				else if(luckysize <= 95){player.sendMessage("§e§l[SYSTEM] : 빅 럭키 피니시!");amount = 5;	SoundEffect.SP(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 0.7F, 1.0F);}
+				else{player.sendMessage("§e§l[SYSTEM] : 휴즈 럭키 피니시!");amount = 20;	SoundEffect.SP(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.1F);}
 			}
 		}
 		else
@@ -480,7 +480,7 @@ public class Monster_Kill
 		YamlLoader playerQuestListYaml = new YamlLoader();
 		playerQuestListYaml.getConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
 
-		if(Main_ServerOption.PartyJoiner.containsKey(player)==false)
+		if(Main_ServerOption.partyJoiner.containsKey(player)==false)
 		{
 			Object[] a = playerQuestListYaml.getConfigurationSection("Started.").getKeys(false).toArray();
 			for(int count = 0; count < a.length; count++)
@@ -506,7 +506,7 @@ public class Monster_Kill
 						if(event.getEntity().isCustomNameVisible() == true)
 						{
 							KilledName = event.getEntity().getCustomName();
-							if(event.getEntity().getLocation().getWorld().getName().compareTo("Dungeon")==0)
+							if(event.getEntity().getLocation().getWorld().getName().equals("Dungeon"))
 							{
 								if(KilledName.length() >= 6)
 								{
@@ -546,7 +546,7 @@ public class Monster_Kill
 		}
 		else
 		{
-			Player[] PartyMember = Main_ServerOption.Party.get(Main_ServerOption.PartyJoiner.get(player)).getMember();
+			Player[] PartyMember = Main_ServerOption.party.get(Main_ServerOption.partyJoiner.get(player)).getMember();
 			YamlLoader configYaml = new YamlLoader();
 			configYaml.getConfig("config.yml");
 			int expShareDistance = configYaml.getInt("Party.EXPShareDistance");
@@ -577,7 +577,7 @@ public class Monster_Kill
 									if(event.getEntity().isCustomNameVisible() == true)
 									{
 										KilledName = event.getEntity().getCustomName();
-										if(event.getEntity().getLocation().getWorld().getName().compareTo("Dungeon")==0)
+										if(event.getEntity().getLocation().getWorld().getName().equals("Dungeon"))
 										{
 											if(KilledName.length() >= 6)
 											{

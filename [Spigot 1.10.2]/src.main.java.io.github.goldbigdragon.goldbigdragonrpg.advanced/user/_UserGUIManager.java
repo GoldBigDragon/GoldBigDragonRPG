@@ -13,21 +13,21 @@ public class _UserGUIManager
 	
 	public void ClickRouting(InventoryClickEvent event, String SubjectCode)
 	{
-		if(SubjectCode.compareTo("00")==0)//스텟
+		if(SubjectCode.equals("00"))//스텟
 			new user.Stats_GUI().StatusInventoryclick(event);
-		if(SubjectCode.compareTo("01")==0)//옵션
+		if(SubjectCode.equals("01"))//옵션
 			new user.Option_GUI().optionInventoryclick(event);
-		if(SubjectCode.compareTo("02")==0)//기타
+		if(SubjectCode.equals("02"))//기타
 			new user.ETC_GUI().ETCInventoryclick(event);
-		if(SubjectCode.compareTo("03")==0)//가이드
+		if(SubjectCode.equals("03"))//가이드
 			new user.ETC_GUI().GuideInventoryclick(event);
-		if(SubjectCode.compareTo("04")==0)//친구
+		if(SubjectCode.equals("04"))//친구
 			new user.ETC_GUI().FriendsGUIclick(event);
-		if(SubjectCode.compareTo("05")==0)//친구 신청 목록
+		if(SubjectCode.equals("05"))//친구 신청 목록
 			new user.ETC_GUI().WaittingFriendsGUIclick(event);
-		if(SubjectCode.compareTo("06")==0)//장비 구경
+		if(SubjectCode.equals("06"))//장비 구경
 			new user.Equip_GUI().EquipSeeInventoryclick(event);
-		if(SubjectCode.compareTo("07")==0)//교환
+		if(SubjectCode.equals("07"))//교환
 		{
 			new user.Equip_GUI().ExchangeInventoryclick(event);
 			new user.Equip_GUI().ExchangeGUIclick(event);
@@ -36,7 +36,7 @@ public class _UserGUIManager
 	
 	public void CloseRouting(InventoryCloseEvent event, String SubjectCode)
 	{
-		if(SubjectCode.compareTo("07")==0)//교환
+		if(SubjectCode.equals("07"))//교환
 			new user.Equip_GUI().ExchangeGUI_Close(event);
 	}
 }

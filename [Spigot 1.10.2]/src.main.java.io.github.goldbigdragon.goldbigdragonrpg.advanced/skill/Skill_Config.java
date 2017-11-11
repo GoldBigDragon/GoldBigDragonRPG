@@ -1,12 +1,8 @@
 package skill;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import util.YamlLoader;
-
-
-
 
 public class Skill_Config
 {
@@ -64,7 +60,7 @@ public class Skill_Config
 		SkillList.set("CloudKill.SkillRank."+(int)1+".Command","/weather clear 9999");
 		SkillList.set("CloudKill.SkillRank."+(int)1+".BukkitPermission",true);
 		SkillList.set("CloudKill.SkillRank."+(int)1+".MagicSpells","null");
-		SkillList.set("CloudKill.SkillRank."+(int)1+".Lore",ChatColor.GRAY + "     [설명 없음]     ");
+		SkillList.set("CloudKill.SkillRank."+(int)1+".Lore","§7     [설명 없음]     ");
 		SkillList.set("CloudKill.SkillRank."+(int)1+".AffectStat","없음");
 		SkillList.set("CloudKill.SkillRank."+(int)1+".DistrictWeapon","없음");
 		SkillList.saveConfig();

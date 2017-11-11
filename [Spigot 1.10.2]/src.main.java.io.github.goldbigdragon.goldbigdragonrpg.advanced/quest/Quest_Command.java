@@ -9,8 +9,6 @@ import org.bukkit.entity.Player;
 import effect.SoundEffect;
 import util.YamlLoader;
 
-
-
 public class Quest_Command
 {
 	public void onCommand(CommandSender talker, Command command, String string, String[] args)
@@ -65,7 +63,7 @@ public class Quest_Command
 								if(questListYaml.contains(QuestNameString))
 						    	{
 								  	SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 2.0F, 1.7F);
-							    	player.sendMessage(ChatColor.RED+"[SYSTEM] : 해당 이름의 퀘스트가 이미 존재합니다!");
+							    	player.sendMessage("§c[SYSTEM] : 해당 이름의 퀘스트가 이미 존재합니다!");
 								    return;
 						    	}
 								String QuestType = null;
@@ -91,7 +89,7 @@ public class Quest_Command
 								questListYaml.set(QuestNameString + ".Need.PrevQuest", "null");
 								questListYaml.createSection(QuestNameString + ".FlowChart");
 								questListYaml.saveConfig();
-							    player.sendMessage(ChatColor.GREEN+"[SYSTEM] : "+ChatColor.YELLOW+QuestNameString+ChatColor.DARK_AQUA+" 퀘스트가 생성되었습니다!");
+							    player.sendMessage("§a[SYSTEM] : §e"+QuestNameString+"§3 퀘스트가 생성되었습니다!");
 			  					SoundEffect.SP(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 0.8F);
 			  					new quest.Quest_GUI().FixQuestGUI(player, (short) 0, QuestNameString);
 				  			}
@@ -108,7 +106,7 @@ public class Quest_Command
 			}
 			else
 			{
-				talker.sendMessage(ChatColor.RED + "[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
+				talker.sendMessage("§c[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
 				SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 2.0F, 1.7F);
 	  			return;
 			}
@@ -117,11 +115,11 @@ public class Quest_Command
 
 	private void HelpMessage(Player player)
 	{
-		player.sendMessage(ChatColor.YELLOW+"────────────[퀘스트 명령어]────────────");
-		player.sendMessage(ChatColor.GOLD + "/퀘스트" + ChatColor.YELLOW + " - 현재 자신이 진행중인 퀘스트 목록을 열람합니다.");
-		player.sendMessage(ChatColor.GOLD + "/퀘스트 구성" + ChatColor.YELLOW + " - 새로운 퀘스트를 만들거나, 기존의 퀘스트를 삭제합니다.");
-		player.sendMessage(ChatColor.GOLD + "/퀘스트 생성 [타입] [이름]" + ChatColor.YELLOW + " - 새로운 퀘스트를 생성하며, 설정창으로 바로 넘어갑니다.");
-		player.sendMessage(ChatColor.GREEN + "[일반 / 반복 / 일일 / 일주 / 한달]");
-		player.sendMessage(ChatColor.YELLOW+"────────────────────────────────");
+		player.sendMessage("§e────────────[퀘스트 명령어]────────────");
+		player.sendMessage("§6/퀘스트§e - 현재 자신이 진행중인 퀘스트 목록을 열람합니다.");
+		player.sendMessage("§6/퀘스트 구성§e - 새로운 퀘스트를 만들거나, 기존의 퀘스트를 삭제합니다.");
+		player.sendMessage("§6/퀘스트 생성 [타입] [이름]§e - 새로운 퀘스트를 생성하며, 설정창으로 바로 넘어갑니다.");
+		player.sendMessage("§a[일반 / 반복 / 일일 / 일주 / 한달]");
+		player.sendMessage("§e────────────────────────────────");
 	}
 }

@@ -1,7 +1,6 @@
 package util;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -16,27 +15,27 @@ public class Util_Player
 	{
 		main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MoneyAndEXP(Money, EXP, false);
 		SoundEffect.SP(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 1.5F, 1.8F);
-		player.sendMessage("§e§l[던전 클리어 보상] : "+"§b§l[경험치] "+ EXP + " " + "§e§l["+ChatColor.WHITE+Main_ServerOption.Money+"§e§l] "+ Money);
+		player.sendMessage("§e§l[던전 클리어 보상] : §b§l[경험치] "+ EXP + " §e§l[§f"+Main_ServerOption.money+"§e§l] "+ Money);
 	}
 	
 	public void addMoneyAndEXP(Player player, long Money, long EXP, Location loc, boolean givePartyMemberToo, boolean isDungeonClear)
 	{
-	    if(EXP * Main_ServerOption.Event_Exp > Long.MAX_VALUE)
+	    if(EXP * Main_ServerOption.eventExp > Long.MAX_VALUE)
 	    	EXP = Long.MAX_VALUE;
-	    else if(EXP * Main_ServerOption.Event_Exp < Long.MIN_VALUE)
+	    else if(EXP * Main_ServerOption.eventExp < Long.MIN_VALUE)
 	    	EXP = Long.MIN_VALUE;
 	    else
-	    	EXP = EXP * Main_ServerOption.Event_Exp;
-		if(main.Main_ServerOption.PartyJoiner.containsKey(player)==false)
+	    	EXP = EXP * Main_ServerOption.eventExp;
+		if(main.Main_ServerOption.partyJoiner.containsKey(player)==false)
 			main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MoneyAndEXP(Money, EXP, true);
 		else if(givePartyMemberToo)
 		{
-		    Player[] party = main.Main_ServerOption.Party.get(main.Main_ServerOption.PartyJoiner.get(player)).getMember();
+		    Player[] party = main.Main_ServerOption.party.get(main.Main_ServerOption.partyJoiner.get(player)).getMember();
 			byte partymember=0;
 			for(int count = 0; count<party.length;count++)
 		    	if(party[count].isOnline() == true)
 					if(party[count].getLocation().getWorld() == loc.getWorld())
-						if(loc.distance(party[count].getLocation()) <= Main_ServerOption.EXPShareDistance)
+						if(loc.distance(party[count].getLocation()) <= Main_ServerOption.expShareDistance)
 							partymember++;
 			Money = (Money/partymember);
 			EXP = (EXP/partymember);
@@ -45,7 +44,7 @@ public class Util_Player
 			{
 		    	if(party[count].isOnline() == true)
 					if(party[count].getLocation().getWorld() == loc.getWorld())
-						if(loc.distance(party[count].getLocation()) <= Main_ServerOption.EXPShareDistance)
+						if(loc.distance(party[count].getLocation()) <= Main_ServerOption.expShareDistance)
 							main.Main_ServerOption.PlayerList.get(party[count].getUniqueId().toString()).addStat_MoneyAndEXP(Money, EXP, true);
 			}
 		}
@@ -221,7 +220,7 @@ public class Util_Player
 					for(int count2 = 0; count2 < main.Main_ServerOption.AreaList.get(WorldList[count].toString()).size(); count2++)
 					{
 						Object[] WorldList2 = main.Main_ServerOption.AreaList.get(WorldList[count].toString()).toArray();
-						if(WorldList2[count2].toString().compareTo(CurrentArea)==0)
+						if(WorldList2[count2].toString().equals(CurrentArea))
 						{
 						  	YamlLoader PlayerConfig = new YamlLoader();
 							PlayerConfig.getConfig("Area/AreaList.yml");
@@ -251,7 +250,7 @@ public class Util_Player
 			for(int count2 = 0; count2 < main.Main_ServerOption.AreaList.get(WorldList[count].toString()).size(); count2++)
 			{
 				Object[] WorldList2 = main.Main_ServerOption.AreaList.get(WorldList[count].toString()).toArray();
-				if(WorldList2[count2].toString().compareTo(CurrentArea)==0)
+				if(WorldList2[count2].toString().equals(CurrentArea))
 				{
 				  	YamlLoader PlayerConfig = new YamlLoader();
 					PlayerConfig.getConfig("Area/AreaList.yml");
@@ -269,14 +268,14 @@ public class Util_Player
 			
 		for(int count =0; count < Bukkit.getWorlds().size(); count++)
 		{
-			if(Bukkit.getWorlds().get(count).getName().compareTo("world")==0)
+			if(Bukkit.getWorlds().get(count).getName().equals("world"))
 			{
 				player.teleport(Bukkit.getWorlds().get(count).getSpawnLocation());
 				return;
 			}
 		}
 		for(int count =0; count < Bukkit.getWorlds().size(); count++)
-			if(Bukkit.getWorlds().get(count).getName().compareTo("Dungeon")!=0)
+			if(!Bukkit.getWorlds().get(count).getName().equals("Dungeon"))
 				player.teleport(Bukkit.getWorlds().get(count).getSpawnLocation());
 	}
 }

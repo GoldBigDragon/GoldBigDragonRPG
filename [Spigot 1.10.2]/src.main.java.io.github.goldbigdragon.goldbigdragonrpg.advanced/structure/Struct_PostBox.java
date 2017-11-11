@@ -20,8 +20,6 @@ import user.UserData_Object;
 import util.Util_GUI;
 import util.YamlLoader;
 
-
-
 public class Struct_PostBox extends Util_GUI
 {
 	public void PostBoxMainGUI(Player player, byte Type)
@@ -50,22 +48,22 @@ public class Struct_PostBox extends Util_GUI
 
 				List<String> Memo = new ArrayList<String>();
 				Memo.add("");
-				Memo.add(ChatColor.BLUE+"제목 : "+ChatColor.WHITE+PostTitle);
+				Memo.add("§9제목 : §f"+PostTitle);
 				Memo.add("");
 				for(int count2=0;count2<(PostMemo.length()/20)+1;count2++)
 				{
 					if((count2+1)*20<PostMemo.length())
-						Memo.add(ChatColor.WHITE+PostMemo.substring(0+(count2*20), ((count2+1)*20)));
+						Memo.add("§f"+PostMemo.substring(0+(count2*20), ((count2+1)*20)));
 					else
-						Memo.add(ChatColor.WHITE+PostMemo.substring(0+(count2*20), PostMemo.length()));
+						Memo.add("§f"+PostMemo.substring(0+(count2*20), PostMemo.length()));
 				}
 				Memo.add("");
-				Memo.add(ChatColor.BLUE+"보낸 이 : " + ChatColor.WHITE+PostFrom);
+				Memo.add("§9보낸 이 : §f"+PostFrom);
 				if(PostItem==null)
 				{
-					Memo.add(ChatColor.YELLOW+"[좌 클릭시 메시지 삭제]");
-					Memo.add(ChatColor.BLACK+PostList[count].toString());
-					Stack2(ChatColor.WHITE+"[메시지]", 358,0,1,Memo, loc, inv);
+					Memo.add("§e[좌 클릭시 메시지 삭제]");
+					Memo.add("§0"+PostList[count].toString());
+					Stack2("§f[메시지]", 358,0,1,Memo, loc, inv);
 				}
 				else
 				{
@@ -73,27 +71,27 @@ public class Struct_PostBox extends Util_GUI
 					ItemMeta PIMeta = PostItem.getItemMeta();
 					if(PostItem.hasItemMeta())
 					{
-						Memo.add(ChatColor.BLUE +"대금 청구 : " + ChatColor.WHITE+PostValue);
-						Memo.add(ChatColor.YELLOW +"[좌 클릭시 물품 수령]");
-						if(PlayerPost.getString("Recieve."+PostList[count]+".From").compareTo("[반송]")!=0
-						&&PlayerPost.getString("Recieve."+PostList[count]+".From").compareTo("[물품 회수]")!=0
-						&&PlayerPost.getString("Recieve."+PostList[count]+".From").compareTo("[거래 게시판]")!=0
-						&&PlayerPost.getString("Recieve."+PostList[count]+".From").compareTo("[이벤트]")!=0
-						&&PlayerPost.getString("Recieve."+PostList[count]+".From").compareTo("[시스템]")!=0)
-							Memo.add(ChatColor.RED +"[우 클릭시 물품 반송]");
-						Memo.add(ChatColor.BLACK+PostList[count].toString());
+						Memo.add("§9대금 청구 : §f"+PostValue);
+						Memo.add("§e[좌 클릭시 물품 수령]");
+						if(!PlayerPost.getString("Recieve."+PostList[count]+".From").equals("[반송]")
+						&&!PlayerPost.getString("Recieve."+PostList[count]+".From").equals("[물품 회수]")
+						&&!PlayerPost.getString("Recieve."+PostList[count]+".From").equals("[거래 게시판]")
+						&&!PlayerPost.getString("Recieve."+PostList[count]+".From").equals("[이벤트]")
+						&&!PlayerPost.getString("Recieve."+PostList[count]+".From").equals("[시스템]"))
+							Memo.add("§c[우 클릭시 물품 반송]");
+						Memo.add("§0"+PostList[count].toString());
 					}
 					else
 					{
-						Memo.add(ChatColor.BLUE+"대금 청구 : " + ChatColor.WHITE+PostValue);
-						Memo.add(ChatColor.YELLOW+"[좌 클릭시 물품 수령]");
-						if(PlayerPost.getString("Recieve."+PostList[count]+".From").compareTo("[반송]")!=0
-						&&PlayerPost.getString("Recieve."+PostList[count]+".From").compareTo("[물품 회수]")!=0
-						&&PlayerPost.getString("Recieve."+PostList[count]+".From").compareTo("[거래 게시판]")!=0
-						&&PlayerPost.getString("Recieve."+PostList[count]+".From").compareTo("[이벤트]")!=0
-						&&PlayerPost.getString("Recieve."+PostList[count]+".From").compareTo("[시스템]")!=0)
-							Memo.add(ChatColor.RED +"[우 클릭시 물품 반송]");
-						Memo.add(ChatColor.BLACK+PostList[count].toString());
+						Memo.add("§9대금 청구 : §f"+PostValue);
+						Memo.add("§e[좌 클릭시 물품 수령]");
+						if(!PlayerPost.getString("Recieve."+PostList[count]+".From").equals("[반송]")
+						&&!PlayerPost.getString("Recieve."+PostList[count]+".From").equals("[물품 회수]")
+						&&!PlayerPost.getString("Recieve."+PostList[count]+".From").equals("[거래 게시판]")
+						&&!PlayerPost.getString("Recieve."+PostList[count]+".From").equals("[이벤트]")
+						&&!PlayerPost.getString("Recieve."+PostList[count]+".From").equals("[시스템]"))
+							Memo.add("§c[우 클릭시 물품 반송]");
+						Memo.add("§0"+PostList[count].toString());
 						PIMeta.setLore(Memo);
 					}
 					PIMeta.setLore(Memo);
@@ -126,22 +124,22 @@ public class Struct_PostBox extends Util_GUI
 	
 				List<String> Memo = new ArrayList<String>();
 				Memo.add("");
-				Memo.add(ChatColor.BLUE+"제목 : "+ChatColor.WHITE+PostTitle);
+				Memo.add("§9제목 : §f"+PostTitle);
 				Memo.add("");
 				for(int count2=0;count2<(PostMemo.length()/20)+1;count2++)
 				{
 					if((count2+1)*20<PostMemo.length())
-						Memo.add(ChatColor.WHITE+PostMemo.substring(0+(count2*20), ((count2+1)*20)));
+						Memo.add("§f"+PostMemo.substring(0+(count2*20), ((count2+1)*20)));
 					else
-						Memo.add(ChatColor.WHITE+PostMemo.substring(0+(count2*20), PostMemo.length()));
+						Memo.add("§f"+PostMemo.substring(0+(count2*20), PostMemo.length()));
 				}
 				Memo.add("");
-				Memo.add(ChatColor.BLUE+"받는이 : " + ChatColor.WHITE+PostTo);
+				Memo.add("§9받는이 : §f"+PostTo);
 				if(PostItem==null)
 				{
-					Memo.add(ChatColor.YELLOW+"[좌 클릭시 메시지 전송 취소]");
-					Memo.add(ChatColor.BLACK+PostList[count].toString());
-					Stack2(ChatColor.WHITE+"[메시지]", 358,0,1,Memo, loc, inv);
+					Memo.add("§e[좌 클릭시 메시지 전송 취소]");
+					Memo.add("§0"+PostList[count].toString());
+					Stack2("§f[메시지]", 358,0,1,Memo, loc, inv);
 				}
 				else
 				{
@@ -150,19 +148,19 @@ public class Struct_PostBox extends Util_GUI
 					List<String> PostedItemLore = PIMeta.getLore();
 					if(PostItem.hasItemMeta() && PIMeta != null)
 					{
-						PostedItemLore.add(ChatColor.BLUE +"대금 청구 : " + ChatColor.WHITE+PostValue);
+						PostedItemLore.add("§9대금 청구 : §f"+PostValue);
 						PostedItemLore.add(" ");
-						PostedItemLore.add(ChatColor.YELLOW +"[좌 클릭시 물품 회수]");
-						PostedItemLore.add(ChatColor.BLACK+PostList[count].toString());
+						PostedItemLore.add("§e[좌 클릭시 물품 회수]");
+						PostedItemLore.add("§0"+PostList[count].toString());
 						for(int count2 = 0; count2 < PostedItemLore.size(); count2++)
 							Memo.add(PostedItemLore.get(count2));
 					}
 					else
 					{
-						Memo.add(ChatColor.BLUE+"대금청구 : " + ChatColor.WHITE+PostValue);
+						Memo.add("§9대금청구 : §f"+PostValue);
 						Memo.add(" ");
-						Memo.add(ChatColor.YELLOW+"[좌 클릭시 물품 회수]");
-						Memo.add(ChatColor.BLACK+PostList[count].toString());
+						Memo.add("§e[좌 클릭시 물품 회수]");
+						Memo.add("§0"+PostList[count].toString());
 					}
 					PIMeta.setLore(Memo);
 					PostItem.setItemMeta(PIMeta);
@@ -175,31 +173,31 @@ public class Struct_PostBox extends Util_GUI
 			}
 		}
 
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 1, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 7, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 10, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 16, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 19, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 25, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 28, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 34, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 37, inv);
-		Stack2(ChatColor.RED + " ", 66,0,1,Arrays.asList(""), 43, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 1, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 7, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 10, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 16, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 19, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 25, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 28, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 34, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 37, inv);
+		Stack2("§c ", 66,0,1,Arrays.asList(""), 43, inv);
 
 		int id = 166;
 		if(Type==0)//받은 우편
 			id = 166;
 		else
 			id = 54;
-		Stack2("§f§l[받은 우편]", id,0,1,Arrays.asList(ChatColor.GRAY + "받은 우편을 확인합니다."), 0, inv);
+		Stack2("§f§l[받은 우편]", id,0,1,Arrays.asList("§7받은 우편을 확인합니다."), 0, inv);
 
 		if(Type==0)//받은 우편
 			id = 333;
 		else
 			id = 166;
-		Stack2("§f§l[보낸 우편]", id,0,1,Arrays.asList(ChatColor.GRAY + "보낸 우편을 확인합니다."), 9, inv);
-		Stack2("§f§l[닫기]", 324,0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+""+Type), 26, inv);
-		Stack2("§f§l[우편 쓰기]", 386,0,1,Arrays.asList(ChatColor.GRAY + "새로운 우편을 보냅니다."), 36, inv);
+		Stack2("§f§l[보낸 우편]", id,0,1,Arrays.asList("§7보낸 우편을 확인합니다."), 9, inv);
+		Stack2("§f§l[닫기]", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+Type), 26, inv);
+		Stack2("§f§l[우편 쓰기]", 386,0,1,Arrays.asList("§7새로운 우편을 보냅니다."), 36, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -208,14 +206,14 @@ public class Struct_PostBox extends Util_GUI
 	{
 		String UniqueCode = "§1§0§d§0§4§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§c§l보낼 아이템");
-		Stack2(ChatColor.RED + " ", 166,0,1,null, 0, inv);
-		Stack2(ChatColor.RED + " ", 166,0,1,null, 1, inv);
-		Stack2(ChatColor.RED + " ", 166,0,1,null, 2, inv);
-		Stack2(ChatColor.RED + " ", 166,0,1,null, 3, inv);
-		Stack2(ChatColor.RED + " ", 166,0,1,null, 5, inv);
-		Stack2(ChatColor.RED + " ", 166,0,1,null, 6, inv);
-		Stack2(ChatColor.RED + " ", 166,0,1,null, 7, inv);
-		Stack2(ChatColor.RED + " ", 166,0,1,null, 8, inv);
+		Stack2("§c ", 166,0,1,null, 0, inv);
+		Stack2("§c ", 166,0,1,null, 1, inv);
+		Stack2("§c ", 166,0,1,null, 2, inv);
+		Stack2("§c ", 166,0,1,null, 3, inv);
+		Stack2("§c ", 166,0,1,null, 5, inv);
+		Stack2("§c ", 166,0,1,null, 6, inv);
+		Stack2("§c ", 166,0,1,null, 7, inv);
+		Stack2("§c ", 166,0,1,null, 8, inv);
 		player.openInventory(inv);
 	}
 	
@@ -255,17 +253,17 @@ public class Struct_PostBox extends Util_GUI
 					u.setType(player, "Post");
 					u.setString(player, (byte)0, "RN");//Reciever Nickname
 					u.setString(player, (byte)1, "");//받는이
-					u.setString(player, (byte)2, ChatColor.WHITE+"제목 없음");//우편 제목
-					u.setString(player, (byte)3, ChatColor.WHITE+"내용 없음");//우편 내용
+					u.setString(player, (byte)2, "§f제목 없음");//우편 제목
+					u.setString(player, (byte)3, "§f내용 없음");//우편 내용
 					u.setBoolean(player, (byte)0, false);//아이템 송부
 					u.setInt(player, (byte)0, 0);//대금 청구
 					player.closeInventory();
-					player.sendMessage(ChatColor.GREEN+"[우편] : 받으실 분의 닉네임을 입력 하세요.");
+					player.sendMessage("§a[우편] : 받으실 분의 닉네임을 입력 하세요.");
 				}
 				else
 				{
 					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
-					player.sendMessage(ChatColor.RED+"[우편] : 우편은 최대 25개 까지만 보낼 수 있습니다.");
+					player.sendMessage("§c[우편] : 우편은 최대 25개 까지만 보낼 수 있습니다.");
 				}
 			else
 			{
@@ -275,12 +273,12 @@ public class Struct_PostBox extends Util_GUI
 				u.setType(player, "Post");
 				u.setString(player, (byte)0, "RN");//Reciever Nickname
 				u.setString(player, (byte)1, "");//받는이
-				u.setString(player, (byte)2, ChatColor.WHITE+"제목 없음");//우편 제목
-				u.setString(player, (byte)3, ChatColor.WHITE+"내용 없음");//우편 내용
+				u.setString(player, (byte)2, "§f제목 없음");//우편 제목
+				u.setString(player, (byte)3, "§f내용 없음");//우편 내용
 				u.setBoolean(player, (byte)0, false);//아이템 송부
 				u.setInt(player, (byte)0, 0);//대금 청구
 				player.closeInventory();
-				player.sendMessage(ChatColor.GREEN+"[우편] : 받으실 분의 닉네임을 입력 하세요.");
+				player.sendMessage("§a[우편] : 받으실 분의 닉네임을 입력 하세요.");
 			}
 		}
 		else if(slot != 1 && slot != 7 && slot != 10 && slot != 16 && slot != 19 && slot != 25 && slot != 28 && slot != 34 && slot != 37 && slot != 43)
@@ -300,8 +298,8 @@ public class Struct_PostBox extends Util_GUI
 						return;
 					}
 					String Sender = PlayerPost.getString("Recieve."+UTC+".From");
-					if(Sender.compareTo("[시스템]")==0|| Sender.compareTo("[반송]")==0||
-					Sender.compareTo("[거래 영수증]")==0||Sender.compareTo("[거래 게시판]")==0)
+					if(Sender.equals("[시스템]")|| Sender.equals("[반송]")||
+					Sender.equals("[거래 영수증]")||Sender.equals("[거래 게시판]"))
 					{
 						if(new util.Util_Player().giveItem(player, PlayerPost.getItemStack("Recieve."+UTC+".Item")))
 						{
@@ -313,7 +311,7 @@ public class Struct_PostBox extends Util_GUI
 						else
 						{
 							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-							player.sendMessage(ChatColor.RED+"[우편] : 인벤토리 공간이 부족합니다!");
+							player.sendMessage("§c[우편] : 인벤토리 공간이 부족합니다!");
 						}
 					}
 					else
@@ -348,7 +346,7 @@ public class Struct_PostBox extends Util_GUI
 									else
 									{
 										SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-										player.sendMessage(ChatColor.RED+"[우편] : 인벤토리 공간이 부족합니다!");
+										player.sendMessage("§c[우편] : 인벤토리 공간이 부족합니다!");
 									}
 								}
 								else
@@ -373,25 +371,25 @@ public class Struct_PostBox extends Util_GUI
 											SenderPost.removeKey("Send."+UTC);
 											SenderPost.saveConfig();
 											PostBoxMainGUI(player, Type);
-											SendPost_Server(Sender, "[거래 영수증]", "[은행 입금 완료]", player.getName()+" 님께서 대금 "+value+" "+main.Main_ServerOption.Money+ChatColor.WHITE+" 입금하였습니다.", null);
+											SendPost_Server(Sender, "[거래 영수증]", "[은행 입금 완료]", player.getName()+" 님께서 대금 "+value+" "+main.Main_ServerOption.money+"§f 입금하였습니다.", null);
 											return;
 										}
 										else
 										{
 											SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-											player.sendMessage(ChatColor.RED+"[우편] : 인벤토리 공간이 부족합니다!");
+											player.sendMessage("§c[우편] : 인벤토리 공간이 부족합니다!");
 										}
 									}
 									else
 									{
 										SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-										player.sendMessage(ChatColor.RED+"[우편] : 소지금이 부족합니다!");
+										player.sendMessage("§c[우편] : 소지금이 부족합니다!");
 									}
 								}
 							}
 							else if(event.isRightClick()&&event.getCurrentItem().getItemMeta().getLore().get(event.getCurrentItem().getItemMeta().getLore().size()-2).contains("반송")==true)
 							{
-								if(PlayerPost.getString("Recieve."+UTC+".From").compareTo("[반송]")!=0)
+								if(!PlayerPost.getString("Recieve."+UTC+".From").equals("[반송]"))
 								{
 									SenderPost.removeKey("Send."+UTC);
 									SenderPost.saveConfig();
@@ -441,7 +439,7 @@ public class Struct_PostBox extends Util_GUI
 						else
 						{
 							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-							player.sendMessage(ChatColor.RED+"[우편] : 인벤토리 공간이 부족합니다!");
+							player.sendMessage("§c[우편] : 인벤토리 공간이 부족합니다!");
 						}
 					}
 				}
@@ -457,7 +455,7 @@ public class Struct_PostBox extends Util_GUI
 
 		if(slot != 4 && event.getCurrentItem().getTypeId()==166)
 		{
-			if(event.getClickedInventory().getTitle().compareTo("container.inventory") != 0)
+			if(!event.getClickedInventory().getTitle().equals("container.inventory"))
 			{
 				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.9F);
 				event.setCancelled(true);
@@ -478,7 +476,7 @@ public class Struct_PostBox extends Util_GUI
 			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.0F);
 			u.setString(player, (byte)0, "Value");
 			u.setTemp(player,"Structure");
-			player.sendMessage(ChatColor.GREEN+"[우편] : 우편물 수령을 위한 대금을 입력 하세요.");
+			player.sendMessage("§a[우편] : 우편물 수령을 위한 대금을 입력 하세요.");
 		}
 		else
 			SendPost(player);
@@ -520,12 +518,12 @@ public class Struct_PostBox extends Util_GUI
 			TargetPost.saveConfig();
 			PlayerPost.saveConfig();
 			SoundEffect.SP(player, Sound.BLOCK_CHEST_CLOSE, 1.0F, 1.8F);
-			player.sendMessage(ChatColor.GREEN+"[우편] : 우편물을 발송하였습니다!");
+			player.sendMessage("§a[우편] : 우편물을 발송하였습니다!");
 		}
 		else
 		{
 			SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-			player.sendMessage(ChatColor.RED+"[우편] : 해당 플레이어의 우편함이 가득 찼습니다.");
+			player.sendMessage("§c[우편] : 해당 플레이어의 우편함이 가득 찼습니다.");
 			if(u.getItemStack(player)!=null)
 			{
 				PlayerPost.set("Recieve."+UTC+".From", "[시스템]");

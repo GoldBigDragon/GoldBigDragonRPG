@@ -25,7 +25,7 @@ public class Main_BlockBreak implements Listener
 	{
 		if(event.isCancelled())
 			return;
-		if(event.getBlock().getLocation().getWorld().getName().compareTo("Dungeon")==0)
+		if(event.getBlock().getLocation().getWorld().getName().equals("Dungeon"))
 		{
 			if(event.getBlock().getTypeId() != 50)
 				event.setCancelled(true);
@@ -44,7 +44,7 @@ public class Main_BlockBreak implements Listener
 			{
 				event.setCancelled(true);
 				SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-				event.getPlayer().sendMessage(ChatColor.RED + "[SYSTEM] : " + ChatColor.YELLOW + Area[1] + ChatColor.RED + " 지역 에서는 블록 채집이 불가능합니다!");
+				event.getPlayer().sendMessage("§c[SYSTEM] : §e"+ Area[1] + "§c 지역 에서는 블록 채집이 불가능합니다!");
 				return;
 			}
 			if(areaYaml.getInt(Area[0]+".RegenBlock")!=0)
@@ -76,32 +76,32 @@ public class Main_BlockBreak implements Listener
 					loc.setZ(loc.getZ()+0.5);
 					if(areaYaml.contains(Area[0]+".Mining."+BlockData+".100"))
 					{
-						if(areaYaml.getString(Area[0]+".Mining."+BlockData+".100").compareTo("0:0")!=0)
+						if(!areaYaml.getString(Area[0]+".Mining."+BlockData+".100").equals("0:0"))
 							ItemDrop.CustomItemDrop(loc, areaYaml.getItemStack(Area[0]+".Mining."+BlockData+".100"));
 						int random = new util.Util_Number().RandomNum(1, 1000);
 						if(random<=1)
 						{
-							if(areaYaml.getString(Area[0]+".Mining."+BlockData+".0").compareTo("0:0")!=0)
+							if(!areaYaml.getString(Area[0]+".Mining."+BlockData+".0").equals("0:0"))
 								ItemDrop.CustomItemDrop(loc, areaYaml.getItemStack(Area[0]+".Mining."+BlockData+".0"));
 						}
 						else if(random<=10)
 						{
-							if(areaYaml.getString(Area[0]+".Mining."+BlockData+".1").compareTo("0:0")!=0)
+							if(!areaYaml.getString(Area[0]+".Mining."+BlockData+".1").equals("0:0"))
 								ItemDrop.CustomItemDrop(loc, areaYaml.getItemStack(Area[0]+".Mining."+BlockData+".1"));
 						}
 						else if(random<=100)
 						{
-							if(areaYaml.getString(Area[0]+".Mining."+BlockData+".10").compareTo("0:0")!=0)
+							if(!areaYaml.getString(Area[0]+".Mining."+BlockData+".10").equals("0:0"))
 								ItemDrop.CustomItemDrop(loc, areaYaml.getItemStack(Area[0]+".Mining."+BlockData+".10"));
 						}
 						else if(random<=500)
 						{
-							if(areaYaml.getString(Area[0]+".Mining."+BlockData+".50").compareTo("0:0")!=0)
+							if(!areaYaml.getString(Area[0]+".Mining."+BlockData+".50").equals("0:0"))
 								ItemDrop.CustomItemDrop(loc, areaYaml.getItemStack(Area[0]+".Mining."+BlockData+".50"));
 						}
 						else if(random<=900)
 						{
-							if(areaYaml.getString(Area[0]+".Mining."+BlockData+".90").compareTo("0:0")!=0)
+							if(!areaYaml.getString(Area[0]+".Mining."+BlockData+".90").equals("0:0"))
 								ItemDrop.CustomItemDrop(loc, areaYaml.getItemStack(Area[0]+".Mining."+BlockData+".90"));
 						}
 					}
@@ -109,8 +109,8 @@ public class Main_BlockBreak implements Listener
 			}
 		}
 		Quest(event, player);
-		if(event.getBlock().getLocation().getWorld().getName().compareTo("Dungeon")==0
-				&&player.isOp()==false)
+		if(event.getBlock().getLocation().getWorld().getName().equals("Dungeon")
+				&&!player.isOp())
 		{
 			event.setCancelled(true);
 			return;
@@ -150,7 +150,7 @@ public class Main_BlockBreak implements Listener
 	  	YamlLoader playerQuestYaml = new YamlLoader();
 		playerQuestYaml.getConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
 
-		if(Main_ServerOption.PartyJoiner.containsKey(player)==false)
+		if(Main_ServerOption.partyJoiner.containsKey(player)==false)
 		{
 			if(playerQuestYaml.contains("Started"))
 			if(playerQuestYaml.getConfigurationSection("Started").getKeys(false).toArray().length >= 1)
@@ -205,7 +205,7 @@ public class Main_BlockBreak implements Listener
 		}
 		else
 		{
-			Player[] PartyMember = Main_ServerOption.Party.get(Main_ServerOption.PartyJoiner.get(player)).getMember();
+			Player[] PartyMember = Main_ServerOption.party.get(Main_ServerOption.partyJoiner.get(player)).getMember();
 			YamlLoader configYaml = new YamlLoader();
 			configYaml.getConfig("config.yml");
 			int partyEXPShareDistance = configYaml.getInt("Party.EXPShareDistance");
@@ -284,18 +284,18 @@ public class Main_BlockBreak implements Listener
 			byte luckysize = (byte) new util.Util_Number().RandomNum(0, 100);
 			if(luckysize <= 80)
 			{
-				t.sendActionBar(player, ChatColor.YELLOW +""+ChatColor.BOLD+ "럭키 보너스!");
+				t.sendActionBar(player, "§e§l럭키 보너스!");
 				amount = 1;
 				SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 0.5F, 0.9F);
 			}
 			else if(luckysize <= 95)
 			{
-				t.sendActionBar(player, ChatColor.YELLOW +""+ChatColor.BOLD+ "빅 럭키 보너스!");amount = 5;
+				t.sendActionBar(player, "§e§l빅 럭키 보너스!");amount = 5;
 				SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 0.7F, 1.0F);
 			}
 			else
 			{
-				t.sendActionBar(player, ChatColor.YELLOW +""+ChatColor.BOLD+ "휴즈 럭키 보너스!");amount = 20;
+				t.sendActionBar(player, "§e§l휴즈 럭키 보너스!");amount = 20;
 				SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.1F);
 			}
 
