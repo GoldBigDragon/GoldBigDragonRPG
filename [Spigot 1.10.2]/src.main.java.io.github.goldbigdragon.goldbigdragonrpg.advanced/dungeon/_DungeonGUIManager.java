@@ -14,47 +14,47 @@ public class _DungeonGUIManager
 	public void ClickRouting(InventoryClickEvent event, String SubjectCode)
 	{
 		if(SubjectCode.equals("00"))//던전 목록
-			new dungeon.Dungeon_GUI().DungeonListMainGUIClick(event);
+			new dungeon.DungeonGui().DungeonListMainGUIClick(event);
 		else if(SubjectCode.equals("01"))//던전 설정
-			new dungeon.Dungeon_GUI().DungeonSetUpGUIClick(event);
+			new dungeon.DungeonGui().DungeonSetUpGUIClick(event);
 		else if(SubjectCode.equals("02"))//던전 보상
-			new dungeon.Dungeon_GUI().DungeonChestRewardClick(event);
+			new dungeon.DungeonGui().DungeonChestRewardClick(event);
 		else if(SubjectCode.equals("03"))//던전 몬스터 메인
-			new dungeon.Dungeon_GUI().DungeonMonsterGUIMainClick(event);
+			new dungeon.DungeonGui().DungeonMonsterGUIMainClick(event);
 		else if(SubjectCode.equals("04"))//던전 몬스터 타입 선택
-			new dungeon.Dungeon_GUI().DungeonMonsterChooseMainClick(event);
+			new dungeon.DungeonGui().DungeonMonsterChooseMainClick(event);
 		else if(SubjectCode.equals("05"))//던전 일반 몬스터
-			new dungeon.Dungeon_GUI().DungeonSelectNormalMonsterChooseClick(event);
+			new dungeon.DungeonGui().DungeonSelectNormalMonsterChooseClick(event);
 		else if(SubjectCode.equals("06"))//던전 커스텀 몬스터
-			new dungeon.Dungeon_GUI().DungeonSelectCustomMonsterChooseClick(event);
+			new dungeon.DungeonGui().DungeonSelectCustomMonsterChooseClick(event);
 		else if(SubjectCode.equals("07"))//던전 배경 음악
-			new dungeon.Dungeon_GUI().DungeonMusicSettingGUIClick(event);
+			new dungeon.DungeonGui().DungeonMusicSettingGUIClick(event);
 		else if(SubjectCode.equals("08"))//던전 통행증 설정
-			new dungeon.Dungeon_GUI().EnterCardSetUpGUIClick(event);
+			new dungeon.DungeonGui().EnterCardSetUpGUIClick(event);
 		else if(SubjectCode.equals("09"))//던전 통행증 연결
-			new dungeon.Dungeon_GUI().EnterCardDungeonSettingGUIClick(event);
+			new dungeon.DungeonGui().EnterCardDungeonSettingGUIClick(event);
 		else if(SubjectCode.equals("0a"))//던전 제단 목록
-			new dungeon.Dungeon_GUI().AltarShapeListGUIClick(event);
+			new dungeon.DungeonGui().AltarShapeListGUIClick(event);
 		else if(SubjectCode.equals("0b"))//던전 제단 설정
-			new dungeon.Dungeon_GUI().AltarSettingGUIClick(event);
+			new dungeon.DungeonGui().AltarSettingGUIClick(event);
 		else if(SubjectCode.equals("0c"))//던전 제단 연결
-			new dungeon.Dungeon_GUI().AltarDungeonSettingGUIClick(event);
+			new dungeon.DungeonGui().AltarDungeonSettingGUIClick(event);
 		else if(SubjectCode.equals("0d"))//던전 제단에 등록된 통행증 목록
-			new dungeon.Dungeon_GUI().AltarEnterCardSettingGUIClick(event);
+			new dungeon.DungeonGui().AltarEnterCardSettingGUIClick(event);
 		else if(SubjectCode.equals("0e"))//생성된 통행증 목록
-			new dungeon.Dungeon_GUI().AltarEnterCardListGUIClick(event);
+			new dungeon.DungeonGui().AltarEnterCardListGUIClick(event);
 		else if(SubjectCode.equals("0f"))//던전 제단 열람 화면
-			new dungeon.Dungeon_GUI().AltarUseGUIClick(event);
+			new dungeon.DungeonGui().AltarUseGUIClick(event);
 		else if(SubjectCode.equals("10"))//던전 잔류 화인
-			new dungeon.Dungeon_GUI().DungeonEXITClick(event);
+			new dungeon.DungeonGui().DungeonEXITClick(event);
 		
 	}
 
 	public void CloseRouting(InventoryCloseEvent event, String SubjectCode)
 	{
 		if(SubjectCode.equals("02"))//던전 보상
-			new dungeon.Dungeon_GUI().DungeonChestRewardClose(event);
+			new dungeon.DungeonGui().DungeonChestRewardClose(event);
 		else if(SubjectCode.equals("0f"))//던전 제단 열람 화면
-			new dungeon.Dungeon_GUI().AltarUSEGuiClose(event);
+			new dungeon.DungeonGui().AltarUSEGuiClose(event);
 	}
 }

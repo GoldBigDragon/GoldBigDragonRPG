@@ -13,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import net.citizensnpcs.api.event.NPCCreateEvent;
 import net.citizensnpcs.api.event.NPCRemoveEvent;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
-import user.UserData_Object;
+import user.UserDataObject;
 import util.YamlLoader;
 
 public class CitizensMain implements Listener
@@ -45,7 +45,7 @@ public class CitizensMain implements Listener
 			{
 				String QuestName = a[count].toString();
 				short QuestFlow = (short) PlayerQuestList.getInt("Started."+QuestName+".Flow");
-				quest.Quest_GUI QGUI = new quest.Quest_GUI();
+				quest.QuestGui QGUI = new quest.QuestGui();
 				boolean isThatTarget = false;
 				if(QuestList.contains(QuestName+".FlowChart."+QuestFlow+".Type"))
 					switch(QuestList.getString(QuestName+".FlowChart."+QuestFlow+".Type"))
@@ -197,7 +197,7 @@ public class CitizensMain implements Listener
 									PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 									PlayerQuestList.saveConfig();
 
-									main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MoneyAndEXP(QuestList.getLong(QuestName + ".FlowChart."+QuestFlow+".Money"), 0, false);
+									main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MoneyAndEXP(QuestList.getLong(QuestName + ".FlowChart."+QuestFlow+".Money"), 0, false);
 
 									YamlLoader YM = new YamlLoader();
 							    	if(YM.isExit("NPC/PlayerData/"+player.getUniqueId()+".yml")==false)
@@ -217,7 +217,7 @@ public class CitizensMain implements Listener
 							    		YM.saveConfig();
 							    	}
 						    		if(QuestList.getInt(QuestName + ".FlowChart."+QuestFlow+".EXP") != 0)
-						    			new util.Util_Player().addMoneyAndEXP(player, 0, QuestList.getLong(QuestName + ".FlowChart."+QuestFlow+".EXP"), null, false, false);
+						    			new util.UtilPlayer().addMoneyAndEXP(player, 0, QuestList.getLong(QuestName + ".FlowChart."+QuestFlow+".EXP"), null, false, false);
 									
 									event.setCancelled(true);
 									QGUI.QuestRouter(player, QuestName);
@@ -241,25 +241,25 @@ public class CitizensMain implements Listener
 	public void NPCRightClick(NPCRightClickEvent event)
 	{
 		Player player = event.getClicker();
-		UserData_Object u = new UserData_Object();
+		UserDataObject u = new UserDataObject();
 		u.setNPCuuid(player, event.getNPC().getUniqueId().toString());
 		YamlLoader DNPC = new YamlLoader();
 		DNPC.getConfig("NPC/DistrictNPC.yml");
 		if(player.isOp()==true)
 		{
-			if(new UserData_Object().getInt(player, (byte)4)==114)
+			if(new UserDataObject().getInt(player, (byte)4)==114)
 			{
 				DNPC.removeKey(event.getNPC().getUniqueId().toString());
 				DNPC.saveConfig();
 				player.sendMessage(ChatColor.GREEN+"[NPC] : 해당 NPC의 GUI창이 활성화 되었습니다!");
 				new effect.SoundEffect().SP(player, Sound.ENTITY_VILLAGER_YES, 1.0F, 1.0F);
-				new UserData_Object().setInt(player, (byte)4, -1);
+				new UserDataObject().setInt(player, (byte)4, -1);
 			}
 		}
 		
 		if(DNPC.contains(event.getNPC().getUniqueId().toString())==false)
 		{
-			npc.NPC_GUI NPGUI = new npc.NPC_GUI();
+			npc.NpcGui NPGUI = new npc.NpcGui();
 			NPGUI.MainGUI(event.getClicker(), event.getNPC().getName(), event.getClicker().isOp());
 		}
 
@@ -269,7 +269,7 @@ public class CitizensMain implements Listener
 	@EventHandler
 	public void NPCCreating(NPCCreateEvent event)
 	{
-		npc.NPC_Config NPCC = new npc.NPC_Config();
+		npc.NpcConfig NPCC = new npc.NpcConfig();
 		NPCC.NPCNPCconfig(event.getNPC().getUniqueId().toString());
 	}
 	@EventHandler

@@ -14,32 +14,32 @@ public class _AreaGUIManager
 	public void clickRouting(InventoryClickEvent event, String subjectCode)
 	{
 		if(subjectCode.equals("00"))//전체 영역 목록
-			new area.Area_GUI().areaListGuiClick(event);
+			new area.AreaGui().areaListGuiClick(event);
 		else if(subjectCode.equals("01"))//영역 설정
-			new area.Area_GUI().areaSettingGuiInventoryClick(event);
+			new area.AreaGui().areaSettingGuiInventoryClick(event);
 		else if(subjectCode.equals("02"))//영역 몬스터 스폰 룰 설정
-			new area.Area_GUI().areaAddMonsterSpawnRuleGuiClick(event);
+			new area.AreaGui().areaAddMonsterSpawnRuleGuiClick(event);
 		else if(subjectCode.equals("03"))//영역 대체 몬스터 설정
-			new area.Area_GUI().areaMonsterSettingGuiClick(event);
+			new area.AreaGui().areaMonsterSettingGuiClick(event);
 		else if(subjectCode.equals("04"))//영역 낚시 보상 설정
-			new area.Area_GUI().areaFishSettingGuiClick(event);
+			new area.AreaGui().areaFishSettingGuiClick(event);
 		else if(subjectCode.equals("05"))//영역 특산품 목록
-			new area.Area_GUI().areaBlockSettingGuiClick(event);
+			new area.AreaGui().areaBlockSettingGuiClick(event);
 		else if(subjectCode.equals("06"))//영역 특산품 설정
-			new area.Area_GUI().areaBlockItemSettingGuiClick(event);
+			new area.AreaGui().areaBlockItemSettingGuiClick(event);
 		else if(subjectCode.equals("07"))//영역 몬스터 선택
-			new area.Area_GUI().areaAddMonsterListGuiClick(event);
+			new area.AreaGui().areaAddMonsterListGuiClick(event);
 		else if(subjectCode.equals("08"))//영역 특수 몬스터 선택
-			new area.Area_GUI().areaSpawnSpecialMonsterListGuiClick(event);
+			new area.AreaGui().areaSpawnSpecialMonsterListGuiClick(event);
 		else if(subjectCode.equals("09"))//영역 배경음 선택
-			new area.Area_GUI().areaMusicSettingGuiClick(event);
+			new area.AreaGui().areaMusicSettingGuiClick(event);
 	}
 	
 	public void closeRouting(InventoryCloseEvent event, String subjectCode)
 	{
 		if(subjectCode.equals("04"))//영역 낚시 보상 설정
-			new area.Area_GUI().fishingSettingInventoryClose(event);
+			new area.AreaGui().fishingSettingInventoryClose(event);
 		else if(subjectCode.equals("06"))//영역 특산품 설정
-			new area.Area_GUI().blockItemSettingInventoryClose(event);
+			new area.AreaGui().blockItemSettingInventoryClose(event);
 	}
 }

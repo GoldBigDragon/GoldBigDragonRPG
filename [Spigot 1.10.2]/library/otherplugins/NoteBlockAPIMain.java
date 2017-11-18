@@ -15,7 +15,7 @@ import com.xxmicloxx.noteblockapi.RadioSongPlayer;
 import com.xxmicloxx.noteblockapi.Song;
 import com.xxmicloxx.noteblockapi.SongPlayer;
 
-public class NoteBlockAPIMain implements Listener
+public class NoteBlockApiMain implements Listener
 {
 	public static List<Song> Musics = new ArrayList<Song>();
 	HashMap<Player,SongPlayer> currentStations = new HashMap<Player,SongPlayer>();
@@ -24,12 +24,12 @@ public class NoteBlockAPIMain implements Listener
 	static boolean MusicAdded =false;
   	public File MusicFolder = new File("plugins/GoldBigDragonRPG/NoteBlockSound/");
 
-	public NoteBlockAPIMain(JavaPlugin plugin)
+	public NoteBlockApiMain(JavaPlugin plugin)
 	{
 		NoteBlockAPIAddMusic();
 	}
 	
-	public NoteBlockAPIMain()
+	public NoteBlockApiMain()
 	{}
 	
 	public void NoteBlockAPIAddMusic()

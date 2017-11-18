@@ -9,8 +9,8 @@ import javax.imageio.ImageIO;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapView;
 
-import main.Main_ServerOption;
-import user.UserData_Object;
+import main.MainServerOption;
+import user.UserDataObject;
 import util.YamlLoader;
 
 import org.bukkit.map.MapCanvas;
@@ -21,20 +21,20 @@ public class MapList extends MapRenderer
 	@Override
 	public void render(MapView MV, MapCanvas MC, Player player)
 	{
-		if(Main_ServerOption.Mapping==true)
+		if(MainServerOption.Mapping==true)
 		{
-			Main_ServerOption.Mapping = false;
+			MainServerOption.Mapping = false;
 			String URL = "null";
 			int Xcenter = 0;
 			int Ycenter  = 0;
 
 		  	YamlLoader mapYaml = new YamlLoader();
 			mapYaml.getConfig("MapImageURL.yml");
-			String Name = new UserData_Object().getString(player, (byte)1);
+			String Name = new UserDataObject().getString(player, (byte)1);
 			URL = mapYaml.getString(Name+".URL");
 			Xcenter = mapYaml.getInt(Name+".Xcenter");
 			Ycenter = mapYaml.getInt(Name+".Ycenter");
-			new UserData_Object().clearAll(player);
+			new UserDataObject().clearAll(player);
 			if(URL=="null")
 				return;
 			else

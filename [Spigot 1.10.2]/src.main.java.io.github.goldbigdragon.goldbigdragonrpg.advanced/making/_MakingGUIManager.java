@@ -14,12 +14,12 @@ public class _MakingGUIManager
 	public void ClickRouting(InventoryClickEvent event, String SubjectCode)
 	{
 		if(SubjectCode.equals("00"))//전체 영역 목록
-			new area.Area_GUI().areaListGuiClick(event);
+			new area.AreaGui().areaListGuiClick(event);
 	}
 	
 	public void CloseRouting(InventoryCloseEvent event, String SubjectCode)
 	{
 		if(SubjectCode.equals("04"))//영역 낚시 보상 설정
-			new area.Area_GUI().fishingSettingInventoryClose(event);
+			new area.AreaGui().fishingSettingInventoryClose(event);
 	}
 }

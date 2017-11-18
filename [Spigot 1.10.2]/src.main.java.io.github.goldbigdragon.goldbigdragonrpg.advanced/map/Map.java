@@ -6,14 +6,14 @@ import org.bukkit.event.server.MapInitializeEvent;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 
-import main.Main_ServerOption;;
+import main.MainServerOption;;
 
 public class Map implements Listener
 {
 	@EventHandler
 	public void onMap(MapInitializeEvent event)
 	{
-		if(Main_ServerOption.Mapping)
+		if(MainServerOption.Mapping)
 		{
 			MapView MV = event.getMap();
 			for(MapRenderer MR : MV.getRenderers())

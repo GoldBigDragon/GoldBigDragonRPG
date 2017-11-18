@@ -14,21 +14,21 @@ public class _MonsterGUIManager
 	public void ClickRouting(InventoryClickEvent event, String SubjectCode)
 	{
 		if(SubjectCode.equals("00"))//몬스터 목록
-			new monster.Monster_GUI().MonsterListGUIClick(event);
+			new monster.MonsterGui().MonsterListGUIClick(event);
 		else if(SubjectCode.equals("01"))//몬스터 설정
-			new monster.Monster_GUI().MonsterOptionSettingGUIClick(event);
+			new monster.MonsterGui().MonsterOptionSettingGUIClick(event);
 		else if(SubjectCode.equals("02"))//몬스터 포션 설정
-			new monster.Monster_GUI().MonsterPotionGUIClick(event);
+			new monster.MonsterGui().MonsterPotionGUIClick(event);
 		else if(SubjectCode.equals("03"))//몬스터 장비 설정
-			new monster.Monster_GUI().ArmorGUIClick(event);
+			new monster.MonsterGui().ArmorGUIClick(event);
 		else if(SubjectCode.equals("0b"))//몬스터 타입 선택
-			new monster.Monster_GUI().MonsterTypeGUIClick(event);
+			new monster.MonsterGui().MonsterTypeGUIClick(event);
 		
 	}
 	
 	public void CloseRouting(InventoryCloseEvent event, String SubjectCode)
 	{
 		if(SubjectCode.equals("03"))//장비 설정창
-			new monster.Monster_GUI().ArmorGUIClose(event);
+			new monster.MonsterGui().ArmorGUIClose(event);
 	}
 }

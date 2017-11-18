@@ -14,38 +14,38 @@ public class _QuestGUIManager
 	public void ClickRouting(InventoryClickEvent event, String SubjectCode)
 	{
 		if(SubjectCode.equals("00"))//개인 퀘스트 수행 목록 GUI
-			new quest.Quest_GUI().MyQuestListGUIClick(event);
+			new quest.QuestGui().MyQuestListGUIClick(event);
 		else if(SubjectCode.equals("01"))//전체 퀘스트 수행 목록 GUI
-			new quest.Quest_GUI().AllOfQuestListGUIClick(event);
+			new quest.QuestGui().AllOfQuestListGUIClick(event);
 		else if(SubjectCode.equals("02"))//퀘스트 흐름도 GUI
-			new quest.Quest_GUI().FixQuestGUIClick(event);
+			new quest.QuestGui().FixQuestGUIClick(event);
 		else if(SubjectCode.equals("03"))//퀘스트 오브젝트 추가 GUI
-			new quest.Quest_GUI().SelectObjectPageClick(event);
+			new quest.QuestGui().SelectObjectPageClick(event);
 		else if(SubjectCode.equals("04"))//스크립트 GUI
-			new quest.Quest_GUI().QuestScriptTypeGUIClick(event);
+			new quest.QuestGui().QuestScriptTypeGUIClick(event);
 		else if(SubjectCode.equals("05"))//퀘스트 옵션 GUI
-			new quest.Quest_GUI().QuestOptionGUIClick(event);
+			new quest.QuestGui().QuestOptionGUIClick(event);
 		else if(SubjectCode.equals("06"))//수집 해야 할 아이템 등록 GUI
-			new quest.Quest_GUI().GetterItemSetingGUIClick(event);
+			new quest.QuestGui().GetterItemSetingGUIClick(event);
 		else if(SubjectCode.equals("07"))//선물로 줄 아이템 등록 GUI
-			new quest.Quest_GUI().PresentItemSettingGUIClick(event);
+			new quest.QuestGui().PresentItemSettingGUIClick(event);
 		else if(SubjectCode.equals("08"))//보상, 모아야 할 아이템, 사냥 해야 할 몬스터, 채집 해야 할 블록 목록 GUI
-			new quest.Quest_GUI().ShowNeedGUIClick(event);
+			new quest.QuestGui().ShowNeedGUIClick(event);
 		else if(SubjectCode.equals("09"))//등록을 계속 할 것인지 묻는 GUI
-			new quest.Quest_GUI().KeepGoingClick(event);
+			new quest.QuestGui().KeepGoingClick(event);
 		else if(SubjectCode.equals("0a"))//퀘스트 네비게이션 GUI
-			new quest.Quest_GUI().Quest_NavigationListGUIClick(event);
+			new quest.QuestGui().Quest_NavigationListGUIClick(event);
 		else if(SubjectCode.equals("0b"))//어드민 입장의 퀘스트 선택 GUI
-			new quest.Quest_GUI().Quest_OPChoiceClick(event);
+			new quest.QuestGui().Quest_OPChoiceClick(event);
 		else if(SubjectCode.equals("0c"))//유저 입장의 퀘스트 선택 GUI
-			new quest.Quest_GUI().Quest_UserChoiceClick(event);
+			new quest.QuestGui().Quest_UserChoiceClick(event);
 	}
 
 	public void CloseRouting(InventoryCloseEvent event, String SubjectCode)
 	{
 		if(SubjectCode.equals("06"))//수집 해야 할 아이템 등록 GUI
-			new quest.Quest_GUI().GetterItemSetingGUIClose(event);
+			new quest.QuestGui().GetterItemSetingGUIClose(event);
 		else if(SubjectCode.equals("07"))//선물로 줄 아이템 등록 GUI
-			new quest.Quest_GUI().PresentItemSettingGUIClose(event);
+			new quest.QuestGui().PresentItemSettingGUIClose(event);
 	}
 }

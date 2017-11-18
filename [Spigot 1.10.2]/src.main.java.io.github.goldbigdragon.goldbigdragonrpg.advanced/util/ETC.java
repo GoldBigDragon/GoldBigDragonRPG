@@ -8,7 +8,7 @@ import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import battle.Battle_Calculator;
+import battle.BattleCalculator;
 
 //자바 본래 라이브러리 중, 날짜 함수를 호출함.
 
@@ -193,14 +193,14 @@ public class ETC
     public void UpdatePlayerHPMP(Player player)
     {
 		if(Bukkit.getPluginManager().isPluginEnabled("MagicSpells") == true
-		&&main.Main_ServerOption.MagicSpellsCatched==true)
+		&&main.MainServerOption.MagicSpellsCatched==true)
 		{
 			otherplugins.SpellMain MS = new otherplugins.SpellMain();
 			MS.setPlayerMaxAndNowMana(player);
 		}
 		Damageable p = player;
-		int BonusHealth = Battle_Calculator.getPlayerEquipmentStat(player, "생명력", false, null)[0];
-		int MaxHealth = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxHP()+BonusHealth;
+		int BonusHealth = BattleCalculator.getPlayerEquipmentStat(player, "생명력", false, null)[0];
+		int MaxHealth = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxHP()+BonusHealth;
 		if(MaxHealth > 0)
 			p.setMaxHealth(MaxHealth);
 		else
@@ -210,15 +210,15 @@ public class ETC
     
     public void SlotChangedUpdatePlayerHPMP(Player player, ItemStack newSlot)
     {
-		if(main.Main_ServerOption.MagicSpellsCatched == true)
+		if(main.MainServerOption.MagicSpellsCatched == true)
 		{
 			otherplugins.SpellMain MS = new otherplugins.SpellMain();
 			MS.setSlotChangePlayerMaxAndNowMana(player,newSlot);
 		}
 		Damageable p = player;
 		
-		int BonusHealth = Battle_Calculator.getPlayerEquipmentStat(player, "생명력",  false, newSlot)[0];
-		int MaxHealth = main.Main_ServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxHP()+BonusHealth;
+		int BonusHealth = BattleCalculator.getPlayerEquipmentStat(player, "생명력",  false, newSlot)[0];
+		int MaxHealth = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxHP()+BonusHealth;
 
 		if(MaxHealth > 0)
 			p.setMaxHealth(MaxHealth);
