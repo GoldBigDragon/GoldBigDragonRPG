@@ -237,7 +237,7 @@ public class BattleMain implements Listener
 				{
 					Player player = (Player)attacker;
 					if(player.isOnline())
-						damage = (int)((damage* main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_BowPull() )/110);
+						damage = ((damage* main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_BowPull() )/110);
 				}
 			}
 		}
@@ -329,7 +329,7 @@ public class BattleMain implements Listener
 	
 	public int[] getAttackerStats(Entity entity)
 	{
-		int attackerStat[] = new int[9];
+		int[] attackerStat = new int[9];
 		for(int count=0;count<9;count++)
 			attackerStat[count] = 0;
 		

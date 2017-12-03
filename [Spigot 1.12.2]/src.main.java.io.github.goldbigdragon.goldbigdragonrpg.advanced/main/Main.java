@@ -713,7 +713,7 @@ public class Main extends JavaPlugin implements Listener
 				  if(talker.isOp() == true)
 				  {
 					  SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
-		  			new monster.MonsterGui().MonsterListGUI(player, 0);
+		  			new monster.MonsterGui().monsterListGUI(player, 0);
 				  }
 				  else
 				  {

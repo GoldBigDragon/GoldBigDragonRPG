@@ -4,11 +4,11 @@ import util.YamlLoader;
 
 public class MainConfig
 {
-    public void CheckConfig()
+    public void checkConfig()
 	{
     	YamlLoader configYaml = new YamlLoader();
     	configYaml.getConfig("config.yml");
-    	if(configYaml.contains("Version")==false)
+    	if(!configYaml.contains("Version"))
     	{
 		  	configYaml.set("Version", "Advanced");
 		  	configYaml.set("Update", 20170527);
@@ -370,7 +370,7 @@ public class MainConfig
 		main.MainServerOption.dualWeapon = configYaml.getBoolean("Server.LeftHandWeaponDamageEnable");
 		
 		configYaml.getConfig("MapImageURL.yml");
-    	if(configYaml.contains("GBD.URL") == false)
+    	if(!configYaml.contains("GBD.URL"))
     	{
     		configYaml.set("KoreaLanguage(UTF-8)->JavaEntityLanguage", "http://itpro.cz/juniconv/");
 		  	configYaml.set("GBD.URL", "http://cafeptthumb3.phinf.naver.net/20140309_183/dnwndugod642_1394374547812opRrb_PNG/GBD%28classic%29.png?type=w740");
@@ -386,7 +386,7 @@ public class MainConfig
     	}
 
     	configYaml.getConfig("Level.yml");
-    	if(configYaml.contains(1+"") == false)
+    	if(!configYaml.contains(1+""))
     	{
     		long EXP = 100;
     		for(int level = 1; level < 250; level++)

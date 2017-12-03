@@ -542,35 +542,89 @@ public class AreaGui extends UtilGui
 
 		byte loc=0;
 		String monsterName = null;
-		String lore = null;
+		StringBuilder sb = new StringBuilder();
 		for(int count = page*45; count < monsterList.length;count++)
 		{
 			if(count > monsterList.length || loc >= 45) break;
 			monsterName = monsterList[count];
-			lore = null;
-			lore = "%enter%§f§l 이름 : §f"+monsterYaml.getString(monsterName+".Name")+"%enter%";
-			lore = lore+"§f§l 타입 : §f"+monsterYaml.getString(monsterName+".Type")+"%enter%";
-			lore = lore+"§f§l 스폰 바이옴 : §f"+monsterYaml.getString(monsterName+".Biome")+"%enter%";
-			lore = lore+"§c§l 생명력 : §f"+monsterYaml.getInt(monsterName+".HP")+"%enter%";
-			lore = lore+"§b§l 경험치 : §f"+monsterYaml.getInt(monsterName+".EXP")+"%enter%";
-			lore = lore+"§e§l 드랍 금액 : §f"+monsterYaml.getInt(monsterName+".MIN_Money")+" ~ "+monsterYaml.getInt(monsterName+".MAX_Money")+"%enter%";
-			lore = lore+"§c§l "+MainServerOption.statSTR+" : §f"+monsterYaml.getInt(monsterName+".STR")
-			+"§7 [물공 : " + BattleCalculator.getCombatDamage(null, 0, monsterYaml.getInt(monsterName+".STR"), true) + " ~ " + BattleCalculator.getCombatDamage(null, 0, monsterYaml.getInt(monsterName+".STR"), false) + "]%enter%";
-			lore = lore+"§a§l "+MainServerOption.statDEX+" : §f"+monsterYaml.getInt(monsterName+".DEX")
-			+"§7 [활공 : " + BattleCalculator.returnRangeDamageValue(null, monsterYaml.getInt(monsterName+".DEX"), 0, true) + " ~ " + BattleCalculator.returnRangeDamageValue(null, monsterYaml.getInt(monsterName+".DEX"), 0, false) + "]%enter%";
-			lore = lore+"§9§l "+MainServerOption.statINT+" : §f"+monsterYaml.getInt(monsterName+".INT")
-			+"§7 [폭공 : " + (monsterYaml.getInt(monsterName+".INT")/4)+ " ~ "+(int)(monsterYaml.getInt(monsterName+".INT")/2.5)+"]%enter%";
-			lore = lore+"§7§l "+MainServerOption.statWILL+" : §f"+monsterYaml.getInt(monsterName+".WILL")
-			+"§7 [크리 : " + BattleCalculator.getCritical(null,monsterYaml.getInt(monsterName+".LUK"), (int)monsterYaml.getInt(monsterName+".WILL"),0) + " %]%enter%";
-			lore = lore+"§e§l "+MainServerOption.statLUK+" : §f"+monsterYaml.getInt(monsterName+".LUK")
-			+"§7 [크리 : " + BattleCalculator.getCritical(null,monsterYaml.getInt(monsterName+".LUK"), (int)monsterYaml.getInt(monsterName+".WILL"),0) + " %]%enter%";
-			lore = lore+"§7§l 방어 : §f"+monsterYaml.getInt(monsterName+".DEF")+"%enter%";
-			lore = lore+"§b§l 보호 : §f"+monsterYaml.getInt(monsterName+".Protect")+"%enter%";
-			lore = lore+"§9§l 마법 방어 : §f"+monsterYaml.getInt(monsterName+".Magic_DEF")+"%enter%";
-			lore = lore+"§1§l 마법 보호 : §f"+monsterYaml.getInt(monsterName+".Magic_Protect")+"%enter%";
-			lore = lore+"%enter%§e§l[좌 클릭시 몬스터 등록]";
+			sb = new StringBuilder();
+			sb.append("%enter%§f§l 이름 : §f");
+			sb.append(monsterYaml.getString(monsterName+".Name"));
+			sb.append("%enter%");
+			sb.append("§f§l 타입 : §f");
+			sb.append(monsterYaml.getString(monsterName+".Type"));
+			sb.append("%enter%");
+			sb.append("§f§l 스폰 바이옴 : §f");
+			sb.append(monsterYaml.getString(monsterName+".Biome"));
+			sb.append("%enter%");
+			sb.append("§c§l 생명력 : §f");
+			sb.append(monsterYaml.getInt(monsterName+".HP"));
+			sb.append("%enter%");
+			sb.append("§b§l 경험치 : §f");
+			sb.append(monsterYaml.getInt(monsterName+".EXP"));
+			sb.append("%enter%");
+			sb.append("§e§l 드랍 금액 : §f");
+			sb.append(monsterYaml.getInt(monsterName+".MIN_Money"));
+			sb.append(" ~ ");
+			sb.append(monsterYaml.getInt(monsterName+".MAX_Money"));
+			sb.append("%enter%");
+			sb.append("§c§l ");
+			sb.append(MainServerOption.statSTR);
+			sb.append(" : §f");
+			sb.append(monsterYaml.getInt(monsterName+".STR"));
+			sb.append("§7 [물공 : ");
+			sb.append(BattleCalculator.getCombatDamage(null, 0, monsterYaml.getInt(monsterName+".STR"), true));
+			sb.append(" ~ ");
+			sb.append(BattleCalculator.getCombatDamage(null, 0, monsterYaml.getInt(monsterName+".STR"), false));
+			sb.append("]%enter%");
+			sb.append("§a§l ");
+			sb.append(MainServerOption.statDEX);
+			sb.append(" : §f");
+			sb.append(monsterYaml.getInt(monsterName+".DEX"));
+			sb.append("§7 [활공 : ");
+			sb.append(BattleCalculator.returnRangeDamageValue(null, monsterYaml.getInt(monsterName+".DEX"), 0, true));
+			sb.append(" ~ ");
+			sb.append(BattleCalculator.returnRangeDamageValue(null, monsterYaml.getInt(monsterName+".DEX"), 0, false));
+			sb.append("]%enter%");
+			sb.append("§9§l ");
+			sb.append(MainServerOption.statINT);
+			sb.append(" : §f");
+			sb.append(monsterYaml.getInt(monsterName+".INT"));
+			sb.append("§7 [폭공 : ");
+			sb.append(monsterYaml.getInt(monsterName+".INT")/4);
+			sb.append(" ~ ");
+			sb.append((int)(monsterYaml.getInt(monsterName+".INT")/2.5));
+			sb.append("]%enter%");
+			sb.append("§7§l ");
+			sb.append(MainServerOption.statWILL);
+			sb.append(" : §f");
+			sb.append(monsterYaml.getInt(monsterName+".WILL"));
+			sb.append("§7 [크리 : ");
+			sb.append(BattleCalculator.getCritical(null,monsterYaml.getInt(monsterName+".LUK"), (int)monsterYaml.getInt(monsterName+".WILL"),0));
+			sb.append(" %]%enter%");
+			sb.append("§e§l ");
+			sb.append(MainServerOption.statLUK);
+			sb.append(" : §f");
+			sb.append(monsterYaml.getInt(monsterName+".LUK"));
+			sb.append("§7 [크리 : ");
+			sb.append(BattleCalculator.getCritical(null,monsterYaml.getInt(monsterName+".LUK"), (int)monsterYaml.getInt(monsterName+".WILL"),0));
+			sb.append(" %]%enter%");
 
-			String[] scriptA = lore.split("%enter%");
+			sb.append("§7§l 방어 : §f");
+			sb.append(monsterYaml.getInt(monsterName+".DEF"));
+			sb.append("%enter%");
+			sb.append("§b§l 보호 : §f");
+			sb.append(monsterYaml.getInt(monsterName+".Protect"));
+			sb.append("%enter%");
+			sb.append("§9§l 마법 방어 : §f");
+			sb.append(monsterYaml.getInt(monsterName+".Magic_DEF"));
+			sb.append("%enter%");
+			sb.append("§1§l 마법 보호 : §f");
+			sb.append(monsterYaml.getInt(monsterName+".Magic_Protect"));
+			sb.append("%enter%");
+			sb.append("%enter%§e§l[좌 클릭시 몬스터 등록]%enter%");
+
+			String[] scriptA = sb.toString().split("%enter%");
 			for(int counter = 0; counter < scriptA.length; counter++)
 				scriptA[counter] =  " "+scriptA[counter];
 			short id = 383;

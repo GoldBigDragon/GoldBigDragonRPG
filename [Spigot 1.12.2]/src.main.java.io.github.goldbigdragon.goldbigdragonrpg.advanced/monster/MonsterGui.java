@@ -25,50 +25,105 @@ import util.YamlLoader;
 
 public class MonsterGui extends UtilGui
 {
-	public void MonsterListGUI(Player player, int page)
+	public void monsterListGUI(Player player, int page)
 	{
-		YamlLoader monsterListYaml = new YamlLoader();
-		monsterListYaml.getConfig("Monster/MonsterList.yml");
-		String UniqueCode = "§0§0§8§0§0§r";
-		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0몬스터 목록 : " + (page+1));
+		YamlLoader monsterYaml = new YamlLoader();
+		monsterYaml.getConfig("Monster/MonsterList.yml");
+		String uniqueCode = "§0§0§8§0§0§r";
+		Inventory inv = Bukkit.createInventory(null, 54, uniqueCode + "§0몬스터 목록 : " + (page+1));
 
-		Object[] a= monsterListYaml.getKeys().toArray();
+		Object[] a= monsterYaml.getKeys().toArray();
 
 		byte loc=0;
+		StringBuilder sb = new StringBuilder();
+		String monsterName = null;
 		for(int count = page*45; count < a.length;count++)
 		{
-			if(count > a.length || loc >= 45) break;
-			String MonsterName =a[count].toString();
-			String Lore=null;
-			
-			Lore = "%enter%§f§l 이름 : §f"+monsterListYaml.getString(MonsterName+".Name")+"%enter%";
-			Lore = Lore+"§f§l 타입 : §f"+monsterListYaml.getString(MonsterName+".Type")+"%enter%";
-			Lore = Lore+"§f§l 스폰 바이옴 : §f"+monsterListYaml.getString(MonsterName+".Biome")+"%enter%";
-			Lore = Lore+"§c§l 생명력 : §f"+monsterListYaml.getInt(MonsterName+".HP")+"%enter%";
-			Lore = Lore+"§b§l 경험치 : §f"+monsterListYaml.getInt(MonsterName+".EXP")+"%enter%";
-			Lore = Lore+"§e§l 드랍 금액 : §f"+monsterListYaml.getInt(MonsterName+".MIN_Money")+" ~ "+monsterListYaml.getInt(MonsterName+".MAX_Money")+"%enter%";
-			Lore = Lore+"§c§l "+MainServerOption.statSTR+" : §f"+monsterListYaml.getInt(MonsterName+".STR")
-			+"§7 [물공 : " + BattleCalculator.getCombatDamage(null, 0, monsterListYaml.getInt(MonsterName+".STR"), true) + " ~ " + BattleCalculator.getCombatDamage(null, 0, monsterListYaml.getInt(MonsterName+".STR"), false) + "]%enter%";
-			Lore = Lore+"§a§l "+MainServerOption.statDEX+" : §f"+monsterListYaml.getInt(MonsterName+".DEX")
-			+"§7 [활공 : " + BattleCalculator.returnRangeDamageValue(null, monsterListYaml.getInt(MonsterName+".DEX"), 0, true) + " ~ " + BattleCalculator.returnRangeDamageValue(null, monsterListYaml.getInt(MonsterName+".DEX"), 0, false) + "]%enter%";
-			Lore = Lore+"§9§l "+MainServerOption.statINT+" : §f"+monsterListYaml.getInt(MonsterName+".INT")
-			+"§7 [폭공 : " + (monsterListYaml.getInt(MonsterName+".INT")/4)+ " ~ "+(int)(monsterListYaml.getInt(MonsterName+".INT")/2.5)+"]%enter%";
-			Lore = Lore+"§7§l "+MainServerOption.statWILL+" : §f"+monsterListYaml.getInt(MonsterName+".WILL")
-			+"§7 [크리 : " + BattleCalculator.getCritical(null,monsterListYaml.getInt(MonsterName+".LUK"), (int)monsterListYaml.getInt(MonsterName+".WILL"),0) + " %]%enter%";
-			Lore = Lore+"§e§l "+MainServerOption.statLUK+" : §f"+monsterListYaml.getInt(MonsterName+".LUK")
-			+"§7 [크리 : " + BattleCalculator.getCritical(null,monsterListYaml.getInt(MonsterName+".LUK"), (int)monsterListYaml.getInt(MonsterName+".WILL"),0) + " %]%enter%";
-			Lore = Lore+"§7§l 방어 : §f"+monsterListYaml.getInt(MonsterName+".DEF")+"%enter%";
-			Lore = Lore+"§b§l 보호 : §f"+monsterListYaml.getInt(MonsterName+".Protect")+"%enter%";
-			Lore = Lore+"§9§l 마법 방어 : §f"+monsterListYaml.getInt(MonsterName+".Magic_DEF")+"%enter%";
-			Lore = Lore+"§1§l 마법 보호 : §f"+monsterListYaml.getInt(MonsterName+".Magic_Protect")+"%enter%";
-			Lore = Lore+"%enter%§e§l[Shift + 좌 클릭시 스폰알 지급]%enter%§c§l[Shift + 우 클릭시 몬스터 제거]";
+			if(loc >= 45) break;
+			monsterName = a[count].toString();
+			sb = new StringBuilder();
+			sb.append("%enter%§f§l 이름 : §f");
+			sb.append(monsterYaml.getString(monsterName+".Name"));
+			sb.append("%enter%");
+			sb.append("§f§l 타입 : §f");
+			sb.append(monsterYaml.getString(monsterName+".Type"));
+			sb.append("%enter%");
+			sb.append("§f§l 스폰 바이옴 : §f");
+			sb.append(monsterYaml.getString(monsterName+".Biome"));
+			sb.append("%enter%");
+			sb.append("§c§l 생명력 : §f");
+			sb.append(monsterYaml.getInt(monsterName+".HP"));
+			sb.append("%enter%");
+			sb.append("§b§l 경험치 : §f");
+			sb.append(monsterYaml.getInt(monsterName+".EXP"));
+			sb.append("%enter%");
+			sb.append("§e§l 드랍 금액 : §f");
+			sb.append(monsterYaml.getInt(monsterName+".MIN_Money"));
+			sb.append(" ~ ");
+			sb.append(monsterYaml.getInt(monsterName+".MAX_Money"));
+			sb.append("%enter%");
+			sb.append("§c§l ");
+			sb.append(MainServerOption.statSTR);
+			sb.append(" : §f");
+			sb.append(monsterYaml.getInt(monsterName+".STR"));
+			sb.append("§7 [물공 : ");
+			sb.append(BattleCalculator.getCombatDamage(null, 0, monsterYaml.getInt(monsterName+".STR"), true));
+			sb.append(" ~ ");
+			sb.append(BattleCalculator.getCombatDamage(null, 0, monsterYaml.getInt(monsterName+".STR"), false));
+			sb.append("]%enter%");
+			sb.append("§a§l ");
+			sb.append(MainServerOption.statDEX);
+			sb.append(" : §f");
+			sb.append(monsterYaml.getInt(monsterName+".DEX"));
+			sb.append("§7 [활공 : ");
+			sb.append(BattleCalculator.returnRangeDamageValue(null, monsterYaml.getInt(monsterName+".DEX"), 0, true));
+			sb.append(" ~ ");
+			sb.append(BattleCalculator.returnRangeDamageValue(null, monsterYaml.getInt(monsterName+".DEX"), 0, false));
+			sb.append("]%enter%");
+			sb.append("§9§l ");
+			sb.append(MainServerOption.statINT);
+			sb.append(" : §f");
+			sb.append(monsterYaml.getInt(monsterName+".INT"));
+			sb.append("§7 [폭공 : ");
+			sb.append(monsterYaml.getInt(monsterName+".INT")/4);
+			sb.append(" ~ ");
+			sb.append((int)(monsterYaml.getInt(monsterName+".INT")/2.5));
+			sb.append("]%enter%");
+			sb.append("§7§l ");
+			sb.append(MainServerOption.statWILL);
+			sb.append(" : §f");
+			sb.append(monsterYaml.getInt(monsterName+".WILL"));
+			sb.append("§7 [크리 : ");
+			sb.append(BattleCalculator.getCritical(null,monsterYaml.getInt(monsterName+".LUK"), (int)monsterYaml.getInt(monsterName+".WILL"),0));
+			sb.append(" %]%enter%");
+			sb.append("§e§l ");
+			sb.append(MainServerOption.statLUK);
+			sb.append(" : §f");
+			sb.append(monsterYaml.getInt(monsterName+".LUK"));
+			sb.append("§7 [크리 : ");
+			sb.append(BattleCalculator.getCritical(null,monsterYaml.getInt(monsterName+".LUK"), (int)monsterYaml.getInt(monsterName+".WILL"),0));
+			sb.append(" %]%enter%");
 
-			String[] scriptA = Lore.split("%enter%");
+			sb.append("§7§l 방어 : §f");
+			sb.append(monsterYaml.getInt(monsterName+".DEF"));
+			sb.append("%enter%");
+			sb.append("§b§l 보호 : §f");
+			sb.append(monsterYaml.getInt(monsterName+".Protect"));
+			sb.append("%enter%");
+			sb.append("§9§l 마법 방어 : §f");
+			sb.append(monsterYaml.getInt(monsterName+".Magic_DEF"));
+			sb.append("%enter%");
+			sb.append("§1§l 마법 보호 : §f");
+			sb.append(monsterYaml.getInt(monsterName+".Magic_Protect"));
+			sb.append("%enter%");
+			sb.append("%enter%§e§l[Shift + 좌 클릭시 스폰알 지급]%enter%§c§l[Shift + 우 클릭시 몬스터 제거]%enter%");
+
+			String[] scriptA = sb.toString().split("%enter%");
 			for(int counter = 0; counter < scriptA.length; counter++)
 				scriptA[counter] =  " "+scriptA[counter];
 			int id = 383;
 			byte data = 0;
-			switch(monsterListYaml.getString(MonsterName+".Type"))
+			switch(monsterYaml.getString(monsterName+".Type"))
 			{
 				case "번개크리퍼" : case "크리퍼" : data=50; break;
 				case "네더스켈레톤" : case "스켈레톤" : data=51; break;
@@ -103,7 +158,7 @@ public class MonsterGui extends UtilGui
 				//case "휴먼" : id=379; data = 3; break;
 			}
 			
-			Stack("§f"+MonsterName, id, data, 1,Arrays.asList(scriptA), loc, inv);
+			Stack("§f"+monsterName, id, data, 1,Arrays.asList(scriptA), loc, inv);
 			loc++;
 		}
 		
@@ -612,7 +667,7 @@ public class MonsterGui extends UtilGui
 			if(slot == 45)//이전 목록
 				new OPboxGui().opBoxGuiMain(player, (byte) 1);
 			else if(slot == 48)//이전 페이지
-				MonsterListGUI(player, page-1);
+				monsterListGUI(player, page-1);
 			else if(slot == 49)//새 몬스터
 			{
 				player.closeInventory();
@@ -622,7 +677,7 @@ public class MonsterGui extends UtilGui
 				u.setString(player, (byte)1, "NM");
 			}
 			else if(slot == 50)//다음 페이지
-				MonsterListGUI(player, page+1);
+				monsterListGUI(player, page+1);
 			else
 			{
 				if(event.isLeftClick() == true&&event.isShiftClick()==false)
@@ -636,7 +691,7 @@ public class MonsterGui extends UtilGui
 					monsterListYaml.getConfig("Monster/MonsterList.yml");
 					monsterListYaml.removeKey(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 					monsterListYaml.saveConfig();
-					MonsterListGUI(player, page);
+					monsterListGUI(player, page);
 				}
 			}
 		}
@@ -659,7 +714,7 @@ public class MonsterGui extends UtilGui
 			
 			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 목록
-				MonsterListGUI(player, 0);
+				monsterListGUI(player, 0);
 			else if(slot == 14)//몹 타입 변경
 				MonsterTypeGUI(player, MonsterName, 0);
 			else if(slot == 15)//스폰 바이옴 변경

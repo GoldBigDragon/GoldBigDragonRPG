@@ -17,12 +17,10 @@ import user.UserDataObject;
 import util.UtilChat;
 import util.YamlLoader;
 
-
-
 public class EventPlayerChat extends UtilChat implements Listener
 {
 	@EventHandler
-	public void PlayerChatting(PlayerChatEvent event)
+	public void playerChatting(PlayerChatEvent event)
 	{
 		event.setMessage(ChatColor.translateAlternateColorCodes('&', event.getMessage()));
 		UserDataObject u = new UserDataObject();
@@ -33,7 +31,7 @@ public class EventPlayerChat extends UtilChat implements Listener
 	    	TEMProuter(event, u.getTemp(player));
 	    	return;
 	    }
-	    if(player.isOp()==true)
+	    if(player.isOp())
 		    if(u.getType(player) != null)
 			    if(u.getType(player).equals("Quest"))
 		    	{new quest.QuestChat().QuestTypeChatting(event); return;}
@@ -102,7 +100,7 @@ public class EventPlayerChat extends UtilChat implements Listener
 		  		Bukkit.broadcastMessage(Prefix);
 		  		return;
 		  	case 1: 
-		  		if(main.MainServerOption.partyJoiner.containsKey(player) == false)
+		  		if(!main.MainServerOption.partyJoiner.containsKey(player))
 		  		{
 		  			player.sendMessage("§9[파티] : 파티에 가입되어 있지 않습니다!");
 		  			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
@@ -118,7 +116,7 @@ public class EventPlayerChat extends UtilChat implements Listener
 		  		return;
 		  	case 3:
 	  			event.setCancelled(true);
-	  			if(player.isOp() == false)
+	  			if(!player.isOp())
 	  			{
 		  			player.sendMessage("§d[관리자] : 당신은 관리자가 아닙니다!");
 		  			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
@@ -162,7 +160,7 @@ public class EventPlayerChat extends UtilChat implements Listener
 		  		return;
 		  	case 3:
 	  			event.setCancelled(true);
-	  			if(player.isOp() == false)
+	  			if(!player.isOp())
 	  			{
 		  			player.sendMessage("§d[관리자] : 당신은 관리자가 아닙니다!");
 		  			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
@@ -174,7 +172,7 @@ public class EventPlayerChat extends UtilChat implements Listener
 	  		    	playerlist.toArray(a);
 	  	  			for(int count = 0; count<a.length;count++)
 	  	  			{
-	  	  		    	if(a[count].isOnline() == true)
+	  	  		    	if(a[count].isOnline())
 	  	  		    	{
 	  	  		    		Player send = (Player) Bukkit.getOfflinePlayer(((Player)a[count]).getName());
 	  	  		    		send.sendMessage("§d[관리자] "+player.getName()+" : " + event.getMessage());
@@ -187,24 +185,24 @@ public class EventPlayerChat extends UtilChat implements Listener
 	  	}
 	}
 
-	public void TEMProuter(PlayerChatEvent event, String Temp)
+	public void TEMProuter(PlayerChatEvent event, String temp)
 	{
 		event.setCancelled(true);
 		Player player = event.getPlayer();
 		
-		String Message = ChatColor.stripColor(event.getMessage());
-		if(Temp.equals("FA"))
+		String message = ChatColor.stripColor(event.getMessage());
+		if(temp.equals("FA"))
 		{
-			if(Message.equals(player.getName()))
+			if(message.equals(player.getName()))
 			{
 				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				player.sendMessage("§c[친구] : 자기 자신을 추가할 수 없습니다!");
 			}
 			else
 			{
-				Message.replace(".", "");
-				if(Bukkit.getServer().getPlayer(Message) != null)
-					new user.EquipGui().SetFriends(player, Bukkit.getServer().getPlayer(Message));
+				message.replace(".", "");
+				if(Bukkit.getServer().getPlayer(message) != null)
+					new user.EquipGui().SetFriends(player, Bukkit.getServer().getPlayer(message));
 				else
 				{
 					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
@@ -214,9 +212,9 @@ public class EventPlayerChat extends UtilChat implements Listener
 			new user.EtcGui().FriendsGUI(player, (short) 0);
 			new UserDataObject().initTemp(player);
 		}
-		else if(Temp.equals("Structure"))
+		else if(temp.equals("Structure"))
 			new structure.StructureChat().PlayerChatrouter(event);
-		else if(Temp.equals("Dungeon"))
+		else if(temp.equals("Dungeon"))
 			new dungeon.DungeonChat().PlayerChatrouter(event);
 		return;
 	}

@@ -17,8 +17,6 @@ import main.MainServerOption;
 import util.UtilNumber;
 import util.YamlLoader;
 
-
-
 public class BattleCalculator
 {
 	//플레이어의 근접최소 공격력을 따 오는 메소드//
@@ -268,8 +266,8 @@ public class BattleCalculator
 
 	public static int[] getPlayerEquipmentStat(Player player, String type, boolean isCombat, ItemStack newSlot)
 	{
-		int bonus[] = new int[2];
-		String lore[];
+		int[] bonus = new int[2];
+		String[] lore;
 		switch(type)
 		{
 			case "Damage":type = main.MainServerOption.damage;break;
@@ -292,7 +290,7 @@ public class BattleCalculator
 			case "Upgrade":type = "업그레이드";break;
 			default : break;
 		}
-		ArrayList<ItemStack> item = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> item = new ArrayList<>();
 		item.add(player.getInventory().getHelmet());
 		item.add(player.getInventory().getChestplate());
 		item.add(player.getInventory().getLeggings());

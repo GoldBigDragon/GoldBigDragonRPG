@@ -34,17 +34,16 @@ import net.minecraft.server.v1_12_R1.PacketPlayOutOpenWindow;
 
 public class SendPacket
 {
-	public void sendTitle(Player player, String title, String subtitle, int FadeInTime, int ShowTime, int FadeOutTime)
+	public void sendTitle(Player player, String title, String subtitle, int fadeInTime, int showTime, int fadeOutTime)
 	{
-		player.sendTitle(title, subtitle, FadeInTime*20, ShowTime*20, FadeOutTime*20);
+		player.sendTitle(title, subtitle, fadeInTime*20, showTime*20, fadeOutTime*20);
 	}
 
-	public void sendTitleAll(String title, String subtitle, int FadeInTime, int ShowTime, int FadeOutTime)
+	public void sendTitleAll(String title, String subtitle, int fadeInTime, int showTime, int fadeOutTime)
 	{
-		Player[] players = null;
-		Bukkit.getOnlinePlayers().toArray(players);
+		Object[] players = Bukkit.getOnlinePlayers().toArray();
 		for(int count = 0; count < players.length; count++)
-			players[count].sendTitle(title, subtitle, FadeInTime*20, ShowTime*20, FadeOutTime*20);
+			((Player)players[count]).sendTitle(title, subtitle, fadeInTime*20, showTime*20, fadeOutTime*20);
 	}
 	
 	public void sendActionBar(Player p, String msg, boolean isAllPlayer)

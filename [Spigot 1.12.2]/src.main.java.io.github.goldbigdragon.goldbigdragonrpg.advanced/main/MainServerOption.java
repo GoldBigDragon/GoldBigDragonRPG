@@ -129,10 +129,10 @@ public class MainServerOption
 	public static short Money6ID = 41;
 	public static byte Money6DATA = 0;
 	
-	public static String serverUpdate = "2017-12-03-02:39";
+	public static String serverUpdate = "2017-12-03-11:42";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/1_12.html";
-	public static String currentServerUpdate = "2017-12-03-02:39";
+	public static String currentServerUpdate = "2017-12-03-11:42";
 	public static String currentServerVersion = "Advanced";
 	
 	public static java.util.Map<Long, PartyObject> party = new LinkedHashMap<>();
@@ -195,7 +195,7 @@ public class MainServerOption
 		if(!musicFolder.exists())
 			musicFolder.mkdirs();
 	  	Bukkit.getConsoleSender().sendMessage("§2§l[OK]§8 NBS 파일 로드");
-	  	new main.MainConfig().CheckConfig();
+	  	new main.MainConfig().checkConfig();
 	  	Bukkit.getConsoleSender().sendMessage("§2§l[OK]§8 콘피그 정보 로드");
 	  	if(monsterYaml.isExit("Skill/SkillList.yml") == false)
 	  	  new skill.SkillConfig().CreateNewSkillList();

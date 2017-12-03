@@ -503,7 +503,7 @@ public class OPboxGui extends UtilGui
 			if(displayName.equals("커스텀 아이템"))
 				new CustomItemGui().itemListGui(player, 0);
 			else if(displayName.equals("몬스터"))
-				new MonsterGui().MonsterListGUI(player, 0);
+				new MonsterGui().monsterListGUI(player, 0);
 			else if(displayName.equals("서버 설정"))
 				opBoxGuiSetting(player);
 			else if(displayName.equals("퀘스트"))
@@ -529,7 +529,7 @@ public class OPboxGui extends UtilGui
 			else if(displayName.equals("월드 생성"))
 				new admin.WorldCreateGui().worldCreateGuiMain(player);
 			else if(displayName.equals("몬스터"))
-				new MonsterGui().MonsterListGUI(player, 0);
+				new MonsterGui().monsterListGUI(player, 0);
 			else if(displayName.equals("초심자"))
 				new NewBieGui().newBieGuiMain(player);
 			else if(displayName.equals("개조식"))
