@@ -55,7 +55,7 @@ public class QuestInteractEvent
     				else
     					u.setString(player, (byte)2, target.getCustomName());
     			}
-    			SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_HORSE_ARMOR, 1.0F,1.2F);
+    			SoundEffect.playSound(event.getPlayer(), org.bukkit.Sound.ENTITY_HORSE_ARMOR, 1.0F,1.2F);
     			if(u.getString(player,(byte)1).equals("Give"))
     			{
     		    	player.sendMessage("§a[SYSTEM] : NPC가 유저에게 받을 물건을 설정하세요!");
@@ -96,7 +96,7 @@ public class QuestInteractEvent
 	    						QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+b+".NPCname", target.getName());
 	    					QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+b+".NPCuuid", target.getUniqueId().toString());
 	    				}
-	    				SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+	    				SoundEffect.playSound(event.getPlayer(), org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 	    		    	player.sendMessage("§a[SYSTEM] : 성공적으로 등록되었습니다!");
 	    				QuestConfig.saveConfig();
 	    		    	QGUI.FixQuestGUI(player, (short) 0, u.getString(player,(byte)2));
@@ -121,7 +121,7 @@ public class QuestInteractEvent
 	    					QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+c+".TargetNPCname", target.getName());
 	    				QuestConfig.set(u.getString(player,(byte)2)+".FlowChart."+c+".TargetNPCuuid", target.getUniqueId().toString());
 	    			}
-	    			SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+	    			SoundEffect.playSound(event.getPlayer(), org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 	    	    	player.sendMessage("§a[SYSTEM] : 성공적으로 등록되었습니다!");
 	    			QuestConfig.saveConfig();
 	    	    	QGUI.FixQuestGUI(player, (short) 0, u.getString(player,(byte)2));
@@ -162,7 +162,7 @@ public class QuestInteractEvent
 				QuestConfig.saveConfig();
 		    	QGUI.FixQuestGUI(player, (short) 0, QuestName);
 		    	u.clearAll(player);
-		    	SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+		    	SoundEffect.playSound(event.getPlayer(), org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 		    	player.sendMessage("§a[SYSTEM] : 성공적으로 등록되었습니다!");
 		    	return;
 			}
@@ -198,7 +198,7 @@ public class QuestInteractEvent
 			    	u.setString(player, (byte)3, null);
 			    	u.setString(player, (byte)1, "BPID");
 			    	u.setInt(player, (byte)1, size);
-			    	SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+			    	SoundEffect.playSound(event.getPlayer(), org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 			    	player.sendMessage("§a[퀘스트] : 설치 될 블록 ID를 입력 해 주세요!");
 					return;
 				}

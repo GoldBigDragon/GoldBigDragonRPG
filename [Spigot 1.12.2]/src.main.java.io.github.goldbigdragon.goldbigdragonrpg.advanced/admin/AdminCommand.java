@@ -32,7 +32,7 @@ public class AdminCommand
 			else if(string.equals("오피박스")||string.equals("opbox"))
 			{
 				new UserDataObject().clearAll(player);
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
 				new admin.OPboxGui().opBoxGuiMain(player,(byte) 1);
 			}
 			else if(string.equals("타입추가")||string.equals("gbdaddtype"))
@@ -40,7 +40,7 @@ public class AdminCommand
 				if(args.length!=1)
 				{
 					player.sendMessage("§c[SYSTEM] : /타입추가 [새로운 아이템 타입]");
-					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.7F);
+					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.7F);
 				}
 				else
 				{
@@ -49,7 +49,7 @@ public class AdminCommand
 			  		target.set("["+args[0]+"]", 0);
 			  		target.saveConfig();
 			  		player.sendMessage("§a[SYSTEM] : 새로운 아이템 타입 추가 완료!  §f"+args[0]);
-					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.7F);
+					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.7F);
 				}
 			}
 			else if(string.equals("엔티티제거")||string.equals("gbdremoveentity"))
@@ -57,7 +57,7 @@ public class AdminCommand
 				if(args.length != 1 ||Integer.parseInt(args[0]) > 10000)
 				{
 					player.sendMessage("§c[SYSTEM] : /엔티티제거 [1~10000]");
-					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 					return;
 				}
 			    List<Entity> entities = player.getNearbyEntities(Integer.parseInt(args[0]), Integer.parseInt(args[0]), Integer.parseInt(args[0]));
@@ -77,7 +77,7 @@ public class AdminCommand
 				if(args.length != 1 ||Integer.parseInt(args[0]) > 10000)
 				{
 					player.sendMessage("§c[SYSTEM] : /아이템제거 [1~10000]");
-					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 					return;
 				}
 			    List<Entity> entities = player.getNearbyEntities(Integer.parseInt(args[0]), Integer.parseInt(args[0]), Integer.parseInt(args[0]));
@@ -97,7 +97,7 @@ public class AdminCommand
 				if(args.length != 1 ||Integer.parseInt(args[0]) > 10000)
 				{
 					player.sendMessage("§c[SYSTEM] : /강제철거 [1~10000]");
-					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 					return;
 				}
 			    List<Entity> entities = player.getNearbyEntities(Integer.parseInt(args[0]), Integer.parseInt(args[0]), Integer.parseInt(args[0]));
@@ -129,7 +129,7 @@ public class AdminCommand
 		  				else
 		  				{
 		  					player.sendMessage("§c[SYSTEM] : 해당 플레이어는 접속중이 아닙니다!");
-		  					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+		  					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		  				}
 	  				}
 				}
@@ -151,7 +151,7 @@ public class AdminCommand
 	  					catch(NumberFormatException e)
 	  					{
 	  						player.sendMessage("§c[SYSTEM] : 정수 형태의 값(숫자)을 입력하세요!");
-		  					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+		  					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		  					return;
 	  					}
 	  					main.MainServerOption.PlayerList.get(target.getUniqueId().toString()).addStat_MoneyAndEXP(0, exp, true);
@@ -160,20 +160,20 @@ public class AdminCommand
 	  				else
 	  				{
 	  					player.sendMessage("§c[SYSTEM] : 해당 플레이어는 접속중이 아닙니다!");
-	  					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+	  					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 	  				}
 				}
 				else
 				{
   					player.sendMessage("§c[SYSTEM] : /경주 [닉네임] [경험치]");
-  					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+  					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 				}
 			}
 		}
 		else
 		{
 			player.sendMessage("§c[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		}
 	}
 }

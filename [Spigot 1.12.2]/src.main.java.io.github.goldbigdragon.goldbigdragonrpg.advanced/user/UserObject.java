@@ -199,7 +199,7 @@ public class UserObject
 			if(isLevelUp)
 			{
 				new effect.SendPacket().sendTitle(Bukkit.getPlayer(PlayerName), "§fLevel Up!", "§f레벨 §e"+ Stat_Level+"§f이 되었습니다!", 1, 3, 1);
-				SoundEffect.SP(Bukkit.getPlayer(PlayerName), org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 1.5F, 1.8F);
+				SoundEffect.playSound(Bukkit.getPlayer(PlayerName), org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 1.5F, 1.8F);
 			}
 		}
 		if(isAlert && Alert_EXPget)

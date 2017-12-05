@@ -136,7 +136,7 @@ public class PartyObject
 								if(player.isOnline())
 								{
 									player.sendMessage("§a[파티] : 파티에 가입 하였습니다!");
-									SoundEffect.SP(player, Sound.BLOCK_WOODEN_DOOR_OPEN, 1.1F, 1.0F);
+									SoundEffect.playSound(player, Sound.BLOCK_WOODEN_DOOR_OPEN, 1.1F, 1.0F);
 								}
 								this.PartyMember[count] = player.getName();
 								main.MainServerOption.partyJoiner.put(player, this.CreateTime);
@@ -163,7 +163,7 @@ public class PartyObject
 		if(player.isOnline())
 		{
 			player.sendMessage("§c[파티] : 파티를 탈퇴하였습니다!");
-			SoundEffect.SP(player, Sound.BLOCK_WOODEN_DOOR_CLOSE, 1.1F, 1.0F);
+			SoundEffect.playSound(player, Sound.BLOCK_WOODEN_DOOR_CLOSE, 1.1F, 1.0F);
 		}
 		if(getPartyMembers() == 1)
 		{
@@ -363,12 +363,12 @@ public class PartyObject
 		for(int count = 0; count < p.length; count++)
 			if(p[count] != null && p[count] != noAlertMember)
 				if(Bukkit.getServer().getOfflinePlayer(p[count].getName()).isOnline())
-					SoundEffect.SP(p[count], s, volume, pitch);
+					SoundEffect.playSound(p[count], s, volume, pitch);
 	}
 	
 	public void Message(Player player, byte num)
 	{
-		SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+		SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 		switch(num)
 		{
 		case 1:

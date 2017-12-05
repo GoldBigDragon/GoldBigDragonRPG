@@ -40,7 +40,7 @@ public class EventBlockPlace implements Listener
 		if(A.getAreaOption(Area[0], (char) 5) == false && player.isOp() == false)
 		{
 			event.setCancelled(true);
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			player.sendMessage("§c[SYSTEM] : §e"+ Area[1] + "§c 지역 에서는 블록 설치가 불가능합니다!");
 			return;
 		}

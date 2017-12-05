@@ -24,8 +24,8 @@ public class StructCampFire extends UtilGui
 		String UniqueCode = "§0§0§d§0§f§r";
 		BoardCode = BoardCode.replace("§", "&");
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§c§0모닥불");
-		Stack2("§9§l불 끄기", 326, 0, 1, Arrays.asList("§f모닥불의 불을 끕니다."), 3, inv);
-		Stack2("§c§l불 지피기", 259, 0, 1, Arrays.asList("§f모닥불에 불을 지핍니다.","","§e[막대기 10개 필요]","§0"+BoardCode), 5, inv);
+		removeFlagStack("§9§l불 끄기", 326, 0, 1, Arrays.asList("§f모닥불의 불을 끕니다."), 3, inv);
+		removeFlagStack("§c§l불 지피기", 259, 0, 1, Arrays.asList("§f모닥불에 불을 지핍니다.","","§e[막대기 10개 필요]","§0"+BoardCode), 5, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -55,15 +55,15 @@ public class StructCampFire extends UtilGui
 				ItemStack item = new MaterialData(280, (byte) 0).toItemStack(1);
 				if(new util.UtilPlayer().deleteItem(player, item, 10)==false)
 				{
-					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 					player.sendMessage("§c[SYSTEM] : 불을 지피기 위해 필요한 막대기 개수가 모자랍니다!");
 					return;
 				}
 				else
-					SoundEffect.SP(player, Sound.ITEM_FLINTANDSTEEL_USE, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ITEM_FLINTANDSTEEL_USE, 1.0F, 1.8F);
 			}
 			else
-				SoundEffect.SP(player, Sound.BLOCK_FIRE_EXTINGUISH, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.BLOCK_FIRE_EXTINGUISH, 1.0F, 1.0F);
 				
 			Object[] e = player.getLocation().getWorld().getNearbyEntities(player.getLocation(), 6, 6, 6).toArray();
 			for(int count = 0; count < e.length; count++)

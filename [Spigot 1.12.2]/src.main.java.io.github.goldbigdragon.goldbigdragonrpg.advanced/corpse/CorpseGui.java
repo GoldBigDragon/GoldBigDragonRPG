@@ -81,37 +81,37 @@ public class CorpseGui extends UtilGui
 		  	try
 		  	{
 				if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_LastVisited()==null||main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_LastVisited().equals("null"))
-					Stack2("§6§l[가까운 마을에서 부활]", 345,0,1,Arrays.asList("§7최근 방문한 마을이 없습니다.","§7이 방법을 선택할 경우,","§8"+ player.getLocation().getWorld().getName()+"월드에 설정된","§7기본 스폰 지점에서 부활합니다.","","§a + "+configYaml.getString("Death.Spawn_Home.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Home.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Home.PenaltyMoney")+" 감소"), 10, inv);
+					removeFlagStack("§6§l[가까운 마을에서 부활]", 345,0,1,Arrays.asList("§7최근 방문한 마을이 없습니다.","§7이 방법을 선택할 경우,","§8"+ player.getLocation().getWorld().getName()+"월드에 설정된","§7기본 스폰 지점에서 부활합니다.","","§a + "+configYaml.getString("Death.Spawn_Home.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Home.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Home.PenaltyMoney")+" 감소"), 10, inv);
 				else
-					Stack2("§6§l[가까운 마을에서 부활]", 345,0,1,Arrays.asList("§e"+ main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_LastVisited()+"§7에서 부활합니다.","","§a + "+configYaml.getString("Death.Spawn_Home.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Home.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Home.PenaltyMoney")+" 감소"), 10, inv);
+					removeFlagStack("§6§l[가까운 마을에서 부활]", 345,0,1,Arrays.asList("§e"+ main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_LastVisited()+"§7에서 부활합니다.","","§a + "+configYaml.getString("Death.Spawn_Home.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Home.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Home.PenaltyMoney")+" 감소"), 10, inv);
 		  	}
 		  	catch(NullPointerException e)
 		  	{
-		  		Stack2("§6§l[가까운 마을에서 부활]", 345,0,1,Arrays.asList("§7최근 방문한 마을이 없습니다.","§7이 방법을 선택할 경우,","§8"+ player.getLocation().getWorld().getName()+"월드에 설정된","§7기본 스폰 지점에서 부활합니다.","","§a + "+configYaml.getString("Death.Spawn_Home.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Home.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Home.PenaltyMoney")+" 감소"), 10, inv);
+		  		removeFlagStack("§6§l[가까운 마을에서 부활]", 345,0,1,Arrays.asList("§7최근 방문한 마을이 없습니다.","§7이 방법을 선택할 경우,","§8"+ player.getLocation().getWorld().getName()+"월드에 설정된","§7기본 스폰 지점에서 부활합니다.","","§a + "+configYaml.getString("Death.Spawn_Home.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Home.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Home.PenaltyMoney")+" 감소"), 10, inv);
 		  	}
 			if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_EXP()<0)
-				Stack2("§c§l[다시 일어선다]", 166,0,1,Arrays.asList("§7경험치가 부족하여 제자리","§7부활이 불가능 합니다."), 12, inv);
+				removeFlagStack("§c§l[다시 일어선다]", 166,0,1,Arrays.asList("§7경험치가 부족하여 제자리","§7부활이 불가능 합니다."), 12, inv);
 			else if(configYaml.getBoolean("Death.DistrictDirectRevive"))
-				Stack2("§c§l[다시 일어선다]", 166,0,1,Arrays.asList("§7제자리 부활이 불가능합니다."), 12, inv);
+				removeFlagStack("§c§l[다시 일어선다]", 166,0,1,Arrays.asList("§7제자리 부활이 불가능합니다."), 12, inv);
 			else
-				Stack2("§c§l[다시 일어선다]", 2266,0,1,Arrays.asList("§7아픔을 참고 다시 일어섭니다.","§7좋은 상태는 기대하기 힘듭니다.","","§a + "+configYaml.getString("Death.Spawn_Here.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Here.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Here.PenaltyMoney")+" 감소"), 12, inv);
+				removeFlagStack("§c§l[다시 일어선다]", 2266,0,1,Arrays.asList("§7아픔을 참고 다시 일어섭니다.","§7좋은 상태는 기대하기 힘듭니다.","","§a + "+configYaml.getString("Death.Spawn_Here.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Here.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Here.PenaltyMoney")+" 감소"), 12, inv);
 			
 			ItemStack item = configYaml.getItemStack("Death.RescueItem");
 			
 			if(item == null)
-				Stack2("§c§l[구조를 기다린다]", 397,3,1,Arrays.asList("§7다른 사람의 도움을 요청합니다.","§7주위에 사람이 있는지 살펴보세요.","","§a + "+configYaml.getString("Death.Spawn_Help.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Help.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Help.PenaltyMoney")+" 감소"), 14, inv);
+				removeFlagStack("§c§l[구조를 기다린다]", 397,3,1,Arrays.asList("§7다른 사람의 도움을 요청합니다.","§7주위에 사람이 있는지 살펴보세요.","","§a + "+configYaml.getString("Death.Spawn_Help.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Help.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Help.PenaltyMoney")+" 감소"), 14, inv);
 			else
-				Stack2("§c§l[구조를 기다린다]", item.getTypeId(),item.getData().getData(),item.getAmount(),Arrays.asList("§7다른 사람의 도움을 요청합니다.","§7주위에 사람이 있는지 살펴보세요.","","§a + "+configYaml.getString("Death.Spawn_Help.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Help.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Help.PenaltyMoney")+" 감소"), 14, inv);
+				removeFlagStack("§c§l[구조를 기다린다]", item.getTypeId(),item.getData().getData(),item.getAmount(),Arrays.asList("§7다른 사람의 도움을 요청합니다.","§7주위에 사람이 있는지 살펴보세요.","","§a + "+configYaml.getString("Death.Spawn_Help.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Help.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Help.PenaltyMoney")+" 감소"), 14, inv);
 			
 			item = configYaml.getItemStack("Death.ReviveItem");
 			if(item == null)
-				Stack2("§3§l[부활석 사용]", 399,0,1,Arrays.asList("§7제자리 부활 아이템을 사용합니다.","","§a + "+configYaml.getString("Death.Spawn_Item.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Item.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Item.PenaltyMoney")+" 감소"), 16, inv);
+				removeFlagStack("§3§l[부활석 사용]", 399,0,1,Arrays.asList("§7제자리 부활 아이템을 사용합니다.","","§a + "+configYaml.getString("Death.Spawn_Item.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Item.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Item.PenaltyMoney")+" 감소"), 16, inv);
 			else if(!item.hasItemMeta())
-				Stack2("§3§l[부활석 사용]", item.getTypeId(),item.getData().getData(),item.getAmount(),Arrays.asList("§7제자리 부활 아이템을 사용합니다.","","§a + "+configYaml.getString("Death.Spawn_Item.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Item.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Item.PenaltyMoney")+" 감소"), 16, inv);
+				removeFlagStack("§3§l[부활석 사용]", item.getTypeId(),item.getData().getData(),item.getAmount(),Arrays.asList("§7제자리 부활 아이템을 사용합니다.","","§a + "+configYaml.getString("Death.Spawn_Item.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Item.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Item.PenaltyMoney")+" 감소"), 16, inv);
 			else if(!item.getItemMeta().hasDisplayName())
-				Stack2("§3§l[부활석 사용]", item.getTypeId(),item.getData().getData(),item.getAmount(),Arrays.asList("§7제자리 부활 아이템을 사용합니다.","","§a + "+configYaml.getString("Death.Spawn_Item.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Item.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Item.PenaltyMoney")+" 감소"), 16, inv);
+				removeFlagStack("§3§l[부활석 사용]", item.getTypeId(),item.getData().getData(),item.getAmount(),Arrays.asList("§7제자리 부활 아이템을 사용합니다.","","§a + "+configYaml.getString("Death.Spawn_Item.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Item.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Item.PenaltyMoney")+" 감소"), 16, inv);
 			else
-				Stack2("§3§l["+item.getItemMeta().getDisplayName()+"§3§l 사용]", item.getTypeId(),item.getData().getData(),item.getAmount(),Arrays.asList("§7제자리 부활 아이템을 사용합니다.","","§a + "+configYaml.getString("Death.Spawn_Item.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Item.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Item.PenaltyMoney")+" 감소"), 16, inv);
+				removeFlagStack("§3§l["+item.getItemMeta().getDisplayName()+"§3§l 사용]", item.getTypeId(),item.getData().getData(),item.getAmount(),Arrays.asList("§7제자리 부활 아이템을 사용합니다.","","§a + "+configYaml.getString("Death.Spawn_Item.SetHealth")+" 생명력","§c - 경험치 "+configYaml.getString("Death.Spawn_Item.PenaltyEXP")+" 감소","§c - 소지금 "+configYaml.getString("Death.Spawn_Item.PenaltyMoney")+" 감소"), 16, inv);
 			player.openInventory(inv);	
 		}
 	}
@@ -123,7 +123,7 @@ public class CorpseGui extends UtilGui
 		int slot = event.getSlot();
 		if(slot == 10)//마을에서 부활
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			reviveAtLastVisitedArea(player);
 			new CorpseMain().removeCorpse(player.getName());
     		new otherplugins.NoteBlockApiMain().Stop(player);
@@ -132,12 +132,12 @@ public class CorpseGui extends UtilGui
 		{
 			if(event.getCurrentItem().getTypeId()==166)
 			{
-				SoundEffect.SP(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.0F);
 				return;
 			}
 			else
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				new CorpseMain().removeCorpse(player.getName());
 				reviveAtDeadPoint(player);
 	    		new otherplugins.NoteBlockApiMain().Stop(player);
@@ -151,10 +151,10 @@ public class CorpseGui extends UtilGui
 				for(int count = 0; count < partyMember.length; count++)
 					if(player != partyMember[count])
 					{
-						SoundEffect.SP(partyMember[count], Sound.ENTITY_VILLAGER_DEATH, 0.4F, 0.5F);
+						SoundEffect.playSound(partyMember[count], Sound.ENTITY_VILLAGER_DEATH, 0.4F, 0.5F);
 						partyMember[count].sendMessage("§d[구조 요청] : §e"+player.getName()+"§d님으로 부터 구조 요청이 들어왔습니다! (월드 : "+player.getLocation().getWorld().getName() + ", XYZ : " + (int)(player.getLocation().getX())+","+(int)(player.getLocation().getY())+","+(int)(player.getLocation().getZ())+")");
 					}
-				SoundEffect.SP(player, Sound.ENTITY_WITHER_SKELETON_STEP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_WITHER_SKELETON_STEP, 1.0F, 1.0F);
 				player.sendMessage("§d[구조 요청] : 파티 멤버들에게 구조 요청 신호를 보냈습니다!");
 			}
 			else
@@ -163,7 +163,7 @@ public class CorpseGui extends UtilGui
 				friendYaml.getConfig("Friend/"+player.getUniqueId().toString()+".yml");
 				if(friendYaml.contains("Name")==false)
 				{
-					SoundEffect.SP(player, Sound.ENTITY_VILLAGER_NO, 1.0F, 1.0F);
+					SoundEffect.playSound(player, Sound.ENTITY_VILLAGER_NO, 1.0F, 1.0F);
 					player.sendMessage("§d[구조 요청] : 구조 요청 신호를 보낼 수 있는 친구가 없습니다!");
 				}
 				else
@@ -171,7 +171,7 @@ public class CorpseGui extends UtilGui
 					String[] friendsList = friendYaml.getConfigurationSection("Friends").getKeys(false).toArray(new String[0]);
 					if(friendsList.length == 0)
 					{
-						SoundEffect.SP(player, Sound.ENTITY_VILLAGER_NO, 1.0F, 1.0F);
+						SoundEffect.playSound(player, Sound.ENTITY_VILLAGER_NO, 1.0F, 1.0F);
 						player.sendMessage("§d[구조 요청] : 구조 요청 신호를 보낼 수 있는 친구가 없습니다!");
 					}
 					else
@@ -183,19 +183,19 @@ public class CorpseGui extends UtilGui
 							if(friend!=null)
 								if(friend.isOnline())
 								{
-									SoundEffect.SP(friend, Sound.ENTITY_VILLAGER_DEATH, 0.4F, 0.5F);
+									SoundEffect.playSound(friend, Sound.ENTITY_VILLAGER_DEATH, 0.4F, 0.5F);
 									friend.sendMessage("§d[구조 요청] : §e"+player.getName()+"§d님으로 부터 구조 요청이 들어왔습니다! (월드 : "+player.getLocation().getWorld().getName() + ", XYZ : " + (int)(player.getLocation().getX())+","+(int)(player.getLocation().getY())+","+(int)(player.getLocation().getZ())+")");
 									exitFriend = true;
 								}
 						}
 						if(exitFriend)
 						{
-							SoundEffect.SP(player, Sound.ENTITY_SKELETON_STEP, 1.0F, 1.0F);
+							SoundEffect.playSound(player, Sound.ENTITY_SKELETON_STEP, 1.0F, 1.0F);
 							player.sendMessage("§d[구조 요청] : 접속한 친구들에게 구조 요청 신호를 보냈습니다!");
 						}
 						else
 						{
-							SoundEffect.SP(player, Sound.ENTITY_VILLAGER_NO, 1.0F, 1.0F);
+							SoundEffect.playSound(player, Sound.ENTITY_VILLAGER_NO, 1.0F, 1.0F);
 							player.sendMessage("§d[구조 요청] : 구조 요청 신호를 보낼 수 있는 친구가 없습니다!");
 						}
 					}
@@ -209,7 +209,7 @@ public class CorpseGui extends UtilGui
 			ItemStack item = configYaml.getItemStack("Death.ReviveItem");
 			if(item == null)
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				player.sendMessage("§c[SYSTEM] : 부활 아이템이 없어 부활할 수 없습니다!");
 				openReviveSelectGui(player);
 			}
@@ -225,14 +225,14 @@ public class CorpseGui extends UtilGui
 					player.teleport(l);
 					for(int countta=0;countta<210;countta++)
 						new effect.ParticleEffect().PL(player.getLocation(), org.bukkit.Effect.SMOKE, new util.UtilNumber().RandomNum(0, 14));
-					SoundEffect.SL(player.getLocation(), Sound.ENTITY_BLAZE_AMBIENT, 0.5F, 1.8F);
+					SoundEffect.playSoundLocation(player.getLocation(), Sound.ENTITY_BLAZE_AMBIENT, 0.5F, 1.8F);
 		    		new otherplugins.NoteBlockApiMain().Stop(player);
 					penalty(player, configYaml.getString("Death.Spawn_Item.SetHealth"), configYaml.getString("Death.Spawn_Item.PenaltyEXP"), configYaml.getString("Death.Spawn_Item.PenaltyMoney"));
 					return;
 				}
 				else
 				{
-					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 					player.sendMessage("§c[SYSTEM] : 부활 아이템이 부족하여 부활할 수 없습니다!");
 					return;
 				}
@@ -279,7 +279,7 @@ public class CorpseGui extends UtilGui
 							Location loc = new Location(Bukkit.getServer().getWorld(world), x, y,z, (float)yaw, (float)pitch);
 							player.teleport(loc);
 							PottionBuff.givePotionEffect(player, PotionEffectType.BLINDNESS, 1, 15);
-							SoundEffect.SL(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 0.8F, 1.0F);
+							SoundEffect.playSoundLocation(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 0.8F, 1.0F);
 							return;
 						}
 					}

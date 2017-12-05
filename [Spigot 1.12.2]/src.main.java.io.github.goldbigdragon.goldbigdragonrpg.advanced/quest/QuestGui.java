@@ -80,16 +80,16 @@ public class QuestGui extends UtilGui
 				switch(QuestList.getString(a[count] + ".FlowChart."+PlayerQuestList.getInt("Started."+a[count]+".Flow")+".Type"))
 				{
 				case "Nevigation":
-					Stack2("§f§l" + a[count], ItemID,0,ItemAmount,Arrays.asList("§f화살표를 따라가자.",""), loc, inv);
+					removeFlagStack("§f§l" + a[count], ItemID,0,ItemAmount,Arrays.asList("§f화살표를 따라가자.",""), loc, inv);
 					break;
 				case "Choice":
-					Stack2("§f§l" + a[count], ItemID,0,ItemAmount,Arrays.asList("§f하고싶은 말을 선택하자.","","§e[좌클릭시 선택지 확인.]"), loc, inv);
+					removeFlagStack("§f§l" + a[count], ItemID,0,ItemAmount,Arrays.asList("§f하고싶은 말을 선택하자.","","§e[좌클릭시 선택지 확인.]"), loc, inv);
 					break;
 				case "Script" :
-					Stack2("§f§l" + a[count], ItemID,0,ItemAmount,Arrays.asList("§e"+QuestList.getString(a[count].toString() + ".FlowChart."+PlayerQuestList.getInt("Started."+a[count].toString()+".Flow")+".NPCname")+"§f와 대화를 해 보자."), loc, inv);
+					removeFlagStack("§f§l" + a[count], ItemID,0,ItemAmount,Arrays.asList("§e"+QuestList.getString(a[count].toString() + ".FlowChart."+PlayerQuestList.getInt("Started."+a[count].toString()+".Flow")+".NPCname")+"§f와 대화를 해 보자."), loc, inv);
 					break;
 				case "PScript" :
-					Stack2("§f§l" + a[count], ItemID,0,ItemAmount,Arrays.asList("§e[좌클릭시 독백 확인]"), loc, inv);
+					removeFlagStack("§f§l" + a[count], ItemID,0,ItemAmount,Arrays.asList("§e[좌클릭시 독백 확인]"), loc, inv);
 					break;
 				case "Visit" :
 					YamlLoader AreaList = new YamlLoader();
@@ -99,23 +99,23 @@ public class QuestGui extends UtilGui
 					int AreaX = AreaList.getInt(QuestList.getString(a[count] + ".FlowChart."+PlayerQuestList.getInt("Started."+a[count]+".Flow")+".AreaName")+".SpawnLocation.X");
 					short AreaY = (short) AreaList.getInt(QuestList.getString(a[count] + ".FlowChart."+PlayerQuestList.getInt("Started."+a[count]+".Flow")+".AreaName")+".SpawnLocation.Y");
 					int AreaZ = AreaList.getInt(QuestList.getString(a[count] + ".FlowChart."+PlayerQuestList.getInt("Started."+a[count]+".Flow")+".AreaName")+".SpawnLocation.Z");
-					Stack2("§f§l" + a[count], ItemID,0,ItemAmount,Arrays.asList("§e"+AreaName+"§f 지역을 방문하자."
+					removeFlagStack("§f§l" + a[count], ItemID,0,ItemAmount,Arrays.asList("§e"+AreaName+"§f 지역을 방문하자."
 							,"§e월드 : §f"+AreaWorld,"§eX 좌표 : §f"+AreaX,"§eY 좌표 : §f"+AreaY,"§eZ 좌표 : §f"+AreaZ), loc, inv);
 					break;
 				case "Talk" :
-					Stack2("§f§l" + a[count], ItemID,0,ItemAmount,Arrays.asList("§e"+QuestList.getString(a[count] + ".FlowChart."+PlayerQuestList.getInt("Started."+a[count]+".Flow")+".TargetNPCname")+"§f에게 말을 걸어 보자."), loc, inv);
+					removeFlagStack("§f§l" + a[count], ItemID,0,ItemAmount,Arrays.asList("§e"+QuestList.getString(a[count] + ".FlowChart."+PlayerQuestList.getInt("Started."+a[count]+".Flow")+".TargetNPCname")+"§f에게 말을 걸어 보자."), loc, inv);
 					break;
 				case "Give" :
-					Stack2("§f§l" + a[count], ItemID,0,ItemAmount,Arrays.asList("§e"+QuestList.getString(a[count] + ".FlowChart."+PlayerQuestList.getInt("Started."+a[count]+".Flow")+".TargetNPCname")+"§f가 부탁한","§f물품을 전달하자.","","§e[좌클릭시 전달 품목 확인.]"), loc, inv);
+					removeFlagStack("§f§l" + a[count], ItemID,0,ItemAmount,Arrays.asList("§e"+QuestList.getString(a[count] + ".FlowChart."+PlayerQuestList.getInt("Started."+a[count]+".Flow")+".TargetNPCname")+"§f가 부탁한","§f물품을 전달하자.","","§e[좌클릭시 전달 품목 확인.]"), loc, inv);
 					break;
 				case "Hunt":
-					Stack2("§f§l" +a[count], ItemID,0,ItemAmount,Arrays.asList("§f목표 대상을 처치하자.","","§e[좌클릭시 처치 대상 확인]"), loc, inv);
+					removeFlagStack("§f§l" +a[count], ItemID,0,ItemAmount,Arrays.asList("§f목표 대상을 처치하자.","","§e[좌클릭시 처치 대상 확인]"), loc, inv);
 					break;
 				case "Harvest":
-					Stack2("§f§l" +a[count], ItemID,0,ItemAmount,Arrays.asList("§f블록을 채집하자.","","§e[좌클릭시 채집 블록 확인]"), loc, inv);
+					removeFlagStack("§f§l" +a[count], ItemID,0,ItemAmount,Arrays.asList("§f블록을 채집하자.","","§e[좌클릭시 채집 블록 확인]"), loc, inv);
 					break;
 				case "Present" :
-					Stack2("§f§l" + a[count], ItemID,0,ItemAmount,Arrays.asList("§e"+QuestList.getString(a[count] + ".FlowChart."+PlayerQuestList.getInt("Started."+a[count]+".Flow")+".TargetNPCname")+"§f에게","§f보상을 받자.","","§e[좌클릭시 보상 확인.]"), loc, inv);
+					removeFlagStack("§f§l" + a[count], ItemID,0,ItemAmount,Arrays.asList("§e"+QuestList.getString(a[count] + ".FlowChart."+PlayerQuestList.getInt("Started."+a[count]+".Flow")+".TargetNPCname")+"§f에게","§f보상을 받자.","","§e[좌클릭시 보상 확인.]"), loc, inv);
 					break;
 				}
 				loc++;
@@ -123,12 +123,12 @@ public class QuestGui extends UtilGui
 		}
 		
 		if(a.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -152,19 +152,19 @@ public class QuestGui extends UtilGui
 				switch(QuestList.getString(a[count].toString() + ".Type"))
 				{
 				case "N" :
-					Stack2("§f§l" + a[count], 340,0,1,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 일반 퀘스트","","§e[우클릭시 세부 설정을 합니다.]","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+					removeFlagStack("§f§l" + a[count], 340,0,1,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 일반 퀘스트","","§e[우클릭시 세부 설정을 합니다.]","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 					break;
 				case "R" :
-					Stack2("§f§l" + a[count], 386,0,1,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 반복 퀘스트","","§e[우클릭시 세부 설정을 합니다.]","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+					removeFlagStack("§f§l" + a[count], 386,0,1,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 반복 퀘스트","","§e[우클릭시 세부 설정을 합니다.]","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 					break;
 				case "D" :
-					Stack2("§f§l" + a[count], 403,0,1,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 일일 퀘스트","","§e[우클릭시 세부 설정을 합니다.]","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+					removeFlagStack("§f§l" + a[count], 403,0,1,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 일일 퀘스트","","§e[우클릭시 세부 설정을 합니다.]","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 					break;
 				case "W" :
-					Stack2("§f§l" + a[count], 403,0,7,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 일주 퀘스트","","§e[우클릭시 세부 설정을 합니다.]","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+					removeFlagStack("§f§l" + a[count], 403,0,7,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 일주 퀘스트","","§e[우클릭시 세부 설정을 합니다.]","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 					break;
 				case "M" :
-					Stack2("§f§l" + a[count], 403,0,31,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 한달 퀘스트","","§e[우클릭시 세부 설정을 합니다.]","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+					removeFlagStack("§f§l" + a[count], 403,0,31,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 한달 퀘스트","","§e[우클릭시 세부 설정을 합니다.]","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 					break;
 				}
 			}
@@ -173,19 +173,19 @@ public class QuestGui extends UtilGui
 				switch(QuestList.getString(a[count].toString() + ".Type"))
 				{
 				case "N" :
-					Stack2("§f§l" + a[count], 340,0,1,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 일반 퀘스트",""), loc, inv);
+					removeFlagStack("§f§l" + a[count], 340,0,1,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 일반 퀘스트",""), loc, inv);
 					break;
 				case "R" :
-					Stack2("§f§l" + a[count], 386,0,1,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 반복 퀘스트",""), loc, inv);
+					removeFlagStack("§f§l" + a[count], 386,0,1,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 반복 퀘스트",""), loc, inv);
 					break;
 				case "D" :
-					Stack2("§f§l" + a[count], 403,0,1,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 일일 퀘스트",""), loc, inv);
+					removeFlagStack("§f§l" + a[count], 403,0,1,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 일일 퀘스트",""), loc, inv);
 					break;
 				case "W" :
-					Stack2("§f§l" + a[count], 403,0,7,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 일주 퀘스트",""), loc, inv);
+					removeFlagStack("§f§l" + a[count], 403,0,7,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 일주 퀘스트",""), loc, inv);
 					break;
 				case "M" :
-					Stack2("§f§l" + a[count], 403,0,31,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 한달 퀘스트",""), loc, inv);
+					removeFlagStack("§f§l" + a[count], 403,0,31,Arrays.asList("§f퀘스트 구성 요소 : "+QuestFlowSize+"개","§3퀘스트 타입 : 한달 퀘스트",""), loc, inv);
 					break;
 				}
 			}
@@ -193,14 +193,14 @@ public class QuestGui extends UtilGui
 		}
 		
 		if(a.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 		if(ChoosePrevQuest == false)
-			Stack2("§f§l새 퀘스트", 386,0,1,Arrays.asList("§7새로운 퀘스트를 생성합니다."), 49, inv);
+			removeFlagStack("§f§l새 퀘스트", 386,0,1,Arrays.asList("§7새로운 퀘스트를 생성합니다."), 49, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ChoosePrevQuest), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ChoosePrevQuest), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -223,19 +223,19 @@ public class QuestGui extends UtilGui
 				switch(QuestList.getInt(QuestName+".FlowChart."+count+".Comparison"))
 				{
 				case 1:
-					Stack2("§f§l"+count, 137,0,1,Arrays.asList("§f타입 : 계산","","§3[     계산 식     ]","§3플레이어 변수 ＋ "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+					removeFlagStack("§f§l"+count, 137,0,1,Arrays.asList("§f타입 : 계산","","§3[     계산 식     ]","§3플레이어 변수 ＋ "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 					break;
 				case 2:
-					Stack2("§f§l"+count, 137,0,1,Arrays.asList("§f타입 : 계산","","§3[     계산 식     ]","§3플레이어 변수 － "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+					removeFlagStack("§f§l"+count, 137,0,1,Arrays.asList("§f타입 : 계산","","§3[     계산 식     ]","§3플레이어 변수 － "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 					break;
 				case 3:
-					Stack2("§f§l"+count, 137,0,1,Arrays.asList("§f타입 : 계산","","§3[     계산 식     ]","§3플레이어 변수 × "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+					removeFlagStack("§f§l"+count, 137,0,1,Arrays.asList("§f타입 : 계산","","§3[     계산 식     ]","§3플레이어 변수 × "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 					break;
 				case 4:
-					Stack2("§f§l"+count, 137,0,1,Arrays.asList("§f타입 : 계산","","§3[     계산 식     ]","§3플레이어 변수 ÷ "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+					removeFlagStack("§f§l"+count, 137,0,1,Arrays.asList("§f타입 : 계산","","§3[     계산 식     ]","§3플레이어 변수 ÷ "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 					break;
 				case 5:
-					Stack2("§f§l"+count, 137,0,1,Arrays.asList("§f타입 : 계산","","§3[     계산 식     ]","§3플레이어 변수 ％ "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+					removeFlagStack("§f§l"+count, 137,0,1,Arrays.asList("§f타입 : 계산","","§3[     계산 식     ]","§3플레이어 변수 ％ "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 					break;
 				}
 				break;
@@ -243,46 +243,46 @@ public class QuestGui extends UtilGui
 				switch(QuestList.getInt(QuestName+".FlowChart."+count+".Comparison"))
 				{
 				case 1:
-					Stack2("§f§l"+count, 184,0,1,Arrays.asList("§f타입 : IF","","§3[     비교 식     ]","§3플레이어 변수 == "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+					removeFlagStack("§f§l"+count, 184,0,1,Arrays.asList("§f타입 : IF","","§3[     비교 식     ]","§3플레이어 변수 == "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 					break;
 				case 2:
-					Stack2("§f§l"+count, 184,0,1,Arrays.asList("§f타입 : IF","","§3[     비교 식     ]","§3플레이어 변수 != "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+					removeFlagStack("§f§l"+count, 184,0,1,Arrays.asList("§f타입 : IF","","§3[     비교 식     ]","§3플레이어 변수 != "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 					break;
 				case 3:
-					Stack2("§f§l"+count, 184,0,1,Arrays.asList("§f타입 : IF","","§3[     비교 식     ]","§3플레이어 변수 > "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+					removeFlagStack("§f§l"+count, 184,0,1,Arrays.asList("§f타입 : IF","","§3[     비교 식     ]","§3플레이어 변수 > "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 					break;
 				case 4:
-					Stack2("§f§l"+count, 184,0,1,Arrays.asList("§f타입 : IF","","§3[     비교 식     ]","§3플레이어 변수 < "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+					removeFlagStack("§f§l"+count, 184,0,1,Arrays.asList("§f타입 : IF","","§3[     비교 식     ]","§3플레이어 변수 < "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 					break;
 				case 5:
-					Stack2("§f§l"+count, 184,0,1,Arrays.asList("§f타입 : IF","","§3[     비교 식     ]","§3플레이어 변수 >= "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+					removeFlagStack("§f§l"+count, 184,0,1,Arrays.asList("§f타입 : IF","","§3[     비교 식     ]","§3플레이어 변수 >= "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 					break;
 				case 6:
-					Stack2("§f§l"+count, 184,0,1,Arrays.asList("§f타입 : IF","","§3[     비교 식     ]","§3플레이어 변수 <= "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+					removeFlagStack("§f§l"+count, 184,0,1,Arrays.asList("§f타입 : IF","","§3[     비교 식     ]","§3플레이어 변수 <= "+QuestList.getInt(QuestName+".FlowChart."+count+".Value"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 					break;
 				case 7:
-					Stack2("§f§l"+count, 184,0,1,Arrays.asList("§f타입 : IF","","§3[     비교 식     ]","§3"+QuestList.getInt(QuestName+".FlowChart."+count+".Min")+" <= 플레이어 변수 <= "+QuestList.getInt(QuestName+".FlowChart."+count+".Max"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+					removeFlagStack("§f§l"+count, 184,0,1,Arrays.asList("§f타입 : IF","","§3[     비교 식     ]","§3"+QuestList.getInt(QuestName+".FlowChart."+count+".Min")+" <= 플레이어 변수 <= "+QuestList.getInt(QuestName+".FlowChart."+count+".Max"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 					break;
 				}
 				break;
 			case "QuestFail":
-				Stack2("§f§l"+count, 166,0,1,Arrays.asList("§f타입 : 퀘스트 실패","","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+				removeFlagStack("§f§l"+count, 166,0,1,Arrays.asList("§f타입 : 퀘스트 실패","","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 				break;
 			case "QuestReset":
-				Stack2("§f§l"+count, 395,0,1,Arrays.asList("§f타입 : 퀘스트 초기화","","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+				removeFlagStack("§f§l"+count, 395,0,1,Arrays.asList("§f타입 : 퀘스트 초기화","","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 				break;
 			case "ELSE":
-				Stack2("§f§l"+count, 167,0,1,Arrays.asList("§f타입 : ELSE","","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+				removeFlagStack("§f§l"+count, 167,0,1,Arrays.asList("§f타입 : ELSE","","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 				break;
 			case "ENDIF":
-				Stack2("§f§l"+count, 191,0,1,Arrays.asList("§f타입 : ENDIF","","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+				removeFlagStack("§f§l"+count, 191,0,1,Arrays.asList("§f타입 : ENDIF","","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 				break;
 			case "VarChange":
-				Stack2("§f§l"+count, 143,0,1,Arrays.asList("§f타입 : 변수 변경","§f변경 값 : " + QuestList.getInt(QuestName+".FlowChart."+count+".Value") ,"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+				removeFlagStack("§f§l"+count, 143,0,1,Arrays.asList("§f타입 : 변수 변경","§f변경 값 : " + QuestList.getInt(QuestName+".FlowChart."+count+".Value") ,"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 				break;
 			case "Choice":
 				int button = QuestList.getConfigurationSection(QuestName+".FlowChart."+count+".Choice").getKeys(false).size();
-				Stack2("§f§l"+count, 72,0,button,Arrays.asList("§f타입 : 선택","§f선택지 개수 : " +button+"개" ,"","§e[좌클릭시 선택창 확인]","","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+				removeFlagStack("§f§l"+count, 72,0,button,Arrays.asList("§f타입 : 선택","§f선택지 개수 : " +button+"개" ,"","§e[좌클릭시 선택창 확인]","","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 				break;
 			case "Nevigation":
 			{
@@ -311,7 +311,7 @@ public class QuestGui extends UtilGui
 						ShowArrowS = "§3<기본 화살표 모양>";
 						break;
 					}
-					Stack2("§f§l" + count, 395,0,1,Arrays.asList(
+					removeFlagStack("§f§l" + count, 395,0,1,Arrays.asList(
 					"§e§l"+NaviName,"",
 					"§9[도착 지점]","§9월드 : §f"+world,
 					"§9좌표 : §f"+x+","+y+","+z,sensitiveS,"",
@@ -319,7 +319,7 @@ public class QuestGui extends UtilGui
 					,"§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 				}
 				else
-					Stack2("§f§l" + count, 166,0,1,Arrays.asList("§c[네비게이션을 찾을 수 없습니다!]","","§c[Shift + 우클릭시 삭제됩니다.]"),loc,inv);
+					removeFlagStack("§f§l" + count, 166,0,1,Arrays.asList("§c[네비게이션을 찾을 수 없습니다!]","","§c[Shift + 우클릭시 삭제됩니다.]"),loc,inv);
 			}
 				break;
 			case "Whisper":
@@ -328,7 +328,7 @@ public class QuestGui extends UtilGui
 				String[] scriptA3 = script3.split("%enter%");
 				for(int counter = 0; counter < scriptA3.length; counter++)
 					scriptA3[counter] = "§f"+ scriptA3[counter];
-				Stack2("§f§l"+count, 421,0,1,Arrays.asList(scriptA3), loc, inv);
+				removeFlagStack("§f§l"+count, 421,0,1,Arrays.asList(scriptA3), loc, inv);
 			}
 			break;
 			case "BroadCast":
@@ -337,7 +337,7 @@ public class QuestGui extends UtilGui
 				String[] scriptA3 = script3.split("%enter%");
 				for(int counter = 0; counter < scriptA3.length; counter++)
 					scriptA3[counter] = "§f"+ scriptA3[counter];
-				Stack2("§f§l"+count, 138,0,1,Arrays.asList(scriptA3), loc, inv);
+				removeFlagStack("§f§l"+count, 138,0,1,Arrays.asList(scriptA3), loc, inv);
 			}
 			break;
 			case "Script":
@@ -345,55 +345,55 @@ public class QuestGui extends UtilGui
 				String[] scriptA = script.split("%enter%");
 				for(int counter = 0; counter < scriptA.length; counter++)
 					scriptA[counter] = "§f"+ scriptA[counter];
-			Stack2("§f§l"+count, 323,0,1,Arrays.asList(scriptA), loc, inv);
+			removeFlagStack("§f§l"+count, 323,0,1,Arrays.asList(scriptA), loc, inv);
 			break;
 			case "PScript":
 				String script3 = "§f타입 : 대사%enter%§f말하는 주체 : 플레이어%enter%%enter%"+QuestList.getString(QuestName+".FlowChart."+count+".Message")+"%enter% %enter%§c[Shift + 우클릭시 삭제됩니다.]";
 				String[] scriptA3 = script3.split("%enter%");
 				for(int counter = 0; counter < scriptA3.length; counter++)
 					scriptA3[counter] = "§f"+ scriptA3[counter];
-			Stack2("§f§l"+count, 323,0,1,Arrays.asList(scriptA3), loc, inv);
+			removeFlagStack("§f§l"+count, 323,0,1,Arrays.asList(scriptA3), loc, inv);
 			break;
 			case "Visit":
-			Stack2("§f§l"+count, 345,0,1,Arrays.asList("§f타입 : 방문","§f방문 지점 : "+QuestList.getString(QuestName+".FlowChart."+count+".AreaName"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+			removeFlagStack("§f§l"+count, 345,0,1,Arrays.asList("§f타입 : 방문","§f방문 지점 : "+QuestList.getString(QuestName+".FlowChart."+count+".AreaName"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 				break;
 			case "Give":
 				String script2 = "§f타입 : 전달%enter%§f전달 대상 : §e"+QuestList.getString(QuestName+".FlowChart."+count+".TargetNPCname")+"%enter%§fNPC의 UUID%enter%§3"+ QuestList.getString(QuestName+".FlowChart."+count+".TargetNPCuuid")+"%enter%%enter%§e[좌클릭시 전달 품목 확인]%enter%§c[Shift + 우클릭시 삭제됩니다.]";
 				String[] scriptB = script2.split("%enter%");
 				for(int counter = 0; counter < scriptB.length; counter++)
 					scriptB[counter] = "§f"+ scriptB[counter];
-			Stack2("§f§l"+count, 388,0,1,Arrays.asList(scriptB), loc, inv);
+			removeFlagStack("§f§l"+count, 388,0,1,Arrays.asList(scriptB), loc, inv);
 				break;
 			case "Hunt":
-				Stack2("§f§l"+count, 267,0,1,Arrays.asList("§f타입 : 사냥","","§e[좌클릭시 처치 대상 확인]","","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+				removeFlagStack("§f§l"+count, 267,0,1,Arrays.asList("§f타입 : 사냥","","§e[좌클릭시 처치 대상 확인]","","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 				break;
 			case "Talk":
-				Stack2("§f§l"+count, 397,3,1,Arrays.asList("§f타입 : 대화","","§f만나야 할 NPC 이름","","§e"+QuestList.getString(QuestName+".FlowChart."+count+".TargetNPCname"),"","§fNPC의 UUID","","§3"+ QuestList.getString(QuestName+".FlowChart."+count+".TargetNPCuuid"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+				removeFlagStack("§f§l"+count, 397,3,1,Arrays.asList("§f타입 : 대화","","§f만나야 할 NPC 이름","","§e"+QuestList.getString(QuestName+".FlowChart."+count+".TargetNPCname"),"","§fNPC의 UUID","","§3"+ QuestList.getString(QuestName+".FlowChart."+count+".TargetNPCuuid"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 				break;
 			case "Present":
-				Stack2("§f§l"+count, 54,0,1,Arrays.asList("§f타입 : 보상","§f수령 대상 : §e"+QuestList.getString(QuestName+".FlowChart."+count+".TargetNPCname"),"§fNPC의 UUID","","§3"+ QuestList.getString(QuestName+".FlowChart."+count+".TargetNPCuuid"),"","","§e[좌클릭시 보상 확인]","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+				removeFlagStack("§f§l"+count, 54,0,1,Arrays.asList("§f타입 : 보상","§f수령 대상 : §e"+QuestList.getString(QuestName+".FlowChart."+count+".TargetNPCname"),"§fNPC의 UUID","","§3"+ QuestList.getString(QuestName+".FlowChart."+count+".TargetNPCuuid"),"","","§e[좌클릭시 보상 확인]","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 				break;
 			case "TelePort":
-			Stack2("§f§l"+count, 368,0,1,Arrays.asList("§f타입 : 이동","","§f월드 : "+QuestList.getString(QuestName+".FlowChart."+count+".World"),"§f좌표 : " + (int)QuestList.getDouble(QuestName+".FlowChart."+count+".X")+","+ (int)QuestList.getDouble(QuestName+".FlowChart."+count+".Y")+","+ (int)QuestList.getDouble(QuestName+".FlowChart."+count+".Z"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+			removeFlagStack("§f§l"+count, 368,0,1,Arrays.asList("§f타입 : 이동","","§f월드 : "+QuestList.getString(QuestName+".FlowChart."+count+".World"),"§f좌표 : " + (int)QuestList.getDouble(QuestName+".FlowChart."+count+".X")+","+ (int)QuestList.getDouble(QuestName+".FlowChart."+count+".Y")+","+ (int)QuestList.getDouble(QuestName+".FlowChart."+count+".Z"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 				break;
 			case "Harvest":
-				Stack2("§f§l"+count, 56,0,1,Arrays.asList("§f타입 : 채집","","§e[좌클릭시 채집 블록 확인]","","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+				removeFlagStack("§f§l"+count, 56,0,1,Arrays.asList("§f타입 : 채집","","§e[좌클릭시 채집 블록 확인]","","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 				break;
 			case "BlockPlace":
-				Stack2("§f§l"+count, 152,0,1,Arrays.asList("§f타입 : 블록 설치","§f월드 : "+QuestList.getString(QuestName+".FlowChart."+count+".World"),"§f좌표 : " + (int)QuestList.getDouble(QuestName+".FlowChart."+count+".X")+","+ (int)QuestList.getDouble(QuestName+".FlowChart."+count+".Y")+","+ (int)QuestList.getDouble(QuestName+".FlowChart."+count+".Z"),"§f블록 타입 : " + QuestList.getInt(QuestName+".FlowChart."+count+".ID")+":"+ QuestList.getInt(QuestName+".FlowChart."+count+".DATA"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
+				removeFlagStack("§f§l"+count, 152,0,1,Arrays.asList("§f타입 : 블록 설치","§f월드 : "+QuestList.getString(QuestName+".FlowChart."+count+".World"),"§f좌표 : " + (int)QuestList.getDouble(QuestName+".FlowChart."+count+".X")+","+ (int)QuestList.getDouble(QuestName+".FlowChart."+count+".Y")+","+ (int)QuestList.getDouble(QuestName+".FlowChart."+count+".Z"),"§f블록 타입 : " + QuestList.getInt(QuestName+".FlowChart."+count+".ID")+":"+ QuestList.getInt(QuestName+".FlowChart."+count+".DATA"),"","§c[Shift + 우클릭시 삭제됩니다.]"), loc, inv);
 				break;
 			}
 			loc++;
 		}
 		
 		if(flowChartSize-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l새 오브젝트 추가", 2,0,1,Arrays.asList("§7새로운 오브젝트를 추가합니다."), 49, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 53, inv);
+		removeFlagStack("§f§l새 오브젝트 추가", 2,0,1,Arrays.asList("§7새로운 오브젝트를 추가합니다."), 49, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 53, inv);
 		player.openInventory(inv);
 	}
 
@@ -402,34 +402,34 @@ public class QuestGui extends UtilGui
 		String UniqueCode = "§0§0§5§0§3§r";
 		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0오브젝트 추가");
 
-		Stack2("§f§l대사", 323,0,1,Arrays.asList("§7대화창을 띄우고, 작성된","§7스크립트를 유저에게 띄웁니다.","§7(화자 : NPC)"), 0, inv);
-		Stack2("§f§l독백", 323,0,1,Arrays.asList("§7대화창을 띄우고, 작성된","§7스크립트를 유저에게 띄웁니다.","§7(화자 : 유저)"), 1, inv);
-		Stack2("§f§l방문", 345,0,1,Arrays.asList("§7플레이어에게 특정 영역에","§7방문하는 퀘스트를 줍니다."), 2, inv);
-		Stack2("§f§l전달", 388,0,1,Arrays.asList("§7플레이어가 특정 아이템을","§7NPC에게 줘야하는 퀘스트를 줍니다."), 3, inv);
-		Stack2("§f§l사냥", 267,0,1,Arrays.asList("§7플레이어에게 특정 몬스터를","§7사냥하는 퀘스트를 줍니다."), 4, inv);
-		Stack2("§f§l대화", 397,3,1,Arrays.asList("§7플레이어에게 특정 NPC에게","§7말을 거는 퀘스트를 줍니다."), 5, inv);
-		Stack2("§f§l보상", 54,0,1,Arrays.asList("§7플레이어에게 보상을 줍니다."), 6, inv);
-		Stack2("§f§l이동", 368,0,1,Arrays.asList("§7플레이어를 특정 위치로","§7이동 시킵니다."), 7, inv);
-		Stack2("§f§l채집", 56,0,1,Arrays.asList("§7플레이어에게 특정 블록을","§7채취하는 퀘스트를 줍니다."), 8, inv);
-		Stack2("§f§l블록", 152,0,1,Arrays.asList("§7특정 위치에 정해진","§7블록을 생성합니다."), 9, inv);
-		Stack2("§f§l소리§c[사용 불가]", 84,0,1,Arrays.asList("§7특정 위치에 소리가 나게 합니다."), 10, inv);
-		Stack2("§f§l귓말", 421,0,1,Arrays.asList("§7플레이어의 채팅창에 메시지가 나타납니다."), 11, inv);
-		Stack2("§f§l전체", 138,0,1,Arrays.asList("§7서버 전체에 메시지가 나타납니다."), 12, inv);
-		Stack2("§f§l네비", 358,0,1,Arrays.asList("§7플레이어에게 네비게이션을 작동 시킵니다."), 13, inv);
+		removeFlagStack("§f§l대사", 323,0,1,Arrays.asList("§7대화창을 띄우고, 작성된","§7스크립트를 유저에게 띄웁니다.","§7(화자 : NPC)"), 0, inv);
+		removeFlagStack("§f§l독백", 323,0,1,Arrays.asList("§7대화창을 띄우고, 작성된","§7스크립트를 유저에게 띄웁니다.","§7(화자 : 유저)"), 1, inv);
+		removeFlagStack("§f§l방문", 345,0,1,Arrays.asList("§7플레이어에게 특정 영역에","§7방문하는 퀘스트를 줍니다."), 2, inv);
+		removeFlagStack("§f§l전달", 388,0,1,Arrays.asList("§7플레이어가 특정 아이템을","§7NPC에게 줘야하는 퀘스트를 줍니다."), 3, inv);
+		removeFlagStack("§f§l사냥", 267,0,1,Arrays.asList("§7플레이어에게 특정 몬스터를","§7사냥하는 퀘스트를 줍니다."), 4, inv);
+		removeFlagStack("§f§l대화", 397,3,1,Arrays.asList("§7플레이어에게 특정 NPC에게","§7말을 거는 퀘스트를 줍니다."), 5, inv);
+		removeFlagStack("§f§l보상", 54,0,1,Arrays.asList("§7플레이어에게 보상을 줍니다."), 6, inv);
+		removeFlagStack("§f§l이동", 368,0,1,Arrays.asList("§7플레이어를 특정 위치로","§7이동 시킵니다."), 7, inv);
+		removeFlagStack("§f§l채집", 56,0,1,Arrays.asList("§7플레이어에게 특정 블록을","§7채취하는 퀘스트를 줍니다."), 8, inv);
+		removeFlagStack("§f§l블록", 152,0,1,Arrays.asList("§7특정 위치에 정해진","§7블록을 생성합니다."), 9, inv);
+		removeFlagStack("§f§l소리§c[사용 불가]", 84,0,1,Arrays.asList("§7특정 위치에 소리가 나게 합니다."), 10, inv);
+		removeFlagStack("§f§l귓말", 421,0,1,Arrays.asList("§7플레이어의 채팅창에 메시지가 나타납니다."), 11, inv);
+		removeFlagStack("§f§l전체", 138,0,1,Arrays.asList("§7서버 전체에 메시지가 나타납니다."), 12, inv);
+		removeFlagStack("§f§l네비", 358,0,1,Arrays.asList("§7플레이어에게 네비게이션을 작동 시킵니다."), 13, inv);
 		
 
-		Stack2("§e§l선택", 72,0,1,Arrays.asList("§7플레이어가 원하는 대답을","§7선택 하도록 합니다.","§7선택한 대답에 따라","§7다른 변수값을 가질 수 있습니다."), 36, inv);
-		Stack2("§e§l변수", 143,0,1,Arrays.asList("§7플레이어의 변수를 강제로 수정합니다."), 37, inv);
-		Stack2("§e§l계산", 137,0,1,Arrays.asList("§7플레이어의 변수를 계산식을","§7사용하여 수정합니다."), 38, inv);
-		Stack2("§e§lIF", 184,0,1,Arrays.asList("§7플레이어의 현재 변수값을 확인하여","§7비교한 값과 동일할 경우","§7IF와 ENDIF혹은 IF와 ELSE","§7사이의 구문을 실행하게 됩니다.","","§c[반드시 IF의 개수 = ENDIF의 개수]"), 39, inv);
-		Stack2("§e§lELSE", 167,0,1,Arrays.asList("§7플레이어의 현재 변수값이","§7IF 논리에 맞지 않을 경우","§7ELSE와 ENDIF 사이의 구문을","§7실행하게 됩니다.",""), 40, inv);
-		Stack2("§e§lENDIF", 191,0,1,Arrays.asList("§7IF의 끝 부분을 나타냅니다.","","§c[반드시 IF의 개수 = ENDIF의 개수]"), 41, inv);
+		removeFlagStack("§e§l선택", 72,0,1,Arrays.asList("§7플레이어가 원하는 대답을","§7선택 하도록 합니다.","§7선택한 대답에 따라","§7다른 변수값을 가질 수 있습니다."), 36, inv);
+		removeFlagStack("§e§l변수", 143,0,1,Arrays.asList("§7플레이어의 변수를 강제로 수정합니다."), 37, inv);
+		removeFlagStack("§e§l계산", 137,0,1,Arrays.asList("§7플레이어의 변수를 계산식을","§7사용하여 수정합니다."), 38, inv);
+		removeFlagStack("§e§lIF", 184,0,1,Arrays.asList("§7플레이어의 현재 변수값을 확인하여","§7비교한 값과 동일할 경우","§7IF와 ENDIF혹은 IF와 ELSE","§7사이의 구문을 실행하게 됩니다.","","§c[반드시 IF의 개수 = ENDIF의 개수]"), 39, inv);
+		removeFlagStack("§e§lELSE", 167,0,1,Arrays.asList("§7플레이어의 현재 변수값이","§7IF 논리에 맞지 않을 경우","§7ELSE와 ENDIF 사이의 구문을","§7실행하게 됩니다.",""), 40, inv);
+		removeFlagStack("§e§lENDIF", 191,0,1,Arrays.asList("§7IF의 끝 부분을 나타냅니다.","","§c[반드시 IF의 개수 = ENDIF의 개수]"), 41, inv);
 		
-		Stack2("§c§l퀘스트 초기화", 395,0,1,Arrays.asList("§7퀘스트를 중간에 포기 합니다.","§a퀘스트를 다시 받을 수 있습니다."), 43, inv);
-		Stack2("§c§l퀘스트 실패", 166,0,1,Arrays.asList("§7퀘스트를 중간에 포기 합니다.","§7일반 퀘스트일 경우 플레이어는","§c퀘스트를 다시 받을 수 없습니다."), 44, inv);
+		removeFlagStack("§c§l퀘스트 초기화", 395,0,1,Arrays.asList("§7퀘스트를 중간에 포기 합니다.","§a퀘스트를 다시 받을 수 있습니다."), 43, inv);
+		removeFlagStack("§c§l퀘스트 실패", 166,0,1,Arrays.asList("§7퀘스트를 중간에 포기 합니다.","§7일반 퀘스트일 경우 플레이어는","§c퀘스트를 다시 받을 수 없습니다."), 44, inv);
 		
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 53, inv);
 		player.openInventory(inv);
 	}
 
@@ -437,15 +437,15 @@ public class QuestGui extends UtilGui
 	{
 		String UniqueCode = "§0§0§5§0§4§r";
 		Inventory inv = Bukkit.createInventory(null, 27, UniqueCode + "§0[퀘스트]");
-		Stack2("§0"+ ChatColor.stripColor(QuestName), 160,8,1,null, 19, inv);
+		removeFlagStack("§0"+ ChatColor.stripColor(QuestName), 160,8,1,null, 19, inv);
 		
 		for(int count=0;count < script.length; count++)
 			script[count] = script[count].replace("%player%", player.getName());
 		if(NPCname.equals(player.getName()))
-			ItemStackStack(getPlayerSkull("§e"+NPCname, 1, Arrays.asList(script), player.getName()), 13, inv);
+			stackItem(getPlayerSkull("§e"+NPCname, 1, Arrays.asList(script), player.getName()), 13, inv);
 		else
-			Stack2("§e"+ NPCname, 386,0,1,Arrays.asList(script), 13, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 26, inv);
+			removeFlagStack("§e"+ NPCname, 386,0,1,Arrays.asList(script), 13, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 26, inv);
 		player.openInventory(inv);
 	}
 	
@@ -460,49 +460,49 @@ public class QuestGui extends UtilGui
 		switch(QuestList.getString(QuestName + ".Type"))
 		{
 		case "N" :
-			Stack2("§f§l퀘스트 타입", 340,0,1,Arrays.asList("§f일반 퀘스트"), 4, inv);
+			removeFlagStack("§f§l퀘스트 타입", 340,0,1,Arrays.asList("§f일반 퀘스트"), 4, inv);
 			break;
 		case "R" :
-			Stack2("§f§l퀘스트 타입", 386,0,1,Arrays.asList("§f반복 퀘스트"), 4, inv);
+			removeFlagStack("§f§l퀘스트 타입", 386,0,1,Arrays.asList("§f반복 퀘스트"), 4, inv);
 			break;
 		case "D" :
-			Stack2("§f§l퀘스트 타입", 403,0,1,Arrays.asList("§f일일 퀘스트"), 4, inv);
+			removeFlagStack("§f§l퀘스트 타입", 403,0,1,Arrays.asList("§f일일 퀘스트"), 4, inv);
 			break;
 		case "W" :
-			Stack2("§f§l퀘스트 타입", 403,0,7,Arrays.asList("§f주간 퀘스트"), 4, inv);
+			removeFlagStack("§f§l퀘스트 타입", 403,0,7,Arrays.asList("§f주간 퀘스트"), 4, inv);
 			break;
 		case "M" :
-			Stack2("§f§l퀘스트 타입", 403,0,31,Arrays.asList("§f월간 퀘스트"), 4, inv);
+			removeFlagStack("§f§l퀘스트 타입", 403,0,31,Arrays.asList("§f월간 퀘스트"), 4, inv);
 			break;
 		}
 
-		Stack2("§f§l레벨 제한", 384,0,1,Arrays.asList("§f퀘스트 수행에 필요한 레벨을 설정합니다.","§6마비노기§f 시스템일 경우 §e누적레벨§f 기준이며,","§c메이플스토리§f 시스템일 경우 §e레벨§f 기준입니다.","","§b[필요 레벨 : " + QuestList.getInt(QuestName+".Need.LV")+"]"), 11, inv);
-		Stack2("§f§lNPC 호감도 제한", 38,0,1,Arrays.asList("§f퀘스트 수행에 필요한","§fNPC와의 호감도를 설정합니다.","","§b[필요 호감도 : " + QuestList.getInt(QuestName+".Need.Love")+"]"), 13, inv);
-		Stack2("§f§l스킬 랭크 제한", 403,0,1,Arrays.asList("§f퀘스트 수행에 필요한","§f스킬 랭크를 설정합니다.",""/*,"§b[필요 스킬 : " + QuestList.getString(QuestName+".Need.Skill.Name")+"]","§b[필요 랭크 : " + QuestList.getInt(QuestName+".Need.Skill.Rank")+"]"*/), 15, inv);
-		Stack2("§f§l"+main.MainServerOption.statSTR+" 제한", 267,0,1,Arrays.asList("§f퀘스트 수행에 필요한","§f"+main.MainServerOption.statSTR+" 스텟을 설정합니다.","","§b[필요 "+main.MainServerOption.statSTR+" : " + QuestList.getInt(QuestName+".Need.STR")+"]"), 20, inv);
-		Stack2("§f§l"+main.MainServerOption.statDEX+" 제한", 261,0,1,Arrays.asList("§f퀘스트 수행에 필요한","§f"+main.MainServerOption.statDEX+" 스텟을 설정합니다.","","§b[필요 "+main.MainServerOption.statDEX+" : " + QuestList.getInt(QuestName+".Need.DEX")+"]"), 21, inv);
-		Stack2("§f§l"+main.MainServerOption.statINT+" 제한", 369,0,1,Arrays.asList("§f퀘스트 수행에 필요한","§f"+main.MainServerOption.statINT+" 스텟을 설정합니다.","","§b[필요 "+main.MainServerOption.statINT+" : " + QuestList.getInt(QuestName+".Need.INT")+"]"), 22, inv);
-		Stack2("§f§l"+main.MainServerOption.statWILL+" 제한", 370,0,1,Arrays.asList("§f퀘스트 수행에 필요한","§f"+main.MainServerOption.statWILL+" 스텟을 설정합니다.","","§b[필요 "+main.MainServerOption.statWILL+" : " + QuestList.getInt(QuestName+".Need.WILL")+"]"), 23, inv);
-		Stack2("§f§l"+main.MainServerOption.statLUK+" 제한", 322,0,1,Arrays.asList("§f퀘스트 수행에 필요한","§f"+main.MainServerOption.statLUK+" 스텟을 설정합니다.","","§b[필요 "+main.MainServerOption.statLUK+" : " + QuestList.getInt(QuestName+".Need.LUK")+"]"), 24, inv);
+		removeFlagStack("§f§l레벨 제한", 384,0,1,Arrays.asList("§f퀘스트 수행에 필요한 레벨을 설정합니다.","§6마비노기§f 시스템일 경우 §e누적레벨§f 기준이며,","§c메이플스토리§f 시스템일 경우 §e레벨§f 기준입니다.","","§b[필요 레벨 : " + QuestList.getInt(QuestName+".Need.LV")+"]"), 11, inv);
+		removeFlagStack("§f§lNPC 호감도 제한", 38,0,1,Arrays.asList("§f퀘스트 수행에 필요한","§fNPC와의 호감도를 설정합니다.","","§b[필요 호감도 : " + QuestList.getInt(QuestName+".Need.Love")+"]"), 13, inv);
+		removeFlagStack("§f§l스킬 랭크 제한", 403,0,1,Arrays.asList("§f퀘스트 수행에 필요한","§f스킬 랭크를 설정합니다.",""/*,"§b[필요 스킬 : " + QuestList.getString(QuestName+".Need.Skill.Name")+"]","§b[필요 랭크 : " + QuestList.getInt(QuestName+".Need.Skill.Rank")+"]"*/), 15, inv);
+		removeFlagStack("§f§l"+main.MainServerOption.statSTR+" 제한", 267,0,1,Arrays.asList("§f퀘스트 수행에 필요한","§f"+main.MainServerOption.statSTR+" 스텟을 설정합니다.","","§b[필요 "+main.MainServerOption.statSTR+" : " + QuestList.getInt(QuestName+".Need.STR")+"]"), 20, inv);
+		removeFlagStack("§f§l"+main.MainServerOption.statDEX+" 제한", 261,0,1,Arrays.asList("§f퀘스트 수행에 필요한","§f"+main.MainServerOption.statDEX+" 스텟을 설정합니다.","","§b[필요 "+main.MainServerOption.statDEX+" : " + QuestList.getInt(QuestName+".Need.DEX")+"]"), 21, inv);
+		removeFlagStack("§f§l"+main.MainServerOption.statINT+" 제한", 369,0,1,Arrays.asList("§f퀘스트 수행에 필요한","§f"+main.MainServerOption.statINT+" 스텟을 설정합니다.","","§b[필요 "+main.MainServerOption.statINT+" : " + QuestList.getInt(QuestName+".Need.INT")+"]"), 22, inv);
+		removeFlagStack("§f§l"+main.MainServerOption.statWILL+" 제한", 370,0,1,Arrays.asList("§f퀘스트 수행에 필요한","§f"+main.MainServerOption.statWILL+" 스텟을 설정합니다.","","§b[필요 "+main.MainServerOption.statWILL+" : " + QuestList.getInt(QuestName+".Need.WILL")+"]"), 23, inv);
+		removeFlagStack("§f§l"+main.MainServerOption.statLUK+" 제한", 322,0,1,Arrays.asList("§f퀘스트 수행에 필요한","§f"+main.MainServerOption.statLUK+" 스텟을 설정합니다.","","§b[필요 "+main.MainServerOption.statLUK+" : " + QuestList.getInt(QuestName+".Need.LUK")+"]"), 24, inv);
 		if(QuestList.getString(QuestName+".Need.PrevQuest").equalsIgnoreCase("null") == true)
-			Stack2("§f§l필수 완료 퀘스트", 386,0,1,Arrays.asList("§f이전 퀘스트를 수행한 뒤","§f현재 퀘스트를 수행 하도록 합니다.","","§b[이전 퀘스트 : 없음]"),29, inv);
+			removeFlagStack("§f§l필수 완료 퀘스트", 386,0,1,Arrays.asList("§f이전 퀘스트를 수행한 뒤","§f현재 퀘스트를 수행 하도록 합니다.","","§b[이전 퀘스트 : 없음]"),29, inv);
 		else
-			Stack2("§f§l필수 완료 퀘스트", 386,0,1,Arrays.asList("§f이전 퀘스트를 수행한 뒤","§f현재 퀘스트를 수행 하도록 합니다.","§c[Shift + 우클릭시 삭제됩니다]","","§b[이전 퀘스트 : " +QuestList.getString(QuestName+".Need.PrevQuest")+"]"),29, inv);
+			removeFlagStack("§f§l필수 완료 퀘스트", 386,0,1,Arrays.asList("§f이전 퀘스트를 수행한 뒤","§f현재 퀘스트를 수행 하도록 합니다.","§c[Shift + 우클릭시 삭제됩니다]","","§b[이전 퀘스트 : " +QuestList.getString(QuestName+".Need.PrevQuest")+"]"),29, inv);
 		switch(QuestList.getInt(QuestName+".Server.Limit"))
 		{
 		case 0:
-			Stack2("§f§l퀘스트 한정", 397,3,1,Arrays.asList("§f서버에서 단 몇 명만이","§f이 퀘스트를 수행 할 수 있습니다.","§f플레이어가 퀘스트를 받을 때 마다 1씩 깎이며,","§f-1이 될 경우 퀘스트를 받을 수 없습니다.","§3(0명으로 설정할 경우, 제한이 사라집니다.)","","§b[수행 가능 플레이어 수 : 제한 없음]"), 33, inv);
+			removeFlagStack("§f§l퀘스트 한정", 397,3,1,Arrays.asList("§f서버에서 단 몇 명만이","§f이 퀘스트를 수행 할 수 있습니다.","§f플레이어가 퀘스트를 받을 때 마다 1씩 깎이며,","§f-1이 될 경우 퀘스트를 받을 수 없습니다.","§3(0명으로 설정할 경우, 제한이 사라집니다.)","","§b[수행 가능 플레이어 수 : 제한 없음]"), 33, inv);
 			break;
 		case -1:
-			Stack2("§f§l퀘스트 한정", 397,3,1,Arrays.asList("§f서버에서 단 몇 명만이","§f이 퀘스트를 수행 할 수 있습니다.","§f플레이어가 퀘스트를 받을 때 마다 1씩 깎이며,","§f-1이 될 경우 퀘스트를 받을 수 없습니다.","§3(0명으로 설정할 경우, 제한이 사라집니다.)","","§c[더이상 받을 수 없음]"), 33, inv);
+			removeFlagStack("§f§l퀘스트 한정", 397,3,1,Arrays.asList("§f서버에서 단 몇 명만이","§f이 퀘스트를 수행 할 수 있습니다.","§f플레이어가 퀘스트를 받을 때 마다 1씩 깎이며,","§f-1이 될 경우 퀘스트를 받을 수 없습니다.","§3(0명으로 설정할 경우, 제한이 사라집니다.)","","§c[더이상 받을 수 없음]"), 33, inv);
 			break;
 		default:
-			Stack2("§f§l퀘스트 한정", 397,3,1,Arrays.asList("§f서버에서 단 몇 명만이","§f이 퀘스트를 수행 할 수 있습니다.","§f플레이어가 퀘스트를 받을 때 마다 1씩 깎이며,","§f-1이 될 경우 퀘스트를 받을 수 없습니다.","§3(0명으로 설정할 경우, 제한이 사라집니다.)","","§b[수행 가능 플레이어 수 : "+QuestList.getInt(QuestName+".Server.Limit")+"]"), 33, inv);
+			removeFlagStack("§f§l퀘스트 한정", 397,3,1,Arrays.asList("§f서버에서 단 몇 명만이","§f이 퀘스트를 수행 할 수 있습니다.","§f플레이어가 퀘스트를 받을 때 마다 1씩 깎이며,","§f-1이 될 경우 퀘스트를 받을 수 없습니다.","§3(0명으로 설정할 경우, 제한이 사라집니다.)","","§b[수행 가능 플레이어 수 : "+QuestList.getInt(QuestName+".Server.Limit")+"]"), 33, inv);
 			break;
 		}
 	
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 36, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 44, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 36, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 44, inv);
 		player.openInventory(inv);
 	}
 	
@@ -511,9 +511,9 @@ public class QuestGui extends UtilGui
 		String UniqueCode = "§1§0§5§0§6§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0모아야 할 아이템 등록");
 		for(int count = 0;count<8;count++)
-			Stack2("§f[아이템을 올려 주세요.]", 389,0,0,null, count, inv);
+			removeFlagStack("§f[아이템을 올려 주세요.]", 389,0,0,null, count, inv);
 		
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 8, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 8, inv);
 		player.openInventory(inv);
 	}
 
@@ -533,22 +533,22 @@ public class QuestGui extends UtilGui
 		if(u.getInt(player, (byte)3) == -1)
 			u.setInt(player, (byte)3, 0);
 			
-		Stack2("§f[보상금 설정하기]", 266,0,1,Arrays.asList("§f§l"+u.getInt(player, (byte)1)+" "+main.MainServerOption.money), 0, inv);
-		Stack2("§f[경험치 설정하기]", 384,0,1,Arrays.asList("§f§l"+u.getInt(player, (byte)2)+"§b§l EXP"), 1, inv);
-		Stack2("§f[NPC 호감도 설정하기]", 38,0,1,Arrays.asList("§f§l"+u.getInt(player, (byte)3)+"§d§l Love"), 2, inv);
+		removeFlagStack("§f[보상금 설정하기]", 266,0,1,Arrays.asList("§f§l"+u.getInt(player, (byte)1)+" "+main.MainServerOption.money), 0, inv);
+		removeFlagStack("§f[경험치 설정하기]", 384,0,1,Arrays.asList("§f§l"+u.getInt(player, (byte)2)+"§b§l EXP"), 1, inv);
+		removeFlagStack("§f[NPC 호감도 설정하기]", 38,0,1,Arrays.asList("§f§l"+u.getInt(player, (byte)3)+"§d§l Love"), 2, inv);
 		int ifItemExit = 0;
 		for(int count = 3;count<8;count++)
 		{
 			if(QuestConfig.getItemStack(QuestName + ".FlowChart."+ u.getInt(player, (byte)5) +".Item."+ifItemExit) != null)
 			{
-				ItemStackStack(QuestConfig.getItemStack(QuestName + ".FlowChart."+ u.getInt(player, (byte)5) +".Item."+ifItemExit), count, inv);
+				stackItem(QuestConfig.getItemStack(QuestName + ".FlowChart."+ u.getInt(player, (byte)5) +".Item."+ifItemExit), count, inv);
 				ifItemExit++;
 			}
 			else
-				Stack2("§f[아이템을 올려 주세요.]", 389,0,0,null, count, inv);
+				removeFlagStack("§f[아이템을 올려 주세요.]", 389,0,0,null, count, inv);
 		}
 		
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 8, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 8, inv);
 		u.setString(player, (byte)4,null);
 		player.openInventory(inv);
 	}
@@ -568,28 +568,28 @@ public class QuestGui extends UtilGui
 			{
 				inv = Bukkit.createInventory(null, 27, UniqueCode + "§0모아야 할 아이템 목록");
 				for(int count = 0;count<a.length;count++)
-					ItemStackStack(QuestList.getItemStack(QuestName+".FlowChart."+Flow+".Item." + a[count]),count+10,inv);
+					stackItem(QuestList.getItemStack(QuestName+".FlowChart."+Flow+".Item." + a[count]),count+10,inv);
 			}
 			else
 			{
 				inv = Bukkit.createInventory(null, 27, UniqueCode + "§0보상 목록");
-				Stack2("§6[보상금]", 266,0,1,Arrays.asList("","§f§l" + QuestList.getInt(QuestName+".FlowChart."+Flow+".Money") +"§6 "+main.MainServerOption.money), 3, inv);
-				Stack2("§b[경험치]", 384,0,1,Arrays.asList("","§f§l" + QuestList.getInt(QuestName+".FlowChart."+Flow+".EXP") +"§b EXP"), 4, inv);
-				Stack2("§d[호감도]", 38,0,1,Arrays.asList("","§f§l" + QuestList.getInt(QuestName+".FlowChart."+Flow+".Love") +"§d Love"), 5, inv);
+				removeFlagStack("§6[보상금]", 266,0,1,Arrays.asList("","§f§l" + QuestList.getInt(QuestName+".FlowChart."+Flow+".Money") +"§6 "+main.MainServerOption.money), 3, inv);
+				removeFlagStack("§b[경험치]", 384,0,1,Arrays.asList("","§f§l" + QuestList.getInt(QuestName+".FlowChart."+Flow+".EXP") +"§b EXP"), 4, inv);
+				removeFlagStack("§d[호감도]", 38,0,1,Arrays.asList("","§f§l" + QuestList.getInt(QuestName+".FlowChart."+Flow+".Love") +"§d Love"), 5, inv);
 
 				for(int count = 0;count<a.length;count++)
-					ItemStackStack(QuestList.getItemStack(QuestName+".FlowChart."+Flow+".Item." + a[count]),count+11,inv);
+					stackItem(QuestList.getItemStack(QuestName+".FlowChart."+Flow+".Item." + a[count]),count+11,inv);
 				if(player.isOp())
 				{
 					UserDataObject u = new UserDataObject();
 					if(u.getInt(player, (byte)1)!=-9)
 					{
 						u.clearAll(player);
-						Stack2("§f§l보상 받기", 54,0,1,Arrays.asList("§7보상을 수령합니다." ,"§0"+ Flow), 22, inv);
+						removeFlagStack("§f§l보상 받기", 54,0,1,Arrays.asList("§7보상을 수령합니다." ,"§0"+ Flow), 22, inv);
 					}
 				}
 				else
-					Stack2("§f§l보상 받기", 54,0,1,Arrays.asList("§7보상을 수령합니다." ,"§0"+ Flow), 22, inv);
+					removeFlagStack("§f§l보상 받기", 54,0,1,Arrays.asList("§7보상을 수령합니다." ,"§0"+ Flow), 22, inv);
 			}
 		}
 		else
@@ -601,24 +601,24 @@ public class QuestGui extends UtilGui
 			else
 			{
 				inv = Bukkit.createInventory(null, 27, UniqueCode + "§0보상 목록");
-				Stack2("§6[보상금]", 266,0,1,Arrays.asList("","§f§l" + QuestList.getInt(QuestName+".FlowChart."+Flow+".Money") +"§6 "+main.MainServerOption.money), 3, inv);
-				Stack2("§b[경험치]", 384,0,1,Arrays.asList("","§f§l" + QuestList.getInt(QuestName+".FlowChart."+Flow+".EXP") +"§b EXP"), 4, inv);
-				Stack2("§d[호감도]", 38,0,1,Arrays.asList("","§f§l" + QuestList.getInt(QuestName+".FlowChart."+Flow+".Love") +"§d Love"), 5, inv);
+				removeFlagStack("§6[보상금]", 266,0,1,Arrays.asList("","§f§l" + QuestList.getInt(QuestName+".FlowChart."+Flow+".Money") +"§6 "+main.MainServerOption.money), 3, inv);
+				removeFlagStack("§b[경험치]", 384,0,1,Arrays.asList("","§f§l" + QuestList.getInt(QuestName+".FlowChart."+Flow+".EXP") +"§b EXP"), 4, inv);
+				removeFlagStack("§d[호감도]", 38,0,1,Arrays.asList("","§f§l" + QuestList.getInt(QuestName+".FlowChart."+Flow+".Love") +"§d Love"), 5, inv);
 				if(player.isOp())
 				{
 					UserDataObject u = new UserDataObject();
 					if(u.getInt(player, (byte)1)!=-9)
 					{
 						u.clearAll(player);
-						Stack2("§f§l보상 받기", 54,0,1,Arrays.asList("§7보상을 수령합니다." ,"§0"+ Flow), 22, inv);
+						removeFlagStack("§f§l보상 받기", 54,0,1,Arrays.asList("§7보상을 수령합니다." ,"§0"+ Flow), 22, inv);
 					}
 				}
 				else
-					Stack2("§f§l보상 받기", 54,0,1,Arrays.asList("§7보상을 수령합니다." ,"§0"+ Flow), 22, inv);
+					removeFlagStack("§f§l보상 받기", 54,0,1,Arrays.asList("§7보상을 수령합니다." ,"§0"+ Flow), 22, inv);
 			}
 		}
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+ isOP), 18, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 26, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+ isOP), 18, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 26, inv);
 		player.openInventory(inv);
 	}
 	
@@ -645,13 +645,13 @@ public class QuestGui extends UtilGui
 	        meta.setDisplayName("§6"+ SkullType(MobName));
 	        meta.setLore(Arrays.asList("§f[" +PlayerKillAmount+"/"+ Amount + "]"));
 	        skull.setItemMeta(meta);
-	        ItemStackStack(skull, counter, inv);
+	        stackItem(skull, counter, inv);
 			//Stack2("§6"+ MobName, 266,0,1,Arrays.asList("§f[" +PlayerKillAmount+"/"+ Amount + "]"), counter, inv);
 		}
 		
 		
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+ isOP), 18, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 26, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+ isOP), 18, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 26, inv);
 		player.openInventory(inv);
 	}
 	
@@ -676,13 +676,13 @@ public class QuestGui extends UtilGui
 			event.EventInteract IT = new event.EventInteract();
 			
 			if(DataEquals == true)
-				Stack("§e"+IT.SetItemDefaultName((short) BlockID,(byte)BlockData), BlockID, BlockData, 1, Arrays.asList("§f[" +PlayerHarvestAmount+"/"+ Amount + "]","","§7아이템 ID : " +BlockID,"§7아이템 Data : " +BlockData), counter, inv);
+				stack("§e"+IT.setItemDefaultName((short) BlockID,(byte)BlockData), BlockID, BlockData, 1, Arrays.asList("§f[" +PlayerHarvestAmount+"/"+ Amount + "]","","§7아이템 ID : " +BlockID,"§7아이템 Data : " +BlockData), counter, inv);
 			else
-				Stack("§e아무런 "+IT.SetItemDefaultName((short) BlockID,(byte)BlockData)+"§e 종류", BlockID, 0, 1, Arrays.asList("§f[" +PlayerHarvestAmount+"/"+ Amount + "]","","§7아이템 ID : " +BlockID), counter, inv);
+				stack("§e아무런 "+IT.setItemDefaultName((short) BlockID,(byte)BlockData)+"§e 종류", BlockID, 0, 1, Arrays.asList("§f[" +PlayerHarvestAmount+"/"+ Amount + "]","","§7아이템 ID : " +BlockID), counter, inv);
 		}
 		
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+ isOP), 18, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 26, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+ isOP), 18, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ ChatColor.stripColor(QuestName)), 26, inv);
 		player.openInventory(inv);
 	}
 	
@@ -693,13 +693,13 @@ public class QuestGui extends UtilGui
 
 		if(Harvest == false)
 		{
-			Stack2("§a§l계속 등록하기", 386,0,1,Arrays.asList("§7사냥 대상을 추가로 등록합니다.","§0"+Flow,"§0"+Mob), 10, inv);
-			Stack2("§c§l등록 중단하기", 166,0,1,Arrays.asList("§7사냥 대상 추가를 종료합니다.","§0"+ ChatColor.stripColor(QuestName)), 16, inv);
+			removeFlagStack("§a§l계속 등록하기", 386,0,1,Arrays.asList("§7사냥 대상을 추가로 등록합니다.","§0"+Flow,"§0"+Mob), 10, inv);
+			removeFlagStack("§c§l등록 중단하기", 166,0,1,Arrays.asList("§7사냥 대상 추가를 종료합니다.","§0"+ ChatColor.stripColor(QuestName)), 16, inv);
 		}
 		else
 		{
-			Stack2("§a§l계속 등록하기", 386,0,1,Arrays.asList("§7채집 대상을 추가로 등록합니다.","§0"+Flow,"§0"+Mob), 10, inv);
-			Stack2("§c§l등록 중단하기", 166,0,1,Arrays.asList("§7채집 대상 추가를 종료합니다.","§0"+ ChatColor.stripColor(QuestName)), 16, inv);
+			removeFlagStack("§a§l계속 등록하기", 386,0,1,Arrays.asList("§7채집 대상을 추가로 등록합니다.","§0"+Flow,"§0"+Mob), 10, inv);
+			removeFlagStack("§c§l등록 중단하기", 166,0,1,Arrays.asList("§7채집 대상 추가를 종료합니다.","§0"+ ChatColor.stripColor(QuestName)), 16, inv);
 		}
 		player.openInventory(inv);
 	}
@@ -743,7 +743,7 @@ public class QuestGui extends UtilGui
 				ShowArrowS = "§3<기본 화살표 모양>";
 				break;
 			}
-			Stack2("§0§l" + Navi[count].toString(), 395,0,1,Arrays.asList(
+			removeFlagStack("§0§l" + Navi[count].toString(), 395,0,1,Arrays.asList(
 			"§e§l"+NaviName,"",
 			"§9[도착 지점]","§9월드 : §f"+world,
 			"§9좌표 : §f"+x+","+y+","+z,sensitiveS,"",
@@ -753,11 +753,11 @@ public class QuestGui extends UtilGui
 		}
 		
 		if(Navi.length-(page*44)>45)
-		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+		removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+QuestName), 53, inv);
+		removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+QuestName), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -774,32 +774,32 @@ public class QuestGui extends UtilGui
 		switch(QuestList.getConfigurationSection(QuestName+".FlowChart."+Flow+".Choice").getKeys(false).size())
 		{
 		case 1:
-			Stack2("§f§l[선택]", 72,0,1,Arrays.asList(script), 13, inv);
+			removeFlagStack("§f§l[선택]", 72,0,1,Arrays.asList(script), 13, inv);
 			break;
 		case 2:
-			Stack2("§f§l[선택]", 72,0,1,Arrays.asList(script), 12, inv);
+			removeFlagStack("§f§l[선택]", 72,0,1,Arrays.asList(script), 12, inv);
 			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore")+"%enter%%enter%§9§l변수값 변경 : §f"+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.1.Var")).split("%enter%");
-			Stack2("§f§l[선택]", 72,0,2,Arrays.asList(script), 14, inv);
+			removeFlagStack("§f§l[선택]", 72,0,2,Arrays.asList(script), 14, inv);
 			break;
 		case 3:
-			Stack2("§f§l[선택]", 72,0,1,Arrays.asList(script), 11, inv);
+			removeFlagStack("§f§l[선택]", 72,0,1,Arrays.asList(script), 11, inv);
 			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore")+"%enter%%enter%§9§l변수값 변경 : §f"+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.1.Var")).split("%enter%");
-			Stack2("§f§l[선택]", 72,0,2,Arrays.asList(script), 13, inv);
+			removeFlagStack("§f§l[선택]", 72,0,2,Arrays.asList(script), 13, inv);
 			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.2.Lore")+"%enter%%enter%§9§l변수값 변경 : §f"+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.2.Var")).split("%enter%");
-			Stack2("§f§l[선택]", 72,0,3,Arrays.asList(script), 15, inv);
+			removeFlagStack("§f§l[선택]", 72,0,3,Arrays.asList(script), 15, inv);
 			break;
 		case 4:
-			Stack2("§f§l[선택]", 72,0,1,Arrays.asList(script), 10, inv);
+			removeFlagStack("§f§l[선택]", 72,0,1,Arrays.asList(script), 10, inv);
 			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore")+"%enter%%enter%§9§l변수값 변경 : §f"+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.1.Var")).split("%enter%");
-			Stack2("§f§l[선택]", 72,0,2,Arrays.asList(script), 12, inv);
+			removeFlagStack("§f§l[선택]", 72,0,2,Arrays.asList(script), 12, inv);
 			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.2.Lore")+"%enter%%enter%§9§l변수값 변경 : §f"+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.2.Var")).split("%enter%");
-			Stack2("§f§l[선택]", 72,0,3,Arrays.asList(script), 14, inv);
+			removeFlagStack("§f§l[선택]", 72,0,3,Arrays.asList(script), 14, inv);
 			script = (QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.3.Lore")+"%enter%%enter%§9§l변수값 변경 : §f"+QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.3.Var")).split("%enter%");
-			Stack2("§f§l[선택]", 72,0,4,Arrays.asList(script), 16, inv);
+			removeFlagStack("§f§l[선택]", 72,0,4,Arrays.asList(script), 16, inv);
 			break;
 		}
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+page), 18, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+QuestName), 26, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+page), 18, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+QuestName), 26, inv);
 		player.openInventory(inv);
 	}
 	
@@ -817,37 +817,37 @@ public class QuestGui extends UtilGui
 		switch(QuestList.getConfigurationSection(QuestName+".FlowChart."+Flow+".Choice").getKeys(false).size())
 		{
 		case 1:
-			Stack2("§f§l[선택]", 72,0,1,Arrays.asList(script), 13, inv);
+			removeFlagStack("§f§l[선택]", 72,0,1,Arrays.asList(script), 13, inv);
 			break;
 		case 2:
-			Stack2("§f§l[선택]", 72,0,1,Arrays.asList(script), 12, inv);
+			removeFlagStack("§f§l[선택]", 72,0,1,Arrays.asList(script), 12, inv);
 			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore").replace("%player%", player.getName());
 			script = lore.split("%enter%");
-			Stack2("§f§l[선택]", 72,0,2,Arrays.asList(script), 14, inv);
+			removeFlagStack("§f§l[선택]", 72,0,2,Arrays.asList(script), 14, inv);
 			break;
 		case 3:
-			Stack2("§f§l[선택]", 72,0,1,Arrays.asList(script), 11, inv);
+			removeFlagStack("§f§l[선택]", 72,0,1,Arrays.asList(script), 11, inv);
 			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore").replace("%player%", player.getName());
 			script = lore.split("%enter%");
-			Stack2("§f§l[선택]", 72,0,2,Arrays.asList(script), 13, inv);
+			removeFlagStack("§f§l[선택]", 72,0,2,Arrays.asList(script), 13, inv);
 			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.2.Lore").replace("%player%", player.getName());
 			script = lore.split("%enter%");
-			Stack2("§f§l[선택]", 72,0,3,Arrays.asList(script), 15, inv);
+			removeFlagStack("§f§l[선택]", 72,0,3,Arrays.asList(script), 15, inv);
 			break;
 		case 4:
-			Stack2("§f§l[선택]", 72,0,1,Arrays.asList(script), 10, inv);
+			removeFlagStack("§f§l[선택]", 72,0,1,Arrays.asList(script), 10, inv);
 			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.1.Lore").replace("%player%", player.getName());
 			script = lore.split("%enter%");
-			Stack2("§f§l[선택]", 72,0,2,Arrays.asList(script), 12, inv);
+			removeFlagStack("§f§l[선택]", 72,0,2,Arrays.asList(script), 12, inv);
 			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.2.Lore").replace("%player%", player.getName());
 			script = lore.split("%enter%");
-			Stack2("§f§l[선택]", 72,0,3,Arrays.asList(script), 14, inv);
+			removeFlagStack("§f§l[선택]", 72,0,3,Arrays.asList(script), 14, inv);
 			lore = QuestList.getString(QuestName+".FlowChart."+Flow+".Choice.3.Lore").replace("%player%", player.getName());
 			script = lore.split("%enter%");
-			Stack2("§f§l[선택]", 72,0,4,Arrays.asList(script), 16, inv);
+			removeFlagStack("§f§l[선택]", 72,0,4,Arrays.asList(script), 16, inv);
 			break;
 		}
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+QuestName,"§0"+Flow), 26, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+QuestName,"§0"+Flow), 26, inv);
 		player.openInventory(inv);
 	}
 	
@@ -879,7 +879,7 @@ public class QuestGui extends UtilGui
 			PlayerVarList.removeKey(QuestName);
 			PlayerVarList.saveConfig();
 			player.closeInventory();
-			SoundEffect.SP(player, Sound.BLOCK_NOTE_PLING, 1.0F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_NOTE_PLING, 1.0F, 1.8F);
 			
 		}
 		else
@@ -1016,7 +1016,7 @@ public class QuestGui extends UtilGui
 						PlayerVarList.removeKey(QuestName);
 						PlayerVarList.saveConfig();
 						player.closeInventory();
-						SoundEffect.SP(player, Sound.BLOCK_NOTE_PLING, 1.0F, 1.8F);
+						SoundEffect.playSound(player, Sound.BLOCK_NOTE_PLING, 1.0F, 1.8F);
 					}
 				}
 				break;
@@ -1059,7 +1059,7 @@ public class QuestGui extends UtilGui
 						PlayerVarList.removeKey(QuestName);
 						PlayerVarList.saveConfig();
 						player.closeInventory();
-						SoundEffect.SP(player, Sound.BLOCK_NOTE_PLING, 1.0F, 1.8F);
+						SoundEffect.playSound(player, Sound.BLOCK_NOTE_PLING, 1.0F, 1.8F);
 					}
 					else
 					{
@@ -1094,8 +1094,8 @@ public class QuestGui extends UtilGui
 					PlayerVarList.removeKey(QuestName);
 					PlayerVarList.saveConfig();
 					player.closeInventory();
-					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
-					SoundEffect.SP(player, Sound.ENTITY_WITHER_DEATH, 0.7F, 0.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_WITHER_DEATH, 0.7F, 0.8F);
 				}
 				break;
 				case "QuestReset":
@@ -1108,7 +1108,7 @@ public class QuestGui extends UtilGui
 					PlayerVarList.removeKey(QuestName);
 					PlayerVarList.saveConfig();
 					player.closeInventory();
-					SoundEffect.SP(player, Sound.BLOCK_LAVA_POP, 1.2F, 0.8F);
+					SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 1.2F, 0.8F);
 				}
 			break;
 			case "VarChange":
@@ -1134,7 +1134,7 @@ public class QuestGui extends UtilGui
 				{
 					ServerTickMain.NaviUsingList.add(player.getName());
 					player.closeInventory();
-					SoundEffect.SP(player, Sound.BLOCK_NOTE_PLING, 1.0F, 1.0F);
+					SoundEffect.playSound(player, Sound.BLOCK_NOTE_PLING, 1.0F, 1.0F);
 					
 					servertick.ServerTickObject STSO = new servertick.ServerTickObject(Long.parseLong(UTC), "NV");
 					STSO.setCount(0);//횟 수 초기화
@@ -1156,7 +1156,7 @@ public class QuestGui extends UtilGui
 				}
 				else
 				{
-					SoundEffect.SP(player, Sound.BLOCK_NOTE_BASS, 1.0F, 1.0F);
+					SoundEffect.playSound(player, Sound.BLOCK_NOTE_BASS, 1.0F, 1.0F);
 					player.sendMessage("§c[네비게이션] : 등록된 네비게이션을 찾을 수 없습니다! 관리자에게 문의하세요!");
 				}
 				PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
@@ -1241,7 +1241,7 @@ public class QuestGui extends UtilGui
 						QuestList.getDouble(QuestName+".FlowChart."+FlowChart+".Y")+1, QuestList.getDouble(QuestName+".FlowChart."+FlowChart+".Z"));
 					player.teleport(l);
 					PottionBuff.givePotionEffect(player, PotionEffectType.BLINDNESS, 1, 15);
-					SoundEffect.SL(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 0.8F, 1.0F);
+					SoundEffect.playSoundLocation(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 0.8F, 1.0F);
 					PlayerQuestList.set("Started."+QuestName+".Flow", PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
 					PlayerQuestList.saveConfig();
 					QuestRouter(player, QuestName);
@@ -1284,12 +1284,12 @@ public class QuestGui extends UtilGui
 		{
 			if(ChooseQuestGUI == true)
 				u.clearAll(player);
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 목록
 			{
 				if(ChooseQuestGUI == true)
@@ -1320,7 +1320,7 @@ public class QuestGui extends UtilGui
 					QuestList.getConfig("Quest/QuestList.yml");
 					if(QuestName.equalsIgnoreCase(u.getString(player, (byte)1)))
 					{
-						SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.8F, 1.0F);
+						SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.8F, 1.0F);
 						player.sendMessage("§c[퀘스트] : 같은 퀘스트는 등록할 수 없습니다!");
 					}
 					else
@@ -1350,7 +1350,7 @@ public class QuestGui extends UtilGui
 		  	  			{
 		  	  		    	if(a[count].isOnline() == true)
 		  	  		    	{
-		  						SoundEffect.SP(a[count], Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+		  						SoundEffect.playSound(a[count], Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
 		  						a[count].sendMessage("§d[관리자] : §e"+ player.getName()+"§d님께서 §e"+ QuestName+"§d퀘스트를 삭제하셨습니다!");
 		  	  		    	}	
 		  	  		    }
@@ -1373,13 +1373,13 @@ public class QuestGui extends UtilGui
 		
 		if(slot == 53)
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
 			String QuestName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
 			if(slot == 45)//이전 목록
 				AllOfQuestListGUI(player,(short) 0,false);
@@ -1442,12 +1442,12 @@ public class QuestGui extends UtilGui
 		
 		if(slot == 53)
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 목록
 				new user.StatsGui().StatusGUI(player);
 			else if(slot == 48)//이전 페이지
@@ -1491,7 +1491,7 @@ public class QuestGui extends UtilGui
 		switch ((ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())))
 		{
 			case "변수":
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 				u.setType(player, "Quest");
 				u.setString(player, (byte)1,"CV");
 				u.setString(player, (byte)2,QuestName);
@@ -1500,7 +1500,7 @@ public class QuestGui extends UtilGui
 				player.closeInventory();
 				return;
 			case "선택":
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 				u.setType(player, "Quest");
 				u.setString(player, (byte)1,"CS");
 				u.setString(player, (byte)2,QuestName);
@@ -1509,12 +1509,12 @@ public class QuestGui extends UtilGui
 				player.closeInventory();
 				return;
 			case "네비":
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 				Quest_NavigationListGUI(player, (short) 0, QuestName);
 				return;
 			case "대사":
 			case "독백":
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 				u.setType(player, "Quest");
 				if(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("대사"))
 					u.setString(player, (byte)1,"Script");
@@ -1539,7 +1539,7 @@ public class QuestGui extends UtilGui
 
 				if(arealist.length <= 0)
 				{
-					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 2.0F, 1.7F);
+					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 2.0F, 1.7F);
 					player.sendMessage("§c[퀘스트] : 생성된 영역이 없습니다!");
 					player.sendMessage("§6/영역 <이름> 생성§e - 새로운 영역을 생성합니다. -");
 					player.closeInventory();
@@ -1552,7 +1552,7 @@ public class QuestGui extends UtilGui
 				}
 				player.sendMessage("§a└────────영역 목록────────┘");
 				player.sendMessage("§3[퀘스트] : 방문해야 할 영역 이름을 적어 주세요!");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 2.0F, 1.7F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 2.0F, 1.7F);
 				u.setType(player, "Quest");
 				u.setString(player, (byte)1,"Visit");
 				u.setString(player, (byte)2,QuestName);
@@ -1562,7 +1562,7 @@ public class QuestGui extends UtilGui
 				u.setType(player, "Quest");
 				u.setString(player, (byte)1,"Give");
 				u.setString(player, (byte)3,QuestName);
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 				player.sendMessage("§a[SYSTEM] : §c수집품을 먼저 준비하신 후,§a 받을 NPC를 우클릭 하세요!");
 				player.closeInventory();
 				return;
@@ -1612,7 +1612,7 @@ public class QuestGui extends UtilGui
 				player.closeInventory();
 				return;
 			case "블록":
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 				u.setType(player, "Quest");
 				u.setString(player, (byte)1,"BlockPlace");
 				u.setString(player, (byte)2,QuestName);
@@ -1626,7 +1626,7 @@ public class QuestGui extends UtilGui
 			case "소리":
 				return;
 			case "귓말":
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 				u.setType(player, "Quest");
 				u.setString(player, (byte)1,"Whisper");
 				u.setString(player, (byte)2,QuestName);
@@ -1641,7 +1641,7 @@ public class QuestGui extends UtilGui
 				player.closeInventory();
 				return;
 			case "전체":
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 				u.setType(player, "Quest");
 				u.setString(player, (byte)1,"BroadCast");
 				u.setString(player, (byte)2,QuestName);
@@ -1656,11 +1656,11 @@ public class QuestGui extends UtilGui
 				player.closeInventory();
 				return;
 			case "이전 목록":
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				FixQuestGUI(player,(short) 0,QuestName);
 				return;
 			case "닫기":
-				SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 				player.closeInventory();
 				return;
 		}
@@ -1671,7 +1671,7 @@ public class QuestGui extends UtilGui
 			{
 			case "계산":
 			{
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 				u.setType(player, "Quest");
 				u.setString(player, (byte)1,"Cal");
 				u.setString(player, (byte)2,QuestName);
@@ -1688,7 +1688,7 @@ public class QuestGui extends UtilGui
 			case "퀘스트 초기화":
 			{
 				
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 				QuestConfig.set(QuestName+".FlowChart."+size+".Type", "QuestReset");
 		    	QuestConfig.saveConfig();
 				FixQuestGUI(player, (short) 0, QuestName);
@@ -1696,7 +1696,7 @@ public class QuestGui extends UtilGui
 			break;
 			case "퀘스트 실패":
 				{
-					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 					QuestConfig.set(QuestName+".FlowChart."+size+".Type", "QuestFail");
 	    	    	QuestConfig.saveConfig();
 	    			FixQuestGUI(player, (short) 0, QuestName);
@@ -1704,7 +1704,7 @@ public class QuestGui extends UtilGui
 			break;
 			case "IF":
 			{
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 				u.setType(player, "Quest");
 				u.setString(player, (byte)1,"IFTS");
 				u.setString(player, (byte)2,QuestName);
@@ -1722,7 +1722,7 @@ public class QuestGui extends UtilGui
 			break;
 			case "ELSE":
 			{
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 				QuestConfig.set(QuestName+".FlowChart."+size+".Type", "ELSE");
     	    	QuestConfig.saveConfig();
     			FixQuestGUI(player, (short) 0, QuestName);
@@ -1730,7 +1730,7 @@ public class QuestGui extends UtilGui
 			break;
 			case "ENDIF":
 			{
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 				QuestConfig.set(QuestName+".FlowChart."+size+".Type", "ENDIF");
     	    	QuestConfig.saveConfig();
     			FixQuestGUI(player, (short) 0, QuestName);
@@ -1740,7 +1740,7 @@ public class QuestGui extends UtilGui
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 			player.sendMessage("§c[퀘스트] : 해당 항목은 첫 번째 구성 요소로 올 수 없습니다!");
 		}
 		return;
@@ -1754,12 +1754,12 @@ public class QuestGui extends UtilGui
 		
 		if(slot == 26)
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else if(slot == 13)
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
 			String QuestName = ChatColor.stripColor(event.getInventory().getItem(19).getItemMeta().getDisplayName());
 			YamlLoader PlayerQuestList = new YamlLoader();
 			PlayerQuestList.getConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
@@ -1785,12 +1785,12 @@ public class QuestGui extends UtilGui
 		
 		if(slot == 26)
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
 			if(slot == 18)
 			{
 				if(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(1)).equalsIgnoreCase("false"))
@@ -1830,7 +1830,7 @@ public class QuestGui extends UtilGui
 					}
 					else
 					{
-						SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 2.0F, 1.7F);
+						SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 2.0F, 1.7F);
 						player.sendMessage("§e[퀘스트] : 현재 플레이어의 인벤토리 공간이 충분하지 않아 보상을 받을 수 없습니다!");
 						return;
 					}
@@ -1878,12 +1878,12 @@ public class QuestGui extends UtilGui
 				event.setCancelled(true);
 				if(slot == 8)
 				{
-					SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+					SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 					player.closeInventory();
 				}
 				else
 				{
-					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
 					UserDataObject u = new UserDataObject();
 					u.setType(player, "Quest");
 					if(slot == 0)
@@ -1917,12 +1917,12 @@ public class QuestGui extends UtilGui
 		
 		if(slot == 16)
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
 			UserDataObject u = new UserDataObject();
 			String QuestName = ChatColor.stripColor(event.getInventory().getItem(16).getItemMeta().getLore().get(1));
 			short Flow = Short.parseShort(ChatColor.stripColor(event.getInventory().getItem(10).getItemMeta().getLore().get(1)));
@@ -1962,12 +1962,12 @@ public class QuestGui extends UtilGui
 		if(slot == 44)
 		{
 
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
 			YamlLoader QuestList = new YamlLoader();
 			QuestList.getConfig("Quest/QuestList.yml");
 			String QuestName = ChatColor.stripColor(event.getInventory().getItem(44).getItemMeta().getLore().get(1));
@@ -1975,8 +1975,8 @@ public class QuestGui extends UtilGui
 				AllOfQuestListGUI(player, (short) 0,false);
 			else if(slot == 15)//스킬 랭크 제한
 			{
-				SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
+				SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.8F);
 				//스킬 선택 및 스킬 랭크 입력하는 창 업데이트 하기
 			}
 			else if(slot == 4)//퀘스트 타입
@@ -2012,7 +2012,7 @@ public class QuestGui extends UtilGui
 				}
 				else if(event.isRightClick() == true && event.isShiftClick() == true)
 				{
-					SoundEffect.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.8F);
+					SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.8F);
 					QuestList.set(QuestName+".Need.PrevQuest", "null");
 					QuestList.saveConfig();
 					QuestOptionGUI(player, QuestName);
@@ -2077,25 +2077,25 @@ public class QuestGui extends UtilGui
 		switch (event.getSlot())
 		{
 		case 45://이전 목록
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			SelectObjectPage(player, (byte) 0, QuestName);
 			return;
 		case 53://나가기
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 			return;
 		case 48://이전 페이지
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			Quest_NavigationListGUI(player, (short) (page-1), QuestName);
 			return;
 		case 50://다음 페이지
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			Quest_NavigationListGUI(player, (short) (page+1), QuestName);
 			return;
 		default :
 			if(event.isLeftClick() == true)
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				YamlLoader QuestConfig = new YamlLoader();
 				QuestConfig.getConfig("Quest/QuestList.yml");
 	    		int size = QuestConfig.getConfigurationSection(QuestName+".FlowChart").getKeys(false).size();
@@ -2119,11 +2119,11 @@ public class QuestGui extends UtilGui
 		switch (event.getSlot())
 		{
 		case 18://이전 목록
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			FixQuestGUI(player, page, QuestName);
 			return;
 		case 26://나가기
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 			return;
 		}
@@ -2135,7 +2135,7 @@ public class QuestGui extends UtilGui
 		Player player = (Player) event.getWhoClicked();
 		if(event.getSlot() == 26)
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 			return;
 		}
@@ -2154,7 +2154,7 @@ public class QuestGui extends UtilGui
 			byte Slot = (byte) event.getSlot();
 			
 			if(event.getCurrentItem()!= null)
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			
 			if((ChoiceLevel==1&&Slot==13)||(ChoiceLevel==2&&Slot==12)||(ChoiceLevel==3&&Slot==11)||(ChoiceLevel==4&&Slot==10))
 				PlayerVarList.set(QuestName, QuestList.getInt(QuestName+".FlowChart."+Flow+".Choice.0.Var"));
@@ -2200,7 +2200,7 @@ public class QuestGui extends UtilGui
 			}
 		}
 		QuestConfig.saveConfig();
-		SoundEffect.SP((Player) event.getPlayer(), org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+		SoundEffect.playSound((Player) event.getPlayer(), org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
     	event.getPlayer().sendMessage("§a[SYSTEM] : 성공적으로 등록되었습니다!");
 		u.clearAll(player);
 		return;
@@ -2267,7 +2267,7 @@ public class QuestGui extends UtilGui
 		if(u.getString(player, (byte)4)==null)
 		{
 			QuestConfig.saveConfig();
-			SoundEffect.SP((Player) event.getPlayer(), org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
+			SoundEffect.playSound((Player) event.getPlayer(), org.bukkit.Sound.ENTITY_ITEM_PICKUP, 0.5F,1.2F);
 	    	event.getPlayer().sendMessage("§a[SYSTEM] : 성공적으로 설정되었습니다!");
 	    	u.clearAll(player);
 		}

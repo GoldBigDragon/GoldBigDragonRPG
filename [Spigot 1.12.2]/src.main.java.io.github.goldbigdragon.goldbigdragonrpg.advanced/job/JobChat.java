@@ -35,7 +35,7 @@ public class JobChat extends UtilChat
 			{
 				jobYaml.createSection("Mabinogi."+Message);
 				jobYaml.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 0.5F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 0.5F);
 				JGUI.Mabinogi_ChooseCategory(player,(short) 0);
 
 				configYaml.set("Time.LastSkillChanged", new util.UtilNumber().RandomNum(0, 100000)-new util.UtilNumber().RandomNum(0, 100000));
@@ -47,7 +47,7 @@ public class JobChat extends UtilChat
 			else
 			{
 				player.sendMessage("§c[카테고리] : 이미 존재하는 카테고리 이름입니다!");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			}
 			return;
 		case "CJ"://CreateJob
@@ -63,7 +63,7 @@ public class JobChat extends UtilChat
 			jobYaml.set("MapleStory."+Message+"."+Message+".IconAmount",1);
 			jobYaml.createSection("MapleStory."+Message+"."+Message+".Skill");
 			jobYaml.saveConfig();
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 0.5F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 0.5F);
 			JGUI.MapleStory_JobSetting(player,Message);
 			u.clearAll(player);
 			return;
@@ -82,7 +82,7 @@ public class JobChat extends UtilChat
 			jobYaml.set("MapleStory."+JobName2+"."+Message+".IconAmount",1);
 			jobYaml.createSection("MapleStory."+JobName2+"."+Message+".Skill");
 			jobYaml.saveConfig();
-			SoundEffect.SP(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+			SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 			JGUI.MapleStory_JobSetting(player, JobName2);
 			u.clearAll(player);
 			return;
@@ -95,7 +95,7 @@ public class JobChat extends UtilChat
 				jobYaml.saveConfig();
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JNS");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§d[직업] : §e"+JobNick2+"§d의 승급 필요 "+main.MainServerOption.statSTR+"을 설정하세요.");
 			}
 			return;
@@ -108,7 +108,7 @@ public class JobChat extends UtilChat
 				jobYaml.saveConfig();
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JND");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§d[직업] : §e"+JobNick2+"§d의 승급 필요 "+main.MainServerOption.statDEX+"를 설정하세요.");
 			}
 			return;
@@ -121,7 +121,7 @@ public class JobChat extends UtilChat
 				jobYaml.saveConfig();
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JNI");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§d[직업] : §e"+JobNick2+"§d의 승급 필요 "+main.MainServerOption.statINT+"을 설정하세요.");
 			}
 			return;
@@ -134,7 +134,7 @@ public class JobChat extends UtilChat
 				jobYaml.saveConfig();
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JNW");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§d[직업] : §e"+JobNick2+"§d의 승급 필요 "+main.MainServerOption.statWILL+"를 설정하세요.");
 			}
 			return;
@@ -147,7 +147,7 @@ public class JobChat extends UtilChat
 				jobYaml.saveConfig();
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JNLU");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§d[직업] : §e"+JobNick2+"§d의 승급 필요 "+main.MainServerOption.statLUK+"을 설정하세요.");
 			}
 			return;
@@ -160,7 +160,7 @@ public class JobChat extends UtilChat
 				jobYaml.saveConfig();
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JNPJ");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§d[직업] : 어떤 직업이§e"+JobNick2+"§d 로 승급 가능하게 할까요?");
 				
 				Object[] Job2 = jobYaml.getConfigurationSection("MapleStory").getKeys(false).toArray();
@@ -208,7 +208,7 @@ public class JobChat extends UtilChat
 				jobYaml.saveConfig();
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JNICONID");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§d[직업] : §e"+JobNick2+"§d 를 나타내는 아이콘 ID는 무엇인가요?");
 			}
 			else
@@ -230,10 +230,10 @@ public class JobChat extends UtilChat
 			if(isIntMinMax(Message, player, 1, 2267))
 			{
 				event.EventInteract I = new event.EventInteract();
-				if(I.SetItemDefaultName(Short.parseShort(Message),(byte)0).equals("지정되지 않은 아이템"))
+				if(I.setItemDefaultName(Short.parseShort(Message),(byte)0).equals("지정되지 않은 아이템"))
 				{
 					player.sendMessage("§c[SYSTEM] : 해당 아이템은 존재하지 않습니다!");
-					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 	  				return;
 				}
 				String JobName4 = u.getString(player, (byte)2);
@@ -242,7 +242,7 @@ public class JobChat extends UtilChat
 				jobYaml.saveConfig();
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JNICONDATA");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§d[직업] : §e"+JobNick3+"§d 를 나타내는 아이콘 DATA는 무엇인가요?");
 			}
 			return;
@@ -255,7 +255,7 @@ public class JobChat extends UtilChat
 				jobYaml.saveConfig();
 				u.setType(player, "Job");
 				u.setString(player, (byte)1, "JNICONAMOUNT");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§d[직업] : §e"+JobNick3+"§d 를 나타내는 아이콘 갯수는 몇 개인가요?");
 			}
 			return;
@@ -266,7 +266,7 @@ public class JobChat extends UtilChat
 				String JobNick3 = u.getString(player, (byte)3);
 				jobYaml.set("MapleStory."+JobName4+"."+JobNick3+".IconAmount",Integer.parseInt(Message));
 				jobYaml.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 				JGUI.MapleStory_JobSetting(player, JobName4);
 				u.clearAll(player);
 			}

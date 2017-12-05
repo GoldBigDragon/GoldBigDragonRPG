@@ -31,7 +31,7 @@ public class QuestChat extends UtilChat
 	    	{
 				if(isIntMinMax(message, player, 1, 5))
 				{
-					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			    	u.setString(player, (byte)1, "CVS");
 			    	u.setInt(player, (byte)1, Integer.parseInt(message));
 			    	String Example=null;
@@ -70,7 +70,7 @@ public class QuestChat extends UtilChat
 	    			if(isIntMinMax(message, player, -1000, 20000))
 					{
 		    			short size = (short) questYaml.getConfigurationSection(u.getString(player, (byte)2)+".FlowChart").getKeys(false).size();
-						SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+						SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 						questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Type", "Cal");
 		        		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Comparison", u.getInt(player, (byte)1));
 			    		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Value", Integer.parseInt(message));
@@ -85,7 +85,7 @@ public class QuestChat extends UtilChat
 	    			if(isIntMinMax(message, player, 1, 100))
 					{
 		    			short size = (short) questYaml.getConfigurationSection(u.getString(player, (byte)2)+".FlowChart").getKeys(false).size();
-						SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+						SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 						questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Type", "Cal");
 		        		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Comparison", u.getInt(player, (byte)1));
 			    		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Value", Integer.parseInt(message));
@@ -102,7 +102,7 @@ public class QuestChat extends UtilChat
 			if(isIntMinMax(message, player, u.getInt(player, (byte)2), 40000))
 			{
     			short size = (short) questYaml.getConfigurationSection(u.getString(player, (byte)2)+".FlowChart").getKeys(false).size();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Type", "IF");
         		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Comparison", u.getInt(player, (byte)1));
 	    		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Min", u.getInt(player, (byte)2));
@@ -119,7 +119,7 @@ public class QuestChat extends UtilChat
 			if(isIntMinMax(message, player, -2000, 40000))
 			{
     			short size = (short) questYaml.getConfigurationSection(u.getString(player, (byte)2)+".FlowChart").getKeys(false).size();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 		    	if(u.getInt(player, (byte)1)!=7)
 		    	{
 	        		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Type", "IF");
@@ -146,7 +146,7 @@ public class QuestChat extends UtilChat
     	{
 			if(isIntMinMax(message, player, 1, 7))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 		    	u.setString(player, (byte)1, "IFVS");
 		    	u.setInt(player, (byte)1, Integer.parseInt(message));
 		    	String Example=null;
@@ -185,7 +185,7 @@ public class QuestChat extends UtilChat
 	    	{
 				if(isIntMinMax(message, player, -1000, 30000))
 				{
-					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 	    			short size = (short) questYaml.getConfigurationSection(u.getString(player, (byte)2)+".FlowChart").getKeys(false).size();
 	        		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Type", "VarChange");
 	        		questYaml.set(u.getString(player, (byte)2)+".FlowChart."+size+".Value", Integer.parseInt(message));
@@ -200,7 +200,7 @@ public class QuestChat extends UtilChat
     	{
 			if(isIntMinMax(message, player, -1000, 30000))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				u.setInt(player, (byte)(u.getInt(player, (byte)1)+2),Integer.parseInt(message));
 				u.setInt(player, (byte)1,u.getInt(player, (byte)1)+1);
 	    		if(u.getInt(player, (byte)0)==u.getInt(player, (byte)1))
@@ -235,7 +235,7 @@ public class QuestChat extends UtilChat
     	return;
     	case "SCL"://SetChoiceLore
     	{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			u.setString(player, (byte)(u.getInt(player, (byte)1)+4), event.getMessage());
 	    	u.setString(player, (byte)1, "SCV");
 			player.sendMessage("§a[퀘스트] : "+(u.getInt(player, (byte)1)+1)+"번 선택지를 고를 경우, 플레이어 변수는 몇으로 변환시킬까요?");
@@ -245,7 +245,7 @@ public class QuestChat extends UtilChat
     	case "CS"://ChoiceSize
 			if(isIntMinMax(message, player, 1, 4))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				u.setInt(player, (byte)0, Integer.parseInt(message));
 				u.setInt(player, (byte)1, 0);
 		    	u.setString(player, (byte)1, "SCL");
@@ -276,15 +276,15 @@ public class QuestChat extends UtilChat
 			if(isIntMinMax(message, player, 1, Integer.MAX_VALUE))
 			{
 				event.EventInteract I = new event.EventInteract();
-				if(I.SetItemDefaultName(Short.parseShort(message),(byte)0).equals("지정되지 않은 아이템"))
+				if(I.setItemDefaultName(Short.parseShort(message),(byte)0).equals("지정되지 않은 아이템"))
 				{
 					player.sendMessage("§c[SYSTEM] : 해당 아이템은 존재하지 않습니다!");
-	  				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+	  				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 	  				return;
 				}
 				String QuestName = u.getString(player, (byte)2);
 				int size = u.getInt(player, (byte)1);
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				questYaml.set(QuestName+".FlowChart."+size+".ID", Integer.parseInt(message));
 				questYaml.saveConfig();
 		    	u.setString(player, (byte)1, "BPDATA");
@@ -296,7 +296,7 @@ public class QuestChat extends UtilChat
 			{
 				String QuestName = u.getString(player, (byte)2);
 				int size = u.getInt(player, (byte)1);
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				questYaml.set(QuestName+".FlowChart."+size+".DATA", Integer.parseInt(message));
 				questYaml.saveConfig();
 		    	u.setString(player, (byte)1, "BPDATA");
@@ -316,7 +316,7 @@ public class QuestChat extends UtilChat
 			if(arealist.length <= 0)
 			{
 				
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 				player.sendMessage("§c[SYSTEM] : 생성된 영역이 없습니다!");
 				u.clearAll(player);
 				return;
@@ -394,7 +394,7 @@ public class QuestChat extends UtilChat
 	    		else
 	    		{
     				player.sendMessage("§c[SYSTEM] : x혹은 o를 입력 해  주세요.");
-      				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+      				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 	    		}
   				return;
 	    	}

@@ -91,7 +91,7 @@ public class NpcMain
 					
 					playerSkillYaml.set("Mabinogi."+Categori+"."+Skillname, 1);
 					playerSkillYaml.saveConfig();
-					SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
 					player.sendMessage("§d§l[새로운 스킬을 획득 하였습니다!] §e§l"+ChatColor.UNDERLINE+Skillname);
 				}
 				else

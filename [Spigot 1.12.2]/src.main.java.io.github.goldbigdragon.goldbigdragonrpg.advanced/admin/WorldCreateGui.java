@@ -19,12 +19,12 @@ public class WorldCreateGui extends UtilGui
 		String uniqueCode = "§0§0§1§1§b§r";
 		Inventory inv = Bukkit.createInventory(null, 9, uniqueCode + "§0월드 선택");
 
-		Stack("§f§l일반 월드", 6,0,1,Arrays.asList("§7일반적인 월드를 생성합니다."), 2, inv);
-		Stack("§f§l완전한 평지", 2,0,1,Arrays.asList("§7완전한 평지를 가진 월드를 생성합니다."), 4, inv);
-		Stack("§f§l넓은 바이옴", 175,4,1,Arrays.asList("§7바이옴이 넓은 월드를 생성합니다."), 6, inv);
+		stack("§f§l일반 월드", 6,0,1,Arrays.asList("§7일반적인 월드를 생성합니다."), 2, inv);
+		stack("§f§l완전한 평지", 2,0,1,Arrays.asList("§7완전한 평지를 가진 월드를 생성합니다."), 4, inv);
+		stack("§f§l넓은 바이옴", 175,4,1,Arrays.asList("§7바이옴이 넓은 월드를 생성합니다."), 6, inv);
 		
-		Stack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
-		Stack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 8, inv);
+		stack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
+		stack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 8, inv);
 		player.openInventory(inv);
 	}
 	
@@ -35,12 +35,12 @@ public class WorldCreateGui extends UtilGui
 		
 		if(slot == 8)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 0)//이전 목록
 				new OPboxGui().opBoxGuiMain(player, (byte) 2);
 			else

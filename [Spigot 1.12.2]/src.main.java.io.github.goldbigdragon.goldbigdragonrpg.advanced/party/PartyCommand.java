@@ -17,7 +17,7 @@ public class PartyCommand
 			Player player = (Player) talker;
 			if(args.length == 0)
 			{
-				SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
+				SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
 				new party.PartyGUI().PartyGUI_Main(player); return;
 			}
 			if(args.length <= 1)
@@ -26,7 +26,7 @@ public class PartyCommand
 				{
 					case "목록":
 						{
-						 	SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
+						 	SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
 						 	new party.PartyGUI().PartyListGUI(player, (short) 0);
 						}
 						return;
@@ -36,7 +36,7 @@ public class PartyCommand
 								main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).QuitParty(player);
 							else
 							{
-								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 								player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
 							}
 						}
@@ -47,7 +47,7 @@ public class PartyCommand
 								main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).getPartyInformation();
 							else
 							{
-								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 								player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
 							}
 						}
@@ -58,7 +58,7 @@ public class PartyCommand
 								main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).ChangeLock(player);
 							else
 							{
-								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 								player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
 							}
 						}
@@ -94,12 +94,12 @@ public class PartyCommand
 				  				}
 				  				else
 				  					main.MainServerOption.party.put(nowSec, new PartyObject(nowSec, player, args[1]));
-				  				SoundEffect.SP(player, Sound.BLOCK_WOODEN_DOOR_OPEN, 1.0F, 1.1F);
+				  				SoundEffect.playSound(player, Sound.BLOCK_WOODEN_DOOR_OPEN, 1.0F, 1.1F);
 				  				new party.PartyGUI().PartyGUI_Main(player);
 							}
 							else
 							{
-								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 								player.sendMessage("§c[파티] : 당신은 이미 파티에 참여한 상태입니다!");
 							}
 						}
@@ -134,7 +134,7 @@ public class PartyCommand
 							}
 							else
 							{
-								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 								player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
 							}
 						}
@@ -155,7 +155,7 @@ public class PartyCommand
 							}
 							else
 							{
-								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 								player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
 							}
 						}
@@ -172,7 +172,7 @@ public class PartyCommand
 							}
 							else
 							{
-								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 								player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
 							}
 						}
@@ -194,13 +194,13 @@ public class PartyCommand
 			else
 			{
 				player.sendMessage("§c[SYSTEM] : 최소 §e"+Min+"§c, 최대 §e"+Max+"§c 이하의 숫자를 입력하세요!");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			}
 		}
 		catch(NumberFormatException e)
 		{
 			player.sendMessage("§c[SYSTEM] : 정수 형태의 값(숫자)을 입력하세요. (§e"+Min+"§c ~ §e"+Max+"§c)");
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		}
 		return false;
 	}

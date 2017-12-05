@@ -19,7 +19,7 @@ public class WarpCommand
 			{
 			case "¸ñ·Ï" :
 				{
-					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 					new warp.WarpGui().WarpListGUI(player, 0);
 				}
 				return;

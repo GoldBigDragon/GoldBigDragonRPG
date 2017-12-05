@@ -56,14 +56,14 @@ public class AreaMain
 		
 		if(areaYaml.contains(name))
 		{
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			player.sendMessage("§c[SYSTEM] : 해당 이름은 이미 등록되어 있습니다!");
 			return;
 		}
 		
 		if(!loc1.getWorld().equals(loc2.getWorld()))
 		{
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			player.sendMessage("§c[SYSTEM] : 서로 다른 월드간은 영역 지정을 할 수 없습니다!");
 			return;
 		}
@@ -133,7 +133,7 @@ public class AreaMain
 		areaYaml.set(name+".Restrict.MaxRealLevel", 0);
 		areaYaml.saveConfig();
 		
-		SoundEffect.SP(player, org.bukkit.Sound.ENTITY_CHICKEN_EGG, 2.0F, 1.7F);
+		SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_CHICKEN_EGG, 2.0F, 1.7F);
 		player.sendMessage("§a[SYSTEM] : 지정 구역 등록 성공!");
 		area.AreaGui AGUI = new area.AreaGui();
 		AGUI.areaSettingGui(player, name);
@@ -211,12 +211,12 @@ public class AreaMain
 			areaYaml.removeKey(name+".Restrict.MaxRealLevel");
 			areaYaml.removeKey(name);
 			areaYaml.saveConfig();
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_CHICKEN_EGG, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_CHICKEN_EGG, 2.0F, 1.7F);
 			player.sendMessage("§c[SYSTEM] : 지정 구역 삭제 성공!");
 		}
 		else
 		{
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			player.sendMessage("§c[SYSTEM] : 해당 이름의 구역은 존재하지 않습니다!");
 		}
 		return;
@@ -248,7 +248,7 @@ public class AreaMain
 		}
 		else
 		{
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			player.sendMessage("§c[SYSTEM] : 해당 이름의 구역은 존재하지 않습니다!");
 		}
 		return;

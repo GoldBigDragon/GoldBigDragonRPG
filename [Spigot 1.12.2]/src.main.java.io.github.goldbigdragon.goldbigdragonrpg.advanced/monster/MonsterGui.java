@@ -158,18 +158,18 @@ public class MonsterGui extends UtilGui
 				//case "휴먼" : id=379; data = 3; break;
 			}
 			
-			Stack("§f"+monsterName, id, data, 1,Arrays.asList(scriptA), loc, inv);
+			stack("§f"+monsterName, id, data, 1,Arrays.asList(scriptA), loc, inv);
 			loc++;
 		}
 		
 		if(a.length-(page*44)>45)
-			Stack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			stack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			stack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack("§f§l새 몬스터", 339,0,1,Arrays.asList("§7새로운 몬스터를 생성합니다."), 49, inv);
-		Stack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
+		stack("§f§l새 몬스터", 339,0,1,Arrays.asList("§7새로운 몬스터를 생성합니다."), 49, inv);
+		stack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		stack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -208,14 +208,14 @@ public class MonsterGui extends UtilGui
 		for(int counter = 0; counter < scriptA.length; counter++)
 			scriptA[counter] =  " "+scriptA[counter];
 
-		Stack2("§c[    몬스터    ]", 52,0,1,null, 9, inv);
-		Stack2("§c[    몬스터    ]", 52,0,1,null, 10, inv);
-		Stack2("§c[    몬스터    ]", 52,0,1,null, 11, inv);
-		Stack2("§c[    몬스터    ]", 52,0,1,null, 18, inv);
-		Stack2("§c[    몬스터    ]", 52,0,1,null, 20, inv);
-		Stack2("§c[    몬스터    ]", 52,0,1,null, 27, inv);
-		Stack2("§c[    몬스터    ]", 52,0,1,null, 28, inv);
-		Stack2("§c[    몬스터    ]", 52,0,1,null, 29, inv);
+		removeFlagStack("§c[    몬스터    ]", 52,0,1,null, 9, inv);
+		removeFlagStack("§c[    몬스터    ]", 52,0,1,null, 10, inv);
+		removeFlagStack("§c[    몬스터    ]", 52,0,1,null, 11, inv);
+		removeFlagStack("§c[    몬스터    ]", 52,0,1,null, 18, inv);
+		removeFlagStack("§c[    몬스터    ]", 52,0,1,null, 20, inv);
+		removeFlagStack("§c[    몬스터    ]", 52,0,1,null, 27, inv);
+		removeFlagStack("§c[    몬스터    ]", 52,0,1,null, 28, inv);
+		removeFlagStack("§c[    몬스터    ]", 52,0,1,null, 29, inv);
 		int id = 383;
 		byte data = 0;
 		String Type = monsterListYaml.getString(MonsterName+".Type");
@@ -256,11 +256,11 @@ public class MonsterGui extends UtilGui
 			//case "휴먼" : id=379; data=3;break;
 		}
 
-		Stack2("§f"+ MonsterName, id,data,1,Arrays.asList(scriptA), 19, inv);
+		removeFlagStack("§f"+ MonsterName, id,data,1,Arrays.asList(scriptA), 19, inv);
 		
 		
-		Stack2("§3[    이름 변경    ]", 421,0,1,Arrays.asList("§f몬스터의 이름을","§f변경합니다.","","§f[    현재 이름    ]"," §f"+monsterListYaml.getString(MonsterName+".Name"),""), 13, inv);
-		Stack2("§3[    타입 변경    ]", 383,0,1,Arrays.asList("§f몬스터의 타입을","§f변경합니다.","","§f[    현재 타입    ]"," §f"+monsterListYaml.getString(MonsterName+".Type"),""), 14, inv);
+		removeFlagStack("§3[    이름 변경    ]", 421,0,1,Arrays.asList("§f몬스터의 이름을","§f변경합니다.","","§f[    현재 이름    ]"," §f"+monsterListYaml.getString(MonsterName+".Name"),""), 13, inv);
+		removeFlagStack("§3[    타입 변경    ]", 383,0,1,Arrays.asList("§f몬스터의 타입을","§f변경합니다.","","§f[    현재 타입    ]"," §f"+monsterListYaml.getString(MonsterName+".Type"),""), 14, inv);
 
 		data = 0;
 		switch(monsterListYaml.getString(MonsterName+".Biome"))
@@ -283,18 +283,18 @@ public class MonsterGui extends UtilGui
 		default : id=166;break;
 		}
 		
-		Stack2("§3[ 스폰 바이옴 변경 ]", id,data,1,Arrays.asList("§f몬스터가 등장하는","§f바이옴을 변경합니다.","","§f[    등장 바이옴    ]"," §f"+monsterListYaml.getString(MonsterName+".Biome"),""), 15, inv);
-		Stack2("§3[    생명력 변경    ]", 351,1,1,Arrays.asList("§f몬스터의 생명력을","§f변경합니다.","","§f[    현재 생명력    ]"," §f"+monsterListYaml.getInt(MonsterName+".HP"),""), 16, inv);
-		Stack2("§3[    경험치 변경    ]", 384,0,1,Arrays.asList("§f몬스터 사냥시 얻는","§f경험치 량을 변경합니다.","","§f[    현재 경험치    ]"," §f"+monsterListYaml.getInt(MonsterName+".EXP"),""), 22, inv);
-		Stack2("§3[  드랍 금액 변경  ]", 266,0,1,Arrays.asList("§f몬스터 사냥시 얻는","§f금액을 변경합니다.","","§f[    현재 금액    ]"," §f"+monsterListYaml.getInt(MonsterName+".MIN_Money")+" ~ "+monsterListYaml.getInt(MonsterName+".MAX_Money"),""), 23, inv);
-		Stack2("§3[    장비 변경    ]", 307,0,1,Arrays.asList("§f몬스터의 장비를","§f설정 합니다.","","§e[    좌클릭시 변경    ]",""), 24, inv);
-		Stack2("§3[  장비 드랍률 변경  ]", 54,0,1,Arrays.asList("§f몬스터 사냥시 드랍되는","§f장비 확룰을 변경합니다.","","§f[    현재 드랍률    ]"," §f머리 : "+monsterListYaml.getInt(MonsterName+".Head.DropChance")/10.0+"%"
+		removeFlagStack("§3[ 스폰 바이옴 변경 ]", id,data,1,Arrays.asList("§f몬스터가 등장하는","§f바이옴을 변경합니다.","","§f[    등장 바이옴    ]"," §f"+monsterListYaml.getString(MonsterName+".Biome"),""), 15, inv);
+		removeFlagStack("§3[    생명력 변경    ]", 351,1,1,Arrays.asList("§f몬스터의 생명력을","§f변경합니다.","","§f[    현재 생명력    ]"," §f"+monsterListYaml.getInt(MonsterName+".HP"),""), 16, inv);
+		removeFlagStack("§3[    경험치 변경    ]", 384,0,1,Arrays.asList("§f몬스터 사냥시 얻는","§f경험치 량을 변경합니다.","","§f[    현재 경험치    ]"," §f"+monsterListYaml.getInt(MonsterName+".EXP"),""), 22, inv);
+		removeFlagStack("§3[  드랍 금액 변경  ]", 266,0,1,Arrays.asList("§f몬스터 사냥시 얻는","§f금액을 변경합니다.","","§f[    현재 금액    ]"," §f"+monsterListYaml.getInt(MonsterName+".MIN_Money")+" ~ "+monsterListYaml.getInt(MonsterName+".MAX_Money"),""), 23, inv);
+		removeFlagStack("§3[    장비 변경    ]", 307,0,1,Arrays.asList("§f몬스터의 장비를","§f설정 합니다.","","§e[    좌클릭시 변경    ]",""), 24, inv);
+		removeFlagStack("§3[  장비 드랍률 변경  ]", 54,0,1,Arrays.asList("§f몬스터 사냥시 드랍되는","§f장비 확룰을 변경합니다.","","§f[    현재 드랍률    ]"," §f머리 : "+monsterListYaml.getInt(MonsterName+".Head.DropChance")/10.0+"%"
 				," §f갑옷 : "+monsterListYaml.getInt(MonsterName+".Chest.DropChance")/10.0+"%"
 				," §f바지 : "+monsterListYaml.getInt(MonsterName+".Leggings.DropChance")/10.0+"%"
 				," §f신발 : "+monsterListYaml.getInt(MonsterName+".Boots.DropChance")/10.0+"%"
 				," §f무기 : "+monsterListYaml.getInt(MonsterName+".Hand.DropChance")/10.0+"%","","§e[    좌클릭시 변경   ]",""), 25, inv);
-		Stack2("§3[  몬스터 스텟 변경  ]", 399,0,1,Arrays.asList("§f몬스터의 기본 스텟을","§f변경합니다.",""), 31, inv);
-		Stack2("§3[  몬스터 방어 변경  ]", 310,0,1,Arrays.asList("§f몬스터의 방어 및 보호를","§f변경합니다.",""), 32, inv);
+		removeFlagStack("§3[  몬스터 스텟 변경  ]", 399,0,1,Arrays.asList("§f몬스터의 기본 스텟을","§f변경합니다.",""), 31, inv);
+		removeFlagStack("§3[  몬스터 방어 변경  ]", 310,0,1,Arrays.asList("§f몬스터의 방어 및 보호를","§f변경합니다.",""), 32, inv);
 		
 		Lore = "§f몬스터의 AI를 변경합니다.%enter%%enter%§f[    현재 AI    ]%enter%§f"+monsterListYaml.getString(MonsterName+".AI")+"%enter%%enter%";
 		if(Type.equals("초대형슬라임")||Type.equals("특대슬라임")||Type.equals("큰슬라임")||
@@ -329,11 +329,11 @@ public class MonsterGui extends UtilGui
 			scriptA[counter] =  " "+scriptA[counter];
 		
 		
-		Stack2("§3[  몬스터 AI 변경  ]", 137,0,1,Arrays.asList(scriptA), 33, inv);
-		Stack2("§3[    포션 효과    ]", 373,0,1,Arrays.asList("§f몬스터에게 포션 효과를","§f부여합니다.",""), 34, inv);
+		removeFlagStack("§3[  몬스터 AI 변경  ]", 137,0,1,Arrays.asList(scriptA), 33, inv);
+		removeFlagStack("§3[    포션 효과    ]", 373,0,1,Arrays.asList("§f몬스터에게 포션 효과를","§f부여합니다.",""), 34, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+MonsterName), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+MonsterName), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -344,30 +344,30 @@ public class MonsterGui extends UtilGui
 		String UniqueCode = "§0§0§8§0§2§r";
 		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0몬스터 포션");
 		
-		Stack2("§3[  재생  ]", 373,8193,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Regenerate")), 10, inv);
-		Stack2("§3[  독  ]", 373,8196,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Poison")), 11, inv);
-		Stack2("§3[  신속  ]", 373,8194,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Speed")), 12, inv);
-		Stack2("§3[  구속  ]", 373,8234,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Slow")), 13, inv);
-		Stack2("§3[  힘  ]", 373,8201,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Strength")), 14, inv);
-		Stack2("§3[  나약함  ]", 373,8232,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Weak")), 15, inv);
-		Stack2("§3[  도약  ]", 373,8267,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.JumpBoost")), 16, inv);
+		removeFlagStack("§3[  재생  ]", 373,8193,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Regenerate")), 10, inv);
+		removeFlagStack("§3[  독  ]", 373,8196,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Poison")), 11, inv);
+		removeFlagStack("§3[  신속  ]", 373,8194,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Speed")), 12, inv);
+		removeFlagStack("§3[  구속  ]", 373,8234,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Slow")), 13, inv);
+		removeFlagStack("§3[  힘  ]", 373,8201,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Strength")), 14, inv);
+		removeFlagStack("§3[  나약함  ]", 373,8232,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.Weak")), 15, inv);
+		removeFlagStack("§3[  도약  ]", 373,8267,1,Arrays.asList("§f[  포션 농도  ]","§e "+monsterListYaml.getInt(MonsterName+".Potion.JumpBoost")), 16, inv);
 
 		if(monsterListYaml.getInt(MonsterName+".Potion.FireRegistance")!=0)
-			Stack2("§3[  화염 저항  ]", 373,8227,1,Arrays.asList("§a[  포션 적용  ]"), 19, inv);
+			removeFlagStack("§3[  화염 저항  ]", 373,8227,1,Arrays.asList("§a[  포션 적용  ]"), 19, inv);
 		else
-			Stack2("§3[  화염 저항  ]", 166,0,1,Arrays.asList("§c[  포션 미적용  ]"), 19, inv);
+			removeFlagStack("§3[  화염 저항  ]", 166,0,1,Arrays.asList("§c[  포션 미적용  ]"), 19, inv);
 		if(monsterListYaml.getInt(MonsterName+".Potion.WaterBreath")!=0)
-			Stack2("§3[  수중 호홉  ]", 373,8237,1,Arrays.asList("§a[  포션 적용  ]"), 20, inv);
+			removeFlagStack("§3[  수중 호홉  ]", 373,8237,1,Arrays.asList("§a[  포션 적용  ]"), 20, inv);
 		else
-			Stack2("§3[  수중 호홉  ]", 166,0,1,Arrays.asList("§c[  포션 미적용  ]"), 20, inv);
+			removeFlagStack("§3[  수중 호홉  ]", 166,0,1,Arrays.asList("§c[  포션 미적용  ]"), 20, inv);
 		if(monsterListYaml.getInt(MonsterName+".Potion.Invisible")!=0)
-			Stack2("§3[  투명  ]", 373,8238,1,Arrays.asList("§a[  포션 적용  ]"), 21, inv);
+			removeFlagStack("§3[  투명  ]", 373,8238,1,Arrays.asList("§a[  포션 적용  ]"), 21, inv);
 		else
-			Stack2("§3[  투명  ]", 166,0,1,Arrays.asList("§c[  포션 미적용  ]"), 21, inv);
+			removeFlagStack("§3[  투명  ]", 166,0,1,Arrays.asList("§c[  포션 미적용  ]"), 21, inv);
 			
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+MonsterName), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+MonsterName), 53, inv);
 		player.openInventory(inv);
 	}
 
@@ -382,41 +382,41 @@ public class MonsterGui extends UtilGui
 			monsterListYaml.getItemStack(mob + ".Head.Item").equals(new ItemStack(Material.AIR))==false)
 			inv.setItem(0, monsterListYaml.getItemStack(mob + ".Head.Item"));
 		else
-			Stack("§f머리", 302,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)0, inv);
+			stack("§f머리", 302,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)0, inv);
 
 		if(monsterListYaml.contains(mob + ".Chest.Item")==true&&
 				monsterListYaml.getItemStack(mob + ".Chest.Item").equals(new ItemStack(Material.AIR))==false)
 			inv.setItem(1, monsterListYaml.getItemStack(mob + ".Chest.Item"));
 		else
-			Stack("§f갑옷", 303,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)1, inv);
+			stack("§f갑옷", 303,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)1, inv);
 
 		if(monsterListYaml.contains(mob + ".Leggings.Item")==true&&
 				monsterListYaml.getItemStack(mob + ".Leggings.Item").equals(new ItemStack(Material.AIR))==false)
 			inv.setItem(2, monsterListYaml.getItemStack(mob + ".Leggings.Item"));
 		else
-			Stack("§f바지", 304,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)2, inv);
+			stack("§f바지", 304,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)2, inv);
 
 		if(monsterListYaml.contains(mob + ".Boots.Item")==true&&
 		monsterListYaml.getItemStack(mob + ".Boots.Item").equals(new ItemStack(Material.AIR))==false)
 			inv.setItem(3, monsterListYaml.getItemStack(mob + ".Boots.Item"));
 		else
-			Stack("§f부츠", 305,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)3, inv);
+			stack("§f부츠", 305,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)3, inv);
 
 		if(monsterListYaml.contains(mob + ".Hand.Item")==true&&
 		monsterListYaml.getItemStack(mob + ".Hand.Item").equals(new ItemStack(Material.AIR))==false)
 			inv.setItem(4, monsterListYaml.getItemStack(mob + ".Hand.Item"));
 		else
-			Stack("§f오른손", 267,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)4, inv);
+			stack("§f오른손", 267,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)4, inv);
 
 		if(monsterListYaml.contains(mob + ".OffHand.Item")==true&&
 		monsterListYaml.getItemStack(mob + ".OffHand.Item").equals(new ItemStack(Material.AIR))==false)
 			inv.setItem(5, monsterListYaml.getItemStack(mob + ".OffHand.Item"));
 		else
-			Stack("§f왼손", 267,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)5, inv);
+			stack("§f왼손", 267,(byte)0,(byte)1,Arrays.asList("§7이곳에 아이템을 넣어 주세요."), (byte)5, inv);
 		
-		Stack("§f"+ mob, 416,(byte)0,(byte)1,Arrays.asList("§8"+ mob+"의 현재 장비입니다." ), (byte)8, inv);
-		Stack("§f", 30,(byte)0,(byte)1,Arrays.asList("§7이곳에는 아이템을","§7올려두지 마세요."), (byte)7, inv);
-		Stack("§f", 30,(byte)0,(byte)1,Arrays.asList("§7이곳에는 아이템을","§7올려두지 마세요."), (byte)6, inv);
+		stack("§f"+ mob, 416,(byte)0,(byte)1,Arrays.asList("§8"+ mob+"의 현재 장비입니다." ), (byte)8, inv);
+		stack("§f", 30,(byte)0,(byte)1,Arrays.asList("§7이곳에는 아이템을","§7올려두지 마세요."), (byte)7, inv);
+		stack("§f", 30,(byte)0,(byte)1,Arrays.asList("§7이곳에는 아이템을","§7올려두지 마세요."), (byte)6, inv);
 		
 		player.openInventory(inv);
 		return;
@@ -475,7 +475,7 @@ public class MonsterGui extends UtilGui
 			MonsterStack(inv, 42, 96,  0, "§c§l[버섯소]", Arrays.asList("§0"+96));
 			MonsterStack(inv, 43, 93,  0, "§f§l[닭]", Arrays.asList("§0"+93));
 			MonsterStack(inv, 44, 94,  0, "§8§l[오징어]", Arrays.asList("§0"+94));
-		  	Stack2("§f§l다음 페이지", 323, 0, 1, null, 50, inv);
+		  	removeFlagStack("§f§l다음 페이지", 323, 0, 1, null, 50, inv);
 		}
 		else
 		{
@@ -489,11 +489,11 @@ public class MonsterGui extends UtilGui
 			MonsterStack(inv, 7, 32,  0, "§6§l[노새]", Arrays.asList("§0"+32));
 			MonsterStack(inv, 8, 103,  0, "§6§l[라마]", Arrays.asList("§0"+103));
 			MonsterStack(inv, 9, 100,  0, "§6§l[말]", Arrays.asList("§0"+100));
-		  	Stack2("§f§l이전 페이지", 323, 0, 1, null, 48, inv);
+		  	removeFlagStack("§f§l이전 페이지", 323, 0, 1, null, 48, inv);
 		}
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+MonsterName), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+MonsterName), 53, inv);
 		player.openInventory(inv);
 	}
 
@@ -645,7 +645,7 @@ public class MonsterGui extends UtilGui
 		else if(monsterID==200)//엔더 크리스탈
 			ID=426;
 		
-		Stack2(displayName, ID, Data, Amount, lore, loc, inv);
+		removeFlagStack(displayName, ID, Data, Amount, lore, loc, inv);
 		return;
 	}
 
@@ -657,12 +657,12 @@ public class MonsterGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 			if(slot == 45)//이전 목록
 				new OPboxGui().opBoxGuiMain(player, (byte) 1);
@@ -686,7 +686,7 @@ public class MonsterGui extends UtilGui
 					new monster.MonsterSpawn().SpawnEggGive(player,ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 				else if(event.isRightClick()&&event.isShiftClick())
 				{
-					SoundEffect.SP(player, Sound.BLOCK_LAVA_POP, 1.0F, 1.0F);
+					SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 1.0F, 1.0F);
 					YamlLoader monsterListYaml = new YamlLoader();
 					monsterListYaml.getConfig("Monster/MonsterList.yml");
 					monsterListYaml.removeKey(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
@@ -705,14 +705,14 @@ public class MonsterGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
 			String MonsterName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
 			
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 목록
 				monsterListGUI(player, 0);
 			else if(slot == 14)//몹 타입 변경
@@ -781,7 +781,7 @@ public class MonsterGui extends UtilGui
 			}
 			else if(slot == 24)//장비 변경
 			{
-				SoundEffect.SP(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.0F);
 				ArmorGUI(player, MonsterName);
 			}
 			else if(slot == 34)//몬스터 포션 효과
@@ -854,20 +854,20 @@ public class MonsterGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
 			String MonsterName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
 			
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 목록
 				MonsterOptionSettingGUI(player, MonsterName);
 			else if(slot >= 10 && slot <= 16)
 			{
 				UserDataObject u = new UserDataObject();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				player.closeInventory();
 				u.setType(player, "Monster");
 				u.setString(player, (byte)1, "Potion");
@@ -941,7 +941,7 @@ public class MonsterGui extends UtilGui
 						monsterListYaml.set(MonsterName+".Potion.Invisible", 0);
 				}
 				monsterListYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_GENERIC_DRINK, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_GENERIC_DRINK, 1.0F, 1.0F);
 				MonsterPotionGUI(player, MonsterName);
 			}
 		}
@@ -1003,7 +1003,7 @@ public class MonsterGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
@@ -1011,7 +1011,7 @@ public class MonsterGui extends UtilGui
 			int page = (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1].split(" / ")[0]));
 			String MonsterName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
 			
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 목록
 				MonsterOptionSettingGUI(player, MonsterName);
 			else if(slot == 48)//이전 페이지

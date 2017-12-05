@@ -31,7 +31,7 @@ public class OPboxChat extends UtilChat
 		case "RO_I_H"://RespawnOption_Item_Health
 			if(isIntMinMax(message, player, 1, 100))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				switch(u.getString(player, (byte)1))
 				{
 					case "RO_S_H":
@@ -68,7 +68,7 @@ public class OPboxChat extends UtilChat
 		case "RO_I_E"://RespawnOption_Item_EXP
 			if(isIntMinMax(message, player, 0, 100))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				switch(u.getString(player, (byte)1))
 				{
 					case "RO_S_E":
@@ -105,7 +105,7 @@ public class OPboxChat extends UtilChat
 		case "RO_I_M"://RespawnOption_Item_Money
 			if(isIntMinMax(message, player, 0, 100))
 			{
-				SoundEffect.SP(player, Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 				switch(u.getString(player, (byte)1))
 				{
 					case "RO_S_M":
@@ -127,7 +127,7 @@ public class OPboxChat extends UtilChat
 			}
 			return;
 		case "CCP"://ChangeChatPrefix
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			configYaml.set("Server.ChatPrefix", event.getMessage());
 			configYaml.saveConfig();
 			u.clearAll(player);
@@ -136,7 +136,7 @@ public class OPboxChat extends UtilChat
 		case "BMT"://BroadcastMessageTick
 			if(isIntMinMax(message, player, 1, 3600))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				configYaml.set("Server.BroadCastSecond", Integer.parseInt(message));
 				configYaml.saveConfig();
 				new admin.OPboxGui().opBoxGuiBroadCast(player, (byte) 0);
@@ -144,7 +144,7 @@ public class OPboxChat extends UtilChat
 			}
 			return;
 		case "NBM"://NewBroadcastMessage
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			YamlLoader broadcastYaml = new YamlLoader();
 			broadcastYaml.getConfig("BroadCast.yml");
 			broadcastYaml.set(u.getInt(player, (byte)0)+"", "§f"+event.getMessage());
@@ -153,7 +153,7 @@ public class OPboxChat extends UtilChat
 			new admin.OPboxGui().opBoxGuiBroadCast(player, (byte) 0);
 			return;
 		case "JM"://JoinMessage
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			if(message.equals("없음"))
 				configYaml.set("Server.JoinMessage", null);
 			else
@@ -163,7 +163,7 @@ public class OPboxChat extends UtilChat
 			new admin.OPboxGui().opBoxGuiSetting(player);
 			return;
 		case "QM"://QuitMessage
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			if(message.equals("없음"))
 				configYaml.set("Server.QuitMessage", null);
 			else
@@ -180,7 +180,7 @@ public class OPboxChat extends UtilChat
 				String Message = event.getMessage();
 				Message.replace(".", "");
 				Message.replace(":", "");
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				switch(u.getString(player, (byte)2))
 				{
 				case "체력":
@@ -255,10 +255,10 @@ public class OPboxChat extends UtilChat
 			{
 				if(isIntMinMax(message, player, 1, Integer.MAX_VALUE))
 				{
-					if(new event.EventInteract().SetItemDefaultName(Short.parseShort(message),(byte)0).equals("지정되지 않은 아이템"))
+					if(new event.EventInteract().setItemDefaultName(Integer.parseInt(message), 0).equals("지정되지 않은 아이템"))
 					{
 						player.sendMessage("§c[SYSTEM] : 해당 아이템은 존재하지 않습니다!");
-		  				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+		  				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		  				return;
 					}
 					int value = Integer.parseInt(message);

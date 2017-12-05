@@ -29,11 +29,11 @@ public class GambleChat
 		{
 			if(gambleYML.contains(message))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				player.sendMessage("§c[도박] : 해당 이름의 상품은 이미 존재합니다!");
 				return;
 			}
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			gambleYML.set(message+".Grade", "§f[일반]");
 			gambleYML.createSection(message+".Present");
 			gambleYML.saveConfig();

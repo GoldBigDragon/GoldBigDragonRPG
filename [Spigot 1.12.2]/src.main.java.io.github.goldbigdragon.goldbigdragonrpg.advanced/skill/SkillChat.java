@@ -27,7 +27,7 @@ public class SkillChat extends UtilChat
 		switch(u.getString(player, (byte)1))
 		{
 		case "SKL"://SkillLore
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.5F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.5F);
 			SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".Lore", event.getMessage());
 			SkillList.saveConfig();
 			SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
@@ -51,7 +51,7 @@ public class SkillChat extends UtilChat
 			SkillList.set(Message+".SkillRank."+1+".AffectStat","없음");
 			SkillList.set(Message+".SkillRank."+1+".DistrictWeapon","없음");
 			SkillList.saveConfig();
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 0.5F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 0.5F);
 			SKGUI.AllSkillsGUI(player, (short) 0,false,"Maple");
 			u.clearAll(player);
 			return;
@@ -59,17 +59,17 @@ public class SkillChat extends UtilChat
 			if(isIntMinMax(Message, player, 1, 2267))
 			{
 				event.EventInteract I = new event.EventInteract();
-				if(I.SetItemDefaultName(Short.parseShort(Message),(byte)0).equals("지정되지 않은 아이템"))
+				if(I.setItemDefaultName(Integer.parseInt(Message), 0).equals("지정되지 않은 아이템"))
 				{
 					player.sendMessage("§c[SYSTEM] : 해당 아이템은 존재하지 않습니다!");
-	  				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+	  				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 	  				return;
 				}
 				SkillList.set(u.getString(player, (byte)2)+".ID", Integer.parseInt(Message));
 				SkillList.saveConfig();
 				u.setType(player, "Skill");
 				u.setString(player, (byte)1, "CSD");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§d[스킬] : 스킬 아이콘의 DATA값을 입력 해 주세요!!");
 			}
 			return;
@@ -80,7 +80,7 @@ public class SkillChat extends UtilChat
 				SkillList.saveConfig();
 				u.setType(player, "Skill");
 				u.setString(player, (byte)1, "CSA");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§d[스킬] : 스킬 아이콘의 개수를 입력 해 주세요!!");
 			}
 			return;
@@ -89,7 +89,7 @@ public class SkillChat extends UtilChat
 			{
 				SkillList.set(u.getString(player, (byte)2)+".Amount", Integer.parseInt(Message));
 				SkillList.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 				SKGUI.AllSkillsGUI(player, (short) 0,false,"Maple");
 				u.clearAll(player);
 			}
@@ -99,7 +99,7 @@ public class SkillChat extends UtilChat
 			{
 				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".SkillPoint",Integer.parseInt(Message));
 				SkillList.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 				SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
 				u.clearAll(player);
 			}
@@ -109,7 +109,7 @@ public class SkillChat extends UtilChat
 			{
 				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".NeedLevel",Integer.parseInt(Message));
 				SkillList.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				player.sendMessage("§d[스킬] : 스킬을 배울 수 있는 누적 레벨을 설정해 주세요!");
 				player.sendMessage("§d[제한 없음 : 0] [최대 : "+Integer.MAX_VALUE+"]");
 				u.setType(player, "Skill");
@@ -123,7 +123,7 @@ public class SkillChat extends UtilChat
 			{
 				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".NeedRealLevel",Integer.parseInt(Message));
 				SkillList.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
 				u.clearAll(player);
 			}
@@ -133,7 +133,7 @@ public class SkillChat extends UtilChat
 			{
 				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".BonusHP",Integer.parseInt(Message));
 				SkillList.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 				SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
 				u.clearAll(player);
 			}
@@ -143,7 +143,7 @@ public class SkillChat extends UtilChat
 			{
 				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".BonusMP",Integer.parseInt(Message));
 				SkillList.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 				SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
 				u.clearAll(player);
 			}
@@ -153,7 +153,7 @@ public class SkillChat extends UtilChat
 			{
 				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".BonusSTR",Integer.parseInt(Message));
 				SkillList.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 				SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
 				u.clearAll(player);
 			}
@@ -163,7 +163,7 @@ public class SkillChat extends UtilChat
 			{
 				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".BonusDEX",Integer.parseInt(Message));
 				SkillList.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 				SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
 				u.clearAll(player);
 			}
@@ -173,7 +173,7 @@ public class SkillChat extends UtilChat
 			{
 				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".BonusINT",Integer.parseInt(Message));
 				SkillList.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 				SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
 				u.clearAll(player);
 			}
@@ -183,7 +183,7 @@ public class SkillChat extends UtilChat
 			{
 				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".BonusWILL",Integer.parseInt(Message));
 				SkillList.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 				SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
 				u.clearAll(player);
 			}
@@ -193,7 +193,7 @@ public class SkillChat extends UtilChat
 			{
 				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".BonusLUK",Integer.parseInt(Message));
 				SkillList.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 				SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
 				u.clearAll(player);
 			}
@@ -203,7 +203,7 @@ public class SkillChat extends UtilChat
 			{
 				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".BonusBAL",Integer.parseInt(Message));
 				SkillList.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 				SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
 				u.clearAll(player);
 			}
@@ -213,7 +213,7 @@ public class SkillChat extends UtilChat
 			{
 				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".BonusCRI",Integer.parseInt(Message));
 				SkillList.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 				SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
 				u.clearAll(player);
 			}
@@ -223,7 +223,7 @@ public class SkillChat extends UtilChat
 			{
 				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".BonusDEF",Integer.parseInt(Message));
 				SkillList.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 				SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
 				u.clearAll(player);
 			}
@@ -233,7 +233,7 @@ public class SkillChat extends UtilChat
 			{
 				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".BonusPRO",Integer.parseInt(Message));
 				SkillList.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 				SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
 				u.clearAll(player);
 			}
@@ -243,7 +243,7 @@ public class SkillChat extends UtilChat
 			{
 				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".BonusMDEF",Integer.parseInt(Message));
 				SkillList.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 				SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
 				u.clearAll(player);
 			}
@@ -253,7 +253,7 @@ public class SkillChat extends UtilChat
 			{
 				SkillList.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".BonusMPRO",Integer.parseInt(Message));
 				SkillList.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 				SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
 				u.clearAll(player);
 			}

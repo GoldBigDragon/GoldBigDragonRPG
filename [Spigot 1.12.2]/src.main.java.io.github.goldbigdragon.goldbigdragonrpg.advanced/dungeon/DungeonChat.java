@@ -38,13 +38,13 @@ public class DungeonChat
 			dungeonListYaml.getConfig("Dungeon/DungeonList.yml");
 			if(Message.length()>=11)
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				player.sendMessage("§c[던전] : 이름이 너무 깁니다! (10자 이내)");
 				return;
 			}
 			if(dungeonListYaml.contains(Message))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				player.sendMessage("§c[던전] : 해당 이름의 던전은 이미 존재합니다!");
 				return;
 			}
@@ -84,7 +84,7 @@ public class DungeonChat
 					dungeonListYaml.createSection("0."+count);
 				}
 				dungeonListYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§a[던전] : 던전 추가 완료!");
 			}
 			u.clearAll(player);
@@ -98,7 +98,7 @@ public class DungeonChat
 				dungeonListYaml.getConfig("Dungeon/Dungeon/"+u.getString(player, (byte)1)+"/Option.yml");
 				dungeonListYaml.set("Size", Integer.parseInt(event.getMessage()));
 				dungeonListYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				new dungeon.DungeonGui().DungeonSetUpGUI(player, u.getString(player, (byte)1));
 				u.clearAll(player);
 			}
@@ -110,7 +110,7 @@ public class DungeonChat
 				dungeonListYaml.getConfig("Dungeon/Dungeon/"+u.getString(player, (byte)1)+"/Option.yml");
 				dungeonListYaml.set("Maze_Level", Integer.parseInt(event.getMessage()));
 				dungeonListYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				new dungeon.DungeonGui().DungeonSetUpGUI(player, u.getString(player, (byte)1));
 				u.clearAll(player);
 			}
@@ -123,7 +123,7 @@ public class DungeonChat
 				dungeonListYaml.set("District.Level", Integer.parseInt(event.getMessage()));
 				dungeonListYaml.saveConfig();
 				u.setString(player, (byte)0, "DDRL");//DungeonDistrictRealLevel
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§a[던전] : 던전 입장 가능 누적 레벨을 입력 해 주세요!");
 			}
 		}
@@ -134,7 +134,7 @@ public class DungeonChat
 				dungeonListYaml.getConfig("Dungeon/Dungeon/"+u.getString(player, (byte)1)+"/Option.yml");
 				dungeonListYaml.set("District.RealLevel", Integer.parseInt(event.getMessage()));
 				dungeonListYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				new dungeon.DungeonGui().DungeonSetUpGUI(player, u.getString(player, (byte)1));
 				u.clearAll(player);
 			}
@@ -147,7 +147,7 @@ public class DungeonChat
 				dungeonListYaml.set("Reward.Money", Integer.parseInt(event.getMessage()));
 				dungeonListYaml.saveConfig();
 				u.setString(player, (byte)0, "DRE");//DungeonRewardEXP
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§a[던전] : 던전 클리어 보상 경험치를 입력 해 주세요!");
 			}
 		}
@@ -158,7 +158,7 @@ public class DungeonChat
 				dungeonListYaml.getConfig("Dungeon/Dungeon/"+u.getString(player, (byte)1)+"/Option.yml");
 				dungeonListYaml.set("Reward.EXP", Integer.parseInt(event.getMessage()));
 				dungeonListYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				new dungeon.DungeonGui().DungeonSetUpGUI(player, u.getString(player, (byte)1));
 				u.clearAll(player);
 			}
@@ -177,13 +177,13 @@ public class DungeonChat
 		{
 			if(Message.length()>=16)
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				player.sendMessage("§c[던전] : 이름이 너무 깁니다! (15자 이내)");
 				return;
 			}
 			if(enterCardListYaml.contains(Message))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				player.sendMessage("§c[던전] : 해당 이름의 통행증은 이미 존재합니다!");
 				return;
 			}
@@ -197,7 +197,7 @@ public class DungeonChat
 				enterCardListYaml.set(Message+".Min", 0);
 				enterCardListYaml.set(Message+".Sec", 0);
 				enterCardListYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§a[던전] : 통행증 추가 완료!");
 			}
 			u.clearAll(player);
@@ -210,7 +210,7 @@ public class DungeonChat
 			{
 				enterCardListYaml.set(u.getString(player, (byte)1)+".ID", Integer.parseInt(event.getMessage()));
 				enterCardListYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				u.setString(player, (byte)0, "ECDATA");
 				player.sendMessage("§a[던전] : 통행증 아이템 타입 DATA를 입력 해 주세요.");
 			}
@@ -221,7 +221,7 @@ public class DungeonChat
 			{
 				enterCardListYaml.set(u.getString(player, (byte)1)+".DATA", Integer.parseInt(event.getMessage()));
 				enterCardListYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				new dungeon.DungeonGui().EnterCardSetUpGUI(player, u.getString(player, (byte)1));
 				u.clearAll(player);
 			}
@@ -232,7 +232,7 @@ public class DungeonChat
 			{
 				enterCardListYaml.set(u.getString(player, (byte)1)+".Capacity", Integer.parseInt(event.getMessage()));
 				enterCardListYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				new dungeon.DungeonGui().EnterCardSetUpGUI(player, u.getString(player, (byte)1));
 				u.clearAll(player);
 			}
@@ -245,7 +245,7 @@ public class DungeonChat
 				{
 					enterCardListYaml.set(u.getString(player, (byte)1)+".Hour", -1);
 					enterCardListYaml.saveConfig();
-					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 					new dungeon.DungeonGui().EnterCardSetUpGUI(player, u.getString(player, (byte)1));
 					u.clearAll(player);
 				}
@@ -254,7 +254,7 @@ public class DungeonChat
 					enterCardListYaml.set(u.getString(player, (byte)1)+".Hour", Integer.parseInt(event.getMessage()));
 					enterCardListYaml.saveConfig();
 					u.setString(player, (byte)0, "ECUM");//EnterCardUseableMinute 
-					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 					player.sendMessage("§a[통행증] : 유효 분을 입력 해 주세요. (최대 59분)");
 				}
 			}
@@ -266,7 +266,7 @@ public class DungeonChat
 				enterCardListYaml.set(u.getString(player, (byte)1)+".Min",Integer.parseInt(event.getMessage()));
 				enterCardListYaml.saveConfig();
 				u.setString(player, (byte)0, "ECUS");//EnterCardUseableSecond
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§a[통행증] : 유효 초를 입력 해 주세요. (최대 59초)");
 			}
 		}
@@ -276,7 +276,7 @@ public class DungeonChat
 			{
 				enterCardListYaml.set(u.getString(player, (byte)1)+".Sec",Integer.parseInt(event.getMessage()));
 				enterCardListYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				new dungeon.DungeonGui().EnterCardSetUpGUI(player, u.getString(player, (byte)1));
 				u.clearAll(player);
 			}
@@ -293,14 +293,14 @@ public class DungeonChat
 		{
 			if(askOX(Message, player)==1)
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.2F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.2F);
 				u.clearAll(player);
 				new dungeon.DungeonGui().AltarShapeListGUI(player);
 			}
 			else if(Message.equals("아니오")||Message.equals("x")
 				||Message.equals("X"))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§a[던전] : 제단 설치가 취소되었습니다.");
 				u.clearAll(player);
 				new dungeon.DungeonGui().DungeonListMainGUI(player, 0, 120);
@@ -314,7 +314,7 @@ public class DungeonChat
 			String AltarName = u.getString(player, (byte)1).substring(2, u.getString(player, (byte)1).length());
 			alterListYaml.set(AltarName+".Name", event.getMessage());
 			alterListYaml.saveConfig();
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			new dungeon.DungeonGui().AltarSettingGUI(player, AltarName);
 			u.clearAll(player);
 		}
@@ -335,14 +335,14 @@ public class DungeonChat
 			else
 			{
 				player.sendMessage("§c[SYSTEM] : [네/O] 혹은 [아니오/X]를 입력 해 주세요!");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			}
 			
 		}
 		else
 		{
 			player.sendMessage("§c[SYSTEM] : [네/O] 혹은 [아니오/X]를 입력 해 주세요!");
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		}
 		return -1;
 	}
@@ -356,13 +356,13 @@ public class DungeonChat
 			else
 			{
 				player.sendMessage("§c[SYSTEM] : 최소 §e"+Min+"§c, 최대 §e"+Max+"§c 이하의 숫자를 입력하세요!");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			}
 		}
 		catch(NumberFormatException e)
 		{
 			player.sendMessage("§c[SYSTEM] : 정수 형태의 값(숫자)을 입력하세요. (§e"+Min+"§c ~ §e"+Max+"§c)");
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		}
 		return false;
 	}

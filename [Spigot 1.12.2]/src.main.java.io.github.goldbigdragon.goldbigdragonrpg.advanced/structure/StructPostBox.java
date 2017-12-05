@@ -63,7 +63,7 @@ public class StructPostBox extends UtilGui
 				{
 					Memo.add("§e[좌 클릭시 메시지 삭제]");
 					Memo.add("§0"+PostList[count].toString());
-					Stack2("§f[메시지]", 358,0,1,Memo, loc, inv);
+					removeFlagStack("§f[메시지]", 358,0,1,Memo, loc, inv);
 				}
 				else
 				{
@@ -96,7 +96,7 @@ public class StructPostBox extends UtilGui
 					}
 					PIMeta.setLore(Memo);
 					PostItem.setItemMeta(PIMeta);
-					ItemStackStack(PostItem, loc, inv);
+					stackItem(PostItem, loc, inv);
 				}
 				if(loc==6||loc==15||loc==24||loc==33||loc==42)
 					loc = (byte) (loc+5);
@@ -139,7 +139,7 @@ public class StructPostBox extends UtilGui
 				{
 					Memo.add("§e[좌 클릭시 메시지 전송 취소]");
 					Memo.add("§0"+PostList[count].toString());
-					Stack2("§f[메시지]", 358,0,1,Memo, loc, inv);
+					removeFlagStack("§f[메시지]", 358,0,1,Memo, loc, inv);
 				}
 				else
 				{
@@ -164,7 +164,7 @@ public class StructPostBox extends UtilGui
 					}
 					PIMeta.setLore(Memo);
 					PostItem.setItemMeta(PIMeta);
-					ItemStackStack(PostItem, loc, inv);
+					stackItem(PostItem, loc, inv);
 				}
 				if(loc==6||loc==15||loc==24||loc==33||loc==42)
 					loc = (byte) (loc+5);
@@ -173,31 +173,31 @@ public class StructPostBox extends UtilGui
 			}
 		}
 
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 1, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 7, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 10, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 16, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 19, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 25, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 28, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 34, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 37, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 43, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 1, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 7, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 10, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 16, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 19, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 25, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 28, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 34, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 37, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 43, inv);
 
 		int id = 166;
 		if(Type==0)//받은 우편
 			id = 166;
 		else
 			id = 54;
-		Stack2("§f§l[받은 우편]", id,0,1,Arrays.asList("§7받은 우편을 확인합니다."), 0, inv);
+		removeFlagStack("§f§l[받은 우편]", id,0,1,Arrays.asList("§7받은 우편을 확인합니다."), 0, inv);
 
 		if(Type==0)//받은 우편
 			id = 333;
 		else
 			id = 166;
-		Stack2("§f§l[보낸 우편]", id,0,1,Arrays.asList("§7보낸 우편을 확인합니다."), 9, inv);
-		Stack2("§f§l[닫기]", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+Type), 26, inv);
-		Stack2("§f§l[우편 쓰기]", 386,0,1,Arrays.asList("§7새로운 우편을 보냅니다."), 36, inv);
+		removeFlagStack("§f§l[보낸 우편]", id,0,1,Arrays.asList("§7보낸 우편을 확인합니다."), 9, inv);
+		removeFlagStack("§f§l[닫기]", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+Type), 26, inv);
+		removeFlagStack("§f§l[우편 쓰기]", 386,0,1,Arrays.asList("§7새로운 우편을 보냅니다."), 36, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -206,14 +206,14 @@ public class StructPostBox extends UtilGui
 	{
 		String UniqueCode = "§1§0§d§0§4§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§c§l보낼 아이템");
-		Stack2("§c ", 166,0,1,null, 0, inv);
-		Stack2("§c ", 166,0,1,null, 1, inv);
-		Stack2("§c ", 166,0,1,null, 2, inv);
-		Stack2("§c ", 166,0,1,null, 3, inv);
-		Stack2("§c ", 166,0,1,null, 5, inv);
-		Stack2("§c ", 166,0,1,null, 6, inv);
-		Stack2("§c ", 166,0,1,null, 7, inv);
-		Stack2("§c ", 166,0,1,null, 8, inv);
+		removeFlagStack("§c ", 166,0,1,null, 0, inv);
+		removeFlagStack("§c ", 166,0,1,null, 1, inv);
+		removeFlagStack("§c ", 166,0,1,null, 2, inv);
+		removeFlagStack("§c ", 166,0,1,null, 3, inv);
+		removeFlagStack("§c ", 166,0,1,null, 5, inv);
+		removeFlagStack("§c ", 166,0,1,null, 6, inv);
+		removeFlagStack("§c ", 166,0,1,null, 7, inv);
+		removeFlagStack("§c ", 166,0,1,null, 8, inv);
 		player.openInventory(inv);
 	}
 	
@@ -227,17 +227,17 @@ public class StructPostBox extends UtilGui
 		
 		if(slot == 26)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else if(slot == 0)//수신함
 		{
-			SoundEffect.SP(player, Sound.BLOCK_CHEST_OPEN, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.BLOCK_CHEST_OPEN, 0.8F, 1.0F);
 			PostBoxMainGUI(player, (byte) 0);
 		}
 		else if(slot == 9)//송신함
 		{
-			SoundEffect.SP(player, Sound.BLOCK_CHEST_OPEN, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.BLOCK_CHEST_OPEN, 0.8F, 1.0F);
 			PostBoxMainGUI(player, (byte) 1);
 		}
 		else if(slot == 36)//새 우편
@@ -248,7 +248,7 @@ public class StructPostBox extends UtilGui
 				if(PlayerPost.getConfigurationSection("Send").getKeys(false).size()<25)
 				{
 					UserDataObject u = new UserDataObject();
-					SoundEffect.SP(player, Sound.BLOCK_CLOTH_STEP, 0.8F, 1.8F);
+					SoundEffect.playSound(player, Sound.BLOCK_CLOTH_STEP, 0.8F, 1.8F);
 					u.setTemp(player, "Structure");
 					u.setType(player, "Post");
 					u.setString(player, (byte)0, "RN");//Reciever Nickname
@@ -262,13 +262,13 @@ public class StructPostBox extends UtilGui
 				}
 				else
 				{
-					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
 					player.sendMessage("§c[우편] : 우편은 최대 25개 까지만 보낼 수 있습니다.");
 				}
 			else
 			{
 				UserDataObject u = new UserDataObject();
-				SoundEffect.SP(player, Sound.BLOCK_CLOTH_STEP, 0.8F, 1.8F);
+				SoundEffect.playSound(player, Sound.BLOCK_CLOTH_STEP, 0.8F, 1.8F);
 				u.setTemp(player, "Structure");
 				u.setType(player, "Post");
 				u.setString(player, (byte)0, "RN");//Reciever Nickname
@@ -288,7 +288,7 @@ public class StructPostBox extends UtilGui
 			if(event.getCurrentItem().hasItemMeta())
 			{
 				byte Type = Byte.parseByte(ChatColor.stripColor(event.getInventory().getItem(26).getItemMeta().getLore().get(1)));
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				long UTC = Long.parseLong(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(event.getCurrentItem().getItemMeta().getLore().size()-1)));
 				if(Type==0)//수신함
 				{
@@ -310,7 +310,7 @@ public class StructPostBox extends UtilGui
 						}
 						else
 						{
-							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 							player.sendMessage("§c[우편] : 인벤토리 공간이 부족합니다!");
 						}
 					}
@@ -345,7 +345,7 @@ public class StructPostBox extends UtilGui
 									}
 									else
 									{
-										SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+										SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 										player.sendMessage("§c[우편] : 인벤토리 공간이 부족합니다!");
 									}
 								}
@@ -376,13 +376,13 @@ public class StructPostBox extends UtilGui
 										}
 										else
 										{
-											SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+											SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 											player.sendMessage("§c[우편] : 인벤토리 공간이 부족합니다!");
 										}
 									}
 									else
 									{
-										SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+										SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 										player.sendMessage("§c[우편] : 소지금이 부족합니다!");
 									}
 								}
@@ -438,7 +438,7 @@ public class StructPostBox extends UtilGui
 						}
 						else
 						{
-							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 							player.sendMessage("§c[우편] : 인벤토리 공간이 부족합니다!");
 						}
 					}
@@ -457,7 +457,7 @@ public class StructPostBox extends UtilGui
 		{
 			if(!event.getClickedInventory().getTitle().equals("container.inventory"))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.9F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.9F);
 				event.setCancelled(true);
 			}
 		}
@@ -473,7 +473,7 @@ public class StructPostBox extends UtilGui
 			
 			UserDataObject u = new UserDataObject();
 			u.setItemStack(player, item);
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.0F);
 			u.setString(player, (byte)0, "Value");
 			u.setTemp(player,"Structure");
 			player.sendMessage("§a[우편] : 우편물 수령을 위한 대금을 입력 하세요.");
@@ -517,12 +517,12 @@ public class StructPostBox extends UtilGui
 			PlayerPost.set("Send."+UTC+".Value", u.getInt(player, (byte)0));
 			TargetPost.saveConfig();
 			PlayerPost.saveConfig();
-			SoundEffect.SP(player, Sound.BLOCK_CHEST_CLOSE, 1.0F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_CHEST_CLOSE, 1.0F, 1.8F);
 			player.sendMessage("§a[우편] : 우편물을 발송하였습니다!");
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+			SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 			player.sendMessage("§c[우편] : 해당 플레이어의 우편함이 가득 찼습니다.");
 			if(u.getItemStack(player)!=null)
 			{

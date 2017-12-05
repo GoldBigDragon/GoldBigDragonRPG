@@ -87,7 +87,7 @@ public class StructBoard extends UtilGui
 				Memo.add("");
 				Memo.add("§e[Shift 우 클릭시 떼어내기]");
 				Memo.add("§0"+Post);
-				Stack2("§6§l"+PostedTime +"전 작성된 게시글", 358,(byte)0,(byte)1,Memo, (byte)loc, inv);
+				removeFlagStack("§6§l"+PostedTime +"전 작성된 게시글", 358,(byte)0,(byte)1,Memo, (byte)loc, inv);
 				if(loc==16||loc==25||loc==34||loc==43)
 					loc = (byte) (loc+3);
 				else
@@ -95,16 +95,16 @@ public class StructBoard extends UtilGui
 				count=(short) (count+1);
 			}
 		}
-		Stack2("§c ", 160,(byte)12,(byte)1,Arrays.asList(BoardCode), (byte)0, inv);
+		removeFlagStack("§c ", 160,(byte)12,(byte)1,Arrays.asList(BoardCode), (byte)0, inv);
 		
 		for(int count2 = 1; count2 < 9; count2++)
-			Stack2("§c ", 160,(byte)12,(byte)1,Arrays.asList(""), (byte)count2, inv);
+			removeFlagStack("§c ", 160,(byte)12,(byte)1,Arrays.asList(""), (byte)count2, inv);
 		for(int count2 = 44; count2 < 54; count2++)
-			Stack2("§c ", 160,(byte)12,(byte)1,Arrays.asList(""), (byte)count2, inv);
+			removeFlagStack("§c ", 160,(byte)12,(byte)1,Arrays.asList(""), (byte)count2, inv);
 		for(int count2 = 9; count2 < 45; count2=(byte) (count2+9))
-			Stack2("§c ", 160,(byte)12,(byte)1,Arrays.asList(""), (byte)count2, inv);
+			removeFlagStack("§c ", 160,(byte)12,(byte)1,Arrays.asList(""), (byte)count2, inv);
 		for(int count2 = 17; count2 < 54; count2=(byte) (count2+9))
-			Stack2("§c ", 160,(byte)12,(byte)1,Arrays.asList(""), (byte)count2, inv);
+			removeFlagStack("§c ", 160,(byte)12,(byte)1,Arrays.asList(""), (byte)count2, inv);
 
 		if(!Board.getString("Notice").equals("null"))
 		{
@@ -116,15 +116,15 @@ public class StructBoard extends UtilGui
 				else
 					Memo.add("§f"+Board.getString("Notice").substring(0+(count2*20), Board.getString("Notice").length()));
 			}
-			Stack2("§f§l[게시판 알림]", 321,(byte)0,(byte)1,Memo, (byte)4, inv);
+			removeFlagStack("§f§l[게시판 알림]", 321,(byte)0,(byte)1,Memo, (byte)4, inv);
 		}
 		
 		if(AllPost>(28*page)+28)
-			Stack2("§f§l다음 페이지", 323,(byte)0,(byte)1,Arrays.asList("§7다음 페이지로 이동 합니다."), (byte)50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,(byte)0,(byte)1,Arrays.asList("§7다음 페이지로 이동 합니다."), (byte)50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,(byte)0,(byte)1,Arrays.asList("§7이전 페이지로 이동 합니다."), (byte)48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,(byte)0,(byte)1,Arrays.asList("§7이전 페이지로 이동 합니다."), (byte)48, inv);
 
-		Stack2("§f§l새 게시글", 386,(byte)0,(byte)1,Arrays.asList("§7새로운 게시글을 작성합니다."), (byte)49, inv);
+		removeFlagStack("§f§l새 게시글", 386,(byte)0,(byte)1,Arrays.asList("§7새로운 게시글을 작성합니다."), (byte)49, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -146,7 +146,7 @@ public class StructBoard extends UtilGui
 			Board.saveConfig();
 		}
 		if(Board.getString("Notice").equals("null"))
-			Stack2("§f§l[게시판 알림]", 166,(byte)0,(byte)1,Arrays.asList("§c[게시판 알림 없음]"), (byte)2, inv);
+			removeFlagStack("§f§l[게시판 알림]", 166,(byte)0,(byte)1,Arrays.asList("§c[게시판 알림 없음]"), (byte)2, inv);
 		else
 		{
 			List<String> Memo = new ArrayList<String>();
@@ -157,23 +157,23 @@ public class StructBoard extends UtilGui
 				else
 					Memo.add("§f"+Board.getString("Notice").substring(0+(count2*20), Board.getString("Notice").length()));
 			}
-			Stack2("§f§l[게시판 알림]", 321,(byte)0,(byte)1,Memo, (byte)2, inv);
+			removeFlagStack("§f§l[게시판 알림]", 321,(byte)0,(byte)1,Memo, (byte)2, inv);
 		}
 
 		if(Board.getBoolean("OnlyUseOP"))
-			Stack2("§f§l[사용 권한]", 137,(byte)0,(byte)1,Arrays.asList("§9[관리자 전용]"), (byte)4, inv);
+			removeFlagStack("§f§l[사용 권한]", 137,(byte)0,(byte)1,Arrays.asList("§9[관리자 전용]"), (byte)4, inv);
 		else
-			Stack2("§f§l[사용 권한]", 397,(byte)3,(byte)1,Arrays.asList("§a[전체 이용]"), (byte)4, inv);
+			removeFlagStack("§f§l[사용 권한]", 397,(byte)3,(byte)1,Arrays.asList("§a[전체 이용]"), (byte)4, inv);
 			
-		Stack2("§f§l[게시글 전체 삭제]", 325,(byte)0,(byte)1,Arrays.asList("§7게시판에 붙여진 모든 게시글을","§7삭제합니다."), (byte)6, inv);
+		removeFlagStack("§f§l[게시글 전체 삭제]", 325,(byte)0,(byte)1,Arrays.asList("§7게시판에 붙여진 모든 게시글을","§7삭제합니다."), (byte)6, inv);
 
-		Stack2(BoardCode, 160,(byte)8,(byte)1,null, (byte)1, inv);
-		Stack2(BoardCode, 160,(byte)8,(byte)1,null, (byte)3, inv);
-		Stack2(BoardCode, 160,(byte)8,(byte)1,null, (byte)5, inv);
-		Stack2(BoardCode, 160,(byte)8,(byte)1,null, (byte)7, inv);
+		removeFlagStack(BoardCode, 160,(byte)8,(byte)1,null, (byte)1, inv);
+		removeFlagStack(BoardCode, 160,(byte)8,(byte)1,null, (byte)3, inv);
+		removeFlagStack(BoardCode, 160,(byte)8,(byte)1,null, (byte)5, inv);
+		removeFlagStack(BoardCode, 160,(byte)8,(byte)1,null, (byte)7, inv);
 		
-		Stack2("§f§l이전 목록", 323,(byte)0,(byte)1,Arrays.asList("§7이전 화면으로 돌아갑니다."), (byte)0, inv);
-		Stack2("§f§l닫기", 324,(byte)0,(byte)1,Arrays.asList("§7창을 닫습니다."), (byte)8, inv);
+		removeFlagStack("§f§l이전 목록", 323,(byte)0,(byte)1,Arrays.asList("§7이전 화면으로 돌아갑니다."), (byte)0, inv);
+		removeFlagStack("§f§l닫기", 324,(byte)0,(byte)1,Arrays.asList("§7창을 닫습니다."), (byte)8, inv);
 		player.openInventory(inv);
 	}
 	
@@ -190,7 +190,7 @@ public class StructBoard extends UtilGui
 		{
 			if(event.getCurrentItem().getTypeId()==323)
 			{
-				SoundEffect.SP(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
 				if(slot == 48)//이전 페이지
 					BoardMainGUI(player, Code, (byte) (page-1));
 				else if(slot == 50)//다음 페이지
@@ -203,12 +203,12 @@ public class StructBoard extends UtilGui
 			Board.getConfig("Structure/"+Code+".yml");
 			if(Board.getBoolean("OnlyUseOP")&&player.isOp()==false)
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				player.sendMessage("§c[게시판] : 게시글 작성 권한이 없습니다!");
 				return;
 			}
 			UserDataObject u = new UserDataObject();
-			SoundEffect.SP(player, Sound.BLOCK_CLOTH_STEP, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_CLOTH_STEP, 0.8F, 1.8F);
 			u.setTemp(player, "Structure");
 			u.setType(player, "Board");
 			u.setString(player, (byte)0, "Title");
@@ -232,14 +232,14 @@ public class StructBoard extends UtilGui
 				{
 					if(Board.getString("User."+PostNumber+".User").equals(player.getName())||player.isOp())
 					{
-						SoundEffect.SP(player, Sound.ENTITY_SHEEP_SHEAR, 1.0F, 1.5F);
+						SoundEffect.playSound(player, Sound.ENTITY_SHEEP_SHEAR, 1.0F, 1.5F);
 						Board.removeKey("User."+PostNumber);
 						Board.saveConfig();
 						BoardMainGUI(player, Code, page);
 					}
 					else
 					{
-						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 						player.sendMessage("§c[게시판] : 자신이 작성한 게시글만 삭제할 수 있습니다.");
 					}
 				}
@@ -257,12 +257,12 @@ public class StructBoard extends UtilGui
 		
 		if(slot == 8)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			String Code = event.getInventory().getItem(1).getItemMeta().getDisplayName();
 			if(slot == 0)//이전 목록
 				new structure.StructureGui().StructureListGUI(player, 0);

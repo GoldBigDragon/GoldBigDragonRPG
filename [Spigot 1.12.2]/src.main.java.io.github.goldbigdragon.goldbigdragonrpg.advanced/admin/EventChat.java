@@ -30,7 +30,7 @@ public class EventChat extends UtilChat
 			if(isIntMinMax(message, player, 1, 10))
 			{
 				int value = Integer.parseInt(message);
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				if(configYaml.getInt("Event.Multiple_Level_Up_SkillPoint") == 1)
 				{
 					if(value != 1)
@@ -68,7 +68,7 @@ public class EventChat extends UtilChat
 			if(isIntMinMax(message, player, 1, 10))
 			{
 				int value = Integer.parseInt(message);
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				if(configYaml.getInt("Event.Multiple_Level_Up_StatPoint") == 1)
 				{
 					if(value != 1)
@@ -107,7 +107,7 @@ public class EventChat extends UtilChat
 			if(isIntMinMax(message, player, 1, 10))
 			{
 				int value = Integer.parseInt(message);
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				if(configYaml.getInt("Event.Multiple_EXP_Get") == 1)
 				{
 					if(value != 1)
@@ -145,7 +145,7 @@ public class EventChat extends UtilChat
 			if(isIntMinMax(message, player, 1, 10))
 			{
 				int value = Integer.parseInt(message);
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				if(configYaml.getInt("Event.DropChance") == 1)
 				{
 					if(value != 1)
@@ -183,7 +183,7 @@ public class EventChat extends UtilChat
 			if(isIntMinMax(message, player, 1, 10))
 			{
 				int value = Integer.parseInt(message);
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				if(configYaml.getInt("Event.Multiple_Proficiency_Get") == 1)
 				{
 					if(value != 1)

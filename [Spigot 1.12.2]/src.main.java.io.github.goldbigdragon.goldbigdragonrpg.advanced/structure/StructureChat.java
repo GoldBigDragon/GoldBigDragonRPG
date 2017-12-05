@@ -40,7 +40,7 @@ public class StructureChat
 			String lower = Message.toLowerCase();
 			if(lower.equals(ChatColor.stripColor(player.getName().toLowerCase())))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				u.clearAll(player);
 				player.sendMessage("§c[우편] : 자기 자신에게는 보낼 수 없습니다!");
 				return;
@@ -48,7 +48,7 @@ public class StructureChat
 				
 			if(Bukkit.getPlayer(Message) != null)
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				u.setString(player, (byte)0, "Title");
 				u.setString(player, (byte)1, Message);
 				u.setTemp(player,"Structure");
@@ -56,14 +56,14 @@ public class StructureChat
 			}
 			else
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				u.clearAll(player);
 				player.sendMessage("§c[우편] : 해당 닉네임을 가진 플레이어가 없습니다!");
 			}
 		}
 		else if(u.getString(player,(byte)0).equals("Title"))
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			u.setString(player, (byte)0, "Memo");
 			u.setString(player, (byte)2, event.getMessage());
 			player.sendMessage("§a[우편] : 우편 내용을 입력 하세요.");
@@ -71,7 +71,7 @@ public class StructureChat
 		}
 		else if(u.getString(player,(byte)0).equals("Memo"))
 		{
-			SoundEffect.SP(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.5F);
+			SoundEffect.playSound(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.5F);
 			u.setString(player, (byte)3,"§f"+event.getMessage());
 			u.setItemStack(player, null);
 			new StructPostBox().ItemPutterGUI(player);
@@ -101,7 +101,7 @@ public class StructureChat
 		//Board_PostTitle
 		if(u.getString(player,(byte)0).equals("Title"))
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			u.setString(player, (byte)0, "Memo");
 			u.setString(player, (byte)1, "§f"+event.getMessage());
 			player.sendMessage("§a[게시판] : 게시글 내용을 입력 하세요.");
@@ -109,7 +109,7 @@ public class StructureChat
 		}
 		else if(u.getString(player,(byte)0).equals("Memo"))
 		{
-			SoundEffect.SP(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.5F);
+			SoundEffect.playSound(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.5F);
 			u.setString(player, (byte)2,"§f"+event.getMessage());
 			YamlLoader Board = new YamlLoader();
 			Board.getConfig("Structure/"+u.getString(player, (byte)3)+".yml");
@@ -124,7 +124,7 @@ public class StructureChat
 		}
 		else if(u.getString(player,(byte)0).equals("Notice"))
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			u.setString(player, (byte)2,"§f"+event.getMessage());
 			YamlLoader Board = new YamlLoader();
 			Board.getConfig("Structure/"+u.getString(player, (byte)1)+".yml");
@@ -146,7 +146,7 @@ public class StructureChat
 		{
 			if(askOX(Message, player)==1)
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				if(u.getInt(player, (byte)0)==1)//거래 타입이 판매일 경우
 				{
 					new StructTradeBoard().SelectSellItemGUI(player);
@@ -167,7 +167,7 @@ public class StructureChat
 			else if(Message.equals("아니오")||Message.equals("x")
 				||Message.equals("X"))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§a[거래 게시판] : 물품 등록이 취소되었습니다.");
 				u.clearAll(player);
 				return;
@@ -180,14 +180,14 @@ public class StructureChat
 				if(u.getInt(player, (byte)0)==5)
 				{
 					u.setInt(player, (byte) 2, Integer.parseInt(event.getMessage()));
-					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 					player.sendMessage("§a[거래 게시판] : 당신은 무엇을 주실건가요?");
 					u.setString(player, (byte)0, "SetMyItem");
 					new StructTradeBoard().SelectExchangeItem_MyGUI(player);
 					return;
 				}
 				u.setInt(player, (byte) 2, Integer.parseInt(event.getMessage()));
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§a[거래 게시판] : 1개당 얼마에 구매 하실건가요? (0 ~ 2백만)");
 				u.setString(player, (byte)0, "SetPrice");
 			}
@@ -206,7 +206,7 @@ public class StructureChat
 					if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()<Board.getInt("RegisterCommission"))
 					{
 						u.clearAll(player);
-						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
 						player.sendMessage("§c[거래 게시판] : 등록 수수료가 부족합니다! 재 등록 해 주세요!");
 						return;
 					}
@@ -232,7 +232,7 @@ public class StructureChat
 					if(Board.contains("Sell."+ItemName+"."+player.getUniqueId().toString()))
 					{
 						u.clearAll(player);
-						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
 						player.sendMessage("§c[거래 게시판] : 동일 상품을 이미 등록하셨습니다!");
 						return;
 					}
@@ -249,7 +249,7 @@ public class StructureChat
 					USRL.set(player.getUniqueId().toString(), USRL.getInt(player.getUniqueId().toString())+1);
 					USRL.saveConfig();
 					u.clearAll(player);
-					SoundEffect.SP(player, Sound.BLOCK_CHEST_OPEN, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.BLOCK_CHEST_OPEN, 1.0F, 1.8F);
 					player.sendMessage("§a[거래 게시판] : 등록이 완료되었습니다!");
 					return;
 				}
@@ -263,7 +263,7 @@ public class StructureChat
 							if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()<Board.getInt("RegisterCommission"))
 							{
 								u.clearAll(player);
-								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
+								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
 								player.sendMessage("§c[거래 게시판] : 등록 수수료가 부족합니다! 재 등록 해 주세요!");
 								return;
 							}
@@ -293,7 +293,7 @@ public class StructureChat
 								if(Board.contains("Buy."+ItemName+"."+player.getUniqueId().toString()))
 								{
 									u.clearAll(player);
-									SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
+									SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
 									player.sendMessage("§c[거래 게시판] : 동일 상품을 이미 등록하셨습니다!");
 									return;
 								}
@@ -313,13 +313,13 @@ public class StructureChat
 							USRL.saveConfig();
 							player.getInventory().setItem(count, null);
 							u.clearAll(player);
-							SoundEffect.SP(player, Sound.BLOCK_CHEST_OPEN, 1.0F, 1.8F);
+							SoundEffect.playSound(player, Sound.BLOCK_CHEST_OPEN, 1.0F, 1.8F);
 							player.sendMessage("§a[거래 게시판] : 등록이 완료되었습니다!");
 							return;
 						}
 				}
 				u.clearAll(player);
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§c[거래 게시판] : 등록할 아이템이 없습니다! 재 등록 해 주세요!");
 			}
 		}
@@ -345,7 +345,7 @@ public class StructureChat
 			}
 			Board.saveConfig();
 			new structure.StructTradeBoard().TradeBoardSettingGUI(player);
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			u.clearAll(player);
 		}
 		else if(u.getString(player,(byte)0).equals("BuyTrade"))
@@ -355,7 +355,7 @@ public class StructureChat
 				int needAmount = Integer.parseInt(ChatColor.stripColor(event.getMessage()));
 				if(needAmount==0)
 				{
-					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 					player.sendMessage("§a[거래 게시판] : 거래가 취소되었습니다.");
 					u.clearAll(player);
 					return;
@@ -367,14 +367,14 @@ public class StructureChat
 					short ExitAmount = (byte) Board.getInt("Buy."+u.getString(player, (byte)1)+"."+u.getString(player, (byte)2)+".Amount");
 					if(Board.contains("Buy."+u.getString(player, (byte)1)+"."+u.getString(player, (byte)2))==false)
 					{
-						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
 						player.sendMessage("§c[거래 게시판] : 거래 정보가 바뀌었습니다! 재 시도 해 주시길 바랍니다!");
 						u.clearAll(player);
 						return;
 					}
 					else if(ExitAmount<needAmount)
 					{
-						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
 						player.sendMessage("§c[거래 게시판] : 거래 정보가 바뀌었습니다! 재 시도 해 주시길 바랍니다!");
 						u.clearAll(player);
 						return;
@@ -396,12 +396,12 @@ public class StructureChat
 								{
 									if(main.MainServerOption.PlayerList.get(u.getString(player, (byte)2)).getStat_Money()+Price > 2000000000)
 									{
-										SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
+										SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
 										player.sendMessage("§c[거래 게시판] : 판매자의 계좌 잔고가 초과되어 거래를 진행할 수 없습니다!");
 										u.clearAll(player);
 										return;
 									}
-									SoundEffect.SP(Target, Sound.ENTITY_VILLAGER_YES, 1.0F, 1.0F);
+									SoundEffect.playSound(Target, Sound.ENTITY_VILLAGER_YES, 1.0F, 1.0F);
 									new effect.SendPacket().sendTitle(Target, "§3[거래 성사]","§3거래 게시판에 등록한 물품이 판매되었습니다.", 1, 3, 1);
 									main.MainServerOption.PlayerList.get(u.getString(player, (byte)2)).addStat_MoneyAndEXP(Price-MinusSellCommission, 0, false);
 								}
@@ -411,7 +411,7 @@ public class StructureChat
 									TargetYML.getConfig("Stats/"+u.getString(player, (byte)2)+".yml");
 									if(TargetYML.getLong("Stat.Money") + Price-MinusSellCommission > 2000000000)
 									{
-										SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
+										SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
 										player.sendMessage("§c[거래 게시판] : 판매자의 계좌 잔고가 초과되어 거래를 진행할 수 없습니다!");
 										u.clearAll(player);
 										return;
@@ -456,7 +456,7 @@ public class StructureChat
 						}
 						else
 						{
-							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
 							player.sendMessage("§c[거래 게시판] : 소지금이 부족합니다!");
 							player.sendMessage("§c[필요 금액 : "+(Price*needAmount)+" "+main.MainServerOption.money+"§c]");
 							player.sendMessage("§c[소지 금액 : "+main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()+" "+main.MainServerOption.money+"§c]");
@@ -474,7 +474,7 @@ public class StructureChat
 				short needAmount = (short) Integer.parseInt(ChatColor.stripColor(event.getMessage()));
 				if(needAmount==0)
 				{
-					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 					player.sendMessage("§a[거래 게시판] : 거래가 취소되었습니다.");
 					u.clearAll(player);
 					return;
@@ -500,14 +500,14 @@ public class StructureChat
 					}
 					if(itemcount<needAmount)
 					{
-						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 						player.sendMessage("§c[거래 게시판] : 물건을 충분히 가지고 있지 않습니다!");
 						u.clearAll(player);
 						return;
 					}
 					if(needAmount > Board.getInt("Sell."+u.getString(player, (byte)1)+"."+u.getString(player, (byte)2)+".Amount"))
 					{
-						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 						player.sendMessage("§c[거래 게시판] : 거래 정보가 바뀌었습니다! 재 시도 해 주시길 바랍니다!");
 						u.clearAll(player);
 						return;
@@ -521,14 +521,14 @@ public class StructureChat
 						{
 							if(main.MainServerOption.PlayerList.get(u.getString(player, (byte)2)).getStat_Money()<price)
 							{
-								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 								player.sendMessage("§c[거래 게시판] : 판매자의 계좌 잔고가 부족하여 거래가 취소되었습니다!");
 								u.clearAll(player);
 								return;
 							}
 							else
 							{
-								SoundEffect.SP(Target, Sound.ENTITY_VILLAGER_YES, 1.0F, 1.0F);
+								SoundEffect.playSound(Target, Sound.ENTITY_VILLAGER_YES, 1.0F, 1.0F);
 								main.MainServerOption.PlayerList.get(u.getString(player, (byte)2)).addStat_MoneyAndEXP(-1*price, 0, false);
 								new effect.SendPacket().sendTitle(Target, "§3[거래 성사]","§3거래 게시판에 의뢰한 물품이 도착하였습니다.", 1, 3, 1);
 							}
@@ -539,7 +539,7 @@ public class StructureChat
 							TargetYML.getConfig("Stats/"+u.getString(player, (byte)2)+".yml");
 							if(TargetYML.getLong("Stat.Money") < price)
 							{
-								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 								player.sendMessage("§c[거래 게시판] : 판매자의 계좌 잔고가 부족하여 거래가 취소되었습니다!");
 								u.clearAll(player);
 								return;
@@ -557,7 +557,7 @@ public class StructureChat
 						TargetYML.getConfig("Stats/"+u.getString(player, (byte)2)+".yml");
 						if(TargetYML.getLong("Stat.Money") < price)
 						{
-							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 							player.sendMessage("§c[거래 게시판] : 판매자의 계좌 잔고가 부족하여 거래가 취소되었습니다!");
 							u.clearAll(player);
 							return;
@@ -648,7 +648,7 @@ public class StructureChat
 		{
 			if(Message.equals(ChatColor.stripColor(player.getName())))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				u.clearAll(player);
 				player.sendMessage("§c[우편] : 자기 자신에게는 보낼 수 없습니다!");
 				return;
@@ -665,13 +665,13 @@ public class StructureChat
 			else
 			{
 				player.sendMessage("§c[SYSTEM] : 최소 §e"+Min+"§c, 최대 §e"+Max+"§c 이하의 숫자를 입력하세요!");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			}
 		}
 		catch(NumberFormatException e)
 		{
 			player.sendMessage("§c[SYSTEM] : 정수 형태의 값(숫자)을 입력하세요. (§e"+Min+"§c ~ §e"+Max+"§c)");
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		}
 		return false;
 	}
@@ -687,14 +687,14 @@ public class StructureChat
 			else
 			{
 				player.sendMessage("§c[SYSTEM] : [네/O] 혹은 [아니오/X]를 입력 해 주세요!");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			}
 			
 		}
 		else
 		{
 			player.sendMessage("§c[SYSTEM] : [네/O] 혹은 [아니오/X]를 입력 해 주세요!");
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		}
 		return -1;
 	}

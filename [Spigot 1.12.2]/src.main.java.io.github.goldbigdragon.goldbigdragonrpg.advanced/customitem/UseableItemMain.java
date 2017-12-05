@@ -24,7 +24,7 @@ public class UseableItemMain
 		{
 			if(ServerTickMain.PlayerTaskList.containsKey(player.getName())==true)
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				new effect.SendPacket().sendActionBar(player, "§c§l[현재 텔레포트를 할 수 없는 상태입니다!]", false);
 				return;
 			}
@@ -32,7 +32,7 @@ public class UseableItemMain
 			if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_AttackTime() >= etc.getSec())
 			{
 				player.sendMessage("§c[이동 불가] : §e"+((main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_AttackTime()+15000 - etc.getSec())/1000)+"§c 초 후에 이동 가능합니다!");
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				return;
 			}
 			String world = "";
@@ -72,8 +72,8 @@ public class UseableItemMain
 			servertick.ServerTickMain.Schedule.put(utc, STSO);
 			ServerTickMain.PlayerTaskList.put(player.getName(), ""+utc);
 			new effect.PottionBuff().givePotionEffect(player, PotionEffectType.CONFUSION, 8, 255);
-			SoundEffect.SP(player, Sound.BLOCK_CLOTH_BREAK, 0.7F, 0.5F);
-			SoundEffect.SP(player, Sound.BLOCK_PORTAL_TRAVEL, 0.6F, 1.4F);
+			SoundEffect.playSound(player, Sound.BLOCK_CLOTH_BREAK, 0.7F, 0.5F);
+			SoundEffect.playSound(player, Sound.BLOCK_PORTAL_TRAVEL, 0.6F, 1.4F);
 		}
 		else if(type.equals("주문서"))
 		{
@@ -102,12 +102,12 @@ public class UseableItemMain
 					main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_WILL(configYaml.getInt("DefaultStat.WILL"));
 					main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_LUK(configYaml.getInt("DefaultStat.LUK"));
 					main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_StatPoint(totalStatPoint);
-					SoundEffect.SP(player, Sound.ITEM_BOTTLE_FILL_DRAGONBREATH, 1.2F, 0.5F);
+					SoundEffect.playSound(player, Sound.ITEM_BOTTLE_FILL_DRAGONBREATH, 1.2F, 0.5F);
 					player.sendMessage("§e§l[SYSTEM] : 스텟이 초기화되었습니다!");
 				}
 				else
 				{
-					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 					player.sendMessage("§c[System] : 메이플 스토리 시스템일 경우만 사용 가능합니다!");
 				}
 				return;
@@ -213,18 +213,18 @@ public class UseableItemMain
 			if(skillPoint>=0&&statPoint>=0&&def>=0&&protect>=0&&magicDef>=0&&magicProtect>=0&&balance>=0&&critical>=0&&hp>0
 			&&mp>=0&&str>=0&&dex>=0&&INT>=0&&will>=0&&luk>0)
 			{
-				SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 0.8F, 0.5F);
+				SoundEffect.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 0.8F, 0.5F);
 				player.sendMessage("§a§l[      능력치가 상승 하였습니다!      ]");
 			}
 			else if(skillPoint<0&&statPoint<0&&def<0&&protect<0&&magicDef<0&&magicProtect<0&&balance<0&&critical<0&&hp<0
 					&&mp<0&&str<0&&dex<0&&INT<0&&will<0&&luk<0)
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, 0.8F, 0.5F);
+				SoundEffect.playSound(player, Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, 0.8F, 0.5F);
 				player.sendMessage("§c§l[      능력치가 감소 하였습니다!      ]");
 			}
 			else
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.5F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.5F);
 				player.sendMessage("§e§l[      능력치에 변화가 생겼습니다!      ]");
 			}
 		}
@@ -273,34 +273,34 @@ public class UseableItemMain
 							}
 							else
 								player.getInventory().setItem(player.getInventory().getHeldItemSlot(), new ItemStack(0));
-							SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
+							SoundEffect.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
 							player.sendMessage("§d§l[새로운 스킬을 획득 하였습니다!] §e§l"+ChatColor.UNDERLINE+skillName);
 							return;
 						}
 						else
 						{
-							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 							player.sendMessage("§c§l[         당신은 이미 해당 스킬을 알고 있습니다!         ]");
 							return;
 						}
 					}
 					else
 					{
-						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 						player.sendMessage("§c§l[해당 스킬은 어느 카테고리에도 존재하지 않습니다! 관리자에게 문의하세요!]");
 						return;
 					}
 				}
 				else
 				{
-					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 					player.sendMessage("§c§l[서버에 해당 스킬이 존재하지 않습니다! 관리자에게 문의하세요!]");
 					return;
 				}
 			}
 			else
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				player.sendMessage("§c§l[   서버 시스템이 '마비노기'일 경우만 사용 가능합니다!   ]");
 				return;
 			}
@@ -333,7 +333,7 @@ public class UseableItemMain
 			
 			if(health > 0)
 			{
-				SoundEffect.SL(player.getLocation(), Sound.ENTITY_GENERIC_DRINK, 2.0F, 0.8F);
+				SoundEffect.playSoundLocation(player.getLocation(), Sound.ENTITY_GENERIC_DRINK, 2.0F, 0.8F);
 				Damageable damageable = player;
 				if(damageable.getMaxHealth() < damageable.getHealth()+health)
 					damageable.setHealth(damageable.getMaxHealth());
@@ -346,12 +346,12 @@ public class UseableItemMain
 				{
 					otherplugins.SpellMain spellMain = new otherplugins.SpellMain();
 					spellMain.DrinkManaPotion(player, mana);
-					SoundEffect.SL(player.getLocation(), Sound.BLOCK_WATER_AMBIENT, 2.0F, 1.9F);
+					SoundEffect.playSoundLocation(player.getLocation(), Sound.BLOCK_WATER_AMBIENT, 2.0F, 1.9F);
 				}
 			}
 			if(food > 0)
 			{
-				SoundEffect.SL(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 2.0F, 1.2F);
+				SoundEffect.playSoundLocation(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 2.0F, 1.2F);
 				if(player.getFoodLevel()+food > 20)
 					player.setFoodLevel(20);
 				player.setFoodLevel(player.getFoodLevel()+food);
@@ -370,13 +370,13 @@ public class UseableItemMain
 				}
 				else
 					player.getInventory().setItem(player.getInventory().getHeldItemSlot(), new ItemStack(0));
-				SoundEffect.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.8F);
+				SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.8F);
 				player.sendMessage("§a[SYSTEM] : §f§l"+money+" "+MainServerOption.money+"§a 입금 완료!");
 				player.sendMessage("§7(현재 "+main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()+ChatColor.stripColor(MainServerOption.money)+" 보유중)");
 			}
 			else
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				player.sendMessage("§c[System] : "+MainServerOption.money+"§c 을(를) 2000000000(20억)이상 가질 수 없습니다!");
 			}
 		}

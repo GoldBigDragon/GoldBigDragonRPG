@@ -37,20 +37,20 @@ public class CustomItemGui extends UtilGui
 			String itemName = itemYaml.getString(number+".DisplayName");
 			int itemId = itemYaml.getInt(number+".ID");
 			int itemData = itemYaml.getInt(number+".Data");
-			Stack2(itemName, itemId, itemData, 1,Arrays.asList(loreCreater(number)), loc, inv);
+			removeFlagStack(itemName, itemId, itemData, 1,Arrays.asList(loreCreater(number)), loc, inv);
 			
 			loc++;
 		}
 		
 		if(itemAmounts-(page*44)>45)
-		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+		removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+		removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l새 아이템", 145,0,1,Arrays.asList("§7새로운 아이템을 생성합니다."), 49, inv);
+		removeFlagStack("§f§l새 아이템", 145,0,1,Arrays.asList("§7새로운 아이템을 생성합니다."), 49, inv);
 		
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 	}
 
@@ -72,38 +72,38 @@ public class CustomItemGui extends UtilGui
 		type = type +itemYaml.getString(number+".Type");
 		grade = itemYaml.getString(number+".Grade");
 		
-		Stack2("§3[    결과물    ]", 145,0,1,null, 9, inv);
-		Stack2("§3[    결과물    ]", 145,0,1,null, 10, inv);
-		Stack2("§3[    결과물    ]", 145,0,1,null, 11, inv);
-		Stack2("§3[    결과물    ]", 145,0,1,null, 18, inv);
-		Stack2("§3[    결과물    ]", 145,0,1,null, 20, inv);
-		Stack2("§3[    결과물    ]", 145,0,1,null, 27, inv);
-		Stack2("§3[    결과물    ]", 145,0,1,null, 28, inv);
-		Stack2("§3[    결과물    ]", 145,0,1,null, 29, inv);
-		Stack2(itemName, itemID,itemData,1,Arrays.asList(loreCreater(number)), 19, inv);
+		removeFlagStack("§3[    결과물    ]", 145,0,1,null, 9, inv);
+		removeFlagStack("§3[    결과물    ]", 145,0,1,null, 10, inv);
+		removeFlagStack("§3[    결과물    ]", 145,0,1,null, 11, inv);
+		removeFlagStack("§3[    결과물    ]", 145,0,1,null, 18, inv);
+		removeFlagStack("§3[    결과물    ]", 145,0,1,null, 20, inv);
+		removeFlagStack("§3[    결과물    ]", 145,0,1,null, 27, inv);
+		removeFlagStack("§3[    결과물    ]", 145,0,1,null, 28, inv);
+		removeFlagStack("§3[    결과물    ]", 145,0,1,null, 29, inv);
+		removeFlagStack(itemName, itemID,itemData,1,Arrays.asList(loreCreater(number)), 19, inv);
 		
-		Stack2("§3[    형식 변경    ]", 421,0,1,Arrays.asList("§f아이템 설명창을","§f변경합니다.","","§f[    현재 형식    ]","       "+ itemYaml.getString(number+".ShowType"),""), 37, inv);
-		Stack2("§3[    이름 변경    ]", 421,0,1,Arrays.asList("§f아이템의 이름을","§f변경합니다.",""), 13, inv);
-		Stack2("§3[    설명 변경    ]", 386,0,1,Arrays.asList("§f아이템의 설명을","§f변경합니다.",""), 14, inv);
-		Stack2("§3[    타입 변경    ]", 61,0,1,Arrays.asList("§f아이템의 타입을","§f변경합니다.","","§f[    현재 타입    ]",type,""), 15, inv);
-		Stack2("§3[    등급 변경    ]", 266,0,1,Arrays.asList("§f아이템의 등급을","§f변경합니다.","","§f[    현재 등급    ]","       "+grade,""), 16, inv);
-		Stack2("§3[        ID        ]", 405,0,1,Arrays.asList("§f아이템의 ID값을","§f변경합니다.",""), 22, inv);
-		Stack2("§3[       DATA       ]", 336,0,1,Arrays.asList("§f아이템의 DATA값을","§f변경합니다.",""), 23, inv);
-		Stack2("§3[       "+main.MainServerOption.damage+"       ]", 267,0,1,Arrays.asList("§f아이템의 "+main.MainServerOption.damage+"를","§f변경합니다.",""), 24, inv);
-		Stack2("§3[     "+main.MainServerOption.magicDamage+"     ]", 403,0,1,Arrays.asList("§f아이템의 "+main.MainServerOption.magicDamage+"를","§f변경합니다.",""), 25, inv);
-		Stack2("§3[        방어        ]", 307,0,1,Arrays.asList("§f아이템의 방어력을","§f변경합니다.",""), 31, inv);
-		Stack2("§3[        보호        ]", 306,0,1,Arrays.asList("§f아이템의 보호를","§f변경합니다.",""), 32, inv);
-		Stack2("§3[      마법 방어      ]", 311,0,1,Arrays.asList("§f아이템의 마법 방어를","§f변경합니다.",""), 33, inv);
-		Stack2("§3[      마법 보호      ]", 310,0,1,Arrays.asList("§f아이템의 마법 보호를","§f변경합니다.",""), 34, inv);
-		Stack2("§3[        스텟        ]", 399,0,1,Arrays.asList("§f아이템의 보너스 스텟을","§f설정합니다.",""), 40, inv);
-		Stack2("§3[       내구도       ]", 145,2,1,Arrays.asList("§f아이템의 내구력을","§f조절합니다.","","§c[0 설정시 일반 아이템 내구도 사용]",""), 41, inv);
-		Stack2("§3[        개조        ]", 145,0,1,Arrays.asList("§f아이템의 최대 개조 횟수를","§f조절합니다.","","§c[0 설정시 개조 불가능]",""), 42, inv);
-		Stack2("§3[         룬         ]", 381,0,1,Arrays.asList("§f아이템의 최대 슬롯을","§f조절합니다.","","§f최대 "+itemYaml.getInt(number+".MaxSocket")+" 개","","§c[0 설정시 룬 장착 불가능]",""), 43, inv);
-		Stack2("§3[      스텟 제한      ]", 166,0,1,Arrays.asList("§f아이템 장착에 제한을","§f걸어둡니다.",""), 49, inv);
-		Stack2("§3[      직업 제한      ]", 397,3,1,Arrays.asList("§f아이템 장착에 제한을","§f걸어둡니다.","§c[우 클릭시 해제]",""), 50, inv);
+		removeFlagStack("§3[    형식 변경    ]", 421,0,1,Arrays.asList("§f아이템 설명창을","§f변경합니다.","","§f[    현재 형식    ]","       "+ itemYaml.getString(number+".ShowType"),""), 37, inv);
+		removeFlagStack("§3[    이름 변경    ]", 421,0,1,Arrays.asList("§f아이템의 이름을","§f변경합니다.",""), 13, inv);
+		removeFlagStack("§3[    설명 변경    ]", 386,0,1,Arrays.asList("§f아이템의 설명을","§f변경합니다.",""), 14, inv);
+		removeFlagStack("§3[    타입 변경    ]", 61,0,1,Arrays.asList("§f아이템의 타입을","§f변경합니다.","","§f[    현재 타입    ]",type,""), 15, inv);
+		removeFlagStack("§3[    등급 변경    ]", 266,0,1,Arrays.asList("§f아이템의 등급을","§f변경합니다.","","§f[    현재 등급    ]","       "+grade,""), 16, inv);
+		removeFlagStack("§3[        ID        ]", 405,0,1,Arrays.asList("§f아이템의 ID값을","§f변경합니다.",""), 22, inv);
+		removeFlagStack("§3[       DATA       ]", 336,0,1,Arrays.asList("§f아이템의 DATA값을","§f변경합니다.",""), 23, inv);
+		removeFlagStack("§3[       "+main.MainServerOption.damage+"       ]", 267,0,1,Arrays.asList("§f아이템의 "+main.MainServerOption.damage+"를","§f변경합니다.",""), 24, inv);
+		removeFlagStack("§3[     "+main.MainServerOption.magicDamage+"     ]", 403,0,1,Arrays.asList("§f아이템의 "+main.MainServerOption.magicDamage+"를","§f변경합니다.",""), 25, inv);
+		removeFlagStack("§3[        방어        ]", 307,0,1,Arrays.asList("§f아이템의 방어력을","§f변경합니다.",""), 31, inv);
+		removeFlagStack("§3[        보호        ]", 306,0,1,Arrays.asList("§f아이템의 보호를","§f변경합니다.",""), 32, inv);
+		removeFlagStack("§3[      마법 방어      ]", 311,0,1,Arrays.asList("§f아이템의 마법 방어를","§f변경합니다.",""), 33, inv);
+		removeFlagStack("§3[      마법 보호      ]", 310,0,1,Arrays.asList("§f아이템의 마법 보호를","§f변경합니다.",""), 34, inv);
+		removeFlagStack("§3[        스텟        ]", 399,0,1,Arrays.asList("§f아이템의 보너스 스텟을","§f설정합니다.",""), 40, inv);
+		removeFlagStack("§3[       내구도       ]", 145,2,1,Arrays.asList("§f아이템의 내구력을","§f조절합니다.","","§c[0 설정시 일반 아이템 내구도 사용]",""), 41, inv);
+		removeFlagStack("§3[        개조        ]", 145,0,1,Arrays.asList("§f아이템의 최대 개조 횟수를","§f조절합니다.","","§c[0 설정시 개조 불가능]",""), 42, inv);
+		removeFlagStack("§3[         룬         ]", 381,0,1,Arrays.asList("§f아이템의 최대 슬롯을","§f조절합니다.","","§f최대 "+itemYaml.getInt(number+".MaxSocket")+" 개","","§c[0 설정시 룬 장착 불가능]",""), 43, inv);
+		removeFlagStack("§3[      스텟 제한      ]", 166,0,1,Arrays.asList("§f아이템 장착에 제한을","§f걸어둡니다.",""), 49, inv);
+		removeFlagStack("§3[      직업 제한      ]", 397,3,1,Arrays.asList("§f아이템 장착에 제한을","§f걸어둡니다.","§c[우 클릭시 해제]",""), 50, inv);
 		
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+number), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+number), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -127,20 +127,20 @@ public class CustomItemGui extends UtilGui
 			if(count > jobList.length || loc >= 45) break;
 			
 			if(jobList[count].equalsIgnoreCase(configYaml.getString("Server.DefaultJob")))
-				Stack2("§f§l" + jobList[count], 403,0,1,Arrays.asList("§3최대 승급 : §f"+jobLevel+"§3차 승급","","§e[좌클릭시 전용 설정]","§e§l[서버 기본 직업]"), loc, inv);
+				removeFlagStack("§f§l" + jobList[count], 403,0,1,Arrays.asList("§3최대 승급 : §f"+jobLevel+"§3차 승급","","§e[좌클릭시 전용 설정]","§e§l[서버 기본 직업]"), loc, inv);
 			else
-				Stack2("§f§l" + jobList[count], 340,0,1,Arrays.asList("§3최대 승급 : §f"+jobLevel+"§3차 승급","","§e[좌클릭시 전용 설정]"), loc, inv);
+				removeFlagStack("§f§l" + jobList[count], 340,0,1,Arrays.asList("§3최대 승급 : §f"+jobLevel+"§3차 승급","","§e[좌클릭시 전용 설정]"), loc, inv);
 			
 			loc++;
 		}
 		
 		if(jobList.length-(page*44)>45)
-		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+		removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+		removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+number), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+number), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -154,12 +154,12 @@ public class CustomItemGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			short page = (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 			if(slot == 45)//이전 목록
 				new OPboxGui().opBoxGuiMain(player,(byte) 1);
@@ -245,12 +245,12 @@ public class CustomItemGui extends UtilGui
 
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 화면
 				itemListGui(player, 0);
 			else if(!((event.getSlot()>=9&&event.getSlot()<=11)||(event.getSlot()>=18&&event.getSlot()<=20)||(event.getSlot()>=27&&event.getSlot()<=29)))
@@ -261,7 +261,7 @@ public class CustomItemGui extends UtilGui
 				if(itemYaml.getString(itemnumber+"")==null)
 				{
 					player.sendMessage("§c[SYSTEM] : 다른 OP가 아이템을 삭제하여 반영되지 않았습니다!");
-					SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+					SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 					player.closeInventory();
 					return;
 				}
@@ -283,7 +283,7 @@ public class CustomItemGui extends UtilGui
 					YamlLoader customTypeYaml = new YamlLoader();
 				  	customTypeYaml.getConfig("Item/CustomType.yml");
 				  	String[] weaponCustomType = customTypeYaml.getKeys().toArray(new String[0]);
-					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				  	if(weaponCustomType.length == 0)
 				  	{
 						if(itemYaml.getString(itemnumber+".Type").contains("[근접 무기]"))
@@ -395,7 +395,7 @@ public class CustomItemGui extends UtilGui
 						jobListGui(player, (short)0, itemnumber);
 					else if(event.isRightClick())
 					{
-						SoundEffect.SP(player, Sound.ITEM_SHIELD_BREAK, 0.8F, 1.0F);
+						SoundEffect.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.8F, 1.0F);
 						itemYaml.set(itemnumber+".JOB", "공용");
 						itemYaml.saveConfig();
 						newItemGui(player, itemnumber);
@@ -509,12 +509,12 @@ public class CustomItemGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			int itemnumber = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
 			if(slot == 45)//이전 목록
 				newItemGui(player, itemnumber);
@@ -524,7 +524,7 @@ public class CustomItemGui extends UtilGui
 				temYaml.getConfig("Item/ItemList.yml");
 				temYaml.set(itemnumber+".JOB", ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 				temYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ITEM_SHIELD_BREAK, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ITEM_SHIELD_BREAK, 0.8F, 1.0F);
 				newItemGui(player, itemnumber);
 			}
 		}

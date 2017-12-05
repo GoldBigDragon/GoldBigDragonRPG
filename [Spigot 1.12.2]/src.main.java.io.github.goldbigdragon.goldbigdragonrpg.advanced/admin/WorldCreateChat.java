@@ -21,7 +21,7 @@ public class WorldCreateChat
 		Player player = event.getPlayer();
 		
 		String message = ChatColor.stripColor(event.getMessage());
-		SoundEffect.SP(player, Sound.BLOCK_ANVIL_USE,1.0F, 0.8F);
+		SoundEffect.playSound(player, Sound.BLOCK_ANVIL_USE,1.0F, 0.8F);
 		player.sendMessage("§6§l[岿靛 积己] : 岿靛 积己 吝...");
 		WorldType type = WorldType.FLAT;
 		
@@ -51,7 +51,7 @@ public class WorldCreateChat
 		for(int count = 0; count < worldYaml.getKeys().size();count++)
 			if(Bukkit.getWorld(worldname[count]) == null)
 				WorldCreator.name(worldname[count]).createWorld();
-    	SoundEffect.SP(player, Sound.ENTITY_WOLF_AMBIENT,1.0F, 0.8F);
+    	SoundEffect.playSound(player, Sound.ENTITY_WOLF_AMBIENT,1.0F, 0.8F);
 		player.sendMessage("§6§l[岿靛 积己] : 岿靛 积己 己傍!");
 		return;
 	}

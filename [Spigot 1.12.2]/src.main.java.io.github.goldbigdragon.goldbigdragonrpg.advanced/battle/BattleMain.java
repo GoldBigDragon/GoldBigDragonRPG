@@ -272,8 +272,8 @@ public class BattleMain implements Listener
 					if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).isAlert_Critical())
 						t.sendTitle(player, "§e", "§e크리티컬 히트!", 1, 0, 1);
 			}
-			SoundEffect.SL(event.getEntity().getLocation(), Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, (float)0.5, (float)2.0);
-			SoundEffect.SL(event.getEntity().getLocation(), Sound.ENTITY_GENERIC_EXPLODE, (float)0.5, (float)1.7);
+			SoundEffect.playSoundLocation(event.getEntity().getLocation(), Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, (float)0.5, (float)2.0);
+			SoundEffect.playSoundLocation(event.getEntity().getLocation(), Sound.ENTITY_GENERIC_EXPLODE, (float)0.5, (float)1.7);
 		}
 
 		int damageMinus = defenderStat[0]-attackerStat[5]; 
@@ -461,7 +461,7 @@ public class BattleMain implements Listener
 	public void damageCancellMessage (Player player, Entity defenser)
 	{
 		byte a = (byte) new util.UtilNumber().RandomNum(1, 5);
-		SoundEffect.SL(defenser.getLocation(), Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, (float)1.0, (float)0.7);
+		SoundEffect.playSoundLocation(defenser.getLocation(), Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, (float)1.0, (float)0.7);
 	    SendPacket t = new SendPacket();
 
 		if (a == 1) t.sendActionBar(player, "§c§l이 공격은 전혀 통하지 않는다!", false);

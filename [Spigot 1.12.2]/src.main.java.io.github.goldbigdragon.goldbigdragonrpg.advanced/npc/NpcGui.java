@@ -37,9 +37,9 @@ public class NpcGui extends UtilGui
 		String UniqueCode = "§0§0§7§0§0§r";
 		Inventory inv = Bukkit.createInventory(null, 27, UniqueCode + "§0[NPC] "+ChatColor.stripColor(NPCname));
 		UserDataObject u = new UserDataObject();
-		Stack2("§f§l대화를 한다", 340,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7에게","§7대화를 합니다."), 10, inv);
-		Stack2("§f§l거래를 한다", 371,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7에게","§7거래를 요청합니다."), 12, inv);
-		Stack2("§f§l퀘스트", 386,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7에게","§7도울 일이 없는지","§7물어봅니다."), 14, inv);
+		removeFlagStack("§f§l대화를 한다", 340,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7에게","§7대화를 합니다."), 10, inv);
+		removeFlagStack("§f§l거래를 한다", 371,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7에게","§7거래를 요청합니다."), 12, inv);
+		removeFlagStack("§f§l퀘스트", 386,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7에게","§7도울 일이 없는지","§7물어봅니다."), 14, inv);
 
 		YamlLoader playerNPCYaml = new YamlLoader();
     	if(playerNPCYaml.isExit("NPC/PlayerData/"+player.getUniqueId()+".yml")==false)
@@ -51,11 +51,11 @@ public class NpcGui extends UtilGui
     	}
     	else
     		playerNPCYaml.getConfig("NPC/PlayerData/"+player.getUniqueId()+".yml");
-		Stack2("§f§l선물하기", 54,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7에게","§7자신이 가지고 있는","§7아이템을 선물합니다.","§7(NPC와의 호감도 상승)","",
+		removeFlagStack("§f§l선물하기", 54,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7에게","§7자신이 가지고 있는","§7아이템을 선물합니다.","§7(NPC와의 호감도 상승)","",
 				"§d[현재 호감도]","§c§l ♥ §f§l"+playerNPCYaml.getInt(u.getNPCuuid(player)+".love") + " / 1000"), 16, inv);
-		Stack2("§f§l나가기", 324,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와의","§7대화를 종료합니다.","§0"+ u.getNPCuuid(player)), 26, inv);
+		removeFlagStack("§f§l나가기", 324,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와의","§7대화를 종료합니다.","§0"+ u.getNPCuuid(player)), 26, inv);
 		if(player.isOp())
-			Stack2("§f§lGUI 비 활성화", 166,0,1,Arrays.asList("§7이 NPC는 GoldBigDragonRPG의","§7NPC GUI 화면을 사용하지 않게 합니다.",""), 8, inv);
+			removeFlagStack("§f§lGUI 비 활성화", 166,0,1,Arrays.asList("§7이 NPC는 GoldBigDragonRPG의","§7NPC GUI 화면을 사용하지 않게 합니다.",""), 8, inv);
 
 		YamlLoader NPCscript = new YamlLoader();
 		NPCscript.getConfig("NPC/NPCData/"+ u.getNPCuuid(player)  +".yml");
@@ -120,13 +120,13 @@ public class NpcGui extends UtilGui
 		switch(NPCscript.getString("Job.Type"))
 		{
 		case "BlackSmith":
-				Stack2("§6§l대장장이", 145,0,1,Arrays.asList("§7손에 든 무기 및 도구, 방어구를","§7정해진 확률과 가격에 수리 해 줍니다.","","§3수리 성공률 : §f" +NPCscript.getInt("Job.FixRate")+"§3 %","§a내구도 10 당 가격 : §e"+NPCscript.getInt("Job.10PointFixDeal")+" "+ChatColor.GREEN+MainServerOption.money,"","§e[좌 클릭시 무기 수리화면 이동]","§c[일반 아이템 수리 실패시]","§c - 수리 성공과 상관 없이 골드 소모","§c[커스텀 아이템 수리 실패시]","§c - 최대 내구도 감소"), 4, inv);
+				removeFlagStack("§6§l대장장이", 145,0,1,Arrays.asList("§7손에 든 무기 및 도구, 방어구를","§7정해진 확률과 가격에 수리 해 줍니다.","","§3수리 성공률 : §f" +NPCscript.getInt("Job.FixRate")+"§3 %","§a내구도 10 당 가격 : §e"+NPCscript.getInt("Job.10PointFixDeal")+" "+ChatColor.GREEN+MainServerOption.money,"","§e[좌 클릭시 무기 수리화면 이동]","§c[일반 아이템 수리 실패시]","§c - 수리 성공과 상관 없이 골드 소모","§c[커스텀 아이템 수리 실패시]","§c - 최대 내구도 감소"), 4, inv);
 			break;
 		case "Shaman":
-			Stack2("§6§l주술사",381,0,1,Arrays.asList("§7플레이어에게 랜덤한 포션 효과를","§7지정 금액을 받고 부여해 줍니다.","§b버프 성공률 : §f" + NPCscript.getInt("Job.GoodRate") + "§3%","§b버프 시간 : §f" + NPCscript.getInt("Job.BuffTime")+"§3 초","§a복채 비용 : §f"+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+MainServerOption.money,"§e[좌 클릭시 점 치기]","§c[버프 실패시]","§c - 성공과 상관없이 골드 소모","§c - 버프 시간동안 너프 효과"), 4, inv);
+			removeFlagStack("§6§l주술사",381,0,1,Arrays.asList("§7플레이어에게 랜덤한 포션 효과를","§7지정 금액을 받고 부여해 줍니다.","§b버프 성공률 : §f" + NPCscript.getInt("Job.GoodRate") + "§3%","§b버프 시간 : §f" + NPCscript.getInt("Job.BuffTime")+"§3 초","§a복채 비용 : §f"+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+MainServerOption.money,"§e[좌 클릭시 점 치기]","§c[버프 실패시]","§c - 성공과 상관없이 골드 소모","§c - 버프 시간동안 너프 효과"), 4, inv);
 		break;
 		case "Healer":
-			Stack2("§6§l힐러", 373,8261,1,Arrays.asList("§7힐러는 지정 금액을 받고","§7플레이어의 생명력 회복 및","§7각종 너프 효과를 제거해 줍니다.","§a치료 비용 : §f"+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+MainServerOption.money,"§e[좌 클릭시 치료 받기]"), 4, inv);
+			removeFlagStack("§6§l힐러", 373,8261,1,Arrays.asList("§7힐러는 지정 금액을 받고","§7플레이어의 생명력 회복 및","§7각종 너프 효과를 제거해 줍니다.","§a치료 비용 : §f"+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+MainServerOption.money,"§e[좌 클릭시 치료 받기]"), 4, inv);
 		break;
 		case "Master":
 			YamlLoader JobList = new YamlLoader();
@@ -208,19 +208,19 @@ public class NpcGui extends UtilGui
 						for(int county = 0; county < scriptA.length; county++)
 							scriptA[county] =  scriptA[county];
 						
-						Stack2("§6§l전직 교관", ID,DATA,Amount,Arrays.asList(scriptA), 4, inv);
+						removeFlagStack("§6§l전직 교관", ID,DATA,Amount,Arrays.asList(scriptA), 4, inv);
 					}
 				}
 			}
 			break;
 		case "Warper":
-			Stack2("§6§l공간 이동술사", 368,0,1,Arrays.asList("§7공간 이동술사는 일정 금액을 받고","§7플레이어를 특정 지역으로 이동시켜 줍니다.","§a등록된 지역 : §f"+NPCscript.getConfigurationSection("Job.WarpList").getKeys(false).size()+"§a 구역","","§e[좌 클릭시 워프 목록 열람]"), 4, inv);
+			removeFlagStack("§6§l공간 이동술사", 368,0,1,Arrays.asList("§7공간 이동술사는 일정 금액을 받고","§7플레이어를 특정 지역으로 이동시켜 줍니다.","§a등록된 지역 : §f"+NPCscript.getConfigurationSection("Job.WarpList").getKeys(false).size()+"§a 구역","","§e[좌 클릭시 워프 목록 열람]"), 4, inv);
 		break;
 		case "Upgrader":
-			Stack2("§6§l개조 장인", 417,0,1,Arrays.asList("§7개조 장인은 일정 금액을 받고","§7개조 장인만이 알고 있는","§7개조 레시피를 참고하여","§7현재 손에 든 무기를","§7개조 시켜 줍니다.","§a이용 가능한 개조식 : §f"+NPCscript.getConfigurationSection("Job.UpgradeRecipe").getKeys(false).size()+"§a 가지","","§e[좌 클릭시 개조 레시피 열람]"), 4, inv);
+			removeFlagStack("§6§l개조 장인", 417,0,1,Arrays.asList("§7개조 장인은 일정 금액을 받고","§7개조 장인만이 알고 있는","§7개조 레시피를 참고하여","§7현재 손에 든 무기를","§7개조 시켜 줍니다.","§a이용 가능한 개조식 : §f"+NPCscript.getConfigurationSection("Job.UpgradeRecipe").getKeys(false).size()+"§a 가지","","§e[좌 클릭시 개조 레시피 열람]"), 4, inv);
 		break;
 		case "Rune":
-			Stack2("§6§l룬 세공사", 351,10,1,Arrays.asList("§7룬 세공사는 일정 금액을 받고","§7가지고 있는 룬을 세공하여","§7현재 손에 든 무기에","§7비어있는 룬 소켓이 있다면","§7룬을 장착 시켜 줍니다.","","§a룬 세공 성공률 : §f" +NPCscript.getInt("Job.SuccessRate")+"§3%","§a룬 세공 가격 : §e"+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+MainServerOption.money,"","§e[좌 클릭시 룬 세공]"), 4, inv);
+			removeFlagStack("§6§l룬 세공사", 351,10,1,Arrays.asList("§7룬 세공사는 일정 금액을 받고","§7가지고 있는 룬을 세공하여","§7현재 손에 든 무기에","§7비어있는 룬 소켓이 있다면","§7룬을 장착 시켜 줍니다.","","§a룬 세공 성공률 : §f" +NPCscript.getInt("Job.SuccessRate")+"§3%","§a룬 세공 가격 : §e"+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+MainServerOption.money,"","§e[좌 클릭시 룬 세공]"), 4, inv);
 		break;
 		}
 		
@@ -229,16 +229,16 @@ public class NpcGui extends UtilGui
 			switch(NPCscript.getString("Job.Type"))
 			{
 			case "null":
-				Stack2("§6§l직업 설정", 403,0,1,Arrays.asList("§7이 NPC에게는 아직 직업이 없습니다!","§7직업을 가지면 다양한 기능을 제공합니다.","","§e[클릭시 직업 설정]"), 4, inv);
+				removeFlagStack("§6§l직업 설정", 403,0,1,Arrays.asList("§7이 NPC에게는 아직 직업이 없습니다!","§7직업을 가지면 다양한 기능을 제공합니다.","","§e[클릭시 직업 설정]"), 4, inv);
 				break;
 			case "BlackSmith":
-					Stack2("§6§l대장장이", 145,0,1,Arrays.asList("§7플레이어의 무기 및 도구, 방어구를","§7정해진 확률과 가격에 수리 해 줍니다.","","§3수리 성공률 : §f" +NPCscript.getInt("Job.FixRate")+"§3 %","§a내구도 10 당 가격 : §e"+NPCscript.getInt("Job.10PointFixDeal")+" "+MainServerOption.money,"","§c[일반 아이템 수리 실패시]","§c - 수리 성공과 상관 없이 "+MainServerOption.money+"§c 소모","§c[커스텀 아이템 수리 실패시]","§c - 최대 내구도 감소","","§e[좌 클릭시 무기 수리화면 이동]","§c[우 클릭시 직업 변경]"), 4, inv);
+					removeFlagStack("§6§l대장장이", 145,0,1,Arrays.asList("§7플레이어의 무기 및 도구, 방어구를","§7정해진 확률과 가격에 수리 해 줍니다.","","§3수리 성공률 : §f" +NPCscript.getInt("Job.FixRate")+"§3 %","§a내구도 10 당 가격 : §e"+NPCscript.getInt("Job.10PointFixDeal")+" "+MainServerOption.money,"","§c[일반 아이템 수리 실패시]","§c - 수리 성공과 상관 없이 "+MainServerOption.money+"§c 소모","§c[커스텀 아이템 수리 실패시]","§c - 최대 내구도 감소","","§e[좌 클릭시 무기 수리화면 이동]","§c[우 클릭시 직업 변경]"), 4, inv);
 				break;
 			case "Shaman":
-				Stack2("§6§l주술사",381,0,1,Arrays.asList("§7플레이어에게 랜덤한 포션 효과를","§7지정 금액을 받고 부여해 줍니다.","","§b버프 성공률 : §f" + NPCscript.getInt("Job.GoodRate") + "§3%","§b버프 시간 : §f" + NPCscript.getInt("Job.BuffTime")+"§3 초","§a복채 비용 : §f"+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+MainServerOption.money,"§c[버프 실패시]","§c - 성공과 상관없이 골드 소모","§c - 버프 시간동안 너프 효과","","§e[좌 클릭시 점 치기]","§c[우 클릭시 직업 변경]"), 4, inv);
+				removeFlagStack("§6§l주술사",381,0,1,Arrays.asList("§7플레이어에게 랜덤한 포션 효과를","§7지정 금액을 받고 부여해 줍니다.","","§b버프 성공률 : §f" + NPCscript.getInt("Job.GoodRate") + "§3%","§b버프 시간 : §f" + NPCscript.getInt("Job.BuffTime")+"§3 초","§a복채 비용 : §f"+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+MainServerOption.money,"§c[버프 실패시]","§c - 성공과 상관없이 골드 소모","§c - 버프 시간동안 너프 효과","","§e[좌 클릭시 점 치기]","§c[우 클릭시 직업 변경]"), 4, inv);
 			break;
 			case "Healer":
-				Stack2("§6§l힐러", 373,8261,1,Arrays.asList("§7힐러는 지정 금액을 받고","§7플레이어의 생명력 회복 및","§7각종 너프 효과를 제거해 줍니다.","§a치료 비용 : §f"+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+MainServerOption.money,"","§e[좌 클릭시 치료 받기]","§c[우 클릭시 직업 변경]"), 4, inv);
+				removeFlagStack("§6§l힐러", 373,8261,1,Arrays.asList("§7힐러는 지정 금액을 받고","§7플레이어의 생명력 회복 및","§7각종 너프 효과를 제거해 줍니다.","§a치료 비용 : §f"+NPCscript.getInt("Job.Deal")+ChatColor.GREEN+MainServerOption.money,"","§e[좌 클릭시 치료 받기]","§c[우 클릭시 직업 변경]"), 4, inv);
 			break;
 			case "Master":
 				YamlLoader JobList = new YamlLoader();
@@ -306,29 +306,29 @@ public class NpcGui extends UtilGui
 							for(int county = 0; county < scriptA.length; county++)
 								scriptA[county] =  scriptA[county];
 							
-							Stack2("§6§l전직 교관", ID,DATA,Amount,Arrays.asList(scriptA), 4, inv);
+							removeFlagStack("§6§l전직 교관", ID,DATA,Amount,Arrays.asList(scriptA), 4, inv);
 						}
 					}
 				}
 				break;
 			case "Warper":
-				Stack2("§6§l공간 이동술사", 368,0,1,Arrays.asList("§7공간 이동술사는 일정 금액을 받고","§7플레이어를 특정 지역으로 이동시켜 줍니다.","§a등록된 지역 : §f"+NPCscript.getConfigurationSection("Job.WarpList").getKeys(false).size()+"§a 구역","","§e[좌 클릭시 워프 목록 열람]","§c[우 클릭시 직업 변경]"), 4, inv);
+				removeFlagStack("§6§l공간 이동술사", 368,0,1,Arrays.asList("§7공간 이동술사는 일정 금액을 받고","§7플레이어를 특정 지역으로 이동시켜 줍니다.","§a등록된 지역 : §f"+NPCscript.getConfigurationSection("Job.WarpList").getKeys(false).size()+"§a 구역","","§e[좌 클릭시 워프 목록 열람]","§c[우 클릭시 직업 변경]"), 4, inv);
 			break;
 			case "Upgrader":
-				Stack2("§6§l개조 장인", 417,0,1,Arrays.asList("§7개조 장인은 일정 금액을 받고","§7개조 장인만이 알고 있는","§7개조 레시피를 참고하여","§7현재 손에 든 무기를","§7개조 시켜 줍니다.","§a이용 가능한 개조식 : §f"+NPCscript.getConfigurationSection("Job.UpgradeRecipe").getKeys(false).size()+"§a 가지","","§e[좌 클릭시 개조 레시피 열람]","§c[우 클릭시 직업 변경]"), 4, inv);
+				removeFlagStack("§6§l개조 장인", 417,0,1,Arrays.asList("§7개조 장인은 일정 금액을 받고","§7개조 장인만이 알고 있는","§7개조 레시피를 참고하여","§7현재 손에 든 무기를","§7개조 시켜 줍니다.","§a이용 가능한 개조식 : §f"+NPCscript.getConfigurationSection("Job.UpgradeRecipe").getKeys(false).size()+"§a 가지","","§e[좌 클릭시 개조 레시피 열람]","§c[우 클릭시 직업 변경]"), 4, inv);
 			break;
 			case "Rune":
-				Stack2("§6§l룬 세공사", 351,10,1,Arrays.asList("§7룬 세공사는 일정 금액을 받고","§7가지고 있는 룬을 세공하여","§7현재 손에 든 무기에","§7비어있는 룬 소켓이 있다면","§7룬을 장착 시켜 줍니다.","","§a룬 세공 성공률 : §f" +NPCscript.getInt("Job.SuccessRate")+"§3%","§a룬 세공 가격 : §e"+NPCscript.getInt("Job.Deal")+" "+MainServerOption.money,"","§e[좌 클릭시 룬 세공]","§c[우 클릭시 직업 변경]"), 4, inv);
+				removeFlagStack("§6§l룬 세공사", 351,10,1,Arrays.asList("§7룬 세공사는 일정 금액을 받고","§7가지고 있는 룬을 세공하여","§7현재 손에 든 무기에","§7비어있는 룬 소켓이 있다면","§7룬을 장착 시켜 줍니다.","","§a룬 세공 성공률 : §f" +NPCscript.getInt("Job.SuccessRate")+"§3%","§a룬 세공 가격 : §e"+NPCscript.getInt("Job.Deal")+" "+MainServerOption.money,"","§e[좌 클릭시 룬 세공]","§c[우 클릭시 직업 변경]"), 4, inv);
 			break;
 			}
-			Stack2("§6§l대화 수정", 403,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와 대화를 할 시","§7플레이어에게 보일 대사를","§7추가/삭제/수정 합니다."), 19, inv);
-			Stack2("§6§l거래 수정", 403,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7의","§7거래 품목을 좌클릭시","§7해당 아이템을 지급 받으며,","§7거래 품목을 우클릭시","§7해당 아이템은 구입/판매 중지됩니다.","","§f[구매/판매할 아이템 등록 명령어]","§6§l/상점 [구매/판매] [가격]"), 21, inv);
-			Stack2("§6§l퀘스트 수정", 403,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7의","§7퀘스트 내용을 수정합니다."), 23, inv);
-			Stack2("§6§l선물 수정", 403,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7에게 플레이어가","§7주는 선물에 따라 상승하는","§7호감도 상승 수치를 수정합니다."), 25, inv);
+			removeFlagStack("§6§l대화 수정", 403,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와 대화를 할 시","§7플레이어에게 보일 대사를","§7추가/삭제/수정 합니다."), 19, inv);
+			removeFlagStack("§6§l거래 수정", 403,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7의","§7거래 품목을 좌클릭시","§7해당 아이템을 지급 받으며,","§7거래 품목을 우클릭시","§7해당 아이템은 구입/판매 중지됩니다.","","§f[구매/판매할 아이템 등록 명령어]","§6§l/상점 [구매/판매] [가격]"), 21, inv);
+			removeFlagStack("§6§l퀘스트 수정", 403,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7의","§7퀘스트 내용을 수정합니다."), 23, inv);
+			removeFlagStack("§6§l선물 수정", 403,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7에게 플레이어가","§7주는 선물에 따라 상승하는","§7호감도 상승 수치를 수정합니다."), 25, inv);
 			if(NPCscript.getBoolean("Sale.Enable"))
-				Stack2("§6§l세일 설정", 38,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와의 친밀도가 높을 경우","§7상점 판매 물품을 세일 해 줍니다.","","§a호감도 "+NPCscript.getInt("Sale.Minlove") + "이상시 " +NPCscript.getInt("Sale.discount")+"% 세일","", "§c[Shift + 우 클릭시 제거]"), 7, inv);
+				removeFlagStack("§6§l세일 설정", 38,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와의 친밀도가 높을 경우","§7상점 판매 물품을 세일 해 줍니다.","","§a호감도 "+NPCscript.getInt("Sale.Minlove") + "이상시 " +NPCscript.getInt("Sale.discount")+"% 세일","", "§c[Shift + 우 클릭시 제거]"), 7, inv);
 			else
-				Stack2("§6§l세일 설정", 38,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와의 친밀도가 높을 경우","§7상점 판매 물품을 세일 해 줍니다.","","§e[좌 클릭시 설정]"), 7, inv);
+				removeFlagStack("§6§l세일 설정", 38,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와의 친밀도가 높을 경우","§7상점 판매 물품을 세일 해 줍니다.","","§e[좌 클릭시 설정]"), 7, inv);
 				
 		}
 		
@@ -350,61 +350,61 @@ public class NpcGui extends UtilGui
 		NPCscript.getConfig("NPC/NPCData/"+ u.getNPCuuid(player) +".yml");
 		ItemStack item;
 		ItemMeta IM = null;
-		short a = 0;
-		if(Buy == true)
+		int a = 0;
+		if(Buy)
 		{
-			a = (short) NPCscript.getConfigurationSection("Shop.Sell").getKeys(false).size();
+			a = NPCscript.getConfigurationSection("Shop.Sell").getKeys(false).size();
 			
-			if(isEditMode == false)
-				Stack2("§b     [구입]     ", 160,11,1,null, 0, inv);
+			if(isEditMode)
+				removeFlagStack("§b     [구입]     ", 160,11,1,Arrays.asList("§0-1"), 0, inv);
 			else
-				Stack2("§b     [구입]     ", 160,11,1,Arrays.asList("§0-1"), 0, inv);
+				removeFlagStack("§b     [구입]     ", 160,11,1,null, 0, inv);
 				
-			Stack2("§b     [구입]     ", 160,11,1,null, 1, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 2, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 3, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 4, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 5, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 6, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 7, inv);
-			Stack2("§b     [구입]     ", 160,11,1,Arrays.asList("§0"+page), 8, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 9, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 18, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 17, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 26, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 27, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 36, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 35, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 36, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 37, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 38, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 39, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 40, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 41, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 42, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 43, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 44, inv);
-			Stack2("§c   [물품 판매]   ", 160,14,1,null, 49, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 1, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 2, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 3, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 4, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 5, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 6, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 7, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,Arrays.asList("§0"+page), 8, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 9, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 18, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 17, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 26, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 27, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 36, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 35, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 36, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 37, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 38, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 39, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 40, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 41, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 42, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 43, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 44, inv);
+			removeFlagStack("§c   [물품 판매]   ", 160,14,1,null, 49, inv);
 			byte loc=0;
-			boolean Sale = NPCscript.getBoolean("Sale.Enable");
+			boolean sale = NPCscript.getBoolean("Sale.Enable");
 			int discount = 0;
-			if(Sale)
+			if(sale)
 			{
-				YamlLoader PlayerNPC = new YamlLoader();
-			  	PlayerNPC = null;
-		    	if(PlayerNPC.isExit("NPC/PlayerData/"+player.getUniqueId()+".yml")==false)
+				YamlLoader playerNPC = new YamlLoader();
+			  	playerNPC = null;
+		    	if(!playerNPC.isExit("NPC/PlayerData/"+player.getUniqueId()+".yml"))
 		    	{
-		    		PlayerNPC.getConfig("NPC/PlayerData/"+player.getUniqueId()+".yml");
-		    		PlayerNPC.set(u.getNPCuuid(player)+".love", 0);
-		    		PlayerNPC.set(u.getNPCuuid(player)+".Career", 0);
-		    		PlayerNPC.saveConfig();
+		    		playerNPC.getConfig("NPC/PlayerData/"+player.getUniqueId()+".yml");
+		    		playerNPC.set(u.getNPCuuid(player)+".love", 0);
+		    		playerNPC.set(u.getNPCuuid(player)+".Career", 0);
+		    		playerNPC.saveConfig();
 		    	}
 		    	else
-		    		PlayerNPC.getConfig("NPC/PlayerData/"+player.getUniqueId()+".yml");
-		    	if(PlayerNPC.getInt(u.getNPCuuid(player)+".love") >= NPCscript.getInt("Sale.Minlove"))
+		    		playerNPC.getConfig("NPC/PlayerData/"+player.getUniqueId()+".yml");
+		    	if(playerNPC.getInt(u.getNPCuuid(player)+".love") >= NPCscript.getInt("Sale.Minlove"))
 					discount = NPCscript.getInt("Sale.discount");
 		    	else
-		    		Sale = false;
+		    		sale = false;
 			}
 			for(int count = page*21; count < a; count++)
 			{
@@ -412,18 +412,18 @@ public class NpcGui extends UtilGui
 				item = NPCscript.getItemStack("Shop.Sell."+count + ".item");
 				IM = item.getItemMeta();
 				long price = NPCscript.getLong("Shop.Sell."+count+".price");
-				if(Sale)
+				if(sale)
 					price = price - ((price/100) * discount);
-				if(item.hasItemMeta() == true)
+				if(item.hasItemMeta())
 				{
-					if(item.getItemMeta().hasLore() == true)
+					if(item.getItemMeta().hasLore())
 					{
 						String[] lore = new String[IM.getLore().size()+3];
 						for(int counter=0; counter < lore.length-3;counter++)
 							lore[counter] = IM.getLore().get(counter);
 						lore[lore.length-3] = "";
 
-						if(isEditMode == false)
+						if(!isEditMode)
 						{
 							if(price >= main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money())
 								lore[lore.length-2] = "§c[가격 : " + price + " "+ChatColor.stripColor(MainServerOption.money)+"]";
@@ -442,7 +442,7 @@ public class NpcGui extends UtilGui
 					{
 						String[] lore = new String[3];
 						lore[0] = "";
-						if(isEditMode == false)
+						if(!isEditMode)
 						{
 							if(price >= main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money())
 								lore[1] = "§c[가격 : " + price + " "+ChatColor.stripColor(MainServerOption.money)+"]";
@@ -460,7 +460,7 @@ public class NpcGui extends UtilGui
 				}
 				else
 				{
-					if(isEditMode == false)
+					if(!isEditMode)
 					{
 						if(price >= main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money())
 						{
@@ -490,44 +490,44 @@ public class NpcGui extends UtilGui
 				loc++;
 			}
 			if(a-(page*20)>21)
-				Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다.", "§7페이지 : " + (page+2)), 50, inv);
+				removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다.", "§7페이지 : " + (page+2)), 50, inv);
 				if(page!=0)
-				Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다.", "§7페이지 : " + (page)), 48, inv);
+				removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다.", "§7페이지 : " + (page)), 48, inv);
 			
 		}
 		else
 		{
 			a = (short) NPCscript.getConfigurationSection("Shop.Buy").getKeys(false).toArray().length;
 
-			if(isEditMode == false)
-				Stack2("§c     [판매]     ", 160,14,1,null, 0, inv);
+			if(!isEditMode)
+				removeFlagStack("§c     [판매]     ", 160,14,1,null, 0, inv);
 			else
-				Stack2("§c     [판매]     ", 160,14,1,Arrays.asList("§0-1"), 0, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 1, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 2, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 3, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 4, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 5, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 6, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 7, inv);
-			Stack2("§c     [판매]     ", 160,14,1,Arrays.asList("§0"+page), 8, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 9, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 18, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 17, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 26, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 27, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 36, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 35, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 36, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 37, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 38, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 39, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 40, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 41, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 42, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 43, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 44, inv);
-			Stack2("§b   [물품 구매]   ", 160,11,1,null, 49, inv);
+				removeFlagStack("§c     [판매]     ", 160,14,1,Arrays.asList("§0-1"), 0, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 1, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 2, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 3, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 4, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 5, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 6, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 7, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,Arrays.asList("§0"+page), 8, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 9, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 18, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 17, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 26, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 27, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 36, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 35, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 36, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 37, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 38, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 39, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 40, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 41, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 42, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 43, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 44, inv);
+			removeFlagStack("§b   [물품 구매]   ", 160,11,1,null, 49, inv);
 			byte loc=0;
 			for(int count = page*21; count < a; count++)
 			{
@@ -595,14 +595,14 @@ public class NpcGui extends UtilGui
 				loc++;
 			}
 			if(a-(page*20)>21)
-				Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다.", "§7페이지 : " + (page+2)), 50, inv);
+				removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다.", "§7페이지 : " + (page+2)), 50, inv);
 				if(page!=0)
-				Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다.", "§7페이지 : " + (page)), 48, inv);
+				removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다.", "§7페이지 : " + (page)), 48, inv);
 		}
 
 	
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ u.getNPCuuid(player)), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ u.getNPCuuid(player)), 53, inv);
 
 		player.openInventory(inv);
 	}
@@ -613,48 +613,48 @@ public class NpcGui extends UtilGui
 		String UniqueCode = "§0§0§7§0§2§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0[NPC] "+ChatColor.stripColor(NPCname));
 
-		Stack2("§f§l개인적인 대화", 340,0,1,Arrays.asList("§7사소한 이야깃 거리를 물어봅니다."), 2, inv);
-		Stack2("§f§l근처의 소문", 340,0,1,Arrays.asList("§7최근 들리는 소문에 대해 물어봅니다."), 4, inv);
-		Stack2("§f§l스킬에 대하여", 340,0,1,Arrays.asList("§7스킬에 대하여 물어봅니다."), 6, inv);
+		removeFlagStack("§f§l개인적인 대화", 340,0,1,Arrays.asList("§7사소한 이야깃 거리를 물어봅니다."), 2, inv);
+		removeFlagStack("§f§l근처의 소문", 340,0,1,Arrays.asList("§7최근 들리는 소문에 대해 물어봅니다."), 4, inv);
+		removeFlagStack("§f§l스킬에 대하여", 340,0,1,Arrays.asList("§7스킬에 대하여 물어봅니다."), 6, inv);
 		if(TalkType != -1)
 		if(strings != null)
-			Stack2("§e§l "+NPCname, 386,0,1,Arrays.asList(new npc.NpcMain().getScript(player, TalkType)),(int) TalkType, inv);
-		Stack2("§f§l이전 메뉴", 323,0,1,Arrays.asList("§7이전 메뉴로 돌아갑니다."), 0, inv);
-		Stack2("§f§l나가기", 324,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와의","§7대화를 종료합니다.","§0"+ u.getNPCuuid(player)), 8, inv);
+			removeFlagStack("§e§l "+NPCname, 386,0,1,Arrays.asList(new npc.NpcMain().getScript(player, TalkType)),(int) TalkType, inv);
+		removeFlagStack("§f§l이전 메뉴", 323,0,1,Arrays.asList("§7이전 메뉴로 돌아갑니다."), 0, inv);
+		removeFlagStack("§f§l나가기", 324,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와의","§7대화를 종료합니다.","§0"+ u.getNPCuuid(player)), 8, inv);
 		
 		player.openInventory(inv);
 	}
 	
-	public void QuestAddGUI(Player player, short page)
+	public void questAddGUI(Player player, short page)
 	{
 		UserDataObject u = new UserDataObject();
-		YamlLoader QuestList = new YamlLoader();
-		QuestList.getConfig("Quest/QuestList.yml");
+		YamlLoader questList = new YamlLoader();
+		questList.getConfig("Quest/QuestList.yml");
 
-	  	if(QuestList.isExit("NPC/NPCData/"+ u.getNPCuuid(player) +".yml") == false)
+	  	if(!questList.isExit("NPC/NPCData/"+ u.getNPCuuid(player) +".yml"))
 	  	{
-	  		npc.NpcConfig NPCC = new npc.NpcConfig();
-	  		NPCC.NPCNPCconfig(u.getNPCuuid(player));
+	  		npc.NpcConfig npcConfig = new npc.NpcConfig();
+	  		npcConfig.NPCNPCconfig(u.getNPCuuid(player));
 	  	}
-		YamlLoader NPCscript = new YamlLoader();
-		NPCscript.getConfig("NPC/NPCData/"+ u.getNPCuuid(player) +".yml");
+		YamlLoader npcScript = new YamlLoader();
+		npcScript.getConfig("NPC/NPCData/"+ u.getNPCuuid(player) +".yml");
 
-		String UniqueCode = "§0§0§7§0§3§r";
-		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0등록 가능 퀘스트 목록 : " + (page+1));
+		String uniqueCode = "§0§0§7§0§3§r";
+		Inventory inv = Bukkit.createInventory(null, 54, uniqueCode + "§0등록 가능 퀘스트 목록 : " + (page+1));
 
-		Object[] a= QuestList.getKeys().toArray();
-		Object[] c =  NPCscript.getConfigurationSection("Quest").getKeys(false).toArray();
+		Object[] a= questList.getKeys().toArray();
+		Object[] c =  npcScript.getConfigurationSection("Quest").getKeys(false).toArray();
 		
 		byte loc=0;
 		for(int count = page*45; count < a.length;count++)
 		{
-			String QuestName = a[count].toString();
-			Set<String> QuestFlow= QuestList.getConfigurationSection(QuestName+".FlowChart").getKeys(false);
+			String questName = a[count].toString();
+			Set<String> questFlow= questList.getConfigurationSection(questName+".FlowChart").getKeys(false);
 
 			boolean isExit =false;
 			for(int counter = 0; counter < c.length; counter ++)
 			{
-				if(NPCscript.getString("Quest."+counter).equals(QuestName))
+				if(npcScript.getString("Quest."+counter).equals(questName))
 				{
 					isExit = true;
 					break;
@@ -664,119 +664,119 @@ public class NpcGui extends UtilGui
 				
 			if(count > a.length || loc >= 45) break;
 
-			String[] Temp = new String[12];
-			Temp[0] = "§f퀘스트 구성 요소 : "+QuestFlow.size()+"개";
+			String[] temp = new String[12];
+			temp[0] = "§f퀘스트 구성 요소 : "+questFlow.size()+"개";
 			int lorecount = 2;
-			if(QuestList.getInt(QuestName + ".Need.LV")!=0)
+			if(questList.getInt(questName + ".Need.LV")!=0)
 			{
-				Temp[lorecount] = "§c레벨 제한 : " + QuestList.getInt(QuestName + ".Need.LV") + " 이상";
+				temp[lorecount] = "§c레벨 제한 : " + questList.getInt(questName + ".Need.LV") + " 이상";
 				lorecount = lorecount+1;
 			}
-			if(QuestList.getInt(QuestName + ".Need.Love")!=0)
+			if(questList.getInt(questName + ".Need.Love")!=0)
 			{
-				Temp[lorecount] = "§c친밀도 제한 : " + QuestList.getInt(QuestName + ".Need.Love") + " 이상";
+				temp[lorecount] = "§c친밀도 제한 : " + questList.getInt(questName + ".Need.Love") + " 이상";
 				lorecount = lorecount+1;
 			}
-			if(QuestList.getInt(QuestName + ".Need.STR")!=0)
+			if(questList.getInt(questName + ".Need.STR")!=0)
 			{
-				Temp[lorecount] = "§c"+MainServerOption.statSTR+" 제한 : " + QuestList.getInt(QuestName + ".Need.STR") + " 이상";
+				temp[lorecount] = "§c"+MainServerOption.statSTR+" 제한 : " + questList.getInt(questName + ".Need.STR") + " 이상";
 				lorecount = lorecount+1;
 			}
-			if(QuestList.getInt(QuestName + ".Need.DEX")!=0)
+			if(questList.getInt(questName + ".Need.DEX")!=0)
 			{
-				Temp[lorecount] = "§c"+MainServerOption.statDEX+" 제한 : " + QuestList.getInt(QuestName + ".Need.DEX") + " 이상";
+				temp[lorecount] = "§c"+MainServerOption.statDEX+" 제한 : " + questList.getInt(questName + ".Need.DEX") + " 이상";
 				lorecount = lorecount+1;
 			}
-			if(QuestList.getInt(QuestName + ".Need.INT")!=0)
+			if(questList.getInt(questName + ".Need.INT")!=0)
 			{
-				Temp[lorecount] = "§c"+MainServerOption.statINT+" 제한 : " + QuestList.getInt(QuestName + ".Need.INT") + " 이상";
+				temp[lorecount] = "§c"+MainServerOption.statINT+" 제한 : " + questList.getInt(questName + ".Need.INT") + " 이상";
 				lorecount = lorecount+1;
 			}
-			if(QuestList.getInt(QuestName + ".Need.WILL")!=0)
+			if(questList.getInt(questName + ".Need.WILL")!=0)
 			{
-				Temp[lorecount] = "§c"+MainServerOption.statWILL+" 제한 : " + QuestList.getInt(QuestName + ".Need.WILL") + " 이상";
+				temp[lorecount] = "§c"+MainServerOption.statWILL+" 제한 : " + questList.getInt(questName + ".Need.WILL") + " 이상";
 				lorecount = lorecount+1;
 			}
-			if(QuestList.getInt(QuestName + ".Need.LUK")!=0)
+			if(questList.getInt(questName + ".Need.LUK")!=0)
 			{
-				Temp[lorecount] = "§c"+MainServerOption.statLUK+" 제한 : " + QuestList.getInt(QuestName + ".Need.LUK" )+ " 이상";
+				temp[lorecount] = "§c"+MainServerOption.statLUK+" 제한 : " + questList.getInt(questName + ".Need.LUK" )+ " 이상";
 				lorecount = lorecount+1;
 			}
-			if(QuestList.getInt(QuestName + ".Server.Limit")==-1)
+			if(questList.getInt(questName + ".Server.Limit")==-1)
 			{
-				Temp[lorecount] = "§c[퀘스트 수행인원 마감]";
+				temp[lorecount] = "§c[퀘스트 수행인원 마감]";
 				lorecount = lorecount+1;
 			}
-			if(QuestList.getInt(QuestName + ".Server.Limit")==0)
+			if(questList.getInt(questName + ".Server.Limit")==0)
 			{
-				Temp[lorecount] = "§a[퀘스트 수행에 제한 없음]";
+				temp[lorecount] = "§a[퀘스트 수행에 제한 없음]";
 				lorecount = lorecount+1;
 			}
-			if(QuestList.getInt(QuestName + ".Server.Limit")>0)
+			if(questList.getInt(questName + ".Server.Limit")>0)
 			{
-				Temp[lorecount] = "§3퀘스트 수행 가능 인원 : " + QuestList.getInt(QuestName + ".Server.Limit")+ " 명 남음";
+				temp[lorecount] = "§3퀘스트 수행 가능 인원 : " + questList.getInt(questName + ".Server.Limit")+ " 명 남음";
 				lorecount = lorecount+1;
 			}
-			if(QuestList.getString(QuestName + ".Need.PrevQuest") != null && QuestList.getString(QuestName + ".Need.PrevQuest").equalsIgnoreCase("null") == false)
+			if(questList.getString(questName + ".Need.PrevQuest") != null && questList.getString(questName + ".Need.PrevQuest").equalsIgnoreCase("null") == false)
 			{
-				if(QuestList.contains(QuestList.getString(QuestName + ".Need.PrevQuest")) == false)
+				if(questList.contains(questList.getString(questName + ".Need.PrevQuest")) == false)
 				{
-					QuestList.set(QuestName + ".Need.PrevQuest","null");
-					QuestList.saveConfig();
+					questList.set(questName + ".Need.PrevQuest","null");
+					questList.saveConfig();
 				}
 				else
 				{
-					Temp[lorecount] = "§c필수 완료 퀘스트 : " + QuestList.getString(QuestName + ".Need.PrevQuest");
+					temp[lorecount] = "§c필수 완료 퀘스트 : " + questList.getString(questName + ".Need.PrevQuest");
 					lorecount = lorecount+1;
 				}
 			}
 			
-			Temp[lorecount] = "";
+			temp[lorecount] = "";
 			lorecount = lorecount+1;
 			if(isExit == true)
-				Temp[lorecount] = "§a[등록 된 퀘스트]";
+				temp[lorecount] = "§a[등록 된 퀘스트]";
 			else
-				Temp[lorecount] = "§c[등록 되지 않은 퀘스트]";
+				temp[lorecount] = "§c[등록 되지 않은 퀘스트]";
 			lorecount = lorecount+1;
 			
 			String[] lore = new String[lorecount];
 			for(int counter = 0; counter < lorecount; counter++)
-				lore[counter] = Temp[counter];
+				lore[counter] = temp[counter];
 			
-			String QuestType = QuestList.getString(QuestName + ".Type");
+			String QuestType = questList.getString(questName + ".Type");
 			switch(QuestType)
 			{
 			case "N" :
 				lore[1] = "§3퀘스트 타입 : 일반 퀘스트";
-				Stack2("§f§l" + QuestName, 340,0,1,Arrays.asList(lore), loc, inv);
+				removeFlagStack("§f§l" + questName, 340,0,1,Arrays.asList(lore), loc, inv);
 				break;
 			case "R" :
 				lore[1] ="§3퀘스트 타입 : 반복 퀘스트";
-				Stack2("§f§l" + QuestName, 386,0,1,Arrays.asList(lore), loc, inv);
+				removeFlagStack("§f§l" + questName, 386,0,1,Arrays.asList(lore), loc, inv);
 				break;
 			case "D" :
 				lore[1] ="§3퀘스트 타입 : 일일 퀘스트";
-				Stack2("§f§l" + QuestName, 403,0,1,Arrays.asList(lore), loc, inv);
+				removeFlagStack("§f§l" + questName, 403,0,1,Arrays.asList(lore), loc, inv);
 				break;
 			case "W" :
 				lore[1] ="§3퀘스트 타입 : 일주 퀘스트";
-				Stack2("§f§l" + QuestName, 403,0,7,Arrays.asList(lore), loc, inv);
+				removeFlagStack("§f§l" + questName, 403,0,7,Arrays.asList(lore), loc, inv);
 				break;
 			case "M" :
 				lore[1] ="§3퀘스트 타입 : 한달 퀘스트";
-				Stack2("§f§l" + QuestName, 403,0,31,Arrays.asList(lore), loc, inv);
+				removeFlagStack("§f§l" + questName, 403,0,31,Arrays.asList(lore), loc, inv);
 				break;
 			}
 			loc++;
 		}
 		
 		if(a.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
 		//Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ u.getNPCuuid(player)), 53, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ u.getNPCuuid(player)), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -794,30 +794,30 @@ public class NpcGui extends UtilGui
 		YamlLoader NPCscript = new YamlLoader();
 		NPCscript.getConfig("NPC/NPCData/"+ u.getNPCuuid(player) +".yml");
 
-		String UniqueCode = "§0§0§7§0§4§r";
-		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0진행 가능한 퀘스트 목록 : " + (page+1));
+		String uniqueCode = "§0§0§7§0§4§r";
+		Inventory inv = Bukkit.createInventory(null, 54, uniqueCode + "§0진행 가능한 퀘스트 목록 : " + (page+1));
 
 		Object[] a = NPCscript.getConfigurationSection("Quest").getKeys(false).toArray();
 
-		YamlLoader PlayerQuestList = new YamlLoader();
-		PlayerQuestList.getConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
+		YamlLoader playerQuestList = new YamlLoader();
+		playerQuestList.getConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
 		
-    	if(PlayerQuestList.isExit("Quest/PlayerData/"+player.getUniqueId()+".yml")==false)
+    	if(!playerQuestList.isExit("Quest/PlayerData/"+player.getUniqueId()+".yml"))
     	{
-    		PlayerQuestList.set("PlayerName", player.getName());
-    		PlayerQuestList.set("PlayerUUID", player.getUniqueId().toString());
-    		PlayerQuestList.createSection("Started");
-    		PlayerQuestList.createSection("Ended");
-    		PlayerQuestList.saveConfig();
+    		playerQuestList.set("PlayerName", player.getName());
+    		playerQuestList.set("PlayerUUID", player.getUniqueId().toString());
+    		playerQuestList.createSection("Started");
+    		playerQuestList.createSection("Ended");
+    		playerQuestList.saveConfig();
     	}
 
-		PlayerQuestList.getConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
+		playerQuestList.getConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
     	
-		Set<String> PlayerHas = PlayerQuestList.getConfigurationSection("Started").getKeys(false);
-		Set<String> PlayerFinished = PlayerQuestList.getConfigurationSection("Ended").getKeys(false);
+		Set<String> PlayerHas = playerQuestList.getConfigurationSection("Started").getKeys(false);
+		Set<String> PlayerFinished = playerQuestList.getConfigurationSection("Ended").getKeys(false);
 
 		YamlLoader PlayerNPC = new YamlLoader();
-    	if(PlayerNPC.isExit("NPC/PlayerData/"+player.getUniqueId()+".yml")==false)
+    	if(!PlayerNPC.isExit("NPC/PlayerData/"+player.getUniqueId()+".yml"))
     	{
     		PlayerNPC.getConfig("NPC/PlayerData/"+player.getUniqueId()+".yml");
     		PlayerNPC.set(u.getNPCuuid(player)+".love", 0);
@@ -833,11 +833,11 @@ public class NpcGui extends UtilGui
 			String QuestName = NPCscript.getString("Quest."+a[count]);
 			if(count > a.length || loc >= 45) break;
 
-			if(QuestList.contains(QuestName) == true)
+			if(QuestList.contains(QuestName))
 			{
 				if(QuestList.getString(QuestName + ".Need.PrevQuest") != null && QuestList.getString(QuestName + ".Need.PrevQuest").equalsIgnoreCase("null") == false)
 				{
-					if(QuestList.contains(QuestList.getString(QuestName + ".Need.PrevQuest")) == false)
+					if(!QuestList.contains(QuestList.getString(QuestName + ".Need.PrevQuest")))
 					{
 						QuestList.set(QuestName + ".Need.PrevQuest","null");
 						QuestList.saveConfig();
@@ -850,23 +850,23 @@ public class NpcGui extends UtilGui
 				}
 				if(QuestList.getString(QuestName + ".Need.PrevQuest") != null && QuestList.getString(QuestName + ".Need.PrevQuest").equalsIgnoreCase("null") == false)
 				{
-					if(PlayerQuestList.contains("Ended."+QuestList.getString(QuestName + ".Need.PrevQuest")) == true)
+					if(playerQuestList.contains("Ended."+QuestList.getString(QuestName + ".Need.PrevQuest")))
 						gogogo = true;
 				}
 				else
 				{
 					gogogo = true;
 				}
-				if(gogogo==true)
+				if(gogogo)
 				{
 					String[] Temp = new String[12];
 					Temp[0]="";
 					byte lorecount = 1;
 					if(QuestList.getInt(QuestName + ".Need.LV")!=0)
 					{
-						YamlLoader Config = new YamlLoader();
-					  	Config.getConfig("config.yml");
-						if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == true)
+						YamlLoader config = new YamlLoader();
+					  	config.getConfig("config.yml");
+						if(config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System"))
 						{
 							if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel() >= QuestList.getInt(QuestName + ".Need.LV"))
 								Temp[lorecount] = "§a레벨 제한 : " + QuestList.getInt(QuestName + ".Need.LV") + " 이상";
@@ -953,7 +953,7 @@ public class NpcGui extends UtilGui
 						if(PlayerHas.toString().contains(QuestName) == false && PlayerFinished.toString().contains(QuestName) == false)
 						{
 							lore[0] ="§f[일반 퀘스트]";
-							Stack2("§f§l" + QuestName, 340,0,1,Arrays.asList(lore), loc, inv);
+							removeFlagStack("§f§l" + QuestName, 340,0,1,Arrays.asList(lore), loc, inv);
 							loc++;
 						}
 						break;
@@ -961,7 +961,7 @@ public class NpcGui extends UtilGui
 						if(PlayerHas.toString().contains(QuestName) == false)
 						{
 							lore[0] ="§f[반복 퀘스트]";
-							Stack2("§f§l" + QuestName, 386,0,1,Arrays.asList(lore), loc, inv);
+							removeFlagStack("§f§l" + QuestName, 386,0,1,Arrays.asList(lore), loc, inv);
 							loc++;
 						}
 						break;
@@ -976,16 +976,16 @@ public class NpcGui extends UtilGui
 								{
 									if(e[counter].toString().equalsIgnoreCase(QuestName))
 									{
-										Long ClearTime = PlayerQuestList.getLong("Ended."+e[counter]+".ClearTime") + (86400000) ;
+										Long ClearTime = playerQuestList.getLong("Ended."+e[counter]+".ClearTime") + (86400000) ;
 										if(ClearTime < ETC.getNowUTC())
 										{
 											lore[0] ="§f[일일 퀘스트]";
-											Stack2("§f§l" + QuestName, 403,0,1,Arrays.asList(lore), loc, inv);
+											removeFlagStack("§f§l" + QuestName, 403,0,1,Arrays.asList(lore), loc, inv);
 											loc++;
 										}
 										else
 										{
-											ClearTime = PlayerQuestList.getLong("Ended."+e[counter]+".ClearTime") + (86400000) - ETC.getNowUTC() ;
+											ClearTime = playerQuestList.getLong("Ended."+e[counter]+".ClearTime") + (86400000) - ETC.getNowUTC() ;
 											ClearTime = ClearTime/1000;
 											lore[0] ="§f[일일 퀘스트]";
 											String[] timelore = new String[lore.length+3];
@@ -1009,7 +1009,7 @@ public class NpcGui extends UtilGui
 											if(ClearTime>0)
 												timelore[lore.length+2] =timelore[lore.length+2] + ClearTime+" 초 " ;
 											
-											Stack2("§f§l" + QuestName, 403,0,1,Arrays.asList(timelore), loc, inv);
+											removeFlagStack("§f§l" + QuestName, 403,0,1,Arrays.asList(timelore), loc, inv);
 											loc++;
 										}
 									}
@@ -1018,33 +1018,33 @@ public class NpcGui extends UtilGui
 							else
 							{
 								lore[0] ="§f[일일 퀘스트]";
-								Stack2("§f§l" + QuestName, 403,0,1,Arrays.asList(lore), loc, inv);
+								removeFlagStack("§f§l" + QuestName, 403,0,1,Arrays.asList(lore), loc, inv);
 								loc++;
 							}
 						}
 						break;
 					case "W" :
-						if(PlayerHas.toString().contains(QuestName) == false)
+						if(!PlayerHas.toString().contains(QuestName))
 						{
-							if(PlayerFinished.contains(QuestName) == true)
+							if(PlayerFinished.contains(QuestName))
 							{
-								util.ETC ETC = new util.ETC();
-								Object e[] = PlayerFinished.toArray();
+								util.ETC etc = new util.ETC();
+								Object[] e = PlayerFinished.toArray();
 								for(int counter=0; counter < e.length; counter++)
 								{
 									if(e[counter].toString().equalsIgnoreCase(QuestName))
 									{
-										Long ClearTime = PlayerQuestList.getLong("Ended."+e[counter]+".ClearTime") + (604800000) ;
-										if(ClearTime < ETC.getNowUTC())
+										Long clearTime = playerQuestList.getLong("Ended."+e[counter]+".ClearTime") + (604800000) ;
+										if(clearTime < etc.getNowUTC())
 										{
 											lore[0] ="§f[주간 퀘스트]";
-											Stack2("§f§l" + QuestName, 403,0,7,Arrays.asList(lore), loc, inv);
+											removeFlagStack("§f§l" + QuestName, 403,0,7,Arrays.asList(lore), loc, inv);
 											loc++;
 										}
 										else
 										{
-											ClearTime = PlayerQuestList.getLong("Ended."+e[counter]+".ClearTime") + (604800000) - ETC.getNowUTC() ;
-											ClearTime = ClearTime/1000;
+											clearTime = playerQuestList.getLong("Ended."+e[counter]+".ClearTime") + (604800000) - etc.getNowUTC() ;
+											clearTime = clearTime/1000;
 											lore[0] ="§f[주간 퀘스트]";
 											String[] timelore = new String[lore.length+3];
 											for(int counter2=0;counter2 < lore.length;counter2++)
@@ -1053,14 +1053,14 @@ public class NpcGui extends UtilGui
 											byte hour = 0;
 											byte min = 0;
 											
-											day = (byte) (ClearTime/86400);
-											ClearTime = ClearTime-(86400*day);
+											day = (byte) (clearTime/86400);
+											clearTime = clearTime-(86400*day);
 											
-											hour = (byte) (ClearTime/3600);
-											ClearTime = ClearTime-(3600*hour);
+											hour = (byte) (clearTime/3600);
+											clearTime = clearTime-(3600*hour);
 											
-											min = (byte)(ClearTime/60);
-											ClearTime = ClearTime-(60*min);
+											min = (byte)(clearTime/60);
+											clearTime = clearTime-(60*min);
 											
 											timelore[lore.length]="";
 											timelore[lore.length+1] = "§c[퀘스트 대기 시간]";
@@ -1070,10 +1070,10 @@ public class NpcGui extends UtilGui
 												timelore[lore.length+2] = timelore[lore.length+2] +""+hour+" 시간 " ;
 											if(min>0)
 												timelore[lore.length+2] =timelore[lore.length+2] + min+" 분 " ;
-											if(ClearTime>0)
-												timelore[lore.length+2] =timelore[lore.length+2] + ClearTime+" 초 " ;
+											if(clearTime>0)
+												timelore[lore.length+2] =timelore[lore.length+2] + clearTime+" 초 " ;
 											
-											Stack2("§f§l" + QuestName, 403,0,7,Arrays.asList(timelore), loc, inv);
+											removeFlagStack("§f§l" + QuestName, 403,0,7,Arrays.asList(timelore), loc, inv);
 											loc++;
 										}
 									}
@@ -1082,33 +1082,33 @@ public class NpcGui extends UtilGui
 							else
 							{
 								lore[0] ="§f[주간 퀘스트]";
-								Stack2("§f§l" + QuestName, 403,0,7,Arrays.asList(lore), loc, inv);
+								removeFlagStack("§f§l" + QuestName, 403,0,7,Arrays.asList(lore), loc, inv);
 								loc++;
 							}
 						}
 						break;
 					case "M" :
-						if(PlayerHas.toString().contains(QuestName) == false)
+						if(!PlayerHas.toString().contains(QuestName))
 						{
-							if(PlayerFinished.contains(QuestName) == true)
+							if(PlayerFinished.contains(QuestName))
 							{
-								util.ETC ETC = new util.ETC();
-								Object e[] = PlayerFinished.toArray();
+								util.ETC etc = new util.ETC();
+								Object[] e = PlayerFinished.toArray();
 								for(int counter=0; counter < e.length; counter++)
 								{
 									if(e[counter].toString().equalsIgnoreCase(QuestName))
 									{
-										Long ClearTime = (PlayerQuestList.getLong("Ended."+e[counter]+".ClearTime") + Long.parseLong("2678400000")) ;
-										if(ClearTime < ETC.getNowUTC())
+										Long clearTime = (playerQuestList.getLong("Ended."+e[counter]+".ClearTime") + Long.parseLong("2678400000")) ;
+										if(clearTime < etc.getNowUTC())
 										{
 											lore[0] ="§f[월간 퀘스트]";
-											Stack2("§f§l" + QuestName, 403,0,31,Arrays.asList(lore), loc, inv);
+											removeFlagStack("§f§l" + QuestName, 403,0,31,Arrays.asList(lore), loc, inv);
 											loc++;
 										}
 										else
 										{
-											ClearTime = PlayerQuestList.getLong("Ended."+e[counter]+".ClearTime") + Long.parseLong("2678400000") - ETC.getNowUTC() ;
-											ClearTime = ClearTime/1000;
+											clearTime = playerQuestList.getLong("Ended."+e[counter]+".ClearTime") + Long.parseLong("2678400000") - etc.getNowUTC() ;
+											clearTime = clearTime/1000;
 											lore[0] ="§f[월간 퀘스트]";
 											String[] timelore = new String[lore.length+3];
 											for(int counter2=0;counter2 < lore.length;counter2++)
@@ -1117,14 +1117,14 @@ public class NpcGui extends UtilGui
 											byte hour = 0;
 											byte min = 0;
 											
-											day = (byte) (ClearTime/86400);
-											ClearTime = ClearTime-(86400*day);
+											day = (byte) (clearTime/86400);
+											clearTime = clearTime-(86400*day);
 											
-											hour = (byte) (ClearTime/3600);
-											ClearTime = ClearTime-(3600*hour);
+											hour = (byte) (clearTime/3600);
+											clearTime = clearTime-(3600*hour);
 											
-											min = (byte)(ClearTime/60);
-											ClearTime = ClearTime-(60*min);
+											min = (byte)(clearTime/60);
+											clearTime = clearTime-(60*min);
 											
 											timelore[lore.length]="";
 											timelore[lore.length+1] = "§c[퀘스트 대기 시간]";
@@ -1134,10 +1134,10 @@ public class NpcGui extends UtilGui
 												timelore[lore.length+2] = timelore[lore.length+2] +""+hour+" 시간 " ;
 											if(min>0)
 												timelore[lore.length+2] =timelore[lore.length+2] + min+" 분 " ;
-											if(ClearTime>0)
-												timelore[lore.length+2] =timelore[lore.length+2] + ClearTime+" 초 " ;
+											if(clearTime>0)
+												timelore[lore.length+2] =timelore[lore.length+2] + clearTime+" 초 " ;
 											
-											Stack2("§f§l" + QuestName, 403,0,31,Arrays.asList(timelore), loc, inv);
+											removeFlagStack("§f§l" + QuestName, 403,0,31,Arrays.asList(timelore), loc, inv);
 											loc++;
 										}
 									}
@@ -1146,7 +1146,7 @@ public class NpcGui extends UtilGui
 							else
 							{
 								lore[0] ="§f[월간 퀘스트]";
-								Stack2("§f§l" + QuestName, 403,0,31,Arrays.asList(lore), loc, inv);
+								removeFlagStack("§f§l" + QuestName, 403,0,31,Arrays.asList(lore), loc, inv);
 								loc++;
 							}
 						}
@@ -1162,12 +1162,12 @@ public class NpcGui extends UtilGui
 		}
 		
 		if(a.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
 		//Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ u.getNPCuuid(player)), 53, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ u.getNPCuuid(player)), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -1177,17 +1177,17 @@ public class NpcGui extends UtilGui
 		String UniqueCode = "§0§0§7§0§5§r";
 		Inventory inv = Bukkit.createInventory(null, 27, UniqueCode + "§0NPC 직업 선택");
 
-		Stack2("§f§l직업 없음", 397,3,1,Arrays.asList("§7NPC의 직업을 없앱니다."), 1, inv);
-		Stack2("§f§l대장장이", 145,0,1,Arrays.asList("§7무기, 도구, 방어구 등등","§7금속으로 제작된 물건을 고칩니다."), 2, inv);
-		Stack2("§f§l주술사", 116,0,1,Arrays.asList("§7플레이어에게 랜덤 버프를 겁니다."), 3, inv);
-		Stack2("§f§l힐러", 373,8261,1,Arrays.asList("§7플레이어를 빠르게 치료해 줍니다."), 4, inv);
-		Stack2("§f§l전직 교관", 314,0,1,Arrays.asList("§7플레이어가 전직 조건에 부합할 경우","§7플레이어를 특정 직업으로 전직 시켜줍니다.","","§c이 기능은 서버 시스템이","§c메이플 스토리일 경우만 사용 가능합니다."), 5, inv);
-		Stack2("§f§l공간 이동술사", 368,0,1,Arrays.asList("§7특정 위치로 텔레포트 시켜줍니다."), 6, inv);
-		Stack2("§f§l개조 장인", 417,0,1,Arrays.asList("§7아이템을 개조 해 줍니다."), 7, inv);
-		Stack2("§f§l룬 세공사", 351,10,1,Arrays.asList("§7아이템에 룬을 장착 시켜줍니다."), 10, inv);
+		removeFlagStack("§f§l직업 없음", 397,3,1,Arrays.asList("§7NPC의 직업을 없앱니다."), 1, inv);
+		removeFlagStack("§f§l대장장이", 145,0,1,Arrays.asList("§7무기, 도구, 방어구 등등","§7금속으로 제작된 물건을 고칩니다."), 2, inv);
+		removeFlagStack("§f§l주술사", 116,0,1,Arrays.asList("§7플레이어에게 랜덤 버프를 겁니다."), 3, inv);
+		removeFlagStack("§f§l힐러", 373,8261,1,Arrays.asList("§7플레이어를 빠르게 치료해 줍니다."), 4, inv);
+		removeFlagStack("§f§l전직 교관", 314,0,1,Arrays.asList("§7플레이어가 전직 조건에 부합할 경우","§7플레이어를 특정 직업으로 전직 시켜줍니다.","","§c이 기능은 서버 시스템이","§c메이플 스토리일 경우만 사용 가능합니다."), 5, inv);
+		removeFlagStack("§f§l공간 이동술사", 368,0,1,Arrays.asList("§7특정 위치로 텔레포트 시켜줍니다."), 6, inv);
+		removeFlagStack("§f§l개조 장인", 417,0,1,Arrays.asList("§7아이템을 개조 해 줍니다."), 7, inv);
+		removeFlagStack("§f§l룬 세공사", 351,10,1,Arrays.asList("§7아이템에 룬을 장착 시켜줍니다."), 10, inv);
 
-		Stack2("§f§l이전 메뉴", 323,0,1,Arrays.asList("§7이전 메뉴로 돌아갑니다.","§0"+ NPCname), 18, inv);
-		Stack2("§f§l나가기", 324,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와의","§7대화를 종료합니다.","§0"+ u.getNPCuuid(player)), 26, inv);
+		removeFlagStack("§f§l이전 메뉴", 323,0,1,Arrays.asList("§7이전 메뉴로 돌아갑니다.","§0"+ NPCname), 18, inv);
+		removeFlagStack("§f§l나가기", 324,0,1,Arrays.asList("§e"+ChatColor.stripColor(NPCname)+"§7와의","§7대화를 종료합니다.","§0"+ u.getNPCuuid(player)), 26, inv);
 		
 		player.openInventory(inv);
 	}
@@ -1197,68 +1197,68 @@ public class NpcGui extends UtilGui
 		UserDataObject u = new UserDataObject();
 		YamlLoader NPCConfig = new YamlLoader();
 		NPCConfig.getConfig("NPC/NPCData/"+u.getNPCuuid(player)+".yml");
-		String UniqueCode = "§0§0§7§0§6§r";
-		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0NPC 워프 가능 목록 : " + (page+1));
-		Object[] WarpList= NPCConfig.getConfigurationSection("Job.WarpList").getKeys(false).toArray();
-		YamlLoader AreaConfig = new YamlLoader();
-		AreaConfig.getConfig("Area/AreaList.yml");
+		String uniqueCode = "§0§0§7§0§6§r";
+		Inventory inv = Bukkit.createInventory(null, 54, uniqueCode + "§0NPC 워프 가능 목록 : " + (page+1));
+		Object[] warpList= NPCConfig.getConfigurationSection("Job.WarpList").getKeys(false).toArray();
+		YamlLoader areaConfig = new YamlLoader();
+		areaConfig.getConfig("Area/AreaList.yml");
 
-		Object[] AreaList = null;
+		Object[] areaList = null;
 		boolean isExit = false;
 		for(int c = 0; c < 5; c++)
 		{
-			AreaList = AreaConfig.getKeys().toArray();
-			for(int count = 0; count < WarpList.length;count++)
+			areaList = areaConfig.getKeys().toArray();
+			for(int count = 0; count < warpList.length;count++)
 			{
 				isExit = false;
-				for(int counter = 0; counter < AreaList.length; counter++)
+				for(int counter = 0; counter < areaList.length; counter++)
 				{
-					if(AreaList[counter].equals(NPCConfig.getString("Job.WarpList."+count+".Area"))==true)
+					if(areaList[counter].equals(NPCConfig.getString("Job.WarpList."+count+".Area"))==true)
 					{
 						isExit = true;
 						break;
 					}
 				}
-				if(isExit == false)
+				if(!isExit)
 				{
-					short Acount =  (short) (WarpList.length-1);
-					for(int counter = count;counter <Acount;counter++)
+					int acount =  warpList.length-1;
+					for(int counter = count;counter <acount;counter++)
 						NPCConfig.set("Job.WarpList."+counter, NPCConfig.get("Job.WarpList."+(counter+1)));
-					NPCConfig.removeKey("Job.WarpList."+Acount);
+					NPCConfig.removeKey("Job.WarpList."+acount);
 				}
 			}
 			NPCConfig.saveConfig();
 		}
-		WarpList= NPCConfig.getConfigurationSection("Job.WarpList").getKeys(false).toArray();
+		warpList= NPCConfig.getConfigurationSection("Job.WarpList").getKeys(false).toArray();
 		byte loc=0;
-		for(int count = page*45; count < WarpList.length;count++)
+		for(int count = page*45; count < warpList.length;count++)
 		{
-			if(count > WarpList.length || loc >= 45) break;
+			if(count > warpList.length || loc >= 45) break;
 
 			if(player.isOp() == true)
-			Stack2("§f§l" + NPCConfig.getString("Job.WarpList."+count+".DisplayName"), 368,0,1,Arrays.asList("",
+			removeFlagStack("§f§l" + NPCConfig.getString("Job.WarpList."+count+".DisplayName"), 368,0,1,Arrays.asList("",
 					"§e워프 비용 : §f" +NPCConfig.getInt("Job.WarpList."+count+".Cost")+" "+MainServerOption.money
 					,"","§e[좌 클릭시 해당 지역으로 이동]","§c[Shift + 우클릭시 영역 삭제]"), loc, inv);
 			else
-				Stack2("§f§l" + NPCConfig.getString("Job.WarpList."+count+".DisplayName"), 368,0,1,Arrays.asList("",
+				removeFlagStack("§f§l" + NPCConfig.getString("Job.WarpList."+count+".DisplayName"), 368,0,1,Arrays.asList("",
 						"§e워프 비용 : §f" +NPCConfig.getInt("Job.WarpList."+count+".Cost") +" "+MainServerOption.money
 						,"","§e[좌 클릭시 해당 지역으로 이동]"), loc, inv);
 			loc++;
 		}
 		
-		if(WarpList.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+		if(warpList.length-(page*44)>45)
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
 		if(player.isOp() == true)
-			Stack2("§f§l새 워프", 381,0,1,Arrays.asList("§7새로운 워프 지점을 생성합니다.","","§e[영역을 설정한 지역만 등록 가능합니다.]"), 49, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
+			removeFlagStack("§f§l새 워프", 381,0,1,Arrays.asList("§7새로운 워프 지점을 생성합니다.","","§e[영역을 설정한 지역만 등록 가능합니다.]"), 49, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
 		player.openInventory(inv);
 	}
 	
-	public void WarperGUI(Player player, short page, String NPCname)
+	public void WarperGUI(Player player, int page, String NPCname)
 	{
 		YamlLoader AreaConfig = new YamlLoader();
 		AreaConfig.getConfig("Area/AreaList.yml");
@@ -1276,12 +1276,12 @@ public class NpcGui extends UtilGui
 			if(count > AreaList.length || loc >= 45) break;
 			String world = AreaConfig.getString(AreaName+".World");
 			int MinXLoc = AreaConfig.getInt(AreaName+".X.Min");
-			short MinYLoc = (short) AreaConfig.getInt(AreaName+".Y.Min");
+			int MinYLoc = AreaConfig.getInt(AreaName+".Y.Min");
 			int MinZLoc = AreaConfig.getInt(AreaName+".Z.Min");
 			int MaxXLoc = AreaConfig.getInt(AreaName+".X.Max");
-			short MaxYLoc = (short) AreaConfig.getInt(AreaName+".Y.Max");
+			int MaxYLoc = AreaConfig.getInt(AreaName+".Y.Max");
 			int MaxZLoc = AreaConfig.getInt(AreaName+".Z.Max");
-			Stack2("§f§l" + AreaName, 395,0,1,Arrays.asList(
+			removeFlagStack("§f§l" + AreaName, 395,0,1,Arrays.asList(
 					"§3월드 : "+world,"§3X 영역 : "+MinXLoc+" ~ " + MaxXLoc
 					,"§3Y 영역 : "+MinYLoc+" ~ " + MaxYLoc
 					,"§3Z 영역 : "+MinZLoc+" ~ " + MaxZLoc
@@ -1291,16 +1291,16 @@ public class NpcGui extends UtilGui
 		}
 		
 		if(AreaList.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
 		player.openInventory(inv);
 	}
 	
-	public void UpgraderGUI(Player player, short page, String NPCname)
+	public void UpgraderGUI(Player player, int page, String NPCname)
 	{
 		UserDataObject u = new UserDataObject();
 		YamlLoader NPCConfig = new YamlLoader();
@@ -1390,24 +1390,24 @@ public class NpcGui extends UtilGui
 			
 			
 			if(count > UpgradeAbleList.length || loc >= 45) break;
-			Stack2("§f§l" + RecipeName, 395,0,1,Arrays.asList(scriptA), loc, inv);
+			removeFlagStack("§f§l" + RecipeName, 395,0,1,Arrays.asList(scriptA), loc, inv);
 			
 			loc++;
 		}
 		
 		if(UpgradeAbleList.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
 		if(player.isOp() == true)
-			Stack2("§f§l개조식 추가", 386,0,1,Arrays.asList("§7현재 개조 장인이 새로운","§7개조 레시피를 알게 합니다."), 49, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
+			removeFlagStack("§f§l개조식 추가", 386,0,1,Arrays.asList("§7현재 개조 장인이 새로운","§7개조 레시피를 알게 합니다."), 49, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
 		player.openInventory(inv);
 	}
 	
-	public void SelectUpgradeRecipeGUI(Player player, short page, String NPCname)
+	public void SelectUpgradeRecipeGUI(Player player, int page, String NPCname)
 	{
 		YamlLoader RecipeList = new YamlLoader();
 		RecipeList.getConfig("Item/Upgrade.yml");
@@ -1484,17 +1484,17 @@ public class NpcGui extends UtilGui
 			for(int counter = 0; counter < scriptA.length; counter++)
 				scriptA[counter] =  " "+scriptA[counter];
 			
-			Stack("§f"+ItemName, 395, 0, 1,Arrays.asList(scriptA), loc, inv);
+			stack("§f"+ItemName, 395, 0, 1,Arrays.asList(scriptA), loc, inv);
 			loc++;
 		}
 		
 		if(a.length-(page*44)>45)
-			Stack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			stack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			stack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
+		stack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		stack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -1506,38 +1506,38 @@ public class NpcGui extends UtilGui
 
 		YamlLoader NPCscript = new YamlLoader();
 		NPCscript.getConfig("NPC/NPCData/"+ u.getNPCuuid(player)  +".yml");
-		Stack2("§9", 160,7,1,null, 0, inv);
-		Stack2("§9", 160,7,1,null, 1, inv);
-		Stack2("§9", 160,7,1,null, 2, inv);
-		Stack2("§9", 160,7,1,null, 9, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 10, inv);
-		Stack2("§9", 160,7,1,null,11, inv);
-		Stack2("§9", 160,7,1,null,18, inv);
-		Stack2("§9", 160,7,1,null,19, inv);
-		Stack2("§9", 160,7,1,null,20, inv);
+		removeFlagStack("§9", 160,7,1,null, 0, inv);
+		removeFlagStack("§9", 160,7,1,null, 1, inv);
+		removeFlagStack("§9", 160,7,1,null, 2, inv);
+		removeFlagStack("§9", 160,7,1,null, 9, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 10, inv);
+		removeFlagStack("§9", 160,7,1,null,11, inv);
+		removeFlagStack("§9", 160,7,1,null,18, inv);
+		removeFlagStack("§9", 160,7,1,null,19, inv);
+		removeFlagStack("§9", 160,7,1,null,20, inv);
 		
-		Stack2("§9§l[룬을 올려 놓으세요]", 160,11,1,null, 3, inv);
-		Stack2("§9§l[룬을 올려 놓으세요]", 160,11,1,null, 4, inv);
-		Stack2("§9§l[룬을 올려 놓으세요]", 160,11,1,null, 5, inv);
-		Stack2("§9§l[룬을 올려 놓으세요]", 160,11,1,null, 12, inv);
-		Stack2("§9§l[룬을 올려 놓으세요]", 160,11,1,null,14, inv);
-		Stack2("§9§l[룬을 올려 놓으세요]", 160,11,1,null,21, inv);
-		Stack2("§9§l[룬을 올려 놓으세요]", 160,11,1,null,22, inv);
-		Stack2("§9§l[룬을 올려 놓으세요]", 160,11,1,null,23, inv);
+		removeFlagStack("§9§l[룬을 올려 놓으세요]", 160,11,1,null, 3, inv);
+		removeFlagStack("§9§l[룬을 올려 놓으세요]", 160,11,1,null, 4, inv);
+		removeFlagStack("§9§l[룬을 올려 놓으세요]", 160,11,1,null, 5, inv);
+		removeFlagStack("§9§l[룬을 올려 놓으세요]", 160,11,1,null, 12, inv);
+		removeFlagStack("§9§l[룬을 올려 놓으세요]", 160,11,1,null,14, inv);
+		removeFlagStack("§9§l[룬을 올려 놓으세요]", 160,11,1,null,21, inv);
+		removeFlagStack("§9§l[룬을 올려 놓으세요]", 160,11,1,null,22, inv);
+		removeFlagStack("§9§l[룬을 올려 놓으세요]", 160,11,1,null,23, inv);
 		
-		Stack2("§9", 160,7,1,null, 6, inv);
-		Stack2("§9", 160,7,1,null, 7, inv);
-		Stack2("§9", 160,7,1,null, 8, inv);
-		Stack2("§9", 160,7,1,null, 15, inv);
-		Stack2("§b§l[     룬 장착     ]", 145,0,1,Arrays.asList("","§a룬 세공 성공률 : §f" +NPCscript.getInt("Job.SuccessRate")+"§a%","§a룬 세공 가격 : §e"+NPCscript.getInt("Job.Deal")+MainServerOption.money), 16, inv);
-		Stack2("§9", 160,7,1,null,17, inv);
-		Stack2("§9", 160,7,1,null,24, inv);
-		Stack2("§9", 160,7,1,null,25, inv);
-		Stack2("§9", 160,7,1,Arrays.asList("§0"+NPCname),26, inv);
+		removeFlagStack("§9", 160,7,1,null, 6, inv);
+		removeFlagStack("§9", 160,7,1,null, 7, inv);
+		removeFlagStack("§9", 160,7,1,null, 8, inv);
+		removeFlagStack("§9", 160,7,1,null, 15, inv);
+		removeFlagStack("§b§l[     룬 장착     ]", 145,0,1,Arrays.asList("","§a룬 세공 성공률 : §f" +NPCscript.getInt("Job.SuccessRate")+"§a%","§a룬 세공 가격 : §e"+NPCscript.getInt("Job.Deal")+MainServerOption.money), 16, inv);
+		removeFlagStack("§9", 160,7,1,null,17, inv);
+		removeFlagStack("§9", 160,7,1,null,24, inv);
+		removeFlagStack("§9", 160,7,1,null,25, inv);
+		removeFlagStack("§9", 160,7,1,Arrays.asList("§0"+NPCname),26, inv);
 		player.openInventory(inv);
 	}
 	
-	public void NPCTalkGUI(Player player, short page, String NPCname,String TalkType)
+	public void NPCTalkGUI(Player player, int page, String NPCname,String TalkType)
 	{
 		UserDataObject u = new UserDataObject();
 		YamlLoader NPCConfig = new YamlLoader();
@@ -1592,38 +1592,38 @@ public class NpcGui extends UtilGui
 			for(int counter = 0; counter < scriptA.length; counter++)
 				scriptA[counter] =  " "+scriptA[counter];
 			
-			Stack2("§f§l"+ (count+1), 386,0,1,Arrays.asList(scriptA), loc, inv);
+			removeFlagStack("§f§l"+ (count+1), 386,0,1,Arrays.asList(scriptA), loc, inv);
 			
 			loc=loc+1;
 		}
 		
 		if(TalkList.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
-		Stack2("§f§l[대사 추가]", 403,0,1,Arrays.asList("§7대사를 추가 시킵니다."), 49, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+		removeFlagStack("§f§l[대사 추가]", 403,0,1,Arrays.asList("§7대사를 추가 시킵니다."), 49, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
 		switch(TalkType)
 		{
 		case "NT"://NatureTalk
-			Stack2("§f§l[근처의 소문]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 46, inv);
-			Stack2("§f§l[스킬에 관하여]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 52, inv);
+			removeFlagStack("§f§l[근처의 소문]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 46, inv);
+			removeFlagStack("§f§l[스킬에 관하여]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 52, inv);
 			break;
 		case "NN"://NearbyNews
-			Stack2("§f§l[스킬에 관하여]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 46, inv);
-			Stack2("§f§l[개인적인 대화]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 52, inv);
+			removeFlagStack("§f§l[스킬에 관하여]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 46, inv);
+			removeFlagStack("§f§l[개인적인 대화]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 52, inv);
 			break;
 		case "AS"://AboutSkill
-			Stack2("§f§l[개인적인 대화]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 46, inv);
-			Stack2("§f§l[근처의 소문]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 52, inv);
+			removeFlagStack("§f§l[개인적인 대화]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 46, inv);
+			removeFlagStack("§f§l[근처의 소문]", 340,0,1,Arrays.asList("§7다른 주제의 대사를 설정합니다."), 52, inv);
 			break;
 		}
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+TalkType), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+TalkType), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
 		player.openInventory(inv);
 	}
 	
-	public void TalkSettingGUI(Player player,String NPCname, String TalkType, short TalkNumber)
+	public void TalkSettingGUI(Player player,String NPCname, String TalkType, int TalkNumber)
 	{
 		UserDataObject u = new UserDataObject();
 		YamlLoader NPCConfig = new YamlLoader();
@@ -1649,53 +1649,53 @@ public class NpcGui extends UtilGui
 			for(int counter = 0; counter < scriptA.length; counter++)
 				scriptA[counter] =  " "+scriptA[counter];
 
-			Stack2("§b[     대사     ]", 160,3,1,null, 0, inv);
-			Stack2("§b[     대사     ]", 160,3,1,null, 1, inv);
-			Stack2("§b[     대사     ]", 160,3,1,null, 2, inv);
-			Stack2("§b[     대사     ]", 160,3,1,null, 9, inv);
-			Stack2("§f§l"+ TalkNumber, 386,0,1,Arrays.asList(scriptA), 10, inv);
-			Stack2("§b[     대사     ]", 160,3,1,null, 11, inv);
-			Stack2("§b[     대사     ]", 160,3,1,null, 18, inv);
-			Stack2("§b[     대사     ]", 160,3,1,null, 19, inv);
-			Stack2("§b[     대사     ]", 160,3,1,null, 20, inv);
+			removeFlagStack("§b[     대사     ]", 160,3,1,null, 0, inv);
+			removeFlagStack("§b[     대사     ]", 160,3,1,null, 1, inv);
+			removeFlagStack("§b[     대사     ]", 160,3,1,null, 2, inv);
+			removeFlagStack("§b[     대사     ]", 160,3,1,null, 9, inv);
+			removeFlagStack("§f§l"+ TalkNumber, 386,0,1,Arrays.asList(scriptA), 10, inv);
+			removeFlagStack("§b[     대사     ]", 160,3,1,null, 11, inv);
+			removeFlagStack("§b[     대사     ]", 160,3,1,null, 18, inv);
+			removeFlagStack("§b[     대사     ]", 160,3,1,null, 19, inv);
+			removeFlagStack("§b[     대사     ]", 160,3,1,null, 20, inv);
 			
 
-			Stack2("§7[     옵션     ]", 160,7,1,null, 3, inv);
-			Stack2("§7[     옵션     ]", 160,7,1,null, 4, inv);
-			Stack2("§7[     옵션     ]", 160,7,1,null, 5, inv);
-			Stack2("§7[     옵션     ]", 160,7,1,null, 6, inv);
-			Stack2("§7[     옵션     ]", 160,7,1,null, 7, inv);
-			Stack2("§7[     옵션     ]", 160,7,1,null, 8, inv);
-			Stack2("§7[     옵션     ]", 160,7,1,null, 12, inv);
-			Stack2("§7[     옵션     ]", 160,7,1,null, 17, inv);
-			Stack2("§7[     옵션     ]", 160,7,1,null, 21, inv);
-			Stack2("§7[     옵션     ]", 160,7,1,null, 22, inv);
-			Stack2("§7[     옵션     ]", 160,7,1,null, 23, inv);
-			Stack2("§7[     옵션     ]", 160,7,1,null, 24, inv);
-			Stack2("§7[     옵션     ]", 160,7,1,null, 25, inv);
-			Stack2("§7[     옵션     ]", 160,7,1,null, 26, inv);
+			removeFlagStack("§7[     옵션     ]", 160,7,1,null, 3, inv);
+			removeFlagStack("§7[     옵션     ]", 160,7,1,null, 4, inv);
+			removeFlagStack("§7[     옵션     ]", 160,7,1,null, 5, inv);
+			removeFlagStack("§7[     옵션     ]", 160,7,1,null, 6, inv);
+			removeFlagStack("§7[     옵션     ]", 160,7,1,null, 7, inv);
+			removeFlagStack("§7[     옵션     ]", 160,7,1,null, 8, inv);
+			removeFlagStack("§7[     옵션     ]", 160,7,1,null, 12, inv);
+			removeFlagStack("§7[     옵션     ]", 160,7,1,null, 17, inv);
+			removeFlagStack("§7[     옵션     ]", 160,7,1,null, 21, inv);
+			removeFlagStack("§7[     옵션     ]", 160,7,1,null, 22, inv);
+			removeFlagStack("§7[     옵션     ]", 160,7,1,null, 23, inv);
+			removeFlagStack("§7[     옵션     ]", 160,7,1,null, 24, inv);
+			removeFlagStack("§7[     옵션     ]", 160,7,1,null, 25, inv);
+			removeFlagStack("§7[     옵션     ]", 160,7,1,null, 26, inv);
 			
 
 			switch(TalkType)
 			{
 			case "NT"://NatureTalk
 			case "NN"://NearbyNews
-				Stack2("§d[     호감도     ]", 38,0,1,null, 13, inv);
-				Stack2("§f[     대 사     ]", 386,0,1,null, 14, inv);
+				removeFlagStack("§d[     호감도     ]", 38,0,1,null, 13, inv);
+				removeFlagStack("§f[     대 사     ]", 386,0,1,null, 14, inv);
 				break;
 			case "AS"://AboutSkill
-				Stack2("§d[     호감도     ]", 38,0,1,null, 13, inv);
-				Stack2("§f[     대 사 1     ]", 386,0,1,null, 14, inv);
-				Stack2("§3[     스킬     ]", 403,0,1,null, 15, inv);
-				Stack2("§f[     대 사 2     ]", 386,0,1,null, 16, inv);
+				removeFlagStack("§d[     호감도     ]", 38,0,1,null, 13, inv);
+				removeFlagStack("§f[     대 사 1     ]", 386,0,1,null, 14, inv);
+				removeFlagStack("§3[     스킬     ]", 403,0,1,null, 15, inv);
+				removeFlagStack("§f[     대 사 2     ]", 386,0,1,null, 16, inv);
 				break;
 			}
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+TalkType), 27, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 35, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+TalkType), 27, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 35, inv);
 		player.openInventory(inv);
 	}
 	
-	public void AddAbleSkillsGUI(Player player, short page, String NPCname,int TalkNumber)
+	public void AddAbleSkillsGUI(Player player, int page, String NPCname,int TalkNumber)
 	{
 		YamlLoader SkillList = new YamlLoader();
 		SkillList.getConfig("Skill/JobList.yml");
@@ -1712,18 +1712,18 @@ public class NpcGui extends UtilGui
 			if(count > Skills.length || loc >= 45) break;
 			if(RealSkills.contains(Skills[count].toString())==true)
 			{
-				Stack2("§f§l"+ Skills[count], RealSkills.getInt(Skills[count].toString()+".ID"),RealSkills.getInt(Skills[count].toString()+".DATA"),RealSkills.getInt(Skills[count].toString()+".Amount"),Arrays.asList("","§a[최대 랭크]","§f"+RealSkills.getConfigurationSection(Skills[count].toString()+".SkillRank").getKeys(false).size()), loc, inv);
+				removeFlagStack("§f§l"+ Skills[count], RealSkills.getInt(Skills[count].toString()+".ID"),RealSkills.getInt(Skills[count].toString()+".DATA"),RealSkills.getInt(Skills[count].toString()+".Amount"),Arrays.asList("","§a[최대 랭크]","§f"+RealSkills.getConfigurationSection(Skills[count].toString()+".SkillRank").getKeys(false).size()), loc, inv);
 				loc++;
 			}
 		}
 		
 		if(Skills.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+TalkNumber), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+TalkNumber), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
 		player.openInventory(inv);
 	}
 
@@ -1735,83 +1735,83 @@ public class NpcGui extends UtilGui
 		if(item.hasItemMeta()&&item.getItemMeta().hasDisplayName())
 			itemName = item.getItemMeta().getDisplayName();
 		else
-			itemName = new event.EventInteract().SetItemDefaultName((short)item.getTypeId(), item.getData().getData());
+			itemName = new event.EventInteract().setItemDefaultName(item.getTypeId(), item.getData().getData());
 		if(isItemBuy)
 		{
 			inv = Bukkit.createInventory(null, 54, UniqueCode + "§0[NPC]§9§l 물품 구매");
-			Stack2("§b     [구입]     ", 160,11,1,Arrays.asList("§0"+value), 0, inv);
-			Stack2("§b     [구입]     ", 160,11,1,Arrays.asList("§0"+count), 1, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 2, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 3, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 4, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 5, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 6, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 7, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 8, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 9, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 18, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 17, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 26, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 27, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 36, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 35, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 36, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 37, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 38, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 39, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 40, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 41, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 42, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 43, inv);
-			Stack2("§b     [구입]     ", 160,11,1,null, 44, inv);
-			Stack2("§b§l[물품 구매]", 54,0,1,Arrays.asList(itemName+"§f§l×"+item.getAmount()+"§f 아이템을","§f총 §e"+ChatColor.BOLD+count +"§f 개 구매합니다."
+			removeFlagStack("§b     [구입]     ", 160,11,1,Arrays.asList("§0"+value), 0, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,Arrays.asList("§0"+count), 1, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 2, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 3, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 4, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 5, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 6, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 7, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 8, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 9, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 18, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 17, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 26, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 27, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 36, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 35, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 36, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 37, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 38, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 39, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 40, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 41, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 42, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 43, inv);
+			removeFlagStack("§b     [구입]     ", 160,11,1,null, 44, inv);
+			removeFlagStack("§b§l[물품 구매]", 54,0,1,Arrays.asList(itemName+"§f§l×"+item.getAmount()+"§f 아이템을","§f총 §e"+ChatColor.BOLD+count +"§f 개 구매합니다."
 					,"","§f가격 : §e"+ value*count + " §6"+ MainServerOption.money, "§f소지금 : §f"+ChatColor.BOLD+MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()+" "+MainServerOption.money), 49, inv);
 		}
 		else
 		{
 			inv = Bukkit.createInventory(null, 54, UniqueCode + "§0[NPC]§c§l 물품 판매");
-			Stack2("§c     [판매]     ", 160,14,1,Arrays.asList("§0"+value), 0, inv);
-			Stack2("§c     [판매]     ", 160,14,1,Arrays.asList("§0"+count), 1, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 2, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 3, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 4, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 5, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 6, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 7, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 8, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 9, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 18, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 17, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 26, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 27, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 36, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 35, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 36, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 37, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 38, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 39, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 40, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 41, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 42, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 43, inv);
-			Stack2("§c     [판매]     ", 160,14,1,null, 44, inv);
-			Stack2("§c§l[물품 판매]", 54,0,1,Arrays.asList(itemName+"§f§l×"+item.getAmount()+"§f 아이템을","§f총 §e"+ChatColor.BOLD+count +"§f 개 판매합니다."
+			removeFlagStack("§c     [판매]     ", 160,14,1,Arrays.asList("§0"+value), 0, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,Arrays.asList("§0"+count), 1, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 2, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 3, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 4, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 5, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 6, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 7, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 8, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 9, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 18, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 17, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 26, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 27, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 36, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 35, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 36, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 37, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 38, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 39, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 40, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 41, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 42, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 43, inv);
+			removeFlagStack("§c     [판매]     ", 160,14,1,null, 44, inv);
+			removeFlagStack("§c§l[물품 판매]", 54,0,1,Arrays.asList(itemName+"§f§l×"+item.getAmount()+"§f 아이템을","§f총 §e"+ChatColor.BOLD+count +"§f 개 판매합니다."
 					,"","§f가격 : §e"+ value*count + " §6"+ MainServerOption.money, "§f소지금 : §f"+ChatColor.BOLD+MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()+" "+MainServerOption.money), 49, inv);
 		}
 
-		Stack2("§c§l     [개수 - 64]     ", 374,0,64,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 19, inv);
-		Stack2("§c§l     [개수 - 10]     ", 374,0,10,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 20, inv);
-		Stack2("§c§l     [개수 - 1]     ", 374,0,1,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 21, inv);
+		removeFlagStack("§c§l     [개수 - 64]     ", 374,0,64,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 19, inv);
+		removeFlagStack("§c§l     [개수 - 10]     ", 374,0,10,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 20, inv);
+		removeFlagStack("§c§l     [개수 - 1]     ", 374,0,1,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 21, inv);
 
-		Stack2("§c§l     [최소한]     ", 325,0,1,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 13, inv);
-		ItemStackStack(item, 22, inv);
-		Stack2("§b§l     [최대한]     ", 326,0,1,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 31, inv);
-		Stack2("§b§l     [개수 + 1]     ", 373,0,1,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 23, inv);
-		Stack2("§b§l     [개수 + 10]     ", 373,0,10,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 24, inv);
-		Stack2("§b§l     [개수 + 64]     ", 373,0,64,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 25, inv);
+		removeFlagStack("§c§l     [최소한]     ", 325,0,1,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 13, inv);
+		stackItem(item, 22, inv);
+		removeFlagStack("§b§l     [최대한]     ", 326,0,1,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 31, inv);
+		removeFlagStack("§b§l     [개수 + 1]     ", 373,0,1,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 23, inv);
+		removeFlagStack("§b§l     [개수 + 10]     ", 373,0,10,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 24, inv);
+		removeFlagStack("§b§l     [개수 + 64]     ", 373,0,64,Arrays.asList("","§f현재 총 §e"+ChatColor.BOLD+count +"§f 개"), 25, inv);
 		
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -1819,16 +1819,16 @@ public class NpcGui extends UtilGui
 	{
 		String UniqueCode = "§0§0§7§0§f§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0[NPC]§0§l 수리할 장비를 선택 하세요.");
-		Stack2("§f§l이전 목록§0§e"+ChatColor.RED, 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+successRate,"§0"+value), 0, inv);
-		Stack2("§f§l닫기§0§e"+ChatColor.RED, 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 8, inv);
+		removeFlagStack("§f§l이전 목록§0§e"+ChatColor.RED, 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+successRate,"§0"+value), 0, inv);
+		removeFlagStack("§f§l닫기§0§e"+ChatColor.RED, 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 8, inv);
 
-		Stack2("§0§e"+ChatColor.RED, 265,0,1,null, 1, inv);
-		Stack2("§0§e"+ChatColor.RED, 265,0,1,null, 2, inv);
-		Stack2("§0§e"+ChatColor.RED, 265,0,1,null, 3, inv);
-		Stack2("§6§l[장비 수리]§0§e"+ChatColor.RED, 145,0,1,Arrays.asList("§7인벤토리 속 내구도가 닳은 장비를","§7정해진 확률과 가격에 수리 해 줍니다.","","§3수리 성공률 : §f" +successRate+"§3 %","§a내구도 10 당 가격 : §e"+value+" "+ChatColor.GREEN+MainServerOption.money,"","§c[일반 아이템 수리 실패시]","§c - 수리 성공과 상관 없이 골드 소모","§c[커스텀 아이템 수리 실패시]","§c - 최대 내구도 감소"), 4, inv);
-		Stack2("§0§e"+ChatColor.RED, 265,0,1,null, 5, inv);
-		Stack2("§0§e"+ChatColor.RED, 265,0,1,null, 6, inv);
-		Stack2("§0§e"+ChatColor.RED, 265,0,1,null, 7, inv);
+		removeFlagStack("§0§e"+ChatColor.RED, 265,0,1,null, 1, inv);
+		removeFlagStack("§0§e"+ChatColor.RED, 265,0,1,null, 2, inv);
+		removeFlagStack("§0§e"+ChatColor.RED, 265,0,1,null, 3, inv);
+		removeFlagStack("§6§l[장비 수리]§0§e"+ChatColor.RED, 145,0,1,Arrays.asList("§7인벤토리 속 내구도가 닳은 장비를","§7정해진 확률과 가격에 수리 해 줍니다.","","§3수리 성공률 : §f" +successRate+"§3 %","§a내구도 10 당 가격 : §e"+value+" "+ChatColor.GREEN+MainServerOption.money,"","§c[일반 아이템 수리 실패시]","§c - 수리 성공과 상관 없이 골드 소모","§c[커스텀 아이템 수리 실패시]","§c - 최대 내구도 감소"), 4, inv);
+		removeFlagStack("§0§e"+ChatColor.RED, 265,0,1,null, 5, inv);
+		removeFlagStack("§0§e"+ChatColor.RED, 265,0,1,null, 6, inv);
+		removeFlagStack("§0§e"+ChatColor.RED, 265,0,1,null, 7, inv);
 		player.openInventory(inv);
 	}
 	
@@ -1836,18 +1836,18 @@ public class NpcGui extends UtilGui
 	{
 		String UniqueCode = "§0§0§7§1§0§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0[NPC] 선물 가능 아이템 목록");
-		Stack2("§f§l이전 목록§0§e"+ChatColor.RED, 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
-		Stack2("§f§l닫기§0§e"+ChatColor.RED, 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 8, inv);
+		removeFlagStack("§f§l이전 목록§0§e"+ChatColor.RED, 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
+		removeFlagStack("§f§l닫기§0§e"+ChatColor.RED, 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 8, inv);
 
 		YamlLoader NPCConfig = new YamlLoader();
 		NPCConfig.getConfig("NPC/NPCData/"+new UserDataObject().getNPCuuid(player)+".yml");
 		
-		Stack2("§f기타 아이템", 138,0,1,Arrays.asList("§7정해진 아이템 외의 다른","§7아이템을 주었을 때의","§7호감도 상승량을 설정합니다.","","§a호감도 : " + NPCConfig.getInt("Present.1.love")), 1, inv);
+		removeFlagStack("§f기타 아이템", 138,0,1,Arrays.asList("§7정해진 아이템 외의 다른","§7아이템을 주었을 때의","§7호감도 상승량을 설정합니다.","","§a호감도 : " + NPCConfig.getInt("Present.1.love")), 1, inv);
 
 		for(int count = 2; count < 8; count++)
 		{
 			if(NPCConfig.getItemStack("Present."+count+".item") == null)
-				Stack2("§c[정해지지 않은 선물]", 166,0,1,Arrays.asList("§e§l[클릭시 선물 지정]"), count, inv);
+				removeFlagStack("§c[정해지지 않은 선물]", 166,0,1,Arrays.asList("§e§l[클릭시 선물 지정]"), count, inv);
 			else
 			{
 				ItemStack item = NPCConfig.getItemStack("Present."+count+".item");
@@ -1862,7 +1862,7 @@ public class NpcGui extends UtilGui
 					im.setLore(lore);
 				}
 				item.setItemMeta(im);
-				ItemStackStack(item, count, inv);
+				stackItem(item, count, inv);
 			}
 		}
 		player.openInventory(inv);
@@ -1874,26 +1874,26 @@ public class NpcGui extends UtilGui
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0[NPC] 선물 아이템을 올려 주세요");
 		if(isSettingMode)
 		{
-			Stack2("§f§l선물 등록§0§e"+ChatColor.RED, 389,0,1,Arrays.asList("§7이 아이템으로 설정합니다.","§0"+isSettingMode), 0, inv);
+			removeFlagStack("§f§l선물 등록§0§e"+ChatColor.RED, 389,0,1,Arrays.asList("§7이 아이템으로 설정합니다.","§0"+isSettingMode), 0, inv);
 
 			YamlLoader NPCConfig = new YamlLoader();
 			NPCConfig.getConfig("NPC/NPCData/"+new UserDataObject().getNPCuuid(player)+".yml");
 			ItemStack item = NPCConfig.getItemStack("Present."+number+".item");
 			if(item != null)
-				ItemStackStack(item, 4, inv);
-			Stack2("§f§l닫기§0§e"+ChatColor.RED, 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 8, inv);
+				stackItem(item, 4, inv);
+			removeFlagStack("§f§l닫기§0§e"+ChatColor.RED, 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+NPCname), 8, inv);
 		}
 		else
 		{
-			Stack2("§f§l이전 목록§0§e"+ChatColor.RED, 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+isSettingMode), 0, inv);
-			Stack2("§f§l선물 주기§0§e"+ChatColor.RED, 54,0,1,Arrays.asList("§7올려둔 아이템을 선물합니다.","§0"+NPCname), 8, inv);
+			removeFlagStack("§f§l이전 목록§0§e"+ChatColor.RED, 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+isSettingMode), 0, inv);
+			removeFlagStack("§f§l선물 주기§0§e"+ChatColor.RED, 54,0,1,Arrays.asList("§7올려둔 아이템을 선물합니다.","§0"+NPCname), 8, inv);
 		}
-		Stack2("§0§e"+ChatColor.RED, 160,5,1,Arrays.asList("§0"+number), 1, inv);
-		Stack2("§0§e"+ChatColor.RED, 160,5,1,null, 2, inv);
-		Stack2("§0§e"+ChatColor.RED, 160,5,1,null, 3, inv);
-		Stack2("§0§e"+ChatColor.RED, 160,5,1,null, 5, inv);
-		Stack2("§0§e"+ChatColor.RED, 160,5,1,null, 6, inv);
-		Stack2("§0§e"+ChatColor.RED, 160,5,1,null, 7, inv);
+		removeFlagStack("§0§e"+ChatColor.RED, 160,5,1,Arrays.asList("§0"+number), 1, inv);
+		removeFlagStack("§0§e"+ChatColor.RED, 160,5,1,null, 2, inv);
+		removeFlagStack("§0§e"+ChatColor.RED, 160,5,1,null, 3, inv);
+		removeFlagStack("§0§e"+ChatColor.RED, 160,5,1,null, 5, inv);
+		removeFlagStack("§0§e"+ChatColor.RED, 160,5,1,null, 6, inv);
+		removeFlagStack("§0§e"+ChatColor.RED, 160,5,1,null, 7, inv);
 		player.openInventory(inv);
 	}
 
@@ -1907,16 +1907,16 @@ public class NpcGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
 			if(slot == 48)//이전 페이지
-				QuestAddGUI(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-2));
+				questAddGUI(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-2));
 			else if(slot == 50)//다음 페이지
-				QuestAddGUI(player,(short) Integer.parseInt(event.getInventory().getTitle().split(" : ")[1]));
+				questAddGUI(player,(short) Integer.parseInt(event.getInventory().getTitle().split(" : ")[1]));
 			else
 			{
 				YamlLoader NPCscript = new YamlLoader();
@@ -1944,17 +1944,17 @@ public class NpcGui extends UtilGui
 				if(isExit == true)
 				{
 					NPCscript.removeKey("Quest."+ (a.length-1));
-					SoundEffect.SP(player, Sound.BLOCK_LAVA_POP, 1.0F, 0.8F);
+					SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 1.0F, 0.8F);
 					player.sendMessage("§c[SYSTEM] : 퀘스트 제거 완료!");
 				}
 				else
 				{
-					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
 					player.sendMessage("§a[SYSTEM] : 퀘스트 등록 완료!");
 					NPCscript.set("Quest."+a.length, QuestName);
 				}
 				NPCscript.saveConfig();
-				QuestAddGUI(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1));
+				questAddGUI(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1));
 			}
 		}
 	}
@@ -1967,12 +1967,12 @@ public class NpcGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			if(slot == 48)//이전 페이지
 				QuestListGUI(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-2));
 			else if(slot == 50)//다음 페이지
@@ -1990,14 +1990,14 @@ public class NpcGui extends UtilGui
 				{
 					if(event.getCurrentItem().getItemMeta().getLore().get(counter).contains("대기") == true)
 					{
-						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
 						player.sendMessage("§c[퀘스트] : 오늘은 더이상 퀘스트를 진행할 수 없습니다!");
 						return;
 					}
 				}
 				if(QuestList.getInt(QuestName+".Server.Limit") == -1)
 				{
-					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
 					player.sendMessage("§c[퀘스트] : 더이상 이 퀘스트는 수행 할 수 없습니다!");
 					return;
 				}
@@ -2045,7 +2045,7 @@ public class NpcGui extends UtilGui
 										QuestList.saveConfig();
 									}
 									player.closeInventory();
-									SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
+									SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
 									String message = Config.getString("Quest.AcceptMessage").replace("%QuestName%", QuestName);
 									player.sendMessage(message);
 
@@ -2058,28 +2058,28 @@ public class NpcGui extends UtilGui
 								}
 								else
 								{
-									SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
+									SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
 									player.sendMessage("§c[퀘스트] : 이전 퀘스트를 진행하지 않아 퀘스트를 수행할 수 없습니다!");
 									return;
 								}
 							}
 							else
 							{
-								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
+								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
 								player.sendMessage("§c[퀘스트] : 호감도가 부족하여 퀘스트를 수행할 수 없습니다!");
 								return;
 							}
 						}
 						else
 						{
-							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
 							player.sendMessage("§c[퀘스트] : 스텟이 부족하여 퀘스트를 수행할 수 없습니다!");
 							return;
 						}
 					}
 					else
 					{
-						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
 						player.sendMessage("§c[퀘스트] : 수행 가능한 레벨이 아닙니다!");
 						return;
 					}
@@ -2097,12 +2097,12 @@ public class NpcGui extends UtilGui
 		{
 			if(slot == 26)//나가기
 			{
-				SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 				player.closeInventory();
 			}
 			else if(slot == 8 && player.isOp())//GUI 비 활성화
 			{
-				SoundEffect.SP(player, Sound.ENTITY_VILLAGER_HURT, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_VILLAGER_HURT, 0.8F, 1.0F);
 				YamlLoader DNPC = new YamlLoader();
 				DNPC.getConfig("NPC/DistrictNPC.yml");
 
@@ -2115,7 +2115,7 @@ public class NpcGui extends UtilGui
 			}
 			else if(slot == 4)//직업 아이콘
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				String Case = (ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 				if(Case.equals("대장장이") || Case.equals("룬 세공사") || Case.equals("주술사") ||
 						Case.equals("힐러") || Case.equals("전직 교관") || Case.equals("공간 이동술사") ||
@@ -2133,7 +2133,7 @@ public class NpcGui extends UtilGui
 						NPCscript.getConfig("NPC/NPCData/"+ u.getNPCuuid(player) +".yml");
 						util.UtilNumber n = new util.UtilNumber();
 
-						SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+						SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 						if(Case.equals("룬 세공사"))
 							RuneEquipGUI(player, NPCname);
 						else if(Case.equals("개조 장인"))
@@ -2152,13 +2152,13 @@ public class NpcGui extends UtilGui
 
 							if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_BuffCoolTime()+(Config.getInt("NPC.Shaman.BuffCoolTime")*1000) > ETC.getNowUTC())
 							{
-								SoundEffect.SP(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+								SoundEffect.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 								player.sendMessage("§c[SYSTEM] : §f"+((main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_BuffCoolTime()+(Config.getInt("NPC.Shaman.BuffCoolTime")*1000) -ETC.getNowUTC())/1000)+"§c초 후 이용 가능합니다!");
 								return;
 							}
 							if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() < NPCscript.getInt("Job.Deal"))
 							{
-								SoundEffect.SP(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+								SoundEffect.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 								player.sendMessage("§c[SYSTEM] : 복채 비용이 부족합니다!");
 								return;
 							}
@@ -2170,22 +2170,22 @@ public class NpcGui extends UtilGui
 									switch(n.RandomNum(1, 8))
 									{
 									case 1:
-										SoundEffect.SP(player,Sound.BLOCK_ANVIL_LAND, 1.0F, 1.0F);
+										SoundEffect.playSound(player,Sound.BLOCK_ANVIL_LAND, 1.0F, 1.0F);
 										player.sendMessage("§f§l[居安思危] 준비된 자의 견고함은 몸을 단단하게 할지니...");
 										PottionBuff.givePotionEffect(player,PotionEffectType.DAMAGE_RESISTANCE, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")));
 										break;
 									case 2:
-										SoundEffect.SP(player,Sound.BLOCK_GRAVEL_HIT, 1.5F, 1.0F);
+										SoundEffect.playSound(player,Sound.BLOCK_GRAVEL_HIT, 1.5F, 1.0F);
 										player.sendMessage("§f§l[能小能大] 장인의 손은 작은 일과 큰 일을 가리지 않을지니...");
 										PottionBuff.givePotionEffect(player,PotionEffectType.FAST_DIGGING, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")));
 										break;
 									case 3:
-										SoundEffect.SP(player,Sound.BLOCK_FIRE_EXTINGUISH, 1.5F, 1.0F);
+										SoundEffect.playSound(player,Sound.BLOCK_FIRE_EXTINGUISH, 1.5F, 1.0F);
 										player.sendMessage("§f§l[明若觀火] 불을 꿰뚫어 본다면 더이상 불이 두렵지 않으리니...");
 										PottionBuff.givePotionEffect(player,PotionEffectType.FIRE_RESISTANCE, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")));
 										break;
 									case 4:
-										SoundEffect.SP(player,Sound.ENTITY_PLAYER_LEVELUP, 1.5F, 0.8F);
+										SoundEffect.playSound(player,Sound.ENTITY_PLAYER_LEVELUP, 1.5F, 0.8F);
 										player.sendMessage("§f§l[鼓腹擊壤] 몸도 마음도 모두 풍요로우니 이 어찌 기쁘지 아니한가...");
 										PottionBuff.givePotionEffect(player,PotionEffectType.HEAL, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")));
 										PottionBuff.givePotionEffect(player,PotionEffectType.SATURATION, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")));
@@ -2193,23 +2193,23 @@ public class NpcGui extends UtilGui
 										PottionBuff.givePotionEffect(player,PotionEffectType.HEALTH_BOOST, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")));
 										break;
 									case 5:
-										SoundEffect.SP(player,Sound.ENTITY_MINECART_INSIDE, 1.0F, 1.0F);
+										SoundEffect.playSound(player,Sound.ENTITY_MINECART_INSIDE, 1.0F, 1.0F);
 										player.sendMessage("§f§l[東奔西走] 내 원래 이리 저리 돌아다니길 좋아하니, 역마가 낀들 어떠하리...");
 										PottionBuff.givePotionEffect(player,PotionEffectType.SPEED, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")));
 										PottionBuff.givePotionEffect(player,PotionEffectType.JUMP, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")));
 										break;
 									case 6:
-										SoundEffect.SP(player,Sound.BLOCK_ANVIL_LAND, 1.0F, 1.8F);
+										SoundEffect.playSound(player,Sound.BLOCK_ANVIL_LAND, 1.0F, 1.8F);
 										player.sendMessage("§f§l[單刀直入] 흔들리지 않는 신념은 적의 살을 베어내고, 철근같은 "+MainServerOption.statWILL+"는 적의 뼈를 바스러 뜨리리...");
 										PottionBuff.givePotionEffect(player,PotionEffectType.INCREASE_DAMAGE, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")));
 										break;
 									case 7:
-										SoundEffect.SP(player,Sound.ENTITY_ENDERDRAGON_GROWL, 1.0F, 1.0F);
+										SoundEffect.playSound(player,Sound.ENTITY_ENDERDRAGON_GROWL, 1.0F, 1.0F);
 										player.sendMessage("§f§l[康衢煙月] 내 눈은 밝은 달빛이요, 내 발길 닿는 곳이 길이니...");
 										PottionBuff.givePotionEffect(player,PotionEffectType.NIGHT_VISION, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")));
 										break;
 									case 8:
-										SoundEffect.SP(player,Sound.BLOCK_WATER_AMBIENT, 1.5F, 1.0F);
+										SoundEffect.playSound(player,Sound.BLOCK_WATER_AMBIENT, 1.5F, 1.0F);
 										player.sendMessage("§f§l[明鏡止水] 거울만치 물이 맑으니 누가 들어가기를 마다하리오...");
 										PottionBuff.givePotionEffect(player,PotionEffectType.WATER_BREATHING, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")));
 										break;
@@ -2220,42 +2220,42 @@ public class NpcGui extends UtilGui
 									switch(n.RandomNum(1, 8))
 									{
 									case 1:
-										SoundEffect.SP(player,Sound.ENTITY_BLAZE_AMBIENT, 1.0F, 1.0F);
+										SoundEffect.playSound(player,Sound.ENTITY_BLAZE_AMBIENT, 1.0F, 1.0F);
 										player.sendMessage("§c§l[螳螂拒轍] 거만이 몸에 베어 적장을 한낱 개미로 바라보리니...");
 										PottionBuff.givePotionEffect(player,PotionEffectType.WEAKNESS, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")+1));
 										break;
 									case 2:
-										SoundEffect.SP(player,Sound.AMBIENT_CAVE, 1.0F, 1.0F);
+										SoundEffect.playSound(player,Sound.AMBIENT_CAVE, 1.0F, 1.0F);
 										player.sendMessage("§c§l[群盲撫象] 한치 앞도 보이지 않거늘...");
 										PottionBuff.givePotionEffect(player,PotionEffectType.BLINDNESS, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")+1));
 										break;
 									case 3:
-										SoundEffect.SP(player,Sound.ENTITY_ENDERDRAGON_GROWL, 0.8F,0.5F);
+										SoundEffect.playSound(player,Sound.ENTITY_ENDERDRAGON_GROWL, 0.8F,0.5F);
 										player.sendMessage("§c§l[竿頭之勢] 절벽 끝에 선 자의 느낌이란...");
 										PottionBuff.givePotionEffect(player,PotionEffectType.CONFUSION, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")+1));
 										break;
 									case 4:
-										SoundEffect.SP(player,Sound.ENTITY_ZOMBIE_DEATH, 0.8F,0.5F);
+										SoundEffect.playSound(player,Sound.ENTITY_ZOMBIE_DEATH, 0.8F,0.5F);
 										player.sendMessage("§c§l[簞食豆羹] 내 모습이 마치 아귀와 같이 앙상하니...");
 										PottionBuff.givePotionEffect(player,PotionEffectType.HUNGER, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")+1));
 										break;
 									case 5:
-										SoundEffect.SP(player,Sound.ENTITY_ZOMBIE_HORSE_DEATH, 0.8F,0.5F);
+										SoundEffect.playSound(player,Sound.ENTITY_ZOMBIE_HORSE_DEATH, 0.8F,0.5F);
 										player.sendMessage("§c§l[累卵之勢] 흐트러진 기가 몸 전체를 감싸 돌아 안으니 위태롭기가 짝이 없도다...");
 										PottionBuff.givePotionEffect(player,PotionEffectType.POISON, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")+1));
 										break;
 									case 6:
-										SoundEffect.SP(player,Sound.ENTITY_ITEM_BREAK, 0.8F,0.5F);
+										SoundEffect.playSound(player,Sound.ENTITY_ITEM_BREAK, 0.8F,0.5F);
 										player.sendMessage("§c§l[曠日彌久] 쓸데없는 잡상을 하여도, 시간은 기다려 주지 않을지니...");
 										PottionBuff.givePotionEffect(player,PotionEffectType.SLOW_DIGGING, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")+1));
 										break;
 									case 7:
-										SoundEffect.SP(player,Sound.ENTITY_SPIDER_AMBIENT, 0.8F,0.5F);
+										SoundEffect.playSound(player,Sound.ENTITY_SPIDER_AMBIENT, 0.8F,0.5F);
 										player.sendMessage("§c§l[姑息之計] 오늘 걸으니 내일은 뛰어야 할지니...");
 										PottionBuff.givePotionEffect(player,PotionEffectType.SLOW, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")+1));
 										break;
 									case 8:
-										SoundEffect.SP(player,Sound.ENTITY_WITHER_HURT, 0.8F,0.5F);
+										SoundEffect.playSound(player,Sound.ENTITY_WITHER_HURT, 0.8F,0.5F);
 										player.sendMessage("§c§l[骨肉相爭] 뼈와 살이 서로 곪아가니 악취가 나는구나...");
 										PottionBuff.givePotionEffect(player,PotionEffectType.WITHER, NPCscript.getInt("Job.BuffTime"), n.RandomNum(1,  NPCscript.getInt("Job.BuffMaxStrog")+1));
 										break;
@@ -2279,18 +2279,18 @@ public class NpcGui extends UtilGui
 									player.hasPotionEffect(PotionEffectType.SLOW)||player.hasPotionEffect(PotionEffectType.SLOW_DIGGING)||
 									player.hasPotionEffect(PotionEffectType.WEAKNESS)||player.hasPotionEffect(PotionEffectType.WITHER))==false)
 							{
-								SoundEffect.SP(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+								SoundEffect.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 								player.sendMessage("§3[SYSTEM] : 당신은 치료받을 필요가 없습니다!");
 								return;
 							}
 							if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() < NPCscript.getInt("Job.Deal"))
 							{
-								SoundEffect.SP(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+								SoundEffect.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 								player.sendMessage("§c[SYSTEM] : 치료 비용이 부족합니다!");
 							}
 							else
 							{
-								SoundEffect.SP(player,Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 0.5F);
+								SoundEffect.playSound(player,Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 0.5F);
 								Damageable p = player;
 								p.setHealth(p.getMaxHealth());
 								player.removePotionEffect(PotionEffectType.BLINDNESS);
@@ -2340,7 +2340,7 @@ public class NpcGui extends UtilGui
 												if(!PlayerJob.getString("Job.Type").equals(PrevJob))
 												{
 													player.sendMessage("§c[전직] : 당신의 직업으로는 전직 할 수 없는 대상입니다.");
-													SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+													SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 													return;	
 												}
 											}
@@ -2360,13 +2360,13 @@ public class NpcGui extends UtilGui
 											else
 											{
 												player.sendMessage("§c[전직] : 현재 직업으로 전직 할 수 없습니다!");
-												SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+												SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 											}
 										}
 										else
 										{
 											player.sendMessage("§c[전직] : 당신의 스텟은 전직 요건에 맞지 않습니다.");
-											SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+											SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 										}
 									}
 								}
@@ -2375,7 +2375,7 @@ public class NpcGui extends UtilGui
 					}
 					else if(event.getClick().isRightClick()&& player.isOp())
 					{
-						SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+						SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 						NPCjobGUI(player,NPCname);
 					}
 				}
@@ -2384,7 +2384,7 @@ public class NpcGui extends UtilGui
 			}
 			else
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				if(slot == 7 && player.isOp())//세일 설정
 				{
 					UserDataObject u = new UserDataObject();
@@ -2394,12 +2394,12 @@ public class NpcGui extends UtilGui
 					{
 						NPCConfig.set("Sale.Enable", false);
 						NPCConfig.saveConfig();
-						SoundEffect.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+						SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
 						MainGUI(player, NPCname, player.isOp());
 					}
 					else
 					{
-						SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+						SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 						u.setType(player, "NPC");
 						u.setString(player, (byte)2,NPCname);
 						u.setString(player, (byte)3,u.getNPCuuid(player));
@@ -2423,7 +2423,7 @@ public class NpcGui extends UtilGui
 					else if(slot == 21)//거래 수정
 						ShopGUI(player,NPCname,(short) 0,true,true);
 					else if(slot == 23)//퀘스트 수정
-						QuestAddGUI(player, (short) 0);
+						questAddGUI(player, (short) 0);
 					else if(slot == 25)//선물 수정
 						PresentSettingGUI(player, NPCname);
 				}
@@ -2439,19 +2439,19 @@ public class NpcGui extends UtilGui
 		int slot = event.getSlot();
 		if(slot > 0 && slot < 8)
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			TalkGUI(player,NPCname, new npc.NpcMain().getScript(player,(char)-1),(char)slot);
 		}
 		else
 		{
 			if(slot == 0)
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				MainGUI(player,NPCname,player.isOp());
 			}
 			else
 			{
-				SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 				player.closeInventory();
 			}
 		}
@@ -2492,12 +2492,12 @@ public class NpcGui extends UtilGui
 				return;
 			case 45:
 				MainGUI(player,NPCname,player.isOp());
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				break;
 			case 48:
 			{
 				int showingPage = Integer.parseInt(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(1).split("페이지 : ")[1]));
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				if(event.getInventory().getItem(0).getItemMeta().hasLore() == false)
 				{
 					if(event.getInventory().getItem(0).getData().getData() ==(byte)14)
@@ -2515,7 +2515,7 @@ public class NpcGui extends UtilGui
 				break;
 			}
 			case 49:
-				SoundEffect.SP(player, Sound.BLOCK_CHEST_OPEN, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.BLOCK_CHEST_OPEN, 0.8F, 1.0F);
 				if(event.getInventory().getItem(0).getItemMeta().hasLore() == false)
 				{
 					if(event.getCurrentItem().getData().getData() ==(byte)14)
@@ -2532,7 +2532,7 @@ public class NpcGui extends UtilGui
 				}
 				break;
 			case 50:
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				int showingPage2 = Integer.parseInt(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(1).split("페이지 : ")[1]));
 				if(event.getInventory().getItem(0).getItemMeta().hasLore() == false)
 				{
@@ -2550,7 +2550,7 @@ public class NpcGui extends UtilGui
 				}
 				break;
 			case 53:
-				SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 				player.closeInventory();
 				break;
 			default:
@@ -2612,7 +2612,7 @@ public class NpcGui extends UtilGui
 							player.getInventory().addItem(item);
 						}
 					}
-					SoundEffect.SP(player, org.bukkit.Sound.BLOCK_LAVA_POP, 2.0F, 1.7F);
+					SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_LAVA_POP, 2.0F, 1.7F);
 					int showingPage3 = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(8).getItemMeta().getLore().get(0)));
 					if(isBuy == true)
 						ShopGUI(player, NPCname, (short) showingPage3, true,true);
@@ -2637,7 +2637,7 @@ public class NpcGui extends UtilGui
 						Icon_Meta.setLore(Arrays.asList(l));
 						item.setItemMeta(Icon_Meta);
 					}
-					SoundEffect.SP(player, Sound.BLOCK_IRON_TRAPDOOR_OPEN, 0.8F, 0.5F);
+					SoundEffect.playSound(player, Sound.BLOCK_IRON_TRAPDOOR_OPEN, 0.8F, 0.5F);
 					if(event.getInventory().getItem(0).getData().getData() == (byte)14)
 						ItemBuy(player, item, value, NPCname, isBuy, 0);
 					else
@@ -2655,12 +2655,12 @@ public class NpcGui extends UtilGui
 		
 		if(slot == 26)//닫기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
 			UserDataObject u = new UserDataObject();
 			YamlLoader NPCscript = new YamlLoader();
 			NPCscript.getConfig("NPC/NPCData/"+ u.getNPCuuid(player) +".yml");
@@ -2735,7 +2735,7 @@ public class NpcGui extends UtilGui
 							if(Job.length == 1)
 							{
 								u.clearAll(player);
-								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 								player.sendMessage("§c[NPC] : 전직 가능한 직업이 없습니다! §e/오피박스§c 명령어를 사용하여 직업군을 만드십시요!");
 								return;
 							}
@@ -2755,7 +2755,7 @@ public class NpcGui extends UtilGui
 						else
 						{
 							u.clearAll(player);
-							SoundEffect.SP(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							SoundEffect.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 							player.sendMessage("§c[NPC] : 직업 기능을 사용하시려면§e /오피박스§c 에서 게임 시스템을 '메이플 스토리'로 변경해 주시길 바랍니다.");
 						}
 					}
@@ -2781,12 +2781,12 @@ public class NpcGui extends UtilGui
 
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 			String NPCname = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
 			if(slot == 45)//이전 목록으로
@@ -2805,7 +2805,7 @@ public class NpcGui extends UtilGui
 					if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_AttackTime()+15000 >= ETC.getSec())
 					{
 						player.sendMessage("§c[이동 불가] : §e"+((main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_AttackTime()+15000 - ETC.getSec())/1000)+"§c 초 후에 이동 가능합니다!");
-						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 						return;
 					}
 					UserDataObject u = new UserDataObject();
@@ -2817,13 +2817,13 @@ public class NpcGui extends UtilGui
 						String AreaName = NPCConfig.getString("Job.WarpList."+((page*45)+event.getSlot())+".Area");
 						YamlLoader AreaConfig = new YamlLoader();
 						AreaConfig.getConfig("Area/AreaList.yml");
-						SoundEffect.SL(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1.0F, 1.0F);
+						SoundEffect.playSoundLocation(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1.0F, 1.0F);
 						player.teleport(new Location(Bukkit.getWorld(AreaConfig.getString(AreaName+".World")), AreaConfig.getInt(AreaName+".SpawnLocation.X"), AreaConfig.getInt(AreaName+".SpawnLocation.Y"), AreaConfig.getInt(AreaName+".SpawnLocation.Z")));
-						SoundEffect.SL(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1.0F, 1.0F);
+						SoundEffect.playSoundLocation(player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1.0F, 1.0F);
 					}
 					else
 					{
-						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 						player.sendMessage("§c[워프] : 텔레포트 비용이 부족합니다!");
 					}
 				}
@@ -2853,12 +2853,12 @@ public class NpcGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
 			String NPCname = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
 			
@@ -2897,12 +2897,12 @@ public class NpcGui extends UtilGui
 		
 		if(slot == 53)
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
 			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 			String NPCname = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
 
@@ -3079,60 +3079,60 @@ public class NpcGui extends UtilGui
 													
 													player.getInventory().setItemInMainHand(item);
 													player.closeInventory();
-													SoundEffect.SP(player, Sound.BLOCK_ANVIL_USE, 1.0F, 0.8F);
+													SoundEffect.playSound(player, Sound.BLOCK_ANVIL_USE, 1.0F, 0.8F);
 													player.sendMessage("§3[개조] : 개조가 완료되었습니다!");
 												}
 												else
 												{
-													SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+													SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 													player.sendMessage("§c[개조] : 숙련도가 부족합니다!");
 												}
 											}
 											else
 											{
-												SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+												SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 												player.sendMessage("§c[개조] : 더이상 개조할 수 없습니다!");
 											}
 										}
 										else
 										{
-											SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+											SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 											player.sendMessage("§c[개조] : 개조 레벨이 맞지 않습니다!");
 										}
 									}
 									else
 									{
-										SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+										SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 										player.sendMessage("§c[개조] : 개조 가능한 무기 타입이 아닙니다!");
 									}
 								}
 								else
 								{
-									SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+									SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 									player.sendMessage("§c[개조] : 개조 비용이 부족합니다!");
 								}
 							}
 							else
 							{
-								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 								player.sendMessage("§c[개조] : 현재 손에 들고 있는 아이템은  개조가 불가능 합니다!");
 							}
 						}
 						else
 						{
-							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 							player.sendMessage("§c[개조] : 현재 손에 들고 있는 아이템은  개조가 불가능 합니다!");
 						}
 					}
 					else
 					{
-						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 						player.sendMessage("§c[개조] : 아이템을 손에 장착하고 있어야 합니다!");
 					}
 				}
 				else if(event.isRightClick()==true && event.isShiftClick()==true&&player.isOp()==true)
 				{
-					SoundEffect.SP(player, Sound.BLOCK_LAVA_POP, 1.2F, 1.0F);
+					SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 1.2F, 1.0F);
 					NPCConfig.removeKey("Job.UpgradeRecipe."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 					NPCConfig.saveConfig();
 					UpgraderGUI(player, page, NPCname);
@@ -3149,14 +3149,14 @@ public class NpcGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
 			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 			String NPCname = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
 			if(slot == 45)//이전 목록
 				UpgraderGUI(player, (short) 0, NPCname);
 			else if(slot == 48)//이전 페이지
@@ -3382,7 +3382,7 @@ public class NpcGui extends UtilGui
 				event.setCancelled(true);
 			if(slot == 10)//이전 목록으로
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
 				String NPCname = ChatColor.stripColor(event.getInventory().getItem(26).getItemMeta().getLore().get(0));
 				MainGUI(player, NPCname, player.isOp());
 			}
@@ -3525,7 +3525,7 @@ public class NpcGui extends UtilGui
 																	}
 																	Lore =  item.getItemMeta().getLore().get(count).split(" : ")[0] + " : " + Circle;
 																	player.sendMessage("§9[룬 세공] : 아이템에 룬을 장착하였습니다!");
-																	SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 0.5F);
+																	SoundEffect.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 0.5F);
 																	Success = true;
 																}
 																else
@@ -3540,7 +3540,7 @@ public class NpcGui extends UtilGui
 																	Lore =  item.getItemMeta().getLore().get(count).split(" : ")[0] + " : " + Circle;
 																	player.sendMessage("§c[룬 세공] : 룬 세공 실패!!!");
 																	player.sendMessage("§c[아이템의 룬 슬롯이 파괴되었습니다!]");
-																	SoundEffect.SP(player, Sound.BLOCK_ANVIL_BREAK, 1.0F, 1.1F);
+																	SoundEffect.playSound(player, Sound.BLOCK_ANVIL_BREAK, 1.0F, 1.1F);
 																}
 																if(event.getInventory().getItem(13).getAmount()==1)
 																	event.getInventory().setItem(13, new ItemStack(0));
@@ -3616,55 +3616,55 @@ public class NpcGui extends UtilGui
 													}
 												}
 												player.sendMessage("§c[룬 세공] : 룬을 장착 시킬 수 있는 여유 슬롯이 없습니다!");
-												SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+												SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 											}
 											else
 											{
 												player.sendMessage("§c[룬 세공] : 소지금이 부족합니다!");
-												SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+												SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 											}
 										}
 										else
 										{
 											player.sendMessage("§c[룬 세공] : 룬을 장착시킬 수 없는 아이템 입니다!");
-											SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+											SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 										}
 										
 									}
 									else
 									{
 										player.sendMessage("§c[룬 세공] : 룬을 장착시킬 수 없는 아이템 입니다!");
-										SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+										SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 									}
 								}
 								else
 								{
 									player.sendMessage("§c[룬 세공] : 손에 아이템을 장착하고 있어야 합니다!");
-									SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+									SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 								}
 							}
 							else
 							{
 								player.sendMessage("§c[룬 세공] : 재료로 올린 아이템은 룬이 아닙니다!");
-								SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 							}
 						}
 						else
 						{
 							player.sendMessage("§c[룬 세공] : 재료로 올린 아이템은 룬이 아닙니다!");
-							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 						}
 					}
 					else
 					{
 						player.sendMessage("§c[룬 세공] : 재료로 올린 아이템은 룬이 아닙니다!");
-						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 					}
 				}
 				else
 				{
 					player.sendMessage("§c[룬 세공] : 장착 시킬 룬을 올려 주세요!");
-					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				}
 			}
 		}
@@ -3678,7 +3678,7 @@ public class NpcGui extends UtilGui
 		
 		if(slot == 53)//닫기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
 			player.closeInventory();
 		}
 		else
@@ -3686,7 +3686,7 @@ public class NpcGui extends UtilGui
 			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 			String NPCname = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
 			String TalkType = ChatColor.stripColor(event.getInventory().getItem(45).getItemMeta().getLore().get(1));
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			if(slot == 45)//이전 목록
 				MainGUI(player, NPCname, player.isOp());
 			else if(slot == 46)//대화 타입 변경
@@ -3748,7 +3748,7 @@ public class NpcGui extends UtilGui
 				short Number = Short.parseShort(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 				if(event.isRightClick()&&event.isShiftClick())
 				{
-					SoundEffect.SP(player, Sound.BLOCK_LAVA_POP, 1.0F, 1.0F);
+					SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 1.0F, 1.0F);
 					Short Acount = 0;
 					switch(TalkType)
 					{
@@ -3802,7 +3802,7 @@ public class NpcGui extends UtilGui
 		
 		if(slot == 35)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
 			player.closeInventory();
 		}
 		else
@@ -3810,7 +3810,7 @@ public class NpcGui extends UtilGui
 			String TalkType = ChatColor.stripColor(event.getInventory().getItem(27).getItemMeta().getLore().get(1));
 			String NPCname = ChatColor.stripColor(event.getInventory().getItem(35).getItemMeta().getLore().get(1));
 			short number =  Short.parseShort(ChatColor.stripColor(event.getInventory().getItem(10).getItemMeta().getDisplayName()));
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			
 			if(slot == 27)
 				NPCTalkGUI(player,(short) (number/45), NPCname, TalkType);
@@ -3831,19 +3831,19 @@ public class NpcGui extends UtilGui
 						}
 						else
 						{
-							SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+							SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 							player.sendMessage("§c[SYSTEM] : 등록 가능한 스킬이 없습니다!");
 						}
 					}
 					else
 					{
-						SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+						SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 						player.sendMessage("§c[SYSTEM] : 등록 가능한 스킬이 없습니다!");
 					}
 				}
 				else
 				{
-					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 					player.sendMessage("§c[SYSTEM] : 서버 시스템이 마비노기 형식이 아닙니다!");
 				}
 			}
@@ -3895,7 +3895,7 @@ public class NpcGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
 			player.closeInventory();
 		}
 		else
@@ -3904,7 +3904,7 @@ public class NpcGui extends UtilGui
 			String TalkType = "AS";
 			short number =  Short.parseShort(ChatColor.stripColor(event.getInventory().getItem(45).getItemMeta().getLore().get(1)));
 			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			
 			if(slot == 45)//이전 메뉴
 				TalkSettingGUI(player, NPCname, TalkType, number);
@@ -3932,7 +3932,7 @@ public class NpcGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
@@ -3940,7 +3940,7 @@ public class NpcGui extends UtilGui
 			boolean isBuy = false;
 			isBuy = event.getInventory().getName().contains("구매");
 			String NPCname = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 목록
 				ShopGUI(player, NPCname, (short)0, isBuy, false);
 			else
@@ -3959,36 +3959,36 @@ public class NpcGui extends UtilGui
 							{
 								if(new util.UtilPlayer().giveItem(player, item)==false)
 								{
-									SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
+									SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
 									player.sendMessage("§c[구매 실패] : 인벤토리가 부족하여 "+(count-counter)+"개를 구매하지 못하였습니다!");
 									MainServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_Money(MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() - (counter*value));
 									return;
 								}
 							}
-							SoundEffect.SP(player, Sound.ENTITY_SHULKER_OPEN, 0.8F, 1.0F);
+							SoundEffect.playSound(player, Sound.ENTITY_SHULKER_OPEN, 0.8F, 1.0F);
 							MainServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_Money(MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() - (count*value));
 						}
 						else
 						{
-							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
 							player.sendMessage("§c[구매 실패] : "+MainServerOption.money+"§c가 부족하여 구매할 수 없습니다!");
 						}
 					}
 					else if(slot == 31)
 					{
-						SoundEffect.SP(player, Sound.ITEM_ARMOR_EQUIP_DIAMOND, 0.8F, 0.5F);
+						SoundEffect.playSound(player, Sound.ITEM_ARMOR_EQUIP_DIAMOND, 0.8F, 0.5F);
 						count = (int) (MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() / value);
 					}
 					else if(slot == 13)
 					{
-						SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.6F, 1.8F);
+						SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.6F, 1.8F);
 						count = 1;
 					}
 					else if(slot>=19&&slot<=21)
 					{
 						if(slot==19)
 						{
-							SoundEffect.SP(player, Sound.ENTITY_SHULKER_CLOSE, 0.8F, 1.6F);
+							SoundEffect.playSound(player, Sound.ENTITY_SHULKER_CLOSE, 0.8F, 1.6F);
 							if(count-64 > 0)
 								count -= 64;
 							else
@@ -3996,7 +3996,7 @@ public class NpcGui extends UtilGui
 						}
 						else if(slot==20)
 						{
-							SoundEffect.SP(player, Sound.ENTITY_ITEMFRAME_REMOVE_ITEM, 0.8F, 1.4F);
+							SoundEffect.playSound(player, Sound.ENTITY_ITEMFRAME_REMOVE_ITEM, 0.8F, 1.4F);
 							if(count-10 > 0)
 								count -= 10;
 							else
@@ -4004,7 +4004,7 @@ public class NpcGui extends UtilGui
 						}
 						else if(slot==21)
 						{
-							SoundEffect.SP(player, Sound.ENTITY_ITEMFRAME_ROTATE_ITEM, 0.8F, 1.4F);
+							SoundEffect.playSound(player, Sound.ENTITY_ITEMFRAME_ROTATE_ITEM, 0.8F, 1.4F);
 							if(count-1 > 0)
 								count -= 1;
 						}
@@ -4014,17 +4014,17 @@ public class NpcGui extends UtilGui
 						int TempCount = count;
 						if(slot == 23)
 						{
-							SoundEffect.SP(player, Sound.ITEM_ARMOR_EQUIP_IRON, 0.8F, 1.8F);
+							SoundEffect.playSound(player, Sound.ITEM_ARMOR_EQUIP_IRON, 0.8F, 1.8F);
 							TempCount += 1;
 						}
 						else if(slot == 24)
 						{
-							SoundEffect.SP(player, Sound.ITEM_ARMOR_EQUIP_CHAIN, 0.8F, 1.2F);
+							SoundEffect.playSound(player, Sound.ITEM_ARMOR_EQUIP_CHAIN, 0.8F, 1.2F);
 							TempCount += 10;
 						}
 						else if(slot == 25)
 						{
-							SoundEffect.SP(player, Sound.ITEM_ARMOR_EQUIP_GOLD, 0.8F, 0.5F);
+							SoundEffect.playSound(player, Sound.ITEM_ARMOR_EQUIP_GOLD, 0.8F, 0.5F);
 							TempCount += 64;
 						}
 						if(value * TempCount <= MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money())
@@ -4042,25 +4042,25 @@ public class NpcGui extends UtilGui
 					{
 						if(new util.UtilPlayer().deleteItem(player, item, count)==false)
 						{
-							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
 							player.sendMessage("§c[판매 실패] : 물품이 부족하여 판매하지 못하였습니다!");
 							return;
 						}
 						else
 						{
-							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.0F);
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.0F);
 							MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MoneyAndEXP(value*count, 0, false);
 						}
 					}
 					
 					if(slot == 31)
 					{
-						SoundEffect.SP(player, Sound.ITEM_ARMOR_EQUIP_DIAMOND, 0.8F, 0.5F);
+						SoundEffect.playSound(player, Sound.ITEM_ARMOR_EQUIP_DIAMOND, 0.8F, 0.5F);
 						count = ItemHave;
 					}
 					else if(slot == 13)
 					{
-						SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.6F, 1.8F);
+						SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.6F, 1.8F);
 						if(ItemHave > 0)
 							count = 1;
 						else
@@ -4070,7 +4070,7 @@ public class NpcGui extends UtilGui
 					{
 						if(slot==19)
 						{
-							SoundEffect.SP(player, Sound.ENTITY_SHULKER_CLOSE, 0.8F, 1.6F);
+							SoundEffect.playSound(player, Sound.ENTITY_SHULKER_CLOSE, 0.8F, 1.6F);
 							if(count-64 > 0)
 								count -= 64;
 							else
@@ -4078,7 +4078,7 @@ public class NpcGui extends UtilGui
 						}
 						else if(slot==20)
 						{
-							SoundEffect.SP(player, Sound.ENTITY_ITEMFRAME_REMOVE_ITEM, 0.8F, 1.4F);
+							SoundEffect.playSound(player, Sound.ENTITY_ITEMFRAME_REMOVE_ITEM, 0.8F, 1.4F);
 							if(count-10 > 0)
 								count -= 10;
 							else
@@ -4086,7 +4086,7 @@ public class NpcGui extends UtilGui
 						}
 						else if(slot==21)
 						{
-							SoundEffect.SP(player, Sound.ENTITY_ITEMFRAME_ROTATE_ITEM, 0.8F, 1.4F);
+							SoundEffect.playSound(player, Sound.ENTITY_ITEMFRAME_ROTATE_ITEM, 0.8F, 1.4F);
 							if(count-1 > 0)
 								count -= 1;
 						}
@@ -4096,17 +4096,17 @@ public class NpcGui extends UtilGui
 						int TempCount = count;
 						if(slot == 23)
 						{
-							SoundEffect.SP(player, Sound.ITEM_ARMOR_EQUIP_IRON, 0.8F, 1.8F);
+							SoundEffect.playSound(player, Sound.ITEM_ARMOR_EQUIP_IRON, 0.8F, 1.8F);
 							TempCount += 1;
 						}
 						else if(slot == 24)
 						{
-							SoundEffect.SP(player, Sound.ITEM_ARMOR_EQUIP_CHAIN, 0.8F, 1.2F);
+							SoundEffect.playSound(player, Sound.ITEM_ARMOR_EQUIP_CHAIN, 0.8F, 1.2F);
 							TempCount += 10;
 						}
 						else if(slot == 25)
 						{
-							SoundEffect.SP(player, Sound.ITEM_ARMOR_EQUIP_GOLD, 0.8F, 0.5F);
+							SoundEffect.playSound(player, Sound.ITEM_ARMOR_EQUIP_GOLD, 0.8F, 0.5F);
 							TempCount += 64;
 						}
 						if(TempCount <= ItemHave)
@@ -4156,7 +4156,7 @@ public class NpcGui extends UtilGui
 					
 					if(nowDurability == 0)
 					{
-						SoundEffect.SP(player,Sound.BLOCK_ANVIL_LAND, 0.8F, 1.6F);
+						SoundEffect.playSound(player,Sound.BLOCK_ANVIL_LAND, 0.8F, 1.6F);
 						player.sendMessage("§3[수리] : 해당 무기는 수리받을 필요가 없습니다.");
 						return;
 					}
@@ -4169,7 +4169,7 @@ public class NpcGui extends UtilGui
 					
 					if(playerMoney < point10need*FixPrice ||playerMoney < ((point1success*FixPrice)/10))
 					{
-						SoundEffect.SP(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+						SoundEffect.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 						player.sendMessage("§c[SYSTEM] : 수리 비용이 부족합니다!");
 						return;
 					}
@@ -4187,10 +4187,10 @@ public class NpcGui extends UtilGui
 					if(point10success==0 && point1success==0)
 					{
 						player.sendMessage("§c[수리] : 완전 수리 실패!");
-						SoundEffect.SP(player,Sound.BLOCK_ANVIL_BREAK, 1.2F, 1.0F);
+						SoundEffect.playSound(player,Sound.BLOCK_ANVIL_BREAK, 1.2F, 1.0F);
 						return;
 					}
-					SoundEffect.SP(player,Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+					SoundEffect.playSound(player,Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 					if(point10success == point10need && point1success ==point1need)
 						player.sendMessage("§3[수리] : 수리 대성공!");
 					if(point10success != point10need || point1success !=point1need)
@@ -4215,7 +4215,7 @@ public class NpcGui extends UtilGui
 					
 					if(nowDurability == Maxdurability)
 					{
-						SoundEffect.SP(player,Sound.BLOCK_ANVIL_LAND, 0.8F, 1.6F);
+						SoundEffect.playSound(player,Sound.BLOCK_ANVIL_LAND, 0.8F, 1.6F);
 						player.sendMessage("§3[수리] : 해당 무기는 수리받을 필요가 없습니다.");
 						return;
 					}
@@ -4228,7 +4228,7 @@ public class NpcGui extends UtilGui
 					
 					if(playerMoney < point10need*FixPrice ||playerMoney < ((point1success*FixPrice)/10))
 					{
-						SoundEffect.SP(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+						SoundEffect.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 						player.sendMessage("§c[SYSTEM] : 수리 비용이 부족합니다!");
 						return;
 					}
@@ -4246,9 +4246,9 @@ public class NpcGui extends UtilGui
 					if(point10success==0 && point1success==0)
 					{
 						player.sendMessage("§c[수리] : 완전 수리 실패!");
-						SoundEffect.SP(player,Sound.BLOCK_ANVIL_BREAK, 1.2F, 1.0F);
+						SoundEffect.playSound(player,Sound.BLOCK_ANVIL_BREAK, 1.2F, 1.0F);
 					}
-					SoundEffect.SP(player,Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
+					SoundEffect.playSound(player,Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
 					if(point10success == point10need && point1success ==point1need)
 						player.sendMessage("§3[수리] : 수리 대성공!");
 					if((point10success != point10need || point1success !=point1need)&&(point10success!=0 || point1success!=0))
@@ -4278,7 +4278,7 @@ public class NpcGui extends UtilGui
 			}
 			else
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.8F, 1.0F);
 				player.sendMessage("§c[SYSTEM] : 수리 할 수 없는 물건입니다!");
 			}
 		}
@@ -4287,12 +4287,12 @@ public class NpcGui extends UtilGui
 			int slot = event.getSlot();
 			if(slot == 8)
 			{
-				SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 				player.closeInventory();
 			}
 			else
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				if(slot == 0)
 				{
 					String NPCname = ChatColor.stripColor(event.getInventory().getItem(8).getItemMeta().getLore().get(1));
@@ -4339,13 +4339,13 @@ public class NpcGui extends UtilGui
 							{
 								NPCConfig.set("Present."+number+".item", null);
 								NPCConfig.saveConfig();
-								SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+								SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 								PresentSettingGUI(player, NPCname);
 								return;
 							}
 							NPCConfig.set("Present."+number+".love", 0);
 							NPCConfig.saveConfig();
-							SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+							SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 							UserDataObject u = new UserDataObject();
 							u.setType(player, "NPC");
 							u.setString(player, (byte)2,NPCname);
@@ -4357,7 +4357,7 @@ public class NpcGui extends UtilGui
 						}
 						else
 						{
-							SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+							SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 							MainGUI(player, NPCname, player.isOp());
 						}
 					}
@@ -4365,7 +4365,7 @@ public class NpcGui extends UtilGui
 					{
 						if(isSettingMode)
 						{
-							SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+							SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 							player.closeInventory();
 							return;
 						}
@@ -4417,12 +4417,12 @@ public class NpcGui extends UtilGui
 										PlayerNPC.saveConfig();
 										if(love >= 0)
 										{
-											SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
+											SoundEffect.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
 											player.sendMessage("§a[SYSTEM] : §e"+NPCname+"§a의 호감도가 §e"+love+"§a 상승하였습니다!");
 										}
 										else
 										{
-											SoundEffect.SP(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.8F);
+											SoundEffect.playSound(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.8F);
 											player.sendMessage("§c[SYSTEM] : §e"+NPCname+"§c의 호감도가 §e"+(love*-1)+"§c 하락 하였습니다!");
 										}
 										return;
@@ -4447,27 +4447,27 @@ public class NpcGui extends UtilGui
 								PlayerNPC.saveConfig();
 								if(love >= 0)
 								{
-									SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
+									SoundEffect.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
 									player.sendMessage("§a[SYSTEM] : §e"+NPCname+"§a의 호감도가 §e"+love+"§a 상승하였습니다!");
 								}
 								else
 								{
-									SoundEffect.SP(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.8F);
+									SoundEffect.playSound(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.8F);
 									player.sendMessage("§c[SYSTEM] : §e"+NPCname+"§c의 호감도가 §e"+(love*-1)+"§c 하락 하였습니다!");
 								}
 								return;
 							}
 							else
 							{
-								SoundEffect.SP(player, Sound.ENTITY_ITEMFRAME_REMOVE_ITEM, 1.0F, 1.8F);
+								SoundEffect.playSound(player, Sound.ENTITY_ITEMFRAME_REMOVE_ITEM, 1.0F, 1.8F);
 								player.sendMessage("§e[SYSTEM] : §6"+NPCname+"§e는 선물을 사양하였다.");
 							}
 						}
 						else
-							SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+							SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 					}
 					else
-						SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+						SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 					return;
 				}
 			}
@@ -4476,17 +4476,17 @@ public class NpcGui extends UtilGui
 		{
 			if(event.getSlot()==0)
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				MainGUI(player, NPCname, player.isOp());
 			}
 			else if(event.getSlot() == 8)
 			{
-				SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 				player.closeInventory();
 			}
 			else
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				if(event.getSlot()==1)
 				{
 					UserDataObject u = new UserDataObject();

@@ -17,7 +17,7 @@ public class AreaCommand
 		if(!player.isOp())
 		{
 			talker.sendMessage("§c[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
-			SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			return;
 		}
 		if(args.length == 1)
@@ -25,7 +25,7 @@ public class AreaCommand
 			if(args[0].equalsIgnoreCase("목록"))
 			{
 				area.AreaGui areaGui = new area.AreaGui();
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 				areaGui.areaListGui(player, (short) 0);
 				return;
 			}
@@ -36,13 +36,13 @@ public class AreaCommand
 				
 				if(areaYaml.contains(args[0]))
 				{
-					SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 					area.AreaGui areaGui = new area.AreaGui();
 					areaGui.areaSettingGui(player, args[0]);
 				}
 				else
 				{
-					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 					player.sendMessage("§c[SYSTEM] : 해당 이름의 영역이 없습니다!");
 				}
 				return;
@@ -64,8 +64,8 @@ public class AreaCommand
 					event.EventInteract interact = new event.EventInteract();
 				  	YamlLoader configYaml = new YamlLoader();
 				  	configYaml.getConfig("config.yml");
-					player.sendMessage("§c[SYSTEM] : 먼저 " + interact.SetItemDefaultName((short) configYaml.getInt("Server.AreaSettingWand"),(byte)0) +"§c 아이템을 손에 든 채로 블록을 좌/우 클릭하여 구역을 설정해 주세요!");
-					SoundEffect.SP((Player)player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+					player.sendMessage("§c[SYSTEM] : 먼저 " + interact.setItemDefaultName(configYaml.getInt("Server.AreaSettingWand"), 0) +"§c 아이템을 손에 든 채로 블록을 좌/우 클릭하여 구역을 설정해 주세요!");
+					SoundEffect.playSound((Player)player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 				}
 				return;
 			case "삭제" :

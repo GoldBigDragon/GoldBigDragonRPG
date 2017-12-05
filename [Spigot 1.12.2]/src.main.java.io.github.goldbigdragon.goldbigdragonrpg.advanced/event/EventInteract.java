@@ -60,7 +60,7 @@ public class EventInteract
 						if(A.getAreaOption(Area[0], (char) 7) == false && event.getPlayer().isOp() == false)
 						{
 							event.setCancelled(true);
-							SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+							SoundEffect.playSound(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 							event.getPlayer().sendMessage("§c[SYSTEM] : §e"+ Area[1] + "§c 지역에 있는 블록은 손 댈 수없습니다!");
 							return;
 						}
@@ -76,7 +76,7 @@ public class EventInteract
 						if(A.getAreaOption(Area[0], (char) 7) == false && event.getPlayer().isOp() == false)
 						{
 							event.setCancelled(true);
-							SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+							SoundEffect.playSound(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 							event.getPlayer().sendMessage("§c[SYSTEM] : §e"+ Area[1] + "§c 지역에서는 양동이를 사용할 수없습니다!");
 							return;
 						}
@@ -122,7 +122,7 @@ public class EventInteract
 				if(new area.AreaMain().getAreaOption(Area[0], (char) 7) == false && event.getPlayer().isOp() == false)
 				{
 					event.setCancelled(true);
-					SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+					SoundEffect.playSound(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 					event.getPlayer().sendMessage("§c[SYSTEM] : §e"+ Area[1] + "§c 지역에 있는 엔티티는 손 댈 수없습니다!");
 					return;
 				}
@@ -172,13 +172,13 @@ public class EventInteract
 	    					new monster.MonsterSpawn().SpawnMob(event.getClickedBlock().getLocation(), ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName()), (byte)-1, null, (char) -1, false);
 	    				else
 	    				{
-	    					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+	    					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 	    			    	player.sendMessage("§c[SYSTEM] : 몬스터 스폰 권한이 없습니다!");
 	    				}
 	    			}
 					else
 					{
-						SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+						SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 				    	player.sendMessage("§c[SYSTEM] : 해당 이름의 몬스터가 존재하지 않습니다!");
 					}
 			    	return;
@@ -259,7 +259,7 @@ public class EventInteract
 				areaYaml.set(AreaName+".Mining."+BlockData+".100",item);
 				areaYaml.saveConfig();
 				area.AreaGui AGUI = new area.AreaGui();
-				SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 				AGUI.areaBlockItemSettingGui(player, AreaName, BlockData);
 		    	u.clearAll(player);
 			}
@@ -274,7 +274,7 @@ public class EventInteract
 				areaYaml.set(AreaName+".MonsterSpawnRule."+count+".loc.y", (short)block.getLocation().getY()+1);
 				areaYaml.set(AreaName+".MonsterSpawnRule."+count+".loc.z", (int)block.getLocation().getZ());
 				areaYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 		    	u.clearAll(player);
 				u.setType(player, "Area");
 				u.setString(player, (byte)1, count);
@@ -321,7 +321,7 @@ public class EventInteract
 				String Name = block.getLocation().getWorld().getName()+"_"+(int)block.getLocation().getX()+","+(short)block.getLocation().getY()+","+(int)block.getLocation().getZ();
 				if(gambleYaml.contains(Name))
 				{
-					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 					player.sendMessage("§c[도박] : 해당 블록에는 이미 다른 도박 기기가 설치되어 있습니다!");
 					return;
 				}
@@ -341,7 +341,7 @@ public class EventInteract
 				gambleYaml.set(Name+".14", "null");
 				gambleYaml.set(Name+".15", "null");
 				gambleYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_IRONGOLEM_DEATH, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_DEATH, 1.0F, 1.8F);
 		    	u.clearAll(player);
 				player.sendMessage("§a[도박] : 기계가 설치 되었습니다!");
 				new admin.GambleGui().slotMachineDetailGUI(player, Name);
@@ -385,13 +385,13 @@ public class EventInteract
 	  		if(event.getItem().getItemStack().hasItemMeta()&&event.getItem().getItemStack().getItemMeta().hasDisplayName())
 	  			ItemName = event.getItem().getItemStack().getItemMeta().getDisplayName();
 	  		else
-				ItemName = SetItemDefaultName((short) event.getItem().getItemStack().getTypeId(),event.getItem().getItemStack().getData().getData());
+				ItemName = setItemDefaultName((short) event.getItem().getItemStack().getTypeId(),event.getItem().getItemStack().getData().getData());
 	  		new effect.SendPacket().sendActionBar(event.getPlayer(), "§7§l(§l"+ItemName+" §7§l"+event.getItem().getItemStack().getAmount()+"개)", false);
 	  	}
 	  	return;
 	}
 
-	public String SetItemDefaultName(short itemCode,byte itemData)
+	public String setItemDefaultName(int itemCode, int itemData)
 	{
 		String name = "지정되지 않은 아이템";
 		switch (itemCode)

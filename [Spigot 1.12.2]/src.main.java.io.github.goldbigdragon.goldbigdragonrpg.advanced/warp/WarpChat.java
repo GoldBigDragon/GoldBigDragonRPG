@@ -8,7 +8,7 @@ import user.UserDataObject;
 
 public class WarpChat
 {
-	public void TeleportTypeChatting(PlayerChatEvent event)
+	public void teleportTypeChatting(PlayerChatEvent event)
 	{
 		UserDataObject u = new UserDataObject();
 		Player player = event.getPlayer();

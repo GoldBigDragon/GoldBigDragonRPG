@@ -29,22 +29,22 @@ public class StatsGui extends UtilGui
 		
 		Inventory inv = Bukkit.createInventory(null, 45, UniqueCode + "§0스텟");
 
-		Stack2("§f스텟", 160,4,1,Arrays.asList("§7스텟을 확인합니다."), 0, inv);
-		Stack2("§f스킬", 403,0,1,Arrays.asList("§7스킬을 확인합니다."), 9, inv);
-		Stack2("§f퀘스트", 358,0,1,Arrays.asList("§7현재 진행중인 퀘스트를 확인합니다."), 18, inv);
-		Stack2("§f옵션", 145,0,1,Arrays.asList("§7기타 설정을 합니다."), 27, inv);
-		Stack2("§f기타", 354,0,1,Arrays.asList("§7기타 내용을 확인합니다."), 36, inv);
+		removeFlagStack("§f스텟", 160,4,1,Arrays.asList("§7스텟을 확인합니다."), 0, inv);
+		removeFlagStack("§f스킬", 403,0,1,Arrays.asList("§7스킬을 확인합니다."), 9, inv);
+		removeFlagStack("§f퀘스트", 358,0,1,Arrays.asList("§7현재 진행중인 퀘스트를 확인합니다."), 18, inv);
+		removeFlagStack("§f옵션", 145,0,1,Arrays.asList("§7기타 설정을 합니다."), 27, inv);
+		removeFlagStack("§f기타", 354,0,1,Arrays.asList("§7기타 내용을 확인합니다."), 36, inv);
 		
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 1, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 7, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 10, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 16, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 19, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 25, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 28, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 34, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 37, inv);
-		Stack2("§c ", 66,0,1,Arrays.asList(""), 43, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 1, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 7, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 10, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 16, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 19, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 25, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 28, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 34, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 37, inv);
+		removeFlagStack("§c ", 66,0,1,Arrays.asList(""), 43, inv);
 		
 		ItemStack EXIT = new ItemStack(Material.WOOD_DOOR, 1);
 		ItemMeta EXIT_BUTTON = EXIT.getItemMeta();
@@ -56,7 +56,7 @@ public class StatsGui extends UtilGui
 		int StatPoint = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_StatPoint();
 		if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == true)
 		{
-			Stack2("§a    [§f§l상태§a]", 397,3,1,
+			removeFlagStack("§a    [§f§l상태§a]", 397,3,1,
 					Arrays.asList("§f[레벨] : §l" + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level(),
 							"§f[누적 레벨] : §l" + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel(),
 							"§f[경험치] : §l" + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_EXP() + " / " + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxEXP(),
@@ -66,7 +66,7 @@ public class StatsGui extends UtilGui
 		{
 		    YamlLoader PlayerSkillYML = new YamlLoader();
 			PlayerSkillYML.getConfig("Skill/PlayerData/"+player.getUniqueId()+".yml");
-			Stack2("§a       [§f§l상태§a]", 397,3,1,
+			removeFlagStack("§a       [§f§l상태§a]", 397,3,1,
 					Arrays.asList("§f[레벨] : §l" + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level(),
 							"§f[직업] : §l" + PlayerSkillYML.getString("Job.Type"),
 							"§f[경험치] : §l" + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_EXP() + " / " + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxEXP(),
@@ -137,7 +137,7 @@ public class StatsGui extends UtilGui
 		lore = LineUp(CurrentStat, (byte) (main.MainServerOption.statSTR.length()+20))+"%enter%"+lore.replace("%stat%", main.MainServerOption.statSTR)
 				+"%enter%§b§l[추가 근접 공격력]%enter%"+LineUp(Additional, (byte) 24);
 		
-		Stack2("§4"+ LineUp("§c[§f§l"+main.MainServerOption.statSTR+"§4]", (byte) 24), 267,0,1,
+		removeFlagStack("§4"+ LineUp("§c[§f§l"+main.MainServerOption.statSTR+"§4]", (byte) 24), 267,0,1,
 				Arrays.asList(lore.split("%enter%")), 20, inv);
 
 		int DEX = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX();
@@ -156,7 +156,7 @@ public class StatsGui extends UtilGui
 		lore = LineUp(CurrentStat, (byte) (main.MainServerOption.statDEX.length()+20))+"%enter%"+lore.replace("%stat%", main.MainServerOption.statDEX)
 					+"%enter%§b§l[추가 원거리 공격력]%enter%"+LineUp(Additional, (byte) 24);
 			
-		Stack2(LineUp("§a[§f§l"+main.MainServerOption.statDEX+"§a]", (byte) 24), 261,0,1,
+		removeFlagStack(LineUp("§a[§f§l"+main.MainServerOption.statDEX+"§a]", (byte) 24), 261,0,1,
 				Arrays.asList(lore.split("%enter%")), 21, inv);
 		
 		int INT = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT();
@@ -175,7 +175,7 @@ public class StatsGui extends UtilGui
 		lore = LineUp(CurrentStat, (byte) (main.MainServerOption.statINT.length()+20))+"%enter%"+lore.replace("%stat%", main.MainServerOption.statINT)
 					+"%enter%§b§l[추가 스킬 공격력]%enter%"+LineUp(Additional, (byte) 24);
 			
-		Stack2(LineUp("§b[§f§l"+main.MainServerOption.statINT+"§b]",(byte) 24), 369,0,1,
+		removeFlagStack(LineUp("§b[§f§l"+main.MainServerOption.statINT+"§b]",(byte) 24), 369,0,1,
 				Arrays.asList(lore.split("%enter%")), 22, inv);
 
 		int WILL = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL();
@@ -194,7 +194,7 @@ public class StatsGui extends UtilGui
 		lore = LineUp(CurrentStat, (byte) (main.MainServerOption.statWILL.length()+20))+"%enter%"+lore.replace("%stat%", main.MainServerOption.statWILL)
 					+"%enter%§b§l[추가 스킬 공격력]%enter%"+LineUp(Additional, (byte) 24);
 			
-		Stack2(LineUp("§7[§f§l"+main.MainServerOption.statWILL+"§7]",(byte) 24), 370,0,1,
+		removeFlagStack(LineUp("§7[§f§l"+main.MainServerOption.statWILL+"§7]",(byte) 24), 370,0,1,
 				Arrays.asList(lore.split("%enter%")), 23, inv);
 		
 		int LUK = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK();
@@ -212,34 +212,34 @@ public class StatsGui extends UtilGui
 		lore = LineUp(CurrentStat, (byte) (main.MainServerOption.statLUK.length()+20))+"%enter%"+lore.replace("%stat%", main.MainServerOption.statLUK)
 					+"%enter%";
 			
-		Stack2(LineUp("§e[§f§l"+main.MainServerOption.statLUK+"§e]",(byte) 24), 322,0,1,
+		removeFlagStack(LineUp("§e[§f§l"+main.MainServerOption.statLUK+"§e]",(byte) 24), 322,0,1,
 				Arrays.asList(lore.split("%enter%")), 24, inv);
 
 
 		if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == false)
 		{
-			Stack2("§6    [§f§l"+main.MainServerOption.statSTR+" 상승§6]", 399,0,1,
+			removeFlagStack("§6    [§f§l"+main.MainServerOption.statSTR+" 상승§6]", 399,0,1,
 					Arrays.asList("§7"+main.MainServerOption.statSTR+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+StatPoint), 29, inv);
-			Stack2("§6    [§f§l"+main.MainServerOption.statDEX+" 상승§6]", 399,0,1,
+			removeFlagStack("§6    [§f§l"+main.MainServerOption.statDEX+" 상승§6]", 399,0,1,
 					Arrays.asList("§7"+main.MainServerOption.statDEX+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+StatPoint), 30, inv);
-			Stack2("§6    [§f§l"+main.MainServerOption.statINT+" 상승§6]", 399,0,1,
+			removeFlagStack("§6    [§f§l"+main.MainServerOption.statINT+" 상승§6]", 399,0,1,
 					Arrays.asList("§7"+main.MainServerOption.statINT+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+StatPoint), 31, inv);
-			Stack2("§6    [§f§l"+main.MainServerOption.statWILL+" 상승§6]", 399,0,1,
+			removeFlagStack("§6    [§f§l"+main.MainServerOption.statWILL+" 상승§6]", 399,0,1,
 					Arrays.asList("§7"+main.MainServerOption.statWILL+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+StatPoint), 32, inv);
-			Stack2("§6    [§f§l"+main.MainServerOption.statLUK+" 상승§6]", 399,0,1,
+			removeFlagStack("§6    [§f§l"+main.MainServerOption.statLUK+" 상승§6]", 399,0,1,
 					Arrays.asList("§7"+main.MainServerOption.statLUK+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+StatPoint), 33, inv);
 		}
-		Stack2("§7    [§f§l방어§7]", 307,0,1,
+		removeFlagStack("§7    [§f§l방어§7]", 307,0,1,
 				Arrays.asList("§f물리 방어 : §f" +(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEF()+BattleCalculator.getPlayerEquipmentStat(player, "방어", false, null)[0]),
 						"§7추가 물리 보호 : §f" + (main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Protect()+BattleCalculator.getPlayerEquipmentStat(player, "보호", false, null)[0]),
 						"§b추가 마법 방어 : §f" + (main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Magic_DEF()+BattleCalculator.getMagicDEF(player,INT)),
 						"§3추가 마법 보호 : §f" + (main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Magic_Protect()+BattleCalculator.getMagicProtect(player, INT))), 38, inv);
 
-		Stack2("§c    [§f§l관통§c]", 409,0,1,
+		removeFlagStack("§c    [§f§l관통§c]", 409,0,1,
 				Arrays.asList("§c추가 물리 방어 관통 : §f" + (main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEFcrash()+BattleCalculator.getDEFcrash(player, DEX)),
 						"§9추가 마법 방어 관통 : §f" + (main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MagicDEFcrash()+BattleCalculator.getMagicDEFcrash(player, INT))), 39, inv);
 		
-		Stack2("§a    [§f§l기회§a]", 377,0,1,
+		removeFlagStack("§a    [§f§l기회§a]", 377,0,1,
 				Arrays.asList("§a추가 밸런스 : §f" + BattleCalculator.getBalance(player, DEX, main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Balance())+"%",
 						"§e추가 크리티컬 : §f" + BattleCalculator.getCritical(player,LUK, WILL,main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Critical())+"%"), 42, inv);
 		
@@ -256,12 +256,12 @@ public class StatsGui extends UtilGui
 		
 		if(slot == 26)
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot >= 29 && slot <= 33)
 			{
 			    YamlLoader Config = new YamlLoader();
@@ -294,11 +294,11 @@ public class StatsGui extends UtilGui
 								main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_WILL(1);
 							else if(slot == 33)
 								main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_LUK(1);
-							SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+							SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 						}
 						else
 						{
-							SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 							new effect.SendPacket().sendActionBar(player, "§c§l[해당 능력은 더 이상 상승시킬 수 없습니다!]", false);
 						}
 					}

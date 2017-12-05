@@ -21,26 +21,26 @@ public final class PartyGUI extends UtilGui
 	{
 		String UniqueCode = "§0§0§4§0§0§r";
 		Inventory inv = Bukkit.createInventory(null, 45, UniqueCode + "§0파티");
-		Stack2("§f§l파티 목록", 340,0,1,Arrays.asList("§7현재 개설된 파티 목록을 봅니다."), 12, inv);
+		removeFlagStack("§f§l파티 목록", 340,0,1,Arrays.asList("§7현재 개설된 파티 목록을 봅니다."), 12, inv);
 		if(main.MainServerOption.partyJoiner.containsKey(player)==false)
 		{
-			Stack2("§f§l파티 개설", 323,0,1,Arrays.asList("§7새로운 파티를 개설합니다."), 10, inv);
-			Stack2("§f§l파티 참여", 386,0,1,Arrays.asList("§7생성되어 있는 파티에 참여합니다."), 12, inv);
+			removeFlagStack("§f§l파티 개설", 323,0,1,Arrays.asList("§7새로운 파티를 개설합니다."), 10, inv);
+			removeFlagStack("§f§l파티 참여", 386,0,1,Arrays.asList("§7생성되어 있는 파티에 참여합니다."), 12, inv);
 		}
 		else
 		{
-			Stack2("§f§l파티 정보", 397,3,1,Arrays.asList("§7현재 파티의 정보를 알아봅니다.","§7리더의 경우, 파티 멤버를","§7강퇴 시킬 수도 있습니다."), 10, inv);
-			Stack2("§f§l파티 탈퇴", 52,0,1,Arrays.asList("§7파티에서 탈퇴합니다."), 14, inv);
+			removeFlagStack("§f§l파티 정보", 397,3,1,Arrays.asList("§7현재 파티의 정보를 알아봅니다.","§7리더의 경우, 파티 멤버를","§7강퇴 시킬 수도 있습니다."), 10, inv);
+			removeFlagStack("§f§l파티 탈퇴", 52,0,1,Arrays.asList("§7파티에서 탈퇴합니다."), 14, inv);
 			if(main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).getLeader().equalsIgnoreCase(player.getName()) == true)
 			{
-				Stack2("§f§l리더 변경", 386,0,1,Arrays.asList("§7파티의 리더를 변경합니다."), 28, inv);
-				Stack2("§f§l인원 변경", 386,0,1,Arrays.asList("§7제한 인원을 변경합니다."), 30, inv);
-				if(main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).getLock() == false) Stack2("§9§l파티 개방", 54,0,1,Arrays.asList("§7파티 가입 신청을 받습니다."), 34, inv);
-				else Stack2("§c§l파티 잠금", 130,0,1,Arrays.asList("§7파티 가입 신청을 받지 않습니다."), 34, inv);
+				removeFlagStack("§f§l리더 변경", 386,0,1,Arrays.asList("§7파티의 리더를 변경합니다."), 28, inv);
+				removeFlagStack("§f§l인원 변경", 386,0,1,Arrays.asList("§7제한 인원을 변경합니다."), 30, inv);
+				if(main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).getLock() == false) removeFlagStack("§9§l파티 개방", 54,0,1,Arrays.asList("§7파티 가입 신청을 받습니다."), 34, inv);
+				else removeFlagStack("§c§l파티 잠금", 130,0,1,Arrays.asList("§7파티 가입 신청을 받지 않습니다."), 34, inv);
 			}
 		}
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7기타 창으로 돌아갑니다."), 36, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7작업 관리자 창을 닫습니다."), 44, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7기타 창으로 돌아갑니다."), 36, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7작업 관리자 창을 닫습니다."), 44, inv);
 		player.openInventory(inv);
 	}
 	
@@ -52,7 +52,7 @@ public final class PartyGUI extends UtilGui
 		Object[] a = main.MainServerOption.party.keySet().toArray();
 		if(main.MainServerOption.party.size() <= 0)
 		{
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			player.sendMessage("§c[파티] : 생성된 파티가 없습니다!");
 			player.sendMessage("§6/파티 생성 <이름>");
 			return;
@@ -64,20 +64,20 @@ public final class PartyGUI extends UtilGui
 			{
 				if(count > main.MainServerOption.party.size() || loc >= 45) break;
 				if(main.MainServerOption.party.get(a[count]).getLock()==false)
-					Stack2("§f§l" + main.MainServerOption.party.get(a[count]).getTitle(), 54,0,1,Arrays.asList("§7파티 생성 시각 : "+ChatColor.DARK_GRAY+a[count],"","§b파티장 : §8"+main.MainServerOption.party.get(a[count]).getLeader(),"§b인원 : §8"+ main.MainServerOption.party.get(a[count]).getPartyMembers()+"/"+main.MainServerOption.party.get(a[count]).getCapacity()), loc, inv);
+					removeFlagStack("§f§l" + main.MainServerOption.party.get(a[count]).getTitle(), 54,0,1,Arrays.asList("§7파티 생성 시각 : "+ChatColor.DARK_GRAY+a[count],"","§b파티장 : §8"+main.MainServerOption.party.get(a[count]).getLeader(),"§b인원 : §8"+ main.MainServerOption.party.get(a[count]).getPartyMembers()+"/"+main.MainServerOption.party.get(a[count]).getCapacity()), loc, inv);
 				else
-					Stack2("§f§l" + main.MainServerOption.party.get(a[count]).getTitle(), 130,0,1,Arrays.asList("§7파티 생성 시각 : "+ChatColor.DARK_GRAY+a[count],"","§b파티장 : §8"+main.MainServerOption.party.get(a[count]).getLeader(),"§b인원 : §8"+ main.MainServerOption.party.get(a[count]).getPartyMembers()+"/"+main.MainServerOption.party.get(a[count]).getCapacity(),"","§c[잠김]","§c파티 가입을 하시려면","§c파티장에게 문의하세요!"), loc, inv);
+					removeFlagStack("§f§l" + main.MainServerOption.party.get(a[count]).getTitle(), 130,0,1,Arrays.asList("§7파티 생성 시각 : "+ChatColor.DARK_GRAY+a[count],"","§b파티장 : §8"+main.MainServerOption.party.get(a[count]).getLeader(),"§b인원 : §8"+ main.MainServerOption.party.get(a[count]).getPartyMembers()+"/"+main.MainServerOption.party.get(a[count]).getCapacity(),"","§c[잠김]","§c파티 가입을 하시려면","§c파티장에게 문의하세요!"), loc, inv);
 				loc++;
 			}
 		}
 		
 		if(a.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 		
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -128,16 +128,16 @@ public final class PartyGUI extends UtilGui
 								"","§7§l[   위치   ]","§3"+pl.getLocation().getWorld().getName()+" "+(int)pl.getLocation().getX()+","+(int)pl.getLocation().getY()+","+(int)pl.getLocation().getZ(),"","§e§l[   파티 리더   ]","","§e§l[ 좌 클릭시 장비 구경 ]"), Member[count].getName());
 				}
 
-				ItemStackStack(ph, loc, inv);
+				stackItem(ph, loc, inv);
 				loc++;
 			}
 		if(Member.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 		
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -150,12 +150,12 @@ public final class PartyGUI extends UtilGui
 
 		if(slot == 44)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 36)//이전 목록
 				new user.EtcGui().ETCGUI_Main(player);
 			else if(slot == 10)//파티 개설 / 파티 정보
@@ -198,12 +198,12 @@ public final class PartyGUI extends UtilGui
 		
 		if(slot == 53)//닫기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 목록
 				PartyGUI_Main(player);
 			else if(slot == 48)//이전 페이지
@@ -214,7 +214,7 @@ public final class PartyGUI extends UtilGui
 			{
 				if(main.MainServerOption.party.get(Long.parseLong(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(0).split(" : ")[1]))).getLock())
 				{
-				  SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+				  SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		    	  player.sendMessage("§c[파티] : 해당 파티는 잠긴 상태입니다! 리더에게 문의하세요!");
 				}
 				else
@@ -233,12 +233,12 @@ public final class PartyGUI extends UtilGui
 		
 		if(slot == 53)//닫기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			boolean isLeaderChange = event.getInventory().getTitle().contains("교체");
 			if(slot == 45)//이전 목록
 				PartyGUI_Main(player);

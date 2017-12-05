@@ -14,7 +14,7 @@ public class UtilPlayer
 	public void DungeonClear(Player player, long Money, long EXP)
 	{
 		main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MoneyAndEXP(Money, EXP, false);
-		SoundEffect.SP(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 1.5F, 1.8F);
+		SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 1.5F, 1.8F);
 		player.sendMessage("§e§l[던전 클리어 보상] : §b§l[경험치] "+ EXP + " §e§l[§f"+MainServerOption.money+"§e§l] "+ Money);
 	}
 	
@@ -72,7 +72,7 @@ public class UtilPlayer
 		{
 			if(player.getInventory().firstEmpty() == -1)
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				player.sendMessage("§c§l[SYSTEM] : 인벤토리가 부족하여 우편함으로 아이템을 발송하였습니다!");
 				new structure.StructPostBox().SendPost_Server(player.getUniqueId().toString(), "[시스템]", "[인벤토리 부족]", "인벤토리가 부족하여 우편으로 아이템이 배송되었습니다.", item);
 			}
@@ -198,9 +198,9 @@ public class UtilPlayer
 				{
 					new event.EventItemDrop().CustomItemDrop(player.getLocation().add(0,2,0), player.getInventory().getItem(count));
 					if(isKeyDrop)
-						SoundEffect.SL(player.getLocation().add(0,2,0), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.5F, 1.8F);
+						SoundEffect.playSoundLocation(player.getLocation().add(0,2,0), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.5F, 1.8F);
 					else
-						SoundEffect.SL(player.getLocation().add(0,2,0), Sound.BLOCK_LAVA_POP, 1.5F, 1.8F);
+						SoundEffect.playSoundLocation(player.getLocation().add(0,2,0), Sound.BLOCK_LAVA_POP, 1.5F, 1.8F);
 					player.getInventory().setItem(count, null);
 				}
 			}

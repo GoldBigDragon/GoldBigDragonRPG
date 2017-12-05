@@ -15,7 +15,7 @@ public class WarpMain
 	{
 		if(player.isOp() == false)
 		{
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			player.sendMessage("§c[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
 			return;
 		}
@@ -26,7 +26,7 @@ public class WarpMain
 
 			if(TeleportList.contains(TeleportName))
 			{
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 				player.sendMessage("§c[SYSTEM] : 해당 워프 지점은 이미 등록되어 있습니다!");
 				return;
 			}
@@ -40,7 +40,7 @@ public class WarpMain
 			TeleportList.set(TeleportName+".OnlyOpUse", true);
 			TeleportList.saveConfig();
 			
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_CHICKEN_EGG, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_CHICKEN_EGG, 2.0F, 1.7F);
 			player.sendMessage("§a[SYSTEM] : 현재 위치로 워프 지점이 등록되었습니다!");
 			
 			return;
@@ -67,18 +67,18 @@ public class WarpMain
 					
 				}
 				TeleportList.saveConfig();
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_CHICKEN_EGG, 2.0F, 1.7F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_CHICKEN_EGG, 2.0F, 1.7F);
 			}
 			else
 			{
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		  		player.sendMessage("§c[SYSTEM] : 해당 이름으로 등록된 워프 지점이 없습니다!");
 			}
 	  		return;
 		}
 		else
 		{
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			player.sendMessage("§c[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
 			return;	
 		}
@@ -89,7 +89,7 @@ public class WarpMain
 	{
 		if(player.isOp() == false)
 		{
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			player.sendMessage("§c[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
 			return;
 		}
@@ -110,12 +110,12 @@ public class WarpMain
 				TeleportList.removeKey(TeleportName+"");
 				TeleportList.saveConfig();
 
-				SoundEffect.SP(player,org.bukkit.Sound.ENTITY_ITEM_PICKUP,0.7F,1.0F);
+				SoundEffect.playSound(player,org.bukkit.Sound.ENTITY_ITEM_PICKUP,0.7F,1.0F);
 	    		player.sendMessage("§a[SYSTEM] : §e"+TeleportName+"§a 워프 지점을 성공적으로 삭제하였습니다!");
 			}
 			else
 			{
-				SoundEffect.SP(player,org.bukkit.Sound.ENTITY_ITEM_BREAK,0.7F,1.0F);
+				SoundEffect.playSound(player,org.bukkit.Sound.ENTITY_ITEM_BREAK,0.7F,1.0F);
 		  		player.sendMessage("§c[SYSTEM] : 해당 이름으로 등록된 워프 지점이 없습니다!");
 			}
 		}
@@ -132,16 +132,16 @@ public class WarpMain
 		{
 			if(TeleportList.getBoolean(TeleportSpotName+".OnlyOpUse")== true  && player.isOp() == false)
 			{
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 				player.sendMessage("§c[SYSTEM] : 해당 구역은 제한된 지역입니다!");
 				return;
 			}
 			else
 			{
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ENDERMEN_TELEPORT, 0.8F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ENDERMEN_TELEPORT, 0.8F, 1.0F);
 				Location loc = new Location(Bukkit.getWorld(TeleportList.getString(TeleportSpotName+".World")), TeleportList.getInt(TeleportSpotName+".X")+0.5,  TeleportList.getInt(TeleportSpotName+".Y")+0.5,  TeleportList.getInt(TeleportSpotName+".Z")+0.5,  TeleportList.getInt(TeleportSpotName+".Yaw"),  TeleportList.getInt(TeleportSpotName+".Pitch"));
 				player.teleport(loc);
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ENDERMEN_TELEPORT, 0.8F, 1.0F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ENDERMEN_TELEPORT, 0.8F, 1.0F);
 				PottionBuff.givePotionEffect(player, PotionEffectType.BLINDNESS, 1, 15);
 				return;
 			}
@@ -152,20 +152,20 @@ public class WarpMain
 			{
 				if(player.isOp()==true)
 				{
-					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ENDERMEN_TELEPORT, 0.8F, 1.0F);
+					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ENDERMEN_TELEPORT, 0.8F, 1.0F);
 					player.teleport(Bukkit.getServer().getWorld(TeleportSpotName).getSpawnLocation());
 					PottionBuff.givePotionEffect(player, PotionEffectType.BLINDNESS, 1, 15);
-					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ENDERMEN_TELEPORT, 0.8F, 1.0F);
+					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ENDERMEN_TELEPORT, 0.8F, 1.0F);
 				}
 				else
 				{
-					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 					player.sendMessage("§c[SYSTEM] : 월드간 이동은 관리자만 허용됩니다!");
 				}
 				return;
 			}
 		}
-		SoundEffect.SP(player,org.bukkit.Sound.ENTITY_ITEM_BREAK,0.7F,1.0F);
+		SoundEffect.playSound(player,org.bukkit.Sound.ENTITY_ITEM_BREAK,0.7F,1.0F);
   		player.sendMessage("§c[SYSTEM] : 해당 이름으로 등록된 워프 지점이 없습니다!");
 		return;
 	}

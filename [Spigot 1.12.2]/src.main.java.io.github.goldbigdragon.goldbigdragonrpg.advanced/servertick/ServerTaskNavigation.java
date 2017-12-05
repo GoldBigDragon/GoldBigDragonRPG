@@ -388,7 +388,7 @@ public class ServerTaskNavigation
 	public void FindedWay(Player player, Location DestinationLoc)
 	{
 		effect.SendPacket PS = new effect.SendPacket();
-		SoundEffect.SP(player, Sound.BLOCK_NOTE_PLING, 1.0F, 1.0F);
+		SoundEffect.playSound(player, Sound.BLOCK_NOTE_PLING, 1.0F, 1.0F);
 		PS.sendTitle(player, "§e도착하였습니다!", "§f[네비게이션을 초기화 합니다.]", 1, 1, 1);
 
 		for(int count = 0; count < ServerTickMain.NaviUsingList.size();count++)

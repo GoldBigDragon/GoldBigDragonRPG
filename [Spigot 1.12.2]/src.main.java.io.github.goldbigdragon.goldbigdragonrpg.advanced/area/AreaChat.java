@@ -30,7 +30,7 @@ public class AreaChat extends UtilChat
 			{
 				areaYaml.set(u.getString(player, (byte)3)+".RegenBlock", Integer.parseInt(message));
     			areaYaml.saveConfig();
-    			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+    			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				areaGui.areaSettingGui(player, u.getString(player, (byte)3));
     			u.clearAll(player);
 			}
@@ -41,7 +41,7 @@ public class AreaChat extends UtilChat
 			{
 				areaYaml.set(u.getString(player, (byte)3)+".MonsterSpawnRule."+u.getString(player, (byte)1)+".count", Integer.parseInt(message));
     			areaYaml.saveConfig();
-    			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+    			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				u.setString(player, (byte)2, "AMSMC");
 				player.sendMessage("§a[영역] : 반경 20블록 이내 엔티티가 몇 마리 미만일 동안 스폰 할까요?");
 				player.sendMessage("§e(최소 1마리 ~ 최대 300마리)");
@@ -53,7 +53,7 @@ public class AreaChat extends UtilChat
 			{
 				areaYaml.set(u.getString(player, (byte)3)+".MonsterSpawnRule."+u.getString(player, (byte)1)+".max", Integer.parseInt(message));
     			areaYaml.saveConfig();
-    			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+    			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				u.setString(player, (byte)2, "AMST");
 				player.sendMessage("§a[영역] : 몇 초마다 스폰되게 할까요?");
 				player.sendMessage("§e(최소 1초 ~ 최대 7200초(2시간))");
@@ -65,7 +65,7 @@ public class AreaChat extends UtilChat
 			{
 				areaYaml.set(u.getString(player, (byte)3)+".MonsterSpawnRule."+u.getString(player, (byte)1)+".timer", Integer.parseInt(message));
     			areaYaml.saveConfig();
-    			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+    			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
     			u.setString(player, (byte)2, "AMSM");
 				player.sendMessage("§a[영역] : 특별히 스폰 하고 싶은 몬스터가 있나요?");
 				player.sendMessage("§e(O 혹은 X로 대답하세요!)");
@@ -78,14 +78,14 @@ public class AreaChat extends UtilChat
 			{
 				if(answer==0)
 				{
-	    			SoundEffect.SP(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.0F);
+	    			SoundEffect.playSound(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.0F);
 	    			areaGui.areaMonsterSpawnSettingGui(player, (short) 0, u.getString(player, (byte)3));
 	    			String areaName =u.getString(player, (byte)3);
 	    			new area.AreaMain().AreaMonsterSpawnAdd(areaName, u.getString(player, (byte)1));
 				}
 				else
 				{
-					SoundEffect.SP(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.7F);
+					SoundEffect.playSound(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.7F);
 					areaGui.areaSpawnSpecialMonsterListGui(player, (short) 0, u.getString(player, (byte)3),u.getString(player, (byte)1));
 				}
     			u.clearAll(player);
@@ -97,7 +97,7 @@ public class AreaChat extends UtilChat
 			{
     			areaYaml.set(u.getString(player, (byte)3)+".Priority", Integer.parseInt(message));
     			areaYaml.saveConfig();
-    			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+    			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
     			areaGui.areaSettingGui(player, u.getString(player, (byte)3));
     			u.clearAll(player);
 			}
@@ -108,7 +108,7 @@ public class AreaChat extends UtilChat
 			{
     			areaYaml.set(u.getString(player, (byte)3)+".Restrict.MinNowLevel", Integer.parseInt(message));
     			areaYaml.saveConfig();
-    			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+    			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
     			if(Integer.parseInt(message) == 0)
     			{
     				YamlLoader configYaml = new YamlLoader();
@@ -141,7 +141,7 @@ public class AreaChat extends UtilChat
     			areaYaml.saveConfig();
     			YamlLoader configYaml = new YamlLoader();
     			configYaml.getConfig("config.yml");
-    			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+    			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
     			if(configYaml.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System")==true)
     			{
         			u.setString(player, (byte)2, "MinRLR");
@@ -160,7 +160,7 @@ public class AreaChat extends UtilChat
 			{
     			areaYaml.set(u.getString(player, (byte)3)+".Restrict.MinRealLevel", Integer.parseInt(message));
     			areaYaml.saveConfig();
-    			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+    			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
     			if(Integer.parseInt(message) == 0)
     			{
         			areaYaml.set(u.getString(player, (byte)3)+".Restrict.MaxRealLevel", 0);
@@ -181,7 +181,7 @@ public class AreaChat extends UtilChat
 			{
     			areaYaml.set(u.getString(player, (byte)3)+".Restrict.MaxRealLevel", Integer.parseInt(message));
     			areaYaml.saveConfig();
-    			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+    			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
     			areaGui.areaSettingGui(player, u.getString(player, (byte)3));
     			u.clearAll(player);
 			}

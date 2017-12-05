@@ -66,7 +66,7 @@ public class DungeonMain
 				if(target.equals(MainServerOption.PlayerList.get(player.getUniqueId().toString()).getDungeon_UTC()))
 				{
 					{
-						SoundEffect.SP(partyMember[count], Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
+						SoundEffect.playSound(partyMember[count], Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
 						new util.UtilPlayer().giveItemDrop(partyMember[count], item, partyMember[count].getLocation());
 						new util.UtilPlayer().DungeonClear(partyMember[count], Reward_M, Reward_E);
 					}
@@ -75,7 +75,7 @@ public class DungeonMain
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
+			SoundEffect.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
 			new util.UtilPlayer().giveItemDrop(player, item, player.getLocation());
 			new util.UtilPlayer().DungeonClear(player, Reward_M, Reward_E);
 		}
@@ -174,7 +174,7 @@ public class DungeonMain
     		for(int count = 0; count < MobList.length; count++)
     		{
     			BossLoc.add(0, 0.2, 0);
-    			SoundEffect.SL(BossLoc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
+    			SoundEffect.playSoundLocation(BossLoc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
     			MC.SpawnMob(BossLoc, dungeonMonsterYaml.getString("Boss."+MobList[count]),(byte) 4, XYZloc, Group, true);
     		}
 		}
@@ -306,11 +306,11 @@ public class DungeonMain
     			loc.add(0,1,0);
         		for(int count = 0; count < 7; count++)
         		{
-        			SoundEffect.SL(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
+        			SoundEffect.playSoundLocation(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
         			MC.SpawnMob(loc, dungeonMonsterYaml.getString(ListName+"."+Mob),(byte) 1, XYZLoc, Group, true);
         			loc.add(0, 0.2, 0);
         		}
-    			SoundEffect.SL(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
+    			SoundEffect.playSoundLocation(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
     			MC.SpawnMob(loc, dungeonMonsterYaml.getString(ListName+"."+Mob),(byte) 3, XYZLoc, Group, true);	
     		}
     		else
@@ -336,14 +336,14 @@ public class DungeonMain
 			event.getPlayer().getInventory().getItemInMainHand().getTypeId()<=327)
 		{
 			event.setCancelled(true);
-			SoundEffect.SP(event.getPlayer(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+			SoundEffect.playSound(event.getPlayer(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 			new effect.SendPacket().sendActionBar(event.getPlayer(), "§c§l[던전에서는 양동이 사용이 불가능합니다!]", false);
 			return;
 		}
 		else if(event.getPlayer().getInventory().getItemInMainHand().getTypeId()==432)
 		{
 			event.setCancelled(true);
-			SoundEffect.SP(event.getPlayer(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+			SoundEffect.playSound(event.getPlayer(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 			new effect.SendPacket().sendActionBar(event.getPlayer(), "§c§l[던전에서는 후렴과 사용이 불가능합니다!]", false);
 			return;
 		}
@@ -482,7 +482,7 @@ public class DungeonMain
 		}
 		else if(block.getType().getId() == 54) //미믹 방 일반 상자
 		{
-			SoundEffect.SL(block.getLocation().add(0,2,0), Sound.BLOCK_CHEST_OPEN, 0.5F, 1.8F);
+			SoundEffect.playSoundLocation(block.getLocation().add(0,2,0), Sound.BLOCK_CHEST_OPEN, 0.5F, 1.8F);
 			event.setCancelled(true);
 			block.setType(Material.AIR);
 			ItemStack item = new ItemStack(292);
@@ -491,7 +491,7 @@ public class DungeonMain
 			im.setLore(Arrays.asList("","§f던전 룸을 열 수 있는","§f낡은 열쇠이다."));
 			im.addEnchant(Enchantment.DURABILITY, 6000, true);
 			item.setItemMeta(im);
-			SoundEffect.SL(block.getLocation().add(0,2,0), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.5F, 1.8F);
+			SoundEffect.playSoundLocation(block.getLocation().add(0,2,0), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.5F, 1.8F);
 			new event.EventItemDrop().CustomItemDrop(block.getLocation().add(0.5,1,0.5), item);
 			byte howMuch = (byte) new util.UtilNumber().RandomNum(0, 4);
 			for(int count = 0; count < howMuch; count++)
@@ -513,7 +513,7 @@ public class DungeonMain
 			if(new util.UtilPlayer().deleteItem(player, item, 1))
 			{
 				event.getClickedBlock().setType(Material.AIR, true);
-				SoundEffect.SL(event.getClickedBlock().getLocation(), Sound.BLOCK_CHEST_OPEN, 1.0F, 1.0F);
+				SoundEffect.playSoundLocation(event.getClickedBlock().getLocation(), Sound.BLOCK_CHEST_OPEN, 1.0F, 1.0F);
 		        Sign SignBlock = (Sign) SB.getState();
 		        String DungeonName = SignBlock.getLine(2);
 			  	YamlLoader dungeonRewardYaml = new YamlLoader();
@@ -588,7 +588,7 @@ public class DungeonMain
 			}
 			else
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, 1.0F, 0.5F);
+				SoundEffect.playSound(player, Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, 1.0F, 0.5F);
 				new effect.SendPacket().sendActionBar(player, "§f§l[상자에 맞는 열쇠가 없습니다!]", false);
 			}
 		}
@@ -682,7 +682,7 @@ public class DungeonMain
     		{
             	if(GridImage.equals("◇"))
             	{
-        			SoundEffect.SL(loc, Sound.BLOCK_CHEST_OPEN, 1.3F, 1.8F);
+        			SoundEffect.playSoundLocation(loc, Sound.BLOCK_CHEST_OPEN, 1.3F, 1.8F);
             		MC.SpawnMob(loc, dungeonMonsterYaml.getString(ListName+"."+Mob.get(0)),(byte)-1,null, (char) -1, false);
             	}
             	else
@@ -728,7 +728,7 @@ public class DungeonMain
     				{
                 		for(int count = 0; count < 8; count++)
                 		{
-                			SoundEffect.SL(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
+                			SoundEffect.playSoundLocation(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
                 			loc.add(0, 0.2, 0);
                 			MC.SpawnMob(loc, dungeonMonsterYaml.getString(ListName+"."+Mob.get(count)),(byte) 2, XYZLoc, Group, true);
                 		}
@@ -738,7 +738,7 @@ public class DungeonMain
                 		for(int count = 0; count < 7; count++)
                 		{
                 			loc.add(0, 0.2, 0);
-                			SoundEffect.SL(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
+                			SoundEffect.playSoundLocation(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
                 			MC.SpawnMob(loc, dungeonMonsterYaml.getString(ListName+"."+Mob.get(count)),(byte) 1, XYZLoc, Group, true);
                 		}
             			MC.SpawnMob(loc, dungeonMonsterYaml.getString(ListName+"."+Mob.get(7)),(byte) 3, XYZLoc, Group, true);
@@ -794,7 +794,7 @@ public class DungeonMain
 			item.setItemMeta(im);
 			new event.EventItemDrop().CustomItemDrop(blockLoc, item);
 		}
-		SoundEffect.SL(block.getLocation(), org.bukkit.Sound.BLOCK_CHEST_OPEN, 1.0F, 0.5F);
+		SoundEffect.playSoundLocation(block.getLocation(), org.bukkit.Sound.BLOCK_CHEST_OPEN, 1.0F, 0.5F);
         block.setTypeIdAndData(0, (byte)0, true);
         return true;
 	}
@@ -820,13 +820,13 @@ public class DungeonMain
 			}
 			for(int counter=0;counter<50;counter++)
 				p.PL(block.getLocation(), org.bukkit.Effect.MAGIC_CRIT, 0);
-			SoundEffect.SL(block.getLocation(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.5F);
+			SoundEffect.playSoundLocation(block.getLocation(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.5F);
 		}
 		else if(block.getData()==0||block.getData()==3||block.getData()==5||block.getData()==6||block.getData()==7)
 		{
 			for(int counter=0;counter<31;counter++)
 				p.PL(block.getLocation(), org.bukkit.Effect.CRIT, 0);
-			SoundEffect.SL(block.getLocation(), org.bukkit.Sound.ENTITY_GENERIC_HURT, 0.5F, 0.5F);
+			SoundEffect.playSoundLocation(block.getLocation(), org.bukkit.Sound.ENTITY_GENERIC_HURT, 0.5F, 0.5F);
 			return;
 		}
 		block = new Location(block.getWorld(),block.getX(),block.getY()-2,block.getZ()).getBlock();
@@ -987,7 +987,7 @@ public class DungeonMain
         		for(int count = 0; count < 4; count++)
         		{
         			loc.add(new util.UtilNumber().RandomNum(-2, 2),0.1*count, new util.UtilNumber().RandomNum(-2, 2));
-        			SoundEffect.SL(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
+        			SoundEffect.playSoundLocation(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
         			MC.SpawnMob(loc, dungeonMonsterYaml.getString(ListName+"."+MobList[new util.UtilNumber().RandomNum(0, MobList.length-1)]), (byte)-1, null, (char) -1, false);
         		}
         	}

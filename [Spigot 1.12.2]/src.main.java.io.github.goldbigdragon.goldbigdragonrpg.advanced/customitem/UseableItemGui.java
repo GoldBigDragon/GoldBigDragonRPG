@@ -37,18 +37,18 @@ public class UseableItemGui extends UtilGui
 			byte Data = (byte) itemYaml.getInt(consumeItemList[count]+".Data");
 			
 			if(count > consumeItemList.length || loc >= 45) break;
-			Stack2(ItemName, ID,Data,1,Arrays.asList(loreCreater(Integer.parseInt(consumeItemList[count]))), loc, inv);
+			removeFlagStack(ItemName, ID,Data,1,Arrays.asList(loreCreater(Integer.parseInt(consumeItemList[count]))), loc, inv);
 			loc++;
 		}
 		
 		if(consumeItemList.length-(page*44)>45)
-		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+		removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+		removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l새 아이템", 386,0,1,Arrays.asList("§7새로운 아이템을 생성합니다."), 49, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
+		removeFlagStack("§f§l새 아이템", 386,0,1,Arrays.asList("§7새로운 아이템을 생성합니다."), 49, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -57,14 +57,14 @@ public class UseableItemGui extends UtilGui
 		String uniqueCode = "§0§0§3§0§4§r";
 		Inventory inv = Bukkit.createInventory(null, 9, uniqueCode + "§0소모성 아이템 타입");
 
-		Stack2("§f§l[귀환서]", 340,0,1,Arrays.asList("§7특정 위치로 신속히 이동할 수 있는","§7귀환서를 제작합니다."), 2, inv);
-		Stack2("§f§l[주문서]", 339,0,1,Arrays.asList("§7특별한 기운이 담긴","§7주문서를 제작합니다."), 3, inv);
-		Stack2("§f§l[스킬 북]", 403,0,1,Arrays.asList("§7특정 스킬을 배울 수 있는","§7스킬 북을 제작합니다.","","§c[게임 시스템이 '마비노기'여야 합니다.]"), 4, inv);
-		Stack2("§f§l[음식, 포션]", 297,0,1,Arrays.asList("§7퀵슬롯으로 등록이 가능한","§7음식 및 포션 류를 제작합니다."), 5, inv);
-		Stack2("§f§l[룬]", 381,0,1,Arrays.asList("§7무기의 능력을 올려주는","§7신비한 룬을 제작합니다."), 6, inv);
+		removeFlagStack("§f§l[귀환서]", 340,0,1,Arrays.asList("§7특정 위치로 신속히 이동할 수 있는","§7귀환서를 제작합니다."), 2, inv);
+		removeFlagStack("§f§l[주문서]", 339,0,1,Arrays.asList("§7특별한 기운이 담긴","§7주문서를 제작합니다."), 3, inv);
+		removeFlagStack("§f§l[스킬 북]", 403,0,1,Arrays.asList("§7특정 스킬을 배울 수 있는","§7스킬 북을 제작합니다.","","§c[게임 시스템이 '마비노기'여야 합니다.]"), 4, inv);
+		removeFlagStack("§f§l[음식, 포션]", 297,0,1,Arrays.asList("§7퀵슬롯으로 등록이 가능한","§7음식 및 포션 류를 제작합니다."), 5, inv);
+		removeFlagStack("§f§l[룬]", 381,0,1,Arrays.asList("§7무기의 능력을 올려주는","§7신비한 룬을 제작합니다."), 6, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ number), 8, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ number), 8, inv);
 		player.openInventory(inv);
 	}
 	
@@ -86,65 +86,65 @@ public class UseableItemGui extends UtilGui
 		type = type +itemYaml.getString(number+".Type");
 		grade = itemYaml.getString(number+".Grade");
 		
-		Stack2("§3[    결과물    ]", 58,0,1,null, 9, inv);
-		Stack2("§3[    결과물    ]", 58,0,1,null, 10, inv);
-		Stack2("§3[    결과물    ]", 58,0,1,null, 11, inv);
-		Stack2("§3[    결과물    ]", 58,0,1,null, 18, inv);
-		Stack2("§3[    결과물    ]", 58,0,1,null, 20, inv);
-		Stack2("§3[    결과물    ]", 58,0,1,null, 27, inv);
-		Stack2("§3[    결과물    ]", 58,0,1,null, 28, inv);
-		Stack2("§3[    결과물    ]", 58,0,1,null, 29, inv);
+		removeFlagStack("§3[    결과물    ]", 58,0,1,null, 9, inv);
+		removeFlagStack("§3[    결과물    ]", 58,0,1,null, 10, inv);
+		removeFlagStack("§3[    결과물    ]", 58,0,1,null, 11, inv);
+		removeFlagStack("§3[    결과물    ]", 58,0,1,null, 18, inv);
+		removeFlagStack("§3[    결과물    ]", 58,0,1,null, 20, inv);
+		removeFlagStack("§3[    결과물    ]", 58,0,1,null, 27, inv);
+		removeFlagStack("§3[    결과물    ]", 58,0,1,null, 28, inv);
+		removeFlagStack("§3[    결과물    ]", 58,0,1,null, 29, inv);
 		
-		Stack2(itemName, itemId,itemData,1,Arrays.asList(loreCreater(number)), 19, inv);
+		removeFlagStack(itemName, itemId,itemData,1,Arrays.asList(loreCreater(number)), 19, inv);
 		
-		Stack2("§3[    형식 변경    ]", 421,0,1,Arrays.asList("§f아이템 설명창을","§f변경합니다.","","§f[    현재 형식    ]","       "+ itemYaml.getString(number+".ShowType"),""), 37, inv);
-		Stack2("§3[    이름 변경    ]", 421,0,1,Arrays.asList("§f아이템의 이름을","§f변경합니다.",""), 13, inv);
-		Stack2("§3[    설명 변경    ]", 386,0,1,Arrays.asList("§f아이템의 설명을","§f변경합니다.",""), 14, inv);
-		Stack2("§3[    타입 변경    ]", 166,0,1,Arrays.asList("","§c[타입 변경이 불가능 합니다]",""), 15, inv);
-		Stack2("§3[    등급 변경    ]", 266,0,1,Arrays.asList("§f아이템의 등급을","§f변경합니다.","","§f[    현재 등급    ]","       "+grade,""), 16, inv);
-		Stack2("§3[        ID        ]", 405,0,1,Arrays.asList("§f아이템의 ID값을","§f변경합니다.",""), 22, inv);
-		Stack2("§3[       DATA       ]", 336,0,1,Arrays.asList("§f아이템의 DATA값을","§f변경합니다.",""), 23, inv);
+		removeFlagStack("§3[    형식 변경    ]", 421,0,1,Arrays.asList("§f아이템 설명창을","§f변경합니다.","","§f[    현재 형식    ]","       "+ itemYaml.getString(number+".ShowType"),""), 37, inv);
+		removeFlagStack("§3[    이름 변경    ]", 421,0,1,Arrays.asList("§f아이템의 이름을","§f변경합니다.",""), 13, inv);
+		removeFlagStack("§3[    설명 변경    ]", 386,0,1,Arrays.asList("§f아이템의 설명을","§f변경합니다.",""), 14, inv);
+		removeFlagStack("§3[    타입 변경    ]", 166,0,1,Arrays.asList("","§c[타입 변경이 불가능 합니다]",""), 15, inv);
+		removeFlagStack("§3[    등급 변경    ]", 266,0,1,Arrays.asList("§f아이템의 등급을","§f변경합니다.","","§f[    현재 등급    ]","       "+grade,""), 16, inv);
+		removeFlagStack("§3[        ID        ]", 405,0,1,Arrays.asList("§f아이템의 ID값을","§f변경합니다.",""), 22, inv);
+		removeFlagStack("§3[       DATA       ]", 336,0,1,Arrays.asList("§f아이템의 DATA값을","§f변경합니다.",""), 23, inv);
 
 		switch(ChatColor.stripColor(itemYaml.getString(number+".Type")))
 		{
 		case "[귀환서]":
-			Stack("§3[    위치 지정    ]", 386,0,1,Arrays.asList("§f현재 서 있는 장소를","§f워프 지점으로 등록 합니다.","","§9[현재 등록된 위치]","§9월드 : "+itemYaml.getString(number+".World"),"§9좌표 : "+itemYaml.getInt(number+".X")+","+itemYaml.getInt(number+".Y")+","+itemYaml.getInt(number+".Z"),"","§e[좌 클릭시 현재 지점 등록]",""), 25, inv);
+			stack("§3[    위치 지정    ]", 386,0,1,Arrays.asList("§f현재 서 있는 장소를","§f워프 지점으로 등록 합니다.","","§9[현재 등록된 위치]","§9월드 : "+itemYaml.getString(number+".World"),"§9좌표 : "+itemYaml.getInt(number+".X")+","+itemYaml.getInt(number+".Y")+","+itemYaml.getInt(number+".Z"),"","§e[좌 클릭시 현재 지점 등록]",""), 25, inv);
 			break;
 		case "[주문서]":
-			Stack("§3[     스킬 포인트     ]", 403,0,1,Arrays.asList("§f주문서 사용시 즉시","§f스킬 포인트를 얻습니다.",""), 24, inv);
-			Stack("§3[     스텟 포인트     ]", 403,0,1,Arrays.asList("§f주문서 사용시 즉시","§f스텟 포인트를 얻습니다.",""), 25, inv);
-			Stack("§3[        방어        ]", 307,0,1,Arrays.asList("§f주문서 사용시 방어력을","§f상승 시켜 줍니다.",""), 31, inv);
-			Stack("§3[        보호        ]", 306,0,1,Arrays.asList("§f주문서 사용시 보호를","§f상승 시켜 줍니다.",""), 32, inv);
-			Stack("§3[      마법 방어      ]", 311,0,1,Arrays.asList("§f주문서 사용시 마법 방어를","§f상승 시켜 줍니다.",""), 33, inv);
-			Stack("§3[      마법 보호      ]", 310,0,1,Arrays.asList("§f주문서 사용시 마법 보호를","§f상승 시켜 줍니다.",""), 34, inv);
-			Stack("§3[        스텟        ]", 399,0,1,Arrays.asList("§f주문서 사용시 스텟을 영구적으로","§f상승 시켜 줍니다.",""), 40, inv);
+			stack("§3[     스킬 포인트     ]", 403,0,1,Arrays.asList("§f주문서 사용시 즉시","§f스킬 포인트를 얻습니다.",""), 24, inv);
+			stack("§3[     스텟 포인트     ]", 403,0,1,Arrays.asList("§f주문서 사용시 즉시","§f스텟 포인트를 얻습니다.",""), 25, inv);
+			stack("§3[        방어        ]", 307,0,1,Arrays.asList("§f주문서 사용시 방어력을","§f상승 시켜 줍니다.",""), 31, inv);
+			stack("§3[        보호        ]", 306,0,1,Arrays.asList("§f주문서 사용시 보호를","§f상승 시켜 줍니다.",""), 32, inv);
+			stack("§3[      마법 방어      ]", 311,0,1,Arrays.asList("§f주문서 사용시 마법 방어를","§f상승 시켜 줍니다.",""), 33, inv);
+			stack("§3[      마법 보호      ]", 310,0,1,Arrays.asList("§f주문서 사용시 마법 보호를","§f상승 시켜 줍니다.",""), 34, inv);
+			stack("§3[        스텟        ]", 399,0,1,Arrays.asList("§f주문서 사용시 스텟을 영구적으로","§f상승 시켜 줍니다.",""), 40, inv);
 			break;
 		case "[스킬북]":
 			if(itemYaml.getString(number+".Skill").equals("null"))
-				Stack("§3[        스킬        ]", 340,0,1,Arrays.asList("§f스킬 북 사용시","§f아래 스킬을 습득합니다.","","§9[현재 등록된 스킬]","§f      없음"), 25, inv);
+				stack("§3[        스킬        ]", 340,0,1,Arrays.asList("§f스킬 북 사용시","§f아래 스킬을 습득합니다.","","§9[현재 등록된 스킬]","§f      없음"), 25, inv);
 			else
-				Stack("§3[        스킬        ]", 403,0,1,Arrays.asList("§f스킬 북 사용시","§f아래 스킬을 습득합니다.","","§9[현재 등록된 스킬]","§f"+itemYaml.getString(number+".Skill")), 25, inv);
+				stack("§3[        스킬        ]", 403,0,1,Arrays.asList("§f스킬 북 사용시","§f아래 스킬을 습득합니다.","","§9[현재 등록된 스킬]","§f"+itemYaml.getString(number+".Skill")), 25, inv);
 			break;
 		case "[소비]":
-			Stack("§3[       포만감       ]", 364,0,1,Arrays.asList("§f아이템 사용시 허기를","§f감소 시켜 줍니다.",""), 31, inv);
-			Stack("§3[       생명력       ]", 373,8261,1,Arrays.asList("§f아이템 사용시 생명력을","§f상승 시켜 줍니다.",""), 32, inv);
-			Stack("§3[        마나        ]", 373,8230,1,Arrays.asList("§f아이템 사용시 마나를","§f상승 시켜 줍니다.",""), 33, inv);
-			Stack("§3[        환생        ]", 399,0,1,Arrays.asList("§f아이템 사용시 플레이어의","§f레벨을 초기화 시켜 줍니다.","","§c[서버 시스템이 마비노기일 경우만 사용 가능합니다.]",""), 34, inv);
+			stack("§3[       포만감       ]", 364,0,1,Arrays.asList("§f아이템 사용시 허기를","§f감소 시켜 줍니다.",""), 31, inv);
+			stack("§3[       생명력       ]", 373,8261,1,Arrays.asList("§f아이템 사용시 생명력을","§f상승 시켜 줍니다.",""), 32, inv);
+			stack("§3[        마나        ]", 373,8230,1,Arrays.asList("§f아이템 사용시 마나를","§f상승 시켜 줍니다.",""), 33, inv);
+			stack("§3[        환생        ]", 399,0,1,Arrays.asList("§f아이템 사용시 플레이어의","§f레벨을 초기화 시켜 줍니다.","","§c[서버 시스템이 마비노기일 경우만 사용 가능합니다.]",""), 34, inv);
 			break;
 		case "[룬]":
-			Stack("§3[       대미지       ]", 267,0,1,Arrays.asList("§f룬 장착시 "+MainServerOption.damage+"를","§f증가 시켜 줍니다.",""), 24, inv);
-			Stack("§3[     마법 대미지     ]", 403,0,1,Arrays.asList("§f룬 장착시 "+MainServerOption.magicDamage+"를","§f증가 시켜 줍니다.",""), 25, inv);
-			Stack("§3[        방어        ]", 307,0,1,Arrays.asList("§f룬 장착시 방어력을","§f증가 시켜 줍니다.",""), 31, inv);
-			Stack("§3[        보호        ]", 306,0,1,Arrays.asList("§f룬 장착시 보호를","§f증가 시켜 줍니다.",""), 32, inv);
-			Stack("§3[      마법 방어      ]", 311,0,1,Arrays.asList("§f룬 장착시 마법 방어를","§f증가 시켜 줍니다.",""), 33, inv);
-			Stack("§3[      마법 보호      ]", 310,0,1,Arrays.asList("§f룬 장착시 마법 보호를","§f증가 시켜 줍니다.",""), 34, inv);
-			Stack("§3[        스텟        ]", 399,0,1,Arrays.asList("§f룬 장착시 스텟을 영구적으로","§f증가 시켜 줍니다.",""), 40, inv);
-			Stack("§3[       내구도       ]", 145,2,1,Arrays.asList("§f룬 장착시 아이템의 내구력을","§f증가 시켜 줍니다.","","§c[일반 아이템 불가능]",""), 41, inv);
+			stack("§3[       대미지       ]", 267,0,1,Arrays.asList("§f룬 장착시 "+MainServerOption.damage+"를","§f증가 시켜 줍니다.",""), 24, inv);
+			stack("§3[     마법 대미지     ]", 403,0,1,Arrays.asList("§f룬 장착시 "+MainServerOption.magicDamage+"를","§f증가 시켜 줍니다.",""), 25, inv);
+			stack("§3[        방어        ]", 307,0,1,Arrays.asList("§f룬 장착시 방어력을","§f증가 시켜 줍니다.",""), 31, inv);
+			stack("§3[        보호        ]", 306,0,1,Arrays.asList("§f룬 장착시 보호를","§f증가 시켜 줍니다.",""), 32, inv);
+			stack("§3[      마법 방어      ]", 311,0,1,Arrays.asList("§f룬 장착시 마법 방어를","§f증가 시켜 줍니다.",""), 33, inv);
+			stack("§3[      마법 보호      ]", 310,0,1,Arrays.asList("§f룬 장착시 마법 보호를","§f증가 시켜 줍니다.",""), 34, inv);
+			stack("§3[        스텟        ]", 399,0,1,Arrays.asList("§f룬 장착시 스텟을 영구적으로","§f증가 시켜 줍니다.",""), 40, inv);
+			stack("§3[       내구도       ]", 145,2,1,Arrays.asList("§f룬 장착시 아이템의 내구력을","§f증가 시켜 줍니다.","","§c[일반 아이템 불가능]",""), 41, inv);
 			//Stack("§3[        개조        ]", 145,0,1,Arrays.asList("§f룬 장착시 최대 개조 횟수를","§f증가 시켜 줍니다.",""), 42, inv);
 			break;
 		}
-		Stack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+type), 45, inv);
-		Stack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+number), 53, inv);
+		stack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+type), 45, inv);
+		stack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+number), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -168,18 +168,18 @@ public class UseableItemGui extends UtilGui
 			jobYaml.getConfig("Skill/JobList.yml");
 			if(jobYaml.contains("Mabinogi.Added."+skillList[count])==true)
 			{
-				Stack2("§f§l" + skillList[count],  skillYaml.getInt(skillList[count].toString()+".ID"),skillYaml.getInt(skillList[count].toString()+".DATA"),skillYaml.getInt(skillList[count].toString()+".Amount"),Arrays.asList("§3최대 스킬 레벨 : §f"+jobLevel,"","§e[좌 클릭시 스킬 등록]"), loc, inv);
+				removeFlagStack("§f§l" + skillList[count],  skillYaml.getInt(skillList[count].toString()+".ID"),skillYaml.getInt(skillList[count].toString()+".DATA"),skillYaml.getInt(skillList[count].toString()+".Amount"),Arrays.asList("§3최대 스킬 레벨 : §f"+jobLevel,"","§e[좌 클릭시 스킬 등록]"), loc, inv);
 				loc++;	
 			}
 		}
 		
 		if(skillList.length-(page*44)>45)
-		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+		removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+		removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+itemNumber), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+itemNumber), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -193,12 +193,12 @@ public class UseableItemGui extends UtilGui
 
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 			if(slot==45)//이전 목록
 				new OPboxGui().opBoxGuiMain(player, (byte) 2);
@@ -242,12 +242,12 @@ public class UseableItemGui extends UtilGui
 		
 		if(slot == 8)
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 0)
 				useableItemListGui(player, 0);
 			else
@@ -386,12 +386,12 @@ public class UseableItemGui extends UtilGui
 			
 			if(configYaml.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System")==true)
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				selectSkillGui(player, (short) 0, itemnumber);
 			}
 			else
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				player.sendMessage("§c[스킬 북 생성] : 현재 서버 시스템이 §e'마비노기'§c가 아닙니다!");
 			}
 		}
@@ -399,7 +399,7 @@ public class UseableItemGui extends UtilGui
 		{
 		  	YamlLoader useableItemYaml = new YamlLoader();
 			useableItemYaml.getConfig("Item/Consume.yml");
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			useableItemYaml.set(itemnumber+".World", player.getLocation().getWorld().getName().toString());
 			useableItemYaml.set(itemnumber+".X", player.getLocation().getX());
 			useableItemYaml.set(itemnumber+".Y", player.getLocation().getY());
@@ -413,7 +413,7 @@ public class UseableItemGui extends UtilGui
 		{
 		  	YamlLoader useableItemYaml = new YamlLoader();
 			useableItemYaml.getConfig("Item/Consume.yml");
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(useableItemYaml.getBoolean(itemnumber+".Rebirth") == false)
 				useableItemYaml.set(itemnumber+".Rebirth", true);
 			else
@@ -425,7 +425,7 @@ public class UseableItemGui extends UtilGui
 		{
 		  	YamlLoader useableItemYaml = new YamlLoader();
 			useableItemYaml.getConfig("Item/Consume.yml");
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(useableItemYaml.getString(itemnumber+".ShowType").contains("[깔끔]"))
 				useableItemYaml.set(itemnumber+".ShowType","§e[컬러]");
 			else if(useableItemYaml.getString(itemnumber+".ShowType").contains("[컬러]"))
@@ -438,12 +438,12 @@ public class UseableItemGui extends UtilGui
 			newUseableItemGui(player, itemnumber);
 		}
 		else if(iconName.equals("[    타입 변경    ]"))
-			SoundEffect.SP(player, Sound.BLOCK_ANVIL_LAND, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_ANVIL_LAND, 0.8F, 1.8F);
 		else if(iconName.equals("[    등급 변경    ]"))
 		{
 		  	YamlLoader useableItemYaml = new YamlLoader();
 			useableItemYaml.getConfig("Item/Consume.yml");
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(useableItemYaml.getString(itemnumber+".Grade").contains("[일반]"))
 				useableItemYaml.set(itemnumber+".Grade","§a[상급]");
 			else if(useableItemYaml.getString(itemnumber+".Grade").contains("[상급]"))
@@ -465,18 +465,18 @@ public class UseableItemGui extends UtilGui
 		}
 		else if(iconName.equals("이전 목록"))
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			useableItemListGui(player, 0);
 		}
 		else if(iconName.equals("닫기"))
 		{
-				SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 				player.closeInventory();
 		}
 		else if(!((event.getSlot()>=9&&event.getSlot()<=11)||(event.getSlot()>=18&&event.getSlot()<=20)||(event.getSlot()>=27&&event.getSlot()<=29)))
 		{
 			UserDataObject u = new UserDataObject();
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			u.setType(player, "UseableItem");
 			u.setInt(player, (byte)3, itemnumber);
 			u.setInt(player, (byte)4, -1);
@@ -597,12 +597,12 @@ public class UseableItemGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			int itemnumber = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
 			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 			if(slot == 45)//이전 목록

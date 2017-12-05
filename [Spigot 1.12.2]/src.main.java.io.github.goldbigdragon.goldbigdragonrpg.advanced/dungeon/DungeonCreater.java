@@ -238,7 +238,7 @@ public class DungeonCreater
 		{Read = new BufferedReader(new FileReader(filename));}
 		catch (FileNotFoundException e)
 		{return null;}
-	  	ArrayList<String> list = new ArrayList<String>();
+	  	ArrayList<String> list = new ArrayList<>();
 	  	String s;
 	  	try
 	  	{

@@ -17,7 +17,7 @@ public class QuestCommand
 		Player player = (Player) talker;
 		if(args.length==0)
 		{
-			SoundEffect.SP(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 0.8F);
+			SoundEffect.playSound(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 0.8F);
 			new quest.QuestGui().MyQuestListGUI(player, (short) 0);
 			return;
 		}
@@ -38,7 +38,7 @@ public class QuestCommand
 				{
 		  			case "구성" :
 		  			{
-		  					SoundEffect.SP(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 0.8F);
+		  					SoundEffect.playSound(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 0.8F);
 		  					new quest.QuestGui().AllOfQuestListGUI(player, (short) 0,false);
 		  			}
 		  			break;
@@ -62,7 +62,7 @@ public class QuestCommand
 							    String QuestNameString = ChatColor.stripColor(QuestName);
 								if(questListYaml.contains(QuestNameString))
 						    	{
-								  	SoundEffect.SP(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 2.0F, 1.7F);
+								  	SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 2.0F, 1.7F);
 							    	player.sendMessage("§c[SYSTEM] : 해당 이름의 퀘스트가 이미 존재합니다!");
 								    return;
 						    	}
@@ -90,7 +90,7 @@ public class QuestCommand
 								questListYaml.createSection(QuestNameString + ".FlowChart");
 								questListYaml.saveConfig();
 							    player.sendMessage("§a[SYSTEM] : §e"+QuestNameString+"§3 퀘스트가 생성되었습니다!");
-			  					SoundEffect.SP(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 0.8F);
+			  					SoundEffect.playSound(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 0.8F);
 			  					new quest.QuestGui().FixQuestGUI(player, (short) 0, QuestNameString);
 				  			}
 				  			else
@@ -107,7 +107,7 @@ public class QuestCommand
 			else
 			{
 				talker.sendMessage("§c[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
-				SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 2.0F, 1.7F);
+				SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_ITEM_PICKUP, 2.0F, 1.7F);
 	  			return;
 			}
 		}

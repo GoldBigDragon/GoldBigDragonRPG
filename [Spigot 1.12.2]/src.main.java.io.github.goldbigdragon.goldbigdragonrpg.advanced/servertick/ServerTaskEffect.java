@@ -16,10 +16,10 @@ public class ServerTaskEffect
 			switch(Integer.parseInt(STSO.getString((byte)0).charAt(STSO.getCount())+""))
 			{
 			case 0:
-				SoundEffect.SL(loc, Sound.ENTITY_IRONGOLEM_ATTACK, 2.0F, 0.5F);
+				SoundEffect.playSoundLocation(loc, Sound.ENTITY_IRONGOLEM_ATTACK, 2.0F, 0.5F);
 				break;
 			case 1:
-				SoundEffect.SL(loc, Sound.ENTITY_IRONGOLEM_HURT, 2.0F, 0.5F);
+				SoundEffect.playSoundLocation(loc, Sound.ENTITY_IRONGOLEM_HURT, 2.0F, 0.5F);
 				break;
 			}
 			STSO.setCount(STSO.getCount()+1);

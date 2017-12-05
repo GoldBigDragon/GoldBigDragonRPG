@@ -27,7 +27,7 @@ public class NavigationChat extends UtilChat
 	    //NewNavigation
 	    if(type.equals("NN"))
 	    {
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			long UTC = new util.ETC().getNowUTC();
 			navigationYaml.set(UTC+".Name", event.getMessage());
 			navigationYaml.set(UTC+".world", player.getLocation().getWorld().getName());
@@ -45,7 +45,7 @@ public class NavigationChat extends UtilChat
 	    //ChangeNavigationName이름 변경
 	    else if(type.equals("CNN"))
 	    {
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 			navigationYaml.set(u.getString(player, (byte)1)+".Name", event.getMessage());
 			navigationYaml.saveConfig();
 			new admin.NavigationGui().navigationOptionGui(player,u.getString(player, (byte)1));
@@ -56,7 +56,7 @@ public class NavigationChat extends UtilChat
 	    {
 	    	if(isIntMinMax(message, player, -1, 3600))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				navigationYaml.set(u.getString(player, (byte)1)+".time", Integer.parseInt(message));
 				navigationYaml.saveConfig();
 				new admin.NavigationGui().navigationOptionGui(player,u.getString(player, (byte)1));
@@ -68,7 +68,7 @@ public class NavigationChat extends UtilChat
 	    {
 			if(isIntMinMax(message, player, 1, 1000))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				navigationYaml.set(u.getString(player, (byte)1)+".sensitive", Integer.parseInt(message));
 				navigationYaml.saveConfig();
 				new admin.NavigationGui().navigationOptionGui(player,u.getString(player, (byte)1));
@@ -80,7 +80,7 @@ public class NavigationChat extends UtilChat
 	    {
 	    	if(isIntMinMax(message, player, 0, 10))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				navigationYaml.set(u.getString(player, (byte)1)+".ShowArrow", Integer.parseInt(message));
 				navigationYaml.saveConfig();
 				new admin.NavigationGui().navigationOptionGui(player,u.getString(player, (byte)1));

@@ -93,18 +93,18 @@ public class UpgradeGui extends UtilGui
 			for(int counter = 0; counter < scriptA.length; counter++)
 				scriptA[counter] =  " "+scriptA[counter];
 			
-			Stack2("§f"+itemName, 395, 0, 1,Arrays.asList(scriptA), loc, inv);
+			removeFlagStack("§f"+itemName, 395, 0, 1,Arrays.asList(scriptA), loc, inv);
 			loc++;
 		}
 		
 		if(upgradeList.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l새 개조식", 339,0,1,Arrays.asList("§7새로운 개조식을 만듭니다."), 49, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
+		removeFlagStack("§f§l새 개조식", 339,0,1,Arrays.asList("§7새로운 개조식을 만듭니다."), 49, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -177,33 +177,33 @@ public class UpgradeGui extends UtilGui
 		for(int counter = 0; counter < scriptA.length; counter++)
 			scriptA[counter] =  " "+scriptA[counter];
 
-		Stack2("§3[    결과물    ]", 265,0,1,null, 9, inv);
-		Stack2("§3[    결과물    ]", 265,0,1,null, 10, inv);
-		Stack2("§3[    결과물    ]", 265,0,1,null, 11, inv);
-		Stack2("§3[    결과물    ]", 265,0,1,null, 18, inv);
-		Stack2("§3[    결과물    ]", 265,0,1,null, 20, inv);
-		Stack2("§3[    결과물    ]", 265,0,1,null, 27, inv);
-		Stack2("§3[    결과물    ]", 265,0,1,null, 28, inv);
-		Stack2("§3[    결과물    ]", 265,0,1,null, 29, inv);
+		removeFlagStack("§3[    결과물    ]", 265,0,1,null, 9, inv);
+		removeFlagStack("§3[    결과물    ]", 265,0,1,null, 10, inv);
+		removeFlagStack("§3[    결과물    ]", 265,0,1,null, 11, inv);
+		removeFlagStack("§3[    결과물    ]", 265,0,1,null, 18, inv);
+		removeFlagStack("§3[    결과물    ]", 265,0,1,null, 20, inv);
+		removeFlagStack("§3[    결과물    ]", 265,0,1,null, 27, inv);
+		removeFlagStack("§3[    결과물    ]", 265,0,1,null, 28, inv);
+		removeFlagStack("§3[    결과물    ]", 265,0,1,null, 29, inv);
 		
-		Stack2("§f"+recipeName, 395, 0, 1,Arrays.asList(scriptA), 19, inv);
-		Stack2("§f[   설명 변경   ]", 421, 0, 1,Arrays.asList("§f개조식의 설명을 변경합니다."), 37, inv);
+		removeFlagStack("§f"+recipeName, 395, 0, 1,Arrays.asList(scriptA), 19, inv);
+		removeFlagStack("§f[   설명 변경   ]", 421, 0, 1,Arrays.asList("§f개조식의 설명을 변경합니다."), 37, inv);
 		
-		Stack2("§3[    타입 변경    ]", 61,0,1,Arrays.asList("§f개조 가능한 타입을","§f변경합니다.","","§f[    현재 타입    ]",upgradeYaml.getString(recipeName+".Only"),""), 13, inv);
-		Stack2("§3[       "+MainServerOption.damage+"       ]", 267,0,1,Arrays.asList("§f개조시 "+MainServerOption.damage+"를","§f상승 시킵니다.",""), 14, inv);
-		Stack2("§3[     "+MainServerOption.magicDamage+"     ]", 403,0,1,Arrays.asList("§f개조시 "+MainServerOption.magicDamage+"를","§f상승 시킵니다.",""), 15, inv);
-		Stack2("§3[       밸런스       ]", 262,0,1,Arrays.asList("§f개조시 밸런스를","§f상승 시킵니다.",""), 16, inv);
-		Stack2("§3[        방어        ]", 307,0,1,Arrays.asList("§f개조시 방어력을","§f상승 시킵니다.",""), 22, inv);
-		Stack2("§3[        보호        ]", 306,0,1,Arrays.asList("§f개조시 보호를","§f상승 시킵니다.",""), 23, inv);
-		Stack2("§3[      마법 방어      ]", 311,0,1,Arrays.asList("§f개조시 마법 방어를","§f상승 시킵니다.",""), 24, inv);
-		Stack2("§3[      마법 보호      ]", 310,0,1,Arrays.asList("§f개조시 마법 보호를","§f상승 시킵니다.",""), 25, inv);
-		Stack2("§3[      크리티컬      ]", 377,0,1,Arrays.asList("§f개조시 크리티컬 확률을","§f상승 시킵니다.",""), 31, inv);
-		Stack2("§3[       내구도       ]", 145,2,1,Arrays.asList("§f개조시 최대 내구도를","§f변경 합니다.",""), 32, inv);
-		Stack2("§3[        개조        ]", 145,0,1,Arrays.asList("§f개조 가능한 개조 레벨을","§f설정 합니다.",""), 33, inv);
-		Stack2("§3[       숙련도       ]", 416,0,1,Arrays.asList("§f개조에 필요한 숙련도를","§f설정 합니다.",""), 34, inv);
+		removeFlagStack("§3[    타입 변경    ]", 61,0,1,Arrays.asList("§f개조 가능한 타입을","§f변경합니다.","","§f[    현재 타입    ]",upgradeYaml.getString(recipeName+".Only"),""), 13, inv);
+		removeFlagStack("§3[       "+MainServerOption.damage+"       ]", 267,0,1,Arrays.asList("§f개조시 "+MainServerOption.damage+"를","§f상승 시킵니다.",""), 14, inv);
+		removeFlagStack("§3[     "+MainServerOption.magicDamage+"     ]", 403,0,1,Arrays.asList("§f개조시 "+MainServerOption.magicDamage+"를","§f상승 시킵니다.",""), 15, inv);
+		removeFlagStack("§3[       밸런스       ]", 262,0,1,Arrays.asList("§f개조시 밸런스를","§f상승 시킵니다.",""), 16, inv);
+		removeFlagStack("§3[        방어        ]", 307,0,1,Arrays.asList("§f개조시 방어력을","§f상승 시킵니다.",""), 22, inv);
+		removeFlagStack("§3[        보호        ]", 306,0,1,Arrays.asList("§f개조시 보호를","§f상승 시킵니다.",""), 23, inv);
+		removeFlagStack("§3[      마법 방어      ]", 311,0,1,Arrays.asList("§f개조시 마법 방어를","§f상승 시킵니다.",""), 24, inv);
+		removeFlagStack("§3[      마법 보호      ]", 310,0,1,Arrays.asList("§f개조시 마법 보호를","§f상승 시킵니다.",""), 25, inv);
+		removeFlagStack("§3[      크리티컬      ]", 377,0,1,Arrays.asList("§f개조시 크리티컬 확률을","§f상승 시킵니다.",""), 31, inv);
+		removeFlagStack("§3[       내구도       ]", 145,2,1,Arrays.asList("§f개조시 최대 내구도를","§f변경 합니다.",""), 32, inv);
+		removeFlagStack("§3[        개조        ]", 145,0,1,Arrays.asList("§f개조 가능한 개조 레벨을","§f설정 합니다.",""), 33, inv);
+		removeFlagStack("§3[       숙련도       ]", 416,0,1,Arrays.asList("§f개조에 필요한 숙련도를","§f설정 합니다.",""), 34, inv);
 		
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+recipeName), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+recipeName), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -215,12 +215,12 @@ public class UpgradeGui extends UtilGui
 		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 목록
 				new OPboxGui().opBoxGuiMain(player, (byte) 2);
 			else if(slot == 48)//이전 페이지
@@ -241,7 +241,7 @@ public class UpgradeGui extends UtilGui
 					upgradeRecipeSettingGui(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 				else if(event.isRightClick()==true&&event.isShiftClick()==true)
 				{
-					SoundEffect.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+					SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
 					YamlLoader upgradeYaml = new YamlLoader();
 					upgradeYaml.getConfig("Item/Upgrade.yml");
 					upgradeYaml.removeKey(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
@@ -261,12 +261,12 @@ public class UpgradeGui extends UtilGui
 		{
 			if(slot == 53)//나가기
 			{
-				SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 				player.closeInventory();
 			}
 			else
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				String recipeName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
 				if(slot == 45)//이전 목록
 					upgradeRecipeGui(player, 0);

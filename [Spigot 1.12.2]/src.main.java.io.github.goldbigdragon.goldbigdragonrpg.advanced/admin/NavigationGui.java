@@ -72,7 +72,7 @@ public class NavigationGui extends UtilGui
 				showArrowS = "§3<기본 화살표 모양>";
 				break;
 			}
-			Stack2("§0§l" + navi[count], 395,0,1,Arrays.asList(
+			removeFlagStack("§0§l" + navi[count], 395,0,1,Arrays.asList(
 			"§e§l"+naviName,"",
 			"§9[도착 지점]","§9월드 : §f"+world,
 			"§9좌표 : §f"+x+","+y+","+z,sensitiveS,"",
@@ -82,12 +82,12 @@ public class NavigationGui extends UtilGui
 		}
 		
 		if(navi.length-(page*44)>45)
-		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+		removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
-		Stack2("§f§l새 네비", 386,0,1,Arrays.asList("§7새 네비를 생성합니다."), 49, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
+		removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+		removeFlagStack("§f§l새 네비", 386,0,1,Arrays.asList("§7새 네비를 생성합니다."), 49, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 	}
 
@@ -124,15 +124,15 @@ public class NavigationGui extends UtilGui
 			break;
 		}
 		
-		Stack2("§f§l이름 변경", 386,0,1,Arrays.asList("§7네비게이션 이름을 변경합니다.","","§9[현재 이름]","§f"+naviName,""), 10, inv);
-		Stack2("§f§l좌표 변경", 358,0,1,Arrays.asList("§7클릭시 현재 위치로 변경합니다.","","§9[도착 지점]","§9월드 : §f"+world,"§9좌표 : §f"+x+","+y+","+z,""), 11, inv);
-		Stack2("§f§l지속 시간", 347,0,1,Arrays.asList("§7네비게이션 지속 시간을 변경합니다.","",timeS,""), 12, inv);
-		Stack2("§f§l도착 반경", 420,0,1,Arrays.asList("§7도착 판정 범위를 변경합니다.","",sensitiveS,""), 13, inv);
-		Stack2("§f§l사용 권한", 137,0,1,Arrays.asList("§7네비게이션 사용 권한을 설정합니다.","",permitionS,""), 14, inv);
-		Stack2("§f§l네비 타입", 381,0,1,Arrays.asList("§7네비게이션 타입을 설정합니다.","",showArrowS,""), 15, inv);
+		removeFlagStack("§f§l이름 변경", 386,0,1,Arrays.asList("§7네비게이션 이름을 변경합니다.","","§9[현재 이름]","§f"+naviName,""), 10, inv);
+		removeFlagStack("§f§l좌표 변경", 358,0,1,Arrays.asList("§7클릭시 현재 위치로 변경합니다.","","§9[도착 지점]","§9월드 : §f"+world,"§9좌표 : §f"+x+","+y+","+z,""), 11, inv);
+		removeFlagStack("§f§l지속 시간", 347,0,1,Arrays.asList("§7네비게이션 지속 시간을 변경합니다.","",timeS,""), 12, inv);
+		removeFlagStack("§f§l도착 반경", 420,0,1,Arrays.asList("§7도착 판정 범위를 변경합니다.","",sensitiveS,""), 13, inv);
+		removeFlagStack("§f§l사용 권한", 137,0,1,Arrays.asList("§7네비게이션 사용 권한을 설정합니다.","",permitionS,""), 14, inv);
+		removeFlagStack("§f§l네비 타입", 381,0,1,Arrays.asList("§7네비게이션 타입을 설정합니다.","",showArrowS,""), 15, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 27, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+naviUTC), 35, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 27, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+naviUTC), 35, inv);
 		player.openInventory(inv);
 	}
 	
@@ -170,7 +170,7 @@ public class NavigationGui extends UtilGui
 					else
 						timeS = "§3<도착할 때 까지 유지>";
 					
-					Stack2("§0§l" + navi[count], 395,0,1,Arrays.asList(
+					removeFlagStack("§0§l" + navi[count], 395,0,1,Arrays.asList(
 					"§e§l"+naviName,"",
 					"§9[설정 지점]","§9월드 : §f"+world,
 					"§9좌표 : §f"+x+","+y+","+z,"",timeS,"","§e[좌 클릭시 네비 사용]"), loc, inv);
@@ -191,7 +191,7 @@ public class NavigationGui extends UtilGui
 				else
 					timeS = "§3<도착할 때 까지 유지>";
 				
-				Stack2("§0§l" + navi[count], 395,0,1,Arrays.asList(
+				removeFlagStack("§0§l" + navi[count], 395,0,1,Arrays.asList(
 				"§e§l"+naviName,"",
 				"§9[설정 지점]","§9월드 : §f"+world,
 				"§9좌표 : §f"+x+","+y+","+z,"",timeS,"","§e[좌 클릭시 네비 사용]"), loc, inv);
@@ -200,11 +200,11 @@ public class NavigationGui extends UtilGui
 		}
 		
 		if(navi.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -217,12 +217,12 @@ public class NavigationGui extends UtilGui
 
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 목록
 				new OPboxGui().opBoxGuiMain(player, (byte) 1);
 			else if(slot == 48)//이전 페이지
@@ -241,12 +241,12 @@ public class NavigationGui extends UtilGui
 			{
 				if(event.isLeftClick())
 				{
-					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 					navigationOptionGui(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 				}
 				else if(event.isShiftClick() && event.isRightClick())
 				{
-					SoundEffect.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+					SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
 					YamlLoader navigationYaml = new YamlLoader();
 					navigationYaml.getConfig("Navigation/NavigationList.yml");
 					navigationYaml.removeKey(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
@@ -264,12 +264,12 @@ public class NavigationGui extends UtilGui
 
 		if(slot == 35)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 27)//이전 목록
 				navigationListGui(player, (short) 0);
 			else
@@ -338,12 +338,12 @@ public class NavigationGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 목록
 				new EtcGui().ETCGUI_Main(player);
 			else if(slot == 48)//이전 페이지
@@ -356,7 +356,7 @@ public class NavigationGui extends UtilGui
 				{
 					if(ServerTickMain.NaviUsingList.get(count).equals(player.getName()))
 					{
-						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 						player.sendMessage("§c[네비게이션] : 당신은 이미 네비게이션을 사용 중입니다!");
 						return;
 					}
@@ -366,7 +366,7 @@ public class NavigationGui extends UtilGui
 				navigationYaml.getConfig("Navigation/NavigationList.yml");
 				String utc = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
 				player.closeInventory();
-				SoundEffect.SP(player, Sound.BLOCK_NOTE_PLING, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.BLOCK_NOTE_PLING, 1.0F, 1.0F);
 				
 				servertick.ServerTickObject tickObject = new servertick.ServerTickObject(servertick.ServerTickMain.nowUTC, "NV");
 				tickObject.setCount(0);//횟 수 초기화

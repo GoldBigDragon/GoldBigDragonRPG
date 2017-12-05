@@ -406,9 +406,9 @@ public class MonsterKill
 			if(lucky >= N.RandomNum(0, 100))
 			{
 				int luckysize = N.RandomNum(0, 100);
-				if(luckysize <= 80){player.sendMessage("§e§l[SYSTEM] : 럭키 피니시!");amount = 2;	SoundEffect.SP(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 0.5F, 0.9F);}
-				else if(luckysize <= 95){player.sendMessage("§e§l[SYSTEM] : 빅 럭키 피니시!");amount = 5;	SoundEffect.SP(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 0.7F, 1.0F);}
-				else{player.sendMessage("§e§l[SYSTEM] : 휴즈 럭키 피니시!");amount = 20;	SoundEffect.SP(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.1F);}
+				if(luckysize <= 80){player.sendMessage("§e§l[SYSTEM] : 럭키 피니시!");amount = 2;	SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 0.5F, 0.9F);}
+				else if(luckysize <= 95){player.sendMessage("§e§l[SYSTEM] : 빅 럭키 피니시!");amount = 5;	SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 0.7F, 1.0F);}
+				else{player.sendMessage("§e§l[SYSTEM] : 휴즈 럭키 피니시!");amount = 20;	SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.1F);}
 			}
 		}
 		else

@@ -25,7 +25,7 @@ public class NpcCommand
 		if(player.isOp() == false)
 		{
 			talker.sendMessage("§c[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
-			SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			return;
 		}
 		if(args.length < 1)
@@ -36,7 +36,7 @@ public class NpcCommand
 		if(player.getInventory().getItemInMainHand().getType() == Material.AIR || player.getInventory().getItemInMainHand().getTypeId() == 0 || player.getInventory().getItemInMainHand().getAmount() == 0)
 		{
 			talker.sendMessage("§c[SYSTEM] : 상점에 등록할 아이템을 들고 있어야 합니다!");
-			SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			return;
 		}
 		List<Entity> NearbyEntity = player.getNearbyEntities(3.0, 3.0, 3.0);
@@ -62,7 +62,7 @@ public class NpcCommand
 								npcScriptYaml.set("Shop.Sell."+directory+".price", Integer.parseInt(args[1]));
 								npcScriptYaml.saveConfig();
 								talker.sendMessage("§a["+ NearbyEntity.get(count).getCustomName()+"] : 상점에 물품을 등록하였습니다.");
-								SoundEffect.SP((Player)talker, org.bukkit.Sound.BLOCK_CHEST_OPEN, 2.0F, 0.8F);
+								SoundEffect.playSound((Player)talker, org.bukkit.Sound.BLOCK_CHEST_OPEN, 2.0F, 0.8F);
 							}
 						}
 						return;
@@ -75,7 +75,7 @@ public class NpcCommand
 								npcScriptYaml.set("Shop.Buy."+directory+".price", Integer.parseInt(args[1]));
 								npcScriptYaml.saveConfig();
 								talker.sendMessage("§a["+ NearbyEntity.get(count).getCustomName()+"] : 보여주신 물품을 "+args[1]+main.MainServerOption.money+"§a에 사 들이겠습니다.");
-								SoundEffect.SP((Player)talker, org.bukkit.Sound.BLOCK_CHEST_OPEN, 2.0F, 0.8F);
+								SoundEffect.playSound((Player)talker, org.bukkit.Sound.BLOCK_CHEST_OPEN, 2.0F, 0.8F);
 							}
 						}
 						return;
@@ -84,7 +84,7 @@ public class NpcCommand
 			}
 		}
 		player.sendMessage("§c[SYSTEM] : NPC를 찾을 수 없습니다!");
-		SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+		SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		return;
 	}
 	
@@ -97,13 +97,13 @@ public class NpcCommand
 			else
 			{
 				player.sendMessage("§c[SYSTEM] : 최소 §e"+Min+"§c, 최대 §e"+Max+"§c 이하의 숫자를 입력하세요!");
-				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			}
 		}
 		catch(NumberFormatException e)
 		{
 			player.sendMessage("§c[SYSTEM] : 정수 형태의 값(숫자)을 입력하세요. (§e"+Min+"§c ~ §e"+Max+"§c)");
-			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		}
 		return false;
 	}

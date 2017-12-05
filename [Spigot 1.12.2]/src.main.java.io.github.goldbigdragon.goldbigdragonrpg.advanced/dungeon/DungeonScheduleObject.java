@@ -46,7 +46,7 @@ public class DungeonScheduleObject
 		{
 			if(leader.getInventory().firstEmpty() == -1)
 			{
-				SoundEffect.SP(leader, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(leader, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				leader.sendMessage("§c§l[SYSTEM] : 던전 생성 도중 퇴장하여, 제물로 넣은 아이템이 복구되었습니다!");
 				new structure.StructPostBox().SendPost_Server(leader.getUniqueId().toString(), "[시스템]", "[던전 생성 취소]", "던전 생성 도중 퇴장하여, 제물로 넣은 아이템이 복구되었습니다.", item);
 			}

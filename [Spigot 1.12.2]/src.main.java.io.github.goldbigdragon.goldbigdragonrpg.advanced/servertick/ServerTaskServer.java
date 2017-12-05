@@ -55,7 +55,7 @@ public class ServerTaskServer
 			    CB.update();
 			    CommandBlockLoc.setY(CommandBlockLoc.getY()-1);
 			    CreateRedStone(CommandBlockLoc);
-			    SoundEffect.SL(CommandBlockLoc, Sound.BLOCK_STONE_STEP, 1.0F, 1.0F);
+			    SoundEffect.playSoundLocation(CommandBlockLoc, Sound.BLOCK_STONE_STEP, 1.0F, 1.0F);
 			    
 				STSO.setInt((byte)3, 1);
 				ServerTickMain.Schedule.remove(UTC);

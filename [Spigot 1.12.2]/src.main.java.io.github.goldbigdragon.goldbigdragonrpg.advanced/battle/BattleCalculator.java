@@ -487,7 +487,7 @@ public class BattleCalculator
 												configYaml.getConfig("config.yml");
 												if(configYaml.getBoolean("Server.CustomWeaponBreak"))
 												{
-													SoundEffect.SP(player, Sound.ENTITY_ITEM_BREAK, 1.2F, 1.0F);
+													SoundEffect.playSound(player, Sound.ENTITY_ITEM_BREAK, 1.2F, 1.0F);
 													if(item.get(counter).getItemMeta().hasDisplayName())
 														player.sendMessage("§c[장비 파괴] : §e"+item.get(counter).getItemMeta().getDisplayName()+"§c 장비가 파괴되었습니다!");
 													else
@@ -522,7 +522,7 @@ public class BattleCalculator
 											{
 												if((Integer.parseInt(subLore[0])-1) == 20)
 												{
-													SoundEffect.SP(player, Sound.BLOCK_ANVIL_USE, 0.8F, 0.5F);
+													SoundEffect.playSound(player, Sound.BLOCK_ANVIL_USE, 0.8F, 0.5F);
 													if(counter==0)
 														player.sendMessage("§e[장비 파괴] : 투구의 내구도가 다 닳아 갑니다!");
 													else if(counter==1)
@@ -641,7 +641,7 @@ public class BattleCalculator
 												configYaml.getConfig("config.yml");
 												if(configYaml.getBoolean("Server.CustomWeaponBreak"))
 												{
-													SoundEffect.SP(player, Sound.ENTITY_ITEM_BREAK, 1.2F, 1.0F);
+													SoundEffect.playSound(player, Sound.ENTITY_ITEM_BREAK, 1.2F, 1.0F);
 													if(item.get(counter).getItemMeta().hasDisplayName())
 														player.sendMessage("§c[장비 파괴] : §e"+item.get(counter).getItemMeta().getDisplayName()+"§c 장비가 파괴되었습니다!");
 													else

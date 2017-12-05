@@ -51,20 +51,20 @@ public class StructureGui extends UtilGui
 				ID=120;
 			
 			if(StructureType==0)
-				Stack2("§0"+StructureCode, ID,DATA,1,Arrays.asList("","§3월드 : §f"+StructureConfig.getString(StructureCode+".World"),"§3좌표 : §f"+StructureConfig.getInt(StructureCode+".X")+","+StructureConfig.getInt(StructureCode+".Y")+","+StructureConfig.getInt(StructureCode+".Z"),"","§c[Shift + 우클릭시 개체 삭제]"), loc, inv);
+				removeFlagStack("§0"+StructureCode, ID,DATA,1,Arrays.asList("","§3월드 : §f"+StructureConfig.getString(StructureCode+".World"),"§3좌표 : §f"+StructureConfig.getInt(StructureCode+".X")+","+StructureConfig.getInt(StructureCode+".Y")+","+StructureConfig.getInt(StructureCode+".Z"),"","§c[Shift + 우클릭시 개체 삭제]"), loc, inv);
 			else
-				Stack2("§0"+StructureCode, ID,DATA,1,Arrays.asList("","§3월드 : §f"+StructureConfig.getString(StructureCode+".World"),"§3좌표 : §f"+StructureConfig.getInt(StructureCode+".X")+","+StructureConfig.getInt(StructureCode+".Y")+","+StructureConfig.getInt(StructureCode+".Z"),"","§e[좌 클릭시 세부 설정]","§c[Shift + 우클릭시 개체 삭제]"), loc, inv);
+				removeFlagStack("§0"+StructureCode, ID,DATA,1,Arrays.asList("","§3월드 : §f"+StructureConfig.getString(StructureCode+".World"),"§3좌표 : §f"+StructureConfig.getInt(StructureCode+".X")+","+StructureConfig.getInt(StructureCode+".Y")+","+StructureConfig.getInt(StructureCode+".Z"),"","§e[좌 클릭시 세부 설정]","§c[Shift + 우클릭시 개체 삭제]"), loc, inv);
 			loc++;
 		}
 		
 		if(StructureList.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l새 개체", 386,0,1,Arrays.asList("§7현재 서 있는 위치에","§7새로운 개체를 생성합니다."), 49, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
+		removeFlagStack("§f§l새 개체", 386,0,1,Arrays.asList("§7현재 서 있는 위치에","§7새로운 개체를 생성합니다."), 49, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -76,10 +76,10 @@ public class StructureGui extends UtilGui
 		switch(page)
 		{
 		case 0:
-			Stack2("§c§l[우편함]", 386,0,1,Arrays.asList("§7우체통을 통하여 플레이어간","§7아이템을 주고 받거나, 메시지를","§7주고 받을 수 있습니다."), 0, inv);
-			Stack2("§a§l[게시판]", 323,0,1,Arrays.asList("§7게시판을 통하여 플레이어가","§7글을 남길 수 있습니다.","","§e[세부 설정 항목이 존재합니다]"), 1, inv);
-			Stack2("§9§l[거래 게시판]", 389,0,1,Arrays.asList("§7거래판을 통하여 플레이어끼리","§7아이템을 사고 팔 수 있습니다.","","§e[세부 설정 항목이 존재합니다]"), 2, inv);
-			Stack2("§c§l[모닥불]", 17,0,1,Arrays.asList("§7불을 이용한 요리가 가능해 집니다.","§7활을 쏠 경우 불화살이 나갑니다.","§7화살의 공격력이 50% 증가합니다."), 3, inv);
+			removeFlagStack("§c§l[우편함]", 386,0,1,Arrays.asList("§7우체통을 통하여 플레이어간","§7아이템을 주고 받거나, 메시지를","§7주고 받을 수 있습니다."), 0, inv);
+			removeFlagStack("§a§l[게시판]", 323,0,1,Arrays.asList("§7게시판을 통하여 플레이어가","§7글을 남길 수 있습니다.","","§e[세부 설정 항목이 존재합니다]"), 1, inv);
+			removeFlagStack("§9§l[거래 게시판]", 389,0,1,Arrays.asList("§7거래판을 통하여 플레이어끼리","§7아이템을 사고 팔 수 있습니다.","","§e[세부 설정 항목이 존재합니다]"), 2, inv);
+			removeFlagStack("§c§l[모닥불]", 17,0,1,Arrays.asList("§7불을 이용한 요리가 가능해 집니다.","§7활을 쏠 경우 불화살이 나갑니다.","§7화살의 공격력이 50% 증가합니다."), 3, inv);
 			break;
 
 		}
@@ -90,8 +90,8 @@ public class StructureGui extends UtilGui
 		if(page!=최소 페이지)
 		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 		 */
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -101,13 +101,13 @@ public class StructureGui extends UtilGui
 		String UniqueCode = "§0§0§d§0§2§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0개체 방향");
 
-		Stack2("§9§l[동]", 345,0,1,Arrays.asList("§7개체가 동쪽 방향을 바라봅니다."), 1, inv);
-		Stack2("§9§l[서]", 345,0,1,Arrays.asList("§7개체가 서쪽 방향을 바라봅니다."), 3, inv);
-		Stack2("§9§l[남]", 345,0,1,Arrays.asList("§7개체가 남쪽 방향을 바라봅니다."), 5, inv);
-		Stack2("§9§l[북]", 345,0,1,Arrays.asList("§7개체가 북쪽 방향을 바라봅니다."), 7, inv);
+		removeFlagStack("§9§l[동]", 345,0,1,Arrays.asList("§7개체가 동쪽 방향을 바라봅니다."), 1, inv);
+		removeFlagStack("§9§l[서]", 345,0,1,Arrays.asList("§7개체가 서쪽 방향을 바라봅니다."), 3, inv);
+		removeFlagStack("§9§l[남]", 345,0,1,Arrays.asList("§7개체가 남쪽 방향을 바라봅니다."), 5, inv);
+		removeFlagStack("§9§l[북]", 345,0,1,Arrays.asList("§7개체가 북쪽 방향을 바라봅니다."), 7, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+StructureID), 8, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+StructureID), 8, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -122,13 +122,13 @@ public class StructureGui extends UtilGui
 		
 		if(slot == 53)//닫기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
 			byte page = (byte) (Byte.parseByte(event.getInventory().getTitle().split(" : ")[1])-1);
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 목록
 				new OPboxGui().opBoxGuiMain(player, (byte) 3);
 			else if(slot == 48)//이전 페이지
@@ -154,7 +154,7 @@ public class StructureGui extends UtilGui
 				}
 				else if(event.isShiftClick() == true && event.isRightClick() == true)
 				{
-					SoundEffect.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+					SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
 					YamlLoader StructureConfig = new YamlLoader();
 					StructureConfig.getConfig("Structure/StructureList.yml");
 
@@ -208,12 +208,12 @@ public class StructureGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			byte page = (byte) (Byte.parseByte(event.getInventory().getTitle().split(" : ")[1])-1);
 			if(slot == 45)//이전 목록
 				StructureListGUI(player, 0);
@@ -237,12 +237,12 @@ public class StructureGui extends UtilGui
 		
 		if(slot == 8)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 0)//이전 목록
 				SelectStructureTypeGUI(player, (byte) 0);
 			else if(slot == 1||slot == 3||slot == 5||slot == 7)

@@ -48,12 +48,12 @@ class Descending_longValue implements Comparator<Object_RankingSet>
 
 public class ServerTickMain
 {
-	public static ArrayList<String> MobSpawningAreaList = new ArrayList<String>();
-	public static ArrayList<String> NaviUsingList = new ArrayList<String>();
-	public static HashMap<String, String> PlayerTaskList = new HashMap<String, String>();
+	public static ArrayList<String> MobSpawningAreaList = new ArrayList<>();
+	public static ArrayList<String> NaviUsingList = new ArrayList<>();
+	public static HashMap<String, String> PlayerTaskList = new HashMap<>();
 	public static String ServerTask = "null";
-	public static HashMap<Long, ServerTickObject> Schedule = new HashMap<Long, ServerTickObject>();
-	public static HashMap<Long, DungeonScheduleObject> DungeonSchedule = new HashMap<Long, DungeonScheduleObject>();
+	public static HashMap<Long, ServerTickObject> Schedule = new HashMap<>();
+	public static HashMap<Long, DungeonScheduleObject> DungeonSchedule = new HashMap<>();
 	public static long nowUTC = 0;
 	int BroadCastMessageTime =0;
   	int BroadCastMessageCool = 0;
@@ -73,7 +73,7 @@ public class ServerTickMain
             public void run() 
             {
             	nowUTC += 50;
-            	CheckShcedule();
+            	checkShcedule();
             }
         }, 0, 1);
 
@@ -82,7 +82,7 @@ public class ServerTickMain
 			Iterator<Player> PlayerList;
 			corpse.CorpseMain CCM = new corpse.CorpseMain();
 			otherplugins.NoteBlockApiMain NBAPI = new otherplugins.NoteBlockApiMain();
-			YamlLoader AreaList = new YamlLoader();
+			YamlLoader areaList = new YamlLoader();
 			area.AreaMain A = new area.AreaMain();
 			quest.QuestGui QGUI = new quest.QuestGui();
         	String Area;
@@ -91,12 +91,12 @@ public class ServerTickMain
             @Override
             public void run() 
             {
-        		BroadCastMessage();
+        		broadCastMessage();
             	
             	PlayerList = (Iterator<Player>) Bukkit.getOnlinePlayers().iterator();
             	Player player;
-	  			AreaList.getConfig("config.yml");
-			  	boolean isMabinogi = AreaList.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System");
+	  			areaList.getConfig("config.yml");
+			  	boolean isMabinogi = areaList.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System");
 				while (PlayerList.hasNext())
 				{
 					player = PlayerList.next();
@@ -117,20 +117,20 @@ public class ServerTickMain
 	        				Area = A.getAreaName(player)[0];
 	        				if(!uo.getETC_CurrentArea().equals(Area))
 	        				{
-	        					AreaList.getConfig("Area/AreaList.yml");
+	        					areaList.getConfig("Area/AreaList.yml");
 	        					//레벨 제한 확인
 	        					boolean restrict = false;
-	        					if(AreaList.getInt(Area+".Restrict.MinNowLevel")!=0 &&(AreaList.getInt(Area+".Restrict.MinNowLevel") > uo.getStat_Level()||AreaList.getInt(Area+".Restrict.MaxNowLevel") < uo.getStat_Level()))
+	        					if(areaList.getInt(Area+".Restrict.MinNowLevel")!=0 &&(areaList.getInt(Area+".Restrict.MinNowLevel") > uo.getStat_Level()||areaList.getInt(Area+".Restrict.MaxNowLevel") < uo.getStat_Level()))
 	        						restrict=true;
-	        					if(isMabinogi&&(AreaList.getInt(Area+".Restrict.MinRealLevel")!=0 &&(AreaList.getInt(Area+".Restrict.MinRealLevel") > uo.getStat_RealLevel()||AreaList.getInt(Area+".Restrict.MaxRealLevel") < uo.getStat_RealLevel())))
+	        					if(isMabinogi&&(areaList.getInt(Area+".Restrict.MinRealLevel")!=0 &&(areaList.getInt(Area+".Restrict.MinRealLevel") > uo.getStat_RealLevel()||areaList.getInt(Area+".Restrict.MaxRealLevel") < uo.getStat_RealLevel())))
 	        						restrict=true;
 	        					if(restrict)
 	        					{
 	        						Location playerLoc = player.getLocation();
-	        						int calc1 = AreaList.getInt(Area+".X.Max") - playerLoc.getBlockX();
-	        						int calc2 = AreaList.getInt(Area+".X.Min") - playerLoc.getBlockX();
-	        						int staticX = AreaList.getInt(Area+".X.Min");
-	        						int staticZ = AreaList.getInt(Area+".Z.Min");
+	        						int calc1 = areaList.getInt(Area+".X.Max") - playerLoc.getBlockX();
+	        						int calc2 = areaList.getInt(Area+".X.Min") - playerLoc.getBlockX();
+	        						int staticX = areaList.getInt(Area+".X.Min");
+	        						int staticZ = areaList.getInt(Area+".Z.Min");
 
 	        						int xF = 0;
 	        						int zF = 0;
@@ -141,35 +141,35 @@ public class ServerTickMain
 	        							calc2 *= -1;
 	        						if(calc1 < calc2)
 	        						{
-	        							staticX = AreaList.getInt(Area+".X.Max")+1;
+	        							staticX = areaList.getInt(Area+".X.Max")+1;
 	        							xF = calc1;
 	        						}
 	        						else
 	        						{
-	        							staticX = AreaList.getInt(Area+".X.Min")-1;
+	        							staticX = areaList.getInt(Area+".X.Min")-1;
 	        							xF = calc2;
 	        						}
 
-	        						calc1 = AreaList.getInt(Area+".Z.Max") - playerLoc.getBlockZ();
-	        						calc2 = AreaList.getInt(Area+".Z.Min") - playerLoc.getBlockZ();
-	        						calc1 = AreaList.getInt(Area+".Z.Max") - playerLoc.getBlockZ();
-	        						calc2 = AreaList.getInt(Area+".Z.Min") - playerLoc.getBlockZ();
+	        						calc1 = areaList.getInt(Area+".Z.Max") - playerLoc.getBlockZ();
+	        						calc2 = areaList.getInt(Area+".Z.Min") - playerLoc.getBlockZ();
+	        						calc1 = areaList.getInt(Area+".Z.Max") - playerLoc.getBlockZ();
+	        						calc2 = areaList.getInt(Area+".Z.Min") - playerLoc.getBlockZ();
 	        						if(calc1 < 0)
 	        							calc1 *= -1;
 	        						if(calc2 < 0)
 	        							calc2 *= -1;
 	        						if(calc1 < calc2)
 	        						{
-	        							staticZ = AreaList.getInt(Area+".Z.Max")+1;
+	        							staticZ = areaList.getInt(Area+".Z.Max")+1;
 	        							zF = calc1;
 	        						}
 	        						else
 	        						{
-	        							staticZ = AreaList.getInt(Area+".Z.Min")-1;
+	        							staticZ = areaList.getInt(Area+".Z.Min")-1;
 	        							zF = calc2;
 	        						}
 
-	        		    			SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+	        		    			SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 	        		    			new effect.SendPacket().sendActionBar(player, "§c§l레벨이 맞지 않아 입장할 수 없습니다!", false);
 	        						if(xF < zF)
 	        							player.teleport(new Location(player.getWorld(), staticX, playerLoc.getY()+0.2, playerLoc.getZ(), playerLoc.getYaw(), playerLoc.getPitch()));
@@ -183,14 +183,14 @@ public class ServerTickMain
 		        					A.AreaMonsterSpawnAdd(Area, "-1");
 		        					NBAPI.Stop(player);
 		        					uo.setETC_CurrentArea(Area);
-		        					if(AreaList.getBoolean(Area + ".SpawnPoint") == true)
+		        					if(areaList.getBoolean(Area + ".SpawnPoint") == true)
 		        						uo.setETC_LastVisited(Area);
 		            				if(uo.isBgmOn())
 		            				{
-		            					if(AreaList.getBoolean(Area + ".Music") == true)
-		        							NBAPI.Play(player, AreaList.getInt(Area+".BGM"));
+		            					if(areaList.getBoolean(Area + ".Music") == true)
+		        							NBAPI.Play(player, areaList.getInt(Area+".BGM"));
 		            				}
-		        					if(AreaList.getBoolean(Area + ".Alert") == true)
+		        					if(areaList.getBoolean(Area + ".Alert") == true)
 		        					{
 		        						YamlLoader QuestList = new YamlLoader();
 		        						QuestList.getConfig("Quest/QuestList.yml");
@@ -226,6 +226,11 @@ public class ServerTickMain
 	        				NBAPI.Stop(player);
 	        			}
 	        		}
+	        		else
+	        		{
+	        			if(uo.getDungeon_Enter() == null)
+	        				NBAPI.Stop(player);
+	        		}
         		}
         	
             	
@@ -238,7 +243,7 @@ public class ServerTickMain
             @Override
             public void run() 
             {
-            	if(directory.exists()==false)
+            	if(!directory.exists())
         			directory.mkdir();
         		File[] fileList = directory.listFiles();
     		  	YamlLoader YAML = new YamlLoader();
@@ -274,102 +279,102 @@ public class ServerTickMain
     	return;
 	}
 	
-	public void BroadCastMessage()
+	public void broadCastMessage()
 	{
-		YamlLoader Config = new YamlLoader();
-		Config.getConfig("config.yml");
-		BroadCastMessageTime = Config.getInt("Server.BroadCastSecond");
+		YamlLoader config = new YamlLoader();
+		config.getConfig("config.yml");
+		BroadCastMessageTime = config.getInt("Server.BroadCastSecond");
     	if(BroadCastMessageTime!=0)
 		if(BroadCastMessageCool>=BroadCastMessageTime)
 		{
 			BroadCastMessageCool=0;
-			YamlLoader BroadCast = new YamlLoader();
-			BroadCast.getConfig("BroadCast.yml");
-			if(BroadCast.contains("0"))
-				if(BroadCast.getConfigurationSection("").getKeys(false).toArray().length != 0)
-					Bukkit.broadcastMessage(BroadCast.getString(BroadCast.getConfigurationSection("").getKeys(false).toArray()[new util.UtilNumber().RandomNum(0, BroadCast.getConfigurationSection("").getKeys(false).toArray().length-1)].toString()));
+			YamlLoader broadCast = new YamlLoader();
+			broadCast.getConfig("BroadCast.yml");
+			if(broadCast.contains("0") &&
+			broadCast.getConfigurationSection("").getKeys(false).toArray().length != 0)
+				Bukkit.broadcastMessage(broadCast.getString(broadCast.getConfigurationSection("").getKeys(false).toArray()[new util.UtilNumber().RandomNum(0, broadCast.getConfigurationSection("").getKeys(false).toArray().length-1)].toString()));
 		}
 		else
 			BroadCastMessageCool++;
     	return;
 	}
 	
-	public void CheckShcedule()
+	public void checkShcedule()
 	{
-		Object[] ScheduleList = Schedule.keySet().toArray();
-		Object[] DungeonScheduleList = DungeonSchedule.keySet().toArray();
+		Object[] scheduleList = Schedule.keySet().toArray();
+		Object[] dungeonScheduleList = DungeonSchedule.keySet().toArray();
 		long scheduleUTC = 0;
-		short SafeLineCounter = SafeLine;
-		for(int count = 0; count<ScheduleList.length;count++)
+		short safeLineCounter = SafeLine;
+		for(int count = 0; count<scheduleList.length;count++)
 		{
-			if(SafeLineCounter <= 0) break;
-				scheduleUTC=Long.parseLong(ScheduleList[count].toString());
+			if(safeLineCounter <= 0) break;
+				scheduleUTC=Long.parseLong(scheduleList[count].toString());
 			if(scheduleUTC <= nowUTC)
 			{
-				ExcuteSchedule(scheduleUTC);
-				SafeLineCounter--;
-				Schedule.remove(Long.parseLong(ScheduleList[count].toString()));
+				excuteSchedule(scheduleUTC);
+				safeLineCounter--;
+				Schedule.remove(Long.parseLong(scheduleList[count].toString()));
 			}
 		}
-		SafeLineCounter = SafeLine;
-		for(int count = 0; count<DungeonScheduleList.length;count++)
+		safeLineCounter = SafeLine;
+		for(int count = 0; count<dungeonScheduleList.length;count++)
 		{
-			if(SafeLineCounter <= 0) break;
-				scheduleUTC=Long.parseLong(DungeonScheduleList[count].toString());
+			if(safeLineCounter <= 0) break;
+				scheduleUTC=Long.parseLong(dungeonScheduleList[count].toString());
 			if(scheduleUTC <= nowUTC)
 			{
-				DungeonExcuteSchedule(scheduleUTC);
-				SafeLineCounter--;
-				DungeonSchedule.remove(Long.parseLong(DungeonScheduleList[count].toString()));
+				dungeonExcuteSchedule(scheduleUTC);
+				safeLineCounter--;
+				DungeonSchedule.remove(Long.parseLong(dungeonScheduleList[count].toString()));
 			}
 		}
     	return;
 	}
 
-	public void ExcuteSchedule(long UTC)
+	public void excuteSchedule(long utc)
 	{
-		String Type = Schedule.get(UTC).getType();
-		switch(Type)
+		String type = Schedule.get(utc).getType();
+		switch(type)
 		{
 		case "A_MS"://Area_MonsterSpawn
-			new AreaServerTask().areaMobSpawn(UTC);
+			new AreaServerTask().areaMobSpawn(utc);
 			return;
 		case "A_RB"://Area_RegenBlock
-			new AreaServerTask().areaRegenBlock(UTC);
+			new AreaServerTask().areaRegenBlock(utc);
 			return;
 		case "NV"://Navigation
-			new ServerTaskNavigation().Navigation(UTC);
+			new ServerTaskNavigation().Navigation(utc);
 			return;
 		case "P_EC"://Player_Exchange
-			new ServerTaskPlayer().ExChangeTimer(UTC);
+			new ServerTaskPlayer().ExChangeTimer(utc);
 			return;
 		case "G_SM"://Gamble_SlotMachine
-			new ServerTaskPlayer().Gamble_SlotMachine_Rolling(UTC);
+			new ServerTaskPlayer().Gamble_SlotMachine_Rolling(utc);
 			return;
 		case "C_S"://Create_Structure
-			new ServerTaskServer().CreateStructureMain(UTC);
+			new ServerTaskServer().CreateStructureMain(utc);
 			return;
 		case "Sound":
-			new ServerTaskEffect().PlaySoundEffect(Schedule.get(UTC));
+			new ServerTaskEffect().PlaySoundEffect(Schedule.get(utc));
 			return;
 		case "P_UTS":
-			new ServerTaskPlayer().UseTeleportScroll(UTC);
+			new ServerTaskPlayer().UseTeleportScroll(utc);
 			return;
 		default:
 			return;
 		}
 	}
 	
-	public void DungeonExcuteSchedule(long UTC)
+	public void dungeonExcuteSchedule(long utc)
 	{
-		String Type = DungeonSchedule.get(UTC).getType();
-		switch(Type)
+		String type = DungeonSchedule.get(utc).getType();
+		switch(type)
 		{
 		case "D_RC"://Dungeon_RoomCreate
-			new DungeonServerTask().CreateRoom(DungeonSchedule.get(UTC));
+			new DungeonServerTask().CreateRoom(DungeonSchedule.get(utc));
 			return;
 		case "D_KRC"://Dungeon_KeyRoomCreate
-			new DungeonServerTask().CreateKeyRoom(DungeonSchedule.get(UTC));
+			new DungeonServerTask().CreateKeyRoom(DungeonSchedule.get(utc));
 			return;
 		default:
 			return;

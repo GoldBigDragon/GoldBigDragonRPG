@@ -37,8 +37,8 @@ public class UserCommand
 					{
 						if(STSO.getString((byte)1).equals(player.getName()))
 						{
-							SoundEffect.SP(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.7F);
-							SoundEffect.SP(Bukkit.getServer().getPlayer(STSO.getString((byte)1)), Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.7F);
+							SoundEffect.playSound(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.7F);
+							SoundEffect.playSound(Bukkit.getServer().getPlayer(STSO.getString((byte)1)), Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.7F);
 							new user.EquipGui().ExChangeGUI(Bukkit.getServer().getPlayer(STSO.getString((byte)0)), Bukkit.getServer().getPlayer(STSO.getString((byte)1)),null,false,false);
 							new user.EquipGui().ExChangeGUI(Bukkit.getServer().getPlayer(STSO.getString((byte)1)), Bukkit.getServer().getPlayer(STSO.getString((byte)0)),null,false,false);
 							ServerTickMain.PlayerTaskList.remove(ServerTickMain.Schedule.get(UTC).getString((byte)0));
@@ -77,7 +77,7 @@ public class UserCommand
   			long Money = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money();
   			if(args.length == 0)
   			{
-			 	SoundEffect.SP(player, org.bukkit.Sound.BLOCK_LAVA_POP, 0.8F, 1.8F);
+			 	SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_LAVA_POP, 0.8F, 1.8F);
 			 	player.sendMessage("§e[현재 소지 금액] §f§l" +Money + " "+MainServerOption.money);
 			 	player.sendMessage("§6/돈 꺼내기 [금액]§f 해당 금액 만큼 돈을 아이템으로 꺼냅니다.");
 			 	player.sendMessage("§6/돈 랭킹 [닉네임]§f 해당 플레이어의 랭킹을 확인합니다.");
@@ -211,30 +211,30 @@ public class UserCommand
 									Icon_Meta.setLore(Arrays.asList("§e[돈]             §f[일반]","§f§l"+args[1]+" "+MainServerOption.money,"§7("+MoneyString.toString()+" "+ChatColor.stripColor(MainServerOption.money)+")","","§7우 클릭시 내 계좌로","§7입금됩니다."));
 									Icon.setItemMeta(Icon_Meta);
 									player.getInventory().addItem(Icon);
-									SoundEffect.SP(player, org.bukkit.Sound.BLOCK_LAVA_POP, 2.0F, 1.7F);
+									SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_LAVA_POP, 2.0F, 1.7F);
 									player.sendMessage("§a[System] : §f§l"+args[1]+" "+MainServerOption.money+"§a 을(를) 꺼냈습니다!");
 									return;
 								}
 							}
-							SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+							SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 							player.sendMessage("§c[System] : 인벤토리 공간이 부족합니다!");
 						}
 						else
 						{
 							player.sendMessage("§c[SYSTEM] : 현재 보유 금액을 초과하는 값입니다!");
-							SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+							SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 						}
 					}
 					else
 					{
 						player.sendMessage("§c[SYSTEM] : 최소 §e"+1+"§c, 최대 §e"+100000000+"§c 이하의 숫자를 입력하세요!");
-						SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+						SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 					}
 				}
 				catch(NumberFormatException e)
 				{
 					player.sendMessage("§c[SYSTEM] : 정수 형태의 값(숫자)을 입력하세요. (§e"+1+"§c ~ §e"+100000000+"§c)");
-					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 				}
   			}
   			else if(args.length == 3&&args[0].equals("주기")&&player.isOp())
@@ -366,39 +366,39 @@ public class UserCommand
 										Icon_Meta.setLore(Arrays.asList("§e[돈]             §f[일반]","§f§l"+args[1]+" "+MainServerOption.money,"§7("+MoneyString.toString()+" "+ChatColor.stripColor(MainServerOption.money)+")","","§7우 클릭시 내 계좌로","§7입금됩니다."));
 										Icon.setItemMeta(Icon_Meta);
 										target.getInventory().addItem(Icon);
-										SoundEffect.SP(target, org.bukkit.Sound.BLOCK_LAVA_POP, 2.0F, 1.7F);
+										SoundEffect.playSound(target, org.bukkit.Sound.BLOCK_LAVA_POP, 2.0F, 1.7F);
 										target.sendMessage("§a[System] : 관리자로 부터 §f§l"+args[1]+" "+MainServerOption.money+"§a 을(를) 받았습니다!");
-										SoundEffect.SP(player, org.bukkit.Sound.BLOCK_LAVA_POP, 2.0F, 1.7F);
+										SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_LAVA_POP, 2.0F, 1.7F);
 										player.sendMessage("§a[System] : "+target.getName()+"에게 §f§l"+args[1]+" "+MainServerOption.money+"§a 을(를) 주었습니다!");
 										return;
 									}
 								}
-								SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+								SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 								player.sendMessage("§c[System] : 인벤토리 공간이 부족합니다!");
 								return;
 							}
 							else
 							{
 								player.sendMessage("§c[SYSTEM] : 최소 §e"+1+"§c, 최대 §e"+100000000+"§c 이하의 숫자를 입력하세요!");
-								SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+								SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 							}
 						}
 						catch(NumberFormatException e)
 						{
 							player.sendMessage("§c[SYSTEM] : 정수 형태의 값(숫자)을 입력하세요. (§e"+1+"§c ~ §e"+100000000+"§c)");
-							SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+							SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 						}
 	  				}
 	  				else
 	  				{
 						player.sendMessage("§c[SYSTEM] : 해당 플레이어는 접속중이 아닙니다!");
-						SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+						SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 	  				}
   				}
   				else
   				{
 					player.sendMessage("§c[SYSTEM] : 해당 플레이어는 접속중이 아닙니다!");
-					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
   				}
   			}
   			else if(args[0].equals("랭킹"))
@@ -414,7 +414,7 @@ public class UserCommand
 	  	  				else
 	  	  				{
 	  						player.sendMessage("§c[SYSTEM] : 해당 플레이어에 대한 자료가 없습니다!");
-	  						SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+	  						SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 	  	  				}
 	  				}
 	  				else
@@ -431,12 +431,12 @@ public class UserCommand
 				else
 				{
 					player.sendMessage("§c[SYSTEM] : 랭킹을 불러 올 수가 없습니다! 잠시 후 다시 시도 해 주시길 바랍니다.");
-					SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 				}
   			}
   			else
   			{
-  				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
+  				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
   				player.sendMessage("§6/돈§f 현재 자신이 보유한 금액을 확인합니다.");
   				player.sendMessage("§6/돈 꺼내기 [금액]§f 해당 금액 만큼 돈을 아이템으로 꺼냅니다.");
 			 	player.sendMessage("§6/돈 랭킹 [닉네임]§f 해당 플레이어의 랭킹을 확인합니다.");

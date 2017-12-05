@@ -54,7 +54,7 @@ public class EventPlayerChat extends UtilChat implements Listener
 			    else if(u.getType(player).equals("Monster"))
 		    	{new monster.MonsterChat().MonsterTypeChatting(event); return;}
 			    else if(u.getType(player).equals("Teleport"))
-		    	{new warp.WarpChat().TeleportTypeChatting(event);return;}
+		    	{new warp.WarpChat().teleportTypeChatting(event);return;}
 			    else if(u.getType(player).equals("Event"))
 		    	{new admin.EventChat().eventChatting(event); return;}
 			    else if(u.getType(player).equals("System"))
@@ -103,7 +103,7 @@ public class EventPlayerChat extends UtilChat implements Listener
 		  		if(!main.MainServerOption.partyJoiner.containsKey(player))
 		  		{
 		  			player.sendMessage("§9[파티] : 파티에 가입되어 있지 않습니다!");
-		  			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+		  			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		  		}
 		  		else
 		  		{
@@ -119,7 +119,7 @@ public class EventPlayerChat extends UtilChat implements Listener
 	  			if(!player.isOp())
 	  			{
 		  			player.sendMessage("§d[관리자] : 당신은 관리자가 아닙니다!");
-		  			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+		  			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 	  			}
 	  			else
 	  			{
@@ -147,7 +147,7 @@ public class EventPlayerChat extends UtilChat implements Listener
 		  		if(main.MainServerOption.partyJoiner.containsKey(player) == false)
 		  		{
 		  			player.sendMessage("§9[파티] : 파티에 가입되어 있지 않습니다!");
-		  			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+		  			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		  		}
 		  		else
 		  		{
@@ -163,7 +163,7 @@ public class EventPlayerChat extends UtilChat implements Listener
 	  			if(!player.isOp())
 	  			{
 		  			player.sendMessage("§d[관리자] : 당신은 관리자가 아닙니다!");
-		  			SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+		  			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 	  			}
 	  			else
 	  			{
@@ -195,7 +195,7 @@ public class EventPlayerChat extends UtilChat implements Listener
 		{
 			if(message.equals(player.getName()))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				player.sendMessage("§c[친구] : 자기 자신을 추가할 수 없습니다!");
 			}
 			else
@@ -205,7 +205,7 @@ public class EventPlayerChat extends UtilChat implements Listener
 					new user.EquipGui().SetFriends(player, Bukkit.getServer().getPlayer(message));
 				else
 				{
-					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 					player.sendMessage("§c[친구] : 해당 플레이어를 찾을 수 없습니다!");
 				}
 			}

@@ -1,6 +1,5 @@
 package event;
 
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -21,7 +20,7 @@ import util.YamlLoader;
 public class EventBlockBreak implements Listener
 {
 	@EventHandler
-	public void BlockBreaking(BlockBreakEvent event)
+	public void blockBreaking(BlockBreakEvent event)
 	{
 		if(event.isCancelled())
 			return;
@@ -33,82 +32,84 @@ public class EventBlockBreak implements Listener
 		}
 		Player player = event.getPlayer();
 		BattleCalculator.decreaseDurabilityWeapon(player);
-		area.AreaMain A = new area.AreaMain();
-		String[] Area = A.getAreaName(event.getBlock());
-		if(Area != null)
+		area.AreaMain area = new area.AreaMain();
+		String[] areaName = area.getAreaName(event.getBlock());
+		if(areaName != null)
 		{
 		  	YamlLoader areaYaml = new YamlLoader();
 			areaYaml.getConfig("Area/AreaList.yml");
 
-			if(A.getAreaOption(Area[0], (char) 1) == false && event.getPlayer().isOp() == false)
+			if(!area.getAreaOption(areaName[0], (char) 1) && !event.getPlayer().isOp())
 			{
 				event.setCancelled(true);
-				SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-				event.getPlayer().sendMessage("§c[SYSTEM] : §e"+ Area[1] + "§c 지역 에서는 블록 채집이 불가능합니다!");
+				SoundEffect.playSound(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+				if(areaName[1].equals("%player%"))
+					areaName[1] = player.getName();
+				event.getPlayer().sendMessage("§c[SYSTEM] : §e"+ areaName[1] + "§c 지역 에서는 블록 채집이 불가능합니다!");
 				return;
 			}
-			if(areaYaml.getInt(Area[0]+".RegenBlock")!=0)
+			if(areaYaml.getInt(areaName[0]+".RegenBlock")!=0)
 			{
-				Long UTC = (areaYaml.getInt(Area[0]+".RegenBlock")*1000)+servertick.ServerTickMain.nowUTC+new util.UtilNumber().RandomNum(1, 1000);
-				servertick.ServerTickObject STSO = new servertick.ServerTickObject(UTC, "A_RB");
-				STSO.setMaxCount(-1);
+				Long utc = (areaYaml.getInt(areaName[0]+".RegenBlock")*1000)+servertick.ServerTickMain.nowUTC+new util.UtilNumber().RandomNum(1, 1000);
+				servertick.ServerTickObject serverTickObject = new servertick.ServerTickObject(utc, "A_RB");
+				serverTickObject.setMaxCount(-1);
 				Block block =event.getBlock();
-				STSO.setString((byte)1, block.getWorld().getName());//목적지 월드 이름 저장
-				STSO.setInt((byte)0, block.getX());//블록X 위치저장
-				STSO.setInt((byte)1, block.getY());//블록Y 위치저장
-				STSO.setInt((byte)2, block.getZ());//블록Z 위치저장
-				STSO.setInt((byte)3, block.getTypeId());//블록 ID저장
-				STSO.setInt((byte)4, block.getData());//블록 DATA 저장
+				serverTickObject.setString((byte)1, block.getWorld().getName());//목적지 월드 이름 저장
+				serverTickObject.setInt((byte)0, block.getX());//블록X 위치저장
+				serverTickObject.setInt((byte)1, block.getY());//블록Y 위치저장
+				serverTickObject.setInt((byte)2, block.getZ());//블록Z 위치저장
+				serverTickObject.setInt((byte)3, block.getTypeId());//블록 ID저장
+				serverTickObject.setInt((byte)4, block.getData());//블록 DATA 저장
 				
-				servertick.ServerTickMain.Schedule.put(UTC, STSO);
+				servertick.ServerTickMain.Schedule.put(utc, serverTickObject);
 			}
 			if(player.getGameMode() != GameMode.CREATIVE)
 			{
-				String BlockData = event.getBlock().getTypeId()+":"+event.getBlock().getData();
-				if(areaYaml.contains(Area[0]+".Mining."+BlockData) == true)
+				String blockData = event.getBlock().getTypeId()+":"+event.getBlock().getData();
+				if(areaYaml.contains(areaName[0]+".Mining."+blockData))
 				{
 					event.setCancelled(true);
 					event.getBlock().setType(Material.AIR);
-					event.EventItemDrop ItemDrop = new event.EventItemDrop();
+					event.EventItemDrop itemDrop = new event.EventItemDrop();
 					Location loc = event.getBlock().getLocation();
 					loc.setY(loc.getY()+0.4);
 					loc.setX(loc.getX()+0.5);
 					loc.setZ(loc.getZ()+0.5);
-					if(areaYaml.contains(Area[0]+".Mining."+BlockData+".100"))
+					if(areaYaml.contains(areaName[0]+".Mining."+blockData+".100"))
 					{
-						if(!areaYaml.getString(Area[0]+".Mining."+BlockData+".100").equals("0:0"))
-							ItemDrop.CustomItemDrop(loc, areaYaml.getItemStack(Area[0]+".Mining."+BlockData+".100"));
+						if(!areaYaml.getString(areaName[0]+".Mining."+blockData+".100").equals("0:0"))
+							itemDrop.CustomItemDrop(loc, areaYaml.getItemStack(areaName[0]+".Mining."+blockData+".100"));
 						int random = new util.UtilNumber().RandomNum(1, 1000);
 						if(random<=1)
 						{
-							if(!areaYaml.getString(Area[0]+".Mining."+BlockData+".0").equals("0:0"))
-								ItemDrop.CustomItemDrop(loc, areaYaml.getItemStack(Area[0]+".Mining."+BlockData+".0"));
+							if(!areaYaml.getString(areaName[0]+".Mining."+blockData+".0").equals("0:0"))
+								itemDrop.CustomItemDrop(loc, areaYaml.getItemStack(areaName[0]+".Mining."+blockData+".0"));
 						}
 						else if(random<=10)
 						{
-							if(!areaYaml.getString(Area[0]+".Mining."+BlockData+".1").equals("0:0"))
-								ItemDrop.CustomItemDrop(loc, areaYaml.getItemStack(Area[0]+".Mining."+BlockData+".1"));
+							if(!areaYaml.getString(areaName[0]+".Mining."+blockData+".1").equals("0:0"))
+								itemDrop.CustomItemDrop(loc, areaYaml.getItemStack(areaName[0]+".Mining."+blockData+".1"));
 						}
 						else if(random<=100)
 						{
-							if(!areaYaml.getString(Area[0]+".Mining."+BlockData+".10").equals("0:0"))
-								ItemDrop.CustomItemDrop(loc, areaYaml.getItemStack(Area[0]+".Mining."+BlockData+".10"));
+							if(!areaYaml.getString(areaName[0]+".Mining."+blockData+".10").equals("0:0"))
+								itemDrop.CustomItemDrop(loc, areaYaml.getItemStack(areaName[0]+".Mining."+blockData+".10"));
 						}
 						else if(random<=500)
 						{
-							if(!areaYaml.getString(Area[0]+".Mining."+BlockData+".50").equals("0:0"))
-								ItemDrop.CustomItemDrop(loc, areaYaml.getItemStack(Area[0]+".Mining."+BlockData+".50"));
+							if(!areaYaml.getString(areaName[0]+".Mining."+blockData+".50").equals("0:0"))
+								itemDrop.CustomItemDrop(loc, areaYaml.getItemStack(areaName[0]+".Mining."+blockData+".50"));
 						}
 						else if(random<=900)
 						{
-							if(!areaYaml.getString(Area[0]+".Mining."+BlockData+".90").equals("0:0"))
-								ItemDrop.CustomItemDrop(loc, areaYaml.getItemStack(Area[0]+".Mining."+BlockData+".90"));
+							if(!areaYaml.getString(areaName[0]+".Mining."+blockData+".90").equals("0:0"))
+								itemDrop.CustomItemDrop(loc, areaYaml.getItemStack(areaName[0]+".Mining."+blockData+".90"));
 						}
 					}
 				}
 			}
 		}
-		Quest(event, player);
+		quest(event, player);
 		if(event.getBlock().getLocation().getWorld().getName().equals("Dungeon")
 				&&!player.isOp())
 		{
@@ -122,79 +123,78 @@ public class EventBlockBreak implements Listener
 		  	YamlLoader exceptionBlockYaml = new YamlLoader();
 			exceptionBlockYaml.getConfig("EXPexceptionBlock.yml");
 			Location loc = event.getBlock().getLocation();
-			String Location = ((int)loc.getX()+"_"+(int)loc.getY()+"_"+(int)loc.getZ());
-			if(exceptionBlockYaml.contains(loc.getWorld().getName()+"."+id+"."+Location))
+			String location = ((int)loc.getX()+"_"+(int)loc.getY()+"_"+(int)loc.getZ());
+			if(exceptionBlockYaml.contains(loc.getWorld().getName()+"."+id+"."+location))
 			{
-				exceptionBlockYaml.removeKey(loc.getWorld().getName()+"."+id+"."+Location);
+				exceptionBlockYaml.removeKey(loc.getWorld().getName()+"."+id+"."+location);
 				exceptionBlockYaml.saveConfig();
 			}
 			else
 			{
 				if(player.getGameMode()!=GameMode.CREATIVE)
 				{
-					EXPadd(event);
+					expAdd(event);
 					if((id>=14&&id<=16)||id==56||id==129||id==73||id==21||id==17||id==162||id==153||id==89||id==169)
-						LuckyBonus(player, event.getBlock());
+						luckyBonus(player, event.getBlock());
 				}
 			}
 		}
 		return;
 	}
 
-	private void Quest(BlockBreakEvent event, Player player)
+	private void quest(BlockBreakEvent event, Player player)
 	{
 	  	YamlLoader questYaml = new YamlLoader();
 		questYaml.getConfig("Quest/QuestList.yml");
-	  	if(questYaml.isExit("Quest/PlayerData/"+player.getUniqueId()+".yml") == false)
+	  	if(!questYaml.isExit("Quest/PlayerData/"+player.getUniqueId()+".yml"))
 	  		new quest.QuestConfig().CreateNewPlayerConfig(player);
 	  	YamlLoader playerQuestYaml = new YamlLoader();
 		playerQuestYaml.getConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
 
-		if(MainServerOption.partyJoiner.containsKey(player)==false)
+		if(!MainServerOption.partyJoiner.containsKey(player))
 		{
-			if(playerQuestYaml.contains("Started"))
-			if(playerQuestYaml.getConfigurationSection("Started").getKeys(false).toArray().length >= 1)
+			if(playerQuestYaml.contains("Started") && playerQuestYaml.getConfigurationSection("Started").getKeys(false).toArray().length >= 1)
 			{
 				String[] startedQuestList = playerQuestYaml.getConfigurationSection("Started").getKeys(false).toArray(new String[0]);
 				for(int count = 0; count < startedQuestList.length; count++)
 				{
-					short Flow = (short) playerQuestYaml.getInt("Started."+startedQuestList[count]+".Flow");
-					if(questYaml.contains(startedQuestList[count]+".FlowChart."+Flow+".Block")&&playerQuestYaml.getString("Started."+startedQuestList[count]+".Type").equalsIgnoreCase("Harvest"))
+					short flow = (short) playerQuestYaml.getInt("Started."+startedQuestList[count]+".Flow");
+					if(questYaml.contains(startedQuestList[count]+".FlowChart."+flow+".Block")&&playerQuestYaml.getString("Started."+startedQuestList[count]+".Type").equalsIgnoreCase("Harvest"))
 					{
-						int blockSize = questYaml.getConfigurationSection(startedQuestList[count]+".FlowChart."+Flow+".Block").getKeys(false).size();
-						short Finish = 0;
+						int blockSize = questYaml.getConfigurationSection(startedQuestList[count]+".FlowChart."+flow+".Block").getKeys(false).size();
+						short finish = 0;
 						for(int counter = 0; counter < blockSize; counter++)
 						{
-							short BlockID = (short) questYaml.getInt(startedQuestList[count]+".FlowChart."+Flow+".Block."+counter+".BlockID");
-							byte BlockData = (byte) questYaml.getInt(startedQuestList[count]+".FlowChart."+Flow+".Block."+counter+".BlockData");
-							int MAX = questYaml.getInt(startedQuestList[count]+".FlowChart."+Flow+".Block."+counter+".Amount");
-							boolean DataEquals = questYaml.getBoolean(startedQuestList[count]+".FlowChart."+Flow+".Block."+counter+".DataEquals");
-							if(BlockID == event.getBlock().getTypeId() && MAX > playerQuestYaml.getInt("Started."+startedQuestList[count]+".Block."+counter))
+							short blockID = (short) questYaml.getInt(startedQuestList[count]+".FlowChart."+flow+".Block."+counter+".BlockID");
+							byte blockData = (byte) questYaml.getInt(startedQuestList[count]+".FlowChart."+flow+".Block."+counter+".BlockData");
+							int max = questYaml.getInt(startedQuestList[count]+".FlowChart."+flow+".Block."+counter+".Amount");
+							boolean dataEquals = questYaml.getBoolean(startedQuestList[count]+".FlowChart."+flow+".Block."+counter+".DataEquals");
+							if(blockID == event.getBlock().getTypeId() && max > playerQuestYaml.getInt("Started."+startedQuestList[count]+".Block."+counter))
 							{
-								if(DataEquals == false)
+								if(!dataEquals)
 								{
 									playerQuestYaml.set("Started."+startedQuestList[count]+".Block."+counter, playerQuestYaml.getInt("Started."+startedQuestList[count]+".Block."+counter)+1);
 									playerQuestYaml.saveConfig();
 								}
 								else
 								{
-									if(BlockData == event.getBlock().getData())
+									if(blockData == event.getBlock().getData())
 									{
 										playerQuestYaml.set("Started."+startedQuestList[count]+".Block."+counter, playerQuestYaml.getInt("Started."+startedQuestList[count]+".Block."+counter)+1);
 										playerQuestYaml.saveConfig();
 									}
 								}
 							}
-							if(MAX == playerQuestYaml.getInt("Started."+startedQuestList[count]+".Block."+counter))
-								Finish++;
-							if(Finish == blockSize)
+							if(max == playerQuestYaml.getInt("Started."+startedQuestList[count]+".Block."+counter))
+								finish++;
+							if(finish == blockSize)
 							{
 								playerQuestYaml.set("Started."+startedQuestList[count]+".Type",questYaml.getString(startedQuestList[count]+".FlowChart."+(playerQuestYaml.getInt("Started."+startedQuestList[count]+".Flow")+1)+".Type"));
 								playerQuestYaml.set("Started."+startedQuestList[count]+".Flow",playerQuestYaml.getInt("Started."+startedQuestList[count]+".Flow")+1);
 								playerQuestYaml.removeKey("Started."+startedQuestList[count]+".Harvest");
 								playerQuestYaml.saveConfig();
-								quest.QuestGui QGUI = new quest.QuestGui();
-								QGUI.QuestRouter(player, startedQuestList[count]);
+								quest.QuestGui questGui = new quest.QuestGui();
+								questGui.QuestRouter(player, startedQuestList[count]);
 								//퀘스트 완료 메시지//
 								break;
 							}
@@ -205,13 +205,13 @@ public class EventBlockBreak implements Listener
 		}
 		else
 		{
-			Player[] PartyMember = MainServerOption.party.get(MainServerOption.partyJoiner.get(player)).getMember();
+			Player[] partyMember = MainServerOption.party.get(MainServerOption.partyJoiner.get(player)).getMember();
 			YamlLoader configYaml = new YamlLoader();
 			configYaml.getConfig("config.yml");
 			int partyEXPShareDistance = configYaml.getInt("Party.EXPShareDistance");
-			for(int counta = 0; counta < PartyMember.length; counta++)
+			for(int counta = 0; counta < partyMember.length; counta++)
 			{
-				player = PartyMember[counta];
+				player = partyMember[counta];
 				if(event.getBlock().getLocation().getWorld() == player.getLocation().getWorld())
 				{
 					if(event.getBlock().getLocation().distance(player.getLocation()) <= partyEXPShareDistance)
@@ -220,45 +220,45 @@ public class EventBlockBreak implements Listener
 						String[] startedQuestList = playerQuestYaml.getConfigurationSection("Started.").getKeys(false).toArray(new String[0]);
 						for(int count = 0; count < startedQuestList.length; count++)
 						{
-							short Flow = (short) playerQuestYaml.getInt("Started."+startedQuestList[count]+".Flow");
+							short flow = (short) playerQuestYaml.getInt("Started."+startedQuestList[count]+".Flow");
 							if(playerQuestYaml.getString("Started."+startedQuestList[count]+".Type").equalsIgnoreCase("Harvest"))
 							{
-								int blockSize = questYaml.getConfigurationSection(startedQuestList[count]+".FlowChart."+Flow+".Block").getKeys(false).size();
-								short Finish = 0;
+								int blockSize = questYaml.getConfigurationSection(startedQuestList[count]+".FlowChart."+flow+".Block").getKeys(false).size();
+								short finish = 0;
 								for(int counter = 0; counter < blockSize; counter++)
 								{
-									short BlockID = (short) questYaml.getInt(startedQuestList[count]+".FlowChart."+Flow+".Block."+counter+".BlockID");
-									byte BlockData = (byte) questYaml.getInt(startedQuestList[count]+".FlowChart."+Flow+".Block."+counter+".BlockData");
-									int MAX = questYaml.getInt(startedQuestList[count]+".FlowChart."+Flow+".Block."+counter+".Amount");
-									boolean DataEquals = questYaml.getBoolean(startedQuestList[count]+".FlowChart."+Flow+".Block."+counter+".DataEquals");
-									if(BlockID == event.getBlock().getTypeId() && MAX > playerQuestYaml.getInt("Started."+startedQuestList[count]+".Block."+counter))
+									short blockID = (short) questYaml.getInt(startedQuestList[count]+".FlowChart."+flow+".Block."+counter+".BlockID");
+									byte blockData = (byte) questYaml.getInt(startedQuestList[count]+".FlowChart."+flow+".Block."+counter+".BlockData");
+									int max = questYaml.getInt(startedQuestList[count]+".FlowChart."+flow+".Block."+counter+".Amount");
+									boolean dataEquals = questYaml.getBoolean(startedQuestList[count]+".FlowChart."+flow+".Block."+counter+".DataEquals");
+									if(blockID == event.getBlock().getTypeId() && max > playerQuestYaml.getInt("Started."+startedQuestList[count]+".Block."+counter))
 									{
-										if(DataEquals == false)
+										if(!dataEquals)
 										{
 											playerQuestYaml.set("Started."+startedQuestList[count]+".Block."+counter, playerQuestYaml.getInt("Started."+startedQuestList[count]+".Block."+counter)+1);
 											playerQuestYaml.saveConfig();
 										}
 										else
 										{
-											if(BlockData == event.getBlock().getData())
+											if(blockData == event.getBlock().getData())
 											{
 												playerQuestYaml.set("Started."+startedQuestList[count]+".Block."+counter, playerQuestYaml.getInt("Started."+startedQuestList[count]+".Block."+counter)+1);
 												playerQuestYaml.saveConfig();
 											}
 										}
 									}
-									if(MAX == playerQuestYaml.getInt("Started."+startedQuestList[count]+".Block."+counter))
+									if(max == playerQuestYaml.getInt("Started."+startedQuestList[count]+".Block."+counter))
 									{
-										Finish++;
+										finish++;
 									}
-									if(Finish == blockSize)
+									if(finish == blockSize)
 									{
 										playerQuestYaml.set("Started."+startedQuestList[count]+".Type",questYaml.getString(startedQuestList[count]+".FlowChart."+(playerQuestYaml.getInt("Started."+startedQuestList[count]+".Flow")+1)+".Type"));
 										playerQuestYaml.set("Started."+startedQuestList[count]+".Flow",playerQuestYaml.getInt("Started."+startedQuestList[count]+".Flow")+1);
 										playerQuestYaml.removeKey("Started."+startedQuestList[count]+".Harvest");
 										playerQuestYaml.saveConfig();
-										quest.QuestGui QGUI = new quest.QuestGui();
-										QGUI.QuestRouter(player, startedQuestList[count]);
+										quest.QuestGui questGui = new quest.QuestGui();
+										questGui.QuestRouter(player, startedQuestList[count]);
 										//퀘스트 완료 메시지//
 										break;
 									}
@@ -272,7 +272,7 @@ public class EventBlockBreak implements Listener
 		return;
 	}
 
-	private void LuckyBonus(Player player, Block block)
+	private void luckyBonus(Player player, Block block)
 	{
 		int lucky = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK()/30;
 		if(lucky >= 150) lucky =150;
@@ -286,17 +286,17 @@ public class EventBlockBreak implements Listener
 			{
 				t.sendActionBar(player, "§e§l럭키 보너스!", false);
 				amount = 1;
-				SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 0.5F, 0.9F);
+				SoundEffect.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 0.5F, 0.9F);
 			}
 			else if(luckysize <= 95)
 			{
 				t.sendActionBar(player, "§e§l빅 럭키 보너스!", false);amount = 5;
-				SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 0.7F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 0.7F, 1.0F);
 			}
 			else
 			{
 				t.sendActionBar(player, "§e§l휴즈 럭키 보너스!", false);amount = 20;
-				SoundEffect.SP(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.1F);
+				SoundEffect.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.1F);
 			}
 
 			int id = block.getTypeId();
@@ -326,7 +326,7 @@ public class EventBlockBreak implements Listener
 		return;
 	}
 
-	private void EXPadd(BlockBreakEvent event)
+	private void expAdd(BlockBreakEvent event)
 	{
 		Player player = event.getPlayer();
 

@@ -46,10 +46,10 @@ public class CustomItemChat extends UtilChat
 			if(isIntMinMax(message, player, 1, Integer.MAX_VALUE))
 			{
 				event.EventInteract interact = new event.EventInteract();
-				if(interact.SetItemDefaultName(Short.parseShort(message),(byte)0).equals("지정되지 않은 아이템"))
+				if(interact.setItemDefaultName(Integer.parseInt(message), 0).equals("지정되지 않은 아이템"))
 				{
 					player.sendMessage("§c[SYSTEM] : 해당 아이템은 존재하지 않습니다!");
-	  				SoundEffect.SP(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+	  				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 	  				return;
 				}
 				itemYaml.set(number+"."+sayType,Integer.parseInt(message));
@@ -211,7 +211,7 @@ public class CustomItemChat extends UtilChat
 			{
 				itemYaml.set(number+"."+sayType,Integer.parseInt(message));
 				itemYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 				if(u.getType(player).equals("UseableItem"))
 				{
 					customitem.UseableItemGui UGUI = new customitem.UseableItemGui();
@@ -237,7 +237,7 @@ public class CustomItemChat extends UtilChat
 			if(upgradeYaml.contains(message)==true)
 			{
 				player.sendMessage("§c[개조] : 해당 이름의 개조식은 이미 존재합니다!");
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				return;
 			}
 			upgradeYaml.set(message+".Lore", "§f무기의 날을 다듬는 개조식이다.%enter%§f날을 다듬은 무기는 내구성이%enter%§f떨어지지만, 위협적이다.");
@@ -256,7 +256,7 @@ public class CustomItemChat extends UtilChat
 			upgradeYaml.set(message+".UpgradeAbleLevel", 0);
 			upgradeYaml.set(message+".DecreaseProficiency",30);
 			upgradeYaml.saveConfig();
-			SoundEffect.SP(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.8F);
+			SoundEffect.playSound(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.8F);
 			upgradeGui.upgradeRecipeSettingGui(player, message);
 			u.clearAll(player);
 			return;
@@ -267,7 +267,7 @@ public class CustomItemChat extends UtilChat
 			{
 				upgradeYaml.set(u.getString(player, (byte)6)+".MinDamage", Integer.parseInt(message));
 				upgradeYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				u.setType(player, u.getType(player));
 				u.setString(player, (byte)1, "UMaxD");
 				player.sendMessage("§3[개조] : 변화될 최대 공격력 수치를 입력하세요!");
@@ -283,7 +283,7 @@ public class CustomItemChat extends UtilChat
 				upgradeYaml.saveConfig();
 				upgradeGui.upgradeRecipeSettingGui(player, u.getString(player, (byte)6));
 				u.clearAll(player);
-				SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 			}
 			return;
 		}
@@ -293,7 +293,7 @@ public class CustomItemChat extends UtilChat
 			{
 				upgradeYaml.set(u.getString(player, (byte)6)+".MinMaDamage", Integer.parseInt(message));
 				upgradeYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				u.setType(player, u.getType(player));
 				u.setString(player, (byte)1, "UMMaxD");
 				player.sendMessage("§3[개조] : 변화될 최대 마법 공격력 수치를 입력하세요!");
@@ -309,7 +309,7 @@ public class CustomItemChat extends UtilChat
 				upgradeYaml.saveConfig();
 				upgradeGui.upgradeRecipeSettingGui(player, u.getString(player, (byte)6));
 				u.clearAll(player);
-				SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 			}
 			return;
 		}
@@ -321,7 +321,7 @@ public class CustomItemChat extends UtilChat
 				upgradeYaml.saveConfig();
 				upgradeGui.upgradeRecipeSettingGui(player, u.getString(player, (byte)6));
 				u.clearAll(player);
-				SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 			}
 			return;
 		}
@@ -333,7 +333,7 @@ public class CustomItemChat extends UtilChat
 				upgradeYaml.saveConfig();
 				upgradeGui.upgradeRecipeSettingGui(player, u.getString(player, (byte)6));
 				u.clearAll(player);
-				SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 			}
 			return;
 		}
@@ -345,7 +345,7 @@ public class CustomItemChat extends UtilChat
 				upgradeYaml.saveConfig();
 				upgradeGui.upgradeRecipeSettingGui(player, u.getString(player, (byte)6));
 				u.clearAll(player);
-				SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 			}
 			return;
 		}
@@ -357,7 +357,7 @@ public class CustomItemChat extends UtilChat
 				upgradeYaml.saveConfig();
 				upgradeGui.upgradeRecipeSettingGui(player, u.getString(player, (byte)6));
 				u.clearAll(player);
-				SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 			}
 			return;
 		}
@@ -369,7 +369,7 @@ public class CustomItemChat extends UtilChat
 				upgradeYaml.saveConfig();
 				upgradeGui.upgradeRecipeSettingGui(player, u.getString(player, (byte)6));
 				u.clearAll(player);
-				SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 			}
 			return;
 		}
@@ -381,7 +381,7 @@ public class CustomItemChat extends UtilChat
 				upgradeYaml.saveConfig();
 				upgradeGui.upgradeRecipeSettingGui(player, u.getString(player, (byte)6));
 				u.clearAll(player);
-				SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 			}
 			return;
 		}
@@ -393,7 +393,7 @@ public class CustomItemChat extends UtilChat
 				upgradeYaml.saveConfig();
 				upgradeGui.upgradeRecipeSettingGui(player, u.getString(player, (byte)6));
 				u.clearAll(player);
-				SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 			}
 			return;
 		}
@@ -405,7 +405,7 @@ public class CustomItemChat extends UtilChat
 				upgradeYaml.saveConfig();
 				upgradeGui.upgradeRecipeSettingGui(player, u.getString(player, (byte)6));
 				u.clearAll(player);
-				SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 			}
 			return;
 		}
@@ -417,7 +417,7 @@ public class CustomItemChat extends UtilChat
 				upgradeYaml.saveConfig();
 				upgradeGui.upgradeRecipeSettingGui(player, u.getString(player, (byte)6));
 				u.clearAll(player);
-				SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 			}
 			return;
 		}
@@ -427,7 +427,7 @@ public class CustomItemChat extends UtilChat
 			upgradeYaml.saveConfig();
 			upgradeGui.upgradeRecipeSettingGui(player, u.getString(player, (byte)6));
 			u.clearAll(player);
-			SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+			SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 			return;
 		}
 		else if(sayType.equals("MinSTR")||sayType.equals("MinDEX")||sayType.equals("MinINT")||sayType.equals("MinWILL")||
@@ -470,20 +470,20 @@ public class CustomItemChat extends UtilChat
 				}
 				if(sayType.equals("MinLUK"))
 				{
-					SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 					itemGui.newItemGui(player, number);
 					u.clearAll(player);
 				}
 				else
 				{
-					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 					player.sendMessage("§3(0 ~ "+Integer.MAX_VALUE+")");
 				}
 			}
 			return;
 		}
 		itemYaml.saveConfig();
-		SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+		SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 		if(u.getType(player).equals("UseableItem"))
 			new customitem.UseableItemGui().newUseableItemGui(player, number);
 		else

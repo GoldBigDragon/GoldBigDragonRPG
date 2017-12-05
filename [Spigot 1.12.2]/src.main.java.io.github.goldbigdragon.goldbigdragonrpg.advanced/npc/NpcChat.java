@@ -39,7 +39,7 @@ public class NpcChat extends UtilChat
 			if(isIntMinMax(Message, player, -1000, 1000))
 			{
 				u.setInt(player, (byte)0, Integer.parseInt(Message));
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 				u.setString(player, (byte)4,"SaleSetting2");
 				player.sendMessage("§3[NPC] : 몇 % 세일을 하실건가요? (0 ~ 100 사이 값)");
 			}
@@ -52,7 +52,7 @@ public class NpcChat extends UtilChat
 				npcYaml.set("Sale.discount", Integer.parseInt(Message));
 				npcYaml.saveConfig();
 				new npc.NpcGui().MainGUI(player, u.getString(player, (byte)2), player.isOp());
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 				u.clearAll(player);
 			}
 			return;
@@ -62,7 +62,7 @@ public class NpcChat extends UtilChat
 				npcYaml.set("Present."+u.getInt(player, (byte)0)+".love", Integer.parseInt(Message));
 				npcYaml.saveConfig();
 				new npc.NpcGui().PresentSettingGUI(player, u.getString(player, (byte)2));
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 				u.clearAll(player);
 			}
 			return;
@@ -73,7 +73,7 @@ public class NpcChat extends UtilChat
 				npcYaml.saveConfig();
 				npc.NpcGui NGUI = new npc.NpcGui();
 				NGUI.UpgraderGUI(player, (short) 0, u.getString(player, (byte)8));
-				SoundEffect.SP(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 				u.clearAll(player);
 			}
 			return;
@@ -93,7 +93,7 @@ public class NpcChat extends UtilChat
 					break;
 				}
 				npcScriptYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.closeInventory();
 				player.sendMessage("§3[대사] : 그렇다면 최대 몇의 호감도가 필요한가요?");
 				player.sendMessage("§a(§e0§a ~ §e"+Integer.MAX_VALUE+"§a)");
@@ -117,7 +117,7 @@ public class NpcChat extends UtilChat
 					break;
 				}
 				npcScriptYaml.saveConfig();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				NPGUI.TalkSettingGUI(player, u.getString(player, (byte)2), u.getString(player, (byte)5), (short) Integer.parseInt(u.getString(player, (byte)6)));
 				u.clearAll(player);
 			}

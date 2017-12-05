@@ -50,7 +50,7 @@ public class AreaGui extends UtilGui
 			int maxZLoc = areaYaml.getInt(areaName+".Z.Max");
 			
 			byte priority = (byte) areaYaml.getInt(areaName+".Priority");
-			Stack2("§f§l" + areaName, 395,0,1,Arrays.asList(
+			removeFlagStack("§f§l" + areaName, 395,0,1,Arrays.asList(
 					"§3월드 : "+world,"§3X 영역 : "+minXLoc+" ~ " + maxXLoc
 					,"§3Y 영역 : "+minYLoc+" ~ " + maxYLoc
 					,"§3Z 영역 : "+minZLoc+" ~ " + maxZLoc
@@ -64,13 +64,13 @@ public class AreaGui extends UtilGui
 		}
 		
 		if(areaList.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l새 영역", 386,0,1,Arrays.asList("§7새로운 영역을 생성합니다."), 49, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
+		removeFlagStack("§f§l새 영역", 386,0,1,Arrays.asList("§7새로운 영역을 생성합니다."), 49, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -83,63 +83,63 @@ public class AreaGui extends UtilGui
 		Inventory inv = Bukkit.createInventory(null, 45, uniqueCode + "§0영역 설정");
 
 		if(!areaYaml.getBoolean(areaName+".BlockUse"))
-			Stack2("§f§l[블록 사용]", 166,0,1,Arrays.asList("","§c§l[   거부   ]",""), 9, inv);
+			removeFlagStack("§f§l[블록 사용]", 166,0,1,Arrays.asList("","§c§l[   거부   ]",""), 9, inv);
 		else
-			Stack2("§f§l[블록 사용]", 116,0,1,Arrays.asList("","§a§l[   허용   ]",""), 9, inv);
+			removeFlagStack("§f§l[블록 사용]", 116,0,1,Arrays.asList("","§a§l[   허용   ]",""), 9, inv);
 
 		if(!areaYaml.getBoolean(areaName+".BlockPlace"))
-			Stack2("§f§l[블록 설치]", 166,0,1,Arrays.asList("","§c§l[   거부   ]",""), 10, inv);
+			removeFlagStack("§f§l[블록 설치]", 166,0,1,Arrays.asList("","§c§l[   거부   ]",""), 10, inv);
 		else
-			Stack2("§f§l[블록 설치]", 2,0,1,Arrays.asList("","§a§l[   허용   ]",""), 10, inv);
+			removeFlagStack("§f§l[블록 설치]", 2,0,1,Arrays.asList("","§a§l[   허용   ]",""), 10, inv);
 
 		if(!areaYaml.getBoolean(areaName+".BlockBreak"))
-			Stack2("§f§l[블록 파괴]", 166,0,1,Arrays.asList("","§c§l[   거부   ]",""), 11, inv);
+			removeFlagStack("§f§l[블록 파괴]", 166,0,1,Arrays.asList("","§c§l[   거부   ]",""), 11, inv);
 		else
-			Stack2("§f§l[블록 파괴]", 278,0,1,Arrays.asList("","§a§l[   허용   ]",""), 11, inv);
+			removeFlagStack("§f§l[블록 파괴]", 278,0,1,Arrays.asList("","§a§l[   허용   ]",""), 11, inv);
 
 		if(!areaYaml.getBoolean(areaName+".PVP"))
-			Stack2("§f§l[   PVP   ]", 166,0,1,Arrays.asList("","§c§l[   거부   ]",""), 12, inv);
+			removeFlagStack("§f§l[   PVP   ]", 166,0,1,Arrays.asList("","§c§l[   거부   ]",""), 12, inv);
 		else
-			Stack2("§f§l[   PVP   ]", 267,0,1,Arrays.asList("","§a§l[   허용   ]",""), 12, inv);
+			removeFlagStack("§f§l[   PVP   ]", 267,0,1,Arrays.asList("","§a§l[   허용   ]",""), 12, inv);
 
 		if(!areaYaml.getBoolean(areaName+".MobSpawn"))
-			Stack2("§f§l[몬스터 스폰]", 166,0,1,Arrays.asList("","§c§l[   거부   ]",""), 13, inv);
+			removeFlagStack("§f§l[몬스터 스폰]", 166,0,1,Arrays.asList("","§c§l[   거부   ]",""), 13, inv);
 		else
-			Stack2("§f§l[몬스터 스폰]", 52,0,1,Arrays.asList("","§a§l[   허용   ]",""), 13, inv);
+			removeFlagStack("§f§l[몬스터 스폰]", 52,0,1,Arrays.asList("","§a§l[   허용   ]",""), 13, inv);
 
 		if(!areaYaml.getBoolean(areaName+".Alert"))
-			Stack2("§f§l[입장 메시지]", 166,0,1,Arrays.asList("","§c§l[   없음   ]",""), 14, inv);
+			removeFlagStack("§f§l[입장 메시지]", 166,0,1,Arrays.asList("","§c§l[   없음   ]",""), 14, inv);
 		else
-			Stack2("§f§l[입장 메시지]", 340,0,1,Arrays.asList("","§a§l[   전송   ]",""), 14, inv);
+			removeFlagStack("§f§l[입장 메시지]", 340,0,1,Arrays.asList("","§a§l[   전송   ]",""), 14, inv);
 
 		if(!areaYaml.getBoolean(areaName+".SpawnPoint"))
-			Stack2("§f§l[리스폰 장소]", 166,0,1,Arrays.asList("","§c§l[   불가   ]",""), 15, inv);
+			removeFlagStack("§f§l[리스폰 장소]", 166,0,1,Arrays.asList("","§c§l[   불가   ]",""), 15, inv);
 		else
-			Stack2("§f§l[리스폰 장소]", 397,3,1,Arrays.asList("","§a§l[   가능   ]",""), 15, inv);
+			removeFlagStack("§f§l[리스폰 장소]", 397,3,1,Arrays.asList("","§a§l[   가능   ]",""), 15, inv);
 
 		if(!areaYaml.getBoolean(areaName+".Music"))
-			Stack2("§f§l[배경음 재생]", 166,0,1,Arrays.asList("","§c§l[   중지   ]",""), 16, inv);
+			removeFlagStack("§f§l[배경음 재생]", 166,0,1,Arrays.asList("","§c§l[   중지   ]",""), 16, inv);
 		else
-			Stack2("§f§l[배경음 재생]", 84,0,1,Arrays.asList("","§a§l[   재생   ]",""), 16, inv);
+			removeFlagStack("§f§l[배경음 재생]", 84,0,1,Arrays.asList("","§a§l[   재생   ]",""), 16, inv);
 
 		if(areaYaml.getInt(areaName+".RegenBlock")==0)
-			Stack2("§f§l[블록 리젠]", 166,0,1,Arrays.asList("","§c§l[   중지   ]",""), 28, inv);
+			removeFlagStack("§f§l[블록 리젠]", 166,0,1,Arrays.asList("","§c§l[   중지   ]",""), 28, inv);
 		else
-			Stack2("§f§l[블록 리젠]", 103,0,1,Arrays.asList("","§a§l[   활성   ]","","§3"+areaYaml.getInt(areaName+".RegenBlock")+" 초 마다 리젠","","§c[플레이어가 직접 캔 블록만 리젠 됩니다]",""), 28, inv);
+			removeFlagStack("§f§l[블록 리젠]", 103,0,1,Arrays.asList("","§a§l[   활성   ]","","§3"+areaYaml.getInt(areaName+".RegenBlock")+" 초 마다 리젠","","§c[플레이어가 직접 캔 블록만 리젠 됩니다]",""), 28, inv);
 
-		Stack2("§f§l[특산품 설정]", 15,0,1,Arrays.asList("","§7현재 영역에서 블록을 캐면","§7지정된 아이템이 나오게","§7설정 합니다.","","§e[클릭시 특산품 설정]"), 19, inv);
-		Stack2("§f§l[낚시 아이템]", 346,0,1,Arrays.asList("","§7현재 영역에서 낚시를 하여","§7얻을 수 있는 물건을 확률별로","§7설정합니다.","§e[클릭시 낚시 아이템 설정]"), 20, inv);
-		Stack2("§f§l[우선순위 변경]", 384,0,1,Arrays.asList("","§7영역끼리 서로 겹칠 경우","§7우선 순위가 더 높은 영역이","§7적용됩니다.","§7이 속성을 이용하여 마을을 만들고,","§7마을 내부의 각종 상점 및","§7구역을 나눌 수 있습니다.","§9[   현재 우선 순위   ]","§f "+areaYaml.getInt(areaName+".Priority"),"","§e[클릭시 우선 순위 변경]"), 21, inv);
-		Stack2("§f§l[몬스터 설정]", 383,0,1,Arrays.asList("","§7현재 영역에서 자연적으로","§7스폰되는 몬스터 대신에","§7커스텀 몬스터로 변경합니다.","","§e[클릭시 커스텀 몬스터 설정]","§c[몬스터 스폰 설정시 비활성]"), 22, inv);
-		Stack2("§f§l[몬스터 스폰 설정]", 52,0,1,Arrays.asList("","§7현재 영역의 특정 구역에","§7특정 시각마다 몬스터를","§7스폰 합니다.","","§e[클릭시 몬스터 스폰 설정]"), 31, inv);
-		Stack2("§f§l[메시지 변경]", 386,0,1,Arrays.asList("","§7영역 입장 메시지를 변경합니다.","","§e[클릭시 입장 메시지 설정]"), 23, inv);
-		Stack2("§f§l[중심지 변경]", 138,0,1,Arrays.asList("","§7마을 귀환, 최근 방문 위치에서","§7리스폰 등의 현재 영역으로","§7텔레포트 되는 이벤트가 발생할 경우","§7현재 위치가 중심점이 됩니다.","","§3[  현재 중심지  ]","§3"+areaYaml.getString(areaName+".World")+" : "+areaYaml.getInt(areaName+".SpawnLocation.X")+","+areaYaml.getInt(areaName+".SpawnLocation.Y")+","+areaYaml.getInt(areaName+".SpawnLocation.Z"),"","§e[클릭시 현재 위치로 변경]"), 24, inv);
+		removeFlagStack("§f§l[특산품 설정]", 15,0,1,Arrays.asList("","§7현재 영역에서 블록을 캐면","§7지정된 아이템이 나오게","§7설정 합니다.","","§e[클릭시 특산품 설정]"), 19, inv);
+		removeFlagStack("§f§l[낚시 아이템]", 346,0,1,Arrays.asList("","§7현재 영역에서 낚시를 하여","§7얻을 수 있는 물건을 확률별로","§7설정합니다.","§e[클릭시 낚시 아이템 설정]"), 20, inv);
+		removeFlagStack("§f§l[우선순위 변경]", 384,0,1,Arrays.asList("","§7영역끼리 서로 겹칠 경우","§7우선 순위가 더 높은 영역이","§7적용됩니다.","§7이 속성을 이용하여 마을을 만들고,","§7마을 내부의 각종 상점 및","§7구역을 나눌 수 있습니다.","§9[   현재 우선 순위   ]","§f "+areaYaml.getInt(areaName+".Priority"),"","§e[클릭시 우선 순위 변경]"), 21, inv);
+		removeFlagStack("§f§l[몬스터 설정]", 383,0,1,Arrays.asList("","§7현재 영역에서 자연적으로","§7스폰되는 몬스터 대신에","§7커스텀 몬스터로 변경합니다.","","§e[클릭시 커스텀 몬스터 설정]","§c[몬스터 스폰 설정시 비활성]"), 22, inv);
+		removeFlagStack("§f§l[몬스터 스폰 설정]", 52,0,1,Arrays.asList("","§7현재 영역의 특정 구역에","§7특정 시각마다 몬스터를","§7스폰 합니다.","","§e[클릭시 몬스터 스폰 설정]"), 31, inv);
+		removeFlagStack("§f§l[메시지 변경]", 386,0,1,Arrays.asList("","§7영역 입장 메시지를 변경합니다.","","§e[클릭시 입장 메시지 설정]"), 23, inv);
+		removeFlagStack("§f§l[중심지 변경]", 138,0,1,Arrays.asList("","§7마을 귀환, 최근 방문 위치에서","§7리스폰 등의 현재 영역으로","§7텔레포트 되는 이벤트가 발생할 경우","§7현재 위치가 중심점이 됩니다.","","§3[  현재 중심지  ]","§3"+areaYaml.getString(areaName+".World")+" : "+areaYaml.getInt(areaName+".SpawnLocation.X")+","+areaYaml.getInt(areaName+".SpawnLocation.Y")+","+areaYaml.getInt(areaName+".SpawnLocation.Z"),"","§e[클릭시 현재 위치로 변경]"), 24, inv);
 		
 		if(areaYaml.getInt(areaName+".Restrict.MinNowLevel")+areaYaml.getInt(areaName+".Restrict.MinNowLevel")+
 			areaYaml.getInt(areaName+".Restrict.MinRealLevel")+areaYaml.getInt(areaName+".Restrict.MaxRealLevel")==0)
-			Stack2("§a§l[입장 레벨 제한 없음]", 166,0,1,Arrays.asList("","§7레벨에 따른 입장 제한이 없습니다.",""), 34, inv);
+			removeFlagStack("§a§l[입장 레벨 제한 없음]", 166,0,1,Arrays.asList("","§7레벨에 따른 입장 제한이 없습니다.",""), 34, inv);
 		else
-			Stack2("§c§l[입장 레벨 제한]", 399,0,1,Arrays.asList("","§7레벨에 따른 입장 제한이 있습니다.",""
+			removeFlagStack("§c§l[입장 레벨 제한]", 399,0,1,Arrays.asList("","§7레벨에 따른 입장 제한이 있습니다.",""
 			,"§3[  최소 현재 레벨  ]", "  §3"+areaYaml.getInt(areaName+".Restrict.MinNowLevel")
 			,"§3[  최대 현재 레벨  ]", "  §3"+areaYaml.getInt(areaName+".Restrict.MaxNowLevel")
 			,"§7 ▼ 마비노기 시스템일 경우 추가 적용 ▼"
@@ -166,11 +166,11 @@ public class AreaGui extends UtilGui
 		}
 		lore = lore + lore2;
 		
-		Stack2("§f§l[영역 배경음]", 2263,0,1,Arrays.asList(lore.split("%enter%")), 25, inv);
+		removeFlagStack("§f§l[영역 배경음]", 2263,0,1,Arrays.asList(lore.split("%enter%")), 25, inv);
 		
-		Stack2("§f§l영역 이동", 368,0,1,Arrays.asList("§7현재 영역으로 빠르게 이동합니다."), 40, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7영역 목록으로 돌아갑니다."), 36, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7현재 창을 닫습니다.","§0"+areaName), 44, inv);
+		removeFlagStack("§f§l영역 이동", 368,0,1,Arrays.asList("§7현재 영역으로 빠르게 이동합니다."), 40, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7영역 목록으로 돌아갑니다."), 36, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7현재 창을 닫습니다.","§0"+areaName), 44, inv);
 		
 		player.openInventory(inv);
 		return;
@@ -195,7 +195,7 @@ public class AreaGui extends UtilGui
 			if(count > ruleList.length || loc >= 45) break;
 			String ruleNumber = ruleList[count];
 			if(areaYaml.contains(areaName+".MonsterSpawnRule."+ruleNumber+".Monster"))
-				Stack2("§0§l" + (ruleNumber), 383,0,1,Arrays.asList(
+				removeFlagStack("§0§l" + (ruleNumber), 383,0,1,Arrays.asList(
 						"§6[     스폰 옵션     ]","§c-영역에 유저가 있을 때만 작동 -","§6월드 : "+areaYaml.getString(areaName+".MonsterSpawnRule."+ruleNumber+".loc.world"),
 						"§6좌표 : "+areaYaml.getString(areaName+".MonsterSpawnRule."+ruleNumber+".loc.x")+","+areaYaml.getString(areaName+".MonsterSpawnRule."+ruleNumber+".loc.y")+","+areaYaml.getString(areaName+".MonsterSpawnRule."+ruleNumber+".loc.z"),
 						"§6인식 : "+areaYaml.getString(areaName+".MonsterSpawnRule."+ruleNumber+".range")+"블록",
@@ -204,7 +204,7 @@ public class AreaGui extends UtilGui
 						"§6스폰 : "+areaYaml.getString(areaName+".MonsterSpawnRule."+ruleNumber+".Monster")
 						,"","§c[Shift + 우클릭시 룰 삭제]"), loc, inv);
 			else
-				Stack2("§0§l" + (ruleNumber), 52,0,1,Arrays.asList(
+				removeFlagStack("§0§l" + (ruleNumber), 52,0,1,Arrays.asList(
 					"§6[     스폰 옵션     ]","§c-영역에 유저가 있을 때만 작동 -","§6월드 : "+areaYaml.getString(areaName+".MonsterSpawnRule."+ruleNumber+".loc.world"),
 					"§6좌표 : "+areaYaml.getString(areaName+".MonsterSpawnRule."+ruleNumber+".loc.x")+","+areaYaml.getString(areaName+".MonsterSpawnRule."+ruleNumber+".loc.y")+","+areaYaml.getString(areaName+".MonsterSpawnRule."+ruleNumber+".loc.z"),
 					"§6인식 : "+areaYaml.getString(areaName+".MonsterSpawnRule."+ruleNumber+".range")+"블록",
@@ -215,13 +215,13 @@ public class AreaGui extends UtilGui
 		}
 
 		if(ruleList.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l새 규칙 추가", 52,0,1,Arrays.asList("§7새 스폰 규칙을 추가합니다."), 49, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ areaName), 53, inv);
+		removeFlagStack("§f§l새 규칙 추가", 52,0,1,Arrays.asList("§7새 스폰 규칙을 추가합니다."), 49, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ areaName), 53, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -249,7 +249,7 @@ public class AreaGui extends UtilGui
 			{
 				name = monsterYaml.getString(monsterName+".Name");
 				if(count > mobNameListLength || loc >= 45) break;
-				Stack2("§f§l" + monsterName, 383,0,1,Arrays.asList(
+				removeFlagStack("§f§l" + monsterName, 383,0,1,Arrays.asList(
 						"§f이름 : " + name,"§f타입 : " + monsterYaml.getString(monsterName+".Type"),
 						"§f생명력 : " + monsterYaml.getInt(monsterName+".HP"),"§f경험치 : " + monsterYaml.getInt(monsterName+".EXP"),
 						"§f골드 : " + monsterYaml.getInt(monsterName+".MIN_Money")+" ~ " +monsterYaml.getInt(monsterName+".MAX_Money"),
@@ -263,13 +263,13 @@ public class AreaGui extends UtilGui
 			}
 		}
 		if(mobNameListLength-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l몬스터 추가", 52,0,1,Arrays.asList("§7새 커스텀 몬스터를 추가합니다."), 49, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ areaName), 53, inv);
+		removeFlagStack("§f§l몬스터 추가", 52,0,1,Arrays.asList("§7새 커스텀 몬스터를 추가합니다."), 49, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ areaName), 53, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -282,30 +282,30 @@ public class AreaGui extends UtilGui
 		String uniqueCode = "§1§0§2§0§4§r";
 		Inventory inv = Bukkit.createInventory(null, 54, uniqueCode + "§0영역 추가 어류");
 		
-		Stack2("§a§l[     54%     ]", 160,5,1,Arrays.asList("§7이 줄에는 54% 확률로 낚일 아이템을 올리세요."), 0, inv);
-		Stack2("§e§l[     30%     ]", 160,4,1,Arrays.asList("§7이 줄에는 30% 확률로 낚일 아이템을 올리세요."), 9, inv);
-		Stack2("§6§l[     10%     ]", 160,1,1,Arrays.asList("§7이 줄에는 10% 확률로 낚일 아이템을 올리세요."), 18, inv);
-		Stack2("§c§l[      5%      ]", 160,14,1,Arrays.asList("§7이 줄에는 5% 확률로 낚일 아이템을 올리세요."), 27, inv);
-		Stack2("§7§l[      1%      ]", 160,10,1,Arrays.asList("§7이 줄에는 1% 확률로 낚일 아이템을 올리세요."), 36, inv);
+		removeFlagStack("§a§l[     54%     ]", 160,5,1,Arrays.asList("§7이 줄에는 54% 확률로 낚일 아이템을 올리세요."), 0, inv);
+		removeFlagStack("§e§l[     30%     ]", 160,4,1,Arrays.asList("§7이 줄에는 30% 확률로 낚일 아이템을 올리세요."), 9, inv);
+		removeFlagStack("§6§l[     10%     ]", 160,1,1,Arrays.asList("§7이 줄에는 10% 확률로 낚일 아이템을 올리세요."), 18, inv);
+		removeFlagStack("§c§l[      5%      ]", 160,14,1,Arrays.asList("§7이 줄에는 5% 확률로 낚일 아이템을 올리세요."), 27, inv);
+		removeFlagStack("§7§l[      1%      ]", 160,10,1,Arrays.asList("§7이 줄에는 1% 확률로 낚일 아이템을 올리세요."), 36, inv);
 
 		String[] fishingItemList = areaYaml.getConfigurationSection(areaName+".Fishing.54").getKeys(false).toArray(new String[0]);
 		for(int count = 0; count < fishingItemList.length; count++)
-			ItemStackStack(areaYaml.getItemStack(areaName+".Fishing.54."+fishingItemList[count]), count+1, inv);
+			stackItem(areaYaml.getItemStack(areaName+".Fishing.54."+fishingItemList[count]), count+1, inv);
 		fishingItemList = areaYaml.getConfigurationSection(areaName+".Fishing.30").getKeys(false).toArray(new String[0]);
 		for(int count = 0; count < fishingItemList.length; count++)
-			ItemStackStack(areaYaml.getItemStack(areaName+".Fishing.30."+fishingItemList[count]), count+10, inv);
+			stackItem(areaYaml.getItemStack(areaName+".Fishing.30."+fishingItemList[count]), count+10, inv);
 		fishingItemList = areaYaml.getConfigurationSection(areaName+".Fishing.10").getKeys(false).toArray(new String[0]);
 		for(int count = 0; count < fishingItemList.length; count++)
-			ItemStackStack(areaYaml.getItemStack(areaName+".Fishing.10."+fishingItemList[count]), count+19, inv);
+			stackItem(areaYaml.getItemStack(areaName+".Fishing.10."+fishingItemList[count]), count+19, inv);
 		fishingItemList = areaYaml.getConfigurationSection(areaName+".Fishing.5").getKeys(false).toArray(new String[0]);
 		for(int count = 0; count < fishingItemList.length; count++)
-			ItemStackStack(areaYaml.getItemStack(areaName+".Fishing.5."+fishingItemList[count]), count+28, inv);
+			stackItem(areaYaml.getItemStack(areaName+".Fishing.5."+fishingItemList[count]), count+28, inv);
 		fishingItemList = areaYaml.getConfigurationSection(areaName+".Fishing.1").getKeys(false).toArray(new String[0]);
 		for(int count = 0; count < fishingItemList.length; count++)
-			ItemStackStack(areaYaml.getItemStack(areaName+".Fishing.1."+fishingItemList[count]), count+37, inv);
+			stackItem(areaYaml.getItemStack(areaName+".Fishing.1."+fishingItemList[count]), count+37, inv);
 		
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ areaName), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ areaName), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -326,19 +326,19 @@ public class AreaGui extends UtilGui
 			short id = Short.parseShort(blockIdDataList[count].split(":")[0]);
 			byte data = Byte.parseByte(blockIdDataList[count].split(":")[1]);
 
-			Stack2(I.SetItemDefaultName(id, (byte) data), id,data,1,Arrays.asList(
+			removeFlagStack(I.setItemDefaultName(id, data), id,data,1,Arrays.asList(
 					"","§c[Shift + 우클릭시 등록 해제]"), loc, inv);
 				loc++;
 		}
 		
 		if(blockIdDataList.length-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l특산물 추가", 52,0,1,Arrays.asList("§7새로운 블록을 설정합니다."), 49, inv);
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ areaName), 53, inv);
+		removeFlagStack("§f§l특산물 추가", 52,0,1,Arrays.asList("§7새로운 블록을 설정합니다."), 49, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ areaName), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -352,72 +352,72 @@ public class AreaGui extends UtilGui
 
 		ItemStack item = areaYaml.getItemStack(areaName+".Mining."+itemData+".100");
 		
-		ItemStackStack(item, 4, inv);
+		stackItem(item, 4, inv);
 
-		Stack2("§c§l[아이템 넣기>", 160,11,1,Arrays.asList("§7[100% 확률로 나올 아이템]"), 0, inv);
-		Stack2("§c§l[아이템 넣기>", 160,11,1,Arrays.asList("§7[100% 확률로 나올 아이템]"), 1, inv);	
-		Stack2("§c§l[아이템 넣기>", 160,11,1,Arrays.asList("§7[100% 확률로 나올 아이템]"), 2, inv);
-		Stack2("§c§l[아이템 넣기>", 160,11,1,Arrays.asList("§7[100% 확률로 나올 아이템]"), 3, inv);	
-		Stack2("§c§l<아이템 넣기]", 160,11,1,Arrays.asList("§7[100% 확률로 나올 아이템]"), 5, inv);
-		Stack2("§c§l<아이템 넣기]", 160,11,1,Arrays.asList("§7[100% 확률로 나올 아이템]"), 6, inv);	
-		Stack2("§c§l<아이템 넣기]", 160,11,1,Arrays.asList("§7[100% 확률로 나올 아이템]"), 7, inv);
-		Stack2("§c§l<아이템 넣기]", 160,11,1,Arrays.asList("§7[100% 확률로 나올 아이템]"), 8, inv);
+		removeFlagStack("§c§l[아이템 넣기>", 160,11,1,Arrays.asList("§7[100% 확률로 나올 아이템]"), 0, inv);
+		removeFlagStack("§c§l[아이템 넣기>", 160,11,1,Arrays.asList("§7[100% 확률로 나올 아이템]"), 1, inv);	
+		removeFlagStack("§c§l[아이템 넣기>", 160,11,1,Arrays.asList("§7[100% 확률로 나올 아이템]"), 2, inv);
+		removeFlagStack("§c§l[아이템 넣기>", 160,11,1,Arrays.asList("§7[100% 확률로 나올 아이템]"), 3, inv);	
+		removeFlagStack("§c§l<아이템 넣기]", 160,11,1,Arrays.asList("§7[100% 확률로 나올 아이템]"), 5, inv);
+		removeFlagStack("§c§l<아이템 넣기]", 160,11,1,Arrays.asList("§7[100% 확률로 나올 아이템]"), 6, inv);	
+		removeFlagStack("§c§l<아이템 넣기]", 160,11,1,Arrays.asList("§7[100% 확률로 나올 아이템]"), 7, inv);
+		removeFlagStack("§c§l<아이템 넣기]", 160,11,1,Arrays.asList("§7[100% 확률로 나올 아이템]"), 8, inv);
 
 		item = areaYaml.getItemStack(areaName+".Mining."+itemData+".90");
-		ItemStackStack(item, 13, inv);
-		Stack2("§c§l[아이템 넣기>", 160,9,1,Arrays.asList("§7[90% 확률로 나올 아이템]"), 9, inv);
-		Stack2("§c§l[아이템 넣기>", 160,9,1,Arrays.asList("§7[90% 확률로 나올 아이템]"), 10, inv);	
-		Stack2("§c§l[아이템 넣기>", 160,9,1,Arrays.asList("§7[90% 확률로 나올 아이템]"), 11, inv);
-		Stack2("§c§l[아이템 넣기>", 160,9,1,Arrays.asList("§7[90% 확률로 나올 아이템]"), 12, inv);	
-		Stack2("§c§l<아이템 넣기]", 160,9,1,Arrays.asList("§7[90% 확률로 나올 아이템]"), 14, inv);
-		Stack2("§c§l<아이템 넣기]", 160,9,1,Arrays.asList("§7[90% 확률로 나올 아이템]"), 15, inv);	
-		Stack2("§c§l<아이템 넣기]", 160,9,1,Arrays.asList("§7[90% 확률로 나올 아이템]"), 16, inv);
-		Stack2("§c§l<아이템 넣기]", 160,9,1,Arrays.asList("§7[90% 확률로 나올 아이템]"), 17, inv);
+		stackItem(item, 13, inv);
+		removeFlagStack("§c§l[아이템 넣기>", 160,9,1,Arrays.asList("§7[90% 확률로 나올 아이템]"), 9, inv);
+		removeFlagStack("§c§l[아이템 넣기>", 160,9,1,Arrays.asList("§7[90% 확률로 나올 아이템]"), 10, inv);	
+		removeFlagStack("§c§l[아이템 넣기>", 160,9,1,Arrays.asList("§7[90% 확률로 나올 아이템]"), 11, inv);
+		removeFlagStack("§c§l[아이템 넣기>", 160,9,1,Arrays.asList("§7[90% 확률로 나올 아이템]"), 12, inv);	
+		removeFlagStack("§c§l<아이템 넣기]", 160,9,1,Arrays.asList("§7[90% 확률로 나올 아이템]"), 14, inv);
+		removeFlagStack("§c§l<아이템 넣기]", 160,9,1,Arrays.asList("§7[90% 확률로 나올 아이템]"), 15, inv);	
+		removeFlagStack("§c§l<아이템 넣기]", 160,9,1,Arrays.asList("§7[90% 확률로 나올 아이템]"), 16, inv);
+		removeFlagStack("§c§l<아이템 넣기]", 160,9,1,Arrays.asList("§7[90% 확률로 나올 아이템]"), 17, inv);
 
 		item = areaYaml.getItemStack(areaName+".Mining."+itemData+".50");
-		ItemStackStack(item, 22, inv);
-		Stack2("§c§l[아이템 넣기>", 160,4,1,Arrays.asList("§7[50% 확률로 나올 아이템]"), 18, inv);
-		Stack2("§c§l[아이템 넣기>", 160,4,1,Arrays.asList("§7[50% 확률로 나올 아이템]"), 19, inv);	
-		Stack2("§c§l[아이템 넣기>", 160,4,1,Arrays.asList("§7[50% 확률로 나올 아이템]"), 20, inv);
-		Stack2("§c§l[아이템 넣기>", 160,4,1,Arrays.asList("§7[50% 확률로 나올 아이템]"), 21, inv);	
-		Stack2("§c§l<아이템 넣기]", 160,4,1,Arrays.asList("§7[50% 확률로 나올 아이템]"), 23, inv);
-		Stack2("§c§l<아이템 넣기]", 160,4,1,Arrays.asList("§7[50% 확률로 나올 아이템]"), 24, inv);	
-		Stack2("§c§l<아이템 넣기]", 160,4,1,Arrays.asList("§7[50% 확률로 나올 아이템]"), 25, inv);
-		Stack2("§c§l<아이템 넣기]", 160,4,1,Arrays.asList("§7[50% 확률로 나올 아이템]"), 26, inv);
+		stackItem(item, 22, inv);
+		removeFlagStack("§c§l[아이템 넣기>", 160,4,1,Arrays.asList("§7[50% 확률로 나올 아이템]"), 18, inv);
+		removeFlagStack("§c§l[아이템 넣기>", 160,4,1,Arrays.asList("§7[50% 확률로 나올 아이템]"), 19, inv);	
+		removeFlagStack("§c§l[아이템 넣기>", 160,4,1,Arrays.asList("§7[50% 확률로 나올 아이템]"), 20, inv);
+		removeFlagStack("§c§l[아이템 넣기>", 160,4,1,Arrays.asList("§7[50% 확률로 나올 아이템]"), 21, inv);	
+		removeFlagStack("§c§l<아이템 넣기]", 160,4,1,Arrays.asList("§7[50% 확률로 나올 아이템]"), 23, inv);
+		removeFlagStack("§c§l<아이템 넣기]", 160,4,1,Arrays.asList("§7[50% 확률로 나올 아이템]"), 24, inv);	
+		removeFlagStack("§c§l<아이템 넣기]", 160,4,1,Arrays.asList("§7[50% 확률로 나올 아이템]"), 25, inv);
+		removeFlagStack("§c§l<아이템 넣기]", 160,4,1,Arrays.asList("§7[50% 확률로 나올 아이템]"), 26, inv);
 
 		item = areaYaml.getItemStack(areaName+".Mining."+itemData+".10");
-		ItemStackStack(item, 31, inv);
-		Stack2("§c§l[아이템 넣기>", 160,1,1,Arrays.asList("§7[10% 확률로 나올 아이템]"), 27, inv);
-		Stack2("§c§l[아이템 넣기>", 160,1,1,Arrays.asList("§7[10% 확률로 나올 아이템]"), 28, inv);	
-		Stack2("§c§l[아이템 넣기>", 160,1,1,Arrays.asList("§7[10% 확률로 나올 아이템]"), 29, inv);
-		Stack2("§c§l[아이템 넣기>", 160,1,1,Arrays.asList("§7[10% 확률로 나올 아이템]"), 30, inv);	
-		Stack2("§c§l<아이템 넣기]", 160,1,1,Arrays.asList("§7[10% 확률로 나올 아이템]"), 32, inv);
-		Stack2("§c§l<아이템 넣기]", 160,1,1,Arrays.asList("§7[10% 확률로 나올 아이템]"), 33, inv);	
-		Stack2("§c§l<아이템 넣기]", 160,1,1,Arrays.asList("§7[10% 확률로 나올 아이템]"), 34, inv);
-		Stack2("§c§l<아이템 넣기]", 160,1,1,Arrays.asList("§7[10% 확률로 나올 아이템]"), 35, inv);
+		stackItem(item, 31, inv);
+		removeFlagStack("§c§l[아이템 넣기>", 160,1,1,Arrays.asList("§7[10% 확률로 나올 아이템]"), 27, inv);
+		removeFlagStack("§c§l[아이템 넣기>", 160,1,1,Arrays.asList("§7[10% 확률로 나올 아이템]"), 28, inv);	
+		removeFlagStack("§c§l[아이템 넣기>", 160,1,1,Arrays.asList("§7[10% 확률로 나올 아이템]"), 29, inv);
+		removeFlagStack("§c§l[아이템 넣기>", 160,1,1,Arrays.asList("§7[10% 확률로 나올 아이템]"), 30, inv);	
+		removeFlagStack("§c§l<아이템 넣기]", 160,1,1,Arrays.asList("§7[10% 확률로 나올 아이템]"), 32, inv);
+		removeFlagStack("§c§l<아이템 넣기]", 160,1,1,Arrays.asList("§7[10% 확률로 나올 아이템]"), 33, inv);	
+		removeFlagStack("§c§l<아이템 넣기]", 160,1,1,Arrays.asList("§7[10% 확률로 나올 아이템]"), 34, inv);
+		removeFlagStack("§c§l<아이템 넣기]", 160,1,1,Arrays.asList("§7[10% 확률로 나올 아이템]"), 35, inv);
 
 		item = areaYaml.getItemStack(areaName+".Mining."+itemData+".1");
-		ItemStackStack(item, 40, inv);
-		Stack2("§c§l[아이템 넣기>", 160,14,1,Arrays.asList("§7[1% 확률로 나올 아이템]"), 36, inv);
-		Stack2("§c§l[아이템 넣기>", 160,14,1,Arrays.asList("§7[1% 확률로 나올 아이템]"), 37, inv);	
-		Stack2("§c§l[아이템 넣기>", 160,14,1,Arrays.asList("§7[1% 확률로 나올 아이템]"), 38, inv);
-		Stack2("§c§l[아이템 넣기>", 160,14,1,Arrays.asList("§7[1% 확률로 나올 아이템]"), 39, inv);	
-		Stack2("§c§l<아이템 넣기]", 160,14,1,Arrays.asList("§7[1% 확률로 나올 아이템]"), 41, inv);
-		Stack2("§c§l<아이템 넣기]", 160,14,1,Arrays.asList("§7[1% 확률로 나올 아이템]"), 42, inv);	
-		Stack2("§c§l<아이템 넣기]", 160,14,1,Arrays.asList("§7[1% 확률로 나올 아이템]"), 43, inv);
-		Stack2("§c§l<아이템 넣기]", 160,14,1,Arrays.asList("§7[1% 확률로 나올 아이템]"), 44, inv);
+		stackItem(item, 40, inv);
+		removeFlagStack("§c§l[아이템 넣기>", 160,14,1,Arrays.asList("§7[1% 확률로 나올 아이템]"), 36, inv);
+		removeFlagStack("§c§l[아이템 넣기>", 160,14,1,Arrays.asList("§7[1% 확률로 나올 아이템]"), 37, inv);	
+		removeFlagStack("§c§l[아이템 넣기>", 160,14,1,Arrays.asList("§7[1% 확률로 나올 아이템]"), 38, inv);
+		removeFlagStack("§c§l[아이템 넣기>", 160,14,1,Arrays.asList("§7[1% 확률로 나올 아이템]"), 39, inv);	
+		removeFlagStack("§c§l<아이템 넣기]", 160,14,1,Arrays.asList("§7[1% 확률로 나올 아이템]"), 41, inv);
+		removeFlagStack("§c§l<아이템 넣기]", 160,14,1,Arrays.asList("§7[1% 확률로 나올 아이템]"), 42, inv);	
+		removeFlagStack("§c§l<아이템 넣기]", 160,14,1,Arrays.asList("§7[1% 확률로 나올 아이템]"), 43, inv);
+		removeFlagStack("§c§l<아이템 넣기]", 160,14,1,Arrays.asList("§7[1% 확률로 나올 아이템]"), 44, inv);
 
 		item = areaYaml.getItemStack(areaName+".Mining."+itemData+".0");
-		ItemStackStack(item, 49, inv);
-		Stack2("§c§l[아이템 넣기>", 160,15,1,Arrays.asList("§7[0.1% 확률로 나올 아이템]"), 46, inv);	
-		Stack2("§c§l[아이템 넣기>", 160,15,1,Arrays.asList("§7[0.1% 확률로 나올 아이템]"), 47, inv);
-		Stack2("§c§l[아이템 넣기>", 160,15,1,Arrays.asList("§7[0.1% 확률로 나올 아이템]"), 48, inv);	
-		Stack2("§c§l<아이템 넣기]", 160,15,1,Arrays.asList("§7[0.1% 확률로 나올 아이템]"), 50, inv);
-		Stack2("§c§l<아이템 넣기]", 160,15,1,Arrays.asList("§7[0.1% 확률로 나올 아이템]"), 51, inv);	
-		Stack2("§c§l<아이템 넣기]", 160,15,1,Arrays.asList("§7[0.1% 확률로 나올 아이템]"), 52, inv);
+		stackItem(item, 49, inv);
+		removeFlagStack("§c§l[아이템 넣기>", 160,15,1,Arrays.asList("§7[0.1% 확률로 나올 아이템]"), 46, inv);	
+		removeFlagStack("§c§l[아이템 넣기>", 160,15,1,Arrays.asList("§7[0.1% 확률로 나올 아이템]"), 47, inv);
+		removeFlagStack("§c§l[아이템 넣기>", 160,15,1,Arrays.asList("§7[0.1% 확률로 나올 아이템]"), 48, inv);	
+		removeFlagStack("§c§l<아이템 넣기]", 160,15,1,Arrays.asList("§7[0.1% 확률로 나올 아이템]"), 50, inv);
+		removeFlagStack("§c§l<아이템 넣기]", 160,15,1,Arrays.asList("§7[0.1% 확률로 나올 아이템]"), 51, inv);	
+		removeFlagStack("§c§l<아이템 넣기]", 160,15,1,Arrays.asList("§7[0.1% 확률로 나올 아이템]"), 52, inv);
 		
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+itemData), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ areaName), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+itemData), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ areaName), 53, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -516,18 +516,18 @@ public class AreaGui extends UtilGui
 					case "엔더크리스탈" : id=46; break;
 				}
 				
-				Stack("§f"+monsterName, id, data, 1,Arrays.asList(scriptA), loc, inv);
+				stack("§f"+monsterName, id, data, 1,Arrays.asList(scriptA), loc, inv);
 				loc++;
 			}
 		}
 		
 		if(monsterList.length-(page*44)>45)
-			Stack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			stack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			stack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+areaName), 53, inv);
+		stack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		stack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+areaName), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -663,16 +663,16 @@ public class AreaGui extends UtilGui
 				case "엔더크리스탈" : id=46; break;
 			}
 			
-			Stack("§f"+monsterName, id, data, 1,Arrays.asList(scriptA), loc, inv);
+			stack("§f"+monsterName, id, data, 1,Arrays.asList(scriptA), loc, inv);
 			loc++;
 		}
 		
 		if(monsterList.length-(page*44)>45)
-			Stack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			stack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			stack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack("§f§l취소", 166,0,1,Arrays.asList("§7지정 몬스터 스폰대신","§7영역에 등록 된 몬스터를","§7랜덤하게 스폰 합니다.","§0"+areaName,"§0"+ruleCount), 49, inv);
+		stack("§f§l취소", 166,0,1,Arrays.asList("§7지정 몬스터 스폰대신","§7영역에 등록 된 몬스터를","§7랜덤하게 스폰 합니다.","§0"+areaName,"§0"+ruleCount), 49, inv);
 		player.openInventory(inv);
 	}
 
@@ -706,18 +706,18 @@ public class AreaGui extends UtilGui
 			}
 			lore = lore + lore2+"%enter% %enter%§e[좌 클릭시 배경음 설정]";
 			if(count > new otherplugins.NoteBlockApiMain().Musics.size() || loc >= 45) break;
-				Stack2("§f§l" + count, 2256+model,0,1,Arrays.asList(lore.split("%enter%")), loc, inv);
+				removeFlagStack("§f§l" + count, 2256+model,0,1,Arrays.asList(lore.split("%enter%")), loc, inv);
 			
 			loc++;
 		}
 		
 		if(new otherplugins.NoteBlockApiMain().Musics.size()-(page*44)>45)
-			Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-			Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+areaName), 53, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+areaName), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -730,12 +730,12 @@ public class AreaGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 			String areaName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
 			
@@ -749,9 +749,9 @@ public class AreaGui extends UtilGui
 				configYaml.getConfig("config.yml");
 				player.closeInventory();
 				event.EventInteract IT = new event.EventInteract();
-				player.sendMessage("§3[영역] : " + IT.SetItemDefaultName((short) configYaml.getInt("Server.AreaSettingWand"),(byte)0) +"§3 아이템으로 구역을 설정을 한 뒤,");
+				player.sendMessage("§3[영역] : " + IT.setItemDefaultName(configYaml.getInt("Server.AreaSettingWand"), 0) +"§3 아이템으로 구역을 설정을 한 뒤,");
 				player.sendMessage("§6§l /영역 <영역이름> 생성 §3명령어를 입력해 주세요!");
-				SoundEffect.SP((Player)player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+				SoundEffect.playSound((Player)player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			}
 			else if(slot == 50)//다음 페이지
 				areaListGui(player, (short) (page+1));
@@ -761,7 +761,7 @@ public class AreaGui extends UtilGui
 					areaSettingGui(player, areaName);
 				else if(event.isShiftClick() && event.isRightClick())
 				{
-					SoundEffect.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+					SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
 				  	YamlLoader areaYaml = new YamlLoader();
 					areaYaml.getConfig("Area/AreaList.yml");
 					for(int count = 0; count < MainServerOption.AreaList.get(areaYaml.getString(areaName+".World")).size(); count++)
@@ -782,12 +782,12 @@ public class AreaGui extends UtilGui
 		
 		if(slot == 44)//창닫기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 		  	YamlLoader areaYaml = new YamlLoader();
 			areaYaml.getConfig("Area/AreaList.yml");
 			String areaName = ChatColor.stripColor(event.getInventory().getItem(44).getItemMeta().getLore().get(1));
@@ -866,7 +866,7 @@ public class AreaGui extends UtilGui
 			}
 			else if(slot == 23)//메시지 변경
 			{
-				SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 				player.sendMessage("§6/영역 "+areaName+" 이름 <문자열>§e\n - "+areaName+" 구역의 알림 메시지에 보일 이름을 정합니다.");
 				player.sendMessage("§6/영역 "+areaName+" 설명 <문자열>§e\n - "+areaName+" 구역의 알림 메시지에 보일 부가 설명을 정합니다.");
 				player.sendMessage("§6%player%§f - 플레이어 지칭하기 -");
@@ -893,7 +893,7 @@ public class AreaGui extends UtilGui
 				if(new otherplugins.NoteBlockApiMain().SoundList(player,true))
 					areaMusicSettingGui(player, 0, areaName);
 				else
-					SoundEffect.SP(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.9F);
+					SoundEffect.playSound(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.9F);
 			}
 			else if(slot == 28)//블록 리젠
 			{
@@ -948,12 +948,12 @@ public class AreaGui extends UtilGui
 		int slot = event.getSlot();
 		if(slot == 53)//창닫기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			String areaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
 			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 			if(slot == 45)//이전 화면
@@ -966,7 +966,7 @@ public class AreaGui extends UtilGui
 				monsterYaml.getConfig("Monster/MonsterList.yml");
 				if(monsterYaml.getKeys().size() == 0)
 				{
-					SoundEffect.SP(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1.0F, 1.8F);
+					SoundEffect.playSound(player,Sound.ENTITY_EXPERIENCE_ORB_PICKUP,1.0F, 1.8F);
 					player.sendMessage("§c[영역] : 현재 등록된 커스텀 몬스터가 존재하지 않습니다!");
 					player.sendMessage("§6§l/몬스터 <이름> 생성 §e해당 이름을 가진 몬스터를 생성합니다.");
 				}
@@ -982,7 +982,7 @@ public class AreaGui extends UtilGui
 				  	YamlLoader areaYaml = new YamlLoader();
 					areaYaml.getConfig("Area/AreaList.yml");
 					String monsterName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
-					SoundEffect.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+					SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
 					areaYaml.removeKey(areaName+".Monster."+monsterName);
 					areaYaml.saveConfig();
 					areaMonsterSettingGui(player, page,areaName);
@@ -1000,12 +1000,12 @@ public class AreaGui extends UtilGui
 			event.setCancelled(true);
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else if(slot == 45)//이전 목록
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			areaSettingGui(player, areaName);
 		}
 	}
@@ -1017,12 +1017,12 @@ public class AreaGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			String areaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
 			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 			if(slot == 45)//이전 목록
@@ -1048,7 +1048,7 @@ public class AreaGui extends UtilGui
 					areaBlockItemSettingGui(player, areaName, blockName);
 				else if(event.isShiftClick() && event.isRightClick())
 				{
-					SoundEffect.SP(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
+					SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
 				  	YamlLoader areaYaml = new YamlLoader();
 					areaYaml.getConfig("Area/AreaList.yml");
 					areaYaml.removeKey(areaName+".Mining."+blockName);
@@ -1071,12 +1071,12 @@ public class AreaGui extends UtilGui
 				event.setCancelled(false);
 			else if(slot == 53)//나가기
 			{
-				SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 				player.closeInventory();
 			}
 			else if(slot == 45)//이전 목록
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 				areaBlockSettingGui(player, (short) 0, areaName);
 			}
 		}
@@ -1089,12 +1089,12 @@ public class AreaGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
 			String areaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
 			if(slot == 45)//이전 목록
@@ -1125,7 +1125,7 @@ public class AreaGui extends UtilGui
 			{
 			  	YamlLoader areaYaml = new YamlLoader();
 				areaYaml.getConfig("Area/AreaList.yml");
-				SoundEffect.SP(player, Sound.BLOCK_LAVA_POP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 1.0F, 1.0F);
 				areaYaml.removeKey(areaName+".MonsterSpawnRule."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 				areaYaml.saveConfig();
 				areaMonsterSpawnSettingGui(player, (short) page, areaName);
@@ -1143,12 +1143,12 @@ public class AreaGui extends UtilGui
 		
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 목록
 				areaMonsterSettingGui(player, (short) 0, areaName);
 			else if(slot == 45)//이전 페이지
@@ -1158,7 +1158,7 @@ public class AreaGui extends UtilGui
 			else
 			{
 				String mobName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
-				SoundEffect.SP(player, Sound.ENTITY_WOLF_AMBIENT, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_WOLF_AMBIENT, 0.8F, 1.0F);
 			  	YamlLoader areaYaml = new YamlLoader();
 				areaYaml.getConfig("Area/AreaList.yml");
 				areaYaml.createSection(areaName+".Monster."+mobName);
@@ -1178,7 +1178,7 @@ public class AreaGui extends UtilGui
 		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 		if(slot == 49)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			areaMonsterSpawnSettingGui(player, (short) 0, areaName);
 			new area.AreaMain().AreaMonsterSpawnAdd(areaName, ruleCounter);
 		}
@@ -1189,7 +1189,7 @@ public class AreaGui extends UtilGui
 		else
 		{
 			String mobName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
-			SoundEffect.SP(player, Sound.BLOCK_ANVIL_LAND, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.BLOCK_ANVIL_LAND, 0.8F, 1.0F);
 		  	YamlLoader areaYaml = new YamlLoader();
 			areaYaml.getConfig("Area/AreaList.yml");
 			areaYaml.set(areaName+".MonsterSpawnRule."+ruleCounter+".Monster", mobName);
@@ -1210,12 +1210,12 @@ public class AreaGui extends UtilGui
 
 		if(slot == 53)//나가기
 		{
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		}
 		else if(areaName.equals("DeathBGM¡"))
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)
 				new admin.OPboxGui().opBoxGuiDeath(player);
 			else if(slot == 48)
@@ -1233,7 +1233,7 @@ public class AreaGui extends UtilGui
 		}
 		else
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 목록
 				areaSettingGui(player, areaName);
 			else if(slot == 48)//이전 페이지

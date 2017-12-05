@@ -263,7 +263,7 @@ public class Main extends JavaPlugin implements Listener
 												target.teleport(l);
 												for(int count2=0;count2<210;count2++)
 													new effect.ParticleEffect().PL(target.getLocation(), org.bukkit.Effect.SMOKE, new util.UtilNumber().RandomNum(0, 14));
-												SoundEffect.SL(target.getLocation(), Sound.ENTITY_BLAZE_AMBIENT, 0.5F, 1.8F);
+												SoundEffect.playSoundLocation(target.getLocation(), Sound.ENTITY_BLAZE_AMBIENT, 0.5F, 1.8F);
 									    		new otherplugins.NoteBlockApiMain().Stop(target);
 											  	YamlLoader configYaml = new YamlLoader();
 										    	configYaml.getConfig("config.yml");
@@ -272,7 +272,7 @@ public class Main extends JavaPlugin implements Listener
 											}
 											else
 											{
-												SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+												SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 												player.sendMessage("§c[SYSTEM] : 부활 아이템이 부족하여 부활시킬 수 없습니다!");
 												return;
 											}
@@ -426,7 +426,7 @@ public class Main extends JavaPlugin implements Listener
 							event.setCancelled(true);
 							if(event.getPlayer().isOp() == false)
 							{
-								SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+								SoundEffect.playSound(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 								event.getPlayer().sendMessage("§c[SYSTEM] : §e"+ Area[1] + "§c 지역에 있는 작물은 손 댈 수없습니다!");
 							}
 							return;
@@ -551,7 +551,7 @@ public class Main extends JavaPlugin implements Listener
 					{
 						event.setCancelled(true);
 						event.getWhoClicked().getInventory().setItem(event.getSlot(), null);
-						SoundEffect.SP((Player)event.getWhoClicked(), Sound.BLOCK_ANVIL_LAND, 1.0F, 1.9F);
+						SoundEffect.playSound((Player)event.getWhoClicked(), Sound.BLOCK_ANVIL_LAND, 1.0F, 1.9F);
 						return;
 					}
 				}
@@ -615,24 +615,24 @@ public class Main extends JavaPlugin implements Listener
 				case"gbdenablegui":
 					if(player.isOp() == true)
 					{
-					 	SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_VILLAGER_YES, 1.0F, 1.8F);
+					 	SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_VILLAGER_YES, 1.0F, 1.8F);
 					    player.sendMessage("§a[NPC] : GUI를 활성화 시킬 NPC를 우클릭 하세요!");
 					    new UserDataObject().setInt(player, (byte) 4, 114);
 					}
 					else
 					{
 						talker.sendMessage("§c[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
-						SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+						SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 					}
 					return true;
 				case"친구":
 				case"gbdfriend":
-				 	SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				 	SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 				 	new user.EtcGui().FriendsGUI(player, (short) 0);
 					return true;
 				case"스킬":
 				case"gbdskill":
-				 	SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+				 	SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 				    skill.UserSkillGui PSKGUI = new skill.UserSkillGui();
 					PSKGUI.MainSkillsListGUI(player, (short) 0);
 					return true;
@@ -695,30 +695,30 @@ public class Main extends JavaPlugin implements Listener
 		  			return true;
 		  		case "스텟":
 		  		case "gbdstat":
-				 	SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
+				 	SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
 				 	new user.StatsGui().StatusGUI((Player)talker);
 					return true;
 		  		case "옵션":
 		  		case "gbdoption":
-				 	SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
+				 	SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
 				 	new user.OptionGui().optionGUI((Player)talker);
 					return true;
 		  		case "기타":
 		  		case "gbdetc":
-				 	SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
+				 	SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
 				 	new user.EtcGui().ETCGUI_Main((Player) talker);
 					return true;
 		  		case "몬스터" :
 		  		case "gbdmobs" :
 				  if(talker.isOp() == true)
 				  {
-					  SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
+					  SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
 		  			new monster.MonsterGui().monsterListGUI(player, 0);
 				  }
 				  else
 				  {
 					  talker.sendMessage("§c[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
-					  SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+					  SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 				  }
 		  			return true;
 		  		case "워프":
@@ -771,14 +771,14 @@ public class Main extends JavaPlugin implements Listener
 						else
 						{
 		  					player.sendMessage("§c[스킬 설정] : 이 명령어는 스킬 설정시 사용됩니다!");
-							SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+							SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 		  					return true;
 						}
 		  			}
 					else
 					{
 						talker.sendMessage("§c[SYSTEM] : 해당 명령어를 실행하기 위해서는 관리자 권한이 필요합니다!");
-						SoundEffect.SP((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+						SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 					}
 					return true;
 			}

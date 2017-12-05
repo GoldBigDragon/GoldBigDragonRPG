@@ -150,27 +150,27 @@ public class StructureMain
 		String Structrue = ChatColor.stripColor(StructureName);
 		if(Structrue.equals("[우편함]"))
 		{
-			SoundEffect.SP(player, Sound.BLOCK_CHEST_OPEN, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.BLOCK_CHEST_OPEN, 0.8F, 1.0F);
 			new StructPostBox().PostBoxMainGUI(player, (byte) 0);
 		}
 		else if(Structrue.equals("[게시판]"))
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ZOMBIE_ATTACK_DOOR_WOOD, 0.5F, 1.8F);
+			SoundEffect.playSound(player, Sound.ENTITY_ZOMBIE_ATTACK_DOOR_WOOD, 0.5F, 1.8F);
 			new StructBoard().BoardMainGUI(player,StructureName, (byte) 0);
 		}
 		else if(Structrue.equals("[거래 게시판]"))
 		{
-			SoundEffect.SP(player, Sound.ENTITY_VILLAGER_AMBIENT, 1.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_VILLAGER_AMBIENT, 1.0F, 1.0F);
 			new StructTradeBoard().TradeBoardMainGUI(player, (byte)0, (byte)0);
 		}
 		else if(Structrue.equals("[모닥불]"))
 		{
-			SoundEffect.SP(player, Sound.BLOCK_FIRE_AMBIENT, 2.0F, 1.0F);
+			SoundEffect.playSound(player, Sound.BLOCK_FIRE_AMBIENT, 2.0F, 1.0F);
 			new StructCampFire().CampFireMainGUI(player, StructureName);
 		}
 		else if(Structrue.equals("[제단]"))
 		{
-			SoundEffect.SP(player, Sound.AMBIENT_CAVE, 1.2F, 1.2F);
+			SoundEffect.playSound(player, Sound.AMBIENT_CAVE, 1.2F, 1.2F);
 			new dungeon.DungeonGui().AltarUseGUI(player, StructureName);
 		}
 	}

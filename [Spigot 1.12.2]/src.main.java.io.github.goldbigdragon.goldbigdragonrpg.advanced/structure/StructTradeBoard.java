@@ -52,30 +52,30 @@ public class StructTradeBoard extends UtilGui
 		String ShopTypeString = "Buy";
 		if(ShopType==1)//Sell
 		{
-			Stack2("§e§l[거래 타입 변경]", 130,0,1,Arrays.asList("","§9§l[현재 거래 타입]","§c§l[    판매    ]"), 46, inv);
+			removeFlagStack("§e§l[거래 타입 변경]", 130,0,1,Arrays.asList("","§9§l[현재 거래 타입]","§c§l[    판매    ]"), 46, inv);
 			ShopTypeString = "Sell";
 			data = 14;
 		}
 		else if(ShopType==2)//Exchange
 		{
-			Stack2("§e§l[거래 타입 변경]", 388,0,1,Arrays.asList("","§9§l[현재 거래 타입]","§a§l[    교환    ]"), 46, inv);
+			removeFlagStack("§e§l[거래 타입 변경]", 388,0,1,Arrays.asList("","§9§l[현재 거래 타입]","§a§l[    교환    ]"), 46, inv);
 			ShopTypeString = "Exchange";
 			data = 5;
 		}
 		else
-			Stack2("§e§l[거래 타입 변경]", 54,0,1,Arrays.asList("","§9§l[현재 거래 타입]","§9§l[    구매    ]"), 46, inv);
+			removeFlagStack("§e§l[거래 타입 변경]", 54,0,1,Arrays.asList("","§9§l[현재 거래 타입]","§9§l[    구매    ]"), 46, inv);
 
-		Stack2("§7§l[물품 검색]", 345,0,1,Arrays.asList("§7등록된 물품을 검색합니다.","","§c§l[GoldBigDragonRPG 버전 업 필요]"), 52, inv);
+		removeFlagStack("§7§l[물품 검색]", 345,0,1,Arrays.asList("§7등록된 물품을 검색합니다.","","§c§l[GoldBigDragonRPG 버전 업 필요]"), 52, inv);
 		
 
 		for(int count2 = 0; count2 < 9; count2++)
-			Stack2("§c ", 160,data,1,Arrays.asList(""), count2, inv);
+			removeFlagStack("§c ", 160,data,1,Arrays.asList(""), count2, inv);
 		for(int count2 = 35; count2 < 45; count2++)
-			Stack2("§c ", 160,data,1,Arrays.asList(""), count2, inv);
+			removeFlagStack("§c ", 160,data,1,Arrays.asList(""), count2, inv);
 		for(int count2 = 9; count2 < 45; count2=(byte) (count2+9))
-			Stack2("§c ", 160,data,1,Arrays.asList(""), count2, inv);
+			removeFlagStack("§c ", 160,data,1,Arrays.asList(""), count2, inv);
 		for(int count2 = 17; count2 < 53; count2=(byte) (count2+9))
-			Stack2("§c ", 160,data,1,Arrays.asList(""), count2, inv);
+			removeFlagStack("§c ", 160,data,1,Arrays.asList(""), count2, inv);
 
 		byte loc=10;
 		
@@ -186,7 +186,7 @@ public class StructTradeBoard extends UtilGui
 				if(ShopType==2)
 				{
 					ItemStack CurrentItem = Board.getItemStack(ShopTypeString+"."+AddItem.get(count)+"."+AddPlayer.get(count)+".WantItem");
-					Temp = new event.EventInteract().SetItemDefaultName((short) CurrentItem.getTypeId(), CurrentItem.getData().getData());
+					Temp = new event.EventInteract().setItemDefaultName(CurrentItem.getTypeId(), CurrentItem.getData().getData());
 					if(CurrentItem.hasItemMeta())
 						if(CurrentItem.getItemMeta().hasDisplayName())
 							Temp = CurrentItem.getItemMeta().getDisplayName();
@@ -232,7 +232,7 @@ public class StructTradeBoard extends UtilGui
 					Memo.add("");
 				itemM.setLore(Memo);
 				item.setItemMeta(itemM);
-				ItemStackStack(item, loc, inv);
+				stackItem(item, loc, inv);
 				if(loc==16||loc==25)
 					loc = (byte) (loc+3);
 				else
@@ -250,11 +250,11 @@ public class StructTradeBoard extends UtilGui
 			if(Board.getInt("ExchangeRegistered")>(21*page)+21)
 				showNextPage=true;
 		if(showNextPage)
-		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+		removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+		removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 
-		Stack2("§e§l[거래 메뉴]", 386,0,1,Arrays.asList("§7거래 물품을 등록하거나","§7자신이 등록한 물품을 봅니다."), 49, inv);
+		removeFlagStack("§e§l[거래 메뉴]", 386,0,1,Arrays.asList("§7거래 물품을 등록하거나","§7자신이 등록한 물품을 봅니다."), 49, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -265,12 +265,12 @@ public class StructTradeBoard extends UtilGui
 		Board.getConfig("Structure/UserShopBoard.yml");
 		String UniqueCode = "§0§0§d§0§8§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0거래 게시판 설정");
-		Stack2("§f§l[판매 수수료]", 266,0,1,Arrays.asList("§7물품 판매 수수료를 설정합니다.","","§9[현재 수수료]","§f판매 가격의 "+Board.getInt("SellCommission")+"%"), 1, inv);
-		Stack2("§f§l[등록 수수료]", 54,0,1,Arrays.asList("§7물품 등록 수수료를 설정합니다.","","§9[현재 수수료]","§f등록시 "+Board.getInt("RegisterCommission")+" "+main.MainServerOption.money+"§f 필요"), 2, inv);
-		Stack2("§f§l[등록 물품 제한]", 397,3,1,Arrays.asList("§71인당 등록 가능한 물품 수를 제한합니다.","","§9[현재 최대 개수]","§f"+Board.getInt("LimitPerPlayer")+" 개"), 3, inv);
+		removeFlagStack("§f§l[판매 수수료]", 266,0,1,Arrays.asList("§7물품 판매 수수료를 설정합니다.","","§9[현재 수수료]","§f판매 가격의 "+Board.getInt("SellCommission")+"%"), 1, inv);
+		removeFlagStack("§f§l[등록 수수료]", 54,0,1,Arrays.asList("§7물품 등록 수수료를 설정합니다.","","§9[현재 수수료]","§f등록시 "+Board.getInt("RegisterCommission")+" "+main.MainServerOption.money+"§f 필요"), 2, inv);
+		removeFlagStack("§f§l[등록 물품 제한]", 397,3,1,Arrays.asList("§71인당 등록 가능한 물품 수를 제한합니다.","","§9[현재 최대 개수]","§f"+Board.getInt("LimitPerPlayer")+" 개"), 3, inv);
 		//
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 8, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 8, inv);
 		player.openInventory(inv);
 	}
 	
@@ -279,13 +279,13 @@ public class StructTradeBoard extends UtilGui
 		String UniqueCode = "§0§0§d§0§9§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0거래 게시판 메뉴");
 
-		Stack2("§9§l[물품 판매]", 54,0,1,Arrays.asList("§7자신이 현재 가지고 있는 아이템을", "§7등록하여 판매합니다."), 1, inv);
-		Stack2("§c§l[물품 구매]", 130,0,1,Arrays.asList("§7구매하고 싶은 아이템을 등록하여", "§7구매합니다."), 3, inv);
-		Stack2("§a§l[물품 교환]", 388,0,1,Arrays.asList("§7자신이 원하는 아이템과 자신의", "§7아이템을 등록하여 교환합니다."), 5, inv);
-		Stack2("§3§l[등록 확인]", 386,0,1,Arrays.asList("§7거래 게시판에 등록한 아이템을", "§7확인하거나 등록을 취소합니다.","","§c§l[GoldBigDragonRPG 버전 업 필요]"), 7, inv);
+		removeFlagStack("§9§l[물품 판매]", 54,0,1,Arrays.asList("§7자신이 현재 가지고 있는 아이템을", "§7등록하여 판매합니다."), 1, inv);
+		removeFlagStack("§c§l[물품 구매]", 130,0,1,Arrays.asList("§7구매하고 싶은 아이템을 등록하여", "§7구매합니다."), 3, inv);
+		removeFlagStack("§a§l[물품 교환]", 388,0,1,Arrays.asList("§7자신이 원하는 아이템과 자신의", "§7아이템을 등록하여 교환합니다."), 5, inv);
+		removeFlagStack("§3§l[등록 확인]", 386,0,1,Arrays.asList("§7거래 게시판에 등록한 아이템을", "§7확인하거나 등록을 취소합니다.","","§c§l[GoldBigDragonRPG 버전 업 필요]"), 7, inv);
 
-		Stack2("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 8, inv);
+		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 8, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -294,7 +294,7 @@ public class StructTradeBoard extends UtilGui
 	{
 		String UniqueCode = "§0§0§d§0§a§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0판매할 아이템을 고르세요");
-		Stack2("§c§c§c§l[판매 취소]", 166,0,1,Arrays.asList("§7아이템 판매를 취소합니다."), 4, inv);
+		removeFlagStack("§c§c§c§l[판매 취소]", 166,0,1,Arrays.asList("§7아이템 판매를 취소합니다."), 4, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -303,8 +303,8 @@ public class StructTradeBoard extends UtilGui
 	{
 		String UniqueCode = "§0§0§d§0§b§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0구매할 아이템을 고르세요");
-		Stack2("§c§c§f§l[일반 아이템]", 2,0,1,Arrays.asList("§7일반 아이템 중에서 고릅니다."), 2, inv);
-		Stack2("§c§c§c§l[구매 취소]", 166,0,1,Arrays.asList("§7아이템 구매를 취소합니다."), 4, inv);
+		removeFlagStack("§c§c§f§l[일반 아이템]", 2,0,1,Arrays.asList("§7일반 아이템 중에서 고릅니다."), 2, inv);
+		removeFlagStack("§c§c§c§l[구매 취소]", 166,0,1,Arrays.asList("§7아이템 구매를 취소합니다."), 4, inv);
 		//Stack2("§c§c§b§l[특수 아이템]", 384,0,1,Arrays.asList("§7특수 아이템 중에서 고릅니다."), 6, inv);
 		player.openInventory(inv);
 		return;
@@ -314,8 +314,8 @@ public class StructTradeBoard extends UtilGui
 	{
 		String UniqueCode = "§0§0§d§0§c§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0받고싶은 아이템을 고르세요");
-		Stack2("§c§c§f§l[일반 아이템]", 2,0,1,Arrays.asList("§7일반 아이템 중에서 고릅니다."), 2, inv);
-		Stack2("§c§c§c§l[구매 취소]", 166,0,1,Arrays.asList("§7아이템 구매를 취소합니다."), 4, inv);
+		removeFlagStack("§c§c§f§l[일반 아이템]", 2,0,1,Arrays.asList("§7일반 아이템 중에서 고릅니다."), 2, inv);
+		removeFlagStack("§c§c§c§l[구매 취소]", 166,0,1,Arrays.asList("§7아이템 구매를 취소합니다."), 4, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -324,7 +324,7 @@ public class StructTradeBoard extends UtilGui
 	{
 		String UniqueCode = "§0§0§d§0§d§r";
 		Inventory inv = Bukkit.createInventory(null, 9, UniqueCode + "§0내가 줄 아이템을 고르세요");
-		Stack2("§c§c§c§l[판매 취소]", 166,0,1,Arrays.asList("§7아이템 판매를 취소합니다."), 4, inv);
+		removeFlagStack("§c§c§c§l[판매 취소]", 166,0,1,Arrays.asList("§7아이템 판매를 취소합니다."), 4, inv);
 		player.openInventory(inv);
 		return;
 	}
@@ -339,17 +339,17 @@ public class StructTradeBoard extends UtilGui
 		for(count = page*45;loc < 45;count++)
 		{
 			if(getNormalItem(count)!=null)
-				ItemStackStack(getNormalItem(count), loc, inv);
+				stackItem(getNormalItem(count), loc, inv);
 			else
 				break;
 			loc=(byte) (loc+1);
 		}
 		
 		if(getNormalItem(count+1)!=null)
-		Stack2("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+		removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
-		Stack2("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
-		Stack2("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ShopType), 53, inv);
+		removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
+		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ShopType), 53, inv);
 		player.openInventory(inv);
 	}
 	
@@ -371,7 +371,7 @@ public class StructTradeBoard extends UtilGui
 		switch (event.getSlot())
 		{
 		case 46://거래 타입 변경
-			SoundEffect.SP(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
 			if(event.isLeftClick())
 			{
 				if(ShopType != 2)
@@ -390,23 +390,23 @@ public class StructTradeBoard extends UtilGui
 		case 48://이전 페이지
 			if(event.getCurrentItem().getTypeId()==323)
 			{
-				SoundEffect.SP(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
 				TradeBoardMainGUI(player, (byte)(page-1), (byte)ShopType);
 			}
 			return;
 		case 49://물품 등록
-			SoundEffect.SP(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
 			SelectTradeTypeGUI(player);
 			return;
 		case 50://다음 페이지
 			if(event.getCurrentItem().getTypeId()==323)
 			{
-				SoundEffect.SP(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
 				TradeBoardMainGUI(player, (byte)(page+1), (byte)ShopType);
 			}
 			return;
 		case 52://물품 검색
-			SoundEffect.SP(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
 			return;
 		}
 		
@@ -492,13 +492,13 @@ public class StructTradeBoard extends UtilGui
 							Board.removeKey(ShopTypeString+"."+ItemName+"."+RegisterUUID);
 						Board.set(ShopTypeString+"Registered", Board.getInt(ShopTypeString+"Registered")-1);
 						Board.saveConfig();
-						SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
+						SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 						TradeBoardMainGUI(player, (byte)page, (byte)ShopType);
 					}
 				}
 				else
 				{
-					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 					player.sendMessage("§c[거래 게시판] : 자신이 등록한 물품만 등록 철회할 수 있습니다!");
 					return;
 				}
@@ -518,7 +518,7 @@ public class StructTradeBoard extends UtilGui
 					u.setString(player, (byte)1, ItemName);
 					u.setString(player, (byte)2, RegisterUUID);
 					
-					String RealName = ChatColor.stripColor(new event.EventInteract().SetItemDefaultName((short) event.getCurrentItem().getTypeId(), event.getCurrentItem().getData().getData()));
+					String RealName = ChatColor.stripColor(new event.EventInteract().setItemDefaultName(event.getCurrentItem().getTypeId(), event.getCurrentItem().getData().getData()));
 					if(CurrentItem.hasItemMeta())
 						if(CurrentItem.getItemMeta().hasDisplayName())
 							RealName = CurrentItem.getItemMeta().getDisplayName();
@@ -527,7 +527,7 @@ public class StructTradeBoard extends UtilGui
 					
 					
 					u.setInt(player, (byte)0, Board.getInt(ShopTypeString+"."+ItemName+"."+RegisterUUID+".Amount"));
-					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 					player.sendMessage("§e[거래 게시판] : 얼마나 필요하신가요? (0 입력시 물품 구매 취소)");
 					player.sendMessage("§e[물품 재고 : "+Board.getInt(ShopTypeString+"."+ItemName+"."+RegisterUUID+".Amount")+" 개]");
 					player.sendMessage("§e[1개당 "+Board.getInt(ShopTypeString+"."+ItemName+"."+RegisterUUID+".Price")+" "+main.MainServerOption.money+"§e]");
@@ -535,7 +535,7 @@ public class StructTradeBoard extends UtilGui
 				}
 				else
 				{
-					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 					player.sendMessage("§c[거래 게시판] : 소지금이 부족하여 물품을 구매할 수 없습니다!");
 					return;
 				}
@@ -562,7 +562,7 @@ public class StructTradeBoard extends UtilGui
 				}
 				if(itemcount==0)
 				{
-					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 					player.sendMessage("§c[거래 게시판] : 해당 물건을 가지고 있지 않습니다!");
 					return;
 				}
@@ -573,7 +573,7 @@ public class StructTradeBoard extends UtilGui
 				u.setString(player, (byte)1, ItemName);
 				u.setString(player, (byte)2, RegisterUUID);
 				
-				String RealName = ChatColor.stripColor(new event.EventInteract().SetItemDefaultName((short) event.getCurrentItem().getTypeId(), event.getCurrentItem().getData().getData()));
+				String RealName = ChatColor.stripColor(new event.EventInteract().setItemDefaultName(event.getCurrentItem().getTypeId(), event.getCurrentItem().getData().getData()));
 				if(CurrentItem.hasItemMeta())
 					if(CurrentItem.getItemMeta().hasDisplayName())
 						RealName = CurrentItem.getItemMeta().getDisplayName();
@@ -583,7 +583,7 @@ public class StructTradeBoard extends UtilGui
 				if(itemcount>Board.getInt(ShopTypeString+"."+ItemName+"."+RegisterUUID+".Amount"))
 					itemcount=(short) Board.getInt(ShopTypeString+"."+ItemName+"."+RegisterUUID+".Amount");
 				u.setInt(player, (byte)0, itemcount);
-				SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 				player.sendMessage("§e[거래 게시판] : 얼마나 판매 하실건가요? (0 입력시 물품 판매 취소)");
 				player.sendMessage("§e[최대 "+itemcount+" 개 판매 가능]");
 				player.sendMessage("§e[1개당 "+Board.getInt(ShopTypeString+"."+ItemName+"."+RegisterUUID+".Price")+" "+main.MainServerOption.money+"§e]");
@@ -600,7 +600,7 @@ public class StructTradeBoard extends UtilGui
 				short needAmount = (short) Board.getInt("Exchange."+ItemName+"."+RegisterUUID+".WantItemAmount");
 				if(Board.contains("Exchange."+ItemName+"."+RegisterUUID)==false)
 				{
-					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 					player.sendMessage("§c[거래 게시판] : 거래 정보가 바뀌었습니다! 재 시도 해 주시길 바랍니다!");
 					u.clearAll(player);
 					return;
@@ -624,14 +624,14 @@ public class StructTradeBoard extends UtilGui
 					}
 					if(itemcount<needAmount)
 					{
-						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 						player.sendMessage("§c[거래 게시판] : 물건을 충분히 가지고 있지 않습니다!");
 						u.clearAll(player);
 						return;
 					}
 					if(needAmount > Board.getInt("Exchange."+ItemName+"."+RegisterUUID+".WantItemAmount"))
 					{
-						SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 						player.sendMessage("§c[거래 게시판] : 거래 정보가 바뀌었습니다! 재 시도 해 주시길 바랍니다!");
 						player.closeInventory();
 						u.clearAll(player);
@@ -639,8 +639,8 @@ public class StructTradeBoard extends UtilGui
 					}
 					String TempName = ItemName;
 					ItemStack BoardGiveItem = Board.getItemStack("Exchange."+ItemName+"."+RegisterUUID+".GiveItem");
-					String BoardGiveItemName = new event.EventInteract().SetItemDefaultName((short) BoardGiveItem.getTypeId(), BoardGiveItem.getData().getData());
-					ItemName = new event.EventInteract().SetItemDefaultName((short) BoardAddedItem.getTypeId(), BoardAddedItem.getData().getData());
+					String BoardGiveItemName = new event.EventInteract().setItemDefaultName(BoardGiveItem.getTypeId(), BoardGiveItem.getData().getData());
+					ItemName = new event.EventInteract().setItemDefaultName(BoardAddedItem.getTypeId(), BoardAddedItem.getData().getData());
 					if(BoardAddedItem.hasItemMeta())
 						if(BoardAddedItem.getItemMeta().hasDisplayName())
 							ItemName = BoardAddedItem.getItemMeta().getDisplayName();
@@ -674,7 +674,7 @@ public class StructTradeBoard extends UtilGui
 					if(Target!=null)
 						if(Target.isOnline())
 						{
-							SoundEffect.SP(Target, Sound.ENTITY_VILLAGER_YES, 1.0F, 1.0F);
+							SoundEffect.playSound(Target, Sound.ENTITY_VILLAGER_YES, 1.0F, 1.0F);
 							new effect.SendPacket().sendTitle(Target, "§3[거래 성사]","§3거래 게시판에 의뢰한 물품이 도착하였습니다.", 1, 3, 1);
 						}
 					
@@ -716,7 +716,7 @@ public class StructTradeBoard extends UtilGui
 		
 		if(event.getSlot()>=1 && event.getSlot() <= 3)
 		{
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			player.closeInventory();
 			UserDataObject u = new UserDataObject();
 			u.setTemp(player, "Structure");
@@ -742,11 +742,11 @@ public class StructTradeBoard extends UtilGui
 		switch (event.getSlot())
 		{
 		case 0://이전 목록
-			SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			new structure.StructureGui().StructureListGUI(player, 0);
 			return;
 		case 8://나가기
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 			return;
 		}
@@ -767,7 +767,7 @@ public class StructTradeBoard extends UtilGui
 				Board.getConfig("Structure/UserShopBoard.yml");
 				if(USRL.getInt(player.getUniqueId().toString())>=Board.getInt("LimitPerPlayer"))
 				{
-					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 					player.sendMessage("§c[거래 게시판] : 당신은 더 이상 등록할 수 없습니다! (최대 "+Board.getInt("LimitPerPlayer")+"개만 등록 가능합니다.)");
 					return;
 				}
@@ -776,7 +776,7 @@ public class StructTradeBoard extends UtilGui
 			Board.getConfig("Structure/UserShopBoard.yml");
 
 			
-			SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
+			SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
 			UserDataObject u = new UserDataObject();
 			u.setTemp(player, "Structure");
 			u.setType(player, "TradeBoard");
@@ -798,14 +798,14 @@ public class StructTradeBoard extends UtilGui
 		switch (event.getSlot())
 		{
 		case 0://이전 페이지
-			SoundEffect.SP(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
 			TradeBoardMainGUI(player, (byte)0, (byte)0);
 			return;
 		case 7://등록 확인
-			SoundEffect.SP(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
 			return;
 		case 8://화면 닫기
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.0F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.0F);
 			player.closeInventory();
 			return;
 		}
@@ -836,7 +836,7 @@ public class StructTradeBoard extends UtilGui
 				}
 				else
 					u.clearAll(player);
-				SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
 				player.closeInventory();
 			}
 		}
@@ -859,7 +859,7 @@ public class StructTradeBoard extends UtilGui
 								u.clearAll(player);
 				if(u.getString(player, (byte)0).equals("SelectItem"))
 				{
-					SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 					if(event.getSlot()==2)
 						if(item.hasItemMeta())
 							if(item.getItemMeta().hasDisplayName())
@@ -877,7 +877,7 @@ public class StructTradeBoard extends UtilGui
 				}
 				else
 					u.clearAll(player);
-				SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
 				player.closeInventory();
 			}
 		}
@@ -894,20 +894,20 @@ public class StructTradeBoard extends UtilGui
 		switch (event.getSlot())
 		{
 			case 48://이전 페이지
-				SoundEffect.SP(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
 				SelectNormalItemGUI(player, (byte) (page-1), ShopType);
 				return;
 			case 50://다음 페이지
-				SoundEffect.SP(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
+				SoundEffect.playSound(player, Sound.BLOCK_WOOD_BUTTON_CLICK_ON, 0.8F, 1.0F);
 				SelectNormalItemGUI(player, (byte) (page+1), ShopType);
 				return;
 			case 53://닫기
-				SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
+				SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 				player.closeInventory();
 				return;
 			default:
 				player.closeInventory();
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				UserDataObject u = new UserDataObject();
 				u.setInt(player, (byte)0,ShopType);
 				u.setTemp(player, "Structure");
@@ -940,7 +940,7 @@ public class StructTradeBoard extends UtilGui
 							u.clearAll(player);
 			if(u.getString(player, (byte)0).equals("SelectItem"))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 				if(event.getSlot()==2)
 					if(item.hasItemMeta())
 						if(item.getItemMeta().hasDisplayName())
@@ -954,7 +954,7 @@ public class StructTradeBoard extends UtilGui
 				u.setTemp(player, "Structure");
 				u.setType(player, "TradeBoard");
 				u.setInt(player, (byte) 2, amount);
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 				player.sendMessage("§a[거래 게시판] : 당신은 무엇을 주실건가요?");
 				u.setString(player, (byte)0, "SetMyItem");
 				new StructTradeBoard().SelectExchangeItem_MyGUI(player);
@@ -965,7 +965,7 @@ public class StructTradeBoard extends UtilGui
 			}
 			else
 				u.clearAll(player);
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
 			player.closeInventory();
 		}
 	}
@@ -987,14 +987,14 @@ public class StructTradeBoard extends UtilGui
 							u.clearAll(player);
 			if(u.getString(player, (byte)0).equals("SetMyItem"))
 			{
-				SoundEffect.SP(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 
 				YamlLoader Board = new YamlLoader();
 				Board.getConfig("Structure/UserShopBoard.yml");
 				if(MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()<Board.getInt("RegisterCommission"))
 				{
 					u.clearAll(player);
-					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
 					player.sendMessage("§c[거래 게시판] : 등록 수수료가 부족합니다! 재 등록 해 주세요!");
 					return;
 				}
@@ -1020,7 +1020,7 @@ public class StructTradeBoard extends UtilGui
 				if(Board.contains("Exchange."+ItemName+"."+player.getUniqueId().toString()))
 				{
 					u.clearAll(player);
-					SoundEffect.SP(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
 					player.sendMessage("§c[거래 게시판] : 동일 상품을 이미 등록하셨습니다!");
 					return;
 				}
@@ -1042,14 +1042,14 @@ public class StructTradeBoard extends UtilGui
 				USRL.saveConfig();
 				u.clearAll(player);
 				player.closeInventory();
-				SoundEffect.SP(player, Sound.BLOCK_CHEST_OPEN, 1.0F, 1.8F);
+				SoundEffect.playSound(player, Sound.BLOCK_CHEST_OPEN, 1.0F, 1.8F);
 				player.sendMessage("§a[거래 게시판] : 등록이 완료되었습니다!");
 				player.getInventory().setItem(event.getSlot(), null);
 				return;
 			}
 			else
 				u.clearAll(player);
-			SoundEffect.SP(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
+			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 1.8F);
 			player.closeInventory();
 		}
 	}
