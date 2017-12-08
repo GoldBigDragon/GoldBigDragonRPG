@@ -68,5 +68,4 @@ public final class IntTag extends Tag {
 		}
 		return "TAG_Int" + append + ": " + value;
 	}
-
 }

@@ -1764,9 +1764,7 @@ public class StructTradeBoard extends UtilGui
 		}
 		if(ID==-1)
 			return null;
-
 		ItemStack Icon = new MaterialData(ID, (byte) DATA).toItemStack(1);
-		
 		return Icon;
 	}
 }

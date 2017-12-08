@@ -279,5 +279,4 @@ public class CitizensMain implements Listener
 		file.delete();
 		return;
 	}
-
 }

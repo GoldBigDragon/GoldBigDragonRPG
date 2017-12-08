@@ -85,7 +85,7 @@ public final class PartyGUI extends UtilGui
 	{
 		Inventory inv = null;
 		String UniqueCode = "§0§0§4§0§2§r";
-		if(isLeaderChange == false)
+		if(!isLeaderChange)
 			inv = Bukkit.createInventory(null, 54, UniqueCode + "§0파티 멤버 : " + (page+1));
 		else
 			inv = Bukkit.createInventory(null, 54, UniqueCode + "§0파티 리더 교체 : " + (page+1));
@@ -99,7 +99,7 @@ public final class PartyGUI extends UtilGui
 				Damageable pl = Member[count];
 				if(player.getName().equals(main.MainServerOption.party.get(PartyCreateTime).getLeader()))
 				{
-					if(isLeaderChange == false)
+					if(!isLeaderChange)
 					{
 						if(!Member[count].getName().equals(main.MainServerOption.party.get(PartyCreateTime).getLeader()))
 							ph = getPlayerSkull("§f§l"+Member[count].getName(), 1, Arrays.asList("","§7§l[   생명   ]","§c§l"+(int)pl.getHealth()+"§7§l / §c§l"+(int)pl.getMaxHealth(),
@@ -250,14 +250,14 @@ public final class PartyGUI extends UtilGui
 			{
 				if(event.isLeftClick())
 				{
-					if(isLeaderChange == false)
+					if(!isLeaderChange)
 						new EquipGui().EquipWatchGUI(player, Bukkit.getServer().getPlayer(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName())));
 					else
 						main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).ChangeLeader(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 				}
 				else if(event.isRightClick()&&event.isShiftClick())
 				{
-					if(isLeaderChange == false)
+					if(!isLeaderChange)
 					{
 						main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).KickPartyMember(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 						PartyMemberInformationGUI(player,(short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1),main.MainServerOption.partyJoiner.get(player), isLeaderChange);

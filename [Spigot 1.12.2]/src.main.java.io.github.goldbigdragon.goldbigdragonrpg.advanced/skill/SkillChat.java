@@ -260,5 +260,4 @@ public class SkillChat extends UtilChat
 			return;
 		}//Main.JobHashMap1를 비교하는 switch의 끝
 	}
-
 }

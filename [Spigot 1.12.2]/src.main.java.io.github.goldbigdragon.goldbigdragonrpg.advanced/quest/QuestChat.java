@@ -518,5 +518,4 @@ public class QuestChat extends UtilChat
     	}
 		return;
 	}
-	
 }

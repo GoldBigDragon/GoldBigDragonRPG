@@ -846,5 +846,4 @@ public class OPboxSkillGui extends UtilGui
 		u.setString(player, (byte)2, SkillName);
 		u.setInt(player, (byte)4,SkillLevel);
 	}
-
 }

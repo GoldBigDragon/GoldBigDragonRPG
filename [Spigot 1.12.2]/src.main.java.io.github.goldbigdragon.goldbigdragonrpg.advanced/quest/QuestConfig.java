@@ -68,5 +68,4 @@ public class QuestConfig
 		playerQuestListYaml.saveConfig();
 	  	return;
 	}
-	
 }

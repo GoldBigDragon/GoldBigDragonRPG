@@ -1392,7 +1392,7 @@ public class QuestGui extends UtilGui
 			else
 			{
 				short Flow = Short.parseShort(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-				if(event.getClick().isLeftClick() == true)
+				if(event.getClick().isLeftClick())
 				{
 					if(event.getCurrentItem().getItemMeta().getLore().get(0).contains(" : "))
 						switch(event.getCurrentItem().getItemMeta().getLore().get(0).split(" : ")[1])
@@ -1417,7 +1417,7 @@ public class QuestGui extends UtilGui
 								break;
 						}
 				}
-				else if(event.getClick().isRightClick() == true && event.isShiftClick() == true)
+				else if(event.getClick().isRightClick() && event.isShiftClick())
 				{
 					YamlLoader YC = new YamlLoader();
 					YamlLoader QuestList = new YamlLoader();

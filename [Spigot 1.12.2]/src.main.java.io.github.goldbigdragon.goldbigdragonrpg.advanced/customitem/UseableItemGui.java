@@ -1405,5 +1405,4 @@ public class UseableItemGui extends UtilGui
 			scriptA[counter] =  scriptA[counter];
 		return scriptA;
 	}
-	
 }

@@ -68,5 +68,4 @@ public final class ShortTag extends Tag {
 		}
 		return "TAG_Short" + append + ": " + value;
 	}
-
 }

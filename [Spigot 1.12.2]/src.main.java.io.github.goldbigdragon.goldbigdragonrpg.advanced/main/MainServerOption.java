@@ -129,10 +129,10 @@ public class MainServerOption
 	public static short Money6ID = 41;
 	public static byte Money6DATA = 0;
 	
-	public static String serverUpdate = "2017-12-05-20:22";
+	public static String serverUpdate = "2017-12-08-23:12";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/1_12.html";
-	public static String currentServerUpdate = "2017-12-05-20:22";
+	public static String currentServerUpdate = "2017-12-08-23:12";
 	public static String currentServerVersion = "Advanced";
 	
 	public static java.util.Map<Long, PartyObject> party = new LinkedHashMap<>();
@@ -308,45 +308,45 @@ public class MainServerOption
 			}
 		}
 		File directory = new File(Main.plugin.getDataFolder() + "\\Dungeon\\Schematic"); 
-		if(directory.exists()==false)
+		if(!directory.exists())
 			directory.mkdir();
 		File[] fileList = directory.listFiles(); 
 		try
 		{
 			for(int count = 0 ; count < fileList.length ; count++)
-				if(fileList[count].isFile()==false)
+				if(!fileList[count].isFile())
 				{
-					File InnerDirectory = new File(Main.plugin.getDataFolder() + "\\Dungeon\\Schematic\\"+fileList[count].getName()); 
-					File[] schematicList = InnerDirectory.listFiles();
+					File innerDirectory = new File(Main.plugin.getDataFolder() + "\\Dungeon\\Schematic\\"+fileList[count].getName()); 
+					File[] schematicList = innerDirectory.listFiles();
 					if(schematicList.length != 25)
 					{
-						ArrayList<String> DungeonFile = new ArrayList<String>();
+						ArrayList<String> dungeonFile = new ArrayList<>();
 						for(int count2 = 0 ; count2 < schematicList.length ; count2++)
-							DungeonFile.add(schematicList[count2].getName());
+							dungeonFile.add(schematicList[count2].getName());
 						Bukkit.getConsoleSender().sendMessage("§c[Fail] " + fileList[count].getName()+" 던전 테마를 사용하려면 아래 구성물들이 더 필요합니다!");
-						if(DungeonFile.contains("Boss.schematic")==false)
+						if(!dungeonFile.contains("Boss.schematic"))
 							Bukkit.getConsoleSender().sendMessage("§c　 Boss.schematic");
 						for(int count2 = 0 ; count2 < 4 ; count2++)
-							if(DungeonFile.contains("Closed_Door"+count2+".schematic")==false)
+							if(!dungeonFile.contains("Closed_Door"+count2+".schematic"))
 								Bukkit.getConsoleSender().sendMessage("§c　 Closed_Door"+count2+".schematic");
-						if(DungeonFile.contains("CrossRoad.schematic")==false)
+						if(!dungeonFile.contains("CrossRoad.schematic"))
 							Bukkit.getConsoleSender().sendMessage("§c　 CrossRoad.schematic");
 						for(int count2 = 0 ; count2 < 4 ; count2++)
-							if(DungeonFile.contains("Door"+count2+".schematic")==false)
+							if(!dungeonFile.contains("Door"+count2+".schematic"))
 								Bukkit.getConsoleSender().sendMessage("§c　 Door"+count2+".schematic");
 						for(int count2 = 0 ; count2 < 4 ; count2++)
-							if(DungeonFile.contains("LRoad"+count2+".schematic")==false)
+							if(!dungeonFile.contains("LRoad"+count2+".schematic"))
 								Bukkit.getConsoleSender().sendMessage("§c　 LRoad"+count2+".schematic");
 						for(int count2 = 0 ; count2 < 2 ; count2++)
-							if(DungeonFile.contains("Road"+count2+".schematic")==false)
+							if(!dungeonFile.contains("Road"+count2+".schematic"))
 								Bukkit.getConsoleSender().sendMessage("§c　 Road"+count2+".schematic");
-						if(DungeonFile.contains("Room.schematic")==false)
+						if(!dungeonFile.contains("Room.schematic"))
 							Bukkit.getConsoleSender().sendMessage("§c　 Room.schematic");
 						for(int count2 = 0 ; count2 < 4 ; count2++)
-							if(DungeonFile.contains("TRoad"+count2+".schematic")==false)
+							if(!dungeonFile.contains("TRoad"+count2+".schematic"))
 								Bukkit.getConsoleSender().sendMessage("§c　 TRoad"+count2+".schematic");
 						for(int count2 = 0 ; count2 < 4 ; count2++)
-							if(DungeonFile.contains("Wall"+count2+".schematic")==false)
+							if(!dungeonFile.contains("Wall"+count2+".schematic"))
 								Bukkit.getConsoleSender().sendMessage("§c　 Wall"+count2+".schematic");
 					}
 					else
@@ -438,7 +438,7 @@ public class MainServerOption
 	public void VersionCheck()
 	{
 		BufferedInputStream in = null;
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		try
 		{
 			URL url = new URL(updateCheckURL);
@@ -449,25 +449,25 @@ public class MainServerOption
 			
 			while ((lenRead = in.read(bufRead)) >0)
 				sb.append(new String(bufRead, 0, lenRead));
-			String[] Parsed = sb.toString().split("<br>");
+			String[] parsed = sb.toString().split("<br>");
 			
-			String Version = Parsed[1].split(": ")[1];
-			String Update = Parsed[2].split(": ")[1];
+			String version = parsed[1].split(": ")[1];
+			String update = parsed[2].split(": ")[1];
 			
-		  	Bukkit.getConsoleSender().sendMessage("§f최신 버전 : "+Version);
+		  	Bukkit.getConsoleSender().sendMessage("§f최신 버전 : "+version);
 		  	Bukkit.getConsoleSender().sendMessage("§7현재 버전 : "+serverVersion);
-		  	Bukkit.getConsoleSender().sendMessage("§f최신 패치 : "+Update);
+		  	Bukkit.getConsoleSender().sendMessage("§f최신 패치 : "+update);
 		  	Bukkit.getConsoleSender().sendMessage("§7현재 패치 : "+serverUpdate);
 
-			currentServerUpdate = Update;
-			currentServerVersion = Version;
-			if(serverVersion.equals(Version)&&serverUpdate.equals(Update))
+			currentServerUpdate = update;
+			currentServerVersion = version;
+			if(serverVersion.equals(version)&&serverUpdate.equals(update))
 				Bukkit.getConsoleSender().sendMessage("§3[ ! ] 현재 GoldBigDragonRPG는 최신 버전입니다!");
 			else
 			{
 				Bukkit.getConsoleSender().sendMessage("§c[ ! ] GoldBigDragonRPG가 최신 버전이 아닙니다! 아래 주소에서 다운로드 받으세요!");
 				Bukkit.getConsoleSender().sendMessage("§c[ ! ] http://cafe.naver.com/goldbigdragon/57885");
-				Bukkit.getConsoleSender().sendMessage("§c[ ! ] 패치가 필요한 이유 : " + Parsed[3].split(": ")[1]);
+				Bukkit.getConsoleSender().sendMessage("§c[ ! ] 패치가 필요한 이유 : " + parsed[3].split(": ")[1]);
 			}
 			
 		}
@@ -479,10 +479,10 @@ public class MainServerOption
 	
 	public void MagicSpellCatch()
 	{
-		if(MagicSpellsCatched == false)
+		if(!MagicSpellsCatched)
 		{
 			MagicSpellsCatched = true;
-			if(Bukkit.getPluginManager().isPluginEnabled("MagicSpells") == false)
+			if(!Bukkit.getPluginManager().isPluginEnabled("MagicSpells"))
 			{
 				ErrorMessage();
 			  	Bukkit.getConsoleSender().sendMessage("§eMagicSpells 플러그인을 찾을 수 없습니다!");
@@ -500,10 +500,10 @@ public class MainServerOption
 	
 	public void CitizensCatch()
 	{
-		if(CitizensCatched == false)
+		if(!CitizensCatched)
 		{
 			CitizensCatched = true;
-			if(Bukkit.getPluginManager().isPluginEnabled("Citizens") == false)
+			if(!Bukkit.getPluginManager().isPluginEnabled("Citizens"))
 			{
 				ErrorMessage();
 			  	Bukkit.getConsoleSender().sendMessage("§eCitizens 플러그인을 찾을 수 없습니다!");

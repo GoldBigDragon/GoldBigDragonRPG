@@ -55,5 +55,4 @@ public final class EndTag extends Tag {
 	public String toString() {
 		return "TAG_End";
 	}
-
 }

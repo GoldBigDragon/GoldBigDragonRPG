@@ -451,5 +451,4 @@ public class UserSkillGui extends UtilGui
 			}
 		}
 	}
-	
 }

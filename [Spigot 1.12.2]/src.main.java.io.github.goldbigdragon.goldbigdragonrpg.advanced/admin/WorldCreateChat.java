@@ -55,5 +55,4 @@ public class WorldCreateChat
 		player.sendMessage("§6§l[岿靛 积己] : 岿靛 积己 己傍!");
 		return;
 	}
-	
 }

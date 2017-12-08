@@ -65,5 +65,4 @@ public abstract class Tag {
 	 * @return The value of this tag.
 	 */
 	public abstract Object getValue();
-
 }

@@ -218,5 +218,4 @@ public class EventPlayerChat extends UtilChat implements Listener
 			new dungeon.DungeonChat().PlayerChatrouter(event);
 		return;
 	}
-	
 }

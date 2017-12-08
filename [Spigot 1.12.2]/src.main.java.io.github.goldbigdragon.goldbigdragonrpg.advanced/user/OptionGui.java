@@ -138,5 +138,4 @@ public class OptionGui extends UtilGui
 		}
 		return;
 	}
-	
 }

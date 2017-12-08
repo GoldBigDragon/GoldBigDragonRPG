@@ -28,8 +28,6 @@ import util.UtilGui;
 import util.UtilNumber;
 import util.YamlLoader;
 
-
-
 public class NpcGui extends UtilGui
 {
 	public void MainGUI(Player player, String NPCname, boolean isOP)
@@ -4504,8 +4502,6 @@ public class NpcGui extends UtilGui
 		}
 		return;
 	}
-	
-
 	
 	public void RuneEquipGUIClose(InventoryCloseEvent event)
 	{

@@ -802,5 +802,4 @@ public class EquipGui extends UtilGui
 		target.sendMessage("§6/수락§f 상대의 요청에 수락합니다.");
 		target.sendMessage("§6/거절§f 상대의 요청에 거절합니다.");
 	}
-
 }

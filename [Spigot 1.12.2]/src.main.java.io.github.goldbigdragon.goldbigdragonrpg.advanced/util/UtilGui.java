@@ -72,5 +72,4 @@ public class UtilGui
 		item.setItemMeta(meta);
 		return item;
 	}
-	
 }

@@ -68,5 +68,4 @@ public final class FloatTag extends Tag {
 		}
 		return "TAG_Float" + append + ": " + value;
 	}
-
 }

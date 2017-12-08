@@ -65,7 +65,5 @@ public final class NBTConstants {
 	 * Default private constructor.
 	 */
 	private NBTConstants() {
-		
 	}
-
 }

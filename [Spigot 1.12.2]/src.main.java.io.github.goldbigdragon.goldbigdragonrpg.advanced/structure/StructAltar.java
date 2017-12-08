@@ -4741,5 +4741,4 @@ public class StructAltar extends UtilGui
 		}
 		return "null";
 	}
-
 }

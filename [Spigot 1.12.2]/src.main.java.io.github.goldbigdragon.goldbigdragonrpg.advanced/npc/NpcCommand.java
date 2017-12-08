@@ -14,8 +14,6 @@ import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import util.YamlLoader;
 
-
-
 public class NpcCommand
 {
 	public void onCommand(CommandSender talker, Command command, String string, String[] args)

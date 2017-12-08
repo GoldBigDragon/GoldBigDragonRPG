@@ -100,7 +100,7 @@ public class NpcMain
 				}
 			}
 		}
-		if(scriptget == false)
+		if(!scriptget)
 		{
 			String[] script = new String[1];
 			randomScript = (byte) new util.UtilNumber().RandomNum(0, 2);

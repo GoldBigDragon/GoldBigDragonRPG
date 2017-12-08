@@ -90,5 +90,4 @@ public class EventPlayerMove implements Listener
 			return;
 		}
 	}
-
 }

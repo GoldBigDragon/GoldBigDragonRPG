@@ -21,8 +21,6 @@ import user.UserDataObject;
 import util.UtilGui;
 import util.YamlLoader;
 
-
-
 public class MonsterGui extends UtilGui
 {
 	public void monsterListGUI(Player player, int page)

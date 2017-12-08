@@ -145,7 +145,5 @@ public final class NBTUtils {
 	 * Default private constructor.
 	 */
 	private NBTUtils() {
-		
 	}
-
 }

@@ -174,5 +174,4 @@ public class StructureMain
 			new dungeon.DungeonGui().AltarUseGUI(player, StructureName);
 		}
 	}
-
 }

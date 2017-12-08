@@ -42,7 +42,6 @@ public enum NotePitch {
                 return notePitch.pitch;
             }
         }
-
         return 0.0F;
     }
 }

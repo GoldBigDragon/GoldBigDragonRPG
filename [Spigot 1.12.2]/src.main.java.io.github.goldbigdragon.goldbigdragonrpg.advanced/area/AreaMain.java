@@ -2,7 +2,6 @@ package area;
 
 import java.util.ArrayList;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -314,7 +313,7 @@ public class AreaMain
 		return SearchAreaName(block.getLocation());
 	}
 
-	public boolean getAreaOption(String AreaName,char type)
+	public boolean getAreaOption(String areaName,char type)
 	{
 	  	YamlLoader areaYaml = new YamlLoader();
 		areaYaml.getConfig("Area/AreaList.yml");
@@ -322,26 +321,26 @@ public class AreaMain
 		switch(type)
 		{
 		case 0:
-			return areaYaml.getBoolean(AreaName + ".PVP");
+			return areaYaml.getBoolean(areaName + ".PVP");
 		case 1:
-			return areaYaml.getBoolean(AreaName + ".BlockBreak");
+			return areaYaml.getBoolean(areaName + ".BlockBreak");
 		case 2:
-			return  areaYaml.getBoolean(AreaName + ".SpawnPoint");
+			return  areaYaml.getBoolean(areaName + ".SpawnPoint");
 		case 3:
-			return areaYaml.getBoolean(AreaName + ".MobSpawn");
+			return areaYaml.getBoolean(areaName + ".MobSpawn");
 		case 4:
-			return areaYaml.getBoolean(AreaName + ".Alert");
+			return areaYaml.getBoolean(areaName + ".Alert");
 		case 5:
-			return areaYaml.getBoolean(AreaName + ".BlockPlace");
+			return areaYaml.getBoolean(areaName + ".BlockPlace");
 		case 6:
-			return areaYaml.getBoolean(AreaName + ".Music");
+			return areaYaml.getBoolean(areaName + ".Music");
 		case 7:
-			return areaYaml.getBoolean(AreaName + ".BlockUse");
+			return areaYaml.getBoolean(areaName + ".BlockUse");
 		case 8:
 		{
-			if(areaYaml.contains(AreaName + ".MonsterSpawnRule"))
+			if(areaYaml.contains(areaName + ".MonsterSpawnRule"))
 			{
-				if(areaYaml.getConfigurationSection(AreaName + ".MonsterSpawnRule").getKeys(false).size() <= 0)
+				if(areaYaml.getConfigurationSection(areaName + ".MonsterSpawnRule").getKeys(false).size() <= 0)
 					return false;
 				else
 					return true;
@@ -353,73 +352,77 @@ public class AreaMain
 		return false;
 	}
 	
-	public void sendAreaTitle(Player player, String AreaName)
+	public void sendAreaTitle(Player player, String areaName)
 	{
 	  	YamlLoader areaYaml = new YamlLoader();
 		areaYaml.getConfig("Area/AreaList.yml");
-		if(getAreaOption(AreaName, (char)4) == true)
+		if(getAreaOption(areaName, (char)4))
 		{
-			String Title = areaYaml.getString(AreaName+".Name").replace("%player%", player.getName());
-			String Description = areaYaml.getString(AreaName+".Description").replace("%player%", player.getName());
-			new effect.SendPacket().sendTitle(player, Title, Description, 1, 10, 1);
+			String title = areaYaml.getString(areaName+".Name");
+			if(title != null)
+				title = title.replace("%player%", player.getName());
+			String description = areaYaml.getString(areaName+".Description");
+			if(description != null)
+				description = description.replace("%player%", player.getName());
+			new effect.SendPacket().sendTitle(player, title, description, 1, 10, 1);
 		}
 		return;
 	}
 
-	public void AreaMonsterSpawnAdd(String AreaName, String Count)
+	public void AreaMonsterSpawnAdd(String areaName, String Count)
 	{
 	  	YamlLoader areaYaml = new YamlLoader();
 		areaYaml.getConfig("Area/AreaList.yml");
 		if(Long.parseLong(Count)!=-1)
 		{
-			if(areaYaml.contains(AreaName+".MonsterSpawnRule")==true)
+			if(areaYaml.contains(areaName+".MonsterSpawnRule"))
 			{
-				if(areaYaml.getConfigurationSection(AreaName+".MonsterSpawnRule").getKeys(false).size()!=0)
+				if(areaYaml.getConfigurationSection(areaName+".MonsterSpawnRule").getKeys(false).size()!=0)
 				{
-					if(areaYaml.getString(AreaName+".MonsterSpawnRule."+Count+".loc.world")!=null)
+					if(areaYaml.getString(areaName+".MonsterSpawnRule."+Count+".loc.world")!=null)
 					{
-						if(servertick.ServerTickMain.MobSpawningAreaList.contains(AreaName)==false)
-							servertick.ServerTickMain.MobSpawningAreaList.add(AreaName);
+						if(!servertick.ServerTickMain.MobSpawningAreaList.contains(areaName))
+							servertick.ServerTickMain.MobSpawningAreaList.add(areaName);
 						
-						Long UTC = servertick.ServerTickMain.nowUTC+5;
+						Long utc = servertick.ServerTickMain.nowUTC+5;
 						for(;;)
 						{
-							if(servertick.ServerTickMain.Schedule.containsKey(UTC))
-								UTC=UTC+1;
+							if(servertick.ServerTickMain.Schedule.containsKey(utc))
+								utc=utc+1;
 							else
 								break;
 						}
-						servertick.ServerTickObject OBJECT = new servertick.ServerTickObject(UTC, "A_MS");
-						OBJECT.setString((byte)0, AreaName);
-						OBJECT.setString((byte)1, areaYaml.getString(AreaName+".MonsterSpawnRule."+Count+".loc.world"));
-						if(areaYaml.contains(AreaName+".MonsterSpawnRule."+Count+".Monster"))
-							OBJECT.setString((byte)2, areaYaml.getString(AreaName+".MonsterSpawnRule."+Count+".Monster"));
+						servertick.ServerTickObject OBJECT = new servertick.ServerTickObject(utc, "A_MS");
+						OBJECT.setString((byte)0, areaName);
+						OBJECT.setString((byte)1, areaYaml.getString(areaName+".MonsterSpawnRule."+Count+".loc.world"));
+						if(areaYaml.contains(areaName+".MonsterSpawnRule."+Count+".Monster"))
+							OBJECT.setString((byte)2, areaYaml.getString(areaName+".MonsterSpawnRule."+Count+".Monster"));
 						OBJECT.setString((byte)3, Count);
-						OBJECT.setInt((byte)0, areaYaml.getInt(AreaName+".MonsterSpawnRule."+Count+".loc.x"));
-						OBJECT.setInt((byte)1, areaYaml.getInt(AreaName+".MonsterSpawnRule."+Count+".loc.y"));
-						OBJECT.setInt((byte)2, areaYaml.getInt(AreaName+".MonsterSpawnRule."+Count+".loc.z"));
-						OBJECT.setInt((byte)3, areaYaml.getInt(AreaName+".MonsterSpawnRule."+Count+".range"));
-						OBJECT.setInt((byte)4, areaYaml.getInt(AreaName+".MonsterSpawnRule."+Count+".count"));
-						OBJECT.setInt((byte)5, areaYaml.getInt(AreaName+".MonsterSpawnRule."+Count+".max"));
-						OBJECT.setMaxCount(areaYaml.getInt(AreaName+".MonsterSpawnRule."+Count+".timer"));
-						servertick.ServerTickMain.Schedule.put(UTC, OBJECT);
+						OBJECT.setInt((byte)0, areaYaml.getInt(areaName+".MonsterSpawnRule."+Count+".loc.x"));
+						OBJECT.setInt((byte)1, areaYaml.getInt(areaName+".MonsterSpawnRule."+Count+".loc.y"));
+						OBJECT.setInt((byte)2, areaYaml.getInt(areaName+".MonsterSpawnRule."+Count+".loc.z"));
+						OBJECT.setInt((byte)3, areaYaml.getInt(areaName+".MonsterSpawnRule."+Count+".range"));
+						OBJECT.setInt((byte)4, areaYaml.getInt(areaName+".MonsterSpawnRule."+Count+".count"));
+						OBJECT.setInt((byte)5, areaYaml.getInt(areaName+".MonsterSpawnRule."+Count+".max"));
+						OBJECT.setMaxCount(areaYaml.getInt(areaName+".MonsterSpawnRule."+Count+".timer"));
+						servertick.ServerTickMain.Schedule.put(utc, OBJECT);
 					}
 				}
 			}
 		}
 		else
 		{
-			if(areaYaml.contains(AreaName+".MonsterSpawnRule")==true)
+			if(areaYaml.contains(areaName+".MonsterSpawnRule")==true)
 			{
-				if(areaYaml.getConfigurationSection(AreaName+".MonsterSpawnRule").getKeys(false).size()!=0)
+				if(areaYaml.getConfigurationSection(areaName+".MonsterSpawnRule").getKeys(false).size()!=0)
 				{
-					if(servertick.ServerTickMain.MobSpawningAreaList.contains(AreaName)==false)
+					if(servertick.ServerTickMain.MobSpawningAreaList.contains(areaName)==false)
 					{
-						servertick.ServerTickMain.MobSpawningAreaList.add(AreaName);
-						String[] RuleName = areaYaml.getConfigurationSection(AreaName+".MonsterSpawnRule").getKeys(false).toArray(new String[0]);
+						servertick.ServerTickMain.MobSpawningAreaList.add(areaName);
+						String[] RuleName = areaYaml.getConfigurationSection(areaName+".MonsterSpawnRule").getKeys(false).toArray(new String[0]);
 						for(int count=0;count<RuleName.length;count++)
 						{
-							if(areaYaml.getString(AreaName+".MonsterSpawnRule."+RuleName[count]+".loc.world")!=null)
+							if(areaYaml.getString(areaName+".MonsterSpawnRule."+RuleName[count]+".loc.world")!=null)
 							{
 								Long UTC = servertick.ServerTickMain.nowUTC+5;
 								for(;;)
@@ -430,18 +433,18 @@ public class AreaMain
 										break;
 								}
 								servertick.ServerTickObject OBJECT = new servertick.ServerTickObject(UTC, "A_MS");
-								OBJECT.setString((byte)0, AreaName);
-								OBJECT.setString((byte)1, areaYaml.getString(AreaName+".MonsterSpawnRule."+RuleName[count]+".loc.world"));
-								if(areaYaml.contains(AreaName+".MonsterSpawnRule."+RuleName[count]+".Monster"))
-									OBJECT.setString((byte)2, areaYaml.getString(AreaName+".MonsterSpawnRule."+RuleName[count]+".Monster"));
+								OBJECT.setString((byte)0, areaName);
+								OBJECT.setString((byte)1, areaYaml.getString(areaName+".MonsterSpawnRule."+RuleName[count]+".loc.world"));
+								if(areaYaml.contains(areaName+".MonsterSpawnRule."+RuleName[count]+".Monster"))
+									OBJECT.setString((byte)2, areaYaml.getString(areaName+".MonsterSpawnRule."+RuleName[count]+".Monster"));
 								OBJECT.setString((byte)3, RuleName[count]);
-								OBJECT.setInt((byte)0, areaYaml.getInt(AreaName+".MonsterSpawnRule."+RuleName[count]+".loc.x"));
-								OBJECT.setInt((byte)1, areaYaml.getInt(AreaName+".MonsterSpawnRule."+RuleName[count]+".loc.y"));
-								OBJECT.setInt((byte)2, areaYaml.getInt(AreaName+".MonsterSpawnRule."+RuleName[count]+".loc.z"));
-								OBJECT.setInt((byte)3, areaYaml.getInt(AreaName+".MonsterSpawnRule."+RuleName[count]+".range"));
-								OBJECT.setInt((byte)4, areaYaml.getInt(AreaName+".MonsterSpawnRule."+RuleName[count]+".count"));
-								OBJECT.setInt((byte)5, areaYaml.getInt(AreaName+".MonsterSpawnRule."+RuleName[count]+".max"));
-								OBJECT.setMaxCount(areaYaml.getInt(AreaName+".MonsterSpawnRule."+RuleName[count]+".timer"));
+								OBJECT.setInt((byte)0, areaYaml.getInt(areaName+".MonsterSpawnRule."+RuleName[count]+".loc.x"));
+								OBJECT.setInt((byte)1, areaYaml.getInt(areaName+".MonsterSpawnRule."+RuleName[count]+".loc.y"));
+								OBJECT.setInt((byte)2, areaYaml.getInt(areaName+".MonsterSpawnRule."+RuleName[count]+".loc.z"));
+								OBJECT.setInt((byte)3, areaYaml.getInt(areaName+".MonsterSpawnRule."+RuleName[count]+".range"));
+								OBJECT.setInt((byte)4, areaYaml.getInt(areaName+".MonsterSpawnRule."+RuleName[count]+".count"));
+								OBJECT.setInt((byte)5, areaYaml.getInt(areaName+".MonsterSpawnRule."+RuleName[count]+".max"));
+								OBJECT.setMaxCount(areaYaml.getInt(areaName+".MonsterSpawnRule."+RuleName[count]+".timer"));
 								servertick.ServerTickMain.Schedule.put(UTC, OBJECT);
 							}
 						}

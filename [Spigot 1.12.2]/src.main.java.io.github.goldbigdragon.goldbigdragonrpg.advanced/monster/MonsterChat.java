@@ -10,8 +10,6 @@ import user.UserDataObject;
 import util.UtilChat;
 import util.YamlLoader;
 
-
-
 public class MonsterChat extends UtilChat
 {
 	public void MonsterTypeChatting(PlayerChatEvent event)
@@ -295,5 +293,4 @@ public class MonsterChat extends UtilChat
 		}
 		return;
 	}
-	
 }

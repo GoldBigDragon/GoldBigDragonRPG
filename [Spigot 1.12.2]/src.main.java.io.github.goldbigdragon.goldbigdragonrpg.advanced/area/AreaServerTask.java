@@ -12,8 +12,6 @@ import main.MainServerOption;
 import servertick.ServerTickMain;
 import util.YamlLoader;
 
-
-
 public class AreaServerTask
 {
 	public void areaMobSpawn(long utc)

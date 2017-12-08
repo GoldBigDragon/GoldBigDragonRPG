@@ -10,8 +10,6 @@ import user.UserDataObject;
 import util.UtilChat;
 import util.YamlLoader;
 
-
-
 public class CustomItemChat extends UtilChat
 {
 	public void itemTypeChatting(PlayerChatEvent event)
@@ -491,5 +489,4 @@ public class CustomItemChat extends UtilChat
 		u.clearAll(player);
 		return;
 	}
-
 }

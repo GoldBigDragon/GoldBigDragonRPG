@@ -57,7 +57,7 @@ public class SpellMain implements Listener
 	public float BonusPowerCalculator (Player player, LivingEntity target)
 	{
 		int bonuspower = 0;
-		if(main.MainServerOption.PlayerUseSpell.containsKey(player) == true)
+		if(main.MainServerOption.PlayerUseSpell.containsKey(player))
 		{
 			Damageable p = player;
 			String switchCheck = main.MainServerOption.PlayerUseSpell.get(player);
@@ -78,9 +78,9 @@ public class SpellMain implements Listener
 			else
 				bonuspower = 0;
 		}
-		int[] WeaponPower = BattleCalculator.getPlayerEquipmentStat(player, "MagicDamage",  false, main.MainServerOption.PlayerlastItem.get(player));
-		int WeaponPowerFixed = new util.UtilNumber().RandomNum(WeaponPower[0], WeaponPower[1]);
-		bonuspower = bonuspower+WeaponPowerFixed;
+		int[] weaponPower = BattleCalculator.getPlayerEquipmentStat(player, "MagicDamage",  false, main.MainServerOption.PlayerlastItem.get(player));
+		int weaponPowerFixed = new util.UtilNumber().RandomNum(weaponPower[0], weaponPower[1]);
+		bonuspower = bonuspower+weaponPowerFixed;
 		int negativeBonus = 0;
 		if(target!=null)
 		{
@@ -91,7 +91,7 @@ public class SpellMain implements Listener
 				  	negativeBonus = BattleCalculator.getMagicProtect(t, main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT());
 				else
 				{
-					if(t.isCustomNameVisible() == true)
+					if(t.isCustomNameVisible())
 					{
 						String name = new monster.MonsterKill().getRealName(target);
 						if(main.MainServerOption.MonsterList.containsKey(name))
@@ -101,7 +101,7 @@ public class SpellMain implements Listener
 			}
 			else
 			{
-				if(target.isCustomNameVisible() == true)
+				if(target.isCustomNameVisible())
 				{
 					String name = new monster.MonsterKill().getRealName(target);
 					if(main.MainServerOption.MonsterList.containsKey(name))
@@ -123,7 +123,7 @@ public class SpellMain implements Listener
 			player.sendMessage(SO[count].toString());
 	}
 
-	public void ShowAllMaigcGUI(Player player, short page,String SkillName, short SkillLevel,byte sort)
+	public void ShowAllMaigcGUI(Player player, short page,String skillName, short skillLevel,byte sort)
 	{
 		Object[] spells = new Object[46];
 		int temp = 0;
@@ -214,41 +214,40 @@ public class SpellMain implements Listener
 			break;
 		}
 
-		String UniqueCode = "§0§0§b§0§7§r";
-		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0매직스펠 목록 : " + (page+1));
+		String uniqueCode = "§0§0§b§0§7§r";
+		Inventory inv = Bukkit.createInventory(null, 54, uniqueCode + "§0매직스펠 목록 : " + (page+1));
 
-		byte loc=0;
 		Spell spell;
 		for(short count = 0; count < spells.length;count++)
 		{
 			spell = (Spell) spells[count];
 			if(spell!=null)
 			{
-				String SpellName = spell.getName();
-				short ID = 403;
+				String spellName = spell.getName();
+				short id = 403;
 				if(spell.getClass().getSimpleName().compareTo("PainSpell")==0)
-					ID= 370;
+					id= 370;
 				else if(spell.getClass().getSimpleName().compareTo("DummySpell")==0)
-					ID= 416;
+					id= 416;
 				else if(spell.getClass().getSimpleName().compareTo("AreaEffectSpell")==0)
-					ID= 438;
+					id= 438;
 				else if(spell.getClass().getSimpleName().compareTo("MultiSpell")==0)
-					ID= 345;
+					id= 345;
 				else if(spell.getClass().getSimpleName().compareTo("ParticleProjectileSpell")==0)
-					ID= 401;
+					id= 401;
 				else if(spell.getClass().getSimpleName().compareTo("ArmorSpell")==0)
-					ID= 315;
+					id= 315;
 				else if(spell.getClass().getSimpleName().compareTo("EmpowerSpell")==0)
-					ID= 373;
+					id= 373;
 				else if(spell.getClass().getSimpleName().compareTo("ForcetossSpell")==0)
-					ID= 33;
+					id= 33;
 				else if(spell.getClass().getSimpleName().compareTo("ExplodeSpell")==0)
-					ID= 46;
+					id= 46;
 				else if(spell.getClass().getSimpleName().compareTo("ThrowBlockSpell")==0)
-					ID= 145;
+					id= 145;
 				else if(spell.getClass().getSimpleName().compareTo("VolleySpell")==0)
-					ID= 262;
-				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + SpellName, ID, (byte)0,1,Arrays.asList(ChatColor.WHITE+spell.getClass().getSimpleName()+"",ChatColor.YELLOW+"[좌 클릭시 스킬 등록]"), (byte)count, inv);
+					id= 262;
+				Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + spellName, id, (byte)0,1,Arrays.asList(ChatColor.WHITE+spell.getClass().getSimpleName()+"",ChatColor.YELLOW+"[좌 클릭시 스킬 등록]"), (byte)count, inv);
 			}
 		}
 		
@@ -271,32 +270,32 @@ public class SpellMain implements Listener
 		case 5:
 			Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "클래스별 정렬", 154,(byte)0,1,Arrays.asList(ChatColor.GRAY + "[P.P 제외 보기]",ChatColor.BLACK+""+sort), (byte)49, inv);break;
 		}
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,(byte)0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK+""+SkillLevel), (byte)45, inv);
-		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,(byte)0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+SkillName), (byte)53, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "이전 목록", 323,(byte)0,1,Arrays.asList(ChatColor.GRAY + "이전 화면으로 돌아갑니다.",ChatColor.BLACK+""+skillLevel), (byte)45, inv);
+		Stack2(ChatColor.WHITE + "" + ChatColor.BOLD + "닫기", 324,(byte)0,1,Arrays.asList(ChatColor.GRAY + "창을 닫습니다.",ChatColor.BLACK+skillName), (byte)53, inv);
 		player.openInventory(inv);
 	}
 	
 	public void Stack2(String Display, int ID, byte DATA, int Stack, List<String> Lore, byte Loc, Inventory inventory)
 	{
-		ItemStack Icon = new MaterialData(ID, (byte) DATA).toItemStack(Stack);
-		ItemMeta Icon_Meta = Icon.getItemMeta();
-		Icon_Meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		Icon_Meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-		Icon_Meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-		Icon_Meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
-		Icon_Meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		Icon_Meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
-		Icon_Meta.setDisplayName(Display);
-		Icon_Meta.setLore(Lore);
-		Icon.setItemMeta(Icon_Meta);
-		inventory.setItem(Loc, Icon);
+		ItemStack item = new MaterialData(ID, (byte) DATA).toItemStack(Stack);
+		ItemMeta meta = item.getItemMeta();
+		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+		meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+		meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
+		meta.setDisplayName(Display);
+		meta.setLore(Lore);
+		item.setItemMeta(meta);
+		inventory.setItem(Loc, item);
 	}
 
 	public void ShowAllMaigcGUIClick(InventoryClickEvent event)
 	{
 		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
-		String SkillName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
-		int SkillLevel = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(45).getItemMeta().getLore().get(1)));
+		String skillName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+		int skillLevel = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(45).getItemMeta().getLore().get(1)));
 		int sort = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(49).getItemMeta().getLore().get(1)));
 		
 		Player player = (Player) event.getWhoClicked();
@@ -307,11 +306,11 @@ public class SpellMain implements Listener
 		{
 			case 45://이전 목록으로
 				s.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
-				new skill.OPboxSkillGui().SkillRankOptionGUI(player, SkillName, (short) SkillLevel);
+				new skill.OPboxSkillGui().SkillRankOptionGUI(player, skillName, (short) skillLevel);
 				break;
 			case 48://이전 페이지
 				s.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
-				ShowAllMaigcGUI(player, (byte)(page-1), SkillName, (short)SkillLevel, (byte)sort);
+				ShowAllMaigcGUI(player, (byte)(page-1), skillName, (short)skillLevel, (byte)sort);
 				break;
 			case 49://정렬 방식 변경
 				s.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 1.0F, 0.8F);
@@ -319,11 +318,11 @@ public class SpellMain implements Listener
 					sort = sort +1;
 				else
 					sort = 0;
-				ShowAllMaigcGUI(player, (byte)0, SkillName, (short) SkillLevel, (byte)sort);
+				ShowAllMaigcGUI(player, (byte)0, skillName, (short) skillLevel, (byte)sort);
 				break;
 			case 50://다음 페이지
 				s.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
-				ShowAllMaigcGUI(player, (byte)(page+1), SkillName, (short) SkillLevel, (byte)sort);
+				ShowAllMaigcGUI(player, (byte)(page+1), skillName, (short) skillLevel, (byte)sort);
 				break;
 			case 53://나가기
 				s.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
@@ -331,24 +330,23 @@ public class SpellMain implements Listener
 				return;
 			default:
 				s.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 0.8F);
-				YamlLoader SkillList = new YamlLoader();
-				SkillList.getConfig("Skill/SkillList.yml");
-				SkillList.set(SkillName+".SkillRank."+SkillLevel+".MagicSpells", ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-				SkillList.saveConfig();
-				new skill.OPboxSkillGui().SkillRankOptionGUI(player, SkillName, (short) SkillLevel);
+				YamlLoader skillList = new YamlLoader();
+				skillList.getConfig("Skill/SkillList.yml");
+				skillList.set(skillName+".SkillRank."+skillLevel+".MagicSpells", ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+				skillList.saveConfig();
+				new skill.OPboxSkillGui().SkillRankOptionGUI(player, skillName, (short) skillLevel);
 				return;
 		}
 	}
 	
-	
-	public void CastSpell(Player player, String SpellName)
+	public void CastSpell(Player player, String spellName)
 	{
 		Object[] spells = MagicSpells.spells().toArray();
 		Spell spell = null;
 		for(short count = 0; count < spells.length;count++)
 		{
 			spell = (Spell) spells[count];
-			if(spell.getName().compareTo(SpellName) == 0)
+			if(spell.getName().compareTo(spellName) == 0)
 				spell.cast(player);
 		}
 	}
@@ -372,14 +370,13 @@ public class SpellMain implements Listener
 
 	public void setPlayerMaxAndNowMana(Player player)
 	{
-		int BonusMana = BattleCalculator.getPlayerEquipmentStat(player, "마나", false, null)[0];
-		int MaxMana = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxMP()+BonusMana;
-		int Mana = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MP()+BonusMana;
-		if(MaxMana > 0 && MainServerOption.MagicSpellsEnable)
+		int bonusMana = BattleCalculator.getPlayerEquipmentStat(player, "마나", false, null)[0];
+		int maxMana = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxMP()+bonusMana;
+		if(maxMana > 0 && MainServerOption.MagicSpellsEnable)
 		{
 			try
 			{
-				MagicSpells.getManaHandler().setMaxMana(player, MaxMana);
+				MagicSpells.getManaHandler().setMaxMana(player, maxMana);
 			}
 			catch(NullPointerException e)
 			{				
@@ -390,14 +387,14 @@ public class SpellMain implements Listener
 
 	public void setSlotChangePlayerMaxAndNowMana(Player player, ItemStack newSlot)
 	{
-		int BonusMana = BattleCalculator.getPlayerEquipmentStat(player, "마나", false, newSlot)[0];
-		int MaxMana = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxMP()+BonusMana;
+		int bonusMana = BattleCalculator.getPlayerEquipmentStat(player, "마나", false, newSlot)[0];
+		int maxMana = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxMP()+bonusMana;
 
-		if(MaxMana > 0 && main.MainServerOption.MagicSpellsEnable == true)
+		if(maxMana > 0 && main.MainServerOption.MagicSpellsEnable)
 		{
 			try
 			{
-				MagicSpells.getManaHandler().setMaxMana(player, MaxMana);
+				MagicSpells.getManaHandler().setMaxMana(player, maxMana);
 			}
 			catch(NoClassDefFoundError e)
 			{

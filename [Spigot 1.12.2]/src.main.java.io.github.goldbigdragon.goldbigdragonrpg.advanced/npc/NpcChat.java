@@ -10,8 +10,6 @@ import user.UserDataObject;
 import util.UtilChat;
 import util.YamlLoader;
 
-
-
 public class NpcChat extends UtilChat
 {
 	public void NPCTypeChatting(PlayerChatEvent event)
@@ -293,5 +291,4 @@ public class NpcChat extends UtilChat
 		}
 		return;
 	}
-
 }
