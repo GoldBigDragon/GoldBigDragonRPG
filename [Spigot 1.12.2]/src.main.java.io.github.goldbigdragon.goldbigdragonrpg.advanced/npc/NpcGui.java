@@ -389,7 +389,6 @@ public class NpcGui extends UtilGui
 			if(sale)
 			{
 				YamlLoader playerNPC = new YamlLoader();
-			  	playerNPC = null;
 		    	if(!playerNPC.isExit("NPC/PlayerData/"+player.getUniqueId()+".yml"))
 		    	{
 		    		playerNPC.getConfig("NPC/PlayerData/"+player.getUniqueId()+".yml");
@@ -410,8 +409,12 @@ public class NpcGui extends UtilGui
 				item = NPCscript.getItemStack("Shop.Sell."+count + ".item");
 				IM = item.getItemMeta();
 				long price = NPCscript.getLong("Shop.Sell."+count+".price");
-				if(sale)
-					price = price - ((price/100) * discount);
+				if(discount!=0)
+				{
+					price = (int)(price - (price * (discount*0.01)));
+					if(price <= 0)
+						price = 1;
+				}
 				if(item.hasItemMeta())
 				{
 					if(item.getItemMeta().hasLore())
@@ -534,16 +537,16 @@ public class NpcGui extends UtilGui
 				IM = item.getItemMeta();
 				long price = NPCscript.getLong("Shop.Buy."+count+".price");
 				
-				if(item.hasItemMeta() == true)
+				if(item.hasItemMeta())
 				{
-					if(item.getItemMeta().hasLore() == true)
+					if(item.getItemMeta().hasLore())
 					{
 						String[] lore = new String[IM.getLore().size()+3];
 						for(int counter=0; counter < lore.length-3;counter++)
 							lore[counter] = IM.getLore().get(counter);
 						lore[lore.length-3] = "";
 
-						if(isEditMode == false)
+						if(!isEditMode)
 						{
 							lore[lore.length-2] = "§b[가격 : " + price + " "+ChatColor.stripColor(MainServerOption.money)+"]";
 							lore[lore.length-1] = "§f[소지금 : " + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + " "+ChatColor.stripColor(MainServerOption.money)+"]";
@@ -560,7 +563,7 @@ public class NpcGui extends UtilGui
 						String[] lore = new String[3];
 						lore[0] = "";
 						
-						if(isEditMode == false)
+						if(!isEditMode)
 						{
 							lore[1] = "§b[가격 : " + price + " "+ChatColor.stripColor(MainServerOption.money)+"]";
 							lore[2] = "§f[소지금 : " + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + " "+ChatColor.stripColor(MainServerOption.money)+"]";
@@ -576,7 +579,7 @@ public class NpcGui extends UtilGui
 				else
 				{
 					List<String> l =null;
-					if(isEditMode == false)
+					if(!isEditMode)
 						l = Arrays.asList("","§b[가격 : " + price + " "+ChatColor.stripColor(MainServerOption.money)+"]","§f[소지금 : " + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + " "+ChatColor.stripColor(MainServerOption.money)+"]");
 					else
 						l = Arrays.asList("","§f[가격 : " + price + " "+ChatColor.stripColor(MainServerOption.money)+"]","§0"+ count);

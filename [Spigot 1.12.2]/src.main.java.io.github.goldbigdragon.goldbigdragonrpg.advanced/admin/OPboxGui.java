@@ -525,7 +525,7 @@ public class OPboxGui extends UtilGui
 			else if(displayName.equals("네비게이션"))
 				new NavigationGui().navigationListGui(player,(short) 0);
 			else if(displayName.equals("워프"))
-				new warp.WarpGui().WarpListGUI(player, 0);
+				new warp.WarpGui().warpListGUI(player, 0);
 			else if(displayName.equals("월드 생성"))
 				new admin.WorldCreateGui().worldCreateGuiMain(player);
 			else if(displayName.equals("몬스터"))

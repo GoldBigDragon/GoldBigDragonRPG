@@ -137,7 +137,7 @@ public class StatsGui extends UtilGui
 		lore = LineUp(CurrentStat, (byte) (main.MainServerOption.statSTR.length()+20))+"%enter%"+lore.replace("%stat%", main.MainServerOption.statSTR)
 				+"%enter%§b§l[추가 근접 공격력]%enter%"+LineUp(Additional, (byte) 24);
 		
-		removeFlagStack("§4"+ LineUp("§c[§f§l"+main.MainServerOption.statSTR+"§4]", (byte) 24), 267,0,1,
+		removeFlagStack("§4"+ LineUp("§c[§f§l"+main.MainServerOption.statSTR+"§c]", (byte) 24), 267,0,1,
 				Arrays.asList(lore.split("%enter%")), 20, inv);
 
 		int DEX = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX();

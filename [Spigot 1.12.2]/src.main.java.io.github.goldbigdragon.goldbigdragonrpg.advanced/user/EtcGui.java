@@ -249,7 +249,7 @@ public final class EtcGui extends UtilGui
 				else if(slot ==3)//파티
 					new party.PartyGUI().PartyGUI_Main(player);
 				else if(slot ==4)//워프
-					new warp.WarpGui().WarpListGUI(player, 0);
+					new warp.WarpGui().warpListGUI(player, 0);
 				else if(slot ==5)//친구
 					FriendsGUI(player, (short) 0);
 				else if(slot ==6)//네비게이션

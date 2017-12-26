@@ -20,7 +20,7 @@ public class WarpCommand
 			case "목록" :
 				{
 					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-					new warp.WarpGui().WarpListGUI(player, 0);
+					new warp.WarpGui().warpListGUI(player, 0);
 				}
 				return;
 			case "등록" : 
