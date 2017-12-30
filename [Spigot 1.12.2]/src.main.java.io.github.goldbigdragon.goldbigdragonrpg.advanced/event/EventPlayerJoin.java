@@ -31,7 +31,7 @@ public class EventPlayerJoin implements Listener
 	  	if(player.getLocation().getWorld().getName().equals("Dungeon"))
 		{
 			new util.UtilPlayer().teleportToCurrentArea(player, true);
-			new dungeon.DungeonMain().EraseAllDungeonKey(player, false);
+			new dungeon.DungeonMain().eraseAllDungeonKey(player, false);
 			main.MainServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setDungeon_Enter(null);
 			main.MainServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setDungeon_UTC(-1);
 		}

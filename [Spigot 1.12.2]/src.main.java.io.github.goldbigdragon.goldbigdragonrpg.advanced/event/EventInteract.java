@@ -38,7 +38,7 @@ public class EventInteract
 
 			if(event.getPlayer().getWorld().getName().equals("Dungeon"))
 			{
-				new dungeon.DungeonMain().DungeonInteract(event);
+				new dungeon.DungeonMain().dungeonInteract(event);
 				return;
 			}
 

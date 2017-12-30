@@ -1877,7 +1877,7 @@ public final class DungeonGui extends UtilGui
 			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 		else if(slot == 5)
 		{
-			new dungeon.DungeonMain().EraseAllDungeonKey(player, true);
+			new dungeon.DungeonMain().eraseAllDungeonKey(player, true);
 			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
 			player.closeInventory();
 		  	YamlLoader playerYaml = new YamlLoader();

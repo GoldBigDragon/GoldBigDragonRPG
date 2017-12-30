@@ -147,7 +147,7 @@ public class Main extends JavaPlugin implements Listener
 		
 	  	YamlLoader userYaml = new YamlLoader();
 		if(player.getLocation().getWorld().getName().equals("Dungeon"))
-			new dungeon.DungeonMain().EraseAllDungeonKey(player, true);
+			new dungeon.DungeonMain().eraseAllDungeonKey(player, true);
 		
 		if(new corpse.CorpseMain().deathCapture(player,false))
 			new corpse.CorpseMain().removeCorpse(player.getName());
@@ -509,7 +509,7 @@ public class Main extends JavaPlugin implements Listener
 								break;
 						}
 						if(b.getTypeId() == 146)
-							new dungeon.DungeonMain().TrapChestOpen(b);
+							new dungeon.DungeonMain().trapChestOpen(b);
 						else if(b.getTypeId() == 95)
 							new dungeon.DungeonMain().TrapGlassTouch(b, player);
 					}

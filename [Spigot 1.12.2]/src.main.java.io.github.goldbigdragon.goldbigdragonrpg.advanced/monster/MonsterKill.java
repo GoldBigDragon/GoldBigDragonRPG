@@ -264,15 +264,15 @@ public class MonsterKill
 					{
 					case 'e' : //일반
 						if(SearchRoomMonster((byte) 20, name.charAt(9), loc) <= 0)
-							new dungeon.DungeonMain().DungeonTrapDoorWorker(loc, false);
+							new dungeon.DungeonMain().dungeonTrapDoorWorker(loc, false);
 						break;
 					case '1' : //다음 웨이브 존재
 						if(SearchRoomMonster((byte) 20, name.charAt(9), loc) <= 0)
-							new dungeon.DungeonMain().MonsterSpawn(loc);
+							new dungeon.DungeonMain().monsterSpawn(loc);
 						break;
 					case '4' : //열쇠 가진 놈
 						if(SearchRoomMonster((byte) 20, name.charAt(9), loc) <= 0)
-							new dungeon.DungeonMain().DungeonTrapDoorWorker(loc, false);
+							new dungeon.DungeonMain().dungeonTrapDoorWorker(loc, false);
 						loc.setY(loc.getY()+1);
 						item = new ItemStack(292);
 						ItemMeta im = item.getItemMeta();
@@ -328,7 +328,7 @@ public class MonsterKill
 							    		dungeonYaml.saveConfig();
 									}
 									else
-										new dungeon.DungeonMain().DungeonClear(player, loc);
+										new dungeon.DungeonMain().dungeonClear(player, loc);
 								}
 							}
 						}

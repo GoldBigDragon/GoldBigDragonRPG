@@ -361,7 +361,7 @@ public class DungeonServerTask
     				if(player.getLocation().getWorld().getName().equals("Dungeon"))
     				{
         				player.teleport(loc);
-        				new dungeon.DungeonMain().EraseAllDungeonKey(player, false);
+        				new dungeon.DungeonMain().eraseAllDungeonKey(player, false);
     				}
     			}
     		}

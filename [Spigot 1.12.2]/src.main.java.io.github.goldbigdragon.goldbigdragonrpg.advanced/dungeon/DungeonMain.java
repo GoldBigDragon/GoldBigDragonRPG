@@ -3,8 +3,6 @@ package dungeon;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -25,32 +23,33 @@ import util.YamlLoader;
 public class DungeonMain
 {
 
-	public void IronDoorOpening(Location loc)
+	public void ironDoorOpening(Location loc)
 	{
-		servertick.ServerTickObject STSO = new servertick.ServerTickObject(0, "Sound");
-		STSO.setType("Sound");
-		STSO.setString((byte)1, loc.getWorld().getName());
-		STSO.setInt((byte)0, (int)loc.getX());
-		STSO.setInt((byte)1, (int)loc.getY());
-		STSO.setInt((byte)2, (int)loc.getZ());
-		STSO.setString((byte)0, "0000001");//소리 구성
-		STSO.setInt((byte)3, 20);//소리 크기
-		STSO.setInt((byte)4, 5);//소리 속도
+		servertick.ServerTickObject serverTickObject = new servertick.ServerTickObject(0, "Sound");
+		serverTickObject.setType("Sound");
+		serverTickObject.setString((byte)1, loc.getWorld().getName());
+		serverTickObject.setInt((byte)0, (int)loc.getX());
+		serverTickObject.setInt((byte)1, (int)loc.getY());
+		serverTickObject.setInt((byte)2, (int)loc.getZ());
+		serverTickObject.setString((byte)0, "0000001");//소리 구성
+		serverTickObject.setInt((byte)3, 20);//소리 크기
+		serverTickObject.setInt((byte)4, 5);//소리 속도
 		
-		STSO.setInt((byte)5, 1);//틱 설정
-		STSO.setMaxCount(STSO.getString((byte)0).length());
-		STSO.setTick(servertick.ServerTickMain.nowUTC);
-		servertick.ServerTickMain.Schedule.put(servertick.ServerTickMain.nowUTC, STSO);
+		serverTickObject.setInt((byte)5, 1);//틱 설정
+		serverTickObject.setMaxCount(serverTickObject.getString((byte)0).length());
+		serverTickObject.setTick(servertick.ServerTickMain.nowUTC);
+		servertick.ServerTickMain.Schedule.put(servertick.ServerTickMain.nowUTC, serverTickObject);
 	}
-	public void DungeonClear(Player player, Location BossLoc)
+
+	public void dungeonClear(Player player, Location bossLoc)
 	{
 		YamlLoader dungeonYaml = new YamlLoader();
 		dungeonYaml.getConfig("Dungeon/Dungeon/"+main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getDungeon_Enter() +"/Option.yml");
 		
-		int Reward_M = dungeonYaml.getInt("Reward.Money");
-		int Reward_E = dungeonYaml.getInt("Reward.EXP");
+		int moneyReward = dungeonYaml.getInt("Reward.Money");
+		int expReward = dungeonYaml.getInt("Reward.EXP");
 		
-		ItemStack item = new ItemStack(292);
+		ItemStack item = new ItemStack(Material.IRON_HOE);
 		ItemMeta im = item.getItemMeta();
 		im.setDisplayName("§a§0§a§f§l[보상 상자 열쇠]");
 		im.setLore(Arrays.asList("","§f보상 상자를 열 수 있는","§f낡은 열쇠이다."));
@@ -68,7 +67,7 @@ public class DungeonMain
 					{
 						SoundEffect.playSound(partyMember[count], Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
 						new util.UtilPlayer().giveItemDrop(partyMember[count], item, partyMember[count].getLocation());
-						new util.UtilPlayer().DungeonClear(partyMember[count], Reward_M, Reward_E);
+						new util.UtilPlayer().DungeonClear(partyMember[count], moneyReward, expReward);
 					}
 				}
 			}
@@ -77,40 +76,40 @@ public class DungeonMain
 		{
 			SoundEffect.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
 			new util.UtilPlayer().giveItemDrop(player, item, player.getLocation());
-			new util.UtilPlayer().DungeonClear(player, Reward_M, Reward_E);
+			new util.UtilPlayer().DungeonClear(player, moneyReward, expReward);
 		}
 		
-		BossLoc.add(3, -1, -30);
-		IronDoorOpening(BossLoc);
+		bossLoc.add(3, -1, -30);
+		ironDoorOpening(bossLoc);
 		Block block = null;
     	for(int count = 0; count < 7; count++)
     	{
     		for(int count2 = 0; count2 < 5; count2++)
     		{
-    			block = BossLoc.add(-1, 0, 0).getBlock();
+    			block = bossLoc.add(-1, 0, 0).getBlock();
 				block.setType(Material.AIR,true);
     		}
-			block = BossLoc.add(5, 1, 0).getBlock();
+			block = bossLoc.add(5, 1, 0).getBlock();
     	}
-		BossLoc.add(0, -7, -1);
+		bossLoc.add(0, -7, -1);
     	for(int count = 0; count < 7; count++)
     	{
     		for(int count2 = 0; count2 < 5; count2++)
     		{
-    			block = BossLoc.add(-1, 0, 0).getBlock();
+    			block = bossLoc.add(-1, 0, 0).getBlock();
 				block.setType(Material.AIR,true);
     		}
-			block = BossLoc.add(5, 1, 0).getBlock();
+			block = bossLoc.add(5, 1, 0).getBlock();
     	}
 	}
 	
-	public void BossRoomOpen(Player player, Location BossLoc, String DungeonName)
+	public void bossRoomOpen(Player player, Location bossLoc, String dungeonName)
 	{
 		YamlLoader dungeonOptionYaml = new YamlLoader();
 		dungeonOptionYaml.getConfig("Dungeon/Dungeon/"+main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getDungeon_Enter() +"/Option.yml");
-		int SoundTrack = dungeonOptionYaml.getInt("BGM.BOSS");
+		int soundTrack = dungeonOptionYaml.getInt("BGM.BOSS");
 		
-		otherplugins.NoteBlockApiMain NBAPIM = new otherplugins.NoteBlockApiMain();
+		otherplugins.NoteBlockApiMain noteBlockApi = new otherplugins.NoteBlockApiMain();
 		if(MainServerOption.partyJoiner.containsKey(player))
 		{
 			Player[] partyMember = MainServerOption.party.get(MainServerOption.partyJoiner.get(player)).getMember();
@@ -121,68 +120,68 @@ public class DungeonMain
 					Long target = MainServerOption.PlayerList.get(partyMember[count].getUniqueId().toString()).getDungeon_UTC();
 					if(target.equals(MainServerOption.PlayerList.get(player.getUniqueId().toString()).getDungeon_UTC()))
 					{
-						NBAPIM.Stop(partyMember[count]);
-						NBAPIM.Play(partyMember[count], SoundTrack);	
+						noteBlockApi.Stop(partyMember[count]);
+						noteBlockApi.Play(partyMember[count], soundTrack);	
 					}
 				}
 			}
 		}
 		else
 		{
-			NBAPIM.Stop(player);
-			NBAPIM.Play(player, SoundTrack);	
+			noteBlockApi.Stop(player);
+			noteBlockApi.Play(player, soundTrack);	
 		}
 
 		YamlLoader dungeonMonsterYaml = new YamlLoader();
-		dungeonMonsterYaml.getConfig("Dungeon/Dungeon/"+DungeonName +"/Monster.yml");
-    	String[] MobList = null;
+		dungeonMonsterYaml.getConfig("Dungeon/Dungeon/"+dungeonName +"/Monster.yml");
+    	String[] mobList = null;
 		if(dungeonMonsterYaml.getConfigurationSection("Boss").getKeys(false).size()!=0)
-			MobList = dungeonMonsterYaml.getConfigurationSection("Boss").getKeys(false).toArray(new String[0]);
+			mobList = dungeonMonsterYaml.getConfigurationSection("Boss").getKeys(false).toArray(new String[0]);
 
 		int XYZloc[] = new int[3];
-		XYZloc[0] = (int) BossLoc.getX();
-		XYZloc[1] = (int) BossLoc.getY();
-		XYZloc[2] = (int) BossLoc.getZ();
-		byte GroupNumber = (byte) new util.UtilNumber().RandomNum(0, 15);
-		char Group = '0';
-		switch(GroupNumber)
+		XYZloc[0] = (int) bossLoc.getX();
+		XYZloc[1] = (int) bossLoc.getY();
+		XYZloc[2] = (int) bossLoc.getZ();
+		byte groupNumber = (byte) new util.UtilNumber().RandomNum(0, 15);
+		char group = '0';
+		switch(groupNumber)
 		{
-			case 0 : Group = '0'; break;
-			case 1 : Group = '1'; break;
-			case 2 : Group = '2'; break;
-			case 3 : Group = '3'; break;
-			case 4 : Group = '4'; break;
-			case 5 : Group = '5'; break;
-			case 6 : Group = '6'; break;
-			case 7 : Group = '7'; break;
-			case 8 : Group = '8'; break;
-			case 9 : Group = '9'; break;
-			case 10 : Group = 'a'; break;
-			case 11 : Group = 'b'; break;
-			case 12 : Group = 'c'; break;
-			case 13 : Group = 'd'; break;
-			case 14 : Group = 'e'; break;
-			case 15 : Group = 'f'; break;
+			case 0 : group = '0'; break;
+			case 1 : group = '1'; break;
+			case 2 : group = '2'; break;
+			case 3 : group = '3'; break;
+			case 4 : group = '4'; break;
+			case 5 : group = '5'; break;
+			case 6 : group = '6'; break;
+			case 7 : group = '7'; break;
+			case 8 : group = '8'; break;
+			case 9 : group = '9'; break;
+			case 10 : group = 'a'; break;
+			case 11 : group = 'b'; break;
+			case 12 : group = 'c'; break;
+			case 13 : group = 'd'; break;
+			case 14 : group = 'e'; break;
+			case 15 : group = 'f'; break;
 		}
 		
-    	if(MobList ==null || MobList.length == 0)
-    		DungeonClear(player, BossLoc);
+    	if(mobList ==null || mobList.length == 0)
+    		dungeonClear(player, bossLoc);
     	else
     	{
-    		monster.MonsterSpawn MC = new monster.MonsterSpawn();
+    		monster.MonsterSpawn monsterSpawn = new monster.MonsterSpawn();
     		
-    		for(int count = 0; count < MobList.length; count++)
+    		for(int count = 0; count < mobList.length; count++)
     		{
-    			BossLoc.add(0, 0.2, 0);
-    			SoundEffect.playSoundLocation(BossLoc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
-    			MC.SpawnMob(BossLoc, dungeonMonsterYaml.getString("Boss."+MobList[count]),(byte) 4, XYZloc, Group, true);
+    			bossLoc.add(0, 0.2, 0);
+    			SoundEffect.playSoundLocation(bossLoc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
+    			monsterSpawn.SpawnMob(bossLoc, dungeonMonsterYaml.getString("Boss."+mobList[count]),(byte) 4, XYZloc, group, true);
     		}
 		}
 	}
 	
-	public void EraseAllDungeonKey(Player player, boolean isDrop)
+	public void eraseAllDungeonKey(Player player, boolean isDrop)
 	{
-		ItemStack item = new ItemStack(292);
+		ItemStack item = new ItemStack(Material.IRON_HOE);
 		ItemMeta im = item.getItemMeta();
 		im.setDisplayName("§a§0§a§f§l[던전 룸 열쇠]");
 		im.setLore(Arrays.asList("","§f던전 룸을 열 수 있는","§f낡은 열쇠이다."));
@@ -193,7 +192,7 @@ public class DungeonMain
 		else
 			new util.UtilPlayer().deleteItem(player, item, -1);
 		
-		item = new ItemStack(292);
+		item = new ItemStack(Material.IRON_HOE);
 		im = item.getItemMeta();
 		im.setDisplayName("§a§0§a§f§l[보상 상자 열쇠]");
 		im.setLore(Arrays.asList("","§f보상 상자를 열 수 있는","§f낡은 열쇠이다."));
@@ -207,65 +206,65 @@ public class DungeonMain
 			new util.UtilPlayer().deleteItem(player, item, -1);
 	}
 
-	public void MonsterSpawn(Location loc)
+	public void monsterSpawn(Location loc)
 	{
-		Block SB = new Location(loc.getWorld(),loc.getX(),loc.getY()+12,loc.getZ()).getBlock();
-        Sign SignBlock = (Sign) SB.getState();
-        String DungeonName = SignBlock.getLine(2);
+		Block signBlock = new Location(loc.getWorld(),loc.getX(),loc.getY()+12,loc.getZ()).getBlock();
+        Sign sign = (Sign) signBlock.getState();
+        String dungeonName = sign.getLine(2);
 
 	  	YamlLoader dungeonMonsterYaml = new YamlLoader();
-		dungeonMonsterYaml.getConfig("Dungeon/Dungeon/"+DungeonName+"/Monster.yml");
-    	String[] MobList = null;
-    	String ListName = "Middle";
+		dungeonMonsterYaml.getConfig("Dungeon/Dungeon/"+dungeonName+"/Monster.yml");
+    	String[] mobList = null;
+    	String listName = "Middle";
     	byte randomLevel = (byte) new util.UtilNumber().RandomNum(0, 3);
     	if(randomLevel<=2)
     	{
-    		if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).size()==0)
-    			if(dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).size()==0)
-	        		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).size()==0)
-	        			MobList = null;
+    		if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).isEmpty())
+    			if(dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).isEmpty())
+	        		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).isEmpty())
+	        			mobList = null;
 		        	else
 		        	{
-		        		ListName = "Normal";
-		        		MobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
+		        		listName = "Normal";
+		        		mobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
 		        	}
     			else
     			{
-	        		ListName = "High";
-    				MobList = dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).toArray(new String[0]);
+	        		listName = "High";
+    				mobList = dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).toArray(new String[0]);
     			}
     		else
     		{
-        		ListName = "Middle";
-    			MobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
+        		listName = "Middle";
+    			mobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
     		}
     	}
     	else
     	{
-    		if(dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).size()==0)
-    			if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).size()==0)
-	        		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).size()==0)
-	        			MobList = null;
+    		if(dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).isEmpty())
+    			if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).isEmpty())
+	        		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).isEmpty())
+	        			mobList = null;
 		        	else
 		        	{
-		        		ListName = "Normal";
-		        		MobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
+		        		listName = "Normal";
+		        		mobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
 		        	}
     			else
     			{
-	        		ListName = "Middle";
-    				MobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
+	        		listName = "Middle";
+    				mobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
     			}
     		else
     		{
-        		ListName = "High";
-    			MobList = dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).toArray(new String[0]);
+        		listName = "High";
+    			mobList = dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).toArray(new String[0]);
     		}
     	}
-    	if(MobList!=null)
+    	if(mobList!=null)
     	{
-        	String Mob = MobList[new util.UtilNumber().RandomNum(0, MobList.length-1)];
-    		if(Mob != null)
+        	String mob = mobList[new util.UtilNumber().RandomNum(0, mobList.length-1)];
+    		if(mob != null)
     		{
         		randomLevel = (byte) new util.UtilNumber().RandomNum(0, 5);
         		switch(randomLevel)
@@ -276,60 +275,60 @@ public class DungeonMain
         			break;
         		}
         		
-    			int[] XYZLoc = new int[3];
-    			XYZLoc[0] = (int) loc.getX();
-    			XYZLoc[1] = (int) loc.getY();
-    			XYZLoc[2] = (int) loc.getZ();
-    			byte GroupNumber = (byte) new util.UtilNumber().RandomNum(0, 15);
-    			char Group = '0';
-    			switch(GroupNumber)
+    			int[] xyzLoc = new int[3];
+    			xyzLoc[0] = (int) loc.getX();
+    			xyzLoc[1] = (int) loc.getY();
+    			xyzLoc[2] = (int) loc.getZ();
+    			byte groupNumber = (byte) new util.UtilNumber().RandomNum(0, 15);
+    			char group = '0';
+    			switch(groupNumber)
     			{
-    				case 0 : Group = '0'; break;
-    				case 1 : Group = '1'; break;
-    				case 2 : Group = '2'; break;
-    				case 3 : Group = '3'; break;
-    				case 4 : Group = '4'; break;
-    				case 5 : Group = '5'; break;
-    				case 6 : Group = '6'; break;
-    				case 7 : Group = '7'; break;
-    				case 8 : Group = '8'; break;
-    				case 9 : Group = '9'; break;
-    				case 10 : Group = 'a'; break;
-    				case 11 : Group = 'b'; break;
-    				case 12 : Group = 'c'; break;
-    				case 13 : Group = 'd'; break;
-    				case 14 : Group = 'e'; break;
-    				case 15 : Group = 'f'; break;
+    				case 0 : group = '0'; break;
+    				case 1 : group = '1'; break;
+    				case 2 : group = '2'; break;
+    				case 3 : group = '3'; break;
+    				case 4 : group = '4'; break;
+    				case 5 : group = '5'; break;
+    				case 6 : group = '6'; break;
+    				case 7 : group = '7'; break;
+    				case 8 : group = '8'; break;
+    				case 9 : group = '9'; break;
+    				case 10 : group = 'a'; break;
+    				case 11 : group = 'b'; break;
+    				case 12 : group = 'c'; break;
+    				case 13 : group = 'd'; break;
+    				case 14 : group = 'e'; break;
+    				case 15 : group = 'f'; break;
     			}
-    			monster.MonsterSpawn MC = new monster.MonsterSpawn();
+    			monster.MonsterSpawn monsterSpawn = new monster.MonsterSpawn();
     			
     			loc.add(0,1,0);
         		for(int count = 0; count < 7; count++)
         		{
         			SoundEffect.playSoundLocation(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
-        			MC.SpawnMob(loc, dungeonMonsterYaml.getString(ListName+"."+Mob),(byte) 1, XYZLoc, Group, true);
+        			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mob),(byte) 1, xyzLoc, group, true);
         			loc.add(0, 0.2, 0);
         		}
     			SoundEffect.playSoundLocation(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
-    			MC.SpawnMob(loc, dungeonMonsterYaml.getString(ListName+"."+Mob),(byte) 3, XYZLoc, Group, true);	
+    			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mob),(byte) 3, xyzLoc, group, true);	
     		}
     		else
     		{
     			Location blockLoc = new Location(loc.getWorld(), loc.getX(), loc.getY()+1, loc.getZ());
-				ItemStack item = new ItemStack(292);
+				ItemStack item = new ItemStack(Material.IRON_HOE);
 				ItemMeta im = item.getItemMeta();
 				im.setDisplayName("§a§0§a§f§l[던전 룸 열쇠]");
 				im.setLore(Arrays.asList("","§f던전 룸을 열 수 있는","§f낡은 열쇠이다."));
 				im.addEnchant(Enchantment.DURABILITY, 6000, true);
 				item.setItemMeta(im);
 				new event.EventItemDrop().CustomItemDrop(blockLoc, item);
-				new dungeon.DungeonMain().DungeonTrapDoorWorker(loc, false);
+				new dungeon.DungeonMain().dungeonTrapDoorWorker(loc, false);
     		}
     	}
         return;
 	}
 	
-	public void DungeonInteract(PlayerInteractEvent event)
+	public void dungeonInteract(PlayerInteractEvent event)
 	{
 		//양동이 사용 못하게 하기
 		if(event.getPlayer().getInventory().getItemInMainHand().getTypeId()>=325&&
@@ -356,7 +355,7 @@ public class DungeonMain
 		
 		if(block.getType().getId()==146)//덫 상자
 		{
-			if(TrapChestOpen(block))
+			if(trapChestOpen(block))
 			{
 				event.setCancelled(true);
 				byte howMuch = (byte) new util.UtilNumber().RandomNum(0, 8);
@@ -376,18 +375,18 @@ public class DungeonMain
 		else if(block.getType().getId()==23) //던전 문 열쇠구멍
 		{
 			event.setCancelled(true);
-			Block SB = new Location(block.getWorld(),block.getX(),block.getY()+10,block.getZ()).getBlock();
-			if(SB.getType()!=Material.SIGN_POST)
+			Block signBlock = new Location(block.getWorld(),block.getX(),block.getY()+10,block.getZ()).getBlock();
+			if(signBlock.getType()!=Material.SIGN_POST)
 				return;
 			if(event.getClickedBlock().getLocation().add(0, 10, 0).getBlock() !=null)
 			{
 				if(event.getClickedBlock().getLocation().add(0,10,0).getBlock().getType() == Material.SIGN_POST)
 				{
-			        Sign SignBlock = (Sign) event.getClickedBlock().getLocation().add(0, 10, 0).getBlock().getState();
-			        String GridImage = SignBlock.getLine(1);
-					if(GridImage.equals("▲")||GridImage.equals("▼")||GridImage.equals("▶")||GridImage.equals("◀")||GridImage.equals("♠"))
+			        Sign sign = (Sign) event.getClickedBlock().getLocation().add(0, 10, 0).getBlock().getState();
+			        String gridImage = sign.getLine(1);
+					if(gridImage.equals("▲")||gridImage.equals("▼")||gridImage.equals("▶")||gridImage.equals("◀")||gridImage.equals("♠"))
 					{
-						ItemStack item = new ItemStack(292);
+						ItemStack item = new ItemStack(Material.IRON_HOE);
 						ItemMeta im = item.getItemMeta();
 						im.setDisplayName("§a§0§a§f§l[던전 룸 열쇠]");
 						im.setLore(Arrays.asList("","§f던전 룸을 열 수 있는","§f낡은 열쇠이다."));
@@ -396,11 +395,11 @@ public class DungeonMain
 						if(new util.UtilPlayer().deleteItem(event.getPlayer(), item, 1))
 						{
 				        	Location loc = event.getClickedBlock().getLocation();
-							String Title = "§9";
-							String SubTitle  = "§f던전 룸 열쇠를 사용하여 문을 열었다.";
-				        	new effect.SendPacket().sendTitle(event.getPlayer(), Title, SubTitle, 1, 2, 1);
-							IronDoorOpening(loc);
-					        switch(GridImage)
+							String title = "§9";
+							String subTitle  = "§f던전 룸 열쇠를 사용하여 문을 열었다.";
+				        	new effect.SendPacket().sendTitle(event.getPlayer(), title, subTitle, 1, 2, 1);
+							ironDoorOpening(loc);
+					        switch(gridImage)
 					        {
 					        case "▲":
 					        case "▼":
@@ -443,7 +442,7 @@ public class DungeonMain
 									block = loc.add(-5, 1, 0).getBlock();
 						    	}
 						    	loc = event.getClickedBlock().getLocation().add(0, -1 ,-33);
-								BossRoomOpen(event.getPlayer(), loc, SignBlock.getLine(2));
+								bossRoomOpen(event.getPlayer(), loc, sign.getLine(2));
 					        	break;
 					        case "▶":
 					        case "◀":
@@ -465,16 +464,16 @@ public class DungeonMain
 						}
 						else
 						{
-							String Title = "§9";
-							String SubTitle  = "§f문을 열기 위해서는 열쇠가 필요할 것 같다...";
-				        	new effect.SendPacket().sendTitle(event.getPlayer(), Title, SubTitle, 1, 2, 1);
+							String title = "§9";
+							String subTitle  = "§f문을 열기 위해서는 열쇠가 필요할 것 같다...";
+				        	new effect.SendPacket().sendTitle(event.getPlayer(), title, subTitle, 1, 2, 1);
 						}
 					}
 					else
 					{
-						String Title = "§9";
-						String SubTitle  = "§f열쇠로 열 수 있는 문이 아닌 것 같다...";
-			        	new effect.SendPacket().sendTitle(event.getPlayer(), Title, SubTitle, 1, 2, 1);
+						String title = "§9";
+						String subTitle  = "§f열쇠로 열 수 있는 문이 아닌 것 같다...";
+			        	new effect.SendPacket().sendTitle(event.getPlayer(), title, subTitle, 1, 2, 1);
 			        	return;
 					}
 				}
@@ -485,7 +484,7 @@ public class DungeonMain
 			SoundEffect.playSoundLocation(block.getLocation().add(0,2,0), Sound.BLOCK_CHEST_OPEN, 0.5F, 1.8F);
 			event.setCancelled(true);
 			block.setType(Material.AIR);
-			ItemStack item = new ItemStack(292);
+			ItemStack item = new ItemStack(Material.IRON_HOE);
 			ItemMeta im = item.getItemMeta();
 			im.setDisplayName("§a§0§a§f§l[던전 룸 열쇠]");
 			im.setLore(Arrays.asList("","§f던전 룸을 열 수 있는","§f낡은 열쇠이다."));
@@ -504,7 +503,7 @@ public class DungeonMain
 				return;
 			event.setCancelled(true);
 	        Player player = event.getPlayer();
-			ItemStack item = new ItemStack(292);
+			ItemStack item = new ItemStack(Material.IRON_HOE);
 			ItemMeta im = item.getItemMeta();
 			im.setDisplayName("§a§0§a§f§l[보상 상자 열쇠]");
 			im.setLore(Arrays.asList("","§f보상 상자를 열 수 있는","§f낡은 열쇠이다."));
@@ -514,20 +513,23 @@ public class DungeonMain
 			{
 				event.getClickedBlock().setType(Material.AIR, true);
 				SoundEffect.playSoundLocation(event.getClickedBlock().getLocation(), Sound.BLOCK_CHEST_OPEN, 1.0F, 1.0F);
-		        Sign SignBlock = (Sign) SB.getState();
-		        String DungeonName = SignBlock.getLine(2);
+		        Sign signBlock = (Sign) SB.getState();
+		        String dungeonName = signBlock.getLine(2);
 			  	YamlLoader dungeonRewardYaml = new YamlLoader();
-				dungeonRewardYaml.getConfig("Dungeon/Dungeon/"+DungeonName+"/Reward.yml");
+				dungeonRewardYaml.getConfig("Dungeon/Dungeon/"+dungeonName+"/Reward.yml");
 				
 				boolean treasureGet = false;
-				int luck = new util.UtilNumber().RandomNum(0, 7);
-				item = dungeonRewardYaml.getItemStack("100."+luck);
-				if(item!=null)
+				for(int count = 0; count < 8; count++)
 				{
-					treasureGet = true;
-					new util.UtilPlayer().giveItemDrop(player, item, event.getClickedBlock().getLocation());
+					item = dungeonRewardYaml.getItemStack("100."+count);
+					if(item!=null)
+					{
+						treasureGet = true;
+						new util.UtilPlayer().giveItemDrop(player, item, event.getClickedBlock().getLocation());
+						break;
+					}
 				}
-				luck = new util.UtilNumber().RandomNum(1, 10);
+				int luck = new util.UtilNumber().RandomNum(1, 10);
 				if(luck != 10)
 				{
 					int count = new util.UtilNumber().RandomNum(0, 7);
@@ -583,7 +585,7 @@ public class DungeonMain
 					}
 				}
 				
-				if(treasureGet==false)
+				if( ! treasureGet)
 					new effect.SendPacket().sendActionBar(player, "§c§l[꽝! 다음 기회에...]", false);
 			}
 			else
@@ -595,95 +597,95 @@ public class DungeonMain
 		return;
 	}
 	
-	public boolean TrapChestOpen(Block block)
+	public boolean trapChestOpen(Block block)
 	{
-		Block SB = new Location(block.getWorld(),block.getX(),block.getY()+12,block.getZ()).getBlock();
-		if(SB.getType()!=Material.SIGN_POST)
+		Block signBlock = new Location(block.getWorld(),block.getX(),block.getY()+12,block.getZ()).getBlock();
+		if(signBlock.getType()!=Material.SIGN_POST)
 			return false;
-		monster.MonsterSpawn MC = new monster.MonsterSpawn();
+		monster.MonsterSpawn monsterSpawn = new monster.MonsterSpawn();
 		
 		
-        Sign SignBlock = (Sign) SB.getState();
-        String GridImage = SignBlock.getLine(1);
-        String DungeonName = SignBlock.getLine(2);
+        Sign sign = (Sign) signBlock.getState();
+        String gridImage = sign.getLine(1);
+        String dungeonName = sign.getLine(2);
         Location loc = new Location(block.getWorld(),block.getX(),block.getY(),block.getZ());
 
 	  	YamlLoader dungeonMonsterYaml = new YamlLoader();
-		dungeonMonsterYaml.getConfig("Dungeon/Dungeon/"+DungeonName+"/Monster.yml");
-    	String[] MobList = null;
-    	String ListName = "Normal";
+		dungeonMonsterYaml.getConfig("Dungeon/Dungeon/"+dungeonName+"/Monster.yml");
+    	String[] mobList = null;
+    	String listName = "Normal";
     	byte randomLevel = (byte) new util.UtilNumber().RandomNum(0, 3);
-        if(dungeonMonsterYaml.contains("Normal")==false)
+        if(! dungeonMonsterYaml.contains("Normal"))
         	dungeonMonsterYaml.createSection("Normal");
-        if(dungeonMonsterYaml.contains("Middle")==false)
+        if(! dungeonMonsterYaml.contains("Middle"))
         	dungeonMonsterYaml.createSection("Middle");
-        if(dungeonMonsterYaml.contains("High")==false)
+        if(! dungeonMonsterYaml.contains("High"))
         	dungeonMonsterYaml.createSection("High");
     	if(randomLevel <= 1)
     	{
-    		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).size()==0)
-        		if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).size()==0)
-        			MobList = null;
+    		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).isEmpty())
+        		if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).isEmpty())
+        			mobList = null;
 	        	else
 	        	{
-	        		ListName = "Middle";
-	        		MobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
+	        		listName = "Middle";
+	        		mobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
 	        	}
         	else
         	{
-        		ListName = "Normal";
-        		MobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
+        		listName = "Normal";
+        		mobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
         	}
     	}
     	else if(randomLevel==2)
     	{
-    		if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).size()==0)
-    			if(dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).size()==0)
-	        		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).size()==0)
-	        			MobList = null;
+    		if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).isEmpty())
+    			if(dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).isEmpty())
+	        		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).isEmpty())
+	        			mobList = null;
 		        	else
-		        		MobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
+		        		mobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
     			else
     			{
-	        		ListName = "High";
-    				MobList = dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).toArray(new String[0]);
+	        		listName = "High";
+    				mobList = dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).toArray(new String[0]);
     			}
     		else
     		{
-        		ListName = "Middle";
-    			MobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
+        		listName = "Middle";
+    			mobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
     		}
     	}
     	else
     	{
-    		if(dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).size()==0)
-    			if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).size()==0)
-	        		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).size()==0)
-	        			MobList = null;
+    		if(dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).isEmpty())
+    			if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).isEmpty())
+	        		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).isEmpty())
+	        			mobList = null;
 		        	else
-		        		MobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
+		        		mobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
     			else
     			{
-	        		ListName = "Middle";
-    				MobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
+	        		listName = "Middle";
+    				mobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
     			}
     		else
     		{
-        		ListName = "High";
-    			MobList = dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).toArray(new String[0]);
+        		listName = "High";
+    			mobList = dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).toArray(new String[0]);
     		}
     	}
-    	if(MobList!=null && MobList.length != 0)
+    	if(mobList!=null && mobList.length != 0)
     	{
-    		ArrayList<String> Mob = new ArrayList<String>();
+    		ArrayList<String> mob = new ArrayList<>();
     		for(int count = 0; count < 8; count++)
-        		Mob.add(MobList[new util.UtilNumber().RandomNum(0, MobList.length-1)]);
-    		if(MobList.length > 0)
+        		mob.add(mobList[new util.UtilNumber().RandomNum(0, mobList.length-1)]);
+    		if(mobList.length > 0)
     		{
-            	if(GridImage.equals("◇"))
+            	if(gridImage.equals("◇"))
             	{
         			SoundEffect.playSoundLocation(loc, Sound.BLOCK_CHEST_OPEN, 1.3F, 1.8F);
-            		MC.SpawnMob(loc, dungeonMonsterYaml.getString(ListName+"."+Mob.get(0)),(byte)-1,null, (char) -1, false);
+            		monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mob.get(0)),(byte)-1,null, (char) -1, false);
             	}
             	else
             	{
@@ -696,41 +698,41 @@ public class DungeonMain
             			break;
             		}
             		
-    				DungeonTrapDoorWorker(loc, true);
-    				int[] XYZLoc = new int[3];
-    				XYZLoc[0] = block.getX();
-    				XYZLoc[1] = block.getY();
-    				XYZLoc[2] = block.getZ();
-    				byte RoomChallenge = (byte) new util.UtilNumber().RandomNum(1, 5);
-    				byte GroupNumber = (byte) new util.UtilNumber().RandomNum(0, 15);
-    				char Group = '0';
-    				switch(GroupNumber)
+    				dungeonTrapDoorWorker(loc, true);
+    				int[] xyzLoc = new int[3];
+    				xyzLoc[0] = block.getX();
+    				xyzLoc[1] = block.getY();
+    				xyzLoc[2] = block.getZ();
+    				byte roomChallenge = (byte) new util.UtilNumber().RandomNum(1, 5);
+    				byte groupNumber = (byte) new util.UtilNumber().RandomNum(0, 15);
+    				char group = '0';
+    				switch(groupNumber)
     				{
-        				case 0 : Group = '0'; break;
-        				case 1 : Group = '1'; break;
-        				case 2 : Group = '2'; break;
-        				case 3 : Group = '3'; break;
-        				case 4 : Group = '4'; break;
-        				case 5 : Group = '5'; break;
-        				case 6 : Group = '6'; break;
-        				case 7 : Group = '7'; break;
-        				case 8 : Group = '8'; break;
-        				case 9 : Group = '9'; break;
-        				case 10 : Group = 'a'; break;
-        				case 11 : Group = 'b'; break;
-        				case 12 : Group = 'c'; break;
-        				case 13 : Group = 'd'; break;
-        				case 14 : Group = 'e'; break;
-        				case 15 : Group = 'f'; break;
+        				case 0 : group = '0'; break;
+        				case 1 : group = '1'; break;
+        				case 2 : group = '2'; break;
+        				case 3 : group = '3'; break;
+        				case 4 : group = '4'; break;
+        				case 5 : group = '5'; break;
+        				case 6 : group = '6'; break;
+        				case 7 : group = '7'; break;
+        				case 8 : group = '8'; break;
+        				case 9 : group = '9'; break;
+        				case 10 : group = 'a'; break;
+        				case 11 : group = 'b'; break;
+        				case 12 : group = 'c'; break;
+        				case 13 : group = 'd'; break;
+        				case 14 : group = 'e'; break;
+        				case 15 : group = 'f'; break;
     				}
         			loc.add(0, 1, 0);
-    				if(RoomChallenge <= 2)
+    				if(roomChallenge <= 2)
     				{
                 		for(int count = 0; count < 8; count++)
                 		{
                 			SoundEffect.playSoundLocation(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
                 			loc.add(0, 0.2, 0);
-                			MC.SpawnMob(loc, dungeonMonsterYaml.getString(ListName+"."+Mob.get(count)),(byte) 2, XYZLoc, Group, true);
+                			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mob.get(count)),(byte) 2, xyzLoc, group, true);
                 		}
     				}
     				else
@@ -739,9 +741,9 @@ public class DungeonMain
                 		{
                 			loc.add(0, 0.2, 0);
                 			SoundEffect.playSoundLocation(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
-                			MC.SpawnMob(loc, dungeonMonsterYaml.getString(ListName+"."+Mob.get(count)),(byte) 1, XYZLoc, Group, true);
+                			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mob.get(count)),(byte) 1, xyzLoc, group, true);
                 		}
-            			MC.SpawnMob(loc, dungeonMonsterYaml.getString(ListName+"."+Mob.get(7)),(byte) 3, XYZLoc, Group, true);
+            			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mob.get(7)),(byte) 3, xyzLoc, group, true);
     				}
             		/*
             		일반 방 열면 몹 스폰되고 문 닫히게 하기
@@ -771,10 +773,10 @@ public class DungeonMain
             		*/
             	}
     		}
-    		else if(!GridImage.equals("◇"))
+    		else if(!gridImage.equals("◇"))
     		{
     			Location blockLoc = new Location(block.getWorld(), block.getLocation().getX(), block.getLocation().getY()+1, block.getLocation().getZ());
-				ItemStack item = new ItemStack(292);
+				ItemStack item = new ItemStack(Material.IRON_HOE);
 				ItemMeta im = item.getItemMeta();
 				im.setDisplayName("§a§0§a§f§l[던전 룸 열쇠]");
 				im.setLore(Arrays.asList("","§f던전 룸을 열 수 있는","§f낡은 열쇠이다."));
@@ -783,10 +785,10 @@ public class DungeonMain
 				new event.EventItemDrop().CustomItemDrop(blockLoc, item);
     		}
     	}
-		else if(!GridImage.equals("◇"))
+		else if(!gridImage.equals("◇"))
 		{
 			Location blockLoc = new Location(block.getWorld(), block.getLocation().getX(), block.getLocation().getY()+1, block.getLocation().getZ());
-			ItemStack item = new ItemStack(292);
+			ItemStack item = new ItemStack(Material.IRON_HOE);
 			ItemMeta im = item.getItemMeta();
 			im.setDisplayName("§a§0§a§f§l[던전 룸 열쇠]");
 			im.setLore(Arrays.asList("","§f던전 룸을 열 수 있는","§f낡은 열쇠이다."));
@@ -799,52 +801,52 @@ public class DungeonMain
         return true;
 	}
 	
-	public void TrapGlassTouch(Block block, Player player)
+	public void TrapGlassTouch(Block trapTypeBlock, Player player)
 	{
-		Block SB = new Location(block.getWorld(),block.getX(),block.getY()+11,block.getZ()).getBlock();
-		if(SB.getType()!=Material.SIGN_POST)
+		Block signBlock = new Location(trapTypeBlock.getWorld(),trapTypeBlock.getX(),trapTypeBlock.getY()+11,trapTypeBlock.getZ()).getBlock();
+		if(signBlock.getType()!=Material.SIGN_POST)
 			return;
-		monster.MonsterSpawn MC = new monster.MonsterSpawn();
+		monster.MonsterSpawn monsterSpawn = new monster.MonsterSpawn();
 		
 		effect.ParticleEffect p = new effect.ParticleEffect();
-		if(block.getData()==15||block.getData()==14||block.getData()==13||
-			block.getData()==11||block.getData()==8)
+		if(trapTypeBlock.getData()==15||trapTypeBlock.getData()==14||trapTypeBlock.getData()==13||
+			trapTypeBlock.getData()==11||trapTypeBlock.getData()==8)
 		{
-			switch(block.getData())
+			switch(trapTypeBlock.getData())
 			{
-    			case 15: block.setTypeIdAndData(95, (byte)7, true);break;
-    			case 14: block.setTypeIdAndData(95, (byte)6, true);break;
-    			case 13: block.setTypeIdAndData(95, (byte) 5, true);break;
-    			case 11: block.setTypeIdAndData(95, (byte)3, true);break;
-    			case 8: block.setTypeIdAndData(95, (byte)0, true);break;
+    			case 15: trapTypeBlock.setTypeIdAndData(95, (byte)7, true);break;
+    			case 14: trapTypeBlock.setTypeIdAndData(95, (byte)6, true);break;
+    			case 13: trapTypeBlock.setTypeIdAndData(95, (byte) 5, true);break;
+    			case 11: trapTypeBlock.setTypeIdAndData(95, (byte)3, true);break;
+    			case 8: trapTypeBlock.setTypeIdAndData(95, (byte)0, true);break;
 			}
 			for(int counter=0;counter<50;counter++)
-				p.PL(block.getLocation(), org.bukkit.Effect.MAGIC_CRIT, 0);
-			SoundEffect.playSoundLocation(block.getLocation(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.5F);
+				p.PL(trapTypeBlock.getLocation(), org.bukkit.Effect.MAGIC_CRIT, 0);
+			SoundEffect.playSoundLocation(trapTypeBlock.getLocation(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.5F);
 		}
-		else if(block.getData()==0||block.getData()==3||block.getData()==5||block.getData()==6||block.getData()==7)
+		else if(trapTypeBlock.getData()==0||trapTypeBlock.getData()==3||trapTypeBlock.getData()==5||trapTypeBlock.getData()==6||trapTypeBlock.getData()==7)
 		{
 			for(int counter=0;counter<31;counter++)
-				p.PL(block.getLocation(), org.bukkit.Effect.CRIT, 0);
-			SoundEffect.playSoundLocation(block.getLocation(), org.bukkit.Sound.ENTITY_GENERIC_HURT, 0.5F, 0.5F);
+				p.PL(trapTypeBlock.getLocation(), org.bukkit.Effect.CRIT, 0);
+			SoundEffect.playSoundLocation(trapTypeBlock.getLocation(), org.bukkit.Sound.ENTITY_GENERIC_HURT, 0.5F, 0.5F);
 			return;
 		}
-		block = new Location(block.getWorld(),block.getX(),block.getY()-2,block.getZ()).getBlock();
-		if(block.getType()==Material.STONE)
+		trapTypeBlock = new Location(trapTypeBlock.getWorld(),trapTypeBlock.getX(),trapTypeBlock.getY()-2,trapTypeBlock.getZ()).getBlock();
+		if(trapTypeBlock.getType()==Material.STONE)
 		{
-			block = new Location(block.getWorld(),block.getX(),block.getY()+13,block.getZ()).getBlock();
-	        Sign SignBlock = (Sign) block.getState();
-	        String GridImage = SignBlock.getLine(1);
-	        Location loc = new Location(block.getWorld(),block.getX(),block.getY(),block.getZ());
-	        int Direction = Integer.parseInt(SignBlock.getLine(3));
-			DungeonDoorRemover(player, GridImage.charAt(0), Direction, loc);
+			trapTypeBlock = new Location(trapTypeBlock.getWorld(),trapTypeBlock.getX(),trapTypeBlock.getY()+13,trapTypeBlock.getZ()).getBlock();
+	        Sign sign = (Sign) trapTypeBlock.getState();
+	        String gridImage = sign.getLine(1);
+	        Location loc = new Location(trapTypeBlock.getWorld(),trapTypeBlock.getX(),trapTypeBlock.getY(),trapTypeBlock.getZ());
+	        int direction = Integer.parseInt(sign.getLine(3));
+			dungeonDoorRemover(player, gridImage.charAt(0), direction, loc);
 		}
 		else
 		{
-			block = new Location(block.getWorld(),block.getX(),block.getY()+13,block.getZ()).getBlock();
-	        Sign SignBlock = (Sign) block.getState();
-	        String GridImage = SignBlock.getLine(1);
-	        String DungeonName = SignBlock.getLine(2);
+			trapTypeBlock = new Location(trapTypeBlock.getWorld(),trapTypeBlock.getX(),trapTypeBlock.getY()+13,trapTypeBlock.getZ()).getBlock();
+	        Sign sign = (Sign) trapTypeBlock.getState();
+	        String gridImage = sign.getLine(1);
+	        String dungeonName = sign.getLine(2);
 	        /*
 	        Direction : 0 = 북
 	        Direction : 1 = 북동
@@ -856,13 +858,13 @@ public class DungeonMain
 	        Direction : 7 = 북서
 	        Direction : 8 = 중앙
 	         */
-	        Location loc = new Location(block.getWorld(),block.getX(),block.getY(),block.getZ());
-	        int Direction = Integer.parseInt(SignBlock.getLine(3));
-	        int NowLevel = Integer.parseInt(SignBlock.getLine(0).split("/")[0]);
-        	if(NowLevel<=0)
-        		NowLevel = 1;
-	        int MaxLevel = Integer.parseInt(SignBlock.getLine(0).split("/")[1]);
-	        switch(Direction)
+	        Location loc = new Location(trapTypeBlock.getWorld(),trapTypeBlock.getX(),trapTypeBlock.getY(),trapTypeBlock.getZ());
+	        int direction = Integer.parseInt(sign.getLine(3));
+	        int nowLevel = Integer.parseInt(sign.getLine(0).split("/")[0]);
+        	if(nowLevel<=0)
+        		nowLevel = 1;
+	        int maxLevel = Integer.parseInt(sign.getLine(0).split("/")[1]);
+	        switch(direction)
 	        {
 	        case 1:
 	        	loc.add(-6, -12, 6);
@@ -878,117 +880,117 @@ public class DungeonMain
 	        	break;
 	        }
 		  	YamlLoader dungeonMonsterYaml = new YamlLoader();
-			dungeonMonsterYaml.getConfig("Dungeon/Dungeon/"+DungeonName+"/Monster.yml");
-        	String[] MobList = null;
-        	String ListName = "Normal";
-	        if(GridImage.equals("◎"))
+			dungeonMonsterYaml.getConfig("Dungeon/Dungeon/"+dungeonName+"/Monster.yml");
+        	String[] mobList = null;
+        	String listName = "Normal";
+	        if(gridImage.equals("◎"))
 	        {
-	        	if(dungeonMonsterYaml.getConfigurationSection("SubBoss").getKeys(false).size()==0)
-	        		if(dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).size()==0)
-		        		if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).size()==0)
-			        		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).size()==0)
-			        			MobList = null;
+	        	if(dungeonMonsterYaml.getConfigurationSection("SubBoss").getKeys(false).isEmpty())
+	        		if(dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).isEmpty())
+		        		if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).isEmpty())
+			        		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).isEmpty())
+			        			mobList = null;
 			        		else
-			        			MobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
+			        			mobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
 		        		else
 		        		{
-		        			ListName = "Middle";
-		        			MobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
+		        			listName = "Middle";
+		        			mobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
 		        		}
 	        		else
 	        		{
-	        			ListName = "High";
-	        			MobList = dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).toArray(new String[0]);
+	        			listName = "High";
+	        			mobList = dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).toArray(new String[0]);
 	        		}
 	        	else
         		{
-        			ListName = "SubBoss";
-	        		MobList = dungeonMonsterYaml.getConfigurationSection("SubBoss").getKeys(false).toArray(new String[0]);
+        			listName = "SubBoss";
+	        		mobList = dungeonMonsterYaml.getConfigurationSection("SubBoss").getKeys(false).toArray(new String[0]);
         		}
-	        	if(MobList!=null)
+	        	if(mobList!=null)
 	        	{
 	        		loc.add(0,1,0);
 	        		for(int count = 0; count < 4; count++)
 	        		{
 	        			loc.add(new util.UtilNumber().RandomNum(-2, 2), 0.1*count, new util.UtilNumber().RandomNum(-2, 2));
-	        			MC.SpawnMob(loc, dungeonMonsterYaml.getString(ListName+"."+MobList[new util.UtilNumber().RandomNum(0, MobList.length-1)]), (byte)-1, null, (char) -1, false);
+	        			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mobList[new util.UtilNumber().RandomNum(0, mobList.length-1)]), (byte)-1, null, (char) -1, false);
 	        		}
 	        	}
 	        }
 	        else
 	        {
-	        	if(MaxLevel < 5)
-	        		MaxLevel = MaxLevel*20;
-	        	else if(MaxLevel < 10)
-	        		MaxLevel = MaxLevel*10;
-	        	else if(MaxLevel < 20)
-	        		MaxLevel = MaxLevel*5;
-	        	else if(MaxLevel >= 100)
-	        		MaxLevel = 100;
-	        	if(MaxLevel/NowLevel>20)
+	        	if(maxLevel < 5)
+	        		maxLevel = maxLevel*20;
+	        	else if(maxLevel < 10)
+	        		maxLevel = maxLevel*10;
+	        	else if(maxLevel < 20)
+	        		maxLevel = maxLevel*5;
+	        	else if(maxLevel >= 100)
+	        		maxLevel = 100;
+	        	if(maxLevel/nowLevel>20)
 	        	{
-	        		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).size()==0)
-		        		if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).size()==0)
-		        			MobList = null;
+	        		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).isEmpty())
+		        		if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).isEmpty())
+		        			mobList = null;
 			        	else
 			        	{
-			        		ListName = "Middle";
-			        		MobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
+			        		listName = "Middle";
+			        		mobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
 			        	}
 		        	else
 		        	{
-		        		ListName = "Normal";
-		        		MobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
+		        		listName = "Normal";
+		        		mobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
 		        	}
 	        	}  	
-	        	else if(MaxLevel/NowLevel>10)
+	        	else if(maxLevel/nowLevel>10)
 	        	{
-	        		if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).size()==0)
-	        			if(dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).size()==0)
-			        		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).size()==0)
-			        			MobList = null;
+	        		if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).isEmpty())
+	        			if(dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).isEmpty())
+			        		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).isEmpty())
+			        			mobList = null;
 				        	else
-				        		MobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
+				        		mobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
 	        			else
 	        			{
-			        		ListName = "High";
-	        				MobList = dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).toArray(new String[0]);
+			        		listName = "High";
+	        				mobList = dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).toArray(new String[0]);
 	        			}
 	        		else
 	        		{
-		        		ListName = "Middle";
-	        			MobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
+		        		listName = "Middle";
+	        			mobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
 	        		}
 	        	}
 	        	else
 	        	{
-	        		if(dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).size()==0)
-	        			if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).size()==0)
-			        		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).size()==0)
-			        			MobList = null;
+	        		if(dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).isEmpty())
+	        			if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).isEmpty())
+			        		if(dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).isEmpty())
+			        			mobList = null;
 				        	else
-				        		MobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
+				        		mobList = dungeonMonsterYaml.getConfigurationSection("Normal").getKeys(false).toArray(new String[0]);
 	        			else
 	        			{
-			        		ListName = "Middle";
-	        				MobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
+			        		listName = "Middle";
+	        				mobList = dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).toArray(new String[0]);
 	        			}
 	        		else
 	        		{
-		        		ListName = "High";
-	        			MobList = dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).toArray(new String[0]);
+		        		listName = "High";
+	        			mobList = dungeonMonsterYaml.getConfigurationSection("High").getKeys(false).toArray(new String[0]);
 	        		}
 	        	}
 	        }
 	        
-        	if(MobList!=null)
+        	if(mobList!=null)
         	{
         		loc.add(0,1,0);
         		for(int count = 0; count < 4; count++)
         		{
         			loc.add(new util.UtilNumber().RandomNum(-2, 2),0.1*count, new util.UtilNumber().RandomNum(-2, 2));
         			SoundEffect.playSoundLocation(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
-        			MC.SpawnMob(loc, dungeonMonsterYaml.getString(ListName+"."+MobList[new util.UtilNumber().RandomNum(0, MobList.length-1)]), (byte)-1, null, (char) -1, false);
+        			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mobList[new util.UtilNumber().RandomNum(0, mobList.length-1)]), (byte)-1, null, (char) -1, false);
         		}
         	}
 		}
@@ -996,18 +998,18 @@ public class DungeonMain
 	
 	
 	
-	private void DungeonDoorRemover(Player player, char GridImage, int Direction, Location loc)
+	private void dungeonDoorRemover(Player player, char gridImage, int direction, Location loc)
 	{
 		
-		Location Original = loc.add(0,-12,0);
-		Original.setX(loc.getX());
-		Original.setY(loc.getY());
-		Original.setZ(loc.getZ());
+		Location original = loc.add(0,-12,0);
+		original.setX(loc.getX());
+		original.setY(loc.getY());
+		original.setZ(loc.getZ());
 		Block block = null;
-		switch(GridImage)
+		switch(gridImage)
         {
         case '△':
-			switch(Direction)
+			switch(direction)
 	        {
 		        case 1:
 		        	loc.add(-3, 0, -4).getBlock();
@@ -1022,7 +1024,7 @@ public class DungeonMain
 		        	loc.add(9, 0, -4).getBlock();
 		        	break;
 	        }
-			IronDoorOpening(loc);
+			ironDoorOpening(loc);
         	for(int count = 0; count < 5; count++)
         	{
         		for(int count2 = 0; count2 < 5; count2++)
@@ -1034,30 +1036,30 @@ public class DungeonMain
         	}
         	break;
         case '♥':
-        	Location BossLoc = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ());
-        	Location SignLoc = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ());
-        	SignLoc.add(0, 12, 0);
-	        Sign SignBlock = (Sign) SignLoc.getBlock().getState();
-			switch(Direction)
+        	Location bossLoc = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ());
+        	Location signLoc = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ());
+        	signLoc.add(0, 12, 0);
+	        Sign signBlock = (Sign) signLoc.getBlock().getState();
+			switch(direction)
 	        {
 		        case 1:
 		        	loc = loc.add(-3, 0, -4);
-		        	BossLoc = BossLoc.add(-6, 1, -37);
+		        	bossLoc = bossLoc.add(-6, 1, -37);
 		        	break;
 		        case 3:
 		        	loc.add(-3, 0, -16).getBlock();
-		        	BossLoc = BossLoc.add(-6, 1, -49);
+		        	bossLoc = bossLoc.add(-6, 1, -49);
 		        	break;
 		        case 5:
 		        	loc.add(9, 0, -16).getBlock();
-		        	BossLoc = BossLoc.add(6, 1, -49);
+		        	bossLoc = bossLoc.add(6, 1, -49);
 		        	break;
 		        case 7:
 		        	loc.add(9, 0, -4).getBlock();
-		        	BossLoc = BossLoc.add(6, 1, -37);
+		        	bossLoc = bossLoc.add(6, 1, -37);
 		        	break;
 	        }
-			IronDoorOpening(loc);
+			ironDoorOpening(loc);
 			for(int c=0;c<2;c++)
 			{
 	        	for(int count = 0; count < 5; count++)
@@ -1071,10 +1073,10 @@ public class DungeonMain
 	        	}
     			block = loc.add(0, -5, -1).getBlock();
 			}
-			BossRoomOpen(player, BossLoc, SignBlock.getLine(2));
+			bossRoomOpen(player, bossLoc, signBlock.getLine(2));
         	break;
         case '▽':
-			switch(Direction)
+			switch(direction)
 	        {
 	        case 1:
 	        	loc.add(-3, 0, 16).getBlock();
@@ -1089,7 +1091,7 @@ public class DungeonMain
 	        	loc.add(9, 0, 16).getBlock();
 	        	break;
 	        }
-			IronDoorOpening(loc);
+			ironDoorOpening(loc);
         	for(int count = 0; count < 5; count++)
         	{
         		for(int count2 = 0; count2 < 5; count2++)
@@ -1101,7 +1103,7 @@ public class DungeonMain
         	}
         	break;
         case '◁':
-			switch(Direction)
+			switch(direction)
 	        {
 		        case 1:
 		        	loc.add(-16, 0, 9).getBlock();
@@ -1116,7 +1118,7 @@ public class DungeonMain
 		        	loc.add(-4, 0, 9).getBlock();
 		        	break;
 	        }
-			IronDoorOpening(loc);
+			ironDoorOpening(loc);
         	for(int count = 0; count < 5; count++)
         	{
         		for(int count2 = 0; count2 < 5; count2++)
@@ -1128,7 +1130,7 @@ public class DungeonMain
         	}
         	break;
         case '▷':
-			switch(Direction)
+			switch(direction)
 	        {
 		        case 1:
 		        	loc.add(4, 0, 9).getBlock();
@@ -1143,7 +1145,7 @@ public class DungeonMain
 		        	loc.add(16, 0, 9).getBlock();
 		        	break;
 	        }
-			IronDoorOpening(loc);
+			ironDoorOpening(loc);
         	for(int count = 0; count < 5; count++)
         	{
         		for(int count2 = 0; count2 < 5; count2++)
@@ -1157,13 +1159,13 @@ public class DungeonMain
         }
 	}
 	
-	public void DungeonTrapDoorWorker(Location loc, boolean isCreate)
+	public void dungeonTrapDoorWorker(Location loc, boolean isCreate)
 	{
 		Block block = null;
 		Material M = Material.STAINED_GLASS_PANE;
 		byte blockData = (byte)14;
 
-		IronDoorOpening(loc);
+		ironDoorOpening(loc);
 		Location loc2;
 		byte signX = 0;
 		byte signZ = 0;

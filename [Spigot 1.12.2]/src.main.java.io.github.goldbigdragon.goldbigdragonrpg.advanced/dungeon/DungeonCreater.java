@@ -165,7 +165,7 @@ public class DungeonCreater
     		//파티 찾아서 파티원들 모두 등록하기
     		for(int count = 0; count < nearPartyMember.size(); count++)
     		{
-    			new dungeon.DungeonMain().EraseAllDungeonKey(nearPartyMember.get(count), false);
+    			new dungeon.DungeonMain().eraseAllDungeonKey(nearPartyMember.get(count), false);
     			new effect.SendPacket().sendTitle(nearPartyMember.get(count),"§f대기실", null, 1, 0, 1);
 				nearPartyMember.get(count).teleport(new Location(Bukkit.getWorld("Dungeon"), -87, 31, -87));
     			DSO.addDungeonMaker(nearPartyMember.get(count).getName());
@@ -178,7 +178,7 @@ public class DungeonCreater
     	}
     	else
     	{
-			new dungeon.DungeonMain().EraseAllDungeonKey(player, false);
+			new dungeon.DungeonMain().eraseAllDungeonKey(player, false);
 			player.teleport(new Location(Bukkit.getWorld("Dungeon"), -87, 31, -87));
 			new effect.SendPacket().sendTitle(player,"§f대기실", null, 1, 0, 1);
     		DSO.addDungeonMaker(player.getName());
