@@ -519,9 +519,12 @@ public class DungeonMain
 				dungeonRewardYaml.getConfig("Dungeon/Dungeon/"+dungeonName+"/Reward.yml");
 				
 				boolean treasureGet = false;
-				for(int count = 0; count < 8; count++)
+				int luck;
+				util.UtilNumber r = new util.UtilNumber();
+				for(int count = 0; count < 100; count++)
 				{
-					item = dungeonRewardYaml.getItemStack("100."+count);
+					luck = r.RandomNum(0, 7);
+					item = dungeonRewardYaml.getItemStack("100."+luck);
 					if(item!=null)
 					{
 						treasureGet = true;
@@ -529,10 +532,10 @@ public class DungeonMain
 						break;
 					}
 				}
-				int luck = new util.UtilNumber().RandomNum(1, 10);
+				luck = r.RandomNum(1, 10);
 				if(luck != 10)
 				{
-					int count = new util.UtilNumber().RandomNum(0, 7);
+					int count = r.RandomNum(0, 7);
 					item = dungeonRewardYaml.getItemStack("90."+count);
 					if(item!=null)
 					{
@@ -540,10 +543,10 @@ public class DungeonMain
 						new util.UtilPlayer().giveItemDrop(player, item, event.getClickedBlock().getLocation());
 					}
 				}
-				luck = new util.UtilNumber().RandomNum(1, 10);
+				luck = r.RandomNum(1, 10);
 				if(luck <= 5)
 				{
-					int count = new util.UtilNumber().RandomNum(0, 7);
+					int count = r.RandomNum(0, 7);
 					item = dungeonRewardYaml.getItemStack("50."+count);
 					if(item!=null)
 					{
@@ -551,10 +554,10 @@ public class DungeonMain
 						new util.UtilPlayer().giveItemDrop(player, item, event.getClickedBlock().getLocation());
 					}
 				}
-				luck = new util.UtilNumber().RandomNum(1, 10);
+				luck = r.RandomNum(1, 10);
 				if(luck == 1)
 				{
-					int count = new util.UtilNumber().RandomNum(0, 7);
+					int count = r.RandomNum(0, 7);
 					item = dungeonRewardYaml.getItemStack("10."+count);
 					if(item!=null)
 					{
@@ -562,10 +565,10 @@ public class DungeonMain
 						new util.UtilPlayer().giveItemDrop(player, item, event.getClickedBlock().getLocation());
 					}
 				}
-				luck = new util.UtilNumber().RandomNum(1, 100);
+				luck = r.RandomNum(1, 100);
 				if(luck == 1)
 				{
-					int count = new util.UtilNumber().RandomNum(0, 7);
+					int count = r.RandomNum(0, 7);
 					item = dungeonRewardYaml.getItemStack("1."+count);
 					if(item!=null)
 					{
@@ -573,10 +576,10 @@ public class DungeonMain
 						new util.UtilPlayer().giveItemDrop(player, item, event.getClickedBlock().getLocation());
 					}
 				}
-				luck = new util.UtilNumber().RandomNum(1, 1000);
+				luck = r.RandomNum(1, 1000);
 				if(luck == 1)
 				{
-					int count = new util.UtilNumber().RandomNum(0, 7);
+					int count = r.RandomNum(0, 7);
 					item = dungeonRewardYaml.getItemStack("0."+count);
 					if(item!=null)
 					{

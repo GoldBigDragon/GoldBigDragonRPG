@@ -842,79 +842,87 @@ public class UserObject
 	
 	public void saveAll()
 	{
-	  	YamlLoader PlayerConfig = new YamlLoader();
-		PlayerConfig.getConfig("Stats/"+PlayerUUID+".yml");
+	  	YamlLoader playerConfig = new YamlLoader();
+		playerConfig.getConfig("Stats/"+PlayerUUID+".yml");
 
-	  	PlayerConfig.set("Player.Name", PlayerName);
-	  	PlayerConfig.set("Player.UUID", PlayerUUID);
+	  	playerConfig.set("Player.Name", PlayerName);
+	  	playerConfig.set("Player.UUID", PlayerUUID);
 		
-	  	PlayerConfig.set("Stat.Level", Stat_Level);
-	  	PlayerConfig.set("Stat.RealLevel", Stat_RealLevel);
-	  	PlayerConfig.set("Stat.SkillPoint", Stat_SkillPoint);
-	  	PlayerConfig.set("Stat.StatPoint", Stat_StatPoint);
-	  	PlayerConfig.set("Stat.EXP", Stat_EXP);
-	  	PlayerConfig.set("Stat.MaxEXP", Stat_MaxEXP);
+	  	playerConfig.set("Stat.Level", Stat_Level);
+	  	playerConfig.set("Stat.RealLevel", Stat_RealLevel);
+	  	playerConfig.set("Stat.SkillPoint", Stat_SkillPoint);
+	  	playerConfig.set("Stat.StatPoint", Stat_StatPoint);
+	  	playerConfig.set("Stat.EXP", Stat_EXP);
+	  	playerConfig.set("Stat.MaxEXP", Stat_MaxEXP);
 		if(main.MainServerOption.economy!=null)
-			PlayerConfig.set("Stat.Money", (long) main.MainServerOption.economy.getBalance(player.getName()));
+		{
+			try{
+				playerConfig.set("Stat.Money", (long) main.MainServerOption.economy.getBalance(player.getName()));
+			}
+			catch(Exception e)
+			{
+				playerConfig.set("Stat.Money", Stat_Money);
+			}
+		}
 		else
-			PlayerConfig.set("Stat.Money", Stat_Money);
-	  	PlayerConfig.set("Stat.HP", Stat_HP);
-	  	PlayerConfig.set("Stat.MAXHP", Stat_MaxHP);
-	  	PlayerConfig.set("Stat.Wond", Stat_Wond);
-	  	PlayerConfig.set("Stat.MP", Stat_MP);
-	  	PlayerConfig.set("Stat.MAXMP", Stat_MaxMP);
-	  	PlayerConfig.set("Stat.STR", Stat_STR);
-	  	PlayerConfig.set("Stat.DEX", Stat_DEX);
-	  	PlayerConfig.set("Stat.INT", Stat_INT);
-	  	PlayerConfig.set("Stat.WILL", Stat_WILL);
-	  	PlayerConfig.set("Stat.LUK", Stat_LUK);
-	  	PlayerConfig.set("Stat.Balance", Stat_Balance);
-	  	PlayerConfig.set("Stat.Critical", Stat_Critical);
-	  	PlayerConfig.set("Stat.DEF", Stat_DEF);
-	  	PlayerConfig.set("Stat.DEFcrash", Stat_DEFcrash);
-	  	PlayerConfig.set("Stat.Protect", Stat_Protect);
-	  	PlayerConfig.set("Stat.Magic_DEF", Stat_Magic_DEF);
-	  	PlayerConfig.set("Stat.MagicDEFcrash", Stat_MagicDEFcrash);
-	  	PlayerConfig.set("Stat.Magic_Protect", Stat_Magic_Protect);
-	  	PlayerConfig.set("Stat.AttackTime", Stat_AttackTime);
-	  	PlayerConfig.set("Stat.BowPull", Stat_BowPull);
+			playerConfig.set("Stat.Money", Stat_Money);
+	  	playerConfig.set("Stat.HP", Stat_HP);
+	  	playerConfig.set("Stat.MAXHP", Stat_MaxHP);
+	  	playerConfig.set("Stat.Wond", Stat_Wond);
+	  	playerConfig.set("Stat.MP", Stat_MP);
+	  	playerConfig.set("Stat.MAXMP", Stat_MaxMP);
+	  	playerConfig.set("Stat.STR", Stat_STR);
+	  	playerConfig.set("Stat.DEX", Stat_DEX);
+	  	playerConfig.set("Stat.INT", Stat_INT);
+	  	playerConfig.set("Stat.WILL", Stat_WILL);
+	  	playerConfig.set("Stat.LUK", Stat_LUK);
+	  	playerConfig.set("Stat.Balance", Stat_Balance);
+	  	playerConfig.set("Stat.Critical", Stat_Critical);
+	  	playerConfig.set("Stat.DEF", Stat_DEF);
+	  	playerConfig.set("Stat.DEFcrash", Stat_DEFcrash);
+	  	playerConfig.set("Stat.Protect", Stat_Protect);
+	  	playerConfig.set("Stat.Magic_DEF", Stat_Magic_DEF);
+	  	playerConfig.set("Stat.MagicDEFcrash", Stat_MagicDEFcrash);
+	  	playerConfig.set("Stat.Magic_Protect", Stat_Magic_Protect);
+	  	playerConfig.set("Stat.AttackTime", Stat_AttackTime);
+	  	playerConfig.set("Stat.BowPull", Stat_BowPull);
 
-	  	PlayerConfig.set("Alert.Damage", Alert_Damage);
-	  	PlayerConfig.set("Alert.MobHealth", Alert_MobHealth);
-	  	PlayerConfig.set("Alert.Critical", Alert_Critical);
-	  	PlayerConfig.set("Alert.AttackDelay", Alert_AttackDelay);
-	  	PlayerConfig.set("Alert.ItemPickUp", Alert_ItemPickUp);
-	  	PlayerConfig.set("Alert.EXPget", Alert_EXPget);
+	  	playerConfig.set("Alert.Damage", Alert_Damage);
+	  	playerConfig.set("Alert.MobHealth", Alert_MobHealth);
+	  	playerConfig.set("Alert.Critical", Alert_Critical);
+	  	playerConfig.set("Alert.AttackDelay", Alert_AttackDelay);
+	  	playerConfig.set("Alert.ItemPickUp", Alert_ItemPickUp);
+	  	playerConfig.set("Alert.EXPget", Alert_EXPget);
 
-	  	PlayerConfig.set("Option.EquipLook", Option_EquipLook);
-	  	PlayerConfig.set("Option.ChattingType", Option_ChattingType);
-	  	PlayerConfig.set("Option.HotBarSound", Option_HotBarSound);
-	  	PlayerConfig.set("Option.BGM", Option_BGM);
-	  	PlayerConfig.set("Option.ClickUse", Option_ClickUse);
-	  	PlayerConfig.set("Option.SeeInventory", Option_SeeInventory);
+	  	playerConfig.set("Option.EquipLook", Option_EquipLook);
+	  	playerConfig.set("Option.ChattingType", Option_ChattingType);
+	  	playerConfig.set("Option.HotBarSound", Option_HotBarSound);
+	  	playerConfig.set("Option.BGM", Option_BGM);
+	  	playerConfig.set("Option.ClickUse", Option_ClickUse);
+	  	playerConfig.set("Option.SeeInventory", Option_SeeInventory);
 
-	  	PlayerConfig.set("ETC.Party", ETC_Party);
-	  	PlayerConfig.set("ETC.Death", ETC_Death);
-	  	PlayerConfig.set("ETC.CurrentArea", ETC_CurrentArea);
-	  	PlayerConfig.set("ETC.LastVisited", ETC_LastVisited);
-	  	PlayerConfig.set("ETC.BuffCoolTime", ETC_BuffCoolTime);
+	  	playerConfig.set("ETC.Party", ETC_Party);
+	  	playerConfig.set("ETC.Death", ETC_Death);
+	  	playerConfig.set("ETC.CurrentArea", ETC_CurrentArea);
+	  	playerConfig.set("ETC.LastVisited", ETC_LastVisited);
+	  	playerConfig.set("ETC.BuffCoolTime", ETC_BuffCoolTime);
 	  	
-	  	PlayerConfig.set("Dungeon.Enter", Dungeon_Enter);
-	  	PlayerConfig.set("Dungeon.UTC", Dungeon_UTC);
-	  	PlayerConfig.set("Dungeon.NormalBGMplaying", Dungeon_NormalBGMplaying);
-	  	PlayerConfig.set("Dungeon.BossBGMplaying", Dungeon_BossBGMplaying);
+	  	playerConfig.set("Dungeon.Enter", Dungeon_Enter);
+	  	playerConfig.set("Dungeon.UTC", Dungeon_UTC);
+	  	playerConfig.set("Dungeon.NormalBGMplaying", Dungeon_NormalBGMplaying);
+	  	playerConfig.set("Dungeon.BossBGMplaying", Dungeon_BossBGMplaying);
 	  	
-	  	PlayerConfig.set("Death", Death);
+	  	playerConfig.set("Death", Death);
 	  	if(LastDeathPoint != null)
 	  	{
-		  	PlayerConfig.set("LastDeathPoint.World", LastDeathPoint.getWorld().getName());
-		  	PlayerConfig.set("LastDeathPoint.X", LastDeathPoint.getX());
-		  	PlayerConfig.set("LastDeathPoint.Y", LastDeathPoint.getY());
-		  	PlayerConfig.set("LastDeathPoint.Z", LastDeathPoint.getZ());
-		  	PlayerConfig.set("LastDeathPoint.Yaw", LastDeathPoint.getYaw());
-		  	PlayerConfig.set("LastDeathPoint.Pitch", LastDeathPoint.getPitch());
+		  	playerConfig.set("LastDeathPoint.World", LastDeathPoint.getWorld().getName());
+		  	playerConfig.set("LastDeathPoint.X", LastDeathPoint.getX());
+		  	playerConfig.set("LastDeathPoint.Y", LastDeathPoint.getY());
+		  	playerConfig.set("LastDeathPoint.Z", LastDeathPoint.getZ());
+		  	playerConfig.set("LastDeathPoint.Yaw", LastDeathPoint.getYaw());
+		  	playerConfig.set("LastDeathPoint.Pitch", LastDeathPoint.getPitch());
 	  	}
-	  	PlayerConfig.saveConfig();
+	  	playerConfig.saveConfig();
 	}
 	
 	private int IntegerProcessing(int BaseNumber, int AddNumber)
