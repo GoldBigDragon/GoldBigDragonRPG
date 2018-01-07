@@ -20,82 +20,90 @@ public class AreaCommand
 			SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			return;
 		}
-		if(args.length == 1)
+		if(args.length > 0)
 		{
-			if(args[0].equalsIgnoreCase("목록"))
+			if(args.length == 1)
 			{
-				area.AreaGui areaGui = new area.AreaGui();
-				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-				areaGui.areaListGui(player, (short) 0);
-				return;
-			}
-			else
-			{
-			  	YamlLoader areaYaml = new YamlLoader();
-				areaYaml.getConfig("Area/AreaList.yml");
-				
-				if(areaYaml.contains(args[0]))
+				if(args[0].equals("목록"))
 				{
-					SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 					area.AreaGui areaGui = new area.AreaGui();
-					areaGui.areaSettingGui(player, args[0]);
-				}
-				else
-				{
-					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-					player.sendMessage("§c[SYSTEM] : 해당 이름의 영역이 없습니다!");
-				}
-				return;
-			}
-		}
-		if(args.length == 2)
-		{
-			area.AreaMain areaMain = new area.AreaMain();
-			switch(args[1])
-			{
-			case "생성" :
-				if(main.MainServerOption.catchedLocation1.containsKey(player)&&main.MainServerOption.catchedLocation2.containsKey(player))
-				{
-					areaMain.CreateNewArea(player, main.MainServerOption.catchedLocation1.get(player), main.MainServerOption.catchedLocation2.get(player), args[0]);
+					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+					areaGui.areaListGui(player, (short) 0);
 					return;
 				}
 				else
 				{
-					event.EventInteract interact = new event.EventInteract();
-				  	YamlLoader configYaml = new YamlLoader();
-				  	configYaml.getConfig("config.yml");
-					player.sendMessage("§c[SYSTEM] : 먼저 " + interact.setItemDefaultName(configYaml.getInt("Server.AreaSettingWand"), 0) +"§c 아이템을 손에 든 채로 블록을 좌/우 클릭하여 구역을 설정해 주세요!");
-					SoundEffect.playSound((Player)player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+				  	YamlLoader areaYaml = new YamlLoader();
+					areaYaml.getConfig("Area/AreaList.yml");
+					
+					if(areaYaml.contains(args[0]))
+					{
+						SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
+						area.AreaGui areaGui = new area.AreaGui();
+						areaGui.areaSettingGui(player, args[0]);
+					}
+					else
+					{
+						SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+						player.sendMessage("§c[SYSTEM] : 해당 이름의 영역이 없습니다!");
+					}
+					return;
 				}
-				return;
-			case "삭제" :
-				areaMain.RemoveArea(player, args[0]);
+			}
+			else if(args.length == 2)
+			{
+				for(int count = 0; count < 10; count++)
+				{
+					if(args[0].contains("."))
+						args[0] = args[0].replace('.', '_');
+					if(args[0].contains(":"))
+						args[0] = args[0].replace(':', '_');
+					if(args[0].contains("["))
+						args[0] = args[0].replace('[', '_');
+					if(args[0].contains("]"))
+						args[0] = args[0].replace(']', '_');
+					if(args[0].contains("\\"))
+						args[0] = args[0].replace('\\', '_');
+					if(args[0].contains("-"))
+						args[0] = args[0].replace('-', '_');
+				}
+				area.AreaMain areaMain = new area.AreaMain();
+				if(args[1].equals("생성"))
+				{
+					if(main.MainServerOption.catchedLocation1.containsKey(player)&&main.MainServerOption.catchedLocation2.containsKey(player))
+					{
+						areaMain.CreateNewArea(player, main.MainServerOption.catchedLocation1.get(player), main.MainServerOption.catchedLocation2.get(player), args[0]);
+					}
+					else
+					{
+						event.EventInteract interact = new event.EventInteract();
+					  	YamlLoader configYaml = new YamlLoader();
+					  	configYaml.getConfig("config.yml");
+						player.sendMessage("§c[SYSTEM] : 먼저 " + interact.setItemDefaultName(configYaml.getInt("Server.AreaSettingWand"), 0) +"§c 아이템을 손에 든 채로 블록을 좌/우 클릭하여 구역을 설정해 주세요!");
+						SoundEffect.playSound((Player)player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+					}
+				}
+				else if(args[1].equals("삭제"))
+					areaMain.RemoveArea(player, args[0]);
+			}
+			else if(args.length <= 2)
+			{
+				helpMessage(player);
 				return;
 			}
-		}
-		if(args.length <= 2)
-		{
-			helpMessage(player);
-			return;
-		}
-		else
-		{
-			area.AreaMain areaMain = new area.AreaMain();
-			StringBuilder sb = new StringBuilder();
-			for(int a =2; a<= ((args.length)-1);a++)
+			else
 			{
-				sb.append(args[a]);
-				sb.append(" ");
-			}
-			
-			switch(args[1])
-			{
-			case "이름" :
-				areaMain.OptionSetting(player, args[0],(char) 0, sb.toString());
-				return;
-			case "설명" :
-				areaMain.OptionSetting(player, args[0],(char) 1, sb.toString());
-				return;
+				area.AreaMain areaMain = new area.AreaMain();
+				StringBuilder sb = new StringBuilder();
+				for(int a =2; a<= ((args.length)-1);a++)
+				{
+					sb.append(args[a]);
+					sb.append(" ");
+				}
+				if(args[1].equals("이름"))
+					areaMain.OptionSetting(player, args[0],(char) 0, sb.toString());
+				else if(args[1].equals("설명"))
+					areaMain.OptionSetting(player, args[0],(char) 1, sb.toString());
 			}
 		}
 	}
