@@ -336,6 +336,11 @@ public class BattleCalculator
 						{
 							if(item.get(counter).getItemMeta().getLore().toString().contains(type))
 							{
+								if(type.equals("방어") || type.equals("보호"))
+								{
+									if(item.get(counter).getItemMeta().getLore().toString().contains("마법"))
+										continue;
+								}
 								if(!(item.get(counter).getItemMeta().getLore().toString().contains("[주문서]")||item.get(counter).getItemMeta().getLore().toString().contains("[룬]")||item.get(counter).getItemMeta().getLore().toString().contains("[소비]")))
 								{
 									boolean useable = true;

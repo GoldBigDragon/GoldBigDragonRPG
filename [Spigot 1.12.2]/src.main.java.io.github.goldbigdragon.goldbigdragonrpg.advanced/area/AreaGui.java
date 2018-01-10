@@ -9,6 +9,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -996,7 +997,7 @@ public class AreaGui extends UtilGui
 		Player player = (Player) event.getWhoClicked();
 		int slot = event.getSlot();
 		String areaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
-		if(slot == 0 || slot == 9 || slot == 18 || slot == 27 || slot == 36 || slot >= 45)
+		if(event.getClickedInventory().getType() != InventoryType.PLAYER && (slot == 0 || slot == 9 || slot == 18 || slot == 27 || slot == 36 || slot >= 45))
 			event.setCancelled(true);
 		if(slot == 53)//³ª°¡±â
 		{
