@@ -1,7 +1,12 @@
 package main;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -119,6 +124,23 @@ public class Main extends JavaPlugin implements Listener
 			if(rspE != null)
 				main.MainServerOption.economy = rspE.getProvider();
 		}
+		
+		Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(main.Main.plugin, new Runnable() {
+			public void run() {
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd", Locale.KOREA);
+				String[] dTime = formatter.format(new Date()).split("/");
+				formatter = null;
+
+				File source = new File(main.Main.plugin.getDataFolder().getAbsolutePath() + File.separator);
+				File target = new File(main.Main.plugin.getDataFolder().getAbsolutePath() + File.separator
+						+ "\\BACKUP\\" + dTime[0] + "_" + dTime[1] + "_" + dTime[2] + "_" + servertick.ServerTickMain.nowUTC + "\\" + source.getName());
+				if (!target.exists())
+					target.mkdirs();
+				util.BackUpAllFile.copyDir(source, target);
+				Bukkit.getConsoleSender().sendMessage("§e§l[GoldBigDragonRPG] BackUp completed!");
+			}
+		}, 0, 36000);//플러그인 실행됬을 때와, 실행 이후 30분마다
+		
 	  	return;
 	}
 	
