@@ -423,7 +423,7 @@ public class AreaGui extends UtilGui
 		return;
 	}
 	
-	public void areaAddMonsterListGui(Player player, short page,String areaName)
+	public void areaAddMonsterListGui(Player player, int page, String areaName)
 	{
 	  	YamlLoader areaYaml = new YamlLoader();
 		areaYaml.getConfig("Area/AreaList.yml");
@@ -532,7 +532,7 @@ public class AreaGui extends UtilGui
 		player.openInventory(inv);
 	}
 	
-	public void areaSpawnSpecialMonsterListGui(Player player, short page,String areaName,String ruleCount)
+	public void areaSpawnSpecialMonsterListGui(Player player, int page,String areaName,String ruleCount)
 	{
 	  	YamlLoader monsterYaml = new YamlLoader();
 		monsterYaml.getConfig("Monster/MonsterList.yml");
@@ -683,7 +683,7 @@ public class AreaGui extends UtilGui
 		Inventory inv = Bukkit.createInventory(null, 54, uniqueCode + "§0영역 배경음 : " + (page+1));
 		byte loc=0;
 		byte model = (byte) new util.UtilNumber().RandomNum(0, 11);
-		for(int count = page*45; count < new otherplugins.NoteBlockApiMain().Musics.size();count++)
+		for(int count = page*45; count < otherplugins.NoteBlockApiMain.Musics.size();count++)
 		{
 			if(model<11)
 				model++;
@@ -706,13 +706,13 @@ public class AreaGui extends UtilGui
 				}
 			}
 			lore = lore + lore2+"%enter% %enter%§e[좌 클릭시 배경음 설정]";
-			if(count > new otherplugins.NoteBlockApiMain().Musics.size() || loc >= 45) break;
+			if(count > otherplugins.NoteBlockApiMain.Musics.size() || loc >= 45) break;
 				removeFlagStack("§f§l" + count, 2256+model,0,1,Arrays.asList(lore.split("%enter%")), loc, inv);
 			
 			loc++;
 		}
 		
-		if(new otherplugins.NoteBlockApiMain().Musics.size()-(page*44)>45)
+		if(otherplugins.NoteBlockApiMain.Musics.size()-(page*44)>45)
 			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
 		if(page!=0)
 			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
@@ -1176,7 +1176,7 @@ public class AreaGui extends UtilGui
 
 		String areaName = ChatColor.stripColor(event.getInventory().getItem(49).getItemMeta().getLore().get(3));
 		String ruleCounter = ChatColor.stripColor(event.getInventory().getItem(49).getItemMeta().getLore().get(4));
-		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
 		if(slot == 49)//나가기
 		{
 			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
@@ -1184,9 +1184,9 @@ public class AreaGui extends UtilGui
 			new area.AreaMain().AreaMonsterSpawnAdd(areaName, ruleCounter);
 		}
 		else if(slot == 48)//이전 페이지
-			areaAddMonsterListGui(player, (short) (page-1), areaName);
+			areaSpawnSpecialMonsterListGui(player, page-1, areaName, ruleCounter);
 		else if(slot == 50)//다음 페이지
-			areaAddMonsterListGui(player, (short) (page+1), areaName);
+			areaSpawnSpecialMonsterListGui(player, page+1, areaName, ruleCounter);
 		else
 		{
 			String mobName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
