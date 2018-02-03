@@ -16,6 +16,7 @@ import org.bukkit.material.*;
 
 import customitem.UseableItemMain;
 import effect.SoundEffect;
+import net.citizensnpcs.api.CitizensAPI;
 import user.UserDataObject;
 import util.YamlLoader;
 
@@ -98,7 +99,7 @@ public class EventInteract
 				if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).isOption_SeeInventory())
 				{
 					Player t = (Player)target;
-					if(t.isOnline()==true)
+					if(t.isOnline())
 					{
 						user.EquipGui EGUI = new user.EquipGui();
 						EGUI.EquipWatchGUI(player, t);
@@ -108,21 +109,23 @@ public class EventInteract
 			}
 		    if(player.isOp())
 		    {
-		    	String Type = new UserDataObject().getType(player);
-		    	if(Type!=null)
-		    		if(new UserDataObject().getType(player).equals("Quest"))
-		    			new quest.QuestInteractEvent().EntityInteract(event, Type);
+		    	String type = new UserDataObject().getType(player);
+		    	if(type!=null && new UserDataObject().getType(player).equals("Quest"))
+	    			new quest.QuestInteractEvent().EntityInteract(event, type);
 		    }
 
-			String[] Area = new area.AreaMain().getAreaName(target);
-			if(Area != null)
+			String[] area = new area.AreaMain().getAreaName(target);
+			if(area != null)
 			{
-				if(new area.AreaMain().getAreaOption(Area[0], (char) 7) == false && event.getPlayer().isOp() == false)
+				if( ! new area.AreaMain().getAreaOption(area[0], (char) 7) && ! event.getPlayer().isOp())
 				{
-					event.setCancelled(true);
-					SoundEffect.playSound(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-					event.getPlayer().sendMessage("§c[SYSTEM] : §e"+ Area[1] + "§c 지역에 있는 엔티티는 손 댈 수없습니다!");
-					return;
+					if(target.getCustomName() == null || CitizensAPI.getNPCRegistry().getNPC(target) == null)
+					{
+						event.setCancelled(true);
+						SoundEffect.playSound(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+						event.getPlayer().sendMessage("§c[SYSTEM] : §e"+ area[1] + "§c 지역에 있는 엔티티는 손 댈 수없습니다!");
+						return;
+					}
 				}
 			}
 		    return;

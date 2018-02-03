@@ -36,7 +36,7 @@ public class UtilGui
 		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
 		meta.addItemFlags();
-		meta.spigot().setUnbreakable(true);
+		meta.setUnbreakable(true);
 		meta.setDisplayName(display);
 		meta.setLore(lore);
 		item.setItemMeta(meta);

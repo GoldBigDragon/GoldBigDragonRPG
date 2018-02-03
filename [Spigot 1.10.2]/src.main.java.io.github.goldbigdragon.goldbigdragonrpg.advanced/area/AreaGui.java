@@ -1129,9 +1129,9 @@ public class AreaGui extends UtilGui
 			new area.AreaMain().AreaMonsterSpawnAdd(areaName, ruleCounter);
 		}
 		else if(slot == 48)//이전 페이지
-			areaAddMonsterListGui(player, (short) (page-1), areaName);
+			areaSpawnSpecialMonsterListGui(player, (short) (page-1), areaName, ruleCounter);
 		else if(slot == 50)//다음 페이지
-			areaAddMonsterListGui(player, (short) (page+1), areaName);
+			areaSpawnSpecialMonsterListGui(player, (short) (page+1), areaName, ruleCounter);
 		else
 		{
 			String mobName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());

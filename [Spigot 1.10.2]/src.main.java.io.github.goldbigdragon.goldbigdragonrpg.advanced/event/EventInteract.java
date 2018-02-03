@@ -16,6 +16,7 @@ import org.bukkit.material.*;
 
 import customitem.UseableItemMain;
 import effect.SoundEffect;
+import net.citizensnpcs.api.CitizensAPI;
 import user.UserDataObject;
 import util.YamlLoader;
 
@@ -54,14 +55,14 @@ public class EventInteract
 					||id==138)
 				{
 					area.AreaMain A = new area.AreaMain();
-					String[] Area = A.getAreaName(event.getClickedBlock());
-					if(Area != null)
+					String[] area = A.getAreaName(event.getClickedBlock());
+					if(area != null)
 					{
-						if(A.getAreaOption(Area[0], (char) 7) == false && event.getPlayer().isOp() == false)
+						if(A.getAreaOption(area[0], (char) 7) == false && event.getPlayer().isOp() == false)
 						{
 							event.setCancelled(true);
 							SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-							event.getPlayer().sendMessage("§c[SYSTEM] : §e"+ Area[1] + "§c 지역에 있는 블록은 손 댈 수없습니다!");
+							event.getPlayer().sendMessage("§c[SYSTEM] : §e"+ area[1] + "§c 지역에 있는 블록은 손 댈 수없습니다!");
 							return;
 						}
 					}
@@ -116,15 +117,18 @@ public class EventInteract
 		    			new quest.QuestInteractEvent().EntityInteract(event, Type);
 		    }
 
-			String[] Area = new area.AreaMain().getAreaName(target);
-			if(Area != null)
+			String[] area = new area.AreaMain().getAreaName(target);
+			if(area != null)
 			{
-				if(new area.AreaMain().getAreaOption(Area[0], (char) 7) == false && event.getPlayer().isOp() == false)
+				if( ! new area.AreaMain().getAreaOption(area[0], (char) 7) && ! event.getPlayer().isOp())
 				{
-					event.setCancelled(true);
-					SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-					event.getPlayer().sendMessage("§c[SYSTEM] : §e"+ Area[1] + "§c 지역에 있는 엔티티는 손 댈 수없습니다!");
-					return;
+					if(target.getCustomName() == null || CitizensAPI.getNPCRegistry().getNPC(target) == null)
+					{
+						event.setCancelled(true);
+						SoundEffect.SP(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+						event.getPlayer().sendMessage("§c[SYSTEM] : §e"+ area[1] + "§c 지역에 있는 엔티티는 손 댈 수없습니다!");
+						return;
+					}
 				}
 			}
 		    return;
