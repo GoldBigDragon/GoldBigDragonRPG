@@ -79,58 +79,58 @@ public class ServerTickMain
 
 		Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable()
         {
-			Iterator<Player> PlayerList;
-			corpse.CorpseMain CCM = new corpse.CorpseMain();
-			otherplugins.NoteBlockApiMain NBAPI = new otherplugins.NoteBlockApiMain();
+			Iterator<Player> playerList;
+			corpse.CorpseMain corpse = new corpse.CorpseMain();
+			otherplugins.NoteBlockApiMain noteblockApi = new otherplugins.NoteBlockApiMain();
 			YamlLoader areaList = new YamlLoader();
-			area.AreaMain A = new area.AreaMain();
-			quest.QuestGui QGUI = new quest.QuestGui();
-        	String Area;
-        	String QuestName;
+			area.AreaMain areaMain = new area.AreaMain();
+			quest.QuestGui questGui = new quest.QuestGui();
+        	String area;
+        	String questName;
         	UserObject uo;
             @Override
             public void run() 
             {
         		broadCastMessage();
             	
-            	PlayerList = (Iterator<Player>) Bukkit.getOnlinePlayers().iterator();
+            	playerList = (Iterator<Player>) Bukkit.getOnlinePlayers().iterator();
             	Player player;
 	  			areaList.getConfig("config.yml");
 			  	boolean isMabinogi = areaList.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System");
-				while (PlayerList.hasNext())
+				while (playerList.hasNext())
 				{
-					player = PlayerList.next();
+					player = playerList.next();
 					uo = main.MainServerOption.PlayerList.get(player.getUniqueId().toString());
-					CCM.asyncDeathCapture(player);
+					corpse.asyncDeathCapture(player);
 	        		if(!player.getLocation().getWorld().getName().equals("Dungeon"))
 	        		{
 	        			if(uo.getDungeon_Enter() != null)
 	        			{
-	        				NBAPI.Stop(player);
+	        				noteblockApi.Stop(player);
 	        				uo.setDungeon_Enter(null);
 	        				uo.setDungeon_UTC(-1);
 	        			}
-	        			if(A.getAreaName(player) != null)
+	        			if(areaMain.getAreaName(player) != null)
 	        			{
 	        				if(uo.getETC_CurrentArea()==null)
 	        					uo.setETC_CurrentArea("null");
-	        				Area = A.getAreaName(player)[0];
-	        				if(!uo.getETC_CurrentArea().equals(Area))
+	        				area = areaMain.getAreaName(player)[0];
+	        				if(!uo.getETC_CurrentArea().equals(area))
 	        				{
 	        					areaList.getConfig("Area/AreaList.yml");
 	        					//레벨 제한 확인
 	        					boolean restrict = false;
-	        					if(areaList.getInt(Area+".Restrict.MinNowLevel")!=0 &&(areaList.getInt(Area+".Restrict.MinNowLevel") > uo.getStat_Level()||areaList.getInt(Area+".Restrict.MaxNowLevel") < uo.getStat_Level()))
+	        					if(areaList.getInt(area+".Restrict.MinNowLevel")!=0 &&(areaList.getInt(area+".Restrict.MinNowLevel") > uo.getStat_Level()||areaList.getInt(area+".Restrict.MaxNowLevel") < uo.getStat_Level()))
 	        						restrict=true;
-	        					if(isMabinogi&&(areaList.getInt(Area+".Restrict.MinRealLevel")!=0 &&(areaList.getInt(Area+".Restrict.MinRealLevel") > uo.getStat_RealLevel()||areaList.getInt(Area+".Restrict.MaxRealLevel") < uo.getStat_RealLevel())))
+	        					if(isMabinogi&&(areaList.getInt(area+".Restrict.MinRealLevel")!=0 &&(areaList.getInt(area+".Restrict.MinRealLevel") > uo.getStat_RealLevel()||areaList.getInt(area+".Restrict.MaxRealLevel") < uo.getStat_RealLevel())))
 	        						restrict=true;
 	        					if(restrict)
 	        					{
 	        						Location playerLoc = player.getLocation();
-	        						int calc1 = areaList.getInt(Area+".X.Max") - playerLoc.getBlockX();
-	        						int calc2 = areaList.getInt(Area+".X.Min") - playerLoc.getBlockX();
-	        						int staticX = areaList.getInt(Area+".X.Min");
-	        						int staticZ = areaList.getInt(Area+".Z.Min");
+	        						int calc1 = areaList.getInt(area+".X.Max") - playerLoc.getBlockX();
+	        						int calc2 = areaList.getInt(area+".X.Min") - playerLoc.getBlockX();
+	        						int staticX = areaList.getInt(area+".X.Min");
+	        						int staticZ = areaList.getInt(area+".Z.Min");
 
 	        						int xF = 0;
 	        						int zF = 0;
@@ -141,31 +141,31 @@ public class ServerTickMain
 	        							calc2 *= -1;
 	        						if(calc1 < calc2)
 	        						{
-	        							staticX = areaList.getInt(Area+".X.Max")+1;
+	        							staticX = areaList.getInt(area+".X.Max")+1;
 	        							xF = calc1;
 	        						}
 	        						else
 	        						{
-	        							staticX = areaList.getInt(Area+".X.Min")-1;
+	        							staticX = areaList.getInt(area+".X.Min")-1;
 	        							xF = calc2;
 	        						}
 
-	        						calc1 = areaList.getInt(Area+".Z.Max") - playerLoc.getBlockZ();
-	        						calc2 = areaList.getInt(Area+".Z.Min") - playerLoc.getBlockZ();
-	        						calc1 = areaList.getInt(Area+".Z.Max") - playerLoc.getBlockZ();
-	        						calc2 = areaList.getInt(Area+".Z.Min") - playerLoc.getBlockZ();
+	        						calc1 = areaList.getInt(area+".Z.Max") - playerLoc.getBlockZ();
+	        						calc2 = areaList.getInt(area+".Z.Min") - playerLoc.getBlockZ();
+	        						calc1 = areaList.getInt(area+".Z.Max") - playerLoc.getBlockZ();
+	        						calc2 = areaList.getInt(area+".Z.Min") - playerLoc.getBlockZ();
 	        						if(calc1 < 0)
 	        							calc1 *= -1;
 	        						if(calc2 < 0)
 	        							calc2 *= -1;
 	        						if(calc1 < calc2)
 	        						{
-	        							staticZ = areaList.getInt(Area+".Z.Max")+1;
+	        							staticZ = areaList.getInt(area+".Z.Max")+1;
 	        							zF = calc1;
 	        						}
 	        						else
 	        						{
-	        							staticZ = areaList.getInt(Area+".Z.Min")-1;
+	        							staticZ = areaList.getInt(area+".Z.Min")-1;
 	        							zF = calc2;
 	        						}
 
@@ -178,19 +178,19 @@ public class ServerTickMain
 	        					}
 	        					else
 	        					{
-		        					uo.setETC_CurrentArea(Area);
-		        					main.MainServerOption.PlayerCurrentArea.put(player, Area);
-		        					A.AreaMonsterSpawnAdd(Area, "-1");
-		        					NBAPI.Stop(player);
-		        					uo.setETC_CurrentArea(Area);
-		        					if(areaList.getBoolean(Area + ".SpawnPoint") == true)
-		        						uo.setETC_LastVisited(Area);
+		        					uo.setETC_CurrentArea(area);
+		        					main.MainServerOption.PlayerCurrentArea.put(player, area);
+		        					areaMain.AreaMonsterSpawnAdd(area, "-1");
+		        					noteblockApi.Stop(player);
+		        					uo.setETC_CurrentArea(area);
+		        					if(areaList.getBoolean(area + ".SpawnPoint") == true)
+		        						uo.setETC_LastVisited(area);
 		            				if(uo.isBgmOn())
 		            				{
-		            					if(areaList.getBoolean(Area + ".Music") == true)
-		        							NBAPI.Play(player, areaList.getInt(Area+".BGM"));
+		            					if(areaList.getBoolean(area + ".Music") == true)
+		        							noteblockApi.Play(player, areaList.getInt(area+".BGM"));
 		            				}
-		        					if(areaList.getBoolean(Area + ".Alert") == true)
+		        					if(areaList.getBoolean(area + ".Alert") == true)
 		        					{
 		        						YamlLoader QuestList = new YamlLoader();
 		        						QuestList.getConfig("Quest/QuestList.yml");
@@ -200,21 +200,21 @@ public class ServerTickMain
 		        						Object[] b = PlayerQuestList.getConfigurationSection("Started").getKeys(false).toArray();
 		        						for(int count = 0; count < b.length; count++)
 		        						{
-		        							QuestName = (String) b[count];
-		        							if(PlayerQuestList.getString("Started."+QuestName+".Type").equals("Visit"))
+		        							questName = (String) b[count];
+		        							if(PlayerQuestList.getString("Started."+questName+".Type").equals("Visit"))
 		        							{
-		        								if(PlayerQuestList.getString("Started."+QuestName+".AreaName").equals(Area))
+		        								if(PlayerQuestList.getString("Started."+questName+".AreaName").equals(area))
 	        									{
-	        										PlayerQuestList.set("Started."+QuestName+".Type",QuestList.getString(QuestName+".FlowChart."+(PlayerQuestList.getInt("Started."+QuestName+".Flow")+1)+".Type"));
-	        										PlayerQuestList.set("Started."+QuestName+".Flow",PlayerQuestList.getInt("Started."+QuestName+".Flow")+1);
-	        										PlayerQuestList.removeKey("Started."+QuestName+".AreaName");
+	        										PlayerQuestList.set("Started."+questName+".Type",QuestList.getString(questName+".FlowChart."+(PlayerQuestList.getInt("Started."+questName+".Flow")+1)+".Type"));
+	        										PlayerQuestList.set("Started."+questName+".Flow",PlayerQuestList.getInt("Started."+questName+".Flow")+1);
+	        										PlayerQuestList.removeKey("Started."+questName+".AreaName");
 	        										PlayerQuestList.saveConfig();
-	        										QGUI.QuestRouter(player, QuestName);
+	        										questGui.QuestRouter(player, questName);
 	        										break;
 	        									}
 		        							}
 		        						}
-		        						A.sendAreaTitle(player, Area);
+		        						areaMain.sendAreaTitle(player, area);
 		        					}
 	        					}
 	        				}
@@ -223,13 +223,13 @@ public class ServerTickMain
 	        			{
 	        				main.MainServerOption.PlayerCurrentArea.put(player, "null");
 	        				uo.setETC_CurrentArea("null");
-	        				NBAPI.Stop(player);
+	        				noteblockApi.Stop(player);
 	        			}
 	        		}
 	        		else
 	        		{
 	        			if(uo.getDungeon_Enter() == null)
-	        				NBAPI.Stop(player);
+	        				noteblockApi.Stop(player);
 	        		}
         		}
         	

@@ -21,7 +21,7 @@ public class MapList extends MapRenderer
 	@Override
 	public void render(MapView MV, MapCanvas MC, Player player)
 	{
-		if(MainServerOption.Mapping==true)
+		if(MainServerOption.Mapping)
 		{
 			MainServerOption.Mapping = false;
 			String URL = "null";

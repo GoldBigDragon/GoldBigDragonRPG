@@ -18,8 +18,6 @@ import main.MainServerOption;
 import util.UtilGui;
 import util.YamlLoader;
 
-
-
 public class CorpseGui extends UtilGui
 {
 	public void setNormal(String path, String normalValue)
@@ -161,7 +159,7 @@ public class CorpseGui extends UtilGui
 			{
 			  	YamlLoader friendYaml = new YamlLoader();
 				friendYaml.getConfig("Friend/"+player.getUniqueId().toString()+".yml");
-				if(friendYaml.contains("Name")==false)
+				if( ! friendYaml.contains("Name"))
 				{
 					SoundEffect.playSound(player, Sound.ENTITY_VILLAGER_NO, 1.0F, 1.0F);
 					player.sendMessage("§d[구조 요청] : 구조 요청 신호를 보낼 수 있는 친구가 없습니다!");
@@ -249,7 +247,7 @@ public class CorpseGui extends UtilGui
 		player.setGameMode(GameMode.SURVIVAL);
 	  	YamlLoader areaYaml = new YamlLoader();
 		YamlLoader configYaml = new YamlLoader();
-		new util.ETC().UpdatePlayerHPMP(player);
+		new util.ETC().updatePlayerHPMP(player);
 
 	  	configYaml.getConfig("config.yml");
 		areaYaml.getConfig("Area/AreaList.yml");
@@ -296,16 +294,16 @@ public class CorpseGui extends UtilGui
 	{
 		player.setGameMode(GameMode.SURVIVAL);
 	  	YamlLoader configYaml = new YamlLoader();
-		new util.ETC().UpdatePlayerHPMP(player);
+		new util.ETC().updatePlayerHPMP(player);
 	  	configYaml.getConfig("config.yml");
 		penalty(player, configYaml.getString("Death.Spawn_Here.SetHealth"), configYaml.getString("Death.Spawn_Here.PenaltyEXP"), configYaml.getString("Death.Spawn_Here.PenaltyMoney"));
 	}
 	
 	public void penalty(Player player, String health, String exp, String money)
 	{
-		byte healthPercent = Byte.parseByte(health.replace("%", ""));
-		byte expPercent = Byte.parseByte(exp.replace("%", ""));
-		byte moneyPercent = Byte.parseByte(money.replace("%", ""));
+		int healthPercent = Integer.parseInt(health.replace("%", ""));
+		int expPercent = Integer.parseInt(exp.replace("%", ""));
+		int moneyPercent = Integer.parseInt(money.replace("%", ""));
 		if(healthPercent < 0)
 			healthPercent = 1;
 		if(healthPercent > 100)

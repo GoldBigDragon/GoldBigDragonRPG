@@ -2,7 +2,6 @@ package main;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -155,9 +154,9 @@ public class Main extends JavaPlugin implements Listener
 	  	new PartyDataManager().saveParty();
 
 		new servertick.ServerTickScheduleManager().saveCategoriFile();
-		Object[] players = Bukkit.getOnlinePlayers().toArray();
-		for(int count = 0; count < players.length; count++)
-			MainServerOption.PlayerList.get(((Player)players[count]).getUniqueId().toString()).saveAll();
+		String[] userUuid = MainServerOption.PlayerList.keySet().toArray(new String[0]);
+		for(int count = 0; count < userUuid.length; count++)
+			MainServerOption.PlayerList.get(userUuid[count]).saveAll();
 	  	Bukkit.getConsoleSender().sendMessage("¡×c[Clossing GoldBigDragon Advanced...]");
 	  	return;
 	}
@@ -457,14 +456,14 @@ public class Main extends JavaPlugin implements Listener
 				}
 			}
 		}
-    	new util.ETC().UpdatePlayerHPMP(event.getPlayer());
+    	new util.ETC().updatePlayerHPMP(event.getPlayer());
     	new event.EventInteract().PlayerInteract(event);
     	return;
     }
     @EventHandler
     private void ITEnity(PlayerInteractEntityEvent event)
     {
-    	new util.ETC().UpdatePlayerHPMP(event.getPlayer());
+    	new util.ETC().updatePlayerHPMP(event.getPlayer());
     	new main.MainServerOption().CitizensCatch();
     	new event.EventInteract().PlayerInteractEntity(event);
     	return;
@@ -548,7 +547,7 @@ public class Main extends JavaPlugin implements Listener
 		if (((event.getEntity() instanceof Player)) &&(event.getRegainReason() == EntityRegainHealthEvent.RegainReason.SATIATED))
 	    {
 	    	util.ETC ETC = new util.ETC();
-	    	ETC.UpdatePlayerHPMP((Player)event.getEntity());
+	    	ETC.updatePlayerHPMP((Player)event.getEntity());
 	    }
 		return;
 	}
@@ -559,7 +558,7 @@ public class Main extends JavaPlugin implements Listener
 		if(Bukkit.getPluginManager().isPluginEnabled("MagicSpells") == true &&MainServerOption.MagicSpellsCatched==true)
 		{
 			util.ETC ETC = new util.ETC();
-			ETC.UpdatePlayerHPMP((Player)event.getWhoClicked());
+			ETC.updatePlayerHPMP((Player)event.getWhoClicked());
 		}
 		if(event.getClickedInventory() == null || event.getCurrentItem()==null || event.getCurrentItem().getType()==Material.AIR)
 			return;
@@ -603,7 +602,7 @@ public class Main extends JavaPlugin implements Listener
 		&&MainServerOption.MagicSpellsCatched==true)
 		{
 			util.ETC ETC = new util.ETC();
-			ETC.UpdatePlayerHPMP((Player)event.getPlayer());
+			ETC.updatePlayerHPMP((Player)event.getPlayer());
 		}
 
 		if(event.getInventory().getName().charAt(0)=='¡×')
@@ -656,7 +655,7 @@ public class Main extends JavaPlugin implements Listener
 				case"gbdskill":
 				 	SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 				    skill.UserSkillGui PSKGUI = new skill.UserSkillGui();
-					PSKGUI.MainSkillsListGUI(player, (short) 0);
+					PSKGUI.mainSkillsListGUI(player, (short) 0);
 					return true;
 		  		case "¾ÆÀÌÅÛ" :
 		  		case "gbditem" :

@@ -97,7 +97,7 @@ public class OptionGui extends UtilGui
 			if(slot == 0)
 				new user.StatsGui().StatusGUI(player);
 			else if(slot == 9)
-				new UserSkillGui().MainSkillsListGUI(player, (short) 0);
+				new UserSkillGui().mainSkillsListGUI(player, (short) 0);
 			else if(slot == 18)
 				new quest.QuestGui().MyQuestListGUI(player, (short) 0);
 			else if(slot == 36)

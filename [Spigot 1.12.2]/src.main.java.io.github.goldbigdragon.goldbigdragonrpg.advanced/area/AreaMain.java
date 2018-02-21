@@ -267,28 +267,26 @@ public class AreaMain
 							AreaName.add(AreaList.get(count).areaName);
 			}
 			
-			if(AreaName.isEmpty())
-				return null;
-			else
+			if(! AreaName.isEmpty())
 			{
 			  	YamlLoader areaYaml = new YamlLoader();
 				areaYaml.getConfig("Area/AreaList.yml");
 
-				int TopPriority = -1000;
+				int topPriority = -1000;
 
 				String[] ret = new String[2];
 				for(int count =0; count < AreaName.size(); count++)
 				{
-					if(areaYaml.contains(AreaName.get(count) + ".Priority")==false)
+					if(!areaYaml.contains(AreaName.get(count) + ".Priority"))
 					{
 						areaYaml.set(AreaName.get(count) + ".Priority", 5);
 						areaYaml.saveConfig();
 					}
-					int AreaPriority = areaYaml.getInt(AreaName.get(count)+".Priority");
-					if(AreaPriority >= TopPriority)
+					int areaPriority = areaYaml.getInt(AreaName.get(count)+".Priority");
+					if(areaPriority >= topPriority)
 					{
 						ret[0] = AreaName.get(count);
-						TopPriority = AreaPriority;
+						topPriority = areaPriority;
 					}
 				}
 				ret[1] = areaYaml.getString(ret[0] + ".Name");

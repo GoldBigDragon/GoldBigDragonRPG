@@ -401,6 +401,30 @@ public class MainConfig
     		}
     		configYaml.saveConfig();
     	}
+    	
+    	configYaml.getConfig("LevelUpPerBonusStat.yml");
+    	if(!configYaml.contains("level"))
+    	{
+    		for(int level = 1; level < 250; level++)
+    		{
+	    		configYaml.set("level."+level+".HP", 1);
+	    		configYaml.set("level."+level+".MP", 1);
+	    		configYaml.set("level."+level+".STR", 0);
+	    		configYaml.set("level."+level+".DEX", 0);
+	    		configYaml.set("level."+level+".INT", 0);
+	    		configYaml.set("level."+level+".WILL", 0);
+	    		configYaml.set("level."+level+".LUK", 0);
+	    		configYaml.set("level."+level+".Balance", 0);
+	    		configYaml.set("level."+level+".Critical", 0);
+	    		configYaml.set("level."+level+".Defense", 0);
+	    		configYaml.set("level."+level+".DefenseCrash", 0);
+	    		configYaml.set("level."+level+".Protect", 0);
+	    		configYaml.set("level."+level+".MagicDefense", 0);
+	    		configYaml.set("level."+level+".MagicDefenseCrash", 0);
+	    		configYaml.set("level."+level+".MagicProtect", 0);
+    		}
+    		configYaml.saveConfig();
+    	}
 	  	return;
 	}
 }

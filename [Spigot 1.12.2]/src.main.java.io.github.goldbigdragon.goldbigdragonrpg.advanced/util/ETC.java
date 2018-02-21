@@ -17,43 +17,43 @@ public class ETC
 	public Date date = new Date();
 	//날짜 함수를 호출하여 date란 새 이름으로 지정하는 단락
 
-	public String getFrom(long nowUTC, long PrevUTC)
+	public String getFrom(long nowUTC, long prevUTC)
 	{
-		if(nowUTC-PrevUTC<0)
+		if(nowUTC-prevUTC<0)
 			return "알 수 없음";
 		else
 		{
-			long WaitingTime = (nowUTC-PrevUTC)/1000;
+			long waitingTime = (nowUTC-prevUTC)/1000;
 			short year = 0;
 			byte month = 0;
 			byte day = 0;
 			byte hour = 0;
 			byte min = 0;
 			String pastedTime="";
-			if(WaitingTime >= 31536000)
+			if(waitingTime >= 31536000)
 			{
-				year = (short) (WaitingTime/31536000);
-				WaitingTime = WaitingTime-(31536000*year);
+				year = (short) (waitingTime/31536000);
+				waitingTime = waitingTime-(31536000*year);
 			}
-			if(WaitingTime >= 2678400)
+			if(waitingTime >= 2678400)
 			{
-				month = (byte) (WaitingTime/2678400);
-				WaitingTime = WaitingTime-(2678400*month);
+				month = (byte) (waitingTime/2678400);
+				waitingTime = waitingTime-(2678400*month);
 			}
-			if(WaitingTime >= 86400)
+			if(waitingTime >= 86400)
 			{
-				day = (byte) (WaitingTime/86400);
-				WaitingTime = WaitingTime-(86400*day);
+				day = (byte) (waitingTime/86400);
+				waitingTime = waitingTime-(86400*day);
 			}
-			if(WaitingTime >= 3600)
+			if(waitingTime >= 3600)
 			{
-				hour = (byte) (WaitingTime/3600);
-				WaitingTime = WaitingTime-(3600*hour);
+				hour = (byte) (waitingTime/3600);
+				waitingTime = waitingTime-(3600*hour);
 			}
-			if(WaitingTime >= 60)
+			if(waitingTime >= 60)
 			{
-				min = (byte) (WaitingTime/60);
-				WaitingTime = WaitingTime-(60*min);
+				min = (byte) (waitingTime/60);
+				waitingTime = waitingTime-(60*min);
 			}
 			if(year!=0)
 				pastedTime = year+"년";
@@ -65,14 +65,14 @@ public class ETC
 				pastedTime = pastedTime+hour+"시간";
 			if(min!=0)
 				pastedTime = pastedTime+min+"분";
-			pastedTime = pastedTime+WaitingTime+"초";
+			pastedTime = pastedTime+waitingTime+"초";
 			return pastedTime;
 		}
 	}
 	
-	public String getSchedule(long UTC)
+	public String getSchedule(long utc)
 	{
-		Date a = new Date(UTC);
+		Date a = new Date(utc);
 		date.after(a);
 		return date.getYear()+"년 "+date.getMonth()+"월 "+date.getDay()+"일 "+
 		date.getHours()+"시 "+date.getMinutes()+"분";
@@ -85,8 +85,8 @@ public class ETC
 	
     public long getSec()
     {
-    	Calendar Calender = Calendar.getInstance();
-    	return Calender.getTimeInMillis();
+    	Calendar calender = Calendar.getInstance();
+    	return calender.getTimeInMillis();
     }
     
     //현재 초를 나타내는 메소드//
@@ -136,14 +136,13 @@ public class ETC
 	{
 		Calendar Calender = Calendar.getInstance();
 		//현재 년도, 월, 일
-		short year = (short)Calender.get ( Calendar.YEAR );
-		byte month = (byte)(Calender.get ( Calendar.MONTH ) + 1);
-		byte date = (byte)Calender.get ( Calendar.DATE ) ;
+		int year = Calender.get ( Calendar.YEAR );
+		int month = Calender.get ( Calendar.MONTH ) + 1;
+		int date = Calender.get ( Calendar.DATE ) ;
 		//현재 시간(시,분,초)
-		byte hour = (byte)Calender.get ( Calendar.HOUR_OF_DAY ) ;
 		int zellerMonth;
 		int zellerYear;
-		String Today = null;
+		String today = null;
 		if(month < 3) { // 월값이 3보다 작으면
 		    
 		    zellerMonth = month + 12; // 월 + 12
@@ -165,63 +164,63 @@ public class ETC
 		    {
 		     
 		      case 0:
-		    	  Today = "토요일";
+		    	  today = "토요일";
 		          break;
 		      case 1:
-		    	  Today = "일요일";
+		    	  today = "일요일";
 		          break;
 		      case 2:
-		    	  Today = "월요일";
+		    	  today = "월요일";
 		          break;
 		      case 3:
-		    	  Today = "화요일";
+		    	  today = "화요일";
 		          break;
 		      case 4:
-		    	  Today = "수요일";
+		    	  today = "수요일";
 		          break;
 		      case 5:
-		    	  Today = "목요일 ";
+		    	  today = "목요일 ";
 		          break;
 		      case 6:
-		    	  Today = "금요일";
+		    	  today = "금요일";
 		          break;
 		    }   
-		 return Today;
+		 return today;
 		    
 	}
 	
-    public void UpdatePlayerHPMP(Player player)
+    public void updatePlayerHPMP(Player player)
     {
-		if(Bukkit.getPluginManager().isPluginEnabled("MagicSpells") == true
-		&&main.MainServerOption.MagicSpellsCatched==true)
+		if(Bukkit.getPluginManager().isPluginEnabled("MagicSpells")
+		&&main.MainServerOption.MagicSpellsCatched)
 		{
-			otherplugins.SpellMain MS = new otherplugins.SpellMain();
-			MS.setPlayerMaxAndNowMana(player);
+			otherplugins.SpellMain spellMain = new otherplugins.SpellMain();
+			spellMain.setPlayerMaxAndNowMana(player);
 		}
 		Damageable p = player;
-		int BonusHealth = BattleCalculator.getPlayerEquipmentStat(player, "생명력", false, null)[0];
-		int MaxHealth = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxHP()+BonusHealth;
-		if(MaxHealth > 0)
-			p.setMaxHealth(MaxHealth);
+		int bonusHealth = BattleCalculator.getPlayerEquipmentStat(player, "생명력", false, null)[0];
+		int maxHealth = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxHP()+bonusHealth;
+		if(maxHealth > 0)
+			p.setMaxHealth(maxHealth);
 		else
 			p.setMaxHealth(1);
 		return;
     }
     
-    public void SlotChangedUpdatePlayerHPMP(Player player, ItemStack newSlot)
+    public void slotChangedUpdatePlayerHPMP(Player player, ItemStack newSlot)
     {
-		if(main.MainServerOption.MagicSpellsCatched == true)
+		if(main.MainServerOption.MagicSpellsCatched)
 		{
-			otherplugins.SpellMain MS = new otherplugins.SpellMain();
-			MS.setSlotChangePlayerMaxAndNowMana(player,newSlot);
+			otherplugins.SpellMain spellMain = new otherplugins.SpellMain();
+			spellMain.setSlotChangePlayerMaxAndNowMana(player,newSlot);
 		}
 		Damageable p = player;
 		
-		int BonusHealth = BattleCalculator.getPlayerEquipmentStat(player, "생명력",  false, newSlot)[0];
-		int MaxHealth = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxHP()+BonusHealth;
+		int bonusHealth = BattleCalculator.getPlayerEquipmentStat(player, "생명력",  false, newSlot)[0];
+		int maxHealth = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxHP()+bonusHealth;
 
-		if(MaxHealth > 0)
-			p.setMaxHealth(MaxHealth);
+		if(maxHealth > 0)
+			p.setMaxHealth(maxHealth);
 		else
 			p.setMaxHealth(1);
 		return;

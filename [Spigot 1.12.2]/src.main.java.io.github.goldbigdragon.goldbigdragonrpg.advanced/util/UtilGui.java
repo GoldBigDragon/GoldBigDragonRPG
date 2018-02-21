@@ -8,14 +8,14 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.material.MaterialData;
 
 public class UtilGui
 {
 	public void stack(String display, int id, int data,  int amount, List<String> lore,  int loc, Inventory inventory)
 	{
-		ItemStack item = new MaterialData(id, (byte) data).toItemStack(amount);
+		ItemStack item = new ItemStack(id);
 		item.setDurability((short) data);
+		item.setAmount(amount);
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(display);
 		meta.setLore(lore);
@@ -26,8 +26,9 @@ public class UtilGui
 	
 	public void removeFlagStack(String display, int id,  int data,  int amount, List<String> lore,  int loc, Inventory inventory)
 	{
-		ItemStack item = new MaterialData(id, (byte) data).toItemStack(amount);
+		ItemStack item = new ItemStack(id);
 		item.setDurability((short) data);
+		item.setAmount(amount);
 		ItemMeta meta = item.getItemMeta();
 		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
@@ -64,8 +65,9 @@ public class UtilGui
 
 	public ItemStack getItemStack(String display, int id,  int data, int amount, List<String> lore)
 	{
-		ItemStack item = new MaterialData(id, (byte) data).toItemStack(amount);
+		ItemStack item = new ItemStack(id);
 		item.setDurability((short) data);
+		item.setAmount(amount);
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(display);
 		meta.setLore(lore);

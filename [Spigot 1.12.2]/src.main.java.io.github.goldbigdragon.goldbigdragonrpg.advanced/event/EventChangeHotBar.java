@@ -339,25 +339,25 @@ public class EventChangeHotBar implements Listener
 						}
 						else
 						{
-							etc.SlotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()));
+							etc.slotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()));
 							hotBarSound(player, (short) player.getInventory().getItem(event.getNewSlot()).getTypeId());
 						}
 					}
 					else
 					{
-						etc.SlotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()));
+						etc.slotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()));
 						hotBarSound(player, (short) player.getInventory().getItem(event.getNewSlot()).getTypeId());
 					}
 				}
 				else
 				{
-					etc.SlotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()));
+					etc.slotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()));
 					hotBarSound(player, (short) player.getInventory().getItem(event.getNewSlot()).getTypeId());
 				}
 			}
 			else
 			{
-				etc.SlotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()));
+				etc.slotChangedUpdatePlayerHPMP(player, player.getInventory().getItem(event.getNewSlot()));
 				hotBarSound(player, (short) player.getInventory().getItem(event.getNewSlot()).getTypeId());
 			}
 		}
@@ -365,7 +365,7 @@ public class EventChangeHotBar implements Listener
 		{
 			ItemStack item = new ItemStack(3);
 			item.setItemMeta(null);
-			etc.SlotChangedUpdatePlayerHPMP(player, item);
+			etc.slotChangedUpdatePlayerHPMP(player, item);
 			hotBarSound(player, (short) -1);
 		}
 		return;

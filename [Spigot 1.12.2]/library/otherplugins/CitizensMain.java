@@ -252,12 +252,12 @@ public class CitizensMain implements Listener
 				DNPC.removeKey(event.getNPC().getUniqueId().toString());
 				DNPC.saveConfig();
 				player.sendMessage(ChatColor.GREEN+"[NPC] : 해당 NPC의 GUI창이 활성화 되었습니다!");
-				new effect.SoundEffect().playSound(player, Sound.ENTITY_VILLAGER_YES, 1.0F, 1.0F);
+				effect.SoundEffect.playSound(player, Sound.ENTITY_VILLAGER_YES, 1.0F, 1.0F);
 				new UserDataObject().setInt(player, (byte)4, -1);
 			}
 		}
 		
-		if(DNPC.contains(event.getNPC().getUniqueId().toString())==false)
+		if( ! DNPC.contains(event.getNPC().getUniqueId().toString()))
 		{
 			npc.NpcGui NPGUI = new npc.NpcGui();
 			NPGUI.MainGUI(event.getClicker(), event.getNPC().getName(), event.getClicker().isOp());

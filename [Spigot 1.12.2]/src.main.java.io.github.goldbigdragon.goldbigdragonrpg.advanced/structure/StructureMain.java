@@ -111,7 +111,7 @@ public class StructureMain
 			return new StructCampFire().CreateCampFire(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
 
 		else if(StructureName.equals("A_M"))
-			return new StructAltar().CreateMossyAltar(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
+			return new StructAltar().createMossyAltar(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
 		else if(StructureName.equals("A_GoldBigDragon"))
 			return new StructAltar().CreateGoldBigDragon1(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
 		else if(StructureName.equals("A_SH"))
@@ -119,7 +119,7 @@ public class StructureMain
 		else if(StructureName.equals("A_AB"))
 			return new StructAltar().CreateAtonomicBoard(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
 		else if(StructureName.equals("A_TEST"))
-			return new StructAltar().CreateTestAltar(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
+			return new StructAltar().createTestAltar(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
 		return "null";
 	}
 	

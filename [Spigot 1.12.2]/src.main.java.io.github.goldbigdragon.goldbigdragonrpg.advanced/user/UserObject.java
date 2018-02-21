@@ -167,13 +167,15 @@ public class UserObject
 		    boolean isLevelUp = false;
 		    YamlLoader levelYAML = new YamlLoader();
     		levelYAML.getConfig("Level.yml");
+		    YamlLoader bonusStat = new YamlLoader();
+		    bonusStat.getConfig("LevelUpPerBonusStat.yml");
 		    int LevelUp_PerSkillPoint = MainServerOption.levelUpPerSkillPoint * MainServerOption.eventSkillPoint;
 		    int LevelUp_PerStatPoint = MainServerOption.levelUpPerStatPoint * MainServerOption.eventStatPoint;
-			for(;;)
+			for(int count = 0; count < 1000; count++)
 			{
 				if(Stat_EXP < Stat_MaxEXP)
 					break;
-				else if(MainServerOption.maxLevel <= Stat_Level || levelYAML.contains((Stat_Level+1)+"")==false)
+				else if(MainServerOption.maxLevel <= Stat_Level || ! levelYAML.contains((Stat_Level+1)+""))
 				{
 					Stat_EXP = Stat_MaxEXP;
 					break;
@@ -182,11 +184,29 @@ public class UserObject
 				{
 					isLevelUp = true;
 					Stat_EXP -= Stat_MaxEXP;
+
+					Stat_MaxHP += bonusStat.getInt("level."+Stat_Level+".HP");
+					Stat_MaxMP += bonusStat.getInt("level."+Stat_Level+".MP");
+					Stat_STR += bonusStat.getInt("level."+Stat_Level+".STR");
+					Stat_DEX += bonusStat.getInt("level."+Stat_Level+".DEX");
+					Stat_INT += bonusStat.getInt("level."+Stat_Level+".INT");
+					Stat_WILL += bonusStat.getInt("level."+Stat_Level+".WILL");
+					Stat_LUK += bonusStat.getInt("level."+Stat_Level+".LUK");
+					Stat_Balance += bonusStat.getInt("level."+Stat_Level+".Balance");
+					Stat_Critical += bonusStat.getInt("level."+Stat_Level+".Critical");
+					Stat_DEF += bonusStat.getInt("level."+Stat_Level+".Defense");
+					Stat_DEFcrash += bonusStat.getInt("level."+Stat_Level+".DefenseCrash");
+					Stat_Protect += bonusStat.getInt("level."+Stat_Level+".Protect");
+					Stat_Magic_DEF += bonusStat.getInt("level."+Stat_Level+".MagicDefense");
+					Stat_MagicDEFcrash += bonusStat.getInt("level."+Stat_Level+".MagicDefense");
+					Stat_Magic_Protect += bonusStat.getInt("level."+Stat_Level+".MagicProtect");
+					
 					Stat_Level++;
+
 					Stat_RealLevel++;
 					Stat_SkillPoint += LevelUp_PerSkillPoint;
 					Stat_StatPoint += LevelUp_PerStatPoint;
-					Stat_MaxEXP = levelYAML.getLong(Stat_Level+"");
+					Stat_MaxEXP = levelYAML.getLong(Integer.toString(Stat_Level));
 					if(Stat_MaxEXP > Long.MAX_VALUE)
 						Stat_MaxEXP = Long.MAX_VALUE;
 					else if(Stat_MaxEXP <= 0)

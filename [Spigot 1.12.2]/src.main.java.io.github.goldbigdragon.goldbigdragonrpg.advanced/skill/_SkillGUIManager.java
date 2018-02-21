@@ -21,11 +21,11 @@ public class _SkillGUIManager
 		else if(SubjectCode.equals("03"))//직업군 선택
 			new skill.UserSkillGui().MapleStory_MainSkillsListGUIClick(event);
 		else if(SubjectCode.equals("04"))//카테고리 선택
-			new skill.UserSkillGui().Mabinogi_MainSkillsListGUIClick(event);
+			new skill.UserSkillGui().mabinogiMainSkillsListGUIClick(event);
 		else if(SubjectCode.equals("05"))//보유 스킬 목록
 			new skill.UserSkillGui().SkillListGUIClick(event);
 		else if(SubjectCode.equals("06"))//퀵슬롯 등록
-			new skill.UserSkillGui().AddQuickBarGUIClick(event);
+			new skill.UserSkillGui().addQuickBarGUIClick(event);
 		else if(SubjectCode.equals("07"))//모든 매직스펠 보기
 			new otherplugins.SpellMain().ShowAllMaigcGUIClick(event);
 	}

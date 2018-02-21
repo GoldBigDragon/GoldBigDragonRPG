@@ -11,41 +11,41 @@ import main.MainServerOption;
 
 public class UtilPlayer
 {
-	public void DungeonClear(Player player, long Money, long EXP)
+	public void dungeonClear(Player player, long money, long exp)
 	{
-		main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MoneyAndEXP(Money, EXP, false);
+		main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MoneyAndEXP(money, exp, false);
 		SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 1.5F, 1.8F);
-		player.sendMessage("§e§l[던전 클리어 보상] : §b§l[경험치] "+ EXP + " §e§l[§f"+MainServerOption.money+"§e§l] "+ Money);
+		player.sendMessage("§e§l[던전 클리어 보상] : §b§l[경험치] "+ exp + " §e§l[§f"+MainServerOption.money+"§e§l] "+ money);
 	}
 	
-	public void addMoneyAndEXP(Player player, long Money, long EXP, Location loc, boolean givePartyMemberToo, boolean isDungeonClear)
+	public void addMoneyAndEXP(Player player, long money, long exp, Location loc, boolean givePartyMemberToo, boolean isDungeonClear)
 	{
-	    if(EXP * MainServerOption.eventExp > Long.MAX_VALUE)
-	    	EXP = Long.MAX_VALUE;
-	    else if(EXP * MainServerOption.eventExp < Long.MIN_VALUE)
-	    	EXP = Long.MIN_VALUE;
+	    if(exp * MainServerOption.eventExp > Long.MAX_VALUE)
+	    	exp = Long.MAX_VALUE;
+	    else if(exp * MainServerOption.eventExp < Long.MIN_VALUE)
+	    	exp = Long.MIN_VALUE;
 	    else
-	    	EXP = EXP * MainServerOption.eventExp;
-		if(main.MainServerOption.partyJoiner.containsKey(player)==false)
-			main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MoneyAndEXP(Money, EXP, true);
+	    	exp = exp * MainServerOption.eventExp;
+		if( ! main.MainServerOption.partyJoiner.containsKey(player))
+			main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MoneyAndEXP(money, exp, true);
 		else if(givePartyMemberToo)
 		{
 		    Player[] party = main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).getMember();
 			byte partymember=0;
 			for(int count = 0; count<party.length;count++)
-		    	if(party[count].isOnline() == true)
+		    	if(party[count].isOnline())
 					if(party[count].getLocation().getWorld() == loc.getWorld())
 						if(loc.distance(party[count].getLocation()) <= MainServerOption.expShareDistance)
 							partymember++;
-			Money = (Money/partymember);
-			EXP = (EXP/partymember);
+			money = (money/partymember);
+			exp = (exp/partymember);
 			
 			for(int count = 0; count<party.length;count++)
 			{
-		    	if(party[count].isOnline() == true)
+		    	if(party[count].isOnline())
 					if(party[count].getLocation().getWorld() == loc.getWorld())
 						if(loc.distance(party[count].getLocation()) <= MainServerOption.expShareDistance)
-							main.MainServerOption.PlayerList.get(party[count].getUniqueId().toString()).addStat_MoneyAndEXP(Money, EXP, true);
+							main.MainServerOption.PlayerList.get(party[count].getUniqueId().toString()).addStat_MoneyAndEXP(money, exp, true);
 			}
 		}
 		return;
@@ -92,9 +92,9 @@ public class UtilPlayer
 			player.getInventory().addItem(item);
 	}
 	
-	public boolean deleteItem(Player player, ItemStack item, int Amount)
+	public boolean deleteItem(Player player, ItemStack item, int amount)
 	{
-		if(Amount == -1)
+		if(amount == -1)
 		{
 			ItemStack originalItem = new ItemStack(item);
 			originalItem.setAmount(1);
@@ -103,7 +103,6 @@ public class UtilPlayer
 				if(player.getInventory().getItem(count)!=null)
 				{
 					ItemStack attatchedItem = new ItemStack(player.getInventory().getItem(count));
-					int attatchedItemAmount = attatchedItem.getAmount();
 					attatchedItem.setAmount(1);
 					if(attatchedItem.equals(originalItem))
 						player.getInventory().setItem(count, null);
@@ -128,11 +127,11 @@ public class UtilPlayer
 			}
 		}
 		
-		if(totalItemAmount < Amount * originalItemAmount)
+		if(totalItemAmount < amount * originalItemAmount)
 			return false;
 		else
 		{
-			Amount = Amount * originalItemAmount;
+			amount = amount * originalItemAmount;
 			totalItemAmount = 0;
 			for(int count = 0; count < player.getInventory().getSize(); count++)
 			{
@@ -143,20 +142,20 @@ public class UtilPlayer
 					attatchedItem.setAmount(1);
 					if(attatchedItem.equals(originalItem))
 					{
-						if(totalItemAmount+attatchedItemAmount <= Amount)
+						if(totalItemAmount+attatchedItemAmount <= amount)
 						{
 							player.getInventory().setItem(count, null);
 							totalItemAmount = totalItemAmount+attatchedItemAmount;
 						}
-						else if(totalItemAmount+attatchedItemAmount > Amount)
+						else if(totalItemAmount+attatchedItemAmount > amount)
 						{
-							attatchedItem.setAmount(attatchedItemAmount-(Amount-totalItemAmount));
+							attatchedItem.setAmount(attatchedItemAmount-(amount-totalItemAmount));
 							player.getInventory().setItem(count, attatchedItem);
 							return true;
 						}
 					}
 				}
-				if(totalItemAmount==Amount)
+				if(totalItemAmount==amount)
 					return true;
 			}
 		}
@@ -192,7 +191,6 @@ public class UtilPlayer
 			if(player.getInventory().getItem(count)!=null)
 			{
 				ItemStack attatchedItem = new ItemStack(player.getInventory().getItem(count));
-				int attatchedItemAmount = attatchedItem.getAmount();
 				attatchedItem.setAmount(1);
 				if(attatchedItem.equals(originalItem))
 				{
@@ -209,22 +207,22 @@ public class UtilPlayer
 
 	public boolean teleportToCurrentArea(Player player, boolean isSearchforLastVisitedToo)
 	{
-		Object[] WorldList = main.MainServerOption.AreaList.keySet().toArray();
-		for(int count = 0; count < WorldList.length; count++)
+		String[] worldList = main.MainServerOption.AreaList.keySet().toArray(new String[0]);
+	  	YamlLoader playerConfig = new YamlLoader();
+		for(int count = 0; count < worldList.length; count++)
 		{
-			if(main.MainServerOption.AreaList.containsKey(WorldList[count].toString()))
+			if(main.MainServerOption.AreaList.containsKey(worldList[count]))
 			{
-				if(main.MainServerOption.AreaList.get(WorldList[count].toString()) != null)
+				if(main.MainServerOption.AreaList.get(worldList[count]) != null)
 				{
-					String CurrentArea = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_CurrentArea();
-					for(int count2 = 0; count2 < main.MainServerOption.AreaList.get(WorldList[count].toString()).size(); count2++)
+					String currentArea = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_CurrentArea();
+					for(int count2 = 0; count2 < main.MainServerOption.AreaList.get(worldList[count]).size(); count2++)
 					{
-						Object[] WorldList2 = main.MainServerOption.AreaList.get(WorldList[count].toString()).toArray();
-						if(WorldList2[count2].toString().equals(CurrentArea))
+						String[] worldList2 = main.MainServerOption.AreaList.get(worldList[count]).toArray(new String[0]);
+						if(worldList2[count2].equals(currentArea))
 						{
-						  	YamlLoader PlayerConfig = new YamlLoader();
-							PlayerConfig.getConfig("Area/AreaList.yml");
-							Location loc = new Location(Bukkit.getServer().getWorld(PlayerConfig.getString(CurrentArea+".World")), PlayerConfig.getInt(CurrentArea+".SpawnLocation.X"), PlayerConfig.getInt(CurrentArea+".SpawnLocation.Y"), PlayerConfig.getInt(CurrentArea+".SpawnLocation.Z"),PlayerConfig.getInt(CurrentArea+".SpawnLocation.Yaw"),PlayerConfig.getInt(CurrentArea+".SpawnLocation.Pitch"));
+							playerConfig.getConfig("Area/AreaList.yml");
+							Location loc = new Location(Bukkit.getServer().getWorld(playerConfig.getString(currentArea+".World")), playerConfig.getInt(currentArea+".SpawnLocation.X"), playerConfig.getInt(currentArea+".SpawnLocation.Y"), playerConfig.getInt(currentArea+".SpawnLocation.Z"),playerConfig.getInt(currentArea+".SpawnLocation.Yaw"),playerConfig.getInt(currentArea+".SpawnLocation.Pitch"));
 							player.teleport(loc);
 							return true;
 						}
@@ -243,18 +241,18 @@ public class UtilPlayer
 	
 	public void teleportToLastVisited(Player player)
 	{
-		Object[] WorldList = main.MainServerOption.AreaList.keySet().toArray();
-		for(int count = 0; count < WorldList.length; count++)
+	  	YamlLoader playerConfig = new YamlLoader();
+		String[] worldList = main.MainServerOption.AreaList.keySet().toArray(new String[0]);
+		for(int count = 0; count < worldList.length; count++)
 		{
-			String CurrentArea = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_LastVisited();
-			for(int count2 = 0; count2 < main.MainServerOption.AreaList.get(WorldList[count].toString()).size(); count2++)
+			String currentArea = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getETC_LastVisited();
+			for(int count2 = 0; count2 < main.MainServerOption.AreaList.get(worldList[count]).size(); count2++)
 			{
-				Object[] WorldList2 = main.MainServerOption.AreaList.get(WorldList[count].toString()).toArray();
-				if(WorldList2[count2].toString().equals(CurrentArea))
+				String[] worldList2 = main.MainServerOption.AreaList.get(worldList[count]).toArray(new String[0]);
+				if(worldList2[count2].toString().equals(currentArea))
 				{
-				  	YamlLoader PlayerConfig = new YamlLoader();
-					PlayerConfig.getConfig("Area/AreaList.yml");
-					Location loc = new Location(Bukkit.getServer().getWorld(PlayerConfig.getString(CurrentArea+".World")), PlayerConfig.getInt(CurrentArea+".SpawnLocation.X"), PlayerConfig.getInt(CurrentArea+".SpawnLocation.Y"), PlayerConfig.getInt(CurrentArea+".SpawnLocation.Z"),PlayerConfig.getInt(CurrentArea+".SpawnLocation.Yaw"),PlayerConfig.getInt(CurrentArea+".SpawnLocation.Pitch"));
+					playerConfig.getConfig("Area/AreaList.yml");
+					Location loc = new Location(Bukkit.getServer().getWorld(playerConfig.getString(currentArea+".World")), playerConfig.getInt(currentArea+".SpawnLocation.X"), playerConfig.getInt(currentArea+".SpawnLocation.Y"), playerConfig.getInt(currentArea+".SpawnLocation.Z"),playerConfig.getInt(currentArea+".SpawnLocation.Yaw"),playerConfig.getInt(currentArea+".SpawnLocation.Pitch"));
 					player.teleport(loc);
 					return;
 				}

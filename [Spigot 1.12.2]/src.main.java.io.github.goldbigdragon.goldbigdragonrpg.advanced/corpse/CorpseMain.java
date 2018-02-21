@@ -100,12 +100,10 @@ public class CorpseMain
 		else
 		{
 			removeCorpse(player.getName());
-			int corpseStyle = new Random().nextInt((int) (11)); //(0 ~ 10 까�??�� ?��)
 			String name = player.getName();
 			ArrayList<ArmorStand> AL = new ArrayList<ArmorStand>();
 	        player.setGameMode(GameMode.SPECTATOR);
 	        int playerRandom = new Random().nextInt((int) (91))-45;
-	        Location playerLoc = player.getLocation();
 			//if(CorpseStyle == 0)
 			{
 				Location loc = new Location(player.getLocation().getWorld(), player.getLocation().getX(), player.getLocation().getY()-0.1, player.getLocation().getZ());

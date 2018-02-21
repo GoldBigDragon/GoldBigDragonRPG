@@ -67,7 +67,7 @@ public class DungeonMain
 					{
 						SoundEffect.playSound(partyMember[count], Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
 						new util.UtilPlayer().giveItemDrop(partyMember[count], item, partyMember[count].getLocation());
-						new util.UtilPlayer().DungeonClear(partyMember[count], moneyReward, expReward);
+						new util.UtilPlayer().dungeonClear(partyMember[count], moneyReward, expReward);
 					}
 				}
 			}
@@ -76,7 +76,7 @@ public class DungeonMain
 		{
 			SoundEffect.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
 			new util.UtilPlayer().giveItemDrop(player, item, player.getLocation());
-			new util.UtilPlayer().DungeonClear(player, moneyReward, expReward);
+			new util.UtilPlayer().dungeonClear(player, moneyReward, expReward);
 		}
 		
 		bossLoc.add(3, -1, -30);

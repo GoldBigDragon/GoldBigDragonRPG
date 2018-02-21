@@ -79,7 +79,7 @@ public class EventPlayerJoin implements Listener
 					player.getInventory().addItem(newbieYaml.getItemStack("SupportItem."+count));
 			player.teleport(new Location(Bukkit.getWorld(newbieYaml.getString("TelePort.World")), newbieYaml.getInt("TelePort.X"), newbieYaml.getInt("TelePort.Y"), newbieYaml.getInt("TelePort.Z"), newbieYaml.getInt("TelePort.Yaw"), newbieYaml.getInt("TelePort.Pitch")));
 	  	}
-		new util.ETC().UpdatePlayerHPMP(event.getPlayer());
+		new util.ETC().updatePlayerHPMP(event.getPlayer());
     	new user.EquipGui().FriendJoinQuitMessage(player, true);
 
 		if(config.getString("Server.JoinMessage") != null)
