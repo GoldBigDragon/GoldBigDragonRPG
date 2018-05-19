@@ -1,6 +1,5 @@
 package event;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,14 +15,14 @@ import util.YamlLoader;
 public class EventBlockPlace implements Listener
 {
 	@EventHandler
-	public void BlockPlaceE(BlockPlaceEvent event)
+	public void blockPlace(BlockPlaceEvent event)
 	{
 		Player player = event.getPlayer();
-		if(event.getItemInHand().hasItemMeta() == true && player.isOp() == false)
+		if(event.getItemInHand().hasItemMeta() && ! player.isOp())
 		{
 		  	YamlLoader configYaml = new YamlLoader();
 			configYaml.getConfig("config.yml");
-			if(configYaml.getBoolean("Server.CustomBlockPlace") == false)
+			if( ! configYaml.getBoolean("Server.CustomBlockPlace"))
 				event.setCancelled(true);
 			return;
 		}
@@ -34,17 +33,17 @@ public class EventBlockPlace implements Listener
 			return;
 		}
 
-		area.AreaMain A = new area.AreaMain();
-		String[] Area = A.getAreaName(event.getBlock());
-		if(Area != null)
-		if(A.getAreaOption(Area[0], (char) 5) == false && player.isOp() == false)
+		area.AreaMain area = new area.AreaMain();
+		String[] areaList = area.getAreaName(event.getBlock());
+		if(areaList != null)
+		if( ! area.getAreaOption(areaList[0], (char) 5) && ! player.isOp())
 		{
 			event.setCancelled(true);
 			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-			player.sendMessage("§c[SYSTEM] : §e"+ Area[1] + "§c 지역 에서는 블록 설치가 불가능합니다!");
+			player.sendMessage("§c[SYSTEM] : §e"+ areaList[1] + "§c 지역 에서는 블록 설치가 불가능합니다!");
 			return;
 		}
-		if(player.isOp()==false)
+		if(! player.isOp())
 			EXPexceptionBlock(event.getBlock().getTypeId(),event.getBlock().getLocation());
 		return;
 	}
@@ -55,8 +54,8 @@ public class EventBlockPlace implements Listener
 		{
 		  	YamlLoader exceptionBlockYaml = new YamlLoader();
 			exceptionBlockYaml.getConfig("EXPexceptionBlock.yml");
-			String Location = ((int)loc.getX()+"_"+(int)loc.getY()+"_"+(int)loc.getZ());
-			exceptionBlockYaml.createSection(loc.getWorld().getName()+"."+id+"."+Location);
+			String location = ((int)loc.getX()+"_"+(int)loc.getY()+"_"+(int)loc.getZ());
+			exceptionBlockYaml.createSection(loc.getWorld().getName()+"."+id+"."+location);
 			exceptionBlockYaml.saveConfig();
 		}
 		return;

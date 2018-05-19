@@ -933,7 +933,7 @@ public class UserObject
 	  	playerConfig.set("Dungeon.BossBGMplaying", Dungeon_BossBGMplaying);
 	  	
 	  	playerConfig.set("Death", Death);
-	  	if(LastDeathPoint != null)
+	  	if(LastDeathPoint != null && LastDeathPoint.getWorld() != null)
 	  	{
 		  	playerConfig.set("LastDeathPoint.World", LastDeathPoint.getWorld().getName());
 		  	playerConfig.set("LastDeathPoint.X", LastDeathPoint.getX());
