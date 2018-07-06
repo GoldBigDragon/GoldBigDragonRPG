@@ -16,10 +16,10 @@ import org.bukkit.inventory.Inventory;
 
 import admin.OPboxGui;
 import effect.SoundEffect;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
-public class StructureGui extends UtilGui
+public class StructureGui extends GuiUtil
 {
 	public void StructureListGUI(Player player, int page)
 	{
@@ -289,7 +289,7 @@ public class StructureGui extends UtilGui
 	
 	public String getRandomCode()
 	{
-		byte randomNum = (byte) new util.UtilNumber().RandomNum(0, 15);
+		byte randomNum = (byte) new util.NumericUtil().RandomNum(0, 15);
 		switch(randomNum)
 		{
 			case 0:

@@ -14,7 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import effect.SoundEffect;
 import main.MainServerOption;
-import util.UtilNumber;
+import util.NumericUtil;
 import util.YamlLoader;
 
 public class BattleCalculator
@@ -147,7 +147,7 @@ public class BattleCalculator
     //플레이어의 밸런스를 구하고, 랜덤하게 데미지를 설정 해 주는 메소드//
 	public static int damagerand(Entity entity, int min, int max, int playerBalance)
 	{
-		UtilNumber num = new UtilNumber();
+		NumericUtil num = new NumericUtil();
 		if(min > max)
 		{
 			int temp = max;
@@ -168,7 +168,7 @@ public class BattleCalculator
 	//플레이어의 크리티컬 확률을 계산하고, 크리티컬 여부를 설정하는 메소드//
 	public static int criticalrend(Entity entity, int attackerLuk, int attackerWill, int attackerDamage, int defenserProtect, int attackerCritical)
 	{
-		UtilNumber num = new UtilNumber();
+		NumericUtil num = new NumericUtil();
 		int critical;
 		if(defenserProtect/2 <= 1) 
 			critical= getCritical(entity, attackerLuk, attackerWill,attackerCritical);
@@ -267,7 +267,6 @@ public class BattleCalculator
 	public static int[] getPlayerEquipmentStat(Player player, String type, boolean isCombat, ItemStack newSlot)
 	{
 		int[] bonus = new int[2];
-		String[] lore;
 		switch(type)
 		{
 			case "Damage":type = main.MainServerOption.damage;break;
@@ -332,21 +331,24 @@ public class BattleCalculator
 				{
 					if(item.get(counter).hasItemMeta())
 					{
-						if(item.get(counter).getItemMeta().hasLore())
+						ItemMeta im = item.get(counter).getItemMeta();
+						if(im.hasLore())
 						{
-							if(item.get(counter).getItemMeta().getLore().toString().contains(type))
+							List<String> lore = im.getLore(); 
+							String loreToString = lore.toString();
+							if(loreToString.contains(type))
 							{
 								if(type.equals("방어") || type.equals("보호"))
 								{
-									if(item.get(counter).getItemMeta().getLore().toString().contains("마법"))
+									if(loreToString.contains("마법"))
 										continue;
 								}
-								if(!(item.get(counter).getItemMeta().getLore().toString().contains("[주문서]")||item.get(counter).getItemMeta().getLore().toString().contains("[룬]")||item.get(counter).getItemMeta().getLore().toString().contains("[소비]")))
+								if(!(loreToString.contains("[주문서]")||loreToString.contains("[룬]")||loreToString.contains("[소비]")))
 								{
 									boolean useable = true;
-									for(int count = 0; count < item.get(counter).getItemMeta().getLore().size(); count++)
+									for(int count = 0; count < lore.size(); count++)
 									{
-										String nowlore=ChatColor.stripColor(item.get(counter).getItemMeta().getLore().get(count));
+										String nowlore=ChatColor.stripColor(lore.get(count));
 										if(nowlore.contains(" : "))
 										{
 											if(nowlore.contains("직업"))
@@ -389,43 +391,38 @@ public class BattleCalculator
 									}
 									if(useable)
 									{
-										for(int count = 0; count < item.get(counter).getItemMeta().getLore().size(); count++)
+										for(int count = 0; count < lore.size(); count++)
 										{
-											if(item.get(counter).getItemMeta().getLore().get(count).contains(type))
+											if(exitDurability && lore.get(count).contains(type) &&
+													(lore.get(count).contains(" : ")||lore.get(count).contains("/")))
 											{
-												if(item.get(counter).getItemMeta().getLore().get(count).contains(" : ")||item.get(counter).getItemMeta().getLore().get(count).contains("/"))
+												String[] stat = ChatColor.stripColor(lore.get(count)).split(" : ");
+												if(stat[0].contains(type))
 												{
-													if(exitDurability)
+													if(type.equals(main.MainServerOption.statSTR)||type.equals(main.MainServerOption.statDEX)||
+														type.equals(main.MainServerOption.statINT)||type.equals(main.MainServerOption.statWILL)||
+														type.equals(main.MainServerOption.statLUK))
 													{
-														lore = ChatColor.stripColor(item.get(counter).getItemMeta().getLore().get(count)).split(" : ");
-														if(lore[0].contains(type))
+														if(!im.getLore().get(count).contains("최소"))
+															bonus[0] = bonus[0] + Integer.parseInt(stat[1]);
+													}
+													else if(type.equals(main.MainServerOption.damage)||type.equals(main.MainServerOption.magicDamage)||type.equals("업그레이드"))
+													{
+														if(type.equals(main.MainServerOption.damage))
 														{
-															if(type.equals(main.MainServerOption.statSTR)||type.equals(main.MainServerOption.statDEX)||
-																type.equals(main.MainServerOption.statINT)||type.equals(main.MainServerOption.statWILL)||
-																type.equals(main.MainServerOption.statLUK))
-															{
-																if(!item.get(counter).getItemMeta().getLore().get(count).contains("최소"))
-																	bonus[0] = bonus[0] + Integer.parseInt(lore[1]);
-															}
-															else if(type.equals(main.MainServerOption.damage)||type.equals(main.MainServerOption.magicDamage)||type.equals("업그레이드"))
-															{
-																if(type.equals(main.MainServerOption.damage))
-																{
-																	String[] subLore = lore[1].split(" ~ ");
-																	bonus[0] = bonus[0] + Integer.parseInt(subLore[0]);
-																	bonus[1] = bonus[1] + Integer.parseInt(subLore[1]);
-																}
-																else if(type.equals(main.MainServerOption.magicDamage)||type.equals("업그레이드"))
-																{
-																	String[] subLore = lore[1].split(" ~ ");
-																	bonus[0] = bonus[0] + Integer.parseInt(subLore[0]);
-																	bonus[1] = bonus[1] + Integer.parseInt(subLore[1]);
-																}
-															}
-															else
-																bonus[0] = bonus[0] + Integer.parseInt(lore[1]);
+															String[] subLore = stat[1].split(" ~ ");
+															bonus[0] = bonus[0] + Integer.parseInt(subLore[0]);
+															bonus[1] = bonus[1] + Integer.parseInt(subLore[1]);
+														}
+														else if(type.equals(main.MainServerOption.magicDamage)||type.equals("업그레이드"))
+														{
+															String[] subLore = stat[1].split(" ~ ");
+															bonus[0] = bonus[0] + Integer.parseInt(subLore[0]);
+															bonus[1] = bonus[1] + Integer.parseInt(subLore[1]);
 														}
 													}
+													else
+														bonus[0] = bonus[0] + Integer.parseInt(stat[1]);
 												}
 											}
 										}
@@ -444,6 +441,8 @@ public class BattleCalculator
 	
 	public static void decreaseDurabilityArmor(Player player)
 	{
+	  	YamlLoader configYaml = new YamlLoader();
+		configYaml.getConfig("config.yml");
 		boolean durabilityExit = false;
 		ArrayList<ItemStack> item = new ArrayList<>();
 		item.add(player.getInventory().getHelmet());
@@ -462,100 +461,99 @@ public class BattleCalculator
 				item.add(player.getInventory().getItemInOffHand());
 				added = (byte) (added + 2);
 			}
+
+		ItemMeta im = null;
+		List<String> lore = null;
+		String loreToString = null;
 		for(int counter = 0; counter < item.size(); counter++)
 		{
-			if(item.get(counter) != null)
-			if(item.get(counter).hasItemMeta())
+			if(item.get(counter) != null && item.get(counter).hasItemMeta())
 			{
-				if(item.get(counter).getItemMeta().hasLore())
+				im = item.get(counter).getItemMeta();
+				if(im.hasLore())
 				{
-					if(item.get(counter).getItemMeta().getLore().toString().contains("내구도"))
+					lore = im.getLore();
+					loreToString = im.getLore().toString();
+					if(loreToString.contains("내구도"))
 					{
-						if(!(item.get(counter).getItemMeta().getLore().toString().contains("[주문서]")||item.get(counter).getItemMeta().getLore().toString().contains("[룬]")||item.get(counter).getItemMeta().getLore().toString().contains("[소비]")))
+						if(!(loreToString.contains("[주문서]")||loreToString.contains("[룬]")||loreToString.contains("[소비]")))
 						{
-							for(int count = 0; count < item.get(counter).getItemMeta().getLore().size(); count++)
+							for(int count = 0; count < im.getLore().size(); count++)
 							{
-								String nowlore=ChatColor.stripColor(item.get(counter).getItemMeta().getLore().get(count));
-								if(nowlore.contains(" : "))
+								String nowlore=ChatColor.stripColor(lore.get(count));
+								if(nowlore.contains(" : ") && nowlore.contains(" / "))
 								{
-									ItemMeta meta = item.get(counter).getItemMeta();
-									if(nowlore.contains(" / "))
+									if(nowlore.contains("내구도"))
 									{
-										if(meta.getLore().get(count).contains("내구도"))
+										String[] stat = ChatColor.stripColor(im.getLore().get(count)).split(" : ");
+										String[] subLore = stat[1].split(" / ");
+										if((Integer.parseInt(subLore[0])-1) <= 0)
 										{
-											String[] lore = ChatColor.stripColor(meta.getLore().get(count)).split(" : ");
-											String[] subLore = lore[1].split(" / ");
-											List<String> pLore = meta.getLore();
-											if((Integer.parseInt(subLore[0])-1) <= 0)
+											if(configYaml.getBoolean("Server.CustomWeaponBreak"))
 											{
-											  	YamlLoader configYaml = new YamlLoader();
-												configYaml.getConfig("config.yml");
-												if(configYaml.getBoolean("Server.CustomWeaponBreak"))
+												SoundEffect.playSound(player, Sound.ENTITY_ITEM_BREAK, 1.2F, 1.0F);
+												if(im.hasDisplayName())
+													player.sendMessage("§c[장비 파괴] : §e"+im.getDisplayName()+"§c 장비가 파괴되었습니다!");
+												else
+													player.sendMessage("§c[장비 파괴] : 장비가 파괴되었습니다!");
+												if(counter==0)
+													player.getInventory().setHelmet(new ItemStack(0));
+												else if(counter==1)
+													player.getInventory().setChestplate(new ItemStack(0));
+												else if(counter==2)
+													player.getInventory().setLeggings(new ItemStack(0));
+												else if(counter==3)
+													player.getInventory().setBoots(new ItemStack(0));
+												else if(added==1 && counter==4)
+													player.getInventory().setItemInMainHand(new ItemStack(0));
+												else if(added==2 && counter==4)
+													player.getInventory().setItemInOffHand(new ItemStack(0));
+												else if(added==3)
 												{
-													SoundEffect.playSound(player, Sound.ENTITY_ITEM_BREAK, 1.2F, 1.0F);
-													if(item.get(counter).getItemMeta().hasDisplayName())
-														player.sendMessage("§c[장비 파괴] : §e"+item.get(counter).getItemMeta().getDisplayName()+"§c 장비가 파괴되었습니다!");
-													else
-														player.sendMessage("§c[장비 파괴] : 장비가 파괴되었습니다!");
-													if(counter==0)
-														player.getInventory().setHelmet(new ItemStack(0));
-													else if(counter==1)
-														player.getInventory().setChestplate(new ItemStack(0));
-													else if(counter==2)
-														player.getInventory().setLeggings(new ItemStack(0));
-													else if(counter==3)
-														player.getInventory().setBoots(new ItemStack(0));
-													else if(added==1 && counter==4)
+													if(counter==4)
 														player.getInventory().setItemInMainHand(new ItemStack(0));
-													else if(added==2 && counter==4)
-														player.getInventory().setItemInOffHand(new ItemStack(0));
-													else if(added==3)
-													{
-														if(counter==4)
-															player.getInventory().setItemInMainHand(new ItemStack(0));
-														else
-															player.getInventory().setItemInOffHand(new ItemStack(0));
-													}
 													else
-														item.set(counter, new ItemStack(0));
-													break;
+														player.getInventory().setItemInOffHand(new ItemStack(0));
 												}
 												else
-													pLore.set(count,"§f"+  lore[0] + " : "+ 0 +" / "+subLore[1]);
+													item.set(counter, new ItemStack(0));
+												break;
 											}
 											else
-											{
-												if((Integer.parseInt(subLore[0])-1) == 20)
-												{
-													SoundEffect.playSound(player, Sound.BLOCK_ANVIL_USE, 0.8F, 0.5F);
-													if(counter==0)
-														player.sendMessage("§e[장비 파괴] : 투구의 내구도가 다 닳아 갑니다!");
-													else if(counter==1)
-														player.sendMessage("§e[장비 파괴] : 흉갑의 내구도가 다 닳아 갑니다!");
-													else if(counter==2)
-														player.sendMessage("§e[장비 파괴] : 낭갑의 내구도가 다 닳아 갑니다!");
-													else if(counter==3)
-														player.sendMessage("§e[장비 파괴] : 신발의 내구도가 다 닳아 갑니다!");
-													else if(added==1 && counter==4)
-														player.sendMessage("§e[장비 파괴] : 주 무기의 내구도가 다 닳아 갑니다!");
-													else if(added==2 && counter==4)
-														player.sendMessage("§e[장비 파괴] : 보조 무기의 내구도가 다 닳아 갑니다!");
-													else if(added==3)
-													{
-														if(counter==4)
-															player.sendMessage("§e[장비 파괴] : 주 무기의 내구도가 다 닳아 갑니다!");
-														else
-															player.sendMessage("§e[장비 파괴] : 보조 무기의 내구도가 다 닳아 갑니다!");
-													}
-													else
-														player.sendMessage("§e[장비 파괴] : 장비의 내구도가 다 닳아 갑니다!");
-												}
-												pLore.set(count,"§f"+  lore[0] + " : "+(Integer.parseInt(subLore[0])-1) +" / "+subLore[1]);
-												durabilityExit = true;
-											}
-											meta.setLore(pLore);
-											item.get(counter).setItemMeta(meta);
+												lore.set(count,"§f"+  stat[0] + " : "+ 0 +" / "+subLore[1]);
 										}
+										else
+										{
+											if((Integer.parseInt(subLore[0])-1) == 20)
+											{
+												SoundEffect.playSound(player, Sound.BLOCK_ANVIL_USE, 0.8F, 0.5F);
+												if(counter==0)
+													player.sendMessage("§e[장비 파괴] : 투구의 내구도가 다 닳아 갑니다!");
+												else if(counter==1)
+													player.sendMessage("§e[장비 파괴] : 흉갑의 내구도가 다 닳아 갑니다!");
+												else if(counter==2)
+													player.sendMessage("§e[장비 파괴] : 낭갑의 내구도가 다 닳아 갑니다!");
+												else if(counter==3)
+													player.sendMessage("§e[장비 파괴] : 신발의 내구도가 다 닳아 갑니다!");
+												else if(added==1 && counter==4)
+													player.sendMessage("§e[장비 파괴] : 주 무기의 내구도가 다 닳아 갑니다!");
+												else if(added==2 && counter==4)
+													player.sendMessage("§e[장비 파괴] : 보조 무기의 내구도가 다 닳아 갑니다!");
+												else if(added==3)
+												{
+													if(counter==4)
+														player.sendMessage("§e[장비 파괴] : 주 무기의 내구도가 다 닳아 갑니다!");
+													else
+														player.sendMessage("§e[장비 파괴] : 보조 무기의 내구도가 다 닳아 갑니다!");
+												}
+												else
+													player.sendMessage("§e[장비 파괴] : 장비의 내구도가 다 닳아 갑니다!");
+											}
+											lore.set(count,"§f"+  stat[0] + " : "+(Integer.parseInt(subLore[0])-1) +" / "+subLore[1]);
+											durabilityExit = true;
+										}
+										im.setLore(lore);
+										item.get(counter).setItemMeta(im);
 									}
 								}
 							}
@@ -568,35 +566,35 @@ public class BattleCalculator
 		{
 			for(int counter = 0; counter < item.size(); counter++)
 			{
-				if(item.get(counter)!=null)
-				if(item.get(counter).hasItemMeta())
+				if(item.get(counter)!=null && item.get(counter).hasItemMeta())
 				{
-					if(item.get(counter).getItemMeta().hasLore())
+					im = item.get(counter).getItemMeta();
+					if(im.hasLore())
 					{
-						if(item.get(counter).getItemMeta().getLore().toString().contains("숙련도"))
+						lore = im.getLore();
+						loreToString = im.getLore().toString();
+						if(loreToString.contains("숙련도"))
 						{
-							for(int count = 0; count < item.get(counter).getItemMeta().getLore().size(); count++)
+							for(int count = 0; count < lore.size(); count++)
 							{
-								String nowlore=ChatColor.stripColor(item.get(counter).getItemMeta().getLore().get(count));
+								String nowlore=ChatColor.stripColor(lore.get(count));
 								if(nowlore.contains(" : "))
 								{
-									ItemMeta meta = item.get(counter).getItemMeta();
-									if(meta.getLore().get(count).contains("숙련도"))
+									if(im.getLore().get(count).contains("숙련도"))
 									{
 										float proficiency = 0.07F * main.MainServerOption.eventProficiency;
-										String[] lore = ChatColor.stripColor(meta.getLore().get(count)).split(" : ");
-										String[] subLore = lore[1].split("%");
-										List<String> pLore = meta.getLore();
+										String[] stat = ChatColor.stripColor(im.getLore().get(count)).split(" : ");
+										String[] subLore = stat[1].split("%");
 										DecimalFormat format = new DecimalFormat(".##");
 										String str = format.format((Float.parseFloat(subLore[0])+proficiency));
 										if(str.charAt(0)=='.')
 											str = "0"+str;
 										if((Float.parseFloat(subLore[0])+0.07F) >= 100.0F)
-											pLore.set(count,"§f"+  lore[0] + " : "+ 100.0 +"%§f");
+											lore.set(count,"§f"+  stat[0] + " : "+ 100.0 +"%§f");
 										else
-											pLore.set(count,"§f"+  lore[0] + " : "+ str +"%§f");
-										meta.setLore(pLore);
-										item.get(counter).setItemMeta(meta);
+											lore.set(count,"§f"+  stat[0] + " : "+ str +"%§f");
+										im.setLore(lore);
+										item.get(counter).setItemMeta(im);
 									}
 								}
 							}
@@ -610,11 +608,18 @@ public class BattleCalculator
 	
 	public static void decreaseDurabilityWeapon(Player player)
 	{
+	  	YamlLoader configYaml = new YamlLoader();
+		configYaml.getConfig("config.yml");
 		boolean durabilityExit = false;
 		ArrayList<ItemStack> item = new ArrayList<>();
 		item.add(player.getInventory().getItemInMainHand());
 		if(main.MainServerOption.dualWeapon)
 			item.add(player.getInventory().getItemInOffHand());
+
+		ItemMeta im = null;
+		List<String> lore = null;
+		String loreToString = null;
+		
 		for(int counter = 0; counter < item.size(); counter++)
 		{
 			if(item.get(counter)!=null)
@@ -623,32 +628,31 @@ public class BattleCalculator
 					return;
 				if(item.get(counter).hasItemMeta())
 				{
-					if(item.get(counter).getItemMeta().hasLore())
+					im = item.get(counter).getItemMeta();
+					if(im.hasLore())
 					{
-						if(item.get(counter).getItemMeta().getLore().toString().contains("내구도"))
+						lore = im.getLore();
+						loreToString = lore.toString();
+						if(loreToString.contains("내구도"))
 						{
-							if(!(item.get(counter).getItemMeta().getLore().toString().contains("[주문서]")||item.get(counter).getItemMeta().getLore().toString().contains("[룬]")||item.get(counter).getItemMeta().getLore().toString().contains("[소비]")))
+							if(!(loreToString.contains("[주문서]")||loreToString.contains("[룬]")||loreToString.contains("[소비]")))
 							{
-								for(int count = 0; count < item.get(counter).getItemMeta().getLore().size(); count++)
+								for(int count = 0; count < im.getLore().size(); count++)
 								{
-									String nowlore=ChatColor.stripColor(item.get(counter).getItemMeta().getLore().get(count));
+									String nowlore=ChatColor.stripColor(im.getLore().get(count));
 									if(nowlore.contains(" : ") && nowlore.contains(" / "))
 									{
-										ItemMeta meta = item.get(counter).getItemMeta();
-										if(meta.getLore().get(count).contains("내구도"))
+										if(nowlore.contains("내구도"))
 										{
-											String[] lore = ChatColor.stripColor(meta.getLore().get(count)).split(" : ");
-											String[] subLore = lore[1].split(" / ");
-											List<String> pLore = meta.getLore();
+											String[] stat = ChatColor.stripColor(nowlore).split(" : ");
+											String[] subLore = stat[1].split(" / ");
 											if((Integer.parseInt(subLore[0])-1) <= 0)
 											{
-											  	YamlLoader configYaml = new YamlLoader();
-												configYaml.getConfig("config.yml");
 												if(configYaml.getBoolean("Server.CustomWeaponBreak"))
 												{
 													SoundEffect.playSound(player, Sound.ENTITY_ITEM_BREAK, 1.2F, 1.0F);
-													if(item.get(counter).getItemMeta().hasDisplayName())
-														player.sendMessage("§c[장비 파괴] : §e"+item.get(counter).getItemMeta().getDisplayName()+"§c 장비가 파괴되었습니다!");
+													if(im.hasDisplayName())
+														player.sendMessage("§c[장비 파괴] : §e"+im.getDisplayName()+"§c 장비가 파괴되었습니다!");
 													else
 														player.sendMessage("§c[장비 파괴] : 장비가 파괴되었습니다!");
 													if(counter==0)
@@ -658,15 +662,15 @@ public class BattleCalculator
 													break;
 												}
 												else
-													pLore.set(count, "§f"+ lore[0] + " : "+ 0 +" / "+subLore[1]);
+													lore.set(count, "§f"+ stat[0] + " : "+ 0 +" / "+subLore[1]);
 											}
 											else
 											{
-												pLore.set(count, "§f"+ lore[0] + " : "+(Integer.parseInt(subLore[0])-1) +" / "+subLore[1]);
+												lore.set(count, "§f"+ stat[0] + " : "+(Integer.parseInt(subLore[0])-1) +" / "+subLore[1]);
 												durabilityExit = true;
 											}
-											meta.setLore(pLore);
-											item.get(counter).setItemMeta(meta);
+											im.setLore(lore);
+											item.get(counter).setItemMeta(im);
 										}
 									}
 								}
@@ -678,32 +682,33 @@ public class BattleCalculator
 				{
 					if(item.get(counter).hasItemMeta())
 					{
-						if(item.get(counter).getItemMeta().hasLore())
+						im = item.get(counter).getItemMeta();
+						if(im.hasLore())
 						{
-							if(item.get(counter).getItemMeta().getLore().toString().contains("숙련도"))
+							lore = im.getLore();
+							loreToString = lore.toString();
+							if(loreToString.contains("숙련도"))
 							{
-								for(int count = 0; count < item.get(counter).getItemMeta().getLore().size(); count++)
+								for(int count = 0; count < im.getLore().size(); count++)
 								{
-									String nowlore=ChatColor.stripColor(item.get(counter).getItemMeta().getLore().get(count));
+									String nowlore=ChatColor.stripColor(im.getLore().get(count));
 									if(nowlore.contains(" : "))
 									{
-										ItemMeta meta = item.get(counter).getItemMeta();
-										if(meta.getLore().get(count).contains("숙련도"))
+										if(nowlore.contains("숙련도"))
 										{
 											float proficiency = 0.07F * main.MainServerOption.eventProficiency;
-											String[] lore = ChatColor.stripColor(meta.getLore().get(count)).split(" : ");
-											String[] subLore = lore[1].split("%");
-											List<String> pLore = meta.getLore();
+											String[] stat = ChatColor.stripColor(nowlore).split(" : ");
+											String[] subLore = stat[1].split("%");
 											DecimalFormat format = new DecimalFormat(".##");
 											String str = format.format((Float.parseFloat(subLore[0])+proficiency));
 											if(str.charAt(0)=='.')
 												str = "0"+str;
 											if((Float.parseFloat(subLore[0])+0.07F) >= 100.0F)
-												pLore.set(count,"§f"+  lore[0] + " : "+ 100.0 +"%§f");
+												lore.set(count,"§f"+  stat[0] + " : "+ 100.0 +"%§f");
 											else
-												pLore.set(count,"§f"+  lore[0] + " : "+ str +"%§f");
-											meta.setLore(pLore);
-											item.get(counter).setItemMeta(meta);
+												lore.set(count,"§f"+  stat[0] + " : "+ str +"%§f");
+											im.setLore(lore);
+											item.get(counter).setItemMeta(im);
 										}
 									}
 								}

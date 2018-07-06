@@ -10,9 +10,9 @@ import org.bukkit.inventory.Inventory;
 
 import effect.SoundEffect;
 import user.UserDataObject;
-import util.UtilGui;
+import util.GuiUtil;
 
-public class WorldCreateGui extends UtilGui
+public class WorldCreateGui extends GuiUtil
 {
 	public void worldCreateGuiMain(Player player)
 	{

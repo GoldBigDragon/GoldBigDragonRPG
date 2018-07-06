@@ -13,10 +13,10 @@ import org.bukkit.inventory.Inventory;
 
 import effect.SoundEffect;
 import user.UserDataObject;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
-public class StructBoard extends UtilGui
+public class StructBoard extends GuiUtil
 {
 	public void BoardMainGUI(Player player, String BoardCode, byte page)
 	{

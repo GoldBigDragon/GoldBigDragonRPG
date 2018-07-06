@@ -21,7 +21,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import area.AreaObject;
-import corpse.CorpseMain;
+import corpse.CorpseAPI;
 import fr.tenebrae.EntityAppearence;
 import fr.tenebrae.EntityRegistrer;
 import monster.MonsterObject;
@@ -129,10 +129,10 @@ public class MainServerOption
 	public static short Money6ID = 41;
 	public static byte Money6DATA = 0;
 	
-	public static String serverUpdate = "2018-05-19-12:51";
+	public static String serverUpdate = "2018-07-07-01:34";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/1_12.html";
-	public static String currentServerUpdate = "2018-05-19-12:51";
+	public static String currentServerUpdate = "2018-07-07-01:34";
 	public static String currentServerVersion = "Advanced";
 	
 	public static java.util.Map<Long, PartyObject> party = new LinkedHashMap<>();
@@ -167,17 +167,17 @@ public class MainServerOption
 	
 	public void initialize()
 	{
-	  	new area.AreaMain().addAreaList();
+	  	new area.AreaAPI().addAreaList();
 	  	Bukkit.getConsoleSender().sendMessage("§2§l[OK]§8 영역 정보 로드");
 		Object[] players = Bukkit.getOnlinePlayers().toArray();
 		for(int count = 0; count < players.length; count++)
 		{
 			Player p = ((Player)players[count]);
 			new UserObject(p);
-			if(new area.AreaMain().SearchAreaName(p.getLocation()) != null)
-				PlayerCurrentArea.put(p, new area.AreaMain().SearchAreaName(p.getLocation())[0].toString());
+			if(new area.AreaAPI().SearchAreaName(p.getLocation()) != null)
+				PlayerCurrentArea.put(p, new area.AreaAPI().SearchAreaName(p.getLocation())[0].toString());
 			if(PlayerList.get(p.getUniqueId().toString()).isDeath())
-				new CorpseMain().createCorpse(p);
+				new CorpseAPI().createCorpse(p);
 		}
 	  	Bukkit.getConsoleSender().sendMessage("§2§l[OK]§8 플레이어 정보 로드");
 	  	YamlLoader monsterYaml = new YamlLoader();

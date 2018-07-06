@@ -5,12 +5,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
 
 import user.UserDataObject;
-import util.UtilChat;
+import util.ChatUtil;
 import util.YamlLoader;
 
 
 
-public class NewBieChat extends UtilChat
+public class NewBieChat extends ChatUtil
 {
 	public void newBieTypeChatting(PlayerChatEvent event)
 	{

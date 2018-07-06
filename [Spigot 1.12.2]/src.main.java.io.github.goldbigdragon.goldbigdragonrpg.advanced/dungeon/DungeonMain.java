@@ -66,8 +66,8 @@ public class DungeonMain
 				{
 					{
 						SoundEffect.playSound(partyMember[count], Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
-						new util.UtilPlayer().giveItemDrop(partyMember[count], item, partyMember[count].getLocation());
-						new util.UtilPlayer().dungeonClear(partyMember[count], moneyReward, expReward);
+						new util.PlayerUtil().giveItemDrop(partyMember[count], item, partyMember[count].getLocation());
+						new util.PlayerUtil().dungeonClear(partyMember[count], moneyReward, expReward);
 					}
 				}
 			}
@@ -75,8 +75,8 @@ public class DungeonMain
 		else
 		{
 			SoundEffect.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
-			new util.UtilPlayer().giveItemDrop(player, item, player.getLocation());
-			new util.UtilPlayer().dungeonClear(player, moneyReward, expReward);
+			new util.PlayerUtil().giveItemDrop(player, item, player.getLocation());
+			new util.PlayerUtil().dungeonClear(player, moneyReward, expReward);
 		}
 		
 		bossLoc.add(3, -1, -30);
@@ -142,7 +142,7 @@ public class DungeonMain
 		XYZloc[0] = (int) bossLoc.getX();
 		XYZloc[1] = (int) bossLoc.getY();
 		XYZloc[2] = (int) bossLoc.getZ();
-		byte groupNumber = (byte) new util.UtilNumber().RandomNum(0, 15);
+		byte groupNumber = (byte) new util.NumericUtil().RandomNum(0, 15);
 		char group = '0';
 		switch(groupNumber)
 		{
@@ -188,9 +188,9 @@ public class DungeonMain
 		im.addEnchant(Enchantment.DURABILITY, 6000, true);
 		item.setItemMeta(im);
 		if(isDrop)
-			new util.UtilPlayer().dropItem(player, item, true);
+			new util.PlayerUtil().dropItem(player, item, true);
 		else
-			new util.UtilPlayer().deleteItem(player, item, -1);
+			new util.PlayerUtil().deleteItem(player, item, -1);
 		
 		item = new ItemStack(Material.IRON_HOE);
 		im = item.getItemMeta();
@@ -198,12 +198,12 @@ public class DungeonMain
 		im.setLore(Arrays.asList("","§f보상 상자를 열 수 있는","§f낡은 열쇠이다."));
 		im.addEnchant(Enchantment.DURABILITY, 6000, true);
 		item.setItemMeta(im);
-		new util.UtilPlayer().dropItem(player, item, true);
+		new util.PlayerUtil().dropItem(player, item, true);
 		
 		if(isDrop)
-			new util.UtilPlayer().dropItem(player, item, true);
+			new util.PlayerUtil().dropItem(player, item, true);
 		else
-			new util.UtilPlayer().deleteItem(player, item, -1);
+			new util.PlayerUtil().deleteItem(player, item, -1);
 	}
 
 	public void monsterSpawn(Location loc)
@@ -216,7 +216,7 @@ public class DungeonMain
 		dungeonMonsterYaml.getConfig("Dungeon/Dungeon/"+dungeonName+"/Monster.yml");
     	String[] mobList = null;
     	String listName = "Middle";
-    	byte randomLevel = (byte) new util.UtilNumber().RandomNum(0, 3);
+    	byte randomLevel = (byte) new util.NumericUtil().RandomNum(0, 3);
     	if(randomLevel<=2)
     	{
     		if(dungeonMonsterYaml.getConfigurationSection("Middle").getKeys(false).isEmpty())
@@ -263,10 +263,10 @@ public class DungeonMain
     	}
     	if(mobList!=null)
     	{
-        	String mob = mobList[new util.UtilNumber().RandomNum(0, mobList.length-1)];
+        	String mob = mobList[new util.NumericUtil().RandomNum(0, mobList.length-1)];
     		if(mob != null)
     		{
-        		randomLevel = (byte) new util.UtilNumber().RandomNum(0, 5);
+        		randomLevel = (byte) new util.NumericUtil().RandomNum(0, 5);
         		switch(randomLevel)
         		{
         		case 0://2회 스폰
@@ -279,7 +279,7 @@ public class DungeonMain
     			xyzLoc[0] = (int) loc.getX();
     			xyzLoc[1] = (int) loc.getY();
     			xyzLoc[2] = (int) loc.getZ();
-    			byte groupNumber = (byte) new util.UtilNumber().RandomNum(0, 15);
+    			byte groupNumber = (byte) new util.NumericUtil().RandomNum(0, 15);
     			char group = '0';
     			switch(groupNumber)
     			{
@@ -358,9 +358,9 @@ public class DungeonMain
 			if(trapChestOpen(block))
 			{
 				event.setCancelled(true);
-				byte howMuch = (byte) new util.UtilNumber().RandomNum(0, 8);
+				byte howMuch = (byte) new util.NumericUtil().RandomNum(0, 8);
 				for(int count = 0; count < howMuch; count++)
-					new util.UtilPlayer().addMoneyAndEXP(event.getPlayer() , new util.UtilNumber().RandomNum(0, 500), 0, block.getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(event.getPlayer() , new util.NumericUtil().RandomNum(0, 500), 0, block.getLocation(), true, false);
 			}
 		}
 		
@@ -392,7 +392,7 @@ public class DungeonMain
 						im.setLore(Arrays.asList("","§f던전 룸을 열 수 있는","§f낡은 열쇠이다."));
 						im.addEnchant(Enchantment.DURABILITY, 6000, true);
 						item.setItemMeta(im);
-						if(new util.UtilPlayer().deleteItem(event.getPlayer(), item, 1))
+						if(new util.PlayerUtil().deleteItem(event.getPlayer(), item, 1))
 						{
 				        	Location loc = event.getClickedBlock().getLocation();
 							String title = "§9";
@@ -492,9 +492,9 @@ public class DungeonMain
 			item.setItemMeta(im);
 			SoundEffect.playSoundLocation(block.getLocation().add(0,2,0), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.5F, 1.8F);
 			new event.EventItemDrop().CustomItemDrop(block.getLocation().add(0.5,1,0.5), item);
-			byte howMuch = (byte) new util.UtilNumber().RandomNum(0, 4);
+			byte howMuch = (byte) new util.NumericUtil().RandomNum(0, 4);
 			for(int count = 0; count < howMuch; count++)
-				new util.UtilPlayer().addMoneyAndEXP(event.getPlayer() , new util.UtilNumber().RandomNum(0, 500), 0, block.getLocation(), true, false);
+				new util.PlayerUtil().addMoneyAndEXP(event.getPlayer() , new util.NumericUtil().RandomNum(0, 500), 0, block.getLocation(), true, false);
 		}
 		else if(block.getType().getId() == 130) //보상 상자
 		{
@@ -509,7 +509,7 @@ public class DungeonMain
 			im.setLore(Arrays.asList("","§f보상 상자를 열 수 있는","§f낡은 열쇠이다."));
 			im.addEnchant(Enchantment.DURABILITY, 6000, true);
 			item.setItemMeta(im);
-			if(new util.UtilPlayer().deleteItem(player, item, 1))
+			if(new util.PlayerUtil().deleteItem(player, item, 1))
 			{
 				event.getClickedBlock().setType(Material.AIR, true);
 				SoundEffect.playSoundLocation(event.getClickedBlock().getLocation(), Sound.BLOCK_CHEST_OPEN, 1.0F, 1.0F);
@@ -520,7 +520,7 @@ public class DungeonMain
 				
 				boolean treasureGet = false;
 				int luck;
-				util.UtilNumber r = new util.UtilNumber();
+				util.NumericUtil r = new util.NumericUtil();
 				for(int count = 0; count < 100; count++)
 				{
 					luck = r.RandomNum(0, 7);
@@ -528,7 +528,7 @@ public class DungeonMain
 					if(item!=null)
 					{
 						treasureGet = true;
-						new util.UtilPlayer().giveItemDrop(player, item, event.getClickedBlock().getLocation());
+						new util.PlayerUtil().giveItemDrop(player, item, event.getClickedBlock().getLocation());
 						break;
 					}
 				}
@@ -540,7 +540,7 @@ public class DungeonMain
 					if(item!=null)
 					{
 						treasureGet = true;
-						new util.UtilPlayer().giveItemDrop(player, item, event.getClickedBlock().getLocation());
+						new util.PlayerUtil().giveItemDrop(player, item, event.getClickedBlock().getLocation());
 					}
 				}
 				luck = r.RandomNum(1, 10);
@@ -551,7 +551,7 @@ public class DungeonMain
 					if(item!=null)
 					{
 						treasureGet = true;
-						new util.UtilPlayer().giveItemDrop(player, item, event.getClickedBlock().getLocation());
+						new util.PlayerUtil().giveItemDrop(player, item, event.getClickedBlock().getLocation());
 					}
 				}
 				luck = r.RandomNum(1, 10);
@@ -562,7 +562,7 @@ public class DungeonMain
 					if(item!=null)
 					{
 						treasureGet = true;
-						new util.UtilPlayer().giveItemDrop(player, item, event.getClickedBlock().getLocation());
+						new util.PlayerUtil().giveItemDrop(player, item, event.getClickedBlock().getLocation());
 					}
 				}
 				luck = r.RandomNum(1, 100);
@@ -573,7 +573,7 @@ public class DungeonMain
 					if(item!=null)
 					{
 						treasureGet = true;
-						new util.UtilPlayer().giveItemDrop(player, item, event.getClickedBlock().getLocation());
+						new util.PlayerUtil().giveItemDrop(player, item, event.getClickedBlock().getLocation());
 					}
 				}
 				luck = r.RandomNum(1, 1000);
@@ -584,7 +584,7 @@ public class DungeonMain
 					if(item!=null)
 					{
 						treasureGet = true;
-						new util.UtilPlayer().giveItemDrop(player, item, event.getClickedBlock().getLocation());
+						new util.PlayerUtil().giveItemDrop(player, item, event.getClickedBlock().getLocation());
 					}
 				}
 				
@@ -617,7 +617,7 @@ public class DungeonMain
 		dungeonMonsterYaml.getConfig("Dungeon/Dungeon/"+dungeonName+"/Monster.yml");
     	String[] mobList = null;
     	String listName = "Normal";
-    	byte randomLevel = (byte) new util.UtilNumber().RandomNum(0, 3);
+    	byte randomLevel = (byte) new util.NumericUtil().RandomNum(0, 3);
         if(! dungeonMonsterYaml.contains("Normal"))
         	dungeonMonsterYaml.createSection("Normal");
         if(! dungeonMonsterYaml.contains("Middle"))
@@ -682,7 +682,7 @@ public class DungeonMain
     	{
     		ArrayList<String> mob = new ArrayList<>();
     		for(int count = 0; count < 8; count++)
-        		mob.add(mobList[new util.UtilNumber().RandomNum(0, mobList.length-1)]);
+        		mob.add(mobList[new util.NumericUtil().RandomNum(0, mobList.length-1)]);
     		if(mobList.length > 0)
     		{
             	if(gridImage.equals("◇"))
@@ -692,7 +692,7 @@ public class DungeonMain
             	}
             	else
             	{
-            		randomLevel = (byte) new util.UtilNumber().RandomNum(0, 5);
+            		randomLevel = (byte) new util.NumericUtil().RandomNum(0, 5);
             		switch(randomLevel)
             		{
             		case 0://2회 스폰
@@ -706,8 +706,8 @@ public class DungeonMain
     				xyzLoc[0] = block.getX();
     				xyzLoc[1] = block.getY();
     				xyzLoc[2] = block.getZ();
-    				byte roomChallenge = (byte) new util.UtilNumber().RandomNum(1, 5);
-    				byte groupNumber = (byte) new util.UtilNumber().RandomNum(0, 15);
+    				byte roomChallenge = (byte) new util.NumericUtil().RandomNum(1, 5);
+    				byte groupNumber = (byte) new util.NumericUtil().RandomNum(0, 15);
     				char group = '0';
     				switch(groupNumber)
     				{
@@ -915,8 +915,8 @@ public class DungeonMain
 	        		loc.add(0,1,0);
 	        		for(int count = 0; count < 4; count++)
 	        		{
-	        			loc.add(new util.UtilNumber().RandomNum(-2, 2), 0.1*count, new util.UtilNumber().RandomNum(-2, 2));
-	        			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mobList[new util.UtilNumber().RandomNum(0, mobList.length-1)]), (byte)-1, null, (char) -1, false);
+	        			loc.add(new util.NumericUtil().RandomNum(-2, 2), 0.1*count, new util.NumericUtil().RandomNum(-2, 2));
+	        			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mobList[new util.NumericUtil().RandomNum(0, mobList.length-1)]), (byte)-1, null, (char) -1, false);
 	        		}
 	        	}
 	        }
@@ -991,9 +991,9 @@ public class DungeonMain
         		loc.add(0,1,0);
         		for(int count = 0; count < 4; count++)
         		{
-        			loc.add(new util.UtilNumber().RandomNum(-2, 2),0.1*count, new util.UtilNumber().RandomNum(-2, 2));
+        			loc.add(new util.NumericUtil().RandomNum(-2, 2),0.1*count, new util.NumericUtil().RandomNum(-2, 2));
         			SoundEffect.playSoundLocation(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
-        			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mobList[new util.UtilNumber().RandomNum(0, mobList.length-1)]), (byte)-1, null, (char) -1, false);
+        			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mobList[new util.NumericUtil().RandomNum(0, mobList.length-1)]), (byte)-1, null, (char) -1, false);
         		}
         	}
 		}

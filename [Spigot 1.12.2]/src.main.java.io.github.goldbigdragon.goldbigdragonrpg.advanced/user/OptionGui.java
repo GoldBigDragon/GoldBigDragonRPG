@@ -10,9 +10,9 @@ import org.bukkit.inventory.Inventory;
 
 import effect.SoundEffect;
 import skill.UserSkillGui;
-import util.UtilGui;
+import util.GuiUtil;
 
-public class OptionGui extends UtilGui
+public class OptionGui extends GuiUtil
 {
 	public void optionGUI(Player player)
 	{

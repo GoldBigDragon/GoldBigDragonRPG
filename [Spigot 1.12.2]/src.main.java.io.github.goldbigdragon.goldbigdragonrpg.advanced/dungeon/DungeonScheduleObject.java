@@ -83,7 +83,7 @@ public class DungeonScheduleObject
 									return;
 								}
 							}
-							new util.UtilPlayer().teleportToCurrentArea(player, true);
+							new util.PlayerUtil().teleportToCurrentArea(player, true);
 							return;
 						}
 					}

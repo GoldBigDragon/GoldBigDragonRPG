@@ -53,14 +53,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import corpse.CorpseAPI;
+import corpse.gui.ReviveSelectGui;
 import effect.SoundEffect;
 import net.milkbowl.vault.economy.Economy;
 import net.minecraft.server.v1_12_R1.PacketPlayInClientCommand;
 import party.PartyDataManager;
 import user.UserDataObject;
 import util.YamlLoader;
-
-
 
 public class Main extends JavaPlugin implements Listener
 {
@@ -138,14 +138,14 @@ public class Main extends JavaPlugin implements Listener
 				util.BackUpAllFile.copyDir(source, target);
 				Bukkit.getConsoleSender().sendMessage("§e§l[GoldBigDragonRPG] BackUp completed!");
 			}
-		}, 0, 36000);//플러그인 실행됬을 때와, 실행 이후 30분마다
+		}, 36000, 36000);//플러그인 실행 이후 30분마다
 		
 	  	return;
 	}
 	
 	public void onDisable()
 	{
-		new corpse.CorpseMain().removeAllCorpse();
+		new corpse.CorpseAPI().removeAllCorpse();
     	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
     	Player[] a = new Player[playerlist.size()];
     	playerlist.toArray(a);
@@ -170,8 +170,8 @@ public class Main extends JavaPlugin implements Listener
 		if(player.getLocation().getWorld().getName().equals("Dungeon"))
 			new dungeon.DungeonMain().eraseAllDungeonKey(player, true);
 		
-		if(new corpse.CorpseMain().deathCapture(player,false))
-			new corpse.CorpseMain().removeCorpse(player.getName());
+		if(new corpse.CorpseAPI().deathCapture(player,false))
+			new corpse.CorpseAPI().removeCorpse(player.getName());
 		
 		if(MainServerOption.partyJoiner.containsKey(player))
 			MainServerOption.party.get(MainServerOption.partyJoiner.get(player)).QuitParty(player);
@@ -214,7 +214,7 @@ public class Main extends JavaPlugin implements Listener
 					if(configYaml.getInt("Death.Track")!=-1)
 						new otherplugins.NoteBlockApiMain().Play(player, configYaml.getInt("Death.Track"));
 			}
-	    	new corpse.CorpseGui().openReviveSelectGui(player);
+  			new ReviveSelectGui().openReviveSelectGui(player);
 		}
 		return;
 	}
@@ -271,9 +271,9 @@ public class Main extends JavaPlugin implements Listener
 									{
 									  	if(main.MainServerOption.PlayerList.get(target.getUniqueId().toString()).isDeath())
 									  	{
-											if(new util.UtilPlayer().deleteItem(player, MainServerOption.DeathRescue, MainServerOption.DeathRescue.getAmount()))
+											if(new util.PlayerUtil().deleteItem(player, MainServerOption.DeathRescue, MainServerOption.DeathRescue.getAmount()))
 											{
-												new corpse.CorpseMain().removeCorpse(Name);
+												new corpse.CorpseAPI().removeCorpse(Name);
 												player.updateInventory();
 												player.sendMessage("§d[구조] : §e"+target.getName()+"§d님을 부활시켰습니다!");
 												target.sendMessage("§d[부활] : §e"+player.getName()+"§d님에 의해 부활하였습니다!");
@@ -283,12 +283,12 @@ public class Main extends JavaPlugin implements Listener
 												l.add(0, 1, 0);
 												target.teleport(l);
 												for(int count2=0;count2<210;count2++)
-													new effect.ParticleEffect().PL(target.getLocation(), org.bukkit.Effect.SMOKE, new util.UtilNumber().RandomNum(0, 14));
+													new effect.ParticleEffect().PL(target.getLocation(), org.bukkit.Effect.SMOKE, new util.NumericUtil().RandomNum(0, 14));
 												SoundEffect.playSoundLocation(target.getLocation(), Sound.ENTITY_BLAZE_AMBIENT, 0.5F, 1.8F);
 									    		new otherplugins.NoteBlockApiMain().Stop(target);
 											  	YamlLoader configYaml = new YamlLoader();
 										    	configYaml.getConfig("config.yml");
-										    	new corpse.CorpseGui().penalty(target, configYaml.getString("Death.Spawn_Help.SetHealth"), configYaml.getString("Death.Spawn_Help.PenaltyEXP"), configYaml.getString("Death.Spawn_Help.PenaltyMoney"));
+										    	new CorpseAPI().penalty(target, configYaml.getString("Death.Spawn_Help.SetHealth"), configYaml.getString("Death.Spawn_Help.PenaltyEXP"), configYaml.getString("Death.Spawn_Help.PenaltyMoney"));
 												return;
 											}
 											else
@@ -341,7 +341,7 @@ public class Main extends JavaPlugin implements Listener
 				if(event.getPlayer().isOp()==false)
 				{
 					String TargetArea = null;
-					area.AreaMain A = new area.AreaMain();
+					area.AreaAPI A = new area.AreaAPI();
 					if(A.getAreaName((Entity)AS) != null)
 						TargetArea = A.getAreaName((Entity)AS)[0];
 					if(TargetArea != null && A.getAreaOption(TargetArea, (char) 7) == false)
@@ -438,7 +438,7 @@ public class Main extends JavaPlugin implements Listener
 			{
 				if (block.getTypeId() == 60) 
 				{
-					area.AreaMain A = new area.AreaMain();
+					area.AreaAPI A = new area.AreaAPI();
 					String[] Area = A.getAreaName(event.getClickedBlock());
 					if(Area != null)
 					{

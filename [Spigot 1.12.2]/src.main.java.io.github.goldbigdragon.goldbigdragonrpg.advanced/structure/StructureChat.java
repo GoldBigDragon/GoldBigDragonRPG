@@ -452,7 +452,7 @@ public class StructureChat
 
 							if(needAmount!=1)
 								item.setAmount(needAmount);
-							new util.UtilPlayer().giveItemForce(player, item);
+							new util.PlayerUtil().giveItemForce(player, item);
 						}
 						else
 						{

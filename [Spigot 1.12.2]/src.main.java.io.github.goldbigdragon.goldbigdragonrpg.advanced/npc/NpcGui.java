@@ -24,11 +24,11 @@ import effect.PottionBuff;
 import effect.SoundEffect;
 import main.MainServerOption;
 import user.UserDataObject;
-import util.UtilGui;
-import util.UtilNumber;
+import util.GuiUtil;
+import util.NumericUtil;
 import util.YamlLoader;
 
-public class NpcGui extends UtilGui
+public class NpcGui extends GuiUtil
 {
 	public void MainGUI(Player player, String NPCname, boolean isOP)
 	{
@@ -2132,7 +2132,7 @@ public class NpcGui extends UtilGui
 					  		NPCC.NPCNPCconfig(u.getNPCuuid(player));
 					  	}
 						NPCscript.getConfig("NPC/NPCData/"+ u.getNPCuuid(player) +".yml");
-						util.UtilNumber n = new util.UtilNumber();
+						util.NumericUtil n = new util.NumericUtil();
 
 						SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
 						if(Case.equals("룬 세공사"))
@@ -3514,7 +3514,7 @@ public class NpcGui extends UtilGui
 																		break;
 																	}
 																}
-																UtilNumber n = new UtilNumber();
+																NumericUtil n = new NumericUtil();
 																if(n.RandomNum(1, 100)<= SuccessRate)
 																{
 																	for(int k = 0; k < Lore.split(" ").length;k++)
@@ -3958,7 +3958,7 @@ public class NpcGui extends UtilGui
 						{
 							for(int counter = 0; counter < count; counter++)
 							{
-								if(new util.UtilPlayer().giveItem(player, item)==false)
+								if(new util.PlayerUtil().giveItem(player, item)==false)
 								{
 									SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
 									player.sendMessage("§c[구매 실패] : 인벤토리가 부족하여 "+(count-counter)+"개를 구매하지 못하였습니다!");
@@ -4037,11 +4037,11 @@ public class NpcGui extends UtilGui
 				}
 				else
 				{
-					int ItemHave = new util.UtilPlayer().getItemAmount(player, item);
+					int ItemHave = new util.PlayerUtil().getItemAmount(player, item);
 
 					if(slot == 49 && count != 0)
 					{
-						if(new util.UtilPlayer().deleteItem(player, item, count)==false)
+						if(new util.PlayerUtil().deleteItem(player, item, count)==false)
 						{
 							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.8F);
 							player.sendMessage("§c[판매 실패] : 물품이 부족하여 판매하지 못하였습니다!");

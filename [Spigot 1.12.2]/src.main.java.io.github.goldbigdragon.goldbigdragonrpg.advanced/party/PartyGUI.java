@@ -13,9 +13,9 @@ import org.bukkit.inventory.ItemStack;
 
 import effect.SoundEffect;
 import user.EquipGui;
-import util.UtilGui;
+import util.GuiUtil;
 
-public final class PartyGUI extends UtilGui
+public final class PartyGUI extends GuiUtil
 {
 	public void PartyGUI_Main(Player player)
 	{

@@ -18,10 +18,10 @@ import battle.BattleCalculator;
 import effect.SoundEffect;
 import main.MainServerOption;
 import user.UserDataObject;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
-public class MonsterGui extends UtilGui
+public class MonsterGui extends GuiUtil
 {
 	public void monsterListGUI(Player player, int page)
 	{
@@ -962,28 +962,28 @@ public class MonsterGui extends UtilGui
 
 		monsterListYaml.getConfig("Monster/MonsterList.yml");
 		String MonsterName = ChatColor.stripColor(event.getInventory().getItem(8).getItemMeta().getDisplayName().toString());
-		if(event.getInventory().getItem(0)==new util.UtilGui().getItemStack("§f머리", 302,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
+		if(event.getInventory().getItem(0)==new util.GuiUtil().getItemStack("§f머리", 302,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
 			monsterListYaml.set(MonsterName+".Head.Item", null);
 		else
 			monsterListYaml.set(MonsterName+".Head.Item", event.getInventory().getItem(0));
 		
-		if(event.getInventory().getItem(1)==new util.UtilGui().getItemStack("§f갑옷", 303,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
+		if(event.getInventory().getItem(1)==new util.GuiUtil().getItemStack("§f갑옷", 303,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
 					monsterListYaml.set(MonsterName+".Chest.Item", null);
 		else
 			monsterListYaml.set(MonsterName+".Chest.Item", event.getInventory().getItem(1));
-		if(event.getInventory().getItem(2)==new util.UtilGui().getItemStack("§f바지", 304,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
+		if(event.getInventory().getItem(2)==new util.GuiUtil().getItemStack("§f바지", 304,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
 			monsterListYaml.set(MonsterName+".Leggings.Item", null);
 		else
 			monsterListYaml.set(MonsterName+".Leggings.Item", event.getInventory().getItem(2));
-		if(event.getInventory().getItem(1)==new util.UtilGui().getItemStack("§f부츠", 305,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
+		if(event.getInventory().getItem(1)==new util.GuiUtil().getItemStack("§f부츠", 305,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
 			monsterListYaml.set(MonsterName+".Boots.Item", null);
 		else
 			monsterListYaml.set(MonsterName+".Boots.Item", event.getInventory().getItem(3));
-		if(event.getInventory().getItem(4)==new util.UtilGui().getItemStack("§f무기", 267,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
+		if(event.getInventory().getItem(4)==new util.GuiUtil().getItemStack("§f무기", 267,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
 			monsterListYaml.set(MonsterName+".Hand.Item", null);
 		else
 			monsterListYaml.set(MonsterName+".Hand.Item", event.getInventory().getItem(4));
-		if(event.getInventory().getItem(5)==new util.UtilGui().getItemStack("§f무기", 267,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
+		if(event.getInventory().getItem(5)==new util.GuiUtil().getItemStack("§f무기", 267,0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
 			monsterListYaml.set(MonsterName+".OffHand.Item", null);
 		else
 			monsterListYaml.set(MonsterName+".OffHand.Item", event.getInventory().getItem(5));

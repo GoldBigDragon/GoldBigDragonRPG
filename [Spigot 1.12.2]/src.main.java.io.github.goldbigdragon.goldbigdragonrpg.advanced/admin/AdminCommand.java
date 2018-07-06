@@ -125,7 +125,7 @@ public class AdminCommand
 	  				{
 	  					Player target = Bukkit.getServer().getPlayer(args[0]);
 		  				if(target.isOnline())
-		  					new util.UtilPlayer().giveItemForce(target, icon);
+		  					new util.PlayerUtil().giveItemForce(target, icon);
 		  				else
 		  				{
 		  					player.sendMessage("§c[SYSTEM] : 해당 플레이어는 접속중이 아닙니다!");
@@ -134,7 +134,7 @@ public class AdminCommand
 	  				}
 				}
 				else
-  					new util.UtilPlayer().giveItemForce(player, icon);
+  					new util.PlayerUtil().giveItemForce(player, icon);
 			}
 			else if(string.equals("경주")||string.equals("giveexp")||string.equals("경험치주기"))
 			{

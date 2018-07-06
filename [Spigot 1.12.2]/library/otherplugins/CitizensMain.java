@@ -217,7 +217,7 @@ public class CitizensMain implements Listener
 							    		YM.saveConfig();
 							    	}
 						    		if(QuestList.getInt(QuestName + ".FlowChart."+QuestFlow+".EXP") != 0)
-						    			new util.UtilPlayer().addMoneyAndEXP(player, 0, QuestList.getLong(QuestName + ".FlowChart."+QuestFlow+".EXP"), null, false, false);
+						    			new util.PlayerUtil().addMoneyAndEXP(player, 0, QuestList.getLong(QuestName + ".FlowChart."+QuestFlow+".EXP"), null, false, false);
 									
 									event.setCancelled(true);
 									QGUI.QuestRouter(player, QuestName);

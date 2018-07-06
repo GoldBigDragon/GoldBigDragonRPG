@@ -7,12 +7,11 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import area.gui.AreaSettingGui;
 import effect.SoundEffect;
 import util.YamlLoader;
 
-
-
-public class AreaMain
+public class AreaAPI
 {
 	public void addAreaList()
 	{
@@ -134,8 +133,7 @@ public class AreaMain
 		
 		SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_CHICKEN_EGG, 2.0F, 1.7F);
 		player.sendMessage("§a[SYSTEM] : 지정 구역 등록 성공!");
-		area.AreaGui AGUI = new area.AreaGui();
-		AGUI.areaSettingGui(player, name);
+		new AreaSettingGui().areaSettingGui(player, name);
 
 		area.AreaObject AO = new area.AreaObject();
 		AO.areaName = name;
@@ -367,7 +365,7 @@ public class AreaMain
 		return;
 	}
 
-	public void AreaMonsterSpawnAdd(String areaName, String Count)
+	public void areaMonsterSpawnAdd(String areaName, String Count)
 	{
 	  	YamlLoader areaYaml = new YamlLoader();
 		areaYaml.getConfig("Area/AreaList.yml");

@@ -1,5 +1,8 @@
 package event;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,10 +18,11 @@ import effect.SoundEffect;
 import main.MainServerOption;
 import util.YamlLoader;
 
-
-
 public class EventBlockBreak implements Listener
 {
+	
+	private List<Integer> targetBlockId = Arrays.asList(14, 15, 16, 17, 21, 56, 59, 73, 83, 86, 103, 115, 127, 129, 141, 142, 153, 162, 199, 200, 207);
+
 	@EventHandler
 	public void blockBreaking(BlockBreakEvent event)
 	{
@@ -32,7 +36,7 @@ public class EventBlockBreak implements Listener
 		}
 		Player player = event.getPlayer();
 		BattleCalculator.decreaseDurabilityWeapon(player);
-		area.AreaMain area = new area.AreaMain();
+		area.AreaAPI area = new area.AreaAPI();
 		String[] areaName = area.getAreaName(event.getBlock());
 		if(areaName != null)
 		{
@@ -50,7 +54,7 @@ public class EventBlockBreak implements Listener
 			}
 			if(areaYaml.getInt(areaName[0]+".RegenBlock")!=0)
 			{
-				Long utc = (areaYaml.getInt(areaName[0]+".RegenBlock")*1000)+servertick.ServerTickMain.nowUTC+new util.UtilNumber().RandomNum(1, 1000);
+				Long utc = (areaYaml.getInt(areaName[0]+".RegenBlock")*1000)+servertick.ServerTickMain.nowUTC+new util.NumericUtil().RandomNum(1, 1000);
 				servertick.ServerTickObject serverTickObject = new servertick.ServerTickObject(utc, "A_RB");
 				serverTickObject.setMaxCount(-1);
 				Block block =event.getBlock();
@@ -79,7 +83,7 @@ public class EventBlockBreak implements Listener
 					{
 						if(!areaYaml.getString(areaName[0]+".Mining."+blockData+".100").equals("0:0"))
 							itemDrop.CustomItemDrop(loc, areaYaml.getItemStack(areaName[0]+".Mining."+blockData+".100"));
-						int random = new util.UtilNumber().RandomNum(1, 1000);
+						int random = new util.NumericUtil().RandomNum(1, 1000);
 						if(random<=1)
 						{
 							if(!areaYaml.getString(areaName[0]+".Mining."+blockData+".0").equals("0:0"))
@@ -117,8 +121,8 @@ public class EventBlockBreak implements Listener
 			return;
 		}
 		
-		short id = (short) event.getBlock().getTypeId();
-		if((id >= 14&&id <= 17)||id==21||id==56||id==129||id==73||id==153)
+		int id = event.getBlock().getTypeId();
+		if(targetBlockId.contains(id))
 		{
 		  	YamlLoader exceptionBlockYaml = new YamlLoader();
 			exceptionBlockYaml.getConfig("EXPexceptionBlock.yml");
@@ -277,11 +281,11 @@ public class EventBlockBreak implements Listener
 		int lucky = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK()/30;
 		if(lucky >= 150) lucky =150;
 		if(lucky <= 0) lucky = 1;
-		if(lucky >= new util.UtilNumber().RandomNum(0, 1000))
+		if(lucky >= new util.NumericUtil().RandomNum(0, 1000))
 		{
 			effect.SendPacket t = new effect.SendPacket();
 			byte amount = 0;
-			byte luckysize = (byte) new util.UtilNumber().RandomNum(0, 100);
+			byte luckysize = (byte) new util.NumericUtil().RandomNum(0, 100);
 			if(luckysize <= 80)
 			{
 				t.sendActionBar(player, "§e§l럭키 보너스!", false);
@@ -334,25 +338,45 @@ public class EventBlockBreak implements Listener
 		configYaml.getConfig("config.yml");
 
 		int id = event.getBlock().getTypeId();
+		int data = event.getBlock().getData();
 		if(id==16)
-			new util.UtilPlayer().addMoneyAndEXP(player, configYaml.getInt("Getting.Coal.Money"), configYaml.getLong("Getting.Coal.EXP"), player.getLocation(), true, false);
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.Coal.Money"), configYaml.getLong("Getting.Coal.EXP"), player.getLocation(), true, false);
 		else if(id == 15)
-			new util.UtilPlayer().addMoneyAndEXP(player, configYaml.getInt("Getting.Iron.Money"), configYaml.getLong("Getting.Iron.EXP"), player.getLocation(), true, false);
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.Iron.Money"), configYaml.getLong("Getting.Iron.EXP"), player.getLocation(), true, false);
 		else if(id == 14)
-			new util.UtilPlayer().addMoneyAndEXP(player, configYaml.getInt("Getting.Gold.Money"), configYaml.getLong("Getting.Gold.EXP"), player.getLocation(), true, false);
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.Gold.Money"), configYaml.getLong("Getting.Gold.EXP"), player.getLocation(), true, false);
 		else if(id == 56)
-			new util.UtilPlayer().addMoneyAndEXP(player, configYaml.getInt("Getting.Diamond.Money"), configYaml.getLong("Getting.Diamond.EXP"), player.getLocation(), true, false);
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.Diamond.Money"), configYaml.getLong("Getting.Diamond.EXP"), player.getLocation(), true, false);
 		else if(id == 129)
-			new util.UtilPlayer().addMoneyAndEXP(player, configYaml.getInt("Getting.Emerald.Money"), configYaml.getLong("Getting.Emerald.EXP"), player.getLocation(), true, false);
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.Emerald.Money"), configYaml.getLong("Getting.Emerald.EXP"), player.getLocation(), true, false);
 		else if(id == 73)
-			new util.UtilPlayer().addMoneyAndEXP(player, configYaml.getInt("Getting.RedStone.Money"), configYaml.getLong("Getting.RedStone.EXP"), player.getLocation(), true, false);
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.RedStone.Money"), configYaml.getLong("Getting.RedStone.EXP"), player.getLocation(), true, false);
 		else if(id == 21)
-			new util.UtilPlayer().addMoneyAndEXP(player, configYaml.getInt("Getting.Lapis.Money"), configYaml.getLong("Getting.Lapis.EXP"), player.getLocation(), true, false);
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.Lapis.Money"), configYaml.getLong("Getting.Lapis.EXP"), player.getLocation(), true, false);
 		else if(id == 17 || id == 162)
-			new util.UtilPlayer().addMoneyAndEXP(player, configYaml.getInt("Getting.Wood.Money"), configYaml.getLong("Getting.Wood.EXP"), player.getLocation(), true, false);
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.Wood.Money"), configYaml.getLong("Getting.Wood.EXP"), player.getLocation(), true, false);
 		else if(id == 153)
-			new util.UtilPlayer().addMoneyAndEXP(player, configYaml.getInt("Getting.NetherQuartz.Money"), configYaml.getLong("Getting.NetherQuartz.EXP"), player.getLocation(), true, false);
-
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.NetherQuartz.Money"), configYaml.getLong("Getting.NetherQuartz.EXP"), player.getLocation(), true, false);
+		else if(id == 59 && data == 7)//wheat
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.Wheat.Money"), configYaml.getLong("Getting.Wheat.EXP"), player.getLocation(), true, false);
+		else if(id == 115 && data == 3)//NetherWart
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.NetherWart.Money"), configYaml.getLong("Getting.NetherWart.EXP"), player.getLocation(), true, false);
+		else if(id == 127 && data > 7)//Cocoa
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.Cocoa.Money"), configYaml.getLong("Getting.Cocoa.EXP"), player.getLocation(), true, false);
+		else if(id == 141 && data == 7)//Carrot
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.Wheat.Money"), configYaml.getLong("Getting.Wheat.EXP"), player.getLocation(), true, false);
+		else if(id == 142 && data == 7)//Potato
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.Potato.Money"), configYaml.getLong("Getting.Potato.EXP"), player.getLocation(), true, false);
+		else if(id == 207 && data == 3)//Beetroot
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.Beetroot.Money"), configYaml.getLong("Getting.Beetroot.EXP"), player.getLocation(), true, false);
+		else if(id == 83)//Sugarcane
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.Sugarcane.Money"), configYaml.getLong("Getting.Sugarcane.EXP"), player.getLocation(), true, false);
+		else if(id == 86)//Pumpkin
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.Pumpkin.Money"), configYaml.getLong("Getting.Pumpkin.EXP"), player.getLocation(), true, false);
+		else if(id == 103)//Melon
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.Melon.Money"), configYaml.getLong("Getting.Melon.EXP"), player.getLocation(), true, false);
+		else if(id == 199 || id == 200)//Chorus Flower
+			new util.PlayerUtil().addMoneyAndEXP(player, configYaml.getInt("Getting.ChorusFlower.Money"), configYaml.getLong("Getting.ChorusFlower.EXP"), player.getLocation(), true, false);
 		return;
 	}
 }

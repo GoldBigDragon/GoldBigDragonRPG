@@ -15,12 +15,12 @@ import org.bukkit.material.MaterialData;
 
 import effect.SoundEffect;
 import user.UserDataObject;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
 
 
-public class GambleGui extends UtilGui
+public class GambleGui extends GuiUtil
 {
 	public void gambleMainGui(Player player)
 	{
@@ -547,7 +547,7 @@ public class GambleGui extends UtilGui
 		
 		for(int count=1;count<4;count++)
 		{
-			byte randomnum = (byte) new util.UtilNumber().RandomNum(0, 5);
+			byte randomnum = (byte) new util.NumericUtil().RandomNum(0, 5);
 			short itemID=263;
 			if(randomnum == 0)
 				itemID = 263;
@@ -617,7 +617,7 @@ public class GambleGui extends UtilGui
 					short itemId[] = new short[3];
 					for(int count=0;count<3;count++)
 					{
-						int randomnum = (byte) new util.UtilNumber().RandomNum(0, 5);
+						int randomnum = (byte) new util.NumericUtil().RandomNum(0, 5);
 						itemId[count]=263;
 						if(randomnum == 0)
 							itemId[count] = 263;

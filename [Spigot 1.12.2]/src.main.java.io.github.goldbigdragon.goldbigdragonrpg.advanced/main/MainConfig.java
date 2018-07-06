@@ -8,10 +8,11 @@ public class MainConfig
 	{
     	YamlLoader configYaml = new YamlLoader();
     	configYaml.getConfig("config.yml");
+    	
     	if(!configYaml.contains("Version"))
     	{
 		  	configYaml.set("Version", "Advanced");
-		  	configYaml.set("Update", 20170527);
+		  	configYaml.set("Update", 20180707);
 		  	configYaml.set("Server.BroadCastSecond", 30);
 		  	configYaml.set("Server.EntitySpawn", true);
 		  	configYaml.set("Server.PVP", true);
@@ -113,6 +114,27 @@ public class MainConfig
 		  	configYaml.set("Getting.Lapis.Money", 0);
 		  	configYaml.set("Getting.NetherQuartz.EXP", 10);
 		  	configYaml.set("Getting.NetherQuartz.Money", 0);
+
+		  	configYaml.set("Getting.Wheat.EXP", 1);
+		  	configYaml.set("Getting.Wheat.Money", 0);
+		  	configYaml.set("Getting.Sugarcane.EXP", 1);
+		  	configYaml.set("Getting.Sugarcane.Money", 0);
+		  	configYaml.set("Getting.Cocoa.EXP", 2);
+		  	configYaml.set("Getting.Cocoa.Money", 0);
+		  	configYaml.set("Getting.NetherWart.EXP", 2);
+		  	configYaml.set("Getting.NetherWart.Money", 0);
+		  	configYaml.set("Getting.Carrot.EXP", 3);
+		  	configYaml.set("Getting.Carrot.Money", 0);
+		  	configYaml.set("Getting.Potato.EXP", 3);
+		  	configYaml.set("Getting.Potato.Money", 0);
+		  	configYaml.set("Getting.Beetroot.EXP", 5);
+		  	configYaml.set("Getting.Beetroot.Money", 0);
+		  	configYaml.set("Getting.Pumpkin.EXP", 10);
+		  	configYaml.set("Getting.Pumpkin.Money", 0);
+		  	configYaml.set("Getting.Melon.EXP", 10);
+		  	configYaml.set("Getting.Melon.Money", 0);
+		  	configYaml.set("Getting.ChorusFlower.EXP", 50);
+		  	configYaml.set("Getting.ChorusFlower.Money", 0);
 		  	
 		  	configYaml.set("Normal_Monster.ZOMBIE.EXP", 10);
 		  	configYaml.set("Normal_Monster.ZOMBIE.MIN_MONEY", 10);
@@ -274,9 +296,33 @@ public class MainConfig
 		  	configYaml.set("Normal_Monster.LLAMA.EXP", 1);
 		  	configYaml.set("Normal_Monster.LLAMA.MIN_MONEY", 1);
 		  	configYaml.set("Normal_Monster.LLAMA.MAX_MONEY", 3);
-		  	configYaml.saveConfig();
     	}
-	
+
+    	if(configYaml.getLong("Update") < 20180707)
+    	{
+		  	configYaml.set("Getting.Wheat.EXP", 1);
+		  	configYaml.set("Getting.Wheat.Money", 0);
+		  	configYaml.set("Getting.Sugarcane.EXP", 1);
+		  	configYaml.set("Getting.Sugarcane.Money", 0);
+		  	configYaml.set("Getting.Cocoa.EXP", 2);
+		  	configYaml.set("Getting.Cocoa.Money", 0);
+		  	configYaml.set("Getting.NetherWart.EXP", 2);
+		  	configYaml.set("Getting.NetherWart.Money", 0);
+		  	configYaml.set("Getting.Carrot.EXP", 3);
+		  	configYaml.set("Getting.Carrot.Money", 0);
+		  	configYaml.set("Getting.Potato.EXP", 3);
+		  	configYaml.set("Getting.Potato.Money", 0);
+		  	configYaml.set("Getting.Beetroot.EXP", 5);
+		  	configYaml.set("Getting.Beetroot.Money", 0);
+		  	configYaml.set("Getting.Pumpkin.EXP", 10);
+		  	configYaml.set("Getting.Pumpkin.Money", 0);
+		  	configYaml.set("Getting.Melon.EXP", 10);
+		  	configYaml.set("Getting.Melon.Money", 0);
+		  	configYaml.set("Getting.ChorusFlower.EXP", 50);
+		  	configYaml.set("Getting.ChorusFlower.Money", 0);
+    	}
+	  	configYaml.saveConfig();
+	  	
 		if(configYaml.contains("Server.MabinogiMoneySystem"))
 			main.MainServerOption.MoneySystem = configYaml.getBoolean("Server.MabinogiMoneySystem");
 		if(configYaml.contains("Server.STR"))

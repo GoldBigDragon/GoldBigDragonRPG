@@ -14,9 +14,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 import effect.SoundEffect;
-import util.UtilGui;
+import util.GuiUtil;
 
-public class StructCampFire extends UtilGui
+public class StructCampFire extends GuiUtil
 {
 
 	public void CampFireMainGUI(Player player, String BoardCode)
@@ -53,7 +53,7 @@ public class StructCampFire extends UtilGui
 			if(event.getSlot()==5)
 			{
 				ItemStack item = new MaterialData(280, (byte) 0).toItemStack(1);
-				if(new util.UtilPlayer().deleteItem(player, item, 10)==false)
+				if(new util.PlayerUtil().deleteItem(player, item, 10)==false)
 				{
 					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 					player.sendMessage("§c[SYSTEM] : 불을 지피기 위해 필요한 막대기 개수가 모자랍니다!");

@@ -13,7 +13,9 @@ public class EventInventoryClose
 		else if(UniqueCode.equals("01"))//Admin 패키지 속의 GUI Close를 관리함.
 		    new admin._AdminGUIManager().closeRouting(event, SubjectCode);
 		else if(UniqueCode.equals("02"))//Area 패키지 속의 GUI Close를 관리함.
-		    new area._AreaGUIManager().closeRouting(event, SubjectCode);
+		    new area.gui._AreaGUIManager().closeRouting(event, SubjectCode);
+		else if(UniqueCode.equals("03"))//CustomItem 패키지 속의 GUI Close를 관리함.
+		    new customitem.gui._CustomItemGUIManager().closeRouting(event, SubjectCode);
 		else if(UniqueCode.equals("05"))//Quest 패키지 속의 GUI Close를 관리함.
 		    new quest._QuestGUIManager().CloseRouting(event, SubjectCode);
 		else if(UniqueCode.equals("07"))//NPC 패키지 속의 GUI Close를 관리함.
@@ -24,7 +26,5 @@ public class EventInventoryClose
 		    new dungeon._DungeonGUIManager().CloseRouting(event, SubjectCode);
 		else if(UniqueCode.equals("0d"))//Structure 패키지 속의 GUI Close를 관리함.
 		    new structure._StructureGUIManager().CloseRouting(event, SubjectCode);
-		else if(UniqueCode.equals("0e"))//Making 패키지 속의 GUI Close를 관리함.
-		    new making._MakingGUIManager().CloseRouting(event, SubjectCode);
 	}
 }

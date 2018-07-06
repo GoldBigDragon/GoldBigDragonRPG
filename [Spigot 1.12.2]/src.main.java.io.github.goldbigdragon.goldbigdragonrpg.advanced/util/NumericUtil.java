@@ -2,7 +2,7 @@ package util;
 
 import java.util.Random;
 
-public class UtilNumber
+public class NumericUtil
 {
     public boolean isNumeric(String str)
     //숫자인가를 알아내 주는 메소드

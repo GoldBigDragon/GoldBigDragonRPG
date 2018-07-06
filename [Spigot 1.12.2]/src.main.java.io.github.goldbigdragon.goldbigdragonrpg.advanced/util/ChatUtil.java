@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 
 import effect.SoundEffect;
 
-public class UtilChat
+public class ChatUtil
 {
 	public boolean isIntMinMax(String message,Player player, int min, int max)
 	{

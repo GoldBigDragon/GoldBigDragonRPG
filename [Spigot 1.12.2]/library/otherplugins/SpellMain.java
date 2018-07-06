@@ -79,7 +79,7 @@ public class SpellMain implements Listener
 				bonuspower = 0;
 		}
 		int[] weaponPower = BattleCalculator.getPlayerEquipmentStat(player, "MagicDamage",  false, main.MainServerOption.PlayerlastItem.get(player));
-		int weaponPowerFixed = new util.UtilNumber().RandomNum(weaponPower[0], weaponPower[1]);
+		int weaponPowerFixed = new util.NumericUtil().RandomNum(weaponPower[0], weaponPower[1]);
 		bonuspower = bonuspower+weaponPowerFixed;
 		int negativeBonus = 0;
 		if(target!=null)

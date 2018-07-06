@@ -17,10 +17,10 @@ import org.bukkit.material.MaterialData;
 
 import effect.SoundEffect;
 import servertick.ServerTickMain;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
-public class EquipGui extends UtilGui
+public class EquipGui extends GuiUtil
 {
 	public void EquipWatchGUI(Player player, Player target)
 	{

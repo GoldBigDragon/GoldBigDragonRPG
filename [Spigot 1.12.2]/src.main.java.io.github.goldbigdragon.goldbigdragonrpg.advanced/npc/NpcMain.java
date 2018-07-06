@@ -41,7 +41,7 @@ public class NpcMain
 		
 		if(Size <= 0)
 		{
-			byte randomScript = (byte) new util.UtilNumber().RandomNum(0, 2);
+			byte randomScript = (byte) new util.NumericUtil().RandomNum(0, 2);
 			String[] script = new String[1];
 			if(randomScript == 0)
 				script[0] = "¡×7....";
@@ -59,7 +59,7 @@ public class NpcMain
 		byte randomScript = 0;
 		for(int counter = 1; counter < 125; counter++)
 		{
-			randomScript = (byte) new util.UtilNumber().RandomNum(1, Size);
+			randomScript = (byte) new util.NumericUtil().RandomNum(1, Size);
 			if(playerNPCData.getInt(u.getNPCuuid(player)+".love") >= npcYaml.getInt(TalkSubject + "."+randomScript+".love"))
 			{
 				if(npcYaml.getInt(TalkSubject + "."+randomScript+".loveMax") != 0)
@@ -103,7 +103,7 @@ public class NpcMain
 		if(!scriptget)
 		{
 			String[] script = new String[1];
-			randomScript = (byte) new util.UtilNumber().RandomNum(0, 2);
+			randomScript = (byte) new util.NumericUtil().RandomNum(0, 2);
 			if(randomScript == 0)
 				script[0] = "¡×7....";
 			if(randomScript == 1)

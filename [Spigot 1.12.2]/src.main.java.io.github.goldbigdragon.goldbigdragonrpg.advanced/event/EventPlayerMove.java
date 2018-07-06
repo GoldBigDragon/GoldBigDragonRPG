@@ -7,16 +7,13 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import util.YamlLoader;
 
-
-
-
 public class EventPlayerMove implements Listener
 {
 	@EventHandler
 	public void PlayerMove(PlayerMoveEvent event)
 	{
 		Player player = event.getPlayer();
-		if(new corpse.CorpseMain().deathCapture(player,false))
+		if(new corpse.CorpseAPI().deathCapture(player,false))
 			return;
 
 		if(!player.getLocation().getWorld().getName().equals("Dungeon"))
@@ -27,17 +24,17 @@ public class EventPlayerMove implements Listener
 				main.MainServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setDungeon_Enter(null);
 				main.MainServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setDungeon_UTC(-1);
 			}
-			if(new area.AreaMain().getAreaName(event.getPlayer()) != null)
+			if(new area.AreaAPI().getAreaName(event.getPlayer()) != null)
 			{
 				if(main.MainServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getETC_CurrentArea()==null)
 					main.MainServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setETC_CurrentArea("null");
-				area.AreaMain A = new area.AreaMain();
+				area.AreaAPI A = new area.AreaAPI();
 				String Area = A.getAreaName(event.getPlayer())[0];
 				if(!main.MainServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).getETC_CurrentArea().equals(Area))
 				{
 					main.MainServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setETC_CurrentArea(Area);
 					main.MainServerOption.PlayerCurrentArea.put(player, Area);
-					A.AreaMonsterSpawnAdd(Area, "-1");
+					A.areaMonsterSpawnAdd(Area, "-1");
 					new otherplugins.NoteBlockApiMain().Stop(player);
 					main.MainServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).setETC_CurrentArea(Area);
 					if(A.getAreaOption(Area, (char) 2) == true)

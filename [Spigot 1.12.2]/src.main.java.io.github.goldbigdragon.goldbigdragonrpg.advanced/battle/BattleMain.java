@@ -130,7 +130,7 @@ public class BattleMain implements Listener
 						if(!((Player)attacker).isOp())
 						{
 							String targetArea = null;
-							area.AreaMain areaMain = new area.AreaMain();
+							area.AreaAPI areaMain = new area.AreaAPI();
 							if(areaMain.getAreaName(event.getEntity()) != null)
 								targetArea = areaMain.getAreaName(event.getEntity())[0];
 							if(targetArea != null && !areaMain.getAreaOption(targetArea, (char) 1))
@@ -147,7 +147,7 @@ public class BattleMain implements Listener
 					if(!((Player)attacker).isOp())
 					{
 						String targetArea = null;
-						area.AreaMain areaMain = new area.AreaMain();
+						area.AreaAPI areaMain = new area.AreaAPI();
 						if(areaMain.getAreaName(event.getEntity()) != null)
 							targetArea = areaMain.getAreaName(event.getEntity())[0];
 						if(targetArea != null && !areaMain.getAreaOption(targetArea, (char) 1))
@@ -179,7 +179,7 @@ public class BattleMain implements Listener
 				String attackerArea = null;
 				String targetArea = null;
 
-				area.AreaMain areaMain = new area.AreaMain();
+				area.AreaAPI areaMain = new area.AreaAPI();
 				if(areaMain.getAreaName(player) != null)
 					attackerArea = areaMain.getAreaName(player)[0];
 				if(areaMain.getAreaName(target) != null)
@@ -460,7 +460,7 @@ public class BattleMain implements Listener
 	//?��미�?�? 0?�� ?��?�� ?�� ?��?��?�� ?��?�� 메시�?�? ?��?��주는 메소?��//
 	public void damageCancellMessage (Player player, Entity defenser)
 	{
-		byte a = (byte) new util.UtilNumber().RandomNum(1, 5);
+		byte a = (byte) new util.NumericUtil().RandomNum(1, 5);
 		SoundEffect.playSoundLocation(defenser.getLocation(), Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, (float)1.0, (float)0.7);
 	    SendPacket t = new SendPacket();
 

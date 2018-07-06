@@ -8,10 +8,10 @@ import org.bukkit.event.player.PlayerChatEvent;
 
 import effect.SoundEffect;
 import user.UserDataObject;
-import util.UtilChat;
+import util.ChatUtil;
 import util.YamlLoader;
 
-public class EventChat extends UtilChat
+public class EventChat extends ChatUtil
 {
 	public void eventChatting(PlayerChatEvent event)
 	{

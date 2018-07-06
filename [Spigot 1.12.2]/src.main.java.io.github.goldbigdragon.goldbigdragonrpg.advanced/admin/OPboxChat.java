@@ -7,10 +7,10 @@ import org.bukkit.event.player.PlayerChatEvent;
 
 import effect.SoundEffect;
 import user.UserDataObject;
-import util.UtilChat;
+import util.ChatUtil;
 import util.YamlLoader;
 
-public class OPboxChat extends UtilChat
+public class OPboxChat extends ChatUtil
 {
 	public void systemTypeChatting(PlayerChatEvent event)
 	{

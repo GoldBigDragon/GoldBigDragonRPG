@@ -7,10 +7,10 @@ import org.bukkit.event.player.PlayerChatEvent;
 
 import effect.SoundEffect;
 import user.UserDataObject;
-import util.UtilChat;
+import util.ChatUtil;
 import util.YamlLoader;
 
-public class SkillChat extends UtilChat
+public class SkillChat extends ChatUtil
 {
 	public void SkillTypeChatting(PlayerChatEvent event)
 	{

@@ -17,10 +17,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import effect.SoundEffect;
 import main.MainServerOption;
 import user.UserDataObject;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
-public class StructPostBox extends UtilGui
+public class StructPostBox extends GuiUtil
 {
 	public void PostBoxMainGUI(Player player, byte Type)
 	{
@@ -301,7 +301,7 @@ public class StructPostBox extends UtilGui
 					if(Sender.equals("[시스템]")|| Sender.equals("[반송]")||
 					Sender.equals("[거래 영수증]")||Sender.equals("[거래 게시판]"))
 					{
-						if(new util.UtilPlayer().giveItem(player, PlayerPost.getItemStack("Recieve."+UTC+".Item")))
+						if(new util.PlayerUtil().giveItem(player, PlayerPost.getItemStack("Recieve."+UTC+".Item")))
 						{
 							PlayerPost.removeKey("Recieve."+UTC);
 							PlayerPost.saveConfig();
@@ -334,7 +334,7 @@ public class StructPostBox extends UtilGui
 							{
 								if(PlayerPost.getInt("Recieve."+UTC+".Value")==0)
 								{
-									if(new util.UtilPlayer().giveItem(player, PlayerPost.getItemStack("Recieve."+UTC+".Item")))
+									if(new util.PlayerUtil().giveItem(player, PlayerPost.getItemStack("Recieve."+UTC+".Item")))
 									{
 										PlayerPost.removeKey("Recieve."+UTC);
 										PlayerPost.saveConfig();
@@ -353,7 +353,7 @@ public class StructPostBox extends UtilGui
 								{
 									if(MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()>=PlayerPost.getInt("Recieve."+UTC+".Value"))
 									{
-										if(new util.UtilPlayer().giveItem(player, PlayerPost.getItemStack("Recieve."+UTC+".Item")))
+										if(new util.PlayerUtil().giveItem(player, PlayerPost.getItemStack("Recieve."+UTC+".Item")))
 										{
 											MainServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_Money(MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()-PlayerPost.getInt("Recieve."+UTC+".Value"));
 											if(MainServerOption.PlayerList.containsKey(Sender))
@@ -426,7 +426,7 @@ public class StructPostBox extends UtilGui
 					}
 					else
 					{
-						if(new util.UtilPlayer().giveItem(player, PlayerPost.getItemStack("Send."+UTC+".Item")))
+						if(new util.PlayerUtil().giveItem(player, PlayerPost.getItemStack("Send."+UTC+".Item")))
 						{
 							ReceiverPost.removeKey("Recieve."+UTC+".Item");
 							ReceiverPost.removeKey("Recieve."+UTC);
@@ -502,7 +502,7 @@ public class StructPostBox extends UtilGui
 			TargetPost.createSection("Send");
 			TargetPost.saveConfig();
 		}
-		long UTC = new servertick.ServerTickMain().nowUTC +new util.UtilNumber().RandomNum(0, 1200);
+		long UTC = new servertick.ServerTickMain().nowUTC +new util.NumericUtil().RandomNum(0, 1200);
 		if(TargetPost.getConfigurationSection("Recieve").getKeys(false).size()<25)
 		{
 			TargetPost.set("Recieve."+UTC+".From", player.getName());
@@ -546,7 +546,7 @@ public class StructPostBox extends UtilGui
 			TargetPost.createSection("Recieve");
 			TargetPost.saveConfig();
 		}
-		long UTC = new servertick.ServerTickMain().nowUTC +new util.UtilNumber().RandomNum(0, 1200);
+		long UTC = new servertick.ServerTickMain().nowUTC +new util.NumericUtil().RandomNum(0, 1200);
 		TargetPost.set("Recieve."+UTC+".From", Name);
 		TargetPost.set("Recieve."+UTC+".Title", Title);
 		TargetPost.set("Recieve."+UTC+".Memo", Memo);

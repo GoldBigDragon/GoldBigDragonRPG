@@ -14,7 +14,8 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.*;
 
-import customitem.UseableItemMain;
+import area.gui.AreaBlockItemSettingGui;
+import customitem.CustomItemAPI;
 import effect.SoundEffect;
 import net.citizensnpcs.api.CitizensAPI;
 import user.UserDataObject;
@@ -27,7 +28,7 @@ public class EventInteract
 	{
 		if(event.getHand()==EquipmentSlot.HAND)
 		{
-			if(new corpse.CorpseMain().deathCapture(event.getPlayer(),false))
+			if(new corpse.CorpseAPI().deathCapture(event.getPlayer(),false))
 				return;
 			if(event.getAction()==Action.RIGHT_CLICK_AIR||event.getAction()==Action.RIGHT_CLICK_BLOCK)
 				ClickTrigger(event);
@@ -52,7 +53,7 @@ public class EventInteract
 					||id==167||id==84||(id>=183&&id<=187)||id==324||id==330||id==356||id==404||(id>=427&&id<=431)
 					||id==138)
 				{
-					area.AreaMain A = new area.AreaMain();
+					area.AreaAPI A = new area.AreaAPI();
 					String[] Area = A.getAreaName(event.getClickedBlock());
 					if(Area != null)
 					{
@@ -68,7 +69,7 @@ public class EventInteract
 				if(event.getItem()!=null)
 				if(event.getItem().getTypeId()>=325&&event.getItem().getTypeId()<=327)
 				{
-					area.AreaMain A = new area.AreaMain();
+					area.AreaAPI A = new area.AreaAPI();
 					String[] Area = A.getAreaName(event.getClickedBlock());
 					if(Area != null)
 					{
@@ -114,10 +115,10 @@ public class EventInteract
 	    			new quest.QuestInteractEvent().EntityInteract(event, type);
 		    }
 
-			String[] area = new area.AreaMain().getAreaName(target);
+			String[] area = new area.AreaAPI().getAreaName(target);
 			if(area != null)
 			{
-				if( ! new area.AreaMain().getAreaOption(area[0], (char) 7) && ! event.getPlayer().isOp())
+				if( ! new area.AreaAPI().getAreaOption(area[0], (char) 7) && ! event.getPlayer().isOp())
 				{
 					if(target.getCustomName() == null || CitizensAPI.getNPCRegistry().getNPC(target) == null)
 					{
@@ -160,9 +161,9 @@ public class EventInteract
 	{
 		Player player = event.getPlayer();
 		if(player.getInventory().getItemInMainHand()!=null)
-		if(player.getInventory().getItemInMainHand().hasItemMeta() == true)
+		if(player.getInventory().getItemInMainHand().hasItemMeta())
 		{
-			if(player.getInventory().getItemInMainHand().getItemMeta().hasLore()==true)
+			if(player.getInventory().getItemInMainHand().getItemMeta().hasLore())
 			{
 				int itemID = player.getInventory().getItemInMainHand().getData().getItemTypeId();
 				if(itemID == 383 && event.getItem().getData().getData() == 0 && event.getAction() == Action.RIGHT_CLICK_BLOCK)
@@ -205,19 +206,21 @@ public class EventInteract
 				String LoreString = player.getInventory().getItemInMainHand().getItemMeta().getLore().get(0).toString();
 				if(LoreString.contains("[±ÍÈ¯¼­]")||LoreString.contains("[ÁÖ¹®¼­]")||
 				   LoreString.contains("[½ºÅ³ºÏ]")||LoreString.contains("[¼Òºñ]")||
-				   LoreString.contains("[µ·]"))
+				   LoreString.contains("[µ·]")||LoreString.contains("[°ø±¸]"))
 				{
 					event.setCancelled(true);
 					if(LoreString.contains("[¼Òºñ]"))
-						new UseableItemMain().useAbleItemUse(player, "¼Òºñ");
+						new CustomItemAPI().useAbleItemUse(player, "¼Òºñ");
 					else if(LoreString.contains("[±ÍÈ¯¼­]"))
-						new UseableItemMain().useAbleItemUse(player, "±ÍÈ¯¼­");
+						new CustomItemAPI().useAbleItemUse(player, "±ÍÈ¯¼­");
 					else if(LoreString.contains("[ÁÖ¹®¼­]"))
-						new UseableItemMain().useAbleItemUse(player, "ÁÖ¹®¼­");
+						new CustomItemAPI().useAbleItemUse(player, "ÁÖ¹®¼­");
 					else if(LoreString.contains("[½ºÅ³ºÏ]"))
-						new UseableItemMain().useAbleItemUse(player, "½ºÅ³ºÏ");
+						new CustomItemAPI().useAbleItemUse(player, "½ºÅ³ºÏ");
 					else if(LoreString.contains("[µ·]"))
-						new UseableItemMain().useAbleItemUse(player, "µ·");
+						new CustomItemAPI().useAbleItemUse(player, "µ·");
+					else if(LoreString.contains("[°ø±¸]"))
+						new CustomItemAPI().useAbleItemUse(player, "°ø±¸");
 					return;
 				}
 			}
@@ -259,9 +262,8 @@ public class EventInteract
 				ItemStack item = new MaterialData(block.getTypeId(), (byte) block.getData()).toItemStack(1);
 				areaYaml.set(AreaName+".Mining."+BlockData+".100",item);
 				areaYaml.saveConfig();
-				area.AreaGui AGUI = new area.AreaGui();
 				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-				AGUI.areaBlockItemSettingGui(player, AreaName, BlockData);
+				new AreaBlockItemSettingGui().areaBlockItemSettingGui(player, AreaName, BlockData);
 		    	u.clearAll(player);
 			}
 		}

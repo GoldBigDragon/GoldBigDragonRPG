@@ -13,10 +13,10 @@ import org.bukkit.inventory.Inventory;
 
 import effect.SoundEffect;
 import user.UserDataObject;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
-public class NewBieGui extends UtilGui
+public class NewBieGui extends GuiUtil
 {
 	public void newBieGuiMain(Player player)
 	{

@@ -36,7 +36,7 @@ public class AreaServerTask
 					{
 						String[] mobList =areaYaml.getConfigurationSection(areaName+".Monster").getKeys(false).toArray(new String[0]);
 						if(mobList.length!=0)
-							mob=mobList[new util.UtilNumber().RandomNum(0, mobList.length-1)];
+							mob=mobList[new util.NumericUtil().RandomNum(0, mobList.length-1)];
 					}
 					else
 						mob = ServerTickMain.Schedule.get(utc).getString((byte)2);

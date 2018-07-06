@@ -14,10 +14,10 @@ import org.bukkit.event.player.PlayerChatEvent;
 
 import effect.SoundEffect;
 import user.UserDataObject;
-import util.UtilChat;
+import util.ChatUtil;
 import util.YamlLoader;
 
-public class EventPlayerChat extends UtilChat implements Listener
+public class EventPlayerChat extends ChatUtil implements Listener
 {
 	@EventHandler
 	public void playerChatting(PlayerChatEvent event)
@@ -40,7 +40,7 @@ public class EventPlayerChat extends UtilChat implements Listener
 			    else if(u.getType(player).equals("UseableItem")
 			    		||u.getType(player).equals("Upgrade")
 			    		||u.getType(player).equals("Item"))
-	    		{new customitem.CustomItemChat().itemTypeChatting(event); return;}
+	    		{new customitem.CustomItemChat().customItemChat(event); return;}
 			    else if(u.getType(player).equals("Area"))
 		    	{new area.AreaChat().areaTypeChatting(event); return;}
 			    else if(u.getType(player).equals("NPC"))

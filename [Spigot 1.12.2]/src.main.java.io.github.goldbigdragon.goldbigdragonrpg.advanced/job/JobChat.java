@@ -6,12 +6,10 @@ import org.bukkit.event.player.PlayerChatEvent;
 
 import effect.SoundEffect;
 import user.UserDataObject;
-import util.UtilChat;
+import util.ChatUtil;
 import util.YamlLoader;
 
-
-
-public class JobChat extends UtilChat
+public class JobChat extends ChatUtil
 {
 	public void JobTypeChatting(PlayerChatEvent event)
 	{
@@ -38,7 +36,7 @@ public class JobChat extends UtilChat
 				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 0.5F);
 				JGUI.Mabinogi_ChooseCategory(player,(short) 0);
 
-				configYaml.set("Time.LastSkillChanged", new util.UtilNumber().RandomNum(0, 100000)-new util.UtilNumber().RandomNum(0, 100000));
+				configYaml.set("Time.LastSkillChanged", new util.NumericUtil().RandomNum(0, 100000)-new util.NumericUtil().RandomNum(0, 100000));
 				configYaml.saveConfig();
 				
 				new job.JobMain().AllPlayerFixAllSkillAndJobYML();

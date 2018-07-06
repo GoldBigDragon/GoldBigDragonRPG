@@ -180,7 +180,7 @@ public class ServerTaskPlayer
 			short[] ItemID = new short[3];
 			for(int counter=0;counter<3;counter++)
 			{
-				byte randomnum = (byte) new util.UtilNumber().RandomNum(0, 5);
+				byte randomnum = (byte) new util.NumericUtil().RandomNum(0, 5);
 				ItemID[counter]=263;
 				switch(randomnum)
 				{
@@ -333,7 +333,7 @@ public class ServerTaskPlayer
 							for(int counter=0;counter<Presents.length;counter++)
 							{
 								ItemStack item = PresentList.getItemStack(Present+".Present."+counter);
-								new util.UtilPlayer().giveItemForce(player, item);
+								new util.PlayerUtil().giveItemForce(player, item);
 							}
 						}
 					}

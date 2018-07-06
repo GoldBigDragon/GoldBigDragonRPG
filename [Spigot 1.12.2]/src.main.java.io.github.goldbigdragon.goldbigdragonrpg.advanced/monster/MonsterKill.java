@@ -396,7 +396,7 @@ public class MonsterKill
 	
 	public void Reward(EntityDeathEvent event, Player player)
 	{
-		util.UtilNumber N = new util.UtilNumber();
+		util.NumericUtil N = new util.NumericUtil();
 		byte amount = 1;
 		if(40 <= N.RandomNum(0, 100) * MainServerOption.eventDropChance)
 		{
@@ -417,9 +417,9 @@ public class MonsterKill
 		if(main.MainServerOption.MonsterList.containsKey(name))
 		{
 			if(amount == 0)
-				new util.UtilPlayer().addMoneyAndEXP(player, 0, main.MainServerOption.MonsterList.get(name).getEXP(), event.getEntity().getLocation(), true, false);
+				new util.PlayerUtil().addMoneyAndEXP(player, 0, main.MainServerOption.MonsterList.get(name).getEXP(), event.getEntity().getLocation(), true, false);
 			else
-				new util.UtilPlayer().addMoneyAndEXP(player, amount* N.RandomNum(main.MainServerOption.MonsterList.get(name).getMinMoney(), main.MainServerOption.MonsterList.get(name).getMaxMoney()), main.MainServerOption.MonsterList.get(name).getEXP(), event.getEntity().getLocation(), true, false);
+				new util.PlayerUtil().addMoneyAndEXP(player, amount* N.RandomNum(main.MainServerOption.MonsterList.get(name).getMinMoney(), main.MainServerOption.MonsterList.get(name).getMaxMoney()), main.MainServerOption.MonsterList.get(name).getEXP(), event.getEntity().getLocation(), true, false);
 			return;
 		}
 		else
@@ -430,44 +430,44 @@ public class MonsterKill
 			if(ET == EntityType.SKELETON)
 			{
 				Skeleton s = (Skeleton)event.getEntity();
-				new util.UtilPlayer().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.SKELETON.MIN_MONEY"), configYaml.getInt("Normal_Monster.SKELETON.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SKELETON.EXP"), event.getEntity().getLocation(), true, false);
+				new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.SKELETON.MIN_MONEY"), configYaml.getInt("Normal_Monster.SKELETON.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SKELETON.EXP"), event.getEntity().getLocation(), true, false);
 			}
 			else if(ET == EntityType.CREEPER)
 			{
 				Creeper c = (Creeper)event.getEntity();
 				if(!c.isPowered())
-					new util.UtilPlayer().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.CREEPER.MIN_MONEY"), configYaml.getInt("Normal_Monster.CREEPER.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.CREEPER.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.CREEPER.MIN_MONEY"), configYaml.getInt("Normal_Monster.CREEPER.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.CREEPER.EXP"), event.getEntity().getLocation(), true, false);
 				else
-					new util.UtilPlayer().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.CHARGED_CREEPER.MIN_MONEY"), configYaml.getInt("Normal_Monster.CHARGED_CREEPER.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.CHARGED_CREEPER.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.CHARGED_CREEPER.MIN_MONEY"), configYaml.getInt("Normal_Monster.CHARGED_CREEPER.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.CHARGED_CREEPER.EXP"), event.getEntity().getLocation(), true, false);
 			}
 			else if(ET == EntityType.SLIME)
 			{
 				Slime sl = (Slime)event.getEntity();
 				if(sl.getSize() == 1)
-					new util.UtilPlayer().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.SLIME_SMALL.MIN_MONEY"), configYaml.getInt("Normal_Monster.SLIME_SMALL.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SLIME_SMALL.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.SLIME_SMALL.MIN_MONEY"), configYaml.getInt("Normal_Monster.SLIME_SMALL.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SLIME_SMALL.EXP"), event.getEntity().getLocation(), true, false);
 				else if(sl.getSize() <= 3)
-					new util.UtilPlayer().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.SLIME_MIDDLE.MIN_MONEY"), configYaml.getInt("Normal_Monster.SLIME_MIDDLE.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SLIME_MIDDLE.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.SLIME_MIDDLE.MIN_MONEY"), configYaml.getInt("Normal_Monster.SLIME_MIDDLE.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SLIME_MIDDLE.EXP"), event.getEntity().getLocation(), true, false);
 				else if(sl.getSize() == 4)
-					new util.UtilPlayer().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.SLIME_BIG.MIN_MONEY"), configYaml.getInt("Normal_Monster.SLIME_BIG.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SLIME_BIG.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.SLIME_BIG.MIN_MONEY"), configYaml.getInt("Normal_Monster.SLIME_BIG.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SLIME_BIG.EXP"), event.getEntity().getLocation(), true, false);
 				else
-					new util.UtilPlayer().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.SLIME_HUGE.MIN_MONEY"), configYaml.getInt("Normal_Monster.SLIME_HUGE.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SLIME_HUGE.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.SLIME_HUGE.MIN_MONEY"), configYaml.getInt("Normal_Monster.SLIME_HUGE.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SLIME_HUGE.EXP"), event.getEntity().getLocation(), true, false);
 			}
 			else if(ET == EntityType.MAGMA_CUBE)
 			{
 				MagmaCube ma = (MagmaCube)event.getEntity();
 				if(ma.getSize() == 1)
-					new util.UtilPlayer().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.MAGMA_CUBE_SMALL.MIN_MONEY"), configYaml.getInt("Normal_Monster.MAGMA_CUBE_SMALL.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.MAGMA_CUBE_SMALL.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.MAGMA_CUBE_SMALL.MIN_MONEY"), configYaml.getInt("Normal_Monster.MAGMA_CUBE_SMALL.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.MAGMA_CUBE_SMALL.EXP"), event.getEntity().getLocation(), true, false);
 				else if(ma.getSize() <= 3)
-					new util.UtilPlayer().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.MAGMA_CUBE_MIDDLE.MIN_MONEY"), configYaml.getInt("Normal_Monster.MAGMA_CUBE_MIDDLE.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.MAGMA_CUBE_MIDDLE.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.MAGMA_CUBE_MIDDLE.MIN_MONEY"), configYaml.getInt("Normal_Monster.MAGMA_CUBE_MIDDLE.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.MAGMA_CUBE_MIDDLE.EXP"), event.getEntity().getLocation(), true, false);
 				else if(ma.getSize() == 4)
-					new util.UtilPlayer().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.MAGMA_CUBE_BIG.MIN_MONEY"), configYaml.getInt("Normal_Monster.MAGMA_CUBE_BIG.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.MAGMA_CUBE_BIG.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.MAGMA_CUBE_BIG.MIN_MONEY"), configYaml.getInt("Normal_Monster.MAGMA_CUBE_BIG.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.MAGMA_CUBE_BIG.EXP"), event.getEntity().getLocation(), true, false);
 				else
-					new util.UtilPlayer().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.MAGMA_CUBE_HUGE.MIN_MONEY"), configYaml.getInt("Normal_Monster.MAGMA_CUBE_HUGE.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.MAGMA_CUBE_HUGE.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.MAGMA_CUBE_HUGE.MIN_MONEY"), configYaml.getInt("Normal_Monster.MAGMA_CUBE_HUGE.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.MAGMA_CUBE_HUGE.EXP"), event.getEntity().getLocation(), true, false);
 			}
 			else
 			{
 				if(configYaml.contains("Normal_Monster."+ET.toString()))
-					new util.UtilPlayer().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster."+ET.toString()+".MIN_MONEY"), configYaml.getInt("Normal_Monster."+ET.toString()+".MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster."+ET.toString()+".EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster."+ET.toString()+".MIN_MONEY"), configYaml.getInt("Normal_Monster."+ET.toString()+".MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster."+ET.toString()+".EXP"), event.getEntity().getLocation(), true, false);
 			}
 		}
 		return;

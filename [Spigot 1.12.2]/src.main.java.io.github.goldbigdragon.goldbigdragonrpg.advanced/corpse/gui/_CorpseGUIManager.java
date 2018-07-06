@@ -1,4 +1,4 @@
-package corpse;
+package corpse.gui;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -10,9 +10,9 @@ public class _CorpseGUIManager
 	//If you want add this system, just Put it in for Main_InventoryClcik!
 	//당신이 시체 관련 GUI 기능을 넣고싶을땐, 그냥 Main_InventoryClick 클래스 안에 넣으세요!
 	
-	public void ClickRouting(InventoryClickEvent event, String SubjectCode)
+	public void ClickRouting(InventoryClickEvent event, String subjectCode)
 	{
-		if(SubjectCode.equals("00"))//부활 방법 선택 창
-			new corpse.CorpseGui().reviveSelectClick(event);
+		if(subjectCode.equals("00"))//부활 방법 선택 창
+			new ReviveSelectGui().reviveSelectClick(event);
 	}
 }

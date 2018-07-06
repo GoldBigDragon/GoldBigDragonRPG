@@ -12,13 +12,13 @@ import org.bukkit.inventory.meta.*;
 
 import effect.SoundEffect;
 import user.StatsGui;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
 import org.bukkit.entity.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-public class UserSkillGui extends UtilGui
+public class UserSkillGui extends GuiUtil
 {
 	public void mainSkillsListGUI(Player player, short page)
 	{

@@ -7,10 +7,10 @@ import org.bukkit.event.player.PlayerChatEvent;
 
 import effect.SoundEffect;
 import user.UserDataObject;
-import util.UtilChat;
+import util.ChatUtil;
 import util.YamlLoader;
 
-public class NavigationChat extends UtilChat
+public class NavigationChat extends ChatUtil
 {
 	public void naviTypeChatting(PlayerChatEvent event)
 	{

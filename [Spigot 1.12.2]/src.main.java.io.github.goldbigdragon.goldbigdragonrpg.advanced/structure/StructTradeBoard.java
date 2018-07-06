@@ -17,10 +17,10 @@ import org.bukkit.material.MaterialData;
 import effect.SoundEffect;
 import main.MainServerOption;
 import user.UserDataObject;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
-public class StructTradeBoard extends UtilGui
+public class StructTradeBoard extends GuiUtil
 {
 	
 	public void TradeBoardMainGUI(Player player, byte page, byte ShopType)

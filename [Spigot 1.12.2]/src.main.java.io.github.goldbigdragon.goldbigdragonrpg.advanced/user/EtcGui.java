@@ -12,10 +12,10 @@ import org.bukkit.inventory.Inventory;
 import admin.NavigationGui;
 import effect.SoundEffect;
 import skill.UserSkillGui;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
-public final class EtcGui extends UtilGui
+public final class EtcGui extends GuiUtil
 {
 	public void ETCGUI_Main(Player player)
 	{

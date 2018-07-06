@@ -15,10 +15,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import battle.BattleCalculator;
 import effect.SoundEffect;
 import skill.UserSkillGui;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
-public class StatsGui extends UtilGui
+public class StatsGui extends GuiUtil
 {
 	//스텟 GUI창의 1 페이지를 구성해 주는 메소드//
 	public void StatusGUI(Player player)

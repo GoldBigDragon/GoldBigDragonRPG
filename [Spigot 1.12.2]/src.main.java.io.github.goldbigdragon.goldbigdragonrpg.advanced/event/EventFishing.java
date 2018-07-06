@@ -20,7 +20,7 @@ public class EventFishing implements Listener
 	{
 		if(event.getState() == State.CAUGHT_FISH)
 		{
-			area.AreaMain A = new area.AreaMain();
+			area.AreaAPI A = new area.AreaAPI();
 			if(A.getAreaName(event.getPlayer()) != null)
 			{
 				String Area = A.getAreaName(event.getPlayer())[0];
@@ -28,7 +28,7 @@ public class EventFishing implements Listener
 				{
 					CraftItem fish = (CraftItem) event.getCaught();
 					
-					util.UtilNumber etc = new util.UtilNumber();
+					util.NumericUtil etc = new util.NumericUtil();
 				  	YamlLoader areaYaml = new YamlLoader();
 					areaYaml.getConfig("Area/AreaList.yml");
 					byte randomnum = (byte) etc.RandomNum(1, 100);

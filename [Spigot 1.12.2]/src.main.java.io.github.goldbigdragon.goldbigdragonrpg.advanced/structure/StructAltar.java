@@ -1,9 +1,9 @@
 package structure;
 
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
-public class StructAltar extends UtilGui
+public class StructAltar extends GuiUtil
 {
 	
 	public String createTestAltar(int lineNumber, String structureCode, byte direction)

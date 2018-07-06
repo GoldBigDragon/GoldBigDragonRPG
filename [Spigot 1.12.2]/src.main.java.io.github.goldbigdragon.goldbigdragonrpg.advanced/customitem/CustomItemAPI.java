@@ -1,629 +1,429 @@
 package customitem;
 
-import java.util.Arrays;
-
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.entity.Damageable;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
-import admin.OPboxGui;
+import customitem.gui.ApplyToolGui;
 import effect.SoundEffect;
 import main.MainServerOption;
-import user.UserDataObject;
-import util.UtilGui;
+import servertick.ServerTickMain;
 import util.YamlLoader;
 
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-
-public class UseableItemGui extends UtilGui
-{
-	public void useableItemListGui(Player player, int page)
-	{
-	  	YamlLoader itemYaml = new YamlLoader();
-		itemYaml.getConfig("Item/Consume.yml");
-
-		String uniqueCode = "§0§0§3§0§3§r";
-		Inventory inv = Bukkit.createInventory(null, 54, uniqueCode + "§0소모성 아이템 목록 : " + (page+1));
-
-		String[] consumeItemList = itemYaml.getKeys().toArray(new String[0]);
-		
-		byte loc=0;
-		for(int count = page*45; count < consumeItemList.length;count++)
-		{
-			String ItemName = itemYaml.getString(consumeItemList[count]+".DisplayName");
-			short ID = (short) itemYaml.getInt(consumeItemList[count]+".ID");
-			byte Data = (byte) itemYaml.getInt(consumeItemList[count]+".Data");
-			
-			if(count > consumeItemList.length || loc >= 45) break;
-			removeFlagStack(ItemName, ID,Data,1,Arrays.asList(loreCreater(Integer.parseInt(consumeItemList[count]))), loc, inv);
-			loc++;
-		}
-		
-		if(consumeItemList.length-(page*44)>45)
-		removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
-		if(page!=0)
-		removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
-
-		removeFlagStack("§f§l새 아이템", 386,0,1,Arrays.asList("§7새로운 아이템을 생성합니다."), 49, inv);
-		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다."), 53, inv);
-		player.openInventory(inv);
-	}
-	
-	public void chooseUseableItemTypeGui(Player player, int number)
-	{
-		String uniqueCode = "§0§0§3§0§4§r";
-		Inventory inv = Bukkit.createInventory(null, 9, uniqueCode + "§0소모성 아이템 타입");
-
-		removeFlagStack("§f§l[귀환서]", 340,0,1,Arrays.asList("§7특정 위치로 신속히 이동할 수 있는","§7귀환서를 제작합니다."), 2, inv);
-		removeFlagStack("§f§l[주문서]", 339,0,1,Arrays.asList("§7특별한 기운이 담긴","§7주문서를 제작합니다."), 3, inv);
-		removeFlagStack("§f§l[스킬 북]", 403,0,1,Arrays.asList("§7특정 스킬을 배울 수 있는","§7스킬 북을 제작합니다.","","§c[게임 시스템이 '마비노기'여야 합니다.]"), 4, inv);
-		removeFlagStack("§f§l[음식, 포션]", 297,0,1,Arrays.asList("§7퀵슬롯으로 등록이 가능한","§7음식 및 포션 류를 제작합니다."), 5, inv);
-		removeFlagStack("§f§l[룬]", 381,0,1,Arrays.asList("§7무기의 능력을 올려주는","§7신비한 룬을 제작합니다."), 6, inv);
-
-		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 0, inv);
-		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ number), 8, inv);
-		player.openInventory(inv);
-	}
-	
-	public void newUseableItemGui(Player player, int number)
-	{
-	  	YamlLoader itemYaml = new YamlLoader();
-		itemYaml.getConfig("Item/Consume.yml");
-
-		String uniqueCode = "§0§0§3§0§5§r";
-		Inventory inv = Bukkit.createInventory(null, 54, uniqueCode + "§0소모성 아이템 상세 설정");
-		String itemName = itemYaml.getString(number+".DisplayName");
-		short itemId = (short) itemYaml.getInt(number+".ID");
-		byte itemData = (byte) itemYaml.getInt(number+".Data");
-
-		String type = "";
-		String grade = "";
-		for(int counter =0;counter < 13 - itemYaml.getString(number+".Type").length();counter++ )
-			type = type +" ";
-		type = type +itemYaml.getString(number+".Type");
-		grade = itemYaml.getString(number+".Grade");
-		
-		removeFlagStack("§3[    결과물    ]", 58,0,1,null, 9, inv);
-		removeFlagStack("§3[    결과물    ]", 58,0,1,null, 10, inv);
-		removeFlagStack("§3[    결과물    ]", 58,0,1,null, 11, inv);
-		removeFlagStack("§3[    결과물    ]", 58,0,1,null, 18, inv);
-		removeFlagStack("§3[    결과물    ]", 58,0,1,null, 20, inv);
-		removeFlagStack("§3[    결과물    ]", 58,0,1,null, 27, inv);
-		removeFlagStack("§3[    결과물    ]", 58,0,1,null, 28, inv);
-		removeFlagStack("§3[    결과물    ]", 58,0,1,null, 29, inv);
-		
-		removeFlagStack(itemName, itemId,itemData,1,Arrays.asList(loreCreater(number)), 19, inv);
-		
-		removeFlagStack("§3[    형식 변경    ]", 421,0,1,Arrays.asList("§f아이템 설명창을","§f변경합니다.","","§f[    현재 형식    ]","       "+ itemYaml.getString(number+".ShowType"),""), 37, inv);
-		removeFlagStack("§3[    이름 변경    ]", 421,0,1,Arrays.asList("§f아이템의 이름을","§f변경합니다.",""), 13, inv);
-		removeFlagStack("§3[    설명 변경    ]", 386,0,1,Arrays.asList("§f아이템의 설명을","§f변경합니다.",""), 14, inv);
-		removeFlagStack("§3[    타입 변경    ]", 166,0,1,Arrays.asList("","§c[타입 변경이 불가능 합니다]",""), 15, inv);
-		removeFlagStack("§3[    등급 변경    ]", 266,0,1,Arrays.asList("§f아이템의 등급을","§f변경합니다.","","§f[    현재 등급    ]","       "+grade,""), 16, inv);
-		removeFlagStack("§3[        ID        ]", 405,0,1,Arrays.asList("§f아이템의 ID값을","§f변경합니다.",""), 22, inv);
-		removeFlagStack("§3[       DATA       ]", 336,0,1,Arrays.asList("§f아이템의 DATA값을","§f변경합니다.",""), 23, inv);
-
-		switch(ChatColor.stripColor(itemYaml.getString(number+".Type")))
-		{
-		case "[귀환서]":
-			stack("§3[    위치 지정    ]", 386,0,1,Arrays.asList("§f현재 서 있는 장소를","§f워프 지점으로 등록 합니다.","","§9[현재 등록된 위치]","§9월드 : "+itemYaml.getString(number+".World"),"§9좌표 : "+itemYaml.getInt(number+".X")+","+itemYaml.getInt(number+".Y")+","+itemYaml.getInt(number+".Z"),"","§e[좌 클릭시 현재 지점 등록]",""), 25, inv);
-			break;
-		case "[주문서]":
-			stack("§3[     스킬 포인트     ]", 403,0,1,Arrays.asList("§f주문서 사용시 즉시","§f스킬 포인트를 얻습니다.",""), 24, inv);
-			stack("§3[     스텟 포인트     ]", 403,0,1,Arrays.asList("§f주문서 사용시 즉시","§f스텟 포인트를 얻습니다.",""), 25, inv);
-			stack("§3[        방어        ]", 307,0,1,Arrays.asList("§f주문서 사용시 방어력을","§f상승 시켜 줍니다.",""), 31, inv);
-			stack("§3[        보호        ]", 306,0,1,Arrays.asList("§f주문서 사용시 보호를","§f상승 시켜 줍니다.",""), 32, inv);
-			stack("§3[      마법 방어      ]", 311,0,1,Arrays.asList("§f주문서 사용시 마법 방어를","§f상승 시켜 줍니다.",""), 33, inv);
-			stack("§3[      마법 보호      ]", 310,0,1,Arrays.asList("§f주문서 사용시 마법 보호를","§f상승 시켜 줍니다.",""), 34, inv);
-			stack("§3[        스텟        ]", 399,0,1,Arrays.asList("§f주문서 사용시 스텟을 영구적으로","§f상승 시켜 줍니다.",""), 40, inv);
-			break;
-		case "[스킬북]":
-			if(itemYaml.getString(number+".Skill").equals("null"))
-				stack("§3[        스킬        ]", 340,0,1,Arrays.asList("§f스킬 북 사용시","§f아래 스킬을 습득합니다.","","§9[현재 등록된 스킬]","§f      없음"), 25, inv);
-			else
-				stack("§3[        스킬        ]", 403,0,1,Arrays.asList("§f스킬 북 사용시","§f아래 스킬을 습득합니다.","","§9[현재 등록된 스킬]","§f"+itemYaml.getString(number+".Skill")), 25, inv);
-			break;
-		case "[소비]":
-			stack("§3[       포만감       ]", 364,0,1,Arrays.asList("§f아이템 사용시 허기를","§f감소 시켜 줍니다.",""), 31, inv);
-			stack("§3[       생명력       ]", 373,8261,1,Arrays.asList("§f아이템 사용시 생명력을","§f상승 시켜 줍니다.",""), 32, inv);
-			stack("§3[        마나        ]", 373,8230,1,Arrays.asList("§f아이템 사용시 마나를","§f상승 시켜 줍니다.",""), 33, inv);
-			stack("§3[        환생        ]", 399,0,1,Arrays.asList("§f아이템 사용시 플레이어의","§f레벨을 초기화 시켜 줍니다.","","§c[서버 시스템이 마비노기일 경우만 사용 가능합니다.]",""), 34, inv);
-			break;
-		case "[룬]":
-			stack("§3[       대미지       ]", 267,0,1,Arrays.asList("§f룬 장착시 "+MainServerOption.damage+"를","§f증가 시켜 줍니다.",""), 24, inv);
-			stack("§3[     마법 대미지     ]", 403,0,1,Arrays.asList("§f룬 장착시 "+MainServerOption.magicDamage+"를","§f증가 시켜 줍니다.",""), 25, inv);
-			stack("§3[        방어        ]", 307,0,1,Arrays.asList("§f룬 장착시 방어력을","§f증가 시켜 줍니다.",""), 31, inv);
-			stack("§3[        보호        ]", 306,0,1,Arrays.asList("§f룬 장착시 보호를","§f증가 시켜 줍니다.",""), 32, inv);
-			stack("§3[      마법 방어      ]", 311,0,1,Arrays.asList("§f룬 장착시 마법 방어를","§f증가 시켜 줍니다.",""), 33, inv);
-			stack("§3[      마법 보호      ]", 310,0,1,Arrays.asList("§f룬 장착시 마법 보호를","§f증가 시켜 줍니다.",""), 34, inv);
-			stack("§3[        스텟        ]", 399,0,1,Arrays.asList("§f룬 장착시 스텟을 영구적으로","§f증가 시켜 줍니다.",""), 40, inv);
-			stack("§3[       내구도       ]", 145,2,1,Arrays.asList("§f룬 장착시 아이템의 내구력을","§f증가 시켜 줍니다.","","§c[일반 아이템 불가능]",""), 41, inv);
-			//Stack("§3[        개조        ]", 145,0,1,Arrays.asList("§f룬 장착시 최대 개조 횟수를","§f증가 시켜 줍니다.",""), 42, inv);
-			break;
-		}
-		stack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다.","§0"+type), 45, inv);
-		stack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+number), 53, inv);
-		player.openInventory(inv);
-	}
-	
-	public void selectSkillGui(Player player, short page, int itemNumber)
-	{
-	  	YamlLoader skillYaml = new YamlLoader();
-		skillYaml.getConfig("Skill/SkillList.yml");
-
-		String uniqueCode = "§0§0§3§0§6§r";
-		Inventory inv = Bukkit.createInventory(null, 54, uniqueCode + "§0등록 가능 스킬 목록 : " + (page+1));
-
-		String[] skillList= skillYaml.getKeys().toArray(new String[0]);
-		
-		byte loc=0;
-		for(int count = page*45; count < skillList.length;count++)
-		{
-			short jobLevel= (short) skillYaml.getConfigurationSection(skillList[count].toString()+".SkillRank").getKeys(false).size();
-			if(count > skillList.length || loc >= 45) break;
-
-		  	YamlLoader jobYaml = new YamlLoader();
-			jobYaml.getConfig("Skill/JobList.yml");
-			if(jobYaml.contains("Mabinogi.Added."+skillList[count])==true)
-			{
-				removeFlagStack("§f§l" + skillList[count],  skillYaml.getInt(skillList[count].toString()+".ID"),skillYaml.getInt(skillList[count].toString()+".DATA"),skillYaml.getInt(skillList[count].toString()+".Amount"),Arrays.asList("§3최대 스킬 레벨 : §f"+jobLevel,"","§e[좌 클릭시 스킬 등록]"), loc, inv);
-				loc++;	
-			}
-		}
-		
-		if(skillList.length-(page*44)>45)
-		removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
-		if(page!=0)
-		removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
-
-		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
-		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+itemNumber), 53, inv);
-		player.openInventory(inv);
-	}
-	
-	
-	
-	public void useableItemListGuiClick(InventoryClickEvent event)
-	{
-		
-		Player player = (Player) event.getWhoClicked();
-		int slot = event.getSlot();
-
-		if(slot == 53)//나가기
-		{
-			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.closeInventory();
-		}
-		else
-		{
-			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
-			if(slot==45)//이전 목록
-				new OPboxGui().opBoxGuiMain(player, (byte) 2);
-			else if(slot == 48)//이전 페이지
-				useableItemListGui(player, page-1);
-			else if(slot == 49)//새 아이템
-				chooseUseableItemTypeGui(player, ((page*45)+event.getSlot()));
-			else if(slot == 50)//다음 페이지
-				useableItemListGui(player, page+1);
-			else
-			{
-				int number = ((page*45)+event.getSlot());
-				if(event.isLeftClick()&&!event.isShiftClick())
-				{
-					player.sendMessage("§a[SYSTEM] : 클릭한 아이템을 지급 받았습니다!");
-					player.getInventory().addItem(event.getCurrentItem());
-				}
-				if(event.isLeftClick()&&event.isShiftClick())
-					newUseableItemGui(player, number);
-				else if(event.isRightClick()&&event.isShiftClick())
-				{
-				  	YamlLoader itemYaml = new YamlLoader();
-					itemYaml.getConfig("Item/Consume.yml");
-					short acount =  (short) (itemYaml.getKeys().toArray().length-1);
-
-					for(int counter = number;counter <acount;counter++)
-						itemYaml.set(counter+"", itemYaml.get((counter+1)+""));
-					itemYaml.removeKey(acount+"");
-					itemYaml.saveConfig();
-					useableItemListGui(player, page);
-				}
-			}
-		}
-	}
-	
-	public void chooseUseableItemTypeGuiClick(InventoryClickEvent event)
-	{
-		
-		Player player = (Player) event.getWhoClicked();
-		int slot = event.getSlot();
-		
-		if(slot == 8)
-		{
-			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.closeInventory();
-		}
-		else
-		{
-			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if(slot == 0)
-				useableItemListGui(player, 0);
-			else
-			{
-				String type = "";
-				String lore = "";
-				String displayName = "";
-				short id = 267;
-				short data = 0;
-				
-				if(slot == 2)
-				{
-					type = "§f[귀환서]";
-					lore = "§f육체의 손실 없이 지정된 곳으로%enter%§f빠르게 이동할 수 있는 신비한%enter%§f귀환 주문서이다.";
-					displayName = "§f0의 귀환 주문서";
-					id = 340;
-				}
-				else if(slot == 3)
-				{
-					type = "§6[주문서]";
-					lore = "§f사용시 스킬 포인트를%enter%§f5만큼 상승시켜 준다.";
-					displayName ="§f스킬 포인트 5 증가 주문서";
-					id = 339;
-				}
-				else if(slot == 4)
-				{
-					type = "§5[스킬북]";
-					lore = "§f아직 아무것도 쓰여있지 않은%enter%§f빈 상태의 스킬 북이다.%enter% %enter%§f(아무것도 얻을 수 없을 것 같다.)";
-					displayName = "§f빈 스킬 북";
-					id = 403;
-				}
-				else if(slot == 5)
-				{
-					type = "§d[소비]";
-					lore = "§f퀵 슬롯에 놓고, 위급시%enter%§f사용할 경우, 생명력을%enter%§f10 치료해 주는 포션이다.";
-					displayName = "§f시뻘건 포션";
-					id = 373;
-					data = 8261;
-				}
-				else if(slot == 6)
-				{
-					type = "§9[룬]";
-					lore = "§f강렬한 녹색의 룬이다.%enter%§f무기의 밸런스를 올려주는 듯 하다.";
-					displayName ="§f녹색 룬";
-					id = 351;
-					data = 10;
-				}
-
-			  	YamlLoader useableItemYaml = new YamlLoader();
-				useableItemYaml.getConfig("Item/Consume.yml");
-				
-				int itemCounter = useableItemYaml.getKeys().size();
-				useableItemYaml.set(itemCounter+".ShowType","§f[깔끔]");
-				useableItemYaml.set(itemCounter+".ID",id);
-				useableItemYaml.set(itemCounter+".Data",data);
-				useableItemYaml.set(itemCounter+".DisplayName",displayName);
-				useableItemYaml.set(itemCounter+".Lore",lore);
-				useableItemYaml.set(itemCounter+".Type",type);
-				useableItemYaml.set(itemCounter+".Grade","§f[일반]");
-				
-				if(slot == 2)
-				{
-					useableItemYaml.set(itemCounter+".World",player.getLocation().getWorld().getName().toString());
-					useableItemYaml.set(itemCounter+".X",0);
-					useableItemYaml.set(itemCounter+".Y",0);
-					useableItemYaml.set(itemCounter+".Z",0);
-					useableItemYaml.set(itemCounter+".Pitch",0);
-					useableItemYaml.set(itemCounter+".Yaw",0);
-				}
-				else if(slot ==3)
-				{
-					useableItemYaml.set(itemCounter+".DEF",0);
-					useableItemYaml.set(itemCounter+".Protect",0);
-					useableItemYaml.set(itemCounter+".MaDEF",0);
-					useableItemYaml.set(itemCounter+".MaProtect",0);
-					useableItemYaml.set(itemCounter+".STR",0);
-					useableItemYaml.set(itemCounter+".DEX",0);
-					useableItemYaml.set(itemCounter+".INT",0);
-					useableItemYaml.set(itemCounter+".WILL",0);
-					useableItemYaml.set(itemCounter+".LUK",0);
-					useableItemYaml.set(itemCounter+".Balance",0);
-					useableItemYaml.set(itemCounter+".Critical",0);
-					useableItemYaml.set(itemCounter+".HP",0);
-					useableItemYaml.set(itemCounter+".MP",0);
-					useableItemYaml.set(itemCounter+".SkillPoint",5);
-					useableItemYaml.set(itemCounter+".StatPoint",0);
-				}
-				else if(slot ==4)
-					useableItemYaml.set(itemCounter+".Skill","null");
-				else if(slot ==5)
-				{
-					useableItemYaml.set(itemCounter+".HP",10);
-					useableItemYaml.set(itemCounter+".MP",0);
-					useableItemYaml.set(itemCounter+".Saturation",0);
-					useableItemYaml.set(itemCounter+".Rebirth",false);
-				}
-				else if(slot ==6)
-				{
-					useableItemYaml.set(itemCounter+".MinDamage",0);
-					useableItemYaml.set(itemCounter+".MaxDamage",0);
-					useableItemYaml.set(itemCounter+".MinMaDamage",0);
-					useableItemYaml.set(itemCounter+".MaxMaDamage",0);
-					useableItemYaml.set(itemCounter+".DEF",0);
-					useableItemYaml.set(itemCounter+".Protect",0);
-					useableItemYaml.set(itemCounter+".MaDEF",0);
-					useableItemYaml.set(itemCounter+".MaProtect",0);
-					useableItemYaml.set(itemCounter+".Durability",0);
-					useableItemYaml.set(itemCounter+".MaxDurability",0);
-					useableItemYaml.set(itemCounter+".STR",0);
-					useableItemYaml.set(itemCounter+".DEX",0);
-					useableItemYaml.set(itemCounter+".INT",0);
-					useableItemYaml.set(itemCounter+".WILL",0);
-					useableItemYaml.set(itemCounter+".LUK",0);
-					useableItemYaml.set(itemCounter+".Balance",10);
-					useableItemYaml.set(itemCounter+".Critical",0);
-					useableItemYaml.set(itemCounter+".HP",0);
-					useableItemYaml.set(itemCounter+".MP",0);
-				}
-				useableItemYaml.saveConfig();
-				newUseableItemGui(player,itemCounter);
-			}
-		}
-	}
-
-	public void newUseableItemGuiClick(InventoryClickEvent event)
-	{
-		
-		Player player = (Player) event.getWhoClicked();
-		String iconName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
-		
-		int itemnumber = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
-		if(iconName.equals("[        스킬        ]"))
-		{
-		  	YamlLoader configYaml = new YamlLoader();
-			configYaml.getConfig("config.yml");
-			
-			if(configYaml.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System")==true)
-			{
-				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				selectSkillGui(player, (short) 0, itemnumber);
-			}
-			else
-			{
-				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-				player.sendMessage("§c[스킬 북 생성] : 현재 서버 시스템이 §e'마비노기'§c가 아닙니다!");
-			}
-		}
-		else if(iconName.equals("[    위치 지정    ]"))
-		{
-		  	YamlLoader useableItemYaml = new YamlLoader();
-			useableItemYaml.getConfig("Item/Consume.yml");
-			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			useableItemYaml.set(itemnumber+".World", player.getLocation().getWorld().getName().toString());
-			useableItemYaml.set(itemnumber+".X", player.getLocation().getX());
-			useableItemYaml.set(itemnumber+".Y", player.getLocation().getY());
-			useableItemYaml.set(itemnumber+".Z", player.getLocation().getZ());
-			useableItemYaml.set(itemnumber+".Pitch", player.getLocation().getPitch());
-			useableItemYaml.set(itemnumber+".Yaw", player.getLocation().getYaw());
-			useableItemYaml.saveConfig();
-			newUseableItemGui(player, itemnumber);
-		}
-		else if(iconName.equals("[        환생        ]"))
-		{
-		  	YamlLoader useableItemYaml = new YamlLoader();
-			useableItemYaml.getConfig("Item/Consume.yml");
-			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if(useableItemYaml.getBoolean(itemnumber+".Rebirth") == false)
-				useableItemYaml.set(itemnumber+".Rebirth", true);
-			else
-				useableItemYaml.set(itemnumber+".Rebirth", false);
-			useableItemYaml.saveConfig();
-			newUseableItemGui(player, itemnumber);
-		}
-		else if(iconName.equals("[    형식 변경    ]"))
-		{
-		  	YamlLoader useableItemYaml = new YamlLoader();
-			useableItemYaml.getConfig("Item/Consume.yml");
-			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if(useableItemYaml.getString(itemnumber+".ShowType").contains("[깔끔]"))
-				useableItemYaml.set(itemnumber+".ShowType","§e[컬러]");
-			else if(useableItemYaml.getString(itemnumber+".ShowType").contains("[컬러]"))
-				useableItemYaml.set(itemnumber+".ShowType","§d[기호]");
-			else if(useableItemYaml.getString(itemnumber+".ShowType").contains("[기호]"))
-				useableItemYaml.set(itemnumber+".ShowType","§9[분류]");
-			else if(useableItemYaml.getString(itemnumber+".ShowType").contains("[분류]"))
-				useableItemYaml.set(itemnumber+".ShowType","§f[깔끔]");
-			useableItemYaml.saveConfig();
-			newUseableItemGui(player, itemnumber);
-		}
-		else if(iconName.equals("[    타입 변경    ]"))
-			SoundEffect.playSound(player, Sound.BLOCK_ANVIL_LAND, 0.8F, 1.8F);
-		else if(iconName.equals("[    등급 변경    ]"))
-		{
-		  	YamlLoader useableItemYaml = new YamlLoader();
-			useableItemYaml.getConfig("Item/Consume.yml");
-			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if(useableItemYaml.getString(itemnumber+".Grade").contains("[일반]"))
-				useableItemYaml.set(itemnumber+".Grade","§a[상급]");
-			else if(useableItemYaml.getString(itemnumber+".Grade").contains("[상급]"))
-				useableItemYaml.set(itemnumber+".Grade","§9[매직]");
-			else if(useableItemYaml.getString(itemnumber+".Grade").contains("[매직]"))
-				useableItemYaml.set(itemnumber+".Grade","§e[레어]");
-			else if(useableItemYaml.getString(itemnumber+".Grade").contains("[레어]"))
-				useableItemYaml.set(itemnumber+".Grade","§5[에픽]");
-			else if(useableItemYaml.getString(itemnumber+".Grade").contains("[에픽]"))
-				useableItemYaml.set(itemnumber+".Grade","§6[전설]");
-			else if(useableItemYaml.getString(itemnumber+".Grade").contains("[전설]"))
-				useableItemYaml.set(itemnumber+".Grade","§4§l[§6§l초§2§l월§1§l]");
-			else if(useableItemYaml.getString(itemnumber+".Grade").contains("초"))
-				useableItemYaml.set(itemnumber+".Grade","§7[하급]");
-			else if(useableItemYaml.getString(itemnumber+".Grade").contains("[하급]"))
-				useableItemYaml.set(itemnumber+".Grade","§f[일반]");
-			useableItemYaml.saveConfig();
-			newUseableItemGui(player, itemnumber);
-		}
-		else if(iconName.equals("이전 목록"))
-		{
-			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			useableItemListGui(player, 0);
-		}
-		else if(iconName.equals("닫기"))
-		{
-				SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-				player.closeInventory();
-		}
-		else if(!((event.getSlot()>=9&&event.getSlot()<=11)||(event.getSlot()>=18&&event.getSlot()<=20)||(event.getSlot()>=27&&event.getSlot()<=29)))
-		{
-			UserDataObject u = new UserDataObject();
-			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			u.setType(player, "UseableItem");
-			u.setInt(player, (byte)3, itemnumber);
-			u.setInt(player, (byte)4, -1);
-			player.closeInventory();
-			if(iconName.equals("[       포만감       ]"))
-			{
-				player.sendMessage("§3[아이템] : 회복할 포만감을 입력해 주세요!");
-				u.setString(player, (byte)1, "Saturation");
-			}
-			else if(iconName.equals("[       생명력       ]"))
-			{
-				player.sendMessage("§3[아이템] : 회복할 생명력을 입력해 주세요!");
-				u.setString(player, (byte)1, "HP");
-				u.setInt(player, (byte)4, -8);
-			}
-			else if(iconName.equals("[        마나        ]"))
-			{
-				player.sendMessage("§3[아이템] : 회복할 마나를 입력해 주세요!");
-				u.setString(player, (byte)1, "MP");
-				u.setInt(player, (byte)4, -8);
-			}
-			else if(iconName.equals("[     스킬 포인트     ]"))
-			{
-				player.sendMessage("§3[아이템] : 주고자 하는 스킬 포인트의 양을 입력해 주세요!");
-				u.setString(player, (byte)1, "SkillPoint");
-			}
-			else if(iconName.equals("[     스텟 포인트     ]"))
-			{
-				player.sendMessage("§3[아이템] : 주고자 하는 스텟 포인트의 양을 입력해 주세요!");
-				u.setString(player, (byte)1, "StatPoint");
-			}
-			else if(iconName.equals("[        ID        ]"))
-			{
-				player.sendMessage("§3[아이템] : 아이템의 ID 값을 입력해 주세요!");
-				u.setString(player, (byte)1, "ID");
-			}
-			else if(iconName.equals("[       DATA       ]"))
-			{
-				player.sendMessage("§3[아이템] : 아이템의 DATA 값을 입력해 주세요!");
-				u.setString(player, (byte)1, "Data");
-			}
-			else if(iconName.equals("[       대미지       ]"))
-			{
-				player.sendMessage("§3[아이템] : 아이템의 최소 "+MainServerOption.damage+"를 입력해 주세요!");
-				player.sendMessage("§3(0 ~ "+Integer.MAX_VALUE+")");
-				u.setString(player, (byte)1, "MinDamage");
-			}
-			else if(iconName.equals("[     마법 대미지     ]"))
-			{
-				player.sendMessage("§3[아이템] : 아이템의 최소 "+MainServerOption.magicDamage+"를 입력해 주세요!");
-				player.sendMessage("§3(0 ~ "+Integer.MAX_VALUE+")");
-				u.setString(player, (byte)1, "MinMaDamage");
-			}
-			else if(iconName.equals("[        방어        ]"))
-			{
-				player.sendMessage("§3[아이템] : 아이템의 방어력을 입력해 주세요!");
-				player.sendMessage("§3(0 ~ "+Integer.MAX_VALUE+")");
-				u.setString(player, (byte)1, "DEF");
-			}
-			else if(iconName.equals("[        보호        ]"))
-			{
-				player.sendMessage("§3[아이템] : 아이템의 보호를 입력해 주세요!");
-				player.sendMessage("§3(0 ~ "+Integer.MAX_VALUE+")");
-				u.setString(player, (byte)1, "Protect");
-			}
-			else if(iconName.equals("[      마법 방어      ]"))
-			{
-				player.sendMessage("§3[아이템] : 아이템의 마법 방어력을 입력해 주세요!");
-				player.sendMessage("§3(0 ~ "+Integer.MAX_VALUE+")");
-				u.setString(player, (byte)1, "MaDEF");
-			}
-			else if(iconName.equals("[      마법 보호      ]"))
-			{
-				player.sendMessage("§3[아이템] : 아이템의 마법 보호를 입력해 주세요!");
-				player.sendMessage("§3(0 ~ "+Integer.MAX_VALUE+")");
-				u.setString(player, (byte)1, "MaProtect");
-			}
-			else if(iconName.equals("[        스텟        ]"))
-			{
-				player.sendMessage("§3[아이템] : 아이템의 생명력 보너스를 입력해 주세요!");
-				player.sendMessage("§3(-127 ~ 127)");
-				u.setString(player, (byte)1, "HP");
-			}
-			else if(iconName.equals("[       내구도       ]"))
-			{
-				player.sendMessage("§3[아이템] : 아이템의 최대 내구력을 입력해 주세요!");
-				player.sendMessage("§3(0 ~ "+Integer.MAX_VALUE+")");
-				u.setString(player, (byte)1, "MaxDurability");
-			}
-			else
-			{
-				if(iconName.equals("[    이름 변경    ]"))
-				{
-					player.sendMessage("§3[아이템] : 아이템의 이름을 입력해 주세요!");
-					u.setString(player, (byte)1, "DisplayName");
-				}
-				else if(iconName.equals("[    설명 변경    ]"))
-				{
-					player.sendMessage("§3[아이템] : 아이템의 설명을 입력해 주세요!");
-					player.sendMessage("§6%enter%§f - 한줄 띄워 쓰기 -");
-					u.setString(player, (byte)1, "Lore");
-				}
-				player.sendMessage("§f§l&l §0&0 §1&1 §2&2 "+
-				"§3&3 §4&4 §5&5 " +
-						"§6&6 §7&7 §8&8 " +
-				"§9&9 §a&a §b&b §c&c " +
-						"§d&d §e&e §f&f");
-			}
-			
-		}
-	}
-	
-	public void selectSkillGuiClick(InventoryClickEvent event)
-	{
-		
-		int slot = event.getSlot();
-		Player player = (Player) event.getWhoClicked();
-		
-		if(slot == 53)//나가기
-		{
-			SoundEffect.playSound(player, Sound.BLOCK_PISTON_CONTRACT, 0.8F, 1.8F);
-			player.closeInventory();
-		}
-		else
-		{
-			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			int itemnumber = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
-			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
-			if(slot == 45)//이전 목록
-				newUseableItemGui(player, itemnumber);
-			else if(slot == 48)//이전 페이지
-				selectSkillGui(player, (short) (page-1), itemnumber);
-			else if(slot == 50)//다음 페이지
-				selectSkillGui(player, (short) (page-1), itemnumber);
-			else
-			{
-			  	YamlLoader useableItemYaml = new YamlLoader();
-				useableItemYaml.getConfig("Item/Consume.yml");
-				useableItemYaml.set(itemnumber+".Skill", ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
-				useableItemYaml.saveConfig();
-				newUseableItemGui(player, itemnumber);
-			}
-		}
-	}
-	
+public class CustomItemAPI {
 	
 	public String[] loreCreater(int itemNumber)
+	{
+	  	YamlLoader itemYaml = new YamlLoader();
+		itemYaml.getConfig("Item/ItemList.yml");
+		String lore = "";
+		String type = ChatColor.stripColor(itemYaml.getString(itemNumber+".ShowType"));
+		if(type.equals("[분류]"))
+		{
+			lore = lore+itemYaml.getString(itemNumber+".Type");
+			for(int count = 0; count<20-itemYaml.getString(itemNumber+".Type").length();count++)
+				lore = lore+" ";
+			if(itemYaml.getString(itemNumber+".JOB").equals("공용"))
+				lore = lore+itemYaml.getString(itemNumber+".Grade")+"%enter%%enter%";
+			else
+				lore = lore+itemYaml.getString(itemNumber+".Grade")+"%enter%§6장비 가능 직업 : §f" + itemYaml.getString(itemNumber+".JOB")+"%enter%%enter%";
+				
+
+			if(itemYaml.getInt(itemNumber+".MinDamage") != 0||itemYaml.getInt(itemNumber+".MaxDamage") != 0)
+				lore = lore+"§c ▩ "+main.MainServerOption.damage+" : §f" + itemYaml.getInt(itemNumber+".MinDamage") + " ~ " + itemYaml.getInt(itemNumber+".MaxDamage")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MinMaDamage") != 0||itemYaml.getInt(itemNumber+".MaxMaDamage") != 0)
+				lore = lore+"§3 ▦ "+main.MainServerOption.magicDamage+" : §f" + itemYaml.getInt(itemNumber+".MinMaDamage") + " ~ " + itemYaml.getInt(itemNumber+".MaxMaDamage")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".DEF") != 0)
+				lore = lore+"§7 ▧ 방어 : §f" + itemYaml.getInt(itemNumber+".DEF")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".Protect") != 0)
+				lore = lore+"§f ■ 보호 : §f" +itemYaml.getInt(itemNumber+".Protect")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaDEF") != 0)
+				lore = lore+"§9 ◇ 마법 방어 : §f" +itemYaml.getInt(itemNumber+".MaDEF")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaProtect") != 0)
+				lore = lore+"§1 ◆ 마법 보호 : §f" + itemYaml.getInt(itemNumber+".MaProtect")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".Balance") != 0)
+				lore = lore+"§2 △ 밸런스 : §f" + itemYaml.getInt(itemNumber+".Balance")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".Critical") != 0)
+				lore = lore+"§e ▲ 크리티컬 : §f" + itemYaml.getInt(itemNumber+".Critical")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaxDurability") > 0)
+				lore = lore+"§6 ▣ 내구도 : §f" + itemYaml.getInt(itemNumber+".Durability")+" / "+ itemYaml.getInt(itemNumber+".MaxDurability")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaxUpgrade") > 0)
+				lore = lore + "§f ♣ 숙련도 : 0.0%§f%enter%";
+			
+			lore = lore+"§6___--------------------___%enter%§6       [아이템 설명]";
+			lore = lore+"%enter%"+ itemYaml.getString(itemNumber+".Lore")+"%enter%";
+			lore = lore+"§6---____________________---%enter%";
+
+
+			if(itemYaml.getInt(itemNumber+".HP")!=0||itemYaml.getInt(itemNumber+".MP")!=0||
+					itemYaml.getInt(itemNumber+".STR")!=0||itemYaml.getInt(itemNumber+".DEX")!=0||
+					itemYaml.getInt(itemNumber+".INT")!=0||itemYaml.getInt(itemNumber+".WILL")!=0||
+					itemYaml.getInt(itemNumber+".LUK")!=0)
+			{
+				lore = lore+"§3___--------------------___%enter%§3       [보너스 옵션]%enter%";
+				if(itemYaml.getInt(itemNumber+".HP") > 0)
+					lore = lore+"§3 ▲ 생명력 : " + itemYaml.getInt(itemNumber+".HP")+"%enter%";
+				else if(itemYaml.getInt(itemNumber+".HP") < 0)
+					lore = lore+"§c ▼ 생명력 : " + itemYaml.getInt(itemNumber+".HP")+"%enter%";
+				if(itemYaml.getInt(itemNumber+".MP") > 0)
+					lore = lore+"§3 ▲ 마나 : " + itemYaml.getInt(itemNumber+".MP")+"%enter%";
+				else if(itemYaml.getInt(itemNumber+".MP") < 0)
+					lore = lore+"§c ▼ 마나 : " + itemYaml.getInt(itemNumber+".MP")+"%enter%";
+				if(itemYaml.getInt(itemNumber+".STR") > 0)
+					lore = lore+"§3 ▲ "+main.MainServerOption.statSTR+" : " + itemYaml.getInt(itemNumber+".STR")+"%enter%";
+				else if(itemYaml.getInt(itemNumber+".STR") < 0)
+					lore = lore+"§c ▼ "+main.MainServerOption.statSTR+" : " + itemYaml.getInt(itemNumber+".STR")+"%enter%";
+				if(itemYaml.getInt(itemNumber+".DEX") > 0)
+					lore = lore+"§3 ▲ "+main.MainServerOption.statDEX+" : " + itemYaml.getInt(itemNumber+".DEX")+"%enter%";
+				else if(itemYaml.getInt(itemNumber+".DEX") < 0)
+					lore = lore+"§c ▼ "+main.MainServerOption.statDEX+" : " + itemYaml.getInt(itemNumber+".DEX")+"%enter%";
+				if(itemYaml.getInt(itemNumber+".INT") > 0)
+					lore = lore+"§3 ▲ "+main.MainServerOption.statINT+" : " + itemYaml.getInt(itemNumber+".INT")+"%enter%";
+				else if(itemYaml.getInt(itemNumber+".INT") < 0)
+					lore = lore+"§c ▼ "+main.MainServerOption.statINT+" : " + itemYaml.getInt(itemNumber+".INT")+"%enter%";
+				if(itemYaml.getInt(itemNumber+".WILL") > 0)
+					lore = lore+"§3 ▲ "+main.MainServerOption.statWILL+" : " + itemYaml.getInt(itemNumber+".WILL")+"%enter%";
+				else if(itemYaml.getInt(itemNumber+".WILL") < 0)
+					lore = lore+"§c ▼ "+main.MainServerOption.statWILL+" : " + itemYaml.getInt(itemNumber+".WILL")+"%enter%";
+				if(itemYaml.getInt(itemNumber+".LUK") > 0)
+					lore = lore+"§3 ▲ "+main.MainServerOption.statLUK+" : " + itemYaml.getInt(itemNumber+".LUK")+"%enter%";
+				else if(itemYaml.getInt(itemNumber+".LUK") < 0)
+					lore = lore+"§c ▼ "+main.MainServerOption.statLUK+" : " + itemYaml.getInt(itemNumber+".LUK")+"%enter%";
+				lore = lore+"§3---____________________---%enter%";
+			}
+
+			if(itemYaml.getInt(itemNumber+".MaxSocket")!=0||itemYaml.getInt(itemNumber+".MaxUpgrade")!=0)
+			{
+				lore = lore+"§d___--------------------___%enter%§d       [아이템 강화]%enter%";
+				if(itemYaml.getInt(itemNumber+".MaxUpgrade") > 0 && itemYaml.getInt(itemNumber+".MaxSocket") > 0)
+				{
+					lore = lore+"§5 ★ 개조 : 0 / "+itemYaml.getInt(itemNumber+".MaxUpgrade")+"%enter%";
+					lore = lore+"§9 ⓛ 룬 : ";
+					for(int count = 0; count <itemYaml.getInt(itemNumber+".MaxSocket");count++)
+						lore = lore+"§7○ ";
+				}
+				else if(itemYaml.getInt(itemNumber+".MaxUpgrade") <= 0 && itemYaml.getInt(itemNumber+".MaxSocket") > 0)
+				{
+					lore = lore+"§9 ⓛ 룬 : ";
+					for(int count = 0; count <itemYaml.getInt(itemNumber+".MaxSocket");count++)
+						lore = lore+"§7○ ";
+				}
+				else
+					lore = lore+"§5 ★ 개조 : 0 / "+itemYaml.getInt(itemNumber+".MaxUpgrade");
+				lore = lore+"%enter%§d---____________________---%enter%";
+			}
+			if(itemYaml.getInt(itemNumber+".MinLV")!=0||itemYaml.getInt(itemNumber+".MinRLV")!=0||
+					itemYaml.getInt(itemNumber+".MinSTR")!=0||itemYaml.getInt(itemNumber+".MinDEX")!=0||
+					itemYaml.getInt(itemNumber+".MinINT")!=0||itemYaml.getInt(itemNumber+".MinWILL")!=0||
+					itemYaml.getInt(itemNumber+".MinLUK")!=0)
+			{
+				lore = lore+"§4___--------------------___%enter%§4       [제한 스텟]%enter%";
+				if(itemYaml.getInt(itemNumber+".MinLV") > 0)
+					lore = lore+"§4 Ω 최소 레벨 : " + itemYaml.getInt(itemNumber+".MinLV")+"%enter%";
+				if(itemYaml.getInt(itemNumber+".MinRLV") > 0)
+					lore = lore+"§4 Ω 최소 누적레벨 : " + itemYaml.getInt(itemNumber+".MinRLV")+"%enter%";
+				if(itemYaml.getInt(itemNumber+".MinSTR") > 0)
+					lore = lore+"§4 Ω 최소 "+main.MainServerOption.statSTR+" : " + itemYaml.getInt(itemNumber+".MinSTR")+"%enter%";
+				if(itemYaml.getInt(itemNumber+".MinDEX") > 0)
+					lore = lore+"§4 Ω 최소 "+main.MainServerOption.statDEX+" : " + itemYaml.getInt(itemNumber+".MinDEX")+"%enter%";
+				if(itemYaml.getInt(itemNumber+".MinINT") > 0)
+					lore = lore+"§4 Ω 최소 "+main.MainServerOption.statINT+" : " + itemYaml.getInt(itemNumber+".MinINT")+"%enter%";
+				if(itemYaml.getInt(itemNumber+".MinWILL") > 0)
+					lore = lore+"§4 Ω 최소 "+main.MainServerOption.statWILL+" : " + itemYaml.getInt(itemNumber+".MinWILL")+"%enter%";
+				if(itemYaml.getInt(itemNumber+".MinLUK") > 0)
+					lore = lore+"§4 Ω 최소 "+main.MainServerOption.statLUK+" : " + itemYaml.getInt(itemNumber+".MinLUK")+"%enter%";
+				lore = lore+"§4---____________________---%enter%";
+				
+			}
+		}
+		else if(type.equals("[기호]"))
+		{
+			lore = lore+itemYaml.getString(itemNumber+".Type");
+			for(int count = 0; count<20-itemYaml.getString(itemNumber+".Type").length();count++)
+				lore = lore+" ";
+			if(itemYaml.getString(itemNumber+".JOB").equals("공용"))
+				lore = lore+itemYaml.getString(itemNumber+".Grade")+"%enter%%enter%";
+			else
+				lore = lore+itemYaml.getString(itemNumber+".Grade")+"%enter%§6장비 가능 직업 : §f" + itemYaml.getString(itemNumber+".JOB")+"%enter%%enter%";
+				
+			if(itemYaml.getInt(itemNumber+".MinDamage") != 0||itemYaml.getInt(itemNumber+".MaxDamage") != 0)
+				lore = lore+"§c ▩ "+main.MainServerOption.damage+" : §f" + itemYaml.getInt(itemNumber+".MinDamage") + " ~ " + itemYaml.getInt(itemNumber+".MaxDamage")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MinMaDamage") != 0||itemYaml.getInt(itemNumber+".MaxMaDamage") != 0)
+				lore = lore+"§3 ▦ "+main.MainServerOption.magicDamage+" : §f" + itemYaml.getInt(itemNumber+".MinMaDamage") + " ~ " + itemYaml.getInt(itemNumber+".MaxMaDamage")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".DEF") != 0)
+				lore = lore+"§7 ▧ 방어 : §f" + itemYaml.getInt(itemNumber+".DEF")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".Protect") != 0)
+				lore = lore+"§f ■ 보호 : §f" +itemYaml.getInt(itemNumber+".Protect")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaDEF") != 0)
+				lore = lore+"§9 ◇ 마법 방어 : §f" +itemYaml.getInt(itemNumber+".MaDEF")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaProtect") != 0)
+				lore = lore+"§1 ◆ 마법 보호 : §f" + itemYaml.getInt(itemNumber+".MaProtect")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".Balance") != 0)
+				lore = lore+"§2 △ 밸런스 : §f" + itemYaml.getInt(itemNumber+".Balance")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".Critical") != 0)
+				lore = lore+"§e ▲ 크리티컬 : §f" + itemYaml.getInt(itemNumber+".Critical")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaxDurability") > 0)
+				lore = lore+"§6 ▣ 내구도 : §f" + itemYaml.getInt(itemNumber+".Durability")+" / "+ itemYaml.getInt(itemNumber+".MaxDurability")+"%enter%";
+
+			if(itemYaml.getInt(itemNumber+".MaxUpgrade") > 0)
+				lore = lore + "§f ♣ 숙련도 : 0.0%§f%enter%";
+			
+			lore = lore+"%enter%"+ itemYaml.getString(itemNumber+".Lore")+"%enter%";
+
+
+			if(itemYaml.getInt(itemNumber+".HP") > 0)
+				lore = lore+"§3 ▲ 생명력 : " + itemYaml.getInt(itemNumber+".HP")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".HP") < 0)
+				lore = lore+"§c ▼ 생명력 : " + itemYaml.getInt(itemNumber+".HP")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MP") > 0)
+				lore = lore+"§3 ▲ 마나 : " + itemYaml.getInt(itemNumber+".MP")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".MP") < 0)
+				lore = lore+"§c ▼ 마나 : " + itemYaml.getInt(itemNumber+".MP")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".STR") > 0)
+				lore = lore+"§3 ▲ "+main.MainServerOption.statSTR+" : " + itemYaml.getInt(itemNumber+".STR")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".STR") < 0)
+				lore = lore+"§c ▼ "+main.MainServerOption.statSTR+" : " + itemYaml.getInt(itemNumber+".STR")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".DEX") > 0)
+				lore = lore+"§3 ▲ "+main.MainServerOption.statDEX+" : " + itemYaml.getInt(itemNumber+".DEX")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".DEX") < 0)
+				lore = lore+"§c ▼ "+main.MainServerOption.statDEX+" : " + itemYaml.getInt(itemNumber+".DEX")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".INT") > 0)
+				lore = lore+"§3 ▲ "+main.MainServerOption.statINT+" : " + itemYaml.getInt(itemNumber+".INT")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".INT") < 0)
+				lore = lore+"§c ▼ "+main.MainServerOption.statINT+" : " + itemYaml.getInt(itemNumber+".INT")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".WILL") > 0)
+				lore = lore+"§3 ▲ "+main.MainServerOption.statWILL+" : " + itemYaml.getInt(itemNumber+".WILL")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".WILL") < 0)
+				lore = lore+"§c ▼ "+main.MainServerOption.statWILL+" : " + itemYaml.getInt(itemNumber+".WILL")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".LUK") > 0)
+				lore = lore+"§3 ▲ "+main.MainServerOption.statLUK+" : " + itemYaml.getInt(itemNumber+".LUK")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".LUK") < 0)
+				lore = lore+"§c ▼ "+main.MainServerOption.statLUK+" : " + itemYaml.getInt(itemNumber+".LUK")+"%enter%";
+			
+			if(itemYaml.getInt(itemNumber+".MaxUpgrade") > 0)
+				lore = lore+"%enter%§5 ★ 개조 : 0 / "+itemYaml.getInt(itemNumber+".MaxUpgrade")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaxSocket") > 0)
+			{
+				lore = lore+"%enter%§9 ⓛ 룬 : ";
+				for(int count = 0; count <itemYaml.getInt(itemNumber+".MaxSocket");count++)
+					lore = lore+"§7○ ";
+			}
+
+			if(itemYaml.getInt(itemNumber+".MinLV")!=0||itemYaml.getInt(itemNumber+".MinRLV")!=0||
+					itemYaml.getInt(itemNumber+".MinSTR")!=0||itemYaml.getInt(itemNumber+".MinDEX")!=0||
+					itemYaml.getInt(itemNumber+".MinINT")!=0||itemYaml.getInt(itemNumber+".MinWILL")!=0||
+					itemYaml.getInt(itemNumber+".MinLUK")!=0)
+				lore = lore+"%enter%";
+			
+			if(itemYaml.getInt(itemNumber+".MinLV") > 0)
+				lore = lore+"§4%enter% Ω 최소 레벨 : " + itemYaml.getInt(itemNumber+".MinLV");
+			if(itemYaml.getInt(itemNumber+".MinRLV") > 0)
+				lore = lore+"§4%enter% Ω 최소 누적레벨 : " + itemYaml.getInt(itemNumber+".MinRLV");
+			if(itemYaml.getInt(itemNumber+".MinSTR") > 0)
+				lore = lore+"§4%enter% Ω 최소 "+main.MainServerOption.statSTR+" : " + itemYaml.getInt(itemNumber+".MinSTR");
+			if(itemYaml.getInt(itemNumber+".MinDEX") > 0)
+				lore = lore+"§4%enter% Ω 최소 "+main.MainServerOption.statDEX+" : " + itemYaml.getInt(itemNumber+".MinDEX");
+			if(itemYaml.getInt(itemNumber+".MinINT") > 0)
+				lore = lore+"§4%enter% Ω 최소 "+main.MainServerOption.statINT+" : " + itemYaml.getInt(itemNumber+".MinINT");
+			if(itemYaml.getInt(itemNumber+".MinWILL") > 0)
+				lore = lore+"§4%enter% Ω 최소 "+main.MainServerOption.statWILL+" : " + itemYaml.getInt(itemNumber+".MinWILL");
+			if(itemYaml.getInt(itemNumber+".MinLUK") > 0)
+				lore = lore+"§4%enter% Ω 최소 "+main.MainServerOption.statLUK+" : " + itemYaml.getInt(itemNumber+".MinLUK");
+		}
+		else if(type.equals("[컬러]"))
+		{
+
+			lore = lore+itemYaml.getString(itemNumber+".Type");
+			for(int count = 0; count<20-itemYaml.getString(itemNumber+".Type").length();count++)
+				lore = lore+" ";
+			if(itemYaml.getString(itemNumber+".JOB").equals("공용"))
+				lore = lore+itemYaml.getString(itemNumber+".Grade")+"%enter%%enter%";
+			else
+				lore = lore+itemYaml.getString(itemNumber+".Grade")+"%enter%§6장비 가능 직업 : §f" + itemYaml.getString(itemNumber+".JOB")+"%enter%%enter%";
+				
+			if(itemYaml.getInt(itemNumber+".MinDamage") != 0||itemYaml.getInt(itemNumber+".MaxDamage") != 0)
+				lore = lore+ChatColor.RED + main.MainServerOption.damage+" : §f" + itemYaml.getInt(itemNumber+".MinDamage") + " ~ " + itemYaml.getInt(itemNumber+".MaxDamage")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MinMaDamage") != 0||itemYaml.getInt(itemNumber+".MaxMaDamage") != 0)
+				lore = lore+"§3"+main.MainServerOption.magicDamage+" : §f" + itemYaml.getInt(itemNumber+".MinMaDamage") + " ~ " + itemYaml.getInt(itemNumber+".MaxMaDamage")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".DEF") != 0)
+				lore = lore+"§7방어 : §f" + itemYaml.getInt(itemNumber+".DEF")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".Protect") != 0)
+				lore = lore+"§f보호 : §f" +itemYaml.getInt(itemNumber+".Protect")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaDEF") != 0)
+				lore = lore+"§9마법 방어 : §f" +itemYaml.getInt(itemNumber+".MaDEF")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaProtect") != 0)
+				lore = lore+"§1마법 보호 : §f" + itemYaml.getInt(itemNumber+".MaProtect")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".Balance") != 0)
+				lore = lore+"§2밸런스 : §f" + itemYaml.getInt(itemNumber+".Balance")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".Critical") != 0)
+				lore = lore+"§e크리티컬 : §f" + itemYaml.getInt(itemNumber+".Critical")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaxDurability") > 0)
+				lore = lore+"§6내구도 : §f" + itemYaml.getInt(itemNumber+".Durability")+" / "+ itemYaml.getInt(itemNumber+".MaxDurability")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaxUpgrade") > 0)
+				lore = lore + "§f숙련도 : 0.0%§f%enter%";
+			
+			lore = lore+"%enter%"+ itemYaml.getString(itemNumber+".Lore")+"%enter%";
+
+
+			if(itemYaml.getInt(itemNumber+".HP") > 0)
+				lore = lore+"§3생명력 : " + itemYaml.getInt(itemNumber+".HP")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".HP") < 0)
+				lore = lore+"§c생명력 : " + itemYaml.getInt(itemNumber+".HP")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MP") > 0)
+				lore = lore+"§3마나 : " + itemYaml.getInt(itemNumber+".MP")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".MP") < 0)
+				lore = lore+"§c마나 : " + itemYaml.getInt(itemNumber+".MP")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".STR") > 0)
+				lore = lore+"§3"+main.MainServerOption.statSTR+" : " + itemYaml.getInt(itemNumber+".STR")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".STR") < 0)
+				lore = lore+"§c"+main.MainServerOption.statSTR+" : " + itemYaml.getInt(itemNumber+".STR")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".DEX") > 0)
+				lore = lore+"§3"+main.MainServerOption.statDEX+" : " + itemYaml.getInt(itemNumber+".DEX")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".DEX") < 0)
+				lore = lore+"§c"+main.MainServerOption.statDEX+" : " + itemYaml.getInt(itemNumber+".DEX")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".INT") > 0)
+				lore = lore+"§3"+main.MainServerOption.statINT+" : " + itemYaml.getInt(itemNumber+".INT")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".INT") < 0)
+				lore = lore+"§c"+main.MainServerOption.statINT+" : " + itemYaml.getInt(itemNumber+".INT")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".WILL") > 0)
+				lore = lore+"§3"+main.MainServerOption.statWILL+" : " + itemYaml.getInt(itemNumber+".WILL")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".WILL") < 0)
+				lore = lore+"§c"+main.MainServerOption.statWILL+" : " + itemYaml.getInt(itemNumber+".WILL")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".LUK") > 0)
+				lore = lore+"§3"+main.MainServerOption.statLUK+" : " + itemYaml.getInt(itemNumber+".LUK")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".LUK") < 0)
+				lore = lore+"§c"+main.MainServerOption.statLUK+" : " + itemYaml.getInt(itemNumber+".LUK")+"%enter%";
+			
+			if(itemYaml.getInt(itemNumber+".MaxUpgrade") > 0)
+				lore = lore+"%enter%§5개조 : 0 / "+itemYaml.getInt(itemNumber+".MaxUpgrade")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaxSocket") > 0)
+			{
+				lore = lore+"%enter%§9룬 : ";
+				for(int count = 0; count <itemYaml.getInt(itemNumber+".MaxSocket");count++)
+					lore = lore+"§7○ ";
+			}
+			if(itemYaml.getInt(itemNumber+".MinLV")!=0||itemYaml.getInt(itemNumber+".MinRLV")!=0||
+					itemYaml.getInt(itemNumber+".MinSTR")!=0||itemYaml.getInt(itemNumber+".MinDEX")!=0||
+					itemYaml.getInt(itemNumber+".MinINT")!=0||itemYaml.getInt(itemNumber+".MinWILL")!=0||
+					itemYaml.getInt(itemNumber+".MinLUK")!=0)
+				lore = lore+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MinLV") > 0)
+				lore = lore+"%enter%§4최소 레벨 : " + itemYaml.getInt(itemNumber+".MinLV");
+			if(itemYaml.getInt(itemNumber+".MinRLV") > 0)
+				lore = lore+"%enter%§4최소 누적레벨 : " + itemYaml.getInt(itemNumber+".MinRLV");
+			if(itemYaml.getInt(itemNumber+".MinSTR") > 0)
+				lore = lore+"%enter%§4최소 "+main.MainServerOption.statSTR+" : " + itemYaml.getInt(itemNumber+".MinSTR");
+			if(itemYaml.getInt(itemNumber+".MinDEX") > 0)
+				lore = lore+"%enter%§4최소 "+main.MainServerOption.statDEX+" : " + itemYaml.getInt(itemNumber+".MinDEX");
+			if(itemYaml.getInt(itemNumber+".MinINT") > 0)
+				lore = lore+"%enter%§4최소 "+main.MainServerOption.statINT+" : " + itemYaml.getInt(itemNumber+".MinINT");
+			if(itemYaml.getInt(itemNumber+".MinWILL") > 0)
+				lore = lore+"%enter%§4최소 "+main.MainServerOption.statWILL+" : " + itemYaml.getInt(itemNumber+".MinWILL");
+			if(itemYaml.getInt(itemNumber+".MinLUK") > 0)
+				lore = lore+"%enter%§4최소 "+main.MainServerOption.statLUK+" : " + itemYaml.getInt(itemNumber+".MinLUK");
+		}
+		else
+		{
+			lore = lore+itemYaml.getString(itemNumber+".Type");
+			for(int count = 0; count<20-itemYaml.getString(itemNumber+".Type").length();count++)
+				lore = lore+" ";
+			if(itemYaml.getString(itemNumber+".JOB").equals("공용"))
+				lore = lore+itemYaml.getString(itemNumber+".Grade")+"%enter%%enter%";
+			else
+				lore = lore+itemYaml.getString(itemNumber+".Grade")+"%enter%§f장비 가능 직업 : " + itemYaml.getString(itemNumber+".JOB")+"%enter%%enter%";
+				
+			if(itemYaml.getInt(itemNumber+".MinDamage") != 0||itemYaml.getInt(itemNumber+".MaxDamage") != 0)
+				lore = lore+"§f"+main.MainServerOption.damage+" : " + itemYaml.getInt(itemNumber+".MinDamage") + " ~ " + itemYaml.getInt(itemNumber+".MaxDamage")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MinMaDamage") != 0||itemYaml.getInt(itemNumber+".MaxMaDamage") != 0)
+				lore = lore+"§f"+main.MainServerOption.magicDamage+" : " + itemYaml.getInt(itemNumber+".MinMaDamage") + " ~ " + itemYaml.getInt(itemNumber+".MaxMaDamage")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".DEF") != 0)
+				lore = lore+"§f방어 : " + itemYaml.getInt(itemNumber+".DEF")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".Protect") != 0)
+				lore = lore+"§f보호 : " + itemYaml.getInt(itemNumber+".Protect")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaDEF") != 0)
+				lore = lore+"§f마법 방어 : " + itemYaml.getInt(itemNumber+".MaDEF")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaProtect") != 0)
+				lore = lore+"§f마법 보호 : " + itemYaml.getInt(itemNumber+".MaProtect")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".Balance") != 0)
+				lore = lore+"§f밸런스 : " + itemYaml.getInt(itemNumber+".Balance")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".Critical") != 0)
+				lore = lore+"§f크리티컬 : " + itemYaml.getInt(itemNumber+".Critical")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaxDurability") > 0)
+				lore = lore+"§f내구도 : " + itemYaml.getInt(itemNumber+".Durability")+" / "+ itemYaml.getInt(itemNumber+".MaxDurability")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaxUpgrade") > 0)
+				lore = lore + "§f숙련도 : 0.0%§f%enter%";
+			
+			lore = lore+"%enter%"+ itemYaml.getString(itemNumber+".Lore")+"%enter%";
+
+
+			if(itemYaml.getInt(itemNumber+".HP") > 0)
+				lore = lore+"§3생명력 : " + itemYaml.getInt(itemNumber+".HP")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".HP") < 0)
+				lore = lore+"§c생명력 : " + itemYaml.getInt(itemNumber+".HP")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MP") > 0)
+				lore = lore+"§3마나 : " + itemYaml.getInt(itemNumber+".MP")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".MP") < 0)
+				lore = lore+"§c마나 : " + itemYaml.getInt(itemNumber+".MP")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".STR") > 0)
+				lore = lore+"§3"+main.MainServerOption.statSTR+" : " + itemYaml.getInt(itemNumber+".STR")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".STR") < 0)
+				lore = lore+"§c"+main.MainServerOption.statSTR+" : " + itemYaml.getInt(itemNumber+".STR")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".DEX") > 0)
+				lore = lore+"§3"+main.MainServerOption.statDEX+" : " + itemYaml.getInt(itemNumber+".DEX")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".DEX") < 0)
+				lore = lore+"§c"+main.MainServerOption.statDEX+" : " + itemYaml.getInt(itemNumber+".DEX")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".INT") > 0)
+				lore = lore+"§3"+main.MainServerOption.statINT+" : " + itemYaml.getInt(itemNumber+".INT")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".INT") < 0)
+				lore = lore+"§c"+main.MainServerOption.statINT+" : " + itemYaml.getInt(itemNumber+".INT")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".WILL") > 0)
+				lore = lore+"§3"+main.MainServerOption.statWILL+" : " + itemYaml.getInt(itemNumber+".WILL")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".WILL") < 0)
+				lore = lore+"§c"+main.MainServerOption.statWILL+" : " + itemYaml.getInt(itemNumber+".WILL")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".LUK") > 0)
+				lore = lore+"§3"+main.MainServerOption.statLUK+" : " + itemYaml.getInt(itemNumber+".LUK")+"%enter%";
+			else if(itemYaml.getInt(itemNumber+".LUK") < 0)
+				lore = lore+"§c"+main.MainServerOption.statLUK+" : " + itemYaml.getInt(itemNumber+".LUK")+"%enter%";
+			
+			if(itemYaml.getInt(itemNumber+".MaxUpgrade") > 0)
+				lore = lore+"%enter%§f개조 : 0 / "+itemYaml.getInt(itemNumber+".MaxUpgrade")+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MaxSocket") > 0)
+			{
+				lore = lore+"%enter%§f룬 : ";
+				for(int count = 0; count <itemYaml.getInt(itemNumber+".MaxSocket");count++)
+					lore = lore+"§7○ ";
+			}
+			if(itemYaml.getInt(itemNumber+".MinLV")!=0||itemYaml.getInt(itemNumber+".MinRLV")!=0||
+					itemYaml.getInt(itemNumber+".MinSTR")!=0||itemYaml.getInt(itemNumber+".MinDEX")!=0||
+					itemYaml.getInt(itemNumber+".MinINT")!=0||itemYaml.getInt(itemNumber+".MinWILL")!=0||
+					itemYaml.getInt(itemNumber+".MinLUK")!=0)
+				lore = lore+"%enter%";
+			if(itemYaml.getInt(itemNumber+".MinLV") > 0)
+				lore = lore+"%enter%§f최소 레벨 : " + itemYaml.getInt(itemNumber+".MinLV");
+			if(itemYaml.getInt(itemNumber+".MinRLV") > 0)
+				lore = lore+"%enter%§f최소 누적레벨 : " + itemYaml.getInt(itemNumber+".MinRLV");
+			if(itemYaml.getInt(itemNumber+".MinSTR") > 0)
+				lore = lore+"%enter%§f최소 "+main.MainServerOption.statSTR+" : " + itemYaml.getInt(itemNumber+".MinSTR");
+			if(itemYaml.getInt(itemNumber+".MinDEX") > 0)
+				lore = lore+"%enter%§f최소 "+main.MainServerOption.statDEX+" : " + itemYaml.getInt(itemNumber+".MinDEX");
+			if(itemYaml.getInt(itemNumber+".MinINT") > 0)
+				lore = lore+"%enter%§f최소 "+main.MainServerOption.statINT+" : " + itemYaml.getInt(itemNumber+".MinINT");
+			if(itemYaml.getInt(itemNumber+".MinWILL") > 0)
+				lore = lore+"%enter%§f최소 "+main.MainServerOption.statWILL+" : " + itemYaml.getInt(itemNumber+".MinWILL");
+			if(itemYaml.getInt(itemNumber+".MinLUK") > 0)
+				lore = lore+"%enter%§f최소 "+main.MainServerOption.statLUK+" : " + itemYaml.getInt(itemNumber+".MinLUK");
+		}
+		String[] scriptA = lore.split("%enter%");
+		for(int counter = 0; counter < scriptA.length; counter++)
+			scriptA[counter] =  scriptA[counter];
+		return scriptA;
+	}
+
+	public String[] useableLoreCreater(int itemNumber)
 	{
 	  	YamlLoader useableItemYaml = new YamlLoader();
 		useableItemYaml.getConfig("Item/Consume.yml");
@@ -824,6 +624,12 @@ public class UseableItemGui extends UtilGui
 						lore = lore+"§c - 개조 : " +useableItemYaml.getInt(itemNumber+".MaxUpgrade")+"%enter%";
 				}
 				break;
+			case "[공구]":
+				if(useableItemYaml.getInt(itemNumber+".MaxDurability")>0)
+					lore = lore+"§3 + 최대 내구도 증가 : " + useableItemYaml.getInt(itemNumber+".MaxDurability")+"%enter%";
+				if(useableItemYaml.getInt(itemNumber+".Proficiency") > 0)
+					lore = lore+"§3 + 숙련도 증가 : " + useableItemYaml.getInt(itemNumber+".Proficiency")+"%enter%";
+				break;
 			}
 
 			lore = lore+"%enter%§6___--------------------___%enter%§6       [아이템 설명]";
@@ -1016,6 +822,12 @@ public class UseableItemGui extends UtilGui
 						lore = lore+"§c - 개조 : " +useableItemYaml.getInt(itemNumber+".MaxUpgrade")+"%enter%";
 				}
 				break;
+			case "[공구]":
+				if(useableItemYaml.getInt(itemNumber+".MaxDurability")>0)
+					lore = lore+"§3 + 최대 내구도 증가 : " + useableItemYaml.getInt(itemNumber+".MaxDurability")+"%enter%";
+				if(useableItemYaml.getInt(itemNumber+".Proficiency") > 0)
+					lore = lore+"§3 + 숙련도 증가 : " + useableItemYaml.getInt(itemNumber+".Proficiency")+"%enter%";
+				break;
 			}			
 			
 			lore = lore+"%enter%"+ useableItemYaml.getString(itemNumber+".Lore")+"%enter%%enter%";
@@ -1203,8 +1015,14 @@ public class UseableItemGui extends UtilGui
 					if(useableItemYaml.getInt(itemNumber+".MaxUpgrade") < 0)
 						lore = lore+"§c 개조 : " +useableItemYaml.getInt(itemNumber+".MaxUpgrade")+"%enter%";
 				break;
+				case "[공구]":
+					if(useableItemYaml.getInt(itemNumber+".MaxDurability")>0)
+						lore = lore+"§3 최대 내구도 증가 : " + useableItemYaml.getInt(itemNumber+".MaxDurability")+"%enter%";
+					if(useableItemYaml.getInt(itemNumber+".Proficiency") > 0)
+						lore = lore+"§3 숙련도 증가 : " + useableItemYaml.getInt(itemNumber+".Proficiency")+"%enter%";
+				break;
 			}
-			
+
 			lore = lore+"%enter%"+ useableItemYaml.getString(itemNumber+".Lore")+"%enter%%enter%";
 
 
@@ -1392,6 +1210,12 @@ public class UseableItemGui extends UtilGui
 						if(useableItemYaml.getInt(itemNumber+".MaxUpgrade") < 0)
 							lore = lore+"§3 개조 : " +useableItemYaml.getInt(itemNumber+".MaxUpgrade")+"%enter%";
 					break;
+					case "[공구]":
+						if(useableItemYaml.getInt(itemNumber+".MaxDurability")>0)
+							lore = lore+"§3 최대 내구도 증가 : " + useableItemYaml.getInt(itemNumber+".MaxDurability")+"%enter%";
+						if(useableItemYaml.getInt(itemNumber+".Proficiency") > 0)
+							lore = lore+"§3 숙련도 증가 : " + useableItemYaml.getInt(itemNumber+".Proficiency")+"%enter%";
+					break;
 				}
 				
 				lore = lore+"%enter%"+ useableItemYaml.getString(itemNumber+".Lore")+"%enter%%enter%";
@@ -1405,4 +1229,384 @@ public class UseableItemGui extends UtilGui
 			scriptA[counter] =  scriptA[counter];
 		return scriptA;
 	}
+
+	public void useAbleItemUse(Player player, String type)
+	{
+		ItemStack item = player.getInventory().getItemInMainHand();
+		if(type.equals("귀환서"))
+		{
+			if(ServerTickMain.PlayerTaskList.containsKey(player.getName())==true)
+			{
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				new effect.SendPacket().sendActionBar(player, "§c§l[현재 텔레포트를 할 수 없는 상태입니다!]", false);
+				return;
+			}
+			util.ETC etc = new util.ETC();
+			if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_AttackTime() >= etc.getSec())
+			{
+				player.sendMessage("§c[이동 불가] : §e"+((main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_AttackTime()+15000 - etc.getSec())/1000)+"§c 초 후에 이동 가능합니다!");
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				return;
+			}
+			String world = "";
+			int x = 0;
+			short y = 0;
+			int z = 0;
+			for(int counter = 0; counter < item.getItemMeta().getLore().size();counter++)
+			{
+				String nowlore=ChatColor.stripColor(item.getItemMeta().getLore().get(counter));
+				if(nowlore.contains(" : "))
+				{
+					if(nowlore.contains("월드"))
+						world = nowlore.split(" : ")[1];
+					else if(nowlore.contains("X 좌표"))
+						x = Integer.parseInt(nowlore.split(" : ")[1]);
+					else if(nowlore.contains("Y 좌표"))
+						y = Short.parseShort(nowlore.split(" : ")[1]);
+					else if(nowlore.contains("Z 좌표"))
+						z = Integer.parseInt(nowlore.split(" : ")[1]);
+				}
+			}
+			if(item.getAmount() != 1)
+			{
+				item.setAmount(item.getAmount()-1);
+				player.getInventory().setItem(player.getInventory().getHeldItemSlot(), item);
+			}
+			else
+				player.getInventory().setItem(player.getInventory().getHeldItemSlot(), new ItemStack(0));
+			long utc= servertick.ServerTickMain.nowUTC-1;
+			servertick.ServerTickObject STSO = new servertick.ServerTickObject(utc, "P_UTS");
+			Location loc = player.getLocation();
+			STSO.setTick(utc);//텔레포트 시작 시간
+			STSO.setCount(5);//텔레포트 시간
+			STSO.setString((byte)0, world+","+x+","+y+","+z);//이동 위치 저장
+			STSO.setString((byte)1, loc.getWorld().getName()+","+loc.getBlockX()+","+loc.getBlockY()+","+loc.getBlockZ());//현재 위치 저장
+			STSO.setString((byte)2, player.getName());//플레이어 이름 저장
+			servertick.ServerTickMain.Schedule.put(utc, STSO);
+			ServerTickMain.PlayerTaskList.put(player.getName(), ""+utc);
+			new effect.PottionBuff().givePotionEffect(player, PotionEffectType.CONFUSION, 8, 255);
+			SoundEffect.playSound(player, Sound.BLOCK_CLOTH_BREAK, 0.7F, 0.5F);
+			SoundEffect.playSound(player, Sound.BLOCK_PORTAL_TRAVEL, 0.6F, 1.4F);
+		}
+		else if(type.equals("주문서"))
+		{
+			if(item.getItemMeta().getDisplayName().equals("§2§3§4§3§3§l[스텟 초기화 주문서]"))
+			{
+			  	YamlLoader configYaml = new YamlLoader();
+				configYaml.getConfig("config.yml");
+				if(!configYaml.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System"))
+				{
+					if(item.getAmount() != 1)
+					{
+						item.setAmount(item.getAmount()-1);
+						player.getInventory().setItem(player.getInventory().getHeldItemSlot(), item);
+					}
+					else
+						player.getInventory().setItem(player.getInventory().getHeldItemSlot(), new ItemStack(0));
+					int totalStatPoint = configYaml.getInt("DefaultStat.StatPoint")+main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_StatPoint();
+					totalStatPoint += main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR() - configYaml.getInt("DefaultStat.STR");
+					totalStatPoint += main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX() - configYaml.getInt("DefaultStat.DEX");
+					totalStatPoint += main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT() - configYaml.getInt("DefaultStat.INT");
+					totalStatPoint += main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL() - configYaml.getInt("DefaultStat.WILL");
+					totalStatPoint += main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK() - configYaml.getInt("DefaultStat.LUK");
+					main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_STR(configYaml.getInt("DefaultStat.STR"));
+					main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_DEX(configYaml.getInt("DefaultStat.DEX"));
+					main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_INT(configYaml.getInt("DefaultStat.INT"));
+					main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_WILL(configYaml.getInt("DefaultStat.WILL"));
+					main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_LUK(configYaml.getInt("DefaultStat.LUK"));
+					main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_StatPoint(totalStatPoint);
+					SoundEffect.playSound(player, Sound.ITEM_BOTTLE_FILL_DRAGONBREATH, 1.2F, 0.5F);
+					player.sendMessage("§e§l[SYSTEM] : 스텟이 초기화되었습니다!");
+				}
+				else
+				{
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					player.sendMessage("§c[System] : 메이플 스토리 시스템일 경우만 사용 가능합니다!");
+				}
+				return;
+			}
+			
+			int statPoint = 0;
+			int skillPoint = 0;
+			int def = 0;
+			int protect = 0;
+			int magicDef = 0;
+			int magicProtect  = 0;
+			int balance = 0;
+			int critical  = 0;
+			int hp  = 0;
+			int mp  = 0;
+			int str  = 0;
+			int dex  = 0;
+			int INT  = 0;
+			int will  = 0;
+			int luk  = 0;
+			
+			for(int counter = 0; counter < item.getItemMeta().getLore().size();counter++)
+			{
+				String nowlore=ChatColor.stripColor(item.getItemMeta().getLore().get(counter));
+				if(nowlore.contains(" : "))
+				{
+					if(nowlore.contains("포인트"))
+					{
+						if(nowlore.contains("스텟"))
+							statPoint = Integer.parseInt(nowlore.split(" : ")[1]);
+						if(nowlore.contains("스킬"))
+							skillPoint = Integer.parseInt(nowlore.split(" : ")[1]);
+					}
+					if(nowlore.contains("방어"))
+						if(nowlore.contains("마법"))
+							magicDef = Integer.parseInt(nowlore.split(" : ")[1]);
+						else
+							def = Integer.parseInt(nowlore.split(" : ")[1]);
+					if(nowlore.contains("보호"))
+						if(nowlore.contains("마법"))
+							magicProtect = Integer.parseInt(nowlore.split(" : ")[1]);
+						else
+							protect = Integer.parseInt(nowlore.split(" : ")[1]);
+					if(nowlore.contains("밸런스"))
+						balance = Integer.parseInt(nowlore.split(" : ")[1]);
+					if(nowlore.contains("크리티컬"))
+						critical = Integer.parseInt(nowlore.split(" : ")[1]);
+					if(nowlore.contains("생명력"))
+						hp = Integer.parseInt(nowlore.split(" : ")[1]);
+					if(nowlore.contains("마나"))
+						mp = Integer.parseInt(nowlore.split(" : ")[1]);
+					if(nowlore.contains(MainServerOption.statSTR))
+						str = Integer.parseInt(nowlore.split(" : ")[1]);
+					if(nowlore.contains(MainServerOption.statDEX))
+						dex = Integer.parseInt(nowlore.split(" : ")[1]);
+					if(nowlore.contains(MainServerOption.statINT))
+						INT = Integer.parseInt(nowlore.split(" : ")[1]);
+					if(nowlore.contains(MainServerOption.statWILL))
+						will = Integer.parseInt(nowlore.split(" : ")[1]);
+					if(nowlore.contains(MainServerOption.statLUK))
+						luk = Integer.parseInt(nowlore.split(" : ")[1]);
+				}
+			}
+			if(skillPoint!=0)
+				main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_SkillPoint(skillPoint);
+			if(statPoint!=0)
+				main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_StatPoint(statPoint);
+			if(def!=0)
+				main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_DEF(def);
+			if(protect!=0)
+			main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_Protect(protect);
+			if(magicDef!=0)
+				main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_Magic_DEF(magicDef);
+			if(magicProtect!=0)
+				main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_Magic_Protect(magicProtect);
+			if(balance!=0)
+				main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_Balance(balance);
+			if(critical!=0)
+				main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_Critical(critical);
+			if(hp!=0)
+				main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MaxHP(hp);
+			if(mp!=0)
+				main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MaxMP(mp);
+			if(str!=0)
+				main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_STR(str);
+			if(dex!=0)
+				main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_DEX(dex);
+			if(INT!=0)
+				main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_INT(INT);
+			if(will!=0)
+				main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_WILL(will);
+			if(luk!=0)
+				main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_LUK(luk);
+
+			if(item.getAmount() != 1)
+			{
+				item.setAmount(item.getAmount()-1);
+				player.getInventory().setItem(player.getInventory().getHeldItemSlot(), item);
+			}
+			else
+				player.getInventory().setItem(player.getInventory().getHeldItemSlot(), new ItemStack(0));
+			
+			if(skillPoint>=0&&statPoint>=0&&def>=0&&protect>=0&&magicDef>=0&&magicProtect>=0&&balance>=0&&critical>=0&&hp>0
+			&&mp>=0&&str>=0&&dex>=0&&INT>=0&&will>=0&&luk>0)
+			{
+				SoundEffect.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 0.8F, 0.5F);
+				player.sendMessage("§a§l[      능력치가 상승 하였습니다!      ]");
+			}
+			else if(skillPoint<0&&statPoint<0&&def<0&&protect<0&&magicDef<0&&magicProtect<0&&balance<0&&critical<0&&hp<0
+					&&mp<0&&str<0&&dex<0&&INT<0&&will<0&&luk<0)
+			{
+				SoundEffect.playSound(player, Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, 0.8F, 0.5F);
+				player.sendMessage("§c§l[      능력치가 감소 하였습니다!      ]");
+			}
+			else
+			{
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.8F, 1.5F);
+				player.sendMessage("§e§l[      능력치에 변화가 생겼습니다!      ]");
+			}
+		}
+		else if(type.equals("스킬북"))
+		{
+		  	YamlLoader configYaml = new YamlLoader();
+			configYaml.getConfig("config.yml");
+			if(configYaml.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System"))
+			{
+				String skillName = null;
+				for(int counter = 0; counter < item.getItemMeta().getLore().size();counter++)
+				{
+					String nowlore=ChatColor.stripColor(item.getItemMeta().getLore().get(counter));
+					if(nowlore.contains("[우"))
+					{
+						if(nowlore.contains("클릭시"))
+							if(nowlore.contains("아래"))
+								if(nowlore.contains("스킬"))
+									if(nowlore.contains("획득]"))
+									{
+										nowlore=ChatColor.stripColor(item.getItemMeta().getLore().get(counter+1));
+										skillName = nowlore.replace(" + ", "");
+										break;
+									}
+					}
+				}
+				if(skillName == null)
+					return;
+			  	YamlLoader skillYaml = new YamlLoader();
+				skillYaml.getConfig("Skill/SkillList.yml");
+				if(skillYaml.contains(skillName))
+				{
+					skillYaml.getConfig("Skill/JobList.yml");
+					if(skillYaml.contains("Mabinogi.Added."+skillName))
+					{
+					  	YamlLoader playerSkillYaml = new YamlLoader();
+						playerSkillYaml.getConfig("Skill/PlayerData/"+player.getUniqueId().toString()+".yml");
+						if(!playerSkillYaml.contains("Mabinogi."+skillYaml.getString("Mabinogi.Added."+skillName)+"."+skillName))
+						{
+							playerSkillYaml.set("Mabinogi."+skillYaml.getString("Mabinogi.Added."+skillName)+"."+skillName, 1);
+							playerSkillYaml.saveConfig();
+							if(item.getAmount() != 1)
+							{
+								item.setAmount(item.getAmount()-1);
+								player.getInventory().setItem(player.getInventory().getHeldItemSlot(), item);
+							}
+							else
+								player.getInventory().setItem(player.getInventory().getHeldItemSlot(), new ItemStack(0));
+							SoundEffect.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.8F);
+							player.sendMessage("§d§l[새로운 스킬을 획득 하였습니다!] §e§l"+ChatColor.UNDERLINE+skillName);
+							return;
+						}
+						else
+						{
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							player.sendMessage("§c§l[         당신은 이미 해당 스킬을 알고 있습니다!         ]");
+							return;
+						}
+					}
+					else
+					{
+						SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+						player.sendMessage("§c§l[해당 스킬은 어느 카테고리에도 존재하지 않습니다! 관리자에게 문의하세요!]");
+						return;
+					}
+				}
+				else
+				{
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					player.sendMessage("§c§l[서버에 해당 스킬이 존재하지 않습니다! 관리자에게 문의하세요!]");
+					return;
+				}
+			}
+			else
+			{
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				player.sendMessage("§c§l[   서버 시스템이 '마비노기'일 경우만 사용 가능합니다!   ]");
+				return;
+			}
+		}
+		else if(type.equals("소비"))
+		{
+			int health = 0;
+			int mana = 0;
+			int food = 0;
+			for(int counter = 0; counter < item.getItemMeta().getLore().size();counter++)
+			{
+				String nowlore=ChatColor.stripColor(item.getItemMeta().getLore().get(counter));
+				if(nowlore.contains(" : "))
+				{
+					if(nowlore.contains("생명력"))
+						health = Integer.parseInt(nowlore.split(" : ")[1]);
+					else if(nowlore.contains("마나"))
+						mana = Integer.parseInt(nowlore.split(" : ")[1]);
+					else if(nowlore.contains("포만감"))
+						food = Integer.parseInt(nowlore.split(" : ")[1]);
+				}
+			}
+			if(item.getAmount() != 1)
+			{
+				item.setAmount(item.getAmount()-1);
+				player.getInventory().setItem(player.getInventory().getHeldItemSlot(), item);
+			}
+			else
+				player.getInventory().setItem(player.getInventory().getHeldItemSlot(), new ItemStack(0));
+			
+			if(health > 0)
+			{
+				SoundEffect.playSoundLocation(player.getLocation(), Sound.ENTITY_GENERIC_DRINK, 2.0F, 0.8F);
+				Damageable damageable = player;
+				if(damageable.getMaxHealth() < damageable.getHealth()+health)
+					damageable.setHealth(damageable.getMaxHealth());
+				else
+					damageable.setHealth(damageable.getHealth() + health);
+			}
+			if(mana >0)
+			{
+				if(main.MainServerOption.MagicSpellsCatched)
+				{
+					otherplugins.SpellMain spellMain = new otherplugins.SpellMain();
+					spellMain.DrinkManaPotion(player, mana);
+					SoundEffect.playSoundLocation(player.getLocation(), Sound.BLOCK_WATER_AMBIENT, 2.0F, 1.9F);
+				}
+			}
+			if(food > 0)
+			{
+				SoundEffect.playSoundLocation(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 2.0F, 1.2F);
+				if(player.getFoodLevel()+food > 20)
+					player.setFoodLevel(20);
+				player.setFoodLevel(player.getFoodLevel()+food);
+			}
+		}
+		else if(type.equals("돈"))
+		{
+			int money=Integer.parseInt(ChatColor.stripColor(item.getItemMeta().getLore().get(1).split(" ")[0]));
+			if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money() + money <= 2000000000)
+			{
+				main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_MoneyAndEXP(money, 0, false);
+				if(item.getAmount() != 1)
+				{
+					item.setAmount(item.getAmount()-1);
+					player.getInventory().setItem(player.getInventory().getHeldItemSlot(), item);
+				}
+				else
+					player.getInventory().setItem(player.getInventory().getHeldItemSlot(), new ItemStack(0));
+				SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.8F);
+				player.sendMessage("§a[SYSTEM] : §f§l"+money+" "+MainServerOption.money+"§a 입금 완료!");
+				player.sendMessage("§7(현재 "+main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Money()+ChatColor.stripColor(MainServerOption.money)+" 보유중)");
+			}
+			else
+			{
+				SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+				player.sendMessage("§c[System] : "+MainServerOption.money+"§c 을(를) 2000000000(20억)이상 가질 수 없습니다!");
+			}
+		}
+		else if(type.equals("공구"))
+		{
+			if(item.getAmount() != 1)
+			{
+				item.setAmount(item.getAmount()-1);
+				player.getInventory().setItem(player.getInventory().getHeldItemSlot(), item);
+			}
+			else
+				player.getInventory().setItem(player.getInventory().getHeldItemSlot(), new ItemStack(0));
+			effect.SoundEffect.playSound(player, Sound.BLOCK_ANVIL_HIT, 0.8F, 1.7F);
+			item.setAmount(1);
+			new ApplyToolGui().applyToolGui(player, item);
+		}
+		return;
+	}
+
 }

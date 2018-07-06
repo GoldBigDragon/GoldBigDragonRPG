@@ -11,9 +11,8 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import area.AreaGui;
-import customitem.CustomItemGui;
-import customitem.UseableItemGui;
+import customitem.gui.EquipItemListGui;
+import customitem.gui.UseableItemListGui;
 import effect.SoundEffect;
 import job.JobGUI;
 import main.MainServerOption;
@@ -22,12 +21,10 @@ import quest.QuestGui;
 import skill.OPboxSkillGui;
 import structure.StructureGui;
 import user.UserDataObject;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
-
-
-public class OPboxGui extends UtilGui
+public class OPboxGui extends GuiUtil
 {
 	public void opBoxGuiMain (Player player, byte page)
 	{
@@ -501,7 +498,7 @@ public class OPboxGui extends UtilGui
 			String displayName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
 			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(displayName.equals("커스텀 아이템"))
-				new CustomItemGui().itemListGui(player, 0);
+				new EquipItemListGui().itemListGui(player, 0);
 			else if(displayName.equals("몬스터"))
 				new MonsterGui().monsterListGUI(player, 0);
 			else if(displayName.equals("서버 설정"))
@@ -513,9 +510,9 @@ public class OPboxGui extends UtilGui
 			else if(displayName.equals("카테고리 및 직업"))
 				new JobGUI().ChooseSystemGUI(player);
 			else if(displayName.equals("소비 아이템"))
-				new UseableItemGui().useableItemListGui(player, 0);
+				new UseableItemListGui().useableItemListGui(player, 0);
 			else if(displayName.equals("영역"))
-				new AreaGui().areaListGui(player, (short) 0);
+				new area.gui.AreaListGui().areaListGui(player, (short) 0);
 			else if(displayName.equals("던전"))
 				new dungeon.DungeonGui().DungeonListMainGUI(player, 0, 52);
 			else if(displayName.equals("기능성 개체"))
@@ -541,7 +538,7 @@ public class OPboxGui extends UtilGui
 				YamlLoader configYaml = new YamlLoader();
 				configYaml.getConfig("config.yml");
 				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-				configYaml.set("Time.LastSkillChanged", new util.UtilNumber().RandomNum(0, 100000)-new util.UtilNumber().RandomNum(0, 100000));
+				configYaml.set("Time.LastSkillChanged", new util.NumericUtil().RandomNum(0, 100000)-new util.NumericUtil().RandomNum(0, 100000));
 				if(configYaml.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System")==true) {configYaml.set("Server.Like_The_Mabinogi_Online_Stat_System", false);}
 				else{configYaml.set("Server.Like_The_Mabinogi_Online_Stat_System", true);}
 				configYaml.saveConfig();
@@ -923,7 +920,7 @@ public class OPboxGui extends UtilGui
 				YamlLoader configYaml = new YamlLoader();
 			  	configYaml.getConfig("config.yml");
 				if(configYaml.getInt("Death.Track")==-1||configYaml.contains("Death.Track")==false)
-					new area.AreaGui().areaMusicSettingGui(player, 0, "DeathBGM¡");
+					new area.gui.AreaMusicSettingGui().areaMusicSettingGui(player, 0, "DeathBGM¡");
 				else
 				{
 					configYaml.set("Death.Track", -1);

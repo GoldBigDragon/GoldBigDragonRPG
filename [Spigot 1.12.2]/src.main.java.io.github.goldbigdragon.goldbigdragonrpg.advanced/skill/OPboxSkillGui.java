@@ -12,13 +12,13 @@ import admin.OPboxGui;
 import effect.SoundEffect;
 import main.MainServerOption;
 import user.UserDataObject;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-public class OPboxSkillGui extends UtilGui
+public class OPboxSkillGui extends GuiUtil
 {
 	public void AllSkillsGUI(Player player, short page, boolean isJobGUI,String WhatJob)
 	{
@@ -422,7 +422,7 @@ public class OPboxSkillGui extends UtilGui
 						u.clearAll(player);
 						YamlLoader Config = new YamlLoader();
 						Config.getConfig("Config.yml");
-						Config.set("Time.LastSkillChanged", new util.UtilNumber().RandomNum(0, 100000)-new util.UtilNumber().RandomNum(0, 100000));
+						Config.set("Time.LastSkillChanged", new util.NumericUtil().RandomNum(0, 100000)-new util.NumericUtil().RandomNum(0, 100000));
 						Config.saveConfig();
 						new job.JobMain().AllPlayerFixAllSkillAndJobYML();
 					}
@@ -459,7 +459,7 @@ public class OPboxSkillGui extends UtilGui
 						SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
 						YamlLoader Config = new YamlLoader();
 						Config.getConfig("Config.yml");
-						Config.set("Time.LastSkillChanged", new util.UtilNumber().RandomNum(0, 100000)-new util.UtilNumber().RandomNum(0, 100000));
+						Config.set("Time.LastSkillChanged", new util.NumericUtil().RandomNum(0, 100000)-new util.NumericUtil().RandomNum(0, 100000));
 						Config.saveConfig();
 						YamlLoader SkillList = new YamlLoader();
 						SkillList.getConfig("Skill/SkillList.yml");
@@ -522,7 +522,7 @@ public class OPboxSkillGui extends UtilGui
 				}
 				else if(event.isShiftClick()==true&&event.isRightClick()==true&&(page*45)+event.getSlot()!=0&&(page*45)+event.getSlot()+1==size)
 				{
-					Config.set("Time.LastSkillChanged", new util.UtilNumber().RandomNum(0, 100000)-new util.UtilNumber().RandomNum(0, 100000));
+					Config.set("Time.LastSkillChanged", new util.NumericUtil().RandomNum(0, 100000)-new util.NumericUtil().RandomNum(0, 100000));
 					Config.saveConfig();
 					SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 0.8F, 1.0F);
 					SkillList.removeKey(SkillName+".SkillRank."+(size));

@@ -52,7 +52,7 @@ public class MonsterSpawn
 				}
 			}
 		}
-		area.AreaMain A = new area.AreaMain();
+		area.AreaAPI A = new area.AreaAPI();
 		String[] Area = A.getAreaName(event.getEntity());
 		
 		YamlLoader areaYaml = new YamlLoader();
@@ -74,7 +74,7 @@ public class MonsterSpawn
 					if(isExit) break;
 					if(MobNameList.length != 0)
 					{
-						short RandomMob = (short) new util.UtilNumber().RandomNum(0, MobNameList.length-1);
+						short RandomMob = (short) new util.NumericUtil().RandomNum(0, MobNameList.length-1);
 						if(main.MainServerOption.MonsterList.containsKey(MobNameList[RandomMob].toString()))
 						{
 							new monster.MonsterSpawn().SpawnMob(event.getLocation(), MobNameList[RandomMob].toString(), (byte) -1, null,(char) -1, false);
@@ -442,7 +442,7 @@ public class MonsterSpawn
 					case "큰슬라임" : ((Slime) Monster).setSize(4);break;
 					case "특대슬라임" : ((Slime) Monster).setSize(16);break;
 					case "초대형슬라임" : ((Slime) Monster).setSize(64);break;
-					default : ((Slime) Monster).setSize(new util.UtilNumber().RandomNum(1, 4));break;
+					default : ((Slime) Monster).setSize(new util.NumericUtil().RandomNum(1, 4));break;
 				}
 			}
 			else if(Monster.getType() == EntityType.MAGMA_CUBE)
@@ -454,7 +454,7 @@ public class MonsterSpawn
 					case "큰마그마큐브" : ((MagmaCube) Monster).setSize(4);break;
 					case "특대마그마큐브" : ((MagmaCube) Monster).setSize(16);break;
 					case "초대형마그마큐브" : ((MagmaCube) Monster).setSize(64);break;
-					default : ((MagmaCube) Monster).setSize(new util.UtilNumber().RandomNum(1, 4));break;
+					default : ((MagmaCube) Monster).setSize(new util.NumericUtil().RandomNum(1, 4));break;
 				}
 			}
 			if(monsterYaml.contains(mob+".Potion"))

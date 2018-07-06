@@ -5,14 +5,17 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
 
+import area.gui.AreaMonsterSpawnSettingGui;
+import area.gui.AreaSettingGui;
+import area.gui.AreaSpawnSpecialMonsterListGui;
 import effect.SoundEffect;
 import user.UserDataObject;
-import util.UtilChat;
+import util.ChatUtil;
 import util.YamlLoader;
 
 
 
-public class AreaChat extends UtilChat
+public class AreaChat extends ChatUtil
 {
 	public void areaTypeChatting(PlayerChatEvent event)
 	{
@@ -21,7 +24,6 @@ public class AreaChat extends UtilChat
 	  	YamlLoader areaYaml = new YamlLoader();
 		areaYaml.getConfig("Area/AreaList.yml");
 		event.setCancelled(true);
-		area.AreaGui areaGui = new area.AreaGui();
 		String message = ChatColor.stripColor(event.getMessage());
 		String subType = u.getString(player, (byte)2);
 		if(subType.equals("ARR"))//AreaRegenBlock
@@ -31,7 +33,7 @@ public class AreaChat extends UtilChat
 				areaYaml.set(u.getString(player, (byte)3)+".RegenBlock", Integer.parseInt(message));
     			areaYaml.saveConfig();
     			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-				areaGui.areaSettingGui(player, u.getString(player, (byte)3));
+				new AreaSettingGui().areaSettingGui(player, u.getString(player, (byte)3));
     			u.clearAll(player);
 			}
 		}
@@ -79,14 +81,14 @@ public class AreaChat extends UtilChat
 				if(answer==0)
 				{
 	    			SoundEffect.playSound(player, Sound.BLOCK_ANVIL_LAND, 1.0F, 1.0F);
-	    			areaGui.areaMonsterSpawnSettingGui(player, (short) 0, u.getString(player, (byte)3));
+	    			new AreaMonsterSpawnSettingGui().areaMonsterSpawnSettingGui(player, 0, u.getString(player, (byte)3));
 	    			String areaName =u.getString(player, (byte)3);
-	    			new area.AreaMain().AreaMonsterSpawnAdd(areaName, u.getString(player, (byte)1));
+	    			new area.AreaAPI().areaMonsterSpawnAdd(areaName, u.getString(player, (byte)1));
 				}
 				else
 				{
 					SoundEffect.playSound(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.7F);
-					areaGui.areaSpawnSpecialMonsterListGui(player, (short) 0, u.getString(player, (byte)3),u.getString(player, (byte)1));
+					new AreaSpawnSpecialMonsterListGui().areaSpawnSpecialMonsterListGui(player, 0, u.getString(player, (byte)3), u.getString(player, (byte)1));
 				}
     			u.clearAll(player);
 			}
@@ -98,7 +100,7 @@ public class AreaChat extends UtilChat
     			areaYaml.set(u.getString(player, (byte)3)+".Priority", Integer.parseInt(message));
     			areaYaml.saveConfig();
     			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-    			areaGui.areaSettingGui(player, u.getString(player, (byte)3));
+				new AreaSettingGui().areaSettingGui(player, u.getString(player, (byte)3));
     			u.clearAll(player);
 			}
 		}
@@ -122,7 +124,7 @@ public class AreaChat extends UtilChat
         			{
             			areaYaml.set(u.getString(player, (byte)3)+".Restrict.MaxNowLevel", 0);
             			areaYaml.saveConfig();
-            			areaGui.areaSettingGui(player, u.getString(player, (byte)3));
+        				new AreaSettingGui().areaSettingGui(player, u.getString(player, (byte)3));
             			u.clearAll(player);
         			}
     			}
@@ -149,7 +151,7 @@ public class AreaChat extends UtilChat
     			}
     			else
     			{
-        			areaGui.areaSettingGui(player, u.getString(player, (byte)3));
+    				new AreaSettingGui().areaSettingGui(player, u.getString(player, (byte)3));
         			u.clearAll(player);
     			}
 			}
@@ -165,7 +167,7 @@ public class AreaChat extends UtilChat
     			{
         			areaYaml.set(u.getString(player, (byte)3)+".Restrict.MaxRealLevel", 0);
         			areaYaml.saveConfig();
-        			areaGui.areaSettingGui(player, u.getString(player, (byte)3));
+    				new AreaSettingGui().areaSettingGui(player, u.getString(player, (byte)3));
         			u.clearAll(player);
     			}
     			else
@@ -182,7 +184,7 @@ public class AreaChat extends UtilChat
     			areaYaml.set(u.getString(player, (byte)3)+".Restrict.MaxRealLevel", Integer.parseInt(message));
     			areaYaml.saveConfig();
     			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-    			areaGui.areaSettingGui(player, u.getString(player, (byte)3));
+				new AreaSettingGui().areaSettingGui(player, u.getString(player, (byte)3));
     			u.clearAll(player);
 			}
 		}

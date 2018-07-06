@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import effect.SoundEffect;
 import main.MainServerOption;
 
-public class UtilPlayer
+public class PlayerUtil
 {
 	public void dungeonClear(Player player, long money, long exp)
 	{

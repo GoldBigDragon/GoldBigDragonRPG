@@ -25,12 +25,10 @@ import battle.BattleCalculator;
 import effect.SoundEffect;
 import servertick.ServerTickMain;
 import user.UserDataObject;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
-
-
-public final class DungeonGui extends UtilGui
+public final class DungeonGui extends GuiUtil
 {
 	/*
 	던전 만듬.
@@ -600,7 +598,7 @@ public final class DungeonGui extends UtilGui
 		String UniqueCode = "§0§0§a§0§7§r";
 		Inventory inv = Bukkit.createInventory(null, 54, UniqueCode + "§0던전 배경음 : " + (page+1));
 		int loc=0;
-		int model = new util.UtilNumber().RandomNum(0, 11);
+		int model = new util.NumericUtil().RandomNum(0, 11);
 		for(int count = page*45; count < otherplugins.NoteBlockApiMain.Musics.size();count++)
 		{
 			if(model<11)
@@ -1826,7 +1824,7 @@ public final class DungeonGui extends UtilGui
 	
 	public String getRandomCode()
 	{
-		int randomNum = new util.UtilNumber().RandomNum(0, 15);
+		int randomNum = new util.NumericUtil().RandomNum(0, 15);
 		switch(randomNum)
 		{
 			case 0:
@@ -1895,7 +1893,7 @@ public final class DungeonGui extends UtilGui
 					return;
 				}
 			}
-			new util.UtilPlayer().teleportToCurrentArea(player, true);
+			new util.PlayerUtil().teleportToCurrentArea(player, true);
 			return;
 		}
 	}
@@ -1956,7 +1954,7 @@ public final class DungeonGui extends UtilGui
 			int RealLvDistrict = -1;
 			if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getDungeon_Enter() != null)
 			{
-				if(new util.UtilPlayer().giveItem(player, item)==false)
+				if(new util.PlayerUtil().giveItem(player, item)==false)
 					new event.EventItemDrop().CustomItemDrop(player.getLocation(), item);
 				SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
 				player.sendMessage("§f(이미 던전이 만들어 지고 있다...)");
@@ -2021,7 +2019,7 @@ public final class DungeonGui extends UtilGui
 								}
 								else
 								{
-									if(new util.UtilPlayer().giveItem(player, item)==false)
+									if(new util.PlayerUtil().giveItem(player, item)==false)
 										new event.EventItemDrop().CustomItemDrop(player.getLocation(), item);
 									SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
 									player.sendMessage("§f(이 물건은 제물로 바칠 수 없는 듯 하다...)");
@@ -2030,7 +2028,7 @@ public final class DungeonGui extends UtilGui
 							}
 							else
 							{
-								if(new util.UtilPlayer().giveItem(player, item)==false)
+								if(new util.PlayerUtil().giveItem(player, item)==false)
 									new event.EventItemDrop().CustomItemDrop(player.getLocation(), item);
 								SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
 								player.sendMessage("§f(던전 통행증의 유효시간이 지났다...)");
@@ -2039,7 +2037,7 @@ public final class DungeonGui extends UtilGui
 						}
 						else
 						{
-							if(new util.UtilPlayer().giveItem(player, item)==false)
+							if(new util.PlayerUtil().giveItem(player, item)==false)
 								new event.EventItemDrop().CustomItemDrop(player.getLocation(), item);
 							SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
 							player.sendMessage("§f(이 물건은 제물로 바칠 수 없는 듯 하다...)");
@@ -2058,7 +2056,7 @@ public final class DungeonGui extends UtilGui
 							{
 								altarYaml.set("NormalDungeon", null);
 								altarYaml.saveConfig();
-								if(new util.UtilPlayer().giveItem(player, item)==false)
+								if(new util.PlayerUtil().giveItem(player, item)==false)
 									new event.EventItemDrop().CustomItemDrop(player.getLocation(), item);
 								SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
 								player.sendMessage("§f(이 물건은 제물로 바칠 수 없는 듯 하다...)");
@@ -2067,7 +2065,7 @@ public final class DungeonGui extends UtilGui
 						}
 						else
 						{
-							if(new util.UtilPlayer().giveItem(player, item)==false)
+							if(new util.PlayerUtil().giveItem(player, item)==false)
 								new event.EventItemDrop().CustomItemDrop(player.getLocation(), item);
 							SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
 							player.sendMessage("§f(이 물건은 제물로 바칠 수 없는 듯 하다...)");
@@ -2087,7 +2085,7 @@ public final class DungeonGui extends UtilGui
 				{
 					altarYaml.set("NormalDungeon", null);
 					altarYaml.saveConfig();
-					if(new util.UtilPlayer().giveItem(player, item)==false)
+					if(new util.PlayerUtil().giveItem(player, item)==false)
 						new event.EventItemDrop().CustomItemDrop(player.getLocation(), item);
 					SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
 					player.sendMessage("§f(이 물건은 제물로 바칠 수 없는 듯 하다...)");
@@ -2096,7 +2094,7 @@ public final class DungeonGui extends UtilGui
 			}
 			else
 			{
-				if(new util.UtilPlayer().giveItem(player, item)==false)
+				if(new util.PlayerUtil().giveItem(player, item)==false)
 					new event.EventItemDrop().CustomItemDrop(player.getLocation(), item);
 				SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
 				player.sendMessage("§f(이 물건은 제물로 바칠 수 없는 듯 하다...)");
@@ -2113,7 +2111,7 @@ public final class DungeonGui extends UtilGui
 			if(capacity!=-1)
 				if(main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).getPartyMembers()!=capacity)
 				{
-					if(new util.UtilPlayer().giveItem(player, item)==false)
+					if(new util.PlayerUtil().giveItem(player, item)==false)
 						new event.EventItemDrop().CustomItemDrop(player.getLocation(), item);
 					SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
 					player.sendMessage("§c[던전] : 던전 입장 인원이 맞지 않습니다! ("+capacity+"명)");
@@ -2145,7 +2143,7 @@ public final class DungeonGui extends UtilGui
 				{
 					if(main.MainServerOption.PlayerList.get(NearPartyMember.get(count).getUniqueId().toString()).getStat_Level()< LvDistrict)
 					{
-						if(new util.UtilPlayer().giveItem(player, item)==false)
+						if(new util.PlayerUtil().giveItem(player, item)==false)
 							new event.EventItemDrop().CustomItemDrop(player.getLocation(), item);
 						SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
 						player.sendMessage("§c[던전] : 파티원 "+NearPartyMember.get(count).getName()+"님의 레벨이 낮아 던전에 입장할 수 없습니다!");
@@ -2154,7 +2152,7 @@ public final class DungeonGui extends UtilGui
 					}
 					if(main.MainServerOption.PlayerList.get(NearPartyMember.get(count).getUniqueId().toString()).getStat_RealLevel()<RealLvDistrict)
 					{
-						if(new util.UtilPlayer().giveItem(player, item)==false)
+						if(new util.PlayerUtil().giveItem(player, item)==false)
 							new event.EventItemDrop().CustomItemDrop(player.getLocation(), item);
 						SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
 						player.sendMessage("§c[던전] : 파티원 "+NearPartyMember.get(count).getName()+"님의 누적 레벨이 낮아 던전에 입장할 수 없습니다!");
@@ -2164,7 +2162,7 @@ public final class DungeonGui extends UtilGui
 				}
 				if(new dungeon.DungeonCreater().CreateDungeon(player, dungeonYaml.getInt("Size"), dungeonYaml.getInt("Maze_Level"), dungeonYaml.getString("Type.Name"),DungeonName,NearPartyMember, AltarName, item)==false)
 				{
-					if(new util.UtilPlayer().giveItem(player, item)==false)
+					if(new util.PlayerUtil().giveItem(player, item)==false)
 						new event.EventItemDrop().CustomItemDrop(player.getLocation(), item);
 					SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
 					return;
@@ -2172,7 +2170,7 @@ public final class DungeonGui extends UtilGui
 			}
 			else
 			{
-				if(new util.UtilPlayer().giveItem(player, item)==false)
+				if(new util.PlayerUtil().giveItem(player, item)==false)
 					new event.EventItemDrop().CustomItemDrop(player.getLocation(), item);
 				SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
 				player.sendMessage("§c[파티] : 파티의 리더만 제단에 물건을 바칠 수 있습니다!");
@@ -2200,7 +2198,7 @@ public final class DungeonGui extends UtilGui
 				RealLvDistrict = dungeonYaml.getInt("District.RealLevel");
 			if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level()< LvDistrict)
 			{
-				if(new util.UtilPlayer().giveItem(player, item)==false)
+				if(new util.PlayerUtil().giveItem(player, item)==false)
 					new event.EventItemDrop().CustomItemDrop(player.getLocation(), item);
 				SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
 				player.sendMessage("§c[던전] : 당신의 레벨이 낮아 던전에 입장할 수 없습니다!");
@@ -2209,7 +2207,7 @@ public final class DungeonGui extends UtilGui
 			}
 			if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel()<RealLvDistrict)
 			{
-				if(new util.UtilPlayer().giveItem(player, item)==false)
+				if(new util.PlayerUtil().giveItem(player, item)==false)
 					new event.EventItemDrop().CustomItemDrop(player.getLocation(), item);
 				SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
 				player.sendMessage("§c[던전] : 당신의 누적 레벨이 낮아 던전에 입장할 수 없습니다!");
@@ -2218,7 +2216,7 @@ public final class DungeonGui extends UtilGui
 			}
 			if(new dungeon.DungeonCreater().CreateDungeon(player, dungeonYaml.getInt("Size"), dungeonYaml.getInt("Maze_Level"), dungeonYaml.getString("Type.Name"),DungeonName,null, AltarName, item)==false)
 			{
-				if(new util.UtilPlayer().giveItem(player, item)==false)
+				if(new util.PlayerUtil().giveItem(player, item)==false)
 					new event.EventItemDrop().CustomItemDrop(player.getLocation(), item);
 				SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
 				return;
@@ -2226,7 +2224,7 @@ public final class DungeonGui extends UtilGui
 		}
 		else
 		{
-			if(new util.UtilPlayer().giveItem(player, item)==false)
+			if(new util.PlayerUtil().giveItem(player, item)==false)
 				new event.EventItemDrop().CustomItemDrop(player.getLocation(), item);
 			SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
 			player.sendMessage("§c[던전] : 던전 입장 인원이 맞지 않습니다! ("+capacity+"명)");

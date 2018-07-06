@@ -5,18 +5,19 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
 
+import customitem.gui.EquipItemForgingGui;
+import customitem.gui.UseableItemMakingGui;
 import effect.SoundEffect;
 import user.UserDataObject;
-import util.UtilChat;
+import util.ChatUtil;
 import util.YamlLoader;
 
-public class CustomItemChat extends UtilChat
+public class CustomItemChat extends ChatUtil
 {
-	public void itemTypeChatting(PlayerChatEvent event)
+	public void customItemChat(PlayerChatEvent event)
 	{
 		UserDataObject u = new UserDataObject();
 		Player player = event.getPlayer();
-		customitem.CustomItemGui itemGui = new customitem.CustomItemGui();
 		admin.UpgradeGui upgradeGui = new admin.UpgradeGui();
 		
 
@@ -102,8 +103,7 @@ public class CustomItemChat extends UtilChat
 				{
 					if(u.getInt(player, (byte)4) == -8)
 					{
-						customitem.UseableItemGui UGUI = new customitem.UseableItemGui();
-						UGUI.newUseableItemGui(player, number);
+						new UseableItemMakingGui().useableItemMakingGui(player, number);
 						u.clearAll(player);
 						return;
 					}
@@ -136,8 +136,7 @@ public class CustomItemChat extends UtilChat
 				{
 					if(u.getInt(player, (byte)4) == -8)
 					{
-						customitem.UseableItemGui UGUI = new customitem.UseableItemGui();
-						UGUI.newUseableItemGui(player, number);
+						new UseableItemMakingGui().useableItemMakingGui(player, number);
 						u.clearAll(player);
 						return;
 					}
@@ -212,11 +211,10 @@ public class CustomItemChat extends UtilChat
 				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 				if(u.getType(player).equals("UseableItem"))
 				{
-					customitem.UseableItemGui UGUI = new customitem.UseableItemGui();
-					UGUI.newUseableItemGui(player, number);
+					new UseableItemMakingGui().useableItemMakingGui(player, number);
 				}
 				else
-					itemGui.newItemGui(player, number);
+					new EquipItemForgingGui().itemForgingGui(player, number);
 				u.clearAll(player);
 			}
 			return;
@@ -469,7 +467,7 @@ public class CustomItemChat extends UtilChat
 				if(sayType.equals("MinLUK"))
 				{
 					SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-					itemGui.newItemGui(player, number);
+					new EquipItemForgingGui().itemForgingGui(player, number);
 					u.clearAll(player);
 				}
 				else
@@ -483,9 +481,9 @@ public class CustomItemChat extends UtilChat
 		itemYaml.saveConfig();
 		SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
 		if(u.getType(player).equals("UseableItem"))
-			new customitem.UseableItemGui().newUseableItemGui(player, number);
+			new UseableItemMakingGui().useableItemMakingGui(player, number);
 		else
-			itemGui.newItemGui(player, number);
+			new EquipItemForgingGui().itemForgingGui(player, number);
 		u.clearAll(player);
 		return;
 	}

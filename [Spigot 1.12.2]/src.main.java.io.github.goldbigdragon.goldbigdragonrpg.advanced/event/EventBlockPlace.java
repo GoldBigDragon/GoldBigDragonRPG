@@ -33,7 +33,7 @@ public class EventBlockPlace implements Listener
 			return;
 		}
 
-		area.AreaMain area = new area.AreaMain();
+		area.AreaAPI area = new area.AreaAPI();
 		String[] areaList = area.getAreaName(event.getBlock());
 		if(areaList != null)
 		if( ! area.getAreaOption(areaList[0], (char) 5) && ! player.isOp())
@@ -50,7 +50,7 @@ public class EventBlockPlace implements Listener
 
 	public void EXPexceptionBlock(int id,Location loc)
 	{
-		if((id >= 14&&id <= 17)||id==21||id==56||id==129||id==73||id==153)
+		if((id >= 14&&id <= 17)||id==21||id==56||id==129||id==73||id==153||id==86||id==83||id==338||id==103||id==199||id==200)
 		{
 		  	YamlLoader exceptionBlockYaml = new YamlLoader();
 			exceptionBlockYaml.getConfig("EXPexceptionBlock.yml");

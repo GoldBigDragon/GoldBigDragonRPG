@@ -12,10 +12,10 @@ import org.bukkit.inventory.Inventory;
 import effect.SoundEffect;
 import main.MainServerOption;
 import user.UserDataObject;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
-public class UpgradeGui extends UtilGui
+public class UpgradeGui extends GuiUtil
 {
 	public void upgradeRecipeGui(Player player, int page)
 	{

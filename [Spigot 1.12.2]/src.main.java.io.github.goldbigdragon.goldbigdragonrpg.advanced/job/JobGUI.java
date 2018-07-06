@@ -11,13 +11,13 @@ import org.bukkit.inventory.Inventory;
 import admin.OPboxGui;
 import effect.SoundEffect;
 import user.UserDataObject;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-public class JobGUI extends UtilGui
+public class JobGUI extends GuiUtil
 {
 	public void ChooseSystemGUI(Player player)
 	{
@@ -295,7 +295,7 @@ public class JobGUI extends UtilGui
 						jobYaml.removeKey("MapleStory."+ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
 						jobYaml.saveConfig();
 						MapleStory_ChooseJob(player, (short) (Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1));
-						configYaml.set("Time.LastSkillChanged", new util.UtilNumber().RandomNum(0, 100000)-new util.UtilNumber().RandomNum(0, 100000));
+						configYaml.set("Time.LastSkillChanged", new util.NumericUtil().RandomNum(0, 100000)-new util.NumericUtil().RandomNum(0, 100000));
 						configYaml.saveConfig();
 						new job.JobMain().AllPlayerFixAllSkillAndJobYML();
 					}
@@ -387,7 +387,7 @@ public class JobGUI extends UtilGui
 						MapleStory_JobSetting(player, JobName);
 						YamlLoader configYaml = new YamlLoader();
 						configYaml.getConfig("config.yml");
-						configYaml.set("Time.LastSkillChanged", new util.UtilNumber().RandomNum(0, 100000)-new util.UtilNumber().RandomNum(0, 100000));
+						configYaml.set("Time.LastSkillChanged", new util.NumericUtil().RandomNum(0, 100000)-new util.NumericUtil().RandomNum(0, 100000));
 						configYaml.saveConfig();
 						new job.JobMain().AllPlayerFixAllSkillAndJobYML();
 					}
@@ -432,7 +432,7 @@ public class JobGUI extends UtilGui
 					AddedSkillsListGUI(player, page, JobName, JobNick);
 					YamlLoader configYaml = new YamlLoader();
 					configYaml.getConfig("config.yml");
-					configYaml.set("Time.LastSkillChanged", new util.UtilNumber().RandomNum(0, 100000)-new util.UtilNumber().RandomNum(0, 100000));
+					configYaml.set("Time.LastSkillChanged", new util.NumericUtil().RandomNum(0, 100000)-new util.NumericUtil().RandomNum(0, 100000));
 					configYaml.saveConfig();
 					new job.JobMain().AllPlayerFixAllSkillAndJobYML();
 				}
@@ -498,7 +498,7 @@ public class JobGUI extends UtilGui
 					Mabinogi_ChooseCategory(player,page);
 					YamlLoader configYaml = new YamlLoader();
 					configYaml.getConfig("config.yml");
-					configYaml.set("Time.LastSkillChanged", new util.UtilNumber().RandomNum(0, 100000)-new util.UtilNumber().RandomNum(0, 100000));
+					configYaml.set("Time.LastSkillChanged", new util.NumericUtil().RandomNum(0, 100000)-new util.NumericUtil().RandomNum(0, 100000));
 					configYaml.saveConfig();
 					new job.JobMain().AllPlayerFixAllSkillAndJobYML();
 				}
@@ -549,7 +549,7 @@ public class JobGUI extends UtilGui
 						jobYaml.set("Mabinogi."+CategoriName+"."+SkillName, true);
 						jobYaml.saveConfig();
 						Mabinogi_SkillSetting(player,(short) page,CategoriName);
-						configYaml.set("Time.LastSkillChanged", new util.UtilNumber().RandomNum(0, 100000)-new util.UtilNumber().RandomNum(0, 100000));
+						configYaml.set("Time.LastSkillChanged", new util.NumericUtil().RandomNum(0, 100000)-new util.NumericUtil().RandomNum(0, 100000));
 						configYaml.saveConfig();
 						new job.JobMain().AllPlayerFixAllSkillAndJobYML();
 					}
@@ -561,7 +561,7 @@ public class JobGUI extends UtilGui
 					jobYaml.removeKey("Mabinogi."+CategoriName+"."+SkillName);
 					jobYaml.saveConfig();
 					Mabinogi_SkillSetting(player, (short) page, CategoriName);
-					configYaml.set("Time.LastSkillChanged", new util.UtilNumber().RandomNum(0, 100000)-new util.UtilNumber().RandomNum(0, 100000));
+					configYaml.set("Time.LastSkillChanged", new util.NumericUtil().RandomNum(0, 100000)-new util.NumericUtil().RandomNum(0, 100000));
 					configYaml.saveConfig();
 					new job.JobMain().AllPlayerFixAllSkillAndJobYML();
 				}

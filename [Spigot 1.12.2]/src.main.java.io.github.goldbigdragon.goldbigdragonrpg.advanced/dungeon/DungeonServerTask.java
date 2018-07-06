@@ -167,7 +167,7 @@ public class DungeonServerTask
 			                int[] randomchest = new int[4];
 			                for(char c=0;c<4;c++)
 			                	randomchest[c]=146;
-			                byte randomnum = (byte) new util.UtilNumber().RandomNum(0, 3);
+			                byte randomnum = (byte) new util.NumericUtil().RandomNum(0, 3);
 			                randomchest[randomnum] = 54;
 			                Block block = new Location(w, 16+Xloc, Yloc+1, 16+Zloc).getBlock();
 			                block.setTypeIdAndData(randomchest[0], (byte)0, true);
@@ -260,7 +260,7 @@ public class DungeonServerTask
     	case '¢·' : 
     	case '¢¹' : 
     	case '¢¾' : 
-			byte color = (byte) new util.UtilNumber().RandomNum(1, 5);
+			byte color = (byte) new util.NumericUtil().RandomNum(1, 5);
 			switch(color)
 			{
     			case 1: color=15;break;
@@ -287,7 +287,7 @@ public class DungeonServerTask
             block = new Location(w, 4+Xloc, Yloc+1, 16+Zloc).getBlock();
             block.setTypeIdAndData(7, (byte)0, true);
 
-            byte randomnum = (byte) new util.UtilNumber().RandomNum(0, 3);
+            byte randomnum = (byte) new util.NumericUtil().RandomNum(0, 3);
             int checker[] = {3,3,3,3};
             checker[randomnum] = 1;
             block = new Location(w, 16+Xloc, Yloc, 16+Zloc).getBlock();

@@ -80,10 +80,10 @@ public class ServerTickMain
 		Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin, new Runnable()
         {
 			Iterator<Player> playerList;
-			corpse.CorpseMain corpse = new corpse.CorpseMain();
+			corpse.CorpseAPI corpse = new corpse.CorpseAPI();
 			otherplugins.NoteBlockApiMain noteblockApi = new otherplugins.NoteBlockApiMain();
 			YamlLoader areaList = new YamlLoader();
-			area.AreaMain areaMain = new area.AreaMain();
+			area.AreaAPI areaMain = new area.AreaAPI();
 			quest.QuestGui questGui = new quest.QuestGui();
         	String area;
         	String questName;
@@ -180,7 +180,7 @@ public class ServerTickMain
 	        					{
 		        					uo.setETC_CurrentArea(area);
 		        					main.MainServerOption.PlayerCurrentArea.put(player, area);
-		        					areaMain.AreaMonsterSpawnAdd(area, "-1");
+		        					areaMain.areaMonsterSpawnAdd(area, "-1");
 		        					noteblockApi.Stop(player);
 		        					uo.setETC_CurrentArea(area);
 		        					if(areaList.getBoolean(area + ".SpawnPoint") == true)
@@ -292,7 +292,7 @@ public class ServerTickMain
 			broadCast.getConfig("BroadCast.yml");
 			if(broadCast.contains("0") &&
 			broadCast.getConfigurationSection("").getKeys(false).toArray().length != 0)
-				Bukkit.broadcastMessage(broadCast.getString(broadCast.getConfigurationSection("").getKeys(false).toArray()[new util.UtilNumber().RandomNum(0, broadCast.getConfigurationSection("").getKeys(false).toArray().length-1)].toString()));
+				Bukkit.broadcastMessage(broadCast.getString(broadCast.getConfigurationSection("").getKeys(false).toArray()[new util.NumericUtil().RandomNum(0, broadCast.getConfigurationSection("").getKeys(false).toArray().length-1)].toString()));
 		}
 		else
 			BroadCastMessageCool++;

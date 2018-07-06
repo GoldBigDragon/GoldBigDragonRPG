@@ -13,12 +13,12 @@ import effect.SoundEffect;
 import servertick.ServerTickMain;
 import user.EtcGui;
 import user.UserDataObject;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
 
 
-public class NavigationGui extends UtilGui
+public class NavigationGui extends GuiUtil
 {
 	public void navigationListGui(Player player, short page)
 	{

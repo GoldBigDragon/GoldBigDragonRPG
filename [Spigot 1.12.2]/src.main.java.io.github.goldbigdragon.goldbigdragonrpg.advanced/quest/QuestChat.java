@@ -9,10 +9,10 @@ import org.bukkit.event.player.PlayerChatEvent;
 
 import effect.SoundEffect;
 import user.UserDataObject;
-import util.UtilChat;
+import util.ChatUtil;
 import util.YamlLoader;
 
-public class QuestChat extends UtilChat
+public class QuestChat extends ChatUtil
 {
 	
 	public void QuestTypeChatting(PlayerChatEvent event)

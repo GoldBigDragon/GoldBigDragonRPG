@@ -5,6 +5,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import area.gui.AreaListGui;
+import area.gui.AreaSettingGui;
 import effect.SoundEffect;
 import util.YamlLoader;
 
@@ -12,7 +14,6 @@ public class AreaCommand
 {
 	public void onCommand(CommandSender talker, Command command, String string, String[] args)
 	{
-	    
 		Player player = (Player) talker;
 		if(!player.isOp())
 		{
@@ -26,9 +27,8 @@ public class AreaCommand
 			{
 				if(args[0].equals("목록"))
 				{
-					area.AreaGui areaGui = new area.AreaGui();
 					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-					areaGui.areaListGui(player, (short) 0);
+					new AreaListGui().areaListGui(player, (short) 0);
 					return;
 				}
 				else
@@ -39,8 +39,8 @@ public class AreaCommand
 					if(areaYaml.contains(args[0]))
 					{
 						SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-						area.AreaGui areaGui = new area.AreaGui();
-						areaGui.areaSettingGui(player, args[0]);
+						area.gui.AreaMusicSettingGui areaGui = new area.gui.AreaMusicSettingGui();
+						new AreaSettingGui().areaSettingGui(player, args[0]);
 					}
 					else
 					{
@@ -67,7 +67,7 @@ public class AreaCommand
 					if(args[0].contains("-"))
 						args[0] = args[0].replace('-', '_');
 				}
-				area.AreaMain areaMain = new area.AreaMain();
+				area.AreaAPI areaMain = new area.AreaAPI();
 				if(args[1].equals("생성"))
 				{
 					if(main.MainServerOption.catchedLocation1.containsKey(player)&&main.MainServerOption.catchedLocation2.containsKey(player))
@@ -93,7 +93,7 @@ public class AreaCommand
 			}
 			else
 			{
-				area.AreaMain areaMain = new area.AreaMain();
+				area.AreaAPI areaMain = new area.AreaAPI();
 				StringBuilder sb = new StringBuilder();
 				for(int a =2; a<= ((args.length)-1);a++)
 				{

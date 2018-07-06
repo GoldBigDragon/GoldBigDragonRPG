@@ -12,12 +12,12 @@ import org.bukkit.inventory.ItemStack;
 
 import effect.SoundEffect;
 import user.UserDataObject;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
 
 
-public class EventGui extends UtilGui
+public class EventGui extends GuiUtil
 {
 	public void eventGuiMain (Player player)
 	{
@@ -169,14 +169,14 @@ public class EventGui extends UtilGui
 	  		    	Collection<? extends Player> playerlist = Bukkit.getServer().getOnlinePlayers();
 	  		    	Player[] a = new Player[playerlist.size()];
 	  		    	playerlist.toArray(a);
-	  		    	int luckyGuy = new util.UtilNumber().RandomNum(0, a.length-1);
+	  		    	int luckyGuy = new util.NumericUtil().RandomNum(0, a.length-1);
 					for(int count = 10; count < 17;count++)
 					{
 						if(event.getInventory().getItem(count) != null)
 						{
 							itemExit = true;
 							ItemStack item = event.getInventory().getItem(count);
-							new util.UtilPlayer().giveItemForce(a[luckyGuy], item);
+							new util.PlayerUtil().giveItemForce(a[luckyGuy], item);
 						}
 					}
 					for(int count = 19; count < 26;count++)
@@ -185,7 +185,7 @@ public class EventGui extends UtilGui
 						{
 							itemExit = true;
 							ItemStack item = event.getInventory().getItem(count);
-							new util.UtilPlayer().giveItemForce(a[luckyGuy], item);
+							new util.PlayerUtil().giveItemForce(a[luckyGuy], item);
 						}
 					}
 					if(itemExit)
@@ -209,7 +209,7 @@ public class EventGui extends UtilGui
 			  		    	playerlist.toArray(a);
 			  	  			for(int counter = 0; counter<a.length;counter++)
 			  	  			{
-								new util.UtilPlayer().giveItemForce(a[counter], item);
+								new util.PlayerUtil().giveItemForce(a[counter], item);
 			  	  				if(item.hasItemMeta())
 			  	  				{
 			  	  					if(item.getItemMeta().hasDisplayName())
@@ -232,7 +232,7 @@ public class EventGui extends UtilGui
 			  		    	playerlist.toArray(a);
 			  	  			for(int counter = 0; counter<a.length;counter++)
 			  	  			{
-								new util.UtilPlayer().giveItemForce(a[counter], item);
+								new util.PlayerUtil().giveItemForce(a[counter], item);
 			  	  				if(item.hasItemMeta())
 			  	  				{
 			  	  					if(item.getItemMeta().hasDisplayName())

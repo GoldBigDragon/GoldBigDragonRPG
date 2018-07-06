@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-public class UtilGui
+public class GuiUtil
 {
 	public void stack(String display, int id, int data,  int amount, List<String> lore,  int loc, Inventory inventory)
 	{

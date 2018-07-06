@@ -11,10 +11,10 @@ import org.bukkit.inventory.Inventory;
 
 import effect.SoundEffect;
 import user.UserDataObject;
-import util.UtilGui;
+import util.GuiUtil;
 import util.YamlLoader;
 
-public class WarpGui extends UtilGui
+public class WarpGui extends GuiUtil
 {
 	public void warpListGUI(Player player, int page)
 	{

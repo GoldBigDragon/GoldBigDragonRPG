@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
+import customitem.gui.EquipItemListGui;
 import effect.SoundEffect;
 
 public class CustomItemCommand
@@ -31,8 +32,7 @@ public class CustomItemCommand
 			  {
 		  			case "목록" :
 		  			{
-		  				customitem.CustomItemGui customItemGui = new customitem.CustomItemGui();
-		  				customItemGui.itemListGui(player,0);
+		  				new EquipItemListGui().itemListGui(player, 0);
 		  			}
 		  			return;
 			  }
@@ -72,7 +72,7 @@ public class CustomItemCommand
 						helpMessage(player);
 						return;
 					}
-				  	SettingItemMeta(player, (byte) 0, Integer.parseInt(args[1]));
+				  	settingItemMeta(player, (byte) 0, Integer.parseInt(args[1]));
 				}
 				return;
 				case "DATA" :
@@ -82,7 +82,7 @@ public class CustomItemCommand
 						helpMessage(player);
 						return;
 					}
-				  	SettingItemMeta(player, (byte) 1, Integer.parseInt(args[1]));
+				  	settingItemMeta(player, (byte) 1, Integer.parseInt(args[1]));
 				}
 				return;
 				case "개수" :
@@ -92,7 +92,7 @@ public class CustomItemCommand
 						helpMessage(player);
 						return;
 					}
-				  	SettingItemMeta(player, (byte) 2, Integer.parseInt(args[1]));
+				  	settingItemMeta(player, (byte) 2, Integer.parseInt(args[1]));
 				}
 				return;
 				case "이름" :
@@ -179,7 +179,7 @@ public class CustomItemCommand
 		}
 	}
 	
-	public void SettingItemMeta(Player player, byte type, int value)
+	public void settingItemMeta(Player player, byte type, int value)
 	{
 		if(!player.isOp())
 		{

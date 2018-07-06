@@ -25,7 +25,7 @@ public class EventChangeHotBar implements Listener
 	public void hotBarMove(PlayerItemHeldEvent event)
 	{
 		Player player = event.getPlayer();
-		if(new corpse.CorpseMain().deathCapture(player,false))
+		if(new corpse.CorpseAPI().deathCapture(player,false))
 			return;
 
 		util.ETC etc = new util.ETC();
