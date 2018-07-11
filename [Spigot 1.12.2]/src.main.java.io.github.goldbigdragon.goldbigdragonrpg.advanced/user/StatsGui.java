@@ -53,13 +53,14 @@ public class StatsGui extends GuiUtil
 		EXIT.setItemMeta(EXIT_BUTTON);
 		inv.setItem(26, EXIT);
 
-		int StatPoint = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_StatPoint();
-		if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == true)
+		int statPoint = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_StatPoint();
+		if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System"))
 		{
 			removeFlagStack("§a    [§f§l상태§a]", 397,3,1,
 					Arrays.asList("§f[레벨] : §l" + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level(),
 							"§f[누적 레벨] : §l" + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_RealLevel(),
 							"§f[경험치] : §l" + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_EXP() + " / " + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxEXP(),
+							"§a[스텟 포인트] : §f" + ChatColor.BOLD + statPoint,
 							"§b[스킬 포인트] : §f" + ChatColor.BOLD + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint()), 13, inv);
 		}
 		else
@@ -70,14 +71,14 @@ public class StatsGui extends GuiUtil
 					Arrays.asList("§f[레벨] : §l" + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Level(),
 							"§f[직업] : §l" + PlayerSkillYML.getString("Job.Type"),
 							"§f[경험치] : §l" + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_EXP() + " / " + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxEXP(),
-							"§a[스텟 포인트] : §f" + ChatColor.BOLD + StatPoint,
+							"§a[스텟 포인트] : §f" + ChatColor.BOLD + statPoint,
 							"§b[스킬 포인트] : §f" + ChatColor.BOLD + main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_SkillPoint()), 13, inv);
 		}
 		
 		int DefaultDamage = 0;
-		if(player.getInventory().getItemInMainHand().hasItemMeta() == true)
+		if(player.getInventory().getItemInMainHand().hasItemMeta())
 		{
-			if(player.getInventory().getItemInMainHand().getItemMeta().hasLore() == true)
+			if(player.getInventory().getItemInMainHand().getItemMeta().hasLore())
 			{
 				if(player.getInventory().getItemInMainHand().getItemMeta().getLore().toString().contains(main.MainServerOption.damage+" : ") == true)
 				{
@@ -216,18 +217,18 @@ public class StatsGui extends GuiUtil
 				Arrays.asList(lore.split("%enter%")), 24, inv);
 
 
-		if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == false)
+		if(statPoint > 0)
 		{
 			removeFlagStack("§6    [§f§l"+main.MainServerOption.statSTR+" 상승§6]", 399,0,1,
-					Arrays.asList("§7"+main.MainServerOption.statSTR+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+StatPoint), 29, inv);
+					Arrays.asList("§7"+main.MainServerOption.statSTR+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+statPoint), 29, inv);
 			removeFlagStack("§6    [§f§l"+main.MainServerOption.statDEX+" 상승§6]", 399,0,1,
-					Arrays.asList("§7"+main.MainServerOption.statDEX+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+StatPoint), 30, inv);
+					Arrays.asList("§7"+main.MainServerOption.statDEX+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+statPoint), 30, inv);
 			removeFlagStack("§6    [§f§l"+main.MainServerOption.statINT+" 상승§6]", 399,0,1,
-					Arrays.asList("§7"+main.MainServerOption.statINT+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+StatPoint), 31, inv);
+					Arrays.asList("§7"+main.MainServerOption.statINT+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+statPoint), 31, inv);
 			removeFlagStack("§6    [§f§l"+main.MainServerOption.statWILL+" 상승§6]", 399,0,1,
-					Arrays.asList("§7"+main.MainServerOption.statWILL+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+StatPoint), 32, inv);
+					Arrays.asList("§7"+main.MainServerOption.statWILL+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+statPoint), 32, inv);
 			removeFlagStack("§6    [§f§l"+main.MainServerOption.statLUK+" 상승§6]", 399,0,1,
-					Arrays.asList("§7"+main.MainServerOption.statLUK+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+StatPoint), 33, inv);
+					Arrays.asList("§7"+main.MainServerOption.statLUK+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+statPoint), 33, inv);
 		}
 		removeFlagStack("§7    [§f§l방어§7]", 307,0,1,
 				Arrays.asList("§f물리 방어 : §f" +(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEF()+BattleCalculator.getPlayerEquipmentStat(player, "방어", false, null)[0]),
@@ -251,7 +252,6 @@ public class StatsGui extends GuiUtil
 	{
 		Player player = (Player) event.getWhoClicked();
 		
-		
 		int slot = event.getSlot();
 		
 		if(slot == 26)
@@ -264,44 +264,38 @@ public class StatsGui extends GuiUtil
 			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot >= 29 && slot <= 33)
 			{
-			    YamlLoader Config = new YamlLoader();
-				Config.getConfig("config.yml");
-				if(Config.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System") == false)
-					if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_StatPoint() >= 1)
-					{
-						boolean isOk = false;
-						if(slot == 29)
-							isOk = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR() < main.MainServerOption.maxSTR;
-						else if(slot == 30)
-							isOk = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX() < main.MainServerOption.maxDEX;
-						else if(slot == 31)
-							isOk = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT() < main.MainServerOption.maxINT;
-						else if(slot == 32)
-							isOk = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL() < main.MainServerOption.maxWILL;
-						else if(slot == 33)
-							isOk = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK() < main.MainServerOption.maxLUK;
-						
-						if(isOk)
-						{
-							main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_StatPoint(-1);
-							if(slot == 29)
-								main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_STR(1);
-							else if(slot == 30)
-								main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_DEX(1);
-							else if(slot == 31)
-								main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_INT(1);
-							else if(slot == 32)
-								main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_WILL(1);
-							else if(slot == 33)
-								main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_LUK(1);
-							SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-						}
-						else
-						{
-							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-							new effect.SendPacket().sendActionBar(player, "§c§l[해당 능력은 더 이상 상승시킬 수 없습니다!]", false);
-						}
-					}
+				boolean isOk = false;
+				if(slot == 29)
+					isOk = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR() < main.MainServerOption.maxSTR;
+				else if(slot == 30)
+					isOk = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX() < main.MainServerOption.maxDEX;
+				else if(slot == 31)
+					isOk = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT() < main.MainServerOption.maxINT;
+				else if(slot == 32)
+					isOk = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL() < main.MainServerOption.maxWILL;
+				else if(slot == 33)
+					isOk = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK() < main.MainServerOption.maxLUK;
+				
+				if(isOk)
+				{
+					main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_StatPoint(-1);
+					if(slot == 29)
+						main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_STR(1);
+					else if(slot == 30)
+						main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_DEX(1);
+					else if(slot == 31)
+						main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_INT(1);
+					else if(slot == 32)
+						main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_WILL(1);
+					else if(slot == 33)
+						main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_LUK(1);
+					SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
+				}
+				else
+				{
+					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+					new effect.SendPacket().sendActionBar(player, "§c§l[해당 능력은 더 이상 상승시킬 수 없습니다!]", false);
+				}
 				StatusGUI(player);
 			}
 			else if(slot == 9)

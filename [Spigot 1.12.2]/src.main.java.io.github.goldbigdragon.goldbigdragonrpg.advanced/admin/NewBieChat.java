@@ -2,17 +2,15 @@ package admin;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import user.UserDataObject;
 import util.ChatUtil;
 import util.YamlLoader;
 
-
-
 public class NewBieChat extends ChatUtil
 {
-	public void newBieTypeChatting(PlayerChatEvent event)
+	public void newBieTypeChatting(AsyncPlayerChatEvent event)
 	{
 		UserDataObject u = new UserDataObject();
 		Player player = event.getPlayer();

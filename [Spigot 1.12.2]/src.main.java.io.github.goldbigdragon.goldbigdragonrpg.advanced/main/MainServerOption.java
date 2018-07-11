@@ -129,10 +129,10 @@ public class MainServerOption
 	public static short Money6ID = 41;
 	public static byte Money6DATA = 0;
 	
-	public static String serverUpdate = "2018-07-07-01:34";
+	public static String serverUpdate = "2018-07-12-02:34";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "https://goldbigdragon.github.io/1_12.html";
-	public static String currentServerUpdate = "2018-07-07-01:34";
+	public static String currentServerUpdate = "2018-07-12-02:34";
 	public static String currentServerVersion = "Advanced";
 	
 	public static java.util.Map<Long, PartyObject> party = new LinkedHashMap<>();
@@ -157,6 +157,7 @@ public class MainServerOption
 	public static boolean Mapping = false;
 	public static boolean AntiExplode = true;
 	public static boolean PVP = true;
+	public static boolean removeMonsterDefaultDrops = false;
 	
 	public static boolean dualWeapon = true;
 	

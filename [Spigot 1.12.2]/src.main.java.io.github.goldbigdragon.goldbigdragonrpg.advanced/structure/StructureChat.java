@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 
 import effect.SoundEffect;
@@ -13,7 +13,7 @@ import util.YamlLoader;
 
 public class StructureChat
 {
-	public void PlayerChatrouter(PlayerChatEvent event)
+	public void PlayerChatrouter(AsyncPlayerChatEvent event)
 	{
 		Player player = event.getPlayer();
 		UserDataObject u = new UserDataObject();
@@ -28,7 +28,7 @@ public class StructureChat
 		
 	}
 	
-	private void PostChatting(PlayerChatEvent event)
+	private void PostChatting(AsyncPlayerChatEvent event)
 	{
 		
 		Player player = event.getPlayer();
@@ -91,7 +91,7 @@ public class StructureChat
 		}
 	}
 
-	private void BoardChatting(PlayerChatEvent event)
+	private void BoardChatting(AsyncPlayerChatEvent event)
 	{
 		
 		Player player = event.getPlayer();
@@ -135,7 +135,7 @@ public class StructureChat
 		}
 	}
 	
-	private void TradeBoardChatting(PlayerChatEvent event)
+	private void TradeBoardChatting(AsyncPlayerChatEvent event)
 	{
 		
 		Player player = event.getPlayer();
@@ -637,7 +637,7 @@ public class StructureChat
 		}//SellTrade ³¡
 	}
 	
-	private void CampFireChatting(PlayerChatEvent event)
+	private void CampFireChatting(AsyncPlayerChatEvent event)
 	{
 		
 		Player player = event.getPlayer();

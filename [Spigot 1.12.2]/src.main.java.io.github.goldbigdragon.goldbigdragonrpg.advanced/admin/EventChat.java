@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import effect.SoundEffect;
 import user.UserDataObject;
@@ -13,7 +13,7 @@ import util.YamlLoader;
 
 public class EventChat extends ChatUtil
 {
-	public void eventChatting(PlayerChatEvent event)
+	public void eventChatting(AsyncPlayerChatEvent event)
 	{
 		UserDataObject u = new UserDataObject();
 		Player player = event.getPlayer();

@@ -2,7 +2,7 @@ package job;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import effect.SoundEffect;
 import user.UserDataObject;
@@ -11,12 +11,11 @@ import util.YamlLoader;
 
 public class JobChat extends ChatUtil
 {
-	public void JobTypeChatting(PlayerChatEvent event)
+	public void JobTypeChatting(AsyncPlayerChatEvent event)
 	{
 		UserDataObject u = new UserDataObject();
 		event.setCancelled(true);
 		Player player = event.getPlayer();
-		skill.OPboxSkillGui SKGUI = new skill.OPboxSkillGui();
 	  	YamlLoader jobYaml = new YamlLoader();
 	  	YamlLoader configYaml = new YamlLoader();
 
@@ -67,7 +66,6 @@ public class JobChat extends ChatUtil
 			return;
 		case "CJL"://CreateJobLevel (½Â±Þ ¸¸µé±â)
 			String JobName2 = u.getString(player, (byte)2);
-			short NowJobLevel = (short) jobYaml.getConfigurationSection("MapleStory."+JobName2).getKeys(false).size();
 			jobYaml.set("MapleStory."+JobName2+"."+Message+".NeedLV",0);
 			jobYaml.set("MapleStory."+JobName2+"."+Message+".NeedSTR",0);
 			jobYaml.set("MapleStory."+JobName2+"."+Message+".NeedDEX",0);

@@ -2,13 +2,13 @@ package warp;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import user.UserDataObject;
 
 public class WarpChat
 {
-	public void teleportTypeChatting(PlayerChatEvent event)
+	public void teleportTypeChatting(AsyncPlayerChatEvent event)
 	{
 		UserDataObject u = new UserDataObject();
 		Player player = event.getPlayer();

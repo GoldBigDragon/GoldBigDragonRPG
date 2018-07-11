@@ -3,21 +3,21 @@ package monster;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import effect.SoundEffect;
+import monster.gui.MonsterOptionSettingGui;
+import monster.gui.MonsterPotionGui;
 import user.UserDataObject;
 import util.ChatUtil;
 import util.YamlLoader;
 
 public class MonsterChat extends ChatUtil
 {
-	public void MonsterTypeChatting(PlayerChatEvent event)
+	public void monsterTypeChatting(AsyncPlayerChatEvent event)
 	{
 		UserDataObject u = new UserDataObject();
 		Player player = event.getPlayer();
-		monster.MonsterGui MGUI = new monster.MonsterGui();
-		monster.MonsterSpawn MC = new monster.MonsterSpawn();
 	  	YamlLoader monsterListYaml = new YamlLoader();
 		monsterListYaml.getConfig("Monster/MonsterList.yml");
 		String[] monsterlist = monsterListYaml.getKeys().toArray(new String[0]);
@@ -29,28 +29,28 @@ public class MonsterChat extends ChatUtil
 		case "Potion":
 			if(isIntMinMax(message, player, 0, 100))
 			{
-				String MonsterName = u.getString(player, (byte)3);
+				String monsterName = u.getString(player, (byte)3);
 				switch(u.getString(player, (byte)2))
 				{
 				case "Regenerate":
-					monsterListYaml.set(MonsterName+".Potion.Regenerate", Integer.parseInt(message));break;
+					monsterListYaml.set(monsterName+".Potion.Regenerate", Integer.parseInt(message));break;
 				case "Poision":
-					monsterListYaml.set(MonsterName+".Potion.Poison", Integer.parseInt(message));break;
+					monsterListYaml.set(monsterName+".Potion.Poison", Integer.parseInt(message));break;
 				case "Speed":
-					monsterListYaml.set(MonsterName+".Potion.Speed", Integer.parseInt(message));break;
+					monsterListYaml.set(monsterName+".Potion.Speed", Integer.parseInt(message));break;
 				case "Slow":
-					monsterListYaml.set(MonsterName+".Potion.Slow", Integer.parseInt(message));break;
+					monsterListYaml.set(monsterName+".Potion.Slow", Integer.parseInt(message));break;
 				case "Strength":
-					monsterListYaml.set(MonsterName+".Potion.Strength", Integer.parseInt(message));break;
+					monsterListYaml.set(monsterName+".Potion.Strength", Integer.parseInt(message));break;
 				case "Weak":
-					monsterListYaml.set(MonsterName+".Potion.Weak", Integer.parseInt(message));break;
+					monsterListYaml.set(monsterName+".Potion.Weak", Integer.parseInt(message));break;
 				case "Jump":
-					monsterListYaml.set(MonsterName+".Potion.JumpBoost", Integer.parseInt(message));break;
+					monsterListYaml.set(monsterName+".Potion.JumpBoost", Integer.parseInt(message));break;
 				}
 				monsterListYaml.saveConfig();
 				u.clearAll(player);
 				SoundEffect.playSound(player, Sound.ENTITY_GENERIC_DRINK, 1.0F, 1.0F);
-				MGUI.MonsterPotionGUI(player, MonsterName);
+				new MonsterPotionGui().monsterPotionGui(player, monsterName);
 			}
 		return;
 		case "NM"://NewMonster
@@ -65,14 +65,14 @@ public class MonsterChat extends ChatUtil
 	    		}
 	    	}
 			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_WOLF_AMBIENT, 1.0F, 1.0F);
-	    	MC.CreateMonster(message);
+			new monster.MonsterSpawn().createMonster(message);
 
 		  	main.MainServerOption.MonsterNameMatching.put(message, message);
 		  	main.MainServerOption.MonsterList.put(message, new monster.MonsterObject(message, message, 15, 20, 1, 10, 10, 10, 10, 10, 10, 0, 0, 0, 0));
 		  	
 	    	player.sendMessage("§a[SYSTEM] : §e"+message+"§a 몬스터 생성 완료! (추가 설정을 해 주세요)");
 			SoundEffect.playSound(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.8F);
-			MGUI.MonsterOptionSettingGUI(player, message);
+			new MonsterOptionSettingGui().monsterOptionSettingGui(player, message);
 			u.clearAll(player);
 	    	return;
 		case "CN"://ChangeName
@@ -85,7 +85,7 @@ public class MonsterChat extends ChatUtil
 			main.MainServerOption.MonsterNameMatching.put(message, u.getString(player, (byte)2));
 			
 			SoundEffect.playSound(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.8F);
-			MGUI.MonsterOptionSettingGUI(player, u.getString(player, (byte)2));
+			new MonsterOptionSettingGui().monsterOptionSettingGui(player,  u.getString(player, (byte)2));
 			u.clearAll(player);
 	    	return;
 		case "HP"://HealthPoint
@@ -95,7 +95,7 @@ public class MonsterChat extends ChatUtil
 				monsterListYaml.saveConfig();
 				main.MainServerOption.MonsterList.get(u.getString(player, (byte)2)).setHP(Integer.parseInt(message));
 				SoundEffect.playSound(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.8F);
-				MGUI.MonsterOptionSettingGUI(player, u.getString(player, (byte)2));
+				new MonsterOptionSettingGui().monsterOptionSettingGui(player,  u.getString(player, (byte)2));
 				u.clearAll(player);
 			}
 			return;
@@ -113,7 +113,7 @@ public class MonsterChat extends ChatUtil
 				else
 					main.MainServerOption.MonsterList.get(u.getString(player, (byte)2)).setMPRO(Integer.parseInt(message));
 				SoundEffect.playSound(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.8F);
-				MGUI.MonsterOptionSettingGUI(player, u.getString(player, (byte)2));
+				new MonsterOptionSettingGui().monsterOptionSettingGui(player,  u.getString(player, (byte)2));
 				u.clearAll(player);
 			}
 			return;
@@ -124,7 +124,7 @@ public class MonsterChat extends ChatUtil
 				monsterListYaml.saveConfig();
 				main.MainServerOption.MonsterList.get(u.getString(player, (byte)2)).setMaxMoney(Integer.parseInt(message));
 				SoundEffect.playSound(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.8F);
-				MGUI.MonsterOptionSettingGUI(player, u.getString(player, (byte)2));
+				new MonsterOptionSettingGui().monsterOptionSettingGui(player,  u.getString(player, (byte)2));
 				u.clearAll(player);
 			}
 			return;
@@ -286,7 +286,7 @@ public class MonsterChat extends ChatUtil
 				monsterListYaml.set(u.getString(player, (byte)2)+"."+u.getString(player, (byte)1), Integer.parseInt(message));
 				monsterListYaml.saveConfig();
 				SoundEffect.playSound(player, Sound.ENTITY_HORSE_ARMOR, 1.0F, 1.8F);
-				MGUI.MonsterOptionSettingGUI(player, u.getString(player, (byte)2));
+				new MonsterOptionSettingGui().monsterOptionSettingGui(player,  u.getString(player, (byte)2));
 				u.clearAll(player);
 			}
 			return;

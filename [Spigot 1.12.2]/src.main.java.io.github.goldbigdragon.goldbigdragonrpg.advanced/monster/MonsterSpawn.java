@@ -3,7 +3,6 @@ package monster;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -22,17 +21,16 @@ import org.bukkit.potion.PotionEffectType;
 import effect.PottionBuff;
 import effect.SoundEffect;
 import monster.ai.*;
+import util.NumericUtil;
 import util.YamlLoader;
-
-
 
 public class MonsterSpawn
 {
-	public void EntitySpawn(CreatureSpawnEvent event)
+	public void entitySpawn(CreatureSpawnEvent event)
 	{
 		if(event.getLocation().getWorld().getName().equals("Dungeon"))
 		{
-			if(event.getSpawnReason()== SpawnReason.NATURAL || event.getSpawnReason() == SpawnReason.CHUNK_GEN
+			if(event.getSpawnReason() == SpawnReason.NATURAL || event.getSpawnReason() == SpawnReason.CHUNK_GEN
 					|| event.getSpawnReason() == SpawnReason.MOUNT|| event.getSpawnReason() == SpawnReason.JOCKEY
 					|| event.getSpawnReason() == SpawnReason.SLIME_SPLIT)
 			{
@@ -40,49 +38,46 @@ public class MonsterSpawn
 				return;
 			}
 		}
+		
 		if(event.getEntity().getType()==EntityType.ARMOR_STAND)
 			return;
-		if(event.getSpawnReason() == SpawnReason.SLIME_SPLIT)
-		{
-			if(event.getEntity().getCustomName()!=null)
-			{
-				if(main.MainServerOption.MonsterNameMatching.containsKey(event.getEntity().getCustomName()))
-				{
-					event.setCancelled(true);
-				}
-			}
-		}
-		area.AreaAPI A = new area.AreaAPI();
-		String[] Area = A.getAreaName(event.getEntity());
+		
+		if(event.getSpawnReason() == SpawnReason.SLIME_SPLIT &&
+				event.getEntity().getCustomName() != null &&
+				main.MainServerOption.MonsterNameMatching.containsKey(event.getEntity().getCustomName()))
+			event.setCancelled(true);
+		
+		area.AreaAPI areaApi = new area.AreaAPI();
+		String[] areaNameArrays = areaApi.getAreaName(event.getEntity());
 		
 		YamlLoader areaYaml = new YamlLoader();
-		if(Area != null)
+		if(areaNameArrays != null)
 		{
-			if(A.getAreaOption(Area[0], (char) 3) == false)
+			if( ! areaApi.getAreaOption(areaNameArrays[0], (char) 3))
 			{
 				event.setCancelled(true);
 				return;
 			}
-			else if(A.getAreaOption(Area[0], (char) 8) == false)
+			else if( ! areaApi.getAreaOption(areaNameArrays[0], (char) 8))
 			{
 				areaYaml.getConfig("Area/AreaList.yml");
-				String AreaName = A.getAreaName(event.getEntity())[0];
-				Object[] MobNameList = areaYaml.getConfigurationSection(AreaName+".Monster").getKeys(false).toArray();
-				boolean isExit = false;
-				for(int count = 0;count<10;count++)
+				String areaName = areaApi.getAreaName(event.getEntity())[0];
+				String[] mobNameArrays = areaYaml.getConfigurationSection(areaName+".Monster").getKeys(false).toArray(new String[0]);
+				int randomMob = 0;
+				NumericUtil nu = new NumericUtil();
+				for(int count = 0; count < 10; count++)
 				{
-					if(isExit) break;
-					if(MobNameList.length != 0)
+					if(mobNameArrays.length != 0)
 					{
-						short RandomMob = (short) new util.NumericUtil().RandomNum(0, MobNameList.length-1);
-						if(main.MainServerOption.MonsterList.containsKey(MobNameList[RandomMob].toString()))
+						randomMob = nu.RandomNum(0, mobNameArrays.length-1);
+						if(main.MainServerOption.MonsterList.containsKey(mobNameArrays[randomMob]))
 						{
-							new monster.MonsterSpawn().SpawnMob(event.getLocation(), MobNameList[RandomMob].toString(), (byte) -1, null,(char) -1, false);
-							isExit = true;
+							new monster.MonsterSpawn().spawnMonster(event.getLocation(), mobNameArrays[randomMob], (byte) -1, null,(char) -1, false);
+							break;
 						}
 						else
 						{
-							areaYaml.removeKey(AreaName+".Monster."+MobNameList[RandomMob]);
+							areaYaml.removeKey(areaName+".Monster."+mobNameArrays[randomMob]);
 							areaYaml.saveConfig();
 						}
 					}
@@ -97,70 +92,69 @@ public class MonsterSpawn
 		return;
 	}
 	
-	public void CreateMonster(String MonsterName)
+	public void createMonster(String monsterName)
 	{
-		ItemStack Item = new ItemStack(Material.AIR);
+		ItemStack item = new ItemStack(Material.AIR);
 		YamlLoader monsterYaml = new YamlLoader();
 		monsterYaml.getConfig("Monster/MonsterList.yml");
 		
-		monsterYaml.set(MonsterName+".Name", MonsterName);
-		monsterYaml.set(MonsterName+".Type", "좀비");
-		monsterYaml.set(MonsterName+".AI", "일반 행동");
-		monsterYaml.set(MonsterName+".EXP", 15);
-		monsterYaml.set(MonsterName+".Biome", "NULL");
-		monsterYaml.set(MonsterName+".HP", 20);
-		monsterYaml.set(MonsterName+".MIN_Money", 1);
-		monsterYaml.set(MonsterName+".MAX_Money", 10);
-		monsterYaml.set(MonsterName+".STR", 10);
-		monsterYaml.set(MonsterName+".DEX", 10);
-		monsterYaml.set(MonsterName+".INT", 10);
-		monsterYaml.set(MonsterName+".WILL", 10);
-		monsterYaml.set(MonsterName+".LUK", 10);
-		monsterYaml.set(MonsterName+".DEF", 0);
-		monsterYaml.set(MonsterName+".Protect", 0);
-		monsterYaml.set(MonsterName+".Magic_DEF", 0);
-		monsterYaml.set(MonsterName+".Magic_Protect", 0);
-		monsterYaml.set(MonsterName+".Head.DropChance", 0);
-		monsterYaml.set(MonsterName+".Head.Item", Item);
-		monsterYaml.set(MonsterName+".Chest.DropChance", 0);
-		monsterYaml.set(MonsterName+".Chest.Item", Item);
-		monsterYaml.set(MonsterName+".Leggings.DropChance", 0);
-		monsterYaml.set(MonsterName+".Leggings.Item", Item);
-		monsterYaml.set(MonsterName+".Boots.DropChance", 0);
-		monsterYaml.set(MonsterName+".Boots.Item", Item);
-		monsterYaml.set(MonsterName+".Hand.DropChance", 0);
-		monsterYaml.set(MonsterName+".Hand.Item", Item);
-		monsterYaml.set(MonsterName+".OffHand.DropChance", 0);
-		monsterYaml.set(MonsterName+".OffHand.Item", Item);
+		monsterYaml.set(monsterName+".Name", monsterName);
+		monsterYaml.set(monsterName+".Type", "좀비");
+		monsterYaml.set(monsterName+".AI", "일반 행동");
+		monsterYaml.set(monsterName+".EXP", 15);
+		monsterYaml.set(monsterName+".Biome", "NULL");
+		monsterYaml.set(monsterName+".HP", 20);
+		monsterYaml.set(monsterName+".MIN_Money", 1);
+		monsterYaml.set(monsterName+".MAX_Money", 10);
+		monsterYaml.set(monsterName+".STR", 10);
+		monsterYaml.set(monsterName+".DEX", 10);
+		monsterYaml.set(monsterName+".INT", 10);
+		monsterYaml.set(monsterName+".WILL", 10);
+		monsterYaml.set(monsterName+".LUK", 10);
+		monsterYaml.set(monsterName+".DEF", 0);
+		monsterYaml.set(monsterName+".Protect", 0);
+		monsterYaml.set(monsterName+".Magic_DEF", 0);
+		monsterYaml.set(monsterName+".Magic_Protect", 0);
+		monsterYaml.set(monsterName+".Head.DropChance", 0);
+		monsterYaml.set(monsterName+".Head.Item", item);
+		monsterYaml.set(monsterName+".Chest.DropChance", 0);
+		monsterYaml.set(monsterName+".Chest.Item", item);
+		monsterYaml.set(monsterName+".Leggings.DropChance", 0);
+		monsterYaml.set(monsterName+".Leggings.Item", item);
+		monsterYaml.set(monsterName+".Boots.DropChance", 0);
+		monsterYaml.set(monsterName+".Boots.Item", item);
+		monsterYaml.set(monsterName+".Hand.DropChance", 0);
+		monsterYaml.set(monsterName+".Hand.Item", item);
+		monsterYaml.set(monsterName+".OffHand.DropChance", 0);
+		monsterYaml.set(monsterName+".OffHand.Item", item);
 		monsterYaml.saveConfig();
 		return;
 	}
 
-	public void StayLive(Entity e, boolean isStayLive)
+	public void stayLive(Entity e, boolean isStayLive)
 	{
-		if(e.getType()!=EntityType.ENDER_CRYSTAL)
-			if(!e.isDead())
-			{
-				LivingEntity LE = (LivingEntity) e;
-				LE.setRemoveWhenFarAway(isStayLive);
-			}
+		if(e.getType()!=EntityType.ENDER_CRYSTAL && !e.isDead())
+		{
+			LivingEntity le = (LivingEntity) e;
+			le.setRemoveWhenFarAway(isStayLive);
+		}
 	}
 	
-	public void SpawnMob(Location loc, String mob, byte DungeonSpawning, int[] XYZLoc, char Group, boolean isStayLive)
+	public void spawnMonster(Location loc, String monsterName, byte dungeonSpawning, int[] xyzLoc, char group, boolean isStayLive)
 	{
-		if(mob.charAt(0)=='놂')
+		if(monsterName.charAt(0)=='놂')
 		{
-			String Type = mob.substring(1);
-			mob = null;
-			CreateCreature(Type, loc, mob, DungeonSpawning, XYZLoc, Group, isStayLive);
+			String type = monsterName.substring(1);
+			monsterName = null;
+			createCreature(type, loc, monsterName, dungeonSpawning, xyzLoc, group, isStayLive);
 		}
 		loc.add(0.5, 1, 0.5);
 		YamlLoader monsterYaml = new YamlLoader();
 		monsterYaml.getConfig("Monster/MonsterList.yml");
-		String Type = monsterYaml.getString(mob + ".Type");
-		if(monsterYaml.getString(mob+".Name")!=null)
+		String type = monsterYaml.getString(monsterName + ".Type");
+		if(monsterYaml.getString(monsterName+".Name")!=null)
 		{
-			String aiString = monsterYaml.getString(mob + ".AI");
+			String aiString = monsterYaml.getString(monsterName + ".AI");
 			int ai = 0;
 			
 			if(aiString.equals("무뇌아"))
@@ -174,320 +168,267 @@ public class MonsterSpawn
 			
 			if(!(aiString.equals("선공")||aiString.equals("비선공")||aiString.equals("무뇌아")||aiString.equals("동물")||aiString.equals("일반 행동")))
 			{
-				monsterYaml.set(mob + ".AI", "일반 행동");
+				monsterYaml.set(monsterName + ".AI", "일반 행동");
 				monsterYaml.saveConfig();
 			}
 			if(!aiString.equals("일반 행동"))
 			{
-				String CustomMobName = "CUSTOM"+mob;
-				int CustomMobID = getMonsterID(monsterYaml.getString(mob + ".Type"));
-				LivingEntity E = null;
-				if(Type.equals("좀비"))
-					E = (CraftZombie) CustomZombie.spawn(loc, ai);
-				else if(Type.equals("자이언트"))
-					E = (CraftGiant) CustomGiant.spawn(loc, ai);
-				else if(Type.equals("스켈레톤"))
-					E = (CraftSkeleton) CustomSkeleton.spawn(loc, ai);
-				else if(Type.equals("네더스켈레톤"))
-					E = (CraftWitherSkeleton) CustomWitherSkeleton.spawn(loc, ai);
-				else if(Type.equals("엔더맨"))
-					E = (CraftEnderman) CustomEnderman.spawn(loc, ai);
-				else if(Type.equals("크리퍼")||Type.equals("번개크리퍼"))
-					E = (CraftCreeper) CustomCreeper.spawn(loc, ai);
-				else if(Type.equals("거미"))
-					E = (CraftSpider) CustomSpider.spawn(loc, ai);
-				else if(Type.equals("동굴거미"))
-					E = (CraftCaveSpider) CustomCaveSpider.spawn(loc, ai);
-				else if(Type.equals("좀벌레"))
-					E = (CraftSilverfish) CustomSilverFish.spawn(loc, ai);
-				else if(Type.equals("엔더진드기"))
-					E = (CraftEndermite) CustomEnderMite.spawn(loc, ai);
-				else if(Type.equals("블레이즈"))
-					E = (CraftBlaze) CustomBlaze.spawn(loc, ai);
-				else if(Type.equals("좀비피그맨"))
-					E = (CraftPigZombie) CustomPigZombie.spawn(loc, ai);
-				else if(Type.equals("마녀"))
-					E = (CraftWitch) CustomWitch.spawn(loc, ai);
-				else if(Type.equals("위더"))
-					E = (CraftWither) CustomWither.spawn(loc, ai);
-				else if(Type.equals("수호자"))
-					E = (CraftGuardian) CustomGuardian.spawn(loc, ai);
-				else if(Type.equals("북극곰"))
-					E = (CraftPolarBear) CustomPolarBear.spawn(loc, ai);
-				else if(Type.equals("엔더크리스탈"))
-					CreateCreature(Type, loc, mob, DungeonSpawning, XYZLoc, Group, isStayLive);
+				LivingEntity entity = null;
+				if(type.equals("좀비"))
+					entity = (CraftZombie) CustomZombie.spawn(loc, ai);
+				else if(type.equals("자이언트"))
+					entity = (CraftGiant) CustomGiant.spawn(loc, ai);
+				else if(type.equals("스켈레톤"))
+					entity = (CraftSkeleton) CustomSkeleton.spawn(loc, ai);
+				else if(type.equals("네더스켈레톤"))
+					entity = (CraftWitherSkeleton) CustomWitherSkeleton.spawn(loc, ai);
+				else if(type.equals("엔더맨"))
+					entity = (CraftEnderman) CustomEnderman.spawn(loc, ai);
+				else if(type.equals("크리퍼")||type.equals("번개크리퍼"))
+					entity = (CraftCreeper) CustomCreeper.spawn(loc, ai);
+				else if(type.equals("거미"))
+					entity = (CraftSpider) CustomSpider.spawn(loc, ai);
+				else if(type.equals("동굴거미"))
+					entity = (CraftCaveSpider) CustomCaveSpider.spawn(loc, ai);
+				else if(type.equals("좀벌레"))
+					entity = (CraftSilverfish) CustomSilverFish.spawn(loc, ai);
+				else if(type.equals("엔더진드기"))
+					entity = (CraftEndermite) CustomEnderMite.spawn(loc, ai);
+				else if(type.equals("블레이즈"))
+					entity = (CraftBlaze) CustomBlaze.spawn(loc, ai);
+				else if(type.equals("좀비피그맨"))
+					entity = (CraftPigZombie) CustomPigZombie.spawn(loc, ai);
+				else if(type.equals("마녀"))
+					entity = (CraftWitch) CustomWitch.spawn(loc, ai);
+				else if(type.equals("위더"))
+					entity = (CraftWither) CustomWither.spawn(loc, ai);
+				else if(type.equals("수호자"))
+					entity = (CraftGuardian) CustomGuardian.spawn(loc, ai);
+				else if(type.equals("북극곰"))
+					entity = (CraftPolarBear) CustomPolarBear.spawn(loc, ai);
+				else if(type.equals("엔더크리스탈"))
+					createCreature(type, loc, monsterName, dungeonSpawning, xyzLoc, group, isStayLive);
 
-				else if (Type.equals("엘더가디언"))
-					E = (CraftElderGuardian) CustomElderGuardian.spawn(loc, ai);
-				else if (Type.equals("스트레이"))
-					E = (CraftStray) CustomStray.spawn(loc, ai);
-				else if (Type.equals("허스크"))
-					E = (CraftHusk) CustomHusk.spawn(loc, ai);
-				else if (Type.equals("주민좀비"))
-					E = (CraftVillagerZombie) CustomZombieVillager.spawn(loc, ai);
-				else if (Type.equals("소환사"))
-					E = (CraftEvoker) CustomEvoker.spawn(loc, ai);
-				else if (Type.equals("벡스"))
-					E = (CraftVex) CustomVex.spawn(loc, ai);
-				else if (Type.equals("변명자"))
-					E = (CraftVindicator) CustomVindicator.spawn(loc, ai);
-				else if (Type.equals("셜커"))
-					E = (Shulker) CustomShulker.spawn(loc, ai);
+				else if (type.equals("엘더가디언"))
+					entity = (CraftElderGuardian) CustomElderGuardian.spawn(loc, ai);
+				else if (type.equals("스트레이"))
+					entity = (CraftStray) CustomStray.spawn(loc, ai);
+				else if (type.equals("허스크"))
+					entity = (CraftHusk) CustomHusk.spawn(loc, ai);
+				else if (type.equals("주민좀비"))
+					entity = (CraftVillagerZombie) CustomZombieVillager.spawn(loc, ai);
+				else if (type.equals("소환사"))
+					entity = (CraftEvoker) CustomEvoker.spawn(loc, ai);
+				else if (type.equals("벡스"))
+					entity = (CraftVex) CustomVex.spawn(loc, ai);
+				else if (type.equals("변명자"))
+					entity = (CraftVindicator) CustomVindicator.spawn(loc, ai);
+				else if (type.equals("셜커"))
+					entity = (Shulker) CustomShulker.spawn(loc, ai);
 				// 몬스터 형태의 몹
-				else if (Type.equals("스켈레톤말"))
-					E = (LivingEntity) CustomSkeletonHorse.spawn(loc, ai);
-				else if (Type.equals("좀비말"))
-					E = (LivingEntity) CustomZombieHorse.spawn(loc, ai);
-				else if (Type.equals("당나귀"))
-					E = (LivingEntity) CustomDonkey.spawn(loc, ai);
-				else if (Type.equals("노새"))
-					E = (LivingEntity) CustomMule.spawn(loc, ai);
-				else if (Type.equals("인간"))
-					E = (LivingEntity) CustomHuman.spawn(loc, ai);
-				else if (Type.equals("박쥐"))
-					E = (LivingEntity) CustomBat.spawn(loc, ai);
-				else if (Type.equals("돼지"))
-					E = (LivingEntity) CustomPig.spawn(loc, ai);
-				else if (Type.equals("양"))
-					E = (LivingEntity) CustomSheep.spawn(loc, ai);
-				else if (Type.equals("소"))
-					E = (LivingEntity) CustomCow.spawn(loc, ai);
-				else if (Type.equals("닭"))
-					E = (LivingEntity) CustomChicken.spawn(loc, ai);
-				else if (Type.equals("오징어"))
-					E = (LivingEntity) CustomSquid.spawn(loc, ai);
-				else if (Type.equals("늑대"))
-					E = (LivingEntity) CustomWolf.spawn(loc, ai);
-				else if (Type.equals("버섯소"))
-					E = (LivingEntity) CustomMooshroom.spawn(loc, ai);
-				else if (Type.equals("눈사람"))
-					E = (LivingEntity) CustomSnowman.spawn(loc, ai);
-				else if (Type.equals("오셀롯"))
-					E = (LivingEntity) CustomOcelot.spawn(loc, ai);
-				else if (Type.equals("철골렘"))
-					E = (LivingEntity) CustomIronGolem.spawn(loc, ai);
-				else if (Type.equals("말"))
-					E = (LivingEntity) CustomHorse.spawn(loc, ai);
-				else if (Type.equals("토끼"))
-					E = (LivingEntity) CustomRabbit.spawn(loc, ai);
-				else if (Type.equals("라마"))
-					E = (LivingEntity) CustomLlama.spawn(loc, ai);
-				else if (Type.equals("주민"))
-					E = (LivingEntity) CustomVillager.spawn(loc, ai);
+				else if (type.equals("스켈레톤말"))
+					entity = (LivingEntity) CustomSkeletonHorse.spawn(loc, ai);
+				else if (type.equals("좀비말"))
+					entity = (LivingEntity) CustomZombieHorse.spawn(loc, ai);
+				else if (type.equals("당나귀"))
+					entity = (LivingEntity) CustomDonkey.spawn(loc, ai);
+				else if (type.equals("노새"))
+					entity = (LivingEntity) CustomMule.spawn(loc, ai);
+				else if (type.equals("인간"))
+					entity = (LivingEntity) CustomHuman.spawn(loc, ai);
+				else if (type.equals("박쥐"))
+					entity = (LivingEntity) CustomBat.spawn(loc, ai);
+				else if (type.equals("돼지"))
+					entity = (LivingEntity) CustomPig.spawn(loc, ai);
+				else if (type.equals("양"))
+					entity = (LivingEntity) CustomSheep.spawn(loc, ai);
+				else if (type.equals("소"))
+					entity = (LivingEntity) CustomCow.spawn(loc, ai);
+				else if (type.equals("닭"))
+					entity = (LivingEntity) CustomChicken.spawn(loc, ai);
+				else if (type.equals("오징어"))
+					entity = (LivingEntity) CustomSquid.spawn(loc, ai);
+				else if (type.equals("늑대"))
+					entity = (LivingEntity) CustomWolf.spawn(loc, ai);
+				else if (type.equals("버섯소"))
+					entity = (LivingEntity) CustomMooshroom.spawn(loc, ai);
+				else if (type.equals("눈사람"))
+					entity = (LivingEntity) CustomSnowman.spawn(loc, ai);
+				else if (type.equals("오셀롯"))
+					entity = (LivingEntity) CustomOcelot.spawn(loc, ai);
+				else if (type.equals("철골렘"))
+					entity = (LivingEntity) CustomIronGolem.spawn(loc, ai);
+				else if (type.equals("말"))
+					entity = (LivingEntity) CustomHorse.spawn(loc, ai);
+				else if (type.equals("토끼"))
+					entity = (LivingEntity) CustomRabbit.spawn(loc, ai);
+				else if (type.equals("라마"))
+					entity = (LivingEntity) CustomLlama.spawn(loc, ai);
+				else if (type.equals("주민"))
+					entity = (LivingEntity) CustomVillager.spawn(loc, ai);
 
-				if(E!=null)
-					E = getEntity(E, mob, DungeonSpawning, XYZLoc, Group);
+				if(entity!=null)
+					entity = getEntity(entity, monsterName, dungeonSpawning, xyzLoc, group);
 			}
 			else
-				CreateCreature(Type, loc, mob, DungeonSpawning, XYZLoc, Group, isStayLive);
+				createCreature(type, loc, monsterName, dungeonSpawning, xyzLoc, group, isStayLive);
 		}
 		return;
 	}
 	
-	private void CreateCreature(String Type, Location loc, String mob, byte DungeonSpawning, int[] XYZLoc, char Group, boolean isStayLive)
+	private void createCreature(String type, Location loc, String mob, byte dungeonSpawning, int[] xyzLoc, char group, boolean isStayLive)
 	{
-		switch(Type)
+		switch(type)
 		{
-			case "좀비":{Zombie zombie = (Zombie) loc.getWorld().spawn(loc, Zombie.class);zombie = (Zombie) getEntity(zombie,mob, DungeonSpawning, XYZLoc, Group);}break;
-			case "자이언트":{Giant giant = (Giant) loc.getWorld().spawn(loc, Giant.class);giant = (Giant) getEntity(giant,mob, DungeonSpawning, XYZLoc, Group);StayLive(giant, isStayLive);}break;
-			case "스켈레톤":{Skeleton skeleton = (Skeleton) loc.getWorld().spawn(loc, Skeleton.class);skeleton = (Skeleton) getEntity(skeleton,mob, DungeonSpawning, XYZLoc, Group);StayLive(skeleton, isStayLive);}break;
-			case "네더스켈레톤":{WitherSkeleton skeleton = (WitherSkeleton) loc.getWorld().spawn(loc, WitherSkeleton.class);skeleton = (WitherSkeleton) getEntity(skeleton,mob, DungeonSpawning, XYZLoc, Group);StayLive(skeleton, isStayLive);}break;
-			case "엔더맨":{Enderman enderman = (Enderman) loc.getWorld().spawn(loc, Enderman.class);enderman = (Enderman) getEntity(enderman,mob, DungeonSpawning, XYZLoc, Group);StayLive(enderman, isStayLive);}break;
-			case "크리퍼":{Creeper creeper = (Creeper) loc.getWorld().spawn(loc, Creeper.class);creeper = (Creeper) getEntity(creeper,mob, DungeonSpawning, XYZLoc, Group);StayLive(creeper, isStayLive);}break;
-			case "번개크리퍼":{Creeper Lcreeper = (Creeper) loc.getWorld().spawn(loc, Creeper.class);Lcreeper = (Creeper) getEntity(Lcreeper,mob, DungeonSpawning, XYZLoc, Group);StayLive(Lcreeper, isStayLive);}break;
-			case "거미":{Spider spider = (Spider) loc.getWorld().spawn(loc, Spider.class);spider = (Spider) getEntity(spider,mob, DungeonSpawning, XYZLoc, Group);StayLive(spider, isStayLive);}break;
-			case "동굴거미":{CaveSpider cavespider = (CaveSpider) loc.getWorld().spawn(loc, CaveSpider.class);cavespider = (CaveSpider) getEntity(cavespider,mob, DungeonSpawning, XYZLoc, Group);StayLive(cavespider, isStayLive);}break;
-			case "좀벌레":{Silverfish silverfish = (Silverfish) loc.getWorld().spawn(loc, Silverfish.class);silverfish = (Silverfish) getEntity(silverfish,mob, DungeonSpawning, XYZLoc, Group);StayLive(silverfish, isStayLive);}break;
-			case "엔더진드기":{Endermite endermite = (Endermite) loc.getWorld().spawn(loc, Endermite.class);endermite = (Endermite) getEntity(endermite,mob, DungeonSpawning, XYZLoc, Group);StayLive(endermite, isStayLive);}break;
-			case "슬라임":case "초대형슬라임": case "특대슬라임": case "큰슬라임": case "보통슬라임": case "작은슬라임":{Slime Sslime = (Slime) loc.getWorld().spawn(loc, Slime.class);Sslime = (Slime) getEntity(Sslime,mob, DungeonSpawning, XYZLoc, Group);StayLive(Sslime, isStayLive);}break;
-			case "마그마큐브": case "초대형마그마큐브":case "특대마그마큐브": case "큰마그마큐브": case "보통마그마큐브": case "작은마그마큐브":{MagmaCube Smagmacube = (MagmaCube) loc.getWorld().spawn(loc, MagmaCube.class);Smagmacube = (MagmaCube) getEntity(Smagmacube,mob, DungeonSpawning, XYZLoc, Group);StayLive(Smagmacube, isStayLive);}break;
-			case "블레이즈":{Blaze blaze = (Blaze) loc.getWorld().spawn(loc, Blaze.class);blaze = (Blaze) getEntity(blaze,mob, DungeonSpawning, XYZLoc, Group);StayLive(blaze, isStayLive);}break;
-			case "가스트":{Ghast ghast = (Ghast) loc.getWorld().spawn(loc, Ghast.class);ghast = (Ghast) getEntity(ghast,mob, DungeonSpawning, XYZLoc, Group);StayLive(ghast, isStayLive);}break;
-			case "좀비피그맨":{PigZombie pigzombie = (PigZombie) loc.getWorld().spawn(loc, PigZombie.class);pigzombie = (PigZombie) getEntity(pigzombie,mob, DungeonSpawning, XYZLoc, Group);StayLive(pigzombie, isStayLive);}break;
-			case "마녀":{Witch witch = (Witch) loc.getWorld().spawn(loc, Witch.class);witch = (Witch) getEntity(witch,mob, DungeonSpawning, XYZLoc, Group);StayLive(witch, isStayLive);}break;
-			case "위더":{Wither wither = (Wither) loc.getWorld().spawn(loc, Wither.class);wither = (Wither) getEntity(wither,mob, DungeonSpawning, XYZLoc, Group);StayLive(wither, isStayLive);}break;
-			case "엔더드래곤":{EnderDragon ED = (EnderDragon) loc.getWorld().spawn(loc, EnderDragon.class);ED = (EnderDragon) getEntity(ED,mob, DungeonSpawning, XYZLoc, Group);StayLive(ED, isStayLive);}break;
-			case "엔더크리스탈":{EnderCrystal EC = (EnderCrystal) loc.getWorld().spawn(loc, EnderCrystal.class);EC = getEnderCrystal(EC,mob, DungeonSpawning, XYZLoc, Group);StayLive(EC, isStayLive);}break;
-			case "수호자":{Guardian guardian = (Guardian) loc.getWorld().spawn(loc, Guardian.class);guardian = (Guardian) getEntity(guardian,mob, DungeonSpawning, XYZLoc, Group);StayLive(guardian, isStayLive);}break;
-			case "양":{Sheep sheep = (Sheep) loc.getWorld().spawn(loc, Sheep.class);sheep = (Sheep) getEntity(sheep,mob, DungeonSpawning, XYZLoc, Group);StayLive(sheep, isStayLive);}break;
-			case "소":{Cow cow = (Cow) loc.getWorld().spawn(loc, Cow.class);cow = (Cow) getEntity(cow,mob, DungeonSpawning, XYZLoc, Group);StayLive(cow, isStayLive);}break;
-			case "돼지":{Pig pig = (Pig) loc.getWorld().spawn(loc, Pig.class);pig = (Pig) getEntity(pig,mob, DungeonSpawning, XYZLoc, Group);StayLive(pig, isStayLive);}break;
-			case "말":{Horse horse = (Horse) loc.getWorld().spawn(loc, Horse.class);horse = (Horse) getEntity(horse,mob, DungeonSpawning, XYZLoc, Group);StayLive(horse, isStayLive);}break;
-			case "토끼":{Rabbit rabbit = (Rabbit) loc.getWorld().spawn(loc, Rabbit.class);rabbit = (Rabbit) getEntity(rabbit,mob, DungeonSpawning, XYZLoc, Group);StayLive(rabbit, isStayLive);}break;
-			case "오셀롯":{Ocelot oceleot = (Ocelot) loc.getWorld().spawn(loc, Ocelot.class);oceleot = (Ocelot) getEntity(oceleot,mob, DungeonSpawning, XYZLoc, Group);StayLive(oceleot, isStayLive);}break;
-			case "늑대":{Wolf wolf = (Wolf) loc.getWorld().spawn(loc, Wolf.class);wolf = (Wolf) getEntity(wolf,mob, DungeonSpawning, XYZLoc, Group);StayLive(wolf, isStayLive);}break;
-			case "닭":{Chicken chicken = (Chicken) loc.getWorld().spawn(loc, Chicken.class);chicken = (Chicken) getEntity(chicken,mob, DungeonSpawning, XYZLoc, Group);StayLive(chicken, isStayLive);}break;
-			case "버섯소":{MushroomCow Mcow = (MushroomCow) loc.getWorld().spawn(loc, MushroomCow.class);Mcow = (MushroomCow) getEntity(Mcow,mob, DungeonSpawning, XYZLoc, Group);StayLive(Mcow, isStayLive);}break;
-			case "박쥐":{Bat bat = (Bat) loc.getWorld().spawn(loc, Bat.class);bat = (Bat) getEntity(bat,mob, DungeonSpawning, XYZLoc, Group);StayLive(bat, isStayLive);}break;
-			case "오징어":{Squid squid = (Squid) loc.getWorld().spawn(loc, Squid.class);squid = (Squid) getEntity(squid,mob, DungeonSpawning, XYZLoc, Group);StayLive(squid, isStayLive);}break;
-			case "주민":{Villager villager = (Villager) loc.getWorld().spawn(loc, Villager.class);villager = (Villager) getEntity(villager,mob, DungeonSpawning, XYZLoc, Group);StayLive(villager, isStayLive);}break;
-			case "눈사람":{Snowman snowman = (Snowman) loc.getWorld().spawn(loc, Snowman.class);snowman = (Snowman) getEntity(snowman,mob, DungeonSpawning, XYZLoc, Group);StayLive(snowman, isStayLive);}break;
-			case "철골렘":{IronGolem golem = (IronGolem) loc.getWorld().spawn(loc, IronGolem.class);golem = (IronGolem) getEntity(golem,mob, DungeonSpawning, XYZLoc, Group);StayLive(golem, isStayLive);}break;
-			case "셜커":{Shulker shulker = (Shulker) loc.getWorld().spawn(loc, Shulker.class);shulker = (Shulker) getEntity(shulker,mob, DungeonSpawning, XYZLoc, Group);StayLive(shulker, isStayLive);}break;
-			case "북극곰":{PolarBear polarBear = (PolarBear) loc.getWorld().spawn(loc, PolarBear.class);polarBear = (PolarBear) getEntity(polarBear,mob, DungeonSpawning, XYZLoc, Group);StayLive(polarBear, isStayLive);}break;
+			case "좀비":{Zombie zombie = (Zombie) loc.getWorld().spawn(loc, Zombie.class);zombie = (Zombie) getEntity(zombie,mob, dungeonSpawning, xyzLoc, group);}break;
+			case "자이언트":{Giant giant = (Giant) loc.getWorld().spawn(loc, Giant.class);giant = (Giant) getEntity(giant,mob, dungeonSpawning, xyzLoc, group);stayLive(giant, isStayLive);}break;
+			case "스켈레톤":{Skeleton skeleton = (Skeleton) loc.getWorld().spawn(loc, Skeleton.class);skeleton = (Skeleton) getEntity(skeleton,mob, dungeonSpawning, xyzLoc, group);stayLive(skeleton, isStayLive);}break;
+			case "네더스켈레톤":{WitherSkeleton skeleton = (WitherSkeleton) loc.getWorld().spawn(loc, WitherSkeleton.class);skeleton = (WitherSkeleton) getEntity(skeleton,mob, dungeonSpawning, xyzLoc, group);stayLive(skeleton, isStayLive);}break;
+			case "엔더맨":{Enderman enderman = (Enderman) loc.getWorld().spawn(loc, Enderman.class);enderman = (Enderman) getEntity(enderman,mob, dungeonSpawning, xyzLoc, group);stayLive(enderman, isStayLive);}break;
+			case "크리퍼":{Creeper creeper = (Creeper) loc.getWorld().spawn(loc, Creeper.class);creeper = (Creeper) getEntity(creeper,mob, dungeonSpawning, xyzLoc, group);stayLive(creeper, isStayLive);}break;
+			case "번개크리퍼":{Creeper Lcreeper = (Creeper) loc.getWorld().spawn(loc, Creeper.class);Lcreeper = (Creeper) getEntity(Lcreeper,mob, dungeonSpawning, xyzLoc, group);stayLive(Lcreeper, isStayLive);}break;
+			case "거미":{Spider spider = (Spider) loc.getWorld().spawn(loc, Spider.class);spider = (Spider) getEntity(spider,mob, dungeonSpawning, xyzLoc, group);stayLive(spider, isStayLive);}break;
+			case "동굴거미":{CaveSpider cavespider = (CaveSpider) loc.getWorld().spawn(loc, CaveSpider.class);cavespider = (CaveSpider) getEntity(cavespider,mob, dungeonSpawning, xyzLoc, group);stayLive(cavespider, isStayLive);}break;
+			case "좀벌레":{Silverfish silverfish = (Silverfish) loc.getWorld().spawn(loc, Silverfish.class);silverfish = (Silverfish) getEntity(silverfish,mob, dungeonSpawning, xyzLoc, group);stayLive(silverfish, isStayLive);}break;
+			case "엔더진드기":{Endermite endermite = (Endermite) loc.getWorld().spawn(loc, Endermite.class);endermite = (Endermite) getEntity(endermite,mob, dungeonSpawning, xyzLoc, group);stayLive(endermite, isStayLive);}break;
+			case "슬라임":case "초대형슬라임": case "특대슬라임": case "큰슬라임": case "보통슬라임": case "작은슬라임":{Slime Sslime = (Slime) loc.getWorld().spawn(loc, Slime.class);Sslime = (Slime) getEntity(Sslime,mob, dungeonSpawning, xyzLoc, group);stayLive(Sslime, isStayLive);}break;
+			case "마그마큐브": case "초대형마그마큐브":case "특대마그마큐브": case "큰마그마큐브": case "보통마그마큐브": case "작은마그마큐브":{MagmaCube Smagmacube = (MagmaCube) loc.getWorld().spawn(loc, MagmaCube.class);Smagmacube = (MagmaCube) getEntity(Smagmacube,mob, dungeonSpawning, xyzLoc, group);stayLive(Smagmacube, isStayLive);}break;
+			case "블레이즈":{Blaze blaze = (Blaze) loc.getWorld().spawn(loc, Blaze.class);blaze = (Blaze) getEntity(blaze,mob, dungeonSpawning, xyzLoc, group);stayLive(blaze, isStayLive);}break;
+			case "가스트":{Ghast ghast = (Ghast) loc.getWorld().spawn(loc, Ghast.class);ghast = (Ghast) getEntity(ghast,mob, dungeonSpawning, xyzLoc, group);stayLive(ghast, isStayLive);}break;
+			case "좀비피그맨":{PigZombie pigzombie = (PigZombie) loc.getWorld().spawn(loc, PigZombie.class);pigzombie = (PigZombie) getEntity(pigzombie,mob, dungeonSpawning, xyzLoc, group);stayLive(pigzombie, isStayLive);}break;
+			case "마녀":{Witch witch = (Witch) loc.getWorld().spawn(loc, Witch.class);witch = (Witch) getEntity(witch,mob, dungeonSpawning, xyzLoc, group);stayLive(witch, isStayLive);}break;
+			case "위더":{Wither wither = (Wither) loc.getWorld().spawn(loc, Wither.class);wither = (Wither) getEntity(wither,mob, dungeonSpawning, xyzLoc, group);stayLive(wither, isStayLive);}break;
+			case "엔더드래곤":{EnderDragon ED = (EnderDragon) loc.getWorld().spawn(loc, EnderDragon.class);ED = (EnderDragon) getEntity(ED,mob, dungeonSpawning, xyzLoc, group);stayLive(ED, isStayLive);}break;
+			case "엔더크리스탈":{EnderCrystal EC = (EnderCrystal) loc.getWorld().spawn(loc, EnderCrystal.class);EC = getEnderCrystal(EC,mob, dungeonSpawning, xyzLoc, group);stayLive(EC, isStayLive);}break;
+			case "수호자":{Guardian guardian = (Guardian) loc.getWorld().spawn(loc, Guardian.class);guardian = (Guardian) getEntity(guardian,mob, dungeonSpawning, xyzLoc, group);stayLive(guardian, isStayLive);}break;
+			case "양":{Sheep sheep = (Sheep) loc.getWorld().spawn(loc, Sheep.class);sheep = (Sheep) getEntity(sheep,mob, dungeonSpawning, xyzLoc, group);stayLive(sheep, isStayLive);}break;
+			case "소":{Cow cow = (Cow) loc.getWorld().spawn(loc, Cow.class);cow = (Cow) getEntity(cow,mob, dungeonSpawning, xyzLoc, group);stayLive(cow, isStayLive);}break;
+			case "돼지":{Pig pig = (Pig) loc.getWorld().spawn(loc, Pig.class);pig = (Pig) getEntity(pig,mob, dungeonSpawning, xyzLoc, group);stayLive(pig, isStayLive);}break;
+			case "말":{Horse horse = (Horse) loc.getWorld().spawn(loc, Horse.class);horse = (Horse) getEntity(horse,mob, dungeonSpawning, xyzLoc, group);stayLive(horse, isStayLive);}break;
+			case "토끼":{Rabbit rabbit = (Rabbit) loc.getWorld().spawn(loc, Rabbit.class);rabbit = (Rabbit) getEntity(rabbit,mob, dungeonSpawning, xyzLoc, group);stayLive(rabbit, isStayLive);}break;
+			case "오셀롯":{Ocelot oceleot = (Ocelot) loc.getWorld().spawn(loc, Ocelot.class);oceleot = (Ocelot) getEntity(oceleot,mob, dungeonSpawning, xyzLoc, group);stayLive(oceleot, isStayLive);}break;
+			case "늑대":{Wolf wolf = (Wolf) loc.getWorld().spawn(loc, Wolf.class);wolf = (Wolf) getEntity(wolf,mob, dungeonSpawning, xyzLoc, group);stayLive(wolf, isStayLive);}break;
+			case "닭":{Chicken chicken = (Chicken) loc.getWorld().spawn(loc, Chicken.class);chicken = (Chicken) getEntity(chicken,mob, dungeonSpawning, xyzLoc, group);stayLive(chicken, isStayLive);}break;
+			case "버섯소":{MushroomCow Mcow = (MushroomCow) loc.getWorld().spawn(loc, MushroomCow.class);Mcow = (MushroomCow) getEntity(Mcow,mob, dungeonSpawning, xyzLoc, group);stayLive(Mcow, isStayLive);}break;
+			case "박쥐":{Bat bat = (Bat) loc.getWorld().spawn(loc, Bat.class);bat = (Bat) getEntity(bat,mob, dungeonSpawning, xyzLoc, group);stayLive(bat, isStayLive);}break;
+			case "오징어":{Squid squid = (Squid) loc.getWorld().spawn(loc, Squid.class);squid = (Squid) getEntity(squid,mob, dungeonSpawning, xyzLoc, group);stayLive(squid, isStayLive);}break;
+			case "주민":{Villager villager = (Villager) loc.getWorld().spawn(loc, Villager.class);villager = (Villager) getEntity(villager,mob, dungeonSpawning, xyzLoc, group);stayLive(villager, isStayLive);}break;
+			case "눈사람":{Snowman snowman = (Snowman) loc.getWorld().spawn(loc, Snowman.class);snowman = (Snowman) getEntity(snowman,mob, dungeonSpawning, xyzLoc, group);stayLive(snowman, isStayLive);}break;
+			case "철골렘":{IronGolem golem = (IronGolem) loc.getWorld().spawn(loc, IronGolem.class);golem = (IronGolem) getEntity(golem,mob, dungeonSpawning, xyzLoc, group);stayLive(golem, isStayLive);}break;
+			case "셜커":{Shulker shulker = (Shulker) loc.getWorld().spawn(loc, Shulker.class);shulker = (Shulker) getEntity(shulker,mob, dungeonSpawning, xyzLoc, group);stayLive(shulker, isStayLive);}break;
+			case "북극곰":{PolarBear polarBear = (PolarBear) loc.getWorld().spawn(loc, PolarBear.class);polarBear = (PolarBear) getEntity(polarBear,mob, dungeonSpawning, xyzLoc, group);stayLive(polarBear, isStayLive);}break;
 			
-			case "엘더가디언":{ElderGuardian elderGuardian = (ElderGuardian) loc.getWorld().spawn(loc, ElderGuardian.class);elderGuardian = (ElderGuardian) getEntity(elderGuardian,mob, DungeonSpawning, XYZLoc, Group);StayLive(elderGuardian, isStayLive);}break;
-			case "스트레이":{Stray stray = (Stray) loc.getWorld().spawn(loc, Stray.class);stray = (Stray) getEntity(stray,mob, DungeonSpawning, XYZLoc, Group);StayLive(stray, isStayLive);}break;
-			case "허스크":{Husk husk = (Husk) loc.getWorld().spawn(loc, Husk.class);husk = (Husk) getEntity(husk,mob, DungeonSpawning, XYZLoc, Group);StayLive(husk, isStayLive);}break;
-			case "주민좀비":{ZombieVillager zombiVillager = (ZombieVillager) loc.getWorld().spawn(loc, ZombieVillager.class);zombiVillager = (ZombieVillager) getEntity(zombiVillager,mob, DungeonSpawning, XYZLoc, Group);StayLive(zombiVillager, isStayLive);}break;
-			case "소환사":{Evoker evoker = (Evoker) loc.getWorld().spawn(loc, Evoker.class);evoker = (Evoker) getEntity(evoker,mob, DungeonSpawning, XYZLoc, Group);StayLive(evoker, isStayLive);}break;
-			case "벡스":{Vex vex = (Vex) loc.getWorld().spawn(loc, Vex.class);vex = (Vex) getEntity(vex,mob, DungeonSpawning, XYZLoc, Group);StayLive(vex, isStayLive);}break;
-			case "변명자":{Vindicator polarBear = (Vindicator) loc.getWorld().spawn(loc, Vindicator.class);polarBear = (Vindicator) getEntity(polarBear,mob, DungeonSpawning, XYZLoc, Group);StayLive(polarBear, isStayLive);}break;
-			case "스켈레톤말":{SkeletonHorse skeletonHorse = (SkeletonHorse) loc.getWorld().spawn(loc, SkeletonHorse.class);skeletonHorse = (SkeletonHorse) getEntity(skeletonHorse,mob, DungeonSpawning, XYZLoc, Group);StayLive(skeletonHorse, isStayLive);}break;
-			case "좀비말":{ZombieHorse zombieHorse = (ZombieHorse) loc.getWorld().spawn(loc, ZombieHorse.class);zombieHorse = (ZombieHorse) getEntity(zombieHorse,mob, DungeonSpawning, XYZLoc, Group);StayLive(zombieHorse, isStayLive);}break;
-			case "당나귀":{Donkey donkey = (Donkey) loc.getWorld().spawn(loc, Donkey.class);donkey = (Donkey) getEntity(donkey,mob, DungeonSpawning, XYZLoc, Group);StayLive(donkey, isStayLive);}break;
-			case "노새":{Mule mule = (Mule) loc.getWorld().spawn(loc, Mule.class);mule = (Mule) getEntity(mule,mob, DungeonSpawning, XYZLoc, Group);StayLive(mule, isStayLive);}break;
-			case "인간":{Player player = (Player) loc.getWorld().spawn(loc, Player.class);player = (Player) getEntity(player,mob, DungeonSpawning, XYZLoc, Group);StayLive(player, isStayLive);}break;
-			case "라마":{Llama llama = (Llama) loc.getWorld().spawn(loc, Llama.class);llama = (Llama) getEntity(llama,mob, DungeonSpawning, XYZLoc, Group);StayLive(llama, isStayLive);}break;
+			case "엘더가디언":{ElderGuardian elderGuardian = (ElderGuardian) loc.getWorld().spawn(loc, ElderGuardian.class);elderGuardian = (ElderGuardian) getEntity(elderGuardian,mob, dungeonSpawning, xyzLoc, group);stayLive(elderGuardian, isStayLive);}break;
+			case "스트레이":{Stray stray = (Stray) loc.getWorld().spawn(loc, Stray.class);stray = (Stray) getEntity(stray,mob, dungeonSpawning, xyzLoc, group);stayLive(stray, isStayLive);}break;
+			case "허스크":{Husk husk = (Husk) loc.getWorld().spawn(loc, Husk.class);husk = (Husk) getEntity(husk,mob, dungeonSpawning, xyzLoc, group);stayLive(husk, isStayLive);}break;
+			case "주민좀비":{ZombieVillager zombiVillager = (ZombieVillager) loc.getWorld().spawn(loc, ZombieVillager.class);zombiVillager = (ZombieVillager) getEntity(zombiVillager,mob, dungeonSpawning, xyzLoc, group);stayLive(zombiVillager, isStayLive);}break;
+			case "소환사":{Evoker evoker = (Evoker) loc.getWorld().spawn(loc, Evoker.class);evoker = (Evoker) getEntity(evoker,mob, dungeonSpawning, xyzLoc, group);stayLive(evoker, isStayLive);}break;
+			case "벡스":{Vex vex = (Vex) loc.getWorld().spawn(loc, Vex.class);vex = (Vex) getEntity(vex,mob, dungeonSpawning, xyzLoc, group);stayLive(vex, isStayLive);}break;
+			case "변명자":{Vindicator polarBear = (Vindicator) loc.getWorld().spawn(loc, Vindicator.class);polarBear = (Vindicator) getEntity(polarBear,mob, dungeonSpawning, xyzLoc, group);stayLive(polarBear, isStayLive);}break;
+			case "스켈레톤말":{SkeletonHorse skeletonHorse = (SkeletonHorse) loc.getWorld().spawn(loc, SkeletonHorse.class);skeletonHorse = (SkeletonHorse) getEntity(skeletonHorse,mob, dungeonSpawning, xyzLoc, group);stayLive(skeletonHorse, isStayLive);}break;
+			case "좀비말":{ZombieHorse zombieHorse = (ZombieHorse) loc.getWorld().spawn(loc, ZombieHorse.class);zombieHorse = (ZombieHorse) getEntity(zombieHorse,mob, dungeonSpawning, xyzLoc, group);stayLive(zombieHorse, isStayLive);}break;
+			case "당나귀":{Donkey donkey = (Donkey) loc.getWorld().spawn(loc, Donkey.class);donkey = (Donkey) getEntity(donkey,mob, dungeonSpawning, xyzLoc, group);stayLive(donkey, isStayLive);}break;
+			case "노새":{Mule mule = (Mule) loc.getWorld().spawn(loc, Mule.class);mule = (Mule) getEntity(mule,mob, dungeonSpawning, xyzLoc, group);stayLive(mule, isStayLive);}break;
+			case "인간":{Player player = (Player) loc.getWorld().spawn(loc, Player.class);player = (Player) getEntity(player,mob, dungeonSpawning, xyzLoc, group);stayLive(player, isStayLive);}break;
+			case "라마":{Llama llama = (Llama) loc.getWorld().spawn(loc, Llama.class);llama = (Llama) getEntity(llama,mob, dungeonSpawning, xyzLoc, group);stayLive(llama, isStayLive);}break;
 			//case "휴먼":{HumanEntity human = (HumanEntity) loc.getWorld().spawn(loc, Player.class);human = (HumanEntity) getEntity(human,mob, DungeonSpawning, XYZLoc, Group);StayLive(human, isStayLive);}break;
 		}
 	}
 
-	private LivingEntity getEntity(LivingEntity Monster, String mob, byte DungeonSpawning, int[] XYZloc, char Group)
+	private LivingEntity getEntity(LivingEntity monster, String monsterName, byte dungeonSpawning, int[] xyzLoc, char group)
 	{
-		if(mob!=null)
+		if(monsterName!=null)
 		{
 			YamlLoader monsterYaml = new YamlLoader();
 			monsterYaml.getConfig("Monster/MonsterList.yml");
-			Monster.setCustomName(monsterYaml.getString(mob + ".Name").replace("&", "§"));
-			Monster.setCustomNameVisible(true);
-			ItemStack Equip = monsterYaml.getItemStack(mob+".Head.Item");
-			if(Equip == null)
-				Monster.getEquipment().setHelmet(null);
-			else
+			monster.setCustomName(monsterYaml.getString(monsterName + ".Name").replace("&", "§"));
+			monster.setCustomNameVisible(true);
+			String[] parts = {"Head", "Chest", "Leggings", "Boots", "Hand", "OffHand"};
+			ItemStack item = null;
+			ItemStack[] equipments = new ItemStack[parts.length];
+			for(int count = 0; count < parts.length; count++)
 			{
-				Monster.getEquipment().setHelmet(Equip);
-				if(Equip.hasItemMeta())
-					if(Equip.getItemMeta().hasLore())
-						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
-							Monster.getEquipment().setHelmet(null);
+				item = monsterYaml.getItemStack(monsterName+"." + parts[count] + ".Item");
+				if(item != null && ! (item.hasItemMeta() && item.getItemMeta().hasLore() &&
+						ChatColor.stripColor(item.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요.")))
+					equipments[count] = item;
+				else
+					equipments[count] = null;
 			}
-			Equip = monsterYaml.getItemStack(mob+".Chest.Item");
-			if(Equip == null)
-				Monster.getEquipment().setChestplate(null);
-			else
-			{
-				Monster.getEquipment().setChestplate(Equip);
-				if(Equip.hasItemMeta())
-					if(Equip.getItemMeta().hasLore())
-						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
-							Monster.getEquipment().setChestplate(null);
-			}
-			Equip = monsterYaml.getItemStack(mob+".Leggings.Item");
-			if(Equip == null)
-				Monster.getEquipment().setLeggings(null);
-			else
-			{
-				Monster.getEquipment().setLeggings(Equip);
-				if(Equip.hasItemMeta())
-					if(Equip.getItemMeta().hasLore())
-						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
-							Monster.getEquipment().setLeggings(null);
-			}
-			Equip = monsterYaml.getItemStack(mob+".Boots.Item");
-			if(Equip == null)
-				Monster.getEquipment().setBoots(null);
-			else
-			{
-				Monster.getEquipment().setBoots(Equip);
-				if(Equip.hasItemMeta())
-					if(Equip.getItemMeta().hasLore())
-						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
-							Monster.getEquipment().setBoots(null);
-			}
-			Equip = monsterYaml.getItemStack(mob+".Hand.Item");
-			if(Equip == null)
-				Monster.getEquipment().setItemInMainHand(null);
-			else
-			{
-				Monster.getEquipment().setItemInMainHand(Equip);
-				if(Equip.hasItemMeta())
-					if(Equip.getItemMeta().hasLore())
-						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
-								Monster.getEquipment().setItemInMainHand(null);
-			}
-			Equip = monsterYaml.getItemStack(mob+".OffHand.Item");
-			if(Equip == null)
-				Monster.getEquipment().setItemInOffHand(null);
-			else
-			{
-				Monster.getEquipment().setItemInOffHand(Equip);
-				if(Equip.hasItemMeta())
-					if(Equip.getItemMeta().hasLore())
-						if(ChatColor.stripColor(Equip.getItemMeta().getLore().get(0)).equals("이곳에 아이템을 넣어 주세요."))
-								Monster.getEquipment().setItemInOffHand(null);
-			}
+			monster.getEquipment().setHelmet(equipments[0]);
+			monster.getEquipment().setChestplate(equipments[1]);
+			monster.getEquipment().setLeggings(equipments[2]);
+			monster.getEquipment().setBoots(equipments[3]);
+			monster.getEquipment().setItemInMainHand(equipments[4]);
+			monster.getEquipment().setItemInOffHand(equipments[5]);
+			
 			YamlLoader configYaml = new YamlLoader();
 		    configYaml.getConfig("config.yml");
-			Monster.getEquipment().setHelmetDropChance((float)(monsterYaml.getInt(mob+".Head.DropChance")*configYaml.getInt("Event.DropChance")/1000.0));
-			Monster.getEquipment().setChestplateDropChance((float)(monsterYaml.getInt(mob+".Chest.DropChance")*configYaml.getInt("Event.DropChance")/1000.0));
-			Monster.getEquipment().setLeggingsDropChance((float)(monsterYaml.getInt(mob+".Leggings.DropChance")*configYaml.getInt("Event.DropChance")/1000.0));
-			Monster.getEquipment().setBootsDropChance((float)(monsterYaml.getInt(mob+".Boots.DropChance")*configYaml.getInt("Event.DropChance")/1000.0));
-			Monster.getEquipment().setItemInMainHandDropChance((float)(monsterYaml.getInt(mob+".Hand.DropChance")*configYaml.getInt("Event.DropChance")/1000.0));
-			Monster.getEquipment().setItemInOffHandDropChance((float)(monsterYaml.getInt(mob+".OffHand.DropChance")*configYaml.getInt("Event.DropChance")/1000.0));
+			monster.getEquipment().setHelmetDropChance((float)(monsterYaml.getInt(monsterName+".Head.DropChance")*configYaml.getInt("Event.DropChance")/1000.0));
+			monster.getEquipment().setChestplateDropChance((float)(monsterYaml.getInt(monsterName+".Chest.DropChance")*configYaml.getInt("Event.DropChance")/1000.0));
+			monster.getEquipment().setLeggingsDropChance((float)(monsterYaml.getInt(monsterName+".Leggings.DropChance")*configYaml.getInt("Event.DropChance")/1000.0));
+			monster.getEquipment().setBootsDropChance((float)(monsterYaml.getInt(monsterName+".Boots.DropChance")*configYaml.getInt("Event.DropChance")/1000.0));
+			monster.getEquipment().setItemInMainHandDropChance((float)(monsterYaml.getInt(monsterName+".Hand.DropChance")*configYaml.getInt("Event.DropChance")/1000.0));
+			monster.getEquipment().setItemInOffHandDropChance((float)(monsterYaml.getInt(monsterName+".OffHand.DropChance")*configYaml.getInt("Event.DropChance")/1000.0));
 			
-			if(Monster.getType() == EntityType.CREEPER)
+			if(monster.getType() == EntityType.CREEPER)
 			{
-				if(monsterYaml.getString(mob+".Type").equalsIgnoreCase("번개크리퍼") == true)
+				if(monsterYaml.getString(monsterName+".Type").equalsIgnoreCase("번개크리퍼"))
+					  ((Creeper) monster).setPowered(true);
+			}
+			else if(monster.getType() == EntityType.SLIME)
+			{
+				switch(monsterYaml.getString(monsterName + ".Type"))
 				{
-					  ((Creeper) Monster).setPowered(true);
+					case "작은슬라임" : ((Slime) monster).setSize(1);break;
+					case "보통슬라임" : ((Slime) monster).setSize(2);break;
+					case "큰슬라임" : ((Slime) monster).setSize(4);break;
+					case "특대슬라임" : ((Slime) monster).setSize(16);break;
+					case "초대형슬라임" : ((Slime) monster).setSize(64);break;
+					default : ((Slime) monster).setSize(new util.NumericUtil().RandomNum(1, 4));break;
 				}
 			}
-			else if(Monster.getType() == EntityType.SLIME)
+			else if(monster.getType() == EntityType.MAGMA_CUBE)
 			{
-				switch(monsterYaml.getString(mob + ".Type"))
+				switch(monsterYaml.getString(monsterName + ".Type"))
 				{
-					case "작은슬라임" : ((Slime) Monster).setSize(1);break;
-					case "보통슬라임" : ((Slime) Monster).setSize(2);break;
-					case "큰슬라임" : ((Slime) Monster).setSize(4);break;
-					case "특대슬라임" : ((Slime) Monster).setSize(16);break;
-					case "초대형슬라임" : ((Slime) Monster).setSize(64);break;
-					default : ((Slime) Monster).setSize(new util.NumericUtil().RandomNum(1, 4));break;
+					case "작은마그마큐브" : ((MagmaCube) monster).setSize(1);break;
+					case "보통마그마큐브" : ((MagmaCube) monster).setSize(2);break;
+					case "큰마그마큐브" : ((MagmaCube) monster).setSize(4);break;
+					case "특대마그마큐브" : ((MagmaCube) monster).setSize(16);break;
+					case "초대형마그마큐브" : ((MagmaCube) monster).setSize(64);break;
+					default : ((MagmaCube) monster).setSize(new util.NumericUtil().RandomNum(1, 4));break;
 				}
 			}
-			else if(Monster.getType() == EntityType.MAGMA_CUBE)
+			if(monsterYaml.contains(monsterName+".Potion"))
 			{
-				switch(monsterYaml.getString(mob + ".Type"))
-				{
-					case "작은마그마큐브" : ((MagmaCube) Monster).setSize(1);break;
-					case "보통마그마큐브" : ((MagmaCube) Monster).setSize(2);break;
-					case "큰마그마큐브" : ((MagmaCube) Monster).setSize(4);break;
-					case "특대마그마큐브" : ((MagmaCube) Monster).setSize(16);break;
-					case "초대형마그마큐브" : ((MagmaCube) Monster).setSize(64);break;
-					default : ((MagmaCube) Monster).setSize(new util.NumericUtil().RandomNum(1, 4));break;
-				}
+				if(monsterYaml.getInt(monsterName+".Potion.Regenerate")!=0)
+					monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.REGENERATION, 50000, monsterYaml.getInt(monsterName+".Potion.Regenerate")));
+				if(monsterYaml.getInt(monsterName+".Potion.Poison")!=0)
+					monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.POISON, 50000, monsterYaml.getInt(monsterName+".Potion.Poison")));
+				if(monsterYaml.getInt(monsterName+".Potion.Speed")!=0)
+					monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.SPEED, 50000, monsterYaml.getInt(monsterName+".Potion.Speed")));
+				if(monsterYaml.getInt(monsterName+".Potion.Slow")!=0)
+					monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.SLOW, 50000, monsterYaml.getInt(monsterName+".Potion.Slow")));
+				if(monsterYaml.getInt(monsterName+".Potion.Strength")!=0)
+					monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.INCREASE_DAMAGE, 50000, monsterYaml.getInt(monsterName+".Potion.Strength")));
+				if(monsterYaml.getInt(monsterName+".Potion.Weak")!=0)
+					monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.WEAKNESS, 50000, monsterYaml.getInt(monsterName+".Potion.Weak")));
+				if(monsterYaml.getInt(monsterName+".Potion.JumpBoost")!=0)
+					monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.JUMP, 50000, monsterYaml.getInt(monsterName+".Potion.JumpBoost")));
+				if(monsterYaml.getInt(monsterName+".Potion.FireRegistance")!=0)
+					monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.FIRE_RESISTANCE, 50000, monsterYaml.getInt(monsterName+".Potion.FireRegistance")));
+				if(monsterYaml.getInt(monsterName+".Potion.WaterBreath")!=0)
+					monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.WATER_BREATHING, 50000, monsterYaml.getInt(monsterName+".Potion.WaterBreath")));
+				if(monsterYaml.getInt(monsterName+".Potion.Invisible")!=0)
+					monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.INVISIBILITY, 50000, monsterYaml.getInt(monsterName+".Potion.Invisible")));
 			}
-			if(monsterYaml.contains(mob+".Potion"))
-			{
-				if(monsterYaml.getInt(mob+".Potion.Regenerate")!=0)
-				Monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.REGENERATION, 50000, monsterYaml.getInt(mob+".Potion.Regenerate")));
-				if(monsterYaml.getInt(mob+".Potion.Poison")!=0)
-				Monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.POISON, 50000, monsterYaml.getInt(mob+".Potion.Poison")));
-				if(monsterYaml.getInt(mob+".Potion.Speed")!=0)
-				Monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.SPEED, 50000, monsterYaml.getInt(mob+".Potion.Speed")));
-				if(monsterYaml.getInt(mob+".Potion.Slow")!=0)
-				Monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.SLOW, 50000, monsterYaml.getInt(mob+".Potion.Slow")));
-				if(monsterYaml.getInt(mob+".Potion.Strength")!=0)
-				Monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.INCREASE_DAMAGE, 50000, monsterYaml.getInt(mob+".Potion.Strength")));
-				if(monsterYaml.getInt(mob+".Potion.Weak")!=0)
-				Monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.WEAKNESS, 50000, monsterYaml.getInt(mob+".Potion.Weak")));
-				if(monsterYaml.getInt(mob+".Potion.JumpBoost")!=0)
-				Monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.JUMP, 50000, monsterYaml.getInt(mob+".Potion.JumpBoost")));
-				if(monsterYaml.getInt(mob+".Potion.FireRegistance")!=0)
-					Monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.FIRE_RESISTANCE, 50000, monsterYaml.getInt(mob+".Potion.FireRegistance")));
-				if(monsterYaml.getInt(mob+".Potion.WaterBreath")!=0)
-				Monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.WATER_BREATHING, 50000, monsterYaml.getInt(mob+".Potion.WaterBreath")));
-				if(monsterYaml.getInt(mob+".Potion.Invisible")!=0)
-				Monster.addPotionEffect(PottionBuff.getPotionEffect(PotionEffectType.INVISIBILITY, 50000, monsterYaml.getInt(mob+".Potion.Invisible")));
-			}
-			Damageable m = Monster;
-			m.setMaxHealth(monsterYaml.getInt(mob + ".HP")+0.5);
+			Damageable m = monster;
+			m.setMaxHealth(monsterYaml.getInt(monsterName + ".HP")+0.5);
 			m.setHealth(m.getMaxHealth());
 		}
 		
-		
-		
-		if(DungeonSpawning != -1)
+		if(dungeonSpawning != -1)
 		{
 			YamlLoader monsterYaml = new YamlLoader();
 			monsterYaml.getConfig("Monster/MonsterList.yml");
@@ -496,82 +437,82 @@ public class MonsterSpawn
     		방 내에 그룹 코드가 붙은 몬스터가 반경 20 이내에 없을 경우, 다음 웨이브가 나오거나
     		문이 열리게 된다. 몬스터 그룹 코드는 0 ~ f 까지 존재한다.
 			 */
-			if(mob==null)
+			if(monsterName==null)
 			{
-				switch(DungeonSpawning)
+				switch(dungeonSpawning)
 				{
 				case 1://1번 == 일반
-					Monster.setCustomName("§2§0§2§e§"+Group+"§f");
+					monster.setCustomName("§2§0§2§e§"+group+"§f");
 					break;
 				case 2://2번 == 다음 웨이브 존재
-					Monster.setCustomName("§2§0§2§1§"+Group+"§f");
+					monster.setCustomName("§2§0§2§1§"+group+"§f");
 					break;
 				case 3://3번 == 열쇠 가진 놈
-					Monster.setCustomName("§2§0§2§4§"+Group+"§f");
+					monster.setCustomName("§2§0§2§4§"+group+"§f");
 					break;
 				case 4://4번 == 보스 [보스방 문을 탐지하기 위해서 보상방 철창 중앙의 위치를 던전 콘피그에 저장 시킨다.]
-					Monster.setCustomName("§2§0§2§2§"+Group+"§f");
+					monster.setCustomName("§2§0§2§2§"+group+"§f");
 					break;
 				}
 			}
 			else
 			{
-				String a = monsterYaml.getString(mob + ".Name").replace("&", "§");
-				switch(DungeonSpawning)
+				String a = monsterYaml.getString(monsterName + ".Name").replace("&", "§");
+				switch(dungeonSpawning)
 				{
 				case 1://1번 == 일반
-					Monster.setCustomName("§2§0§2§e§"+Group+"§f"+a);
+					monster.setCustomName("§2§0§2§e§"+group+"§f"+a);
 					break;
 				case 2://2번 == 다음 웨이브 존재
-					Monster.setCustomName("§2§0§2§1§"+Group+"§f"+a);
+					monster.setCustomName("§2§0§2§1§"+group+"§f"+a);
 					break;
 				case 3://3번 == 열쇠 가진 놈
-					Monster.setCustomName("§2§0§2§4§"+Group+"§f"+a);
+					monster.setCustomName("§2§0§2§4§"+group+"§f"+a);
 					break;
 				case 4://4번 == 보스 [보스방 문을 탐지하기 위해서 보상방 철창 중앙의 위치를 던전 콘피그에 저장 시킨다.]
-					Monster.setCustomName("§2§0§2§2§"+Group+"§f"+a);
+					monster.setCustomName("§2§0§2§2§"+group+"§f"+a);
 					break;
 				}
 			}
-			ItemStack Equip = monsterYaml.getItemStack(mob+".Head.Item");
+			ItemStack helmet = monsterYaml.getItemStack(monsterName+".Head.Item");
 			int itemnumber = 30;
-			if(Equip!=null && Equip.getType() != Material.AIR)
+			if(helmet!=null && helmet.getType() != Material.AIR)
 			{
-				if(Equip.hasItemMeta())
+				if(helmet.hasItemMeta())
 				{
-					ItemMeta im = Equip.getItemMeta();
-					im.setLore(Arrays.asList("xyz:"+XYZloc[0]+","+XYZloc[1]+","+XYZloc[2]));
-					Equip.setItemMeta(im);
-					Monster.getEquipment().setHelmet(Equip);
+					ItemMeta im = helmet.getItemMeta();
+					im.setLore(Arrays.asList("xyz:"+xyzLoc[0]+","+xyzLoc[1]+","+xyzLoc[2]));
+					helmet.setItemMeta(im);
+					monster.getEquipment().setHelmet(helmet);
 				}
 				else
 				{
-					ItemStack Icon = new MaterialData(267, (byte) 0).toItemStack(1);
-					ItemMeta Icon_Meta = Icon.getItemMeta();
-					Icon_Meta.setLore(Arrays.asList("xyz:"+XYZloc[0]+","+XYZloc[1]+","+XYZloc[2]));
-					Equip.setItemMeta(Icon_Meta);
-					Monster.getEquipment().setHelmet(Equip);
+					ItemStack item = new MaterialData(267, (byte) 0).toItemStack(1);
+					ItemMeta im = item.getItemMeta();
+					im.setLore(Arrays.asList("xyz:"+xyzLoc[0]+","+xyzLoc[1]+","+xyzLoc[2]));
+					helmet.setItemMeta(im);
+					monster.getEquipment().setHelmet(helmet);
 				}
 			}
 			else
 			{
-				ItemStack i = new ItemStack(itemnumber);
-				i.setAmount(1);
-				ItemMeta im = i.getItemMeta();
-				im.setLore(Arrays.asList("xyz:"+XYZloc[0]+","+XYZloc[1]+","+XYZloc[2]));
-				i.setItemMeta(im);
-				Monster.getEquipment().setHelmet(i);
+				ItemStack item = new ItemStack(itemnumber);
+				item.setAmount(1);
+				ItemMeta im = item.getItemMeta();
+				im.setLore(Arrays.asList("xyz:"+xyzLoc[0]+","+xyzLoc[1]+","+xyzLoc[2]));
+				item.setItemMeta(im);
+				monster.getEquipment().setHelmet(item);
 			}
-			Monster.getEquipment().setHelmetDropChance(0.00000000000000000F);
+			monster.getEquipment().setHelmetDropChance(0.00000000000000000F);
 		}
-		return Monster;
+		return monster;
 	}
 	
-	private EnderCrystal getEnderCrystal(EnderCrystal Monster, String mob, byte DungeonSpawning, int[] XYZLoc, char Group)
+	private EnderCrystal getEnderCrystal(EnderCrystal monster, String mob, byte dungeonSpawning, int[] xyzLoc, char group)
 	{
 		YamlLoader monsterYaml = new YamlLoader();
 		monsterYaml.getConfig("Monster/MonsterList.yml");
-		if(DungeonSpawning != -1)
+		if(dungeonSpawning != -1)
 		{
 			/*
     		몬스터 식별 코드 이후 오는 GroupNumber 코드는 각각의 몬스터 그룹을 설정하기 위함으로,
@@ -580,69 +521,73 @@ public class MonsterSpawn
 			 */
 			if(mob.charAt(0)=='놂')
 			{
-				switch(DungeonSpawning)
+				switch(dungeonSpawning)
 				{
 				case 1://1번 == 일반
-					Monster.setCustomName("§2§0§2§e§"+Group+"§f");
+					monster.setCustomName("§2§0§2§e§"+group+"§f");
 					break;
 				case 2://2번 == 다음 웨이브 존재
-					Monster.setCustomName("§2§0§2§1§"+Group+"§f");
+					monster.setCustomName("§2§0§2§1§"+group+"§f");
 					break;
 				case 3://3번 == 열쇠 가진 놈
-					Monster.setCustomName("§2§0§2§4§"+Group+"§f");
+					monster.setCustomName("§2§0§2§4§"+group+"§f");
 					break;
 				case 4://4번 == 보스 [보스방 문을 탐지하기 위해서 보상방 철창 중앙의 위치를 던전 콘피그에 저장 시킨다.]
-					Monster.setCustomName("§2§0§2§2§"+Group+"§f");
+					monster.setCustomName("§2§0§2§2§"+group+"§f");
 					break;
 				}
 			}
 			else
 			{
 				String a = monsterYaml.getString(mob + ".Name").replace("&", "§");
-				switch(DungeonSpawning)
+				switch(dungeonSpawning)
 				{
 				case 1://1번 == 일반
-					Monster.setCustomName("§2§0§2§e§"+Group+"§f"+a);
+					monster.setCustomName("§2§0§2§e§"+group+"§f"+a);
 					break;
 				case 2://2번 == 다음 웨이브 존재
-					Monster.setCustomName("§2§0§2§1§"+Group+"§f"+a);
+					monster.setCustomName("§2§0§2§1§"+group+"§f"+a);
 					break;
 				case 3://3번 == 열쇠 가진 놈
-					Monster.setCustomName("§2§0§2§4§"+Group+"§f"+a);
+					monster.setCustomName("§2§0§2§4§"+group+"§f"+a);
 					break;
 				case 4://4번 == 보스 [보스방 문을 탐지하기 위해서 보상방 철창 중앙의 위치를 던전 콘피그에 저장 시킨다.]
-					Monster.setCustomName("§2§0§2§2§"+Group+"§f"+a);
+					monster.setCustomName("§2§0§2§2§"+group+"§f"+a);
 					break;
 				}
 			}
 		}
 		else
-			Monster.setCustomName(monsterYaml.getString(mob + ".Name").replace("&", "§"));
-		Monster.setCustomNameVisible(true);
-		return Monster;
+			monster.setCustomName(monsterYaml.getString(mob + ".Name").replace("&", "§"));
+		monster.setCustomNameVisible(true);
+		return monster;
 	}
 
 	
-	private static void Stack(String Display, int ID, byte DATA, byte STACK, List<String> Lore, byte Loc, Inventory inventory)
+	private static void stack(String display, int id, int data, int amount, List<String> lore, int loc, Inventory inventory)
 	{
-		ItemStack Icon = new MaterialData(ID, (byte) DATA).toItemStack(STACK);
-		ItemMeta Icon_Meta = Icon.getItemMeta();
-		Icon_Meta.setDisplayName(Display);
-		Icon_Meta.setLore(Lore);
-		Icon.setItemMeta(Icon_Meta);
-		inventory.setItem(Loc, Icon);
+		ItemStack item = new ItemStack(id);
+		item.setAmount(amount);
+		item.setDurability((short) data);
+		ItemMeta im = item.getItemMeta();
+		im.setDisplayName(display);
+		im.setLore(lore);
+		item.setItemMeta(im);
+		inventory.setItem(loc, item);
 		return;
 	}
 	
-	public void SpawnEggGive(Player player, String mob)
+	public void spawnEggGive(Player player, String mob)
 	{
-		ItemStack Icon = new MaterialData(383, (byte) 0).toItemStack(1);
-		ItemMeta Icon_Meta = Icon.getItemMeta();
-		Icon_Meta.setDisplayName("§c"+mob);
-		Icon_Meta.addEnchant(Enchantment.DURABILITY, 1, true);
-		Icon_Meta.setLore(Arrays.asList("§8"+mob+"스폰 에그"));
-		Icon.setItemMeta(Icon_Meta);
-		player.getInventory().addItem(Icon);
+		ItemStack item = new ItemStack(383);
+		item.setAmount(1);
+		item.setDurability((short)0);
+		ItemMeta im = item.getItemMeta();
+		im.setDisplayName("§c"+mob);
+		im.addEnchant(Enchantment.DURABILITY, 1, true);
+		im.setLore(Arrays.asList("§8"+mob+"스폰 에그"));
+		item.setItemMeta(im);
+		player.getInventory().addItem(item);
 		player.sendMessage("§e[SYSTEM] : "+ChatColor.GREEN+mob +"§e스폰 에그를 얻었습니다!");
 		return;
 	}
@@ -858,9 +803,9 @@ public class MonsterSpawn
 		return;
 	}
 	
-	public short getMonsterID(String MonsterType)
+	public short getMonsterID(String monsterType)
 	{
-		switch(MonsterType)
+		switch(monsterType)
 		{
 			case "좀비":
 				return 54;
@@ -940,9 +885,9 @@ public class MonsterSpawn
 		}
 	}
 
-	public String getMonsterCustomName(String MonsterType)
+	public String getMonsterCustomName(String monsterType)
 	{
-		switch(MonsterType)
+		switch(monsterType)
 		{
 			case "좀비":
 				return "CUSTOMZOMBIE";

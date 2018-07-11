@@ -12,7 +12,7 @@ public class MainConfig
     	if(!configYaml.contains("Version"))
     	{
 		  	configYaml.set("Version", "Advanced");
-		  	configYaml.set("Update", 20180707);
+		  	configYaml.set("Update", 20180712);
 		  	configYaml.set("Server.BroadCastSecond", 30);
 		  	configYaml.set("Server.EntitySpawn", true);
 		  	configYaml.set("Server.PVP", true);
@@ -28,6 +28,7 @@ public class MainConfig
 			configYaml.set("Server.AntiExplode", true);
 		  	configYaml.set("Server.PVP", true);
 		  	configYaml.set("Server.LeftHandWeaponDamageEnable", true);
+		  	configYaml.set("Server.RemoveMonsterDefaultDrops", false);
 		  	configYaml.set("MaxStat.Level", 100);
 		  	configYaml.set("MaxStat.STR", 1500);
 		  	configYaml.set("MaxStat.DEX", 1500);
@@ -321,6 +322,11 @@ public class MainConfig
 		  	configYaml.set("Getting.ChorusFlower.EXP", 50);
 		  	configYaml.set("Getting.ChorusFlower.Money", 0);
     	}
+    	else if(configYaml.getLong("Update") < 20180712)
+    	  	configYaml.set("Server.RemoveMonsterDefaultDrops", false);
+    	
+    	
+
 	  	configYaml.saveConfig();
 	  	
 		if(configYaml.contains("Server.MabinogiMoneySystem"))
@@ -403,6 +409,7 @@ public class MainConfig
 		main.MainServerOption.PVP = configYaml.getBoolean("Server.PVP");
 		main.MainServerOption.maxDropMoney = configYaml.getLong("Server.Max_Drop_Money");
 		main.MainServerOption.expShareDistance = configYaml.getInt("Party.EXPShareDistance");
+		main.MainServerOption.removeMonsterDefaultDrops = configYaml.getBoolean("Server.RemoveMonsterDefaultDrops");
 
 		main.MainServerOption.eventSkillPoint = (byte) configYaml.getInt("Event.Multiple_Level_Up_SkillPoint");
 		main.MainServerOption.eventStatPoint = (byte) configYaml.getInt("Event.Multiple_Level_Up_StatPoint");

@@ -10,7 +10,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import effect.SoundEffect;
 import user.UserDataObject;
@@ -20,7 +20,7 @@ import util.YamlLoader;
 public class EventPlayerChat extends ChatUtil implements Listener
 {
 	@EventHandler
-	public void playerChatting(PlayerChatEvent event)
+	public void playerChatting(AsyncPlayerChatEvent event)
 	{
 		event.setMessage(ChatColor.translateAlternateColorCodes('&', event.getMessage()));
 		UserDataObject u = new UserDataObject();
@@ -52,7 +52,7 @@ public class EventPlayerChat extends ChatUtil implements Listener
 			    else if(u.getType(player).equals("Job"))
 		    	{new job.JobChat().JobTypeChatting(event); return;}
 			    else if(u.getType(player).equals("Monster"))
-		    	{new monster.MonsterChat().MonsterTypeChatting(event); return;}
+		    	{new monster.MonsterChat().monsterTypeChatting(event); return;}
 			    else if(u.getType(player).equals("Teleport"))
 		    	{new warp.WarpChat().teleportTypeChatting(event);return;}
 			    else if(u.getType(player).equals("Event"))
@@ -185,7 +185,7 @@ public class EventPlayerChat extends ChatUtil implements Listener
 	  	}
 	}
 
-	public void TEMProuter(PlayerChatEvent event, String temp)
+	public void TEMProuter(AsyncPlayerChatEvent event, String temp)
 	{
 		event.setCancelled(true);
 		Player player = event.getPlayer();

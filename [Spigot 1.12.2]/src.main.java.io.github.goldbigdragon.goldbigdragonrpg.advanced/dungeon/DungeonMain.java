@@ -174,7 +174,7 @@ public class DungeonMain
     		{
     			bossLoc.add(0, 0.2, 0);
     			SoundEffect.playSoundLocation(bossLoc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
-    			monsterSpawn.SpawnMob(bossLoc, dungeonMonsterYaml.getString("Boss."+mobList[count]),(byte) 4, XYZloc, group, true);
+    			monsterSpawn.spawnMonster(bossLoc, dungeonMonsterYaml.getString("Boss."+mobList[count]),(byte) 4, XYZloc, group, true);
     		}
 		}
 	}
@@ -306,11 +306,11 @@ public class DungeonMain
         		for(int count = 0; count < 7; count++)
         		{
         			SoundEffect.playSoundLocation(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
-        			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mob),(byte) 1, xyzLoc, group, true);
+        			monsterSpawn.spawnMonster(loc, dungeonMonsterYaml.getString(listName+"."+mob),(byte) 1, xyzLoc, group, true);
         			loc.add(0, 0.2, 0);
         		}
     			SoundEffect.playSoundLocation(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
-    			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mob),(byte) 3, xyzLoc, group, true);	
+    			monsterSpawn.spawnMonster(loc, dungeonMonsterYaml.getString(listName+"."+mob),(byte) 3, xyzLoc, group, true);	
     		}
     		else
     		{
@@ -688,7 +688,7 @@ public class DungeonMain
             	if(gridImage.equals("◇"))
             	{
         			SoundEffect.playSoundLocation(loc, Sound.BLOCK_CHEST_OPEN, 1.3F, 1.8F);
-            		monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mob.get(0)),(byte)-1,null, (char) -1, false);
+            		monsterSpawn.spawnMonster(loc, dungeonMonsterYaml.getString(listName+"."+mob.get(0)),(byte)-1,null, (char) -1, false);
             	}
             	else
             	{
@@ -735,7 +735,7 @@ public class DungeonMain
                 		{
                 			SoundEffect.playSoundLocation(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
                 			loc.add(0, 0.2, 0);
-                			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mob.get(count)),(byte) 2, xyzLoc, group, true);
+                			monsterSpawn.spawnMonster(loc, dungeonMonsterYaml.getString(listName+"."+mob.get(count)),(byte) 2, xyzLoc, group, true);
                 		}
     				}
     				else
@@ -744,9 +744,9 @@ public class DungeonMain
                 		{
                 			loc.add(0, 0.2, 0);
                 			SoundEffect.playSoundLocation(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
-                			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mob.get(count)),(byte) 1, xyzLoc, group, true);
+                			monsterSpawn.spawnMonster(loc, dungeonMonsterYaml.getString(listName+"."+mob.get(count)),(byte) 1, xyzLoc, group, true);
                 		}
-            			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mob.get(7)),(byte) 3, xyzLoc, group, true);
+            			monsterSpawn.spawnMonster(loc, dungeonMonsterYaml.getString(listName+"."+mob.get(7)),(byte) 3, xyzLoc, group, true);
     				}
             		/*
             		일반 방 열면 몹 스폰되고 문 닫히게 하기
@@ -916,7 +916,7 @@ public class DungeonMain
 	        		for(int count = 0; count < 4; count++)
 	        		{
 	        			loc.add(new util.NumericUtil().RandomNum(-2, 2), 0.1*count, new util.NumericUtil().RandomNum(-2, 2));
-	        			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mobList[new util.NumericUtil().RandomNum(0, mobList.length-1)]), (byte)-1, null, (char) -1, false);
+	        			monsterSpawn.spawnMonster(loc, dungeonMonsterYaml.getString(listName+"."+mobList[new util.NumericUtil().RandomNum(0, mobList.length-1)]), (byte)-1, null, (char) -1, false);
 	        		}
 	        	}
 	        }
@@ -993,7 +993,7 @@ public class DungeonMain
         		{
         			loc.add(new util.NumericUtil().RandomNum(-2, 2),0.1*count, new util.NumericUtil().RandomNum(-2, 2));
         			SoundEffect.playSoundLocation(loc, Sound.ENTITY_WITHER_DEATH, 1.3F, 1.8F);
-        			monsterSpawn.SpawnMob(loc, dungeonMonsterYaml.getString(listName+"."+mobList[new util.NumericUtil().RandomNum(0, mobList.length-1)]), (byte)-1, null, (char) -1, false);
+        			monsterSpawn.spawnMonster(loc, dungeonMonsterYaml.getString(listName+"."+mobList[new util.NumericUtil().RandomNum(0, mobList.length-1)]), (byte)-1, null, (char) -1, false);
         		}
         	}
 		}

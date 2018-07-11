@@ -47,7 +47,7 @@ public class AreaServerTask
 						{
 							monster.MonsterSpawn monsterSpawn = new monster.MonsterSpawn();
 							for(int mobspawn=0;mobspawn<ServerTickMain.Schedule.get(utc).getInt((byte)4);mobspawn++)
-								monsterSpawn.SpawnMob(loc.add(-0.5, -1,-0.5), mob, (byte) -1, null, (char) -1, false);
+								monsterSpawn.spawnMonster(loc.add(-0.5, -1,-0.5), mob, (byte) -1, null, (char) -1, false);
 						}
 					}
 				}

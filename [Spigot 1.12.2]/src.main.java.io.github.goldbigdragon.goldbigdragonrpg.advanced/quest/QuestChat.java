@@ -5,7 +5,7 @@ import java.util.Set;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import effect.SoundEffect;
 import user.UserDataObject;
@@ -15,7 +15,7 @@ import util.YamlLoader;
 public class QuestChat extends ChatUtil
 {
 	
-	public void QuestTypeChatting(PlayerChatEvent event)
+	public void QuestTypeChatting(AsyncPlayerChatEvent event)
 	{
 		UserDataObject u = new UserDataObject();
 	    Player player = event.getPlayer();

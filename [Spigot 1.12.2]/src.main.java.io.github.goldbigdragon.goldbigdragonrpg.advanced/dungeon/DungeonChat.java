@@ -2,18 +2,16 @@ package dungeon;
 
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import effect.SoundEffect;
 import net.md_5.bungee.api.ChatColor;
 import user.UserDataObject;
 import util.YamlLoader;
 
-
-
 public class DungeonChat
 {
-	public void PlayerChatrouter(PlayerChatEvent event)
+	public void PlayerChatrouter(AsyncPlayerChatEvent event)
 	{
 		Player player = event.getPlayer();
 		UserDataObject u = new UserDataObject();
@@ -26,7 +24,7 @@ public class DungeonChat
 	}
 	
 	
-	private void DungeonMainChatting(PlayerChatEvent event)
+	private void DungeonMainChatting(AsyncPlayerChatEvent event)
 	{
 		
 		Player player = event.getPlayer();
@@ -165,7 +163,7 @@ public class DungeonChat
 		}
 	}
 	
-	private void EnterCardChatting(PlayerChatEvent event)
+	private void EnterCardChatting(AsyncPlayerChatEvent event)
 	{
 		
 		Player player = event.getPlayer();
@@ -283,7 +281,7 @@ public class DungeonChat
 		}
 	}
 	
-	private void AltarChatting(PlayerChatEvent event)
+	private void AltarChatting(AsyncPlayerChatEvent event)
 	{
 		
 		Player player = event.getPlayer();

@@ -1,5 +1,7 @@
 package event;
 
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -26,60 +28,49 @@ public class EventInteract
 	//블럭 우클/좌클 할 때//
 	public void PlayerInteract(PlayerInteractEvent event)
 	{
+		Player player = event.getPlayer();
 		if(event.getHand()==EquipmentSlot.HAND)
 		{
-			if(new corpse.CorpseAPI().deathCapture(event.getPlayer(),false))
+			if(new corpse.CorpseAPI().deathCapture(player, false))
 				return;
 			if(event.getAction()==Action.RIGHT_CLICK_AIR||event.getAction()==Action.RIGHT_CLICK_BLOCK)
-				ClickTrigger(event);
-			if(event.getPlayer().getInventory().getItemInMainHand()!=null&&event.getPlayer().isOp())
-				AreaChecker(event);
+				clickTrigger(event);
+			if(player.getInventory().getItemInMainHand()!=null&&player.isOp())
+				areaChecker(event);
+			if(player.isOp())
+				opWork(event);
 
-			if(event.getPlayer().isOp())
-				OPwork(event);
-
-			if(event.getPlayer().getWorld().getName().equals("Dungeon"))
+			if(player.getWorld().getName().equals("Dungeon"))
 			{
 				new dungeon.DungeonMain().dungeonInteract(event);
 				return;
 			}
 
-			if(event.getAction()==Action.RIGHT_CLICK_BLOCK&&event.getClickedBlock()!=null)
+			if(event.getAction()==Action.RIGHT_CLICK_BLOCK && event.getClickedBlock() != null && ! player.isOp())
 			{
-				short id = (short) event.getClickedBlock().getTypeId();
-				if(id==54||id==58||id==61||id==84||id==116||id==120||id==130||id==145||id==146
-					||id==321||id==355||id==389||id==416||id==23||id==25||id==84||id==69||id==84
-					||id==46||id==77||id==84||id==96||id==107||id==143||id==151||id==154||id==158
-					||id==167||id==84||(id>=183&&id<=187)||id==324||id==330||id==356||id==404||(id>=427&&id<=431)
-					||id==138)
+				area.AreaAPI areaApi = new area.AreaAPI();
+				String[] areaNames = areaApi.getAreaName(event.getClickedBlock());
+				if(areaNames != null)
 				{
-					area.AreaAPI A = new area.AreaAPI();
-					String[] Area = A.getAreaName(event.getClickedBlock());
-					if(Area != null)
+					int id = event.getClickedBlock().getTypeId();
+					if((id==54||id==58||id==61||id==84||id==116||id==120||id==130||id==145||id==146
+						||id==321||id==355||id==389||id==416||id==23||id==25||id==84||id==69||id==84
+						||id==46||id==77||id==84||id==96||id==107||id==143||id==151||id==154||id==158
+						||id==167||id==84||(id>=183&&id<=187)||id==324||id==330||id==356||id==404||(id>=427&&id<=431)
+						||id==138) &&  ! areaApi.getAreaOption(areaNames[0], (char) 7))
 					{
-						if(A.getAreaOption(Area[0], (char) 7) == false && event.getPlayer().isOp() == false)
-						{
-							event.setCancelled(true);
-							SoundEffect.playSound(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-							event.getPlayer().sendMessage("§c[SYSTEM] : §e"+ Area[1] + "§c 지역에 있는 블록은 손 댈 수없습니다!");
-							return;
-						}
+						event.setCancelled(true);
+						SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+						player.sendMessage("§c[SYSTEM] : §e"+ areaNames[1] + "§c 지역에 있는 블록은 손 댈 수없습니다!");
+						return;
 					}
-				}
-				if(event.getItem()!=null)
-				if(event.getItem().getTypeId()>=325&&event.getItem().getTypeId()<=327)
-				{
-					area.AreaAPI A = new area.AreaAPI();
-					String[] Area = A.getAreaName(event.getClickedBlock());
-					if(Area != null)
+					if(event.getItem()!=null && event.getItem().getTypeId()>=325&&event.getItem().getTypeId()<=327
+							&&  ! areaApi.getAreaOption(areaNames[0], (char) 7))
 					{
-						if(A.getAreaOption(Area[0], (char) 7) == false && event.getPlayer().isOp() == false)
-						{
-							event.setCancelled(true);
-							SoundEffect.playSound(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-							event.getPlayer().sendMessage("§c[SYSTEM] : §e"+ Area[1] + "§c 지역에서는 양동이를 사용할 수없습니다!");
-							return;
-						}
+						event.setCancelled(true);
+						SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+						player.sendMessage("§c[SYSTEM] : §e"+ areaNames[1] + "§c 지역에서는 양동이를 사용할 수없습니다!");
+						return;
 					}
 				}
 			}
@@ -88,13 +79,12 @@ public class EventInteract
 	}
 	
 	//NPC 및 액자
-	public void PlayerInteractEntity (PlayerInteractEntityEvent event)
+	public void playerInteractEntity (PlayerInteractEntityEvent event)
 	{
 		if(event.getHand()==EquipmentSlot.HAND)
 		{
 			Entity target = event.getRightClicked();
 			Player player = event.getPlayer();
-
 			if(target.getType() == EntityType.PLAYER)
 			{
 				if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).isOption_SeeInventory())
@@ -102,8 +92,7 @@ public class EventInteract
 					Player t = (Player)target;
 					if(t.isOnline())
 					{
-						user.EquipGui EGUI = new user.EquipGui();
-						EGUI.EquipWatchGUI(player, t);
+						new user.EquipGui().EquipWatchGUI(player, t);
 						return;
 					}
 				}
@@ -118,13 +107,13 @@ public class EventInteract
 			String[] area = new area.AreaAPI().getAreaName(target);
 			if(area != null)
 			{
-				if( ! new area.AreaAPI().getAreaOption(area[0], (char) 7) && ! event.getPlayer().isOp())
+				if( ! new area.AreaAPI().getAreaOption(area[0], (char) 7) && ! player.isOp())
 				{
 					if(target.getCustomName() == null || CitizensAPI.getNPCRegistry().getNPC(target) == null)
 					{
 						event.setCancelled(true);
-						SoundEffect.playSound(event.getPlayer(), org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-						event.getPlayer().sendMessage("§c[SYSTEM] : §e"+ area[1] + "§c 지역에 있는 엔티티는 손 댈 수없습니다!");
+						SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+						player.sendMessage("§c[SYSTEM] : §e"+ area[1] + "§c 지역에 있는 엔티티는 손 댈 수없습니다!");
 						return;
 					}
 				}
@@ -133,15 +122,15 @@ public class EventInteract
 		}
 	}
 	
-	public void ClickTrigger(PlayerInteractEvent event)
+	public void clickTrigger(PlayerInteractEvent event)
 	{
 		if(event.getPlayer().getInventory().getItemInMainHand()!=null)
-			ItemUse(event);
+			itemUse(event);
 		if(event.getClickedBlock()!=null)
-			SlotMachine(event);
+			slotMachine(event);
 	}
 	
-	private void OPwork(PlayerInteractEvent event)
+	private void opWork(PlayerInteractEvent event)
 	{
 		Player player = event.getPlayer();
 		UserDataObject u = new UserDataObject();
@@ -150,100 +139,93 @@ public class EventInteract
 			if(u.getType(player).equals("Quest"))
 				new quest.QuestInteractEvent().BlockInteract(event);
 			else if(u.getType(player).equals("Area"))
-			    OPwork_Area(event);
+			    opWork_Area(event);
 			else if(u.getType(player).equals("Gamble"))
-			    OPwork_Gamble(event);
+			    opWork_Gamble(event);
 		}
 		return;
 	}
 	
-	private void ItemUse(PlayerInteractEvent event)
+	private void itemUse(PlayerInteractEvent event)
 	{
 		Player player = event.getPlayer();
-		if(player.getInventory().getItemInMainHand()!=null)
-		if(player.getInventory().getItemInMainHand().hasItemMeta())
+		ItemStack item = player.getInventory().getItemInMainHand();
+		if(item != null && item.hasItemMeta() && item.getItemMeta().hasLore())
 		{
-			if(player.getInventory().getItemInMainHand().getItemMeta().hasLore())
+			int itemID = item.getTypeId();
+			if(itemID == 383 && event.getItem().getData().getData() == 0 && event.getAction() == Action.RIGHT_CLICK_BLOCK)
 			{
-				int itemID = player.getInventory().getItemInMainHand().getData().getItemTypeId();
-				if(itemID == 383 && event.getItem().getData().getData() == 0 && event.getAction() == Action.RIGHT_CLICK_BLOCK)
+    			if(main.MainServerOption.MonsterList.containsKey(ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName())))
+    			{
+    				if(player.isOp())
+    					new monster.MonsterSpawn().spawnMonster(event.getClickedBlock().getLocation(), ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName()), (byte)-1, null, (char) -1, false);
+    				else
+    				{
+    					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+    			    	player.sendMessage("§c[SYSTEM] : 몬스터 스폰 권한이 없습니다!");
+    				}
+    			}
+				else
 				{
-	    			if(main.MainServerOption.MonsterList.containsKey(ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName())))
-	    			{
-	    				if(player.isOp())
-	    					new monster.MonsterSpawn().SpawnMob(event.getClickedBlock().getLocation(), ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName()), (byte)-1, null, (char) -1, false);
-	    				else
-	    				{
-	    					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-	    			    	player.sendMessage("§c[SYSTEM] : 몬스터 스폰 권한이 없습니다!");
-	    				}
-	    			}
-					else
+					SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
+			    	player.sendMessage("§c[SYSTEM] : 해당 이름의 몬스터가 존재하지 않습니다!");
+				}
+		    	return;
+			}
+			//지도 사용
+			else if(itemID == 395 || itemID == 358 && player.isOp())
+			{
+				List<String> lore = item.getItemMeta().getLore();
+				UserDataObject u = new UserDataObject();
+				for(int counter = 0; counter < lore.size(); counter ++)
+					if(lore.get(counter).contains("내용"))
 					{
-						SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
-				    	player.sendMessage("§c[SYSTEM] : 해당 이름의 몬스터가 존재하지 않습니다!");
+						u.setType(player, "Map");
+						u.setString(player, (byte)1, ChatColor.stripColor(lore.get(counter)).split(" : ")[1]);
+						main.MainServerOption.Mapping = true;
+						return;
 					}
-			    	return;
-				}
-				//지도 사용
-				else if(itemID == 395 || itemID == 358)
-				{
-					Object[] lore = player.getInventory().getItemInMainHand().getItemMeta().getLore().toArray();
-					for(int counter = 0; counter < lore.length; counter ++)
-						if(lore[counter].toString().contains("내용"))
-						{
-							UserDataObject u = new UserDataObject();
-							//지도에 이미지 넣는 작업
-							if(player.isOp())
-							{
-								u.setType(player, "Map");
-								u.setString(player, (byte)1, ChatColor.stripColor(lore[counter].toString()).split(" : ")[1]);
-								main.MainServerOption.Mapping = true;
-								return;
-							}
-						}
-				}
-				String LoreString = player.getInventory().getItemInMainHand().getItemMeta().getLore().get(0).toString();
-				if(LoreString.contains("[귀환서]")||LoreString.contains("[주문서]")||
-				   LoreString.contains("[스킬북]")||LoreString.contains("[소비]")||
-				   LoreString.contains("[돈]")||LoreString.contains("[공구]"))
-				{
-					event.setCancelled(true);
-					if(LoreString.contains("[소비]"))
-						new CustomItemAPI().useAbleItemUse(player, "소비");
-					else if(LoreString.contains("[귀환서]"))
-						new CustomItemAPI().useAbleItemUse(player, "귀환서");
-					else if(LoreString.contains("[주문서]"))
-						new CustomItemAPI().useAbleItemUse(player, "주문서");
-					else if(LoreString.contains("[스킬북]"))
-						new CustomItemAPI().useAbleItemUse(player, "스킬북");
-					else if(LoreString.contains("[돈]"))
-						new CustomItemAPI().useAbleItemUse(player, "돈");
-					else if(LoreString.contains("[공구]"))
-						new CustomItemAPI().useAbleItemUse(player, "공구");
-					return;
-				}
+			}
+			String loreString = player.getInventory().getItemInMainHand().getItemMeta().getLore().get(0).toString();
+			if(loreString.contains("[귀환서]")||loreString.contains("[주문서]")||
+			   loreString.contains("[스킬북]")||loreString.contains("[소비]")||
+			   loreString.contains("[돈]")||loreString.contains("[공구]"))
+			{
+				event.setCancelled(true);
+				if(loreString.contains("[소비]"))
+					new CustomItemAPI().useAbleItemUse(player, "소비");
+				else if(loreString.contains("[귀환서]"))
+					new CustomItemAPI().useAbleItemUse(player, "귀환서");
+				else if(loreString.contains("[주문서]"))
+					new CustomItemAPI().useAbleItemUse(player, "주문서");
+				else if(loreString.contains("[스킬북]"))
+					new CustomItemAPI().useAbleItemUse(player, "스킬북");
+				else if(loreString.contains("[돈]"))
+					new CustomItemAPI().useAbleItemUse(player, "돈");
+				else if(loreString.contains("[공구]"))
+					new CustomItemAPI().useAbleItemUse(player, "공구");
+				return;
 			}
 		}
 		return;
 	}
 	
-	private void SlotMachine(PlayerInteractEvent event)
+	private void slotMachine(PlayerInteractEvent event)
 	{
 		Block block = event.getClickedBlock();
 	  	YamlLoader gambleYaml = new YamlLoader();
 		gambleYaml.getConfig("ETC/SlotMachine.yml");
-		String BlockLocation = block.getLocation().getWorld().getName()+"_"+(int)block.getLocation().getX()+","+(short)block.getLocation().getY()+","+(int)block.getLocation().getZ();
-		if(gambleYaml.contains(BlockLocation))
+		String blockLocation = block.getLocation().getWorld().getName()+"_"+(int)block.getLocation().getX()+","+(short)block.getLocation().getY()+","+(int)block.getLocation().getZ();
+		if(gambleYaml.contains(blockLocation))
 		{
 			event.setCancelled(true);
-			new admin.GambleGui().slotMachinePlayGui(event.getPlayer(), BlockLocation);
+			new admin.GambleGui().slotMachinePlayGui(event.getPlayer(), blockLocation);
 		}
 		return;
 	}
 	
 	
-	private void OPwork_Area(PlayerInteractEvent event)
+	private void opWork_Area(PlayerInteractEvent event)
 	{
 		event.setCancelled(true);
 		Player player = event.getPlayer();
@@ -253,17 +235,17 @@ public class EventInteract
 		
 		UserDataObject u = new UserDataObject();
 
-		String AreaName = u.getString(player, (byte)2);
+		String areaName = u.getString(player, (byte)2);
 		if(event.getAction()==Action.LEFT_CLICK_BLOCK)
 		{
 			if(u.getString(player, (byte)3).equals("ANBI"))
 			{
-				String BlockData = block.getTypeId()+":"+block.getData();
+				String blockData = block.getTypeId()+":"+block.getData();
 				ItemStack item = new MaterialData(block.getTypeId(), (byte) block.getData()).toItemStack(1);
-				areaYaml.set(AreaName+".Mining."+BlockData+".100",item);
+				areaYaml.set(areaName+".Mining."+blockData+".100",item);
 				areaYaml.saveConfig();
 				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
-				new AreaBlockItemSettingGui().areaBlockItemSettingGui(player, AreaName, BlockData);
+				new AreaBlockItemSettingGui().areaBlockItemSettingGui(player, areaName, blockData);
 		    	u.clearAll(player);
 			}
 		}
@@ -272,17 +254,17 @@ public class EventInteract
 			if(u.getString(player, (byte)3).equals("MLS"))//MonsterLocationSetting
 			{
 				String count = u.getString(player, (byte)1);
-				areaYaml.set(AreaName+".MonsterSpawnRule."+count+".loc.world", block.getLocation().getWorld().getName());
-				areaYaml.set(AreaName+".MonsterSpawnRule."+count+".loc.x", (int)block.getLocation().getX());
-				areaYaml.set(AreaName+".MonsterSpawnRule."+count+".loc.y", (short)block.getLocation().getY()+1);
-				areaYaml.set(AreaName+".MonsterSpawnRule."+count+".loc.z", (int)block.getLocation().getZ());
+				areaYaml.set(areaName+".MonsterSpawnRule."+count+".loc.world", block.getLocation().getWorld().getName());
+				areaYaml.set(areaName+".MonsterSpawnRule."+count+".loc.x", (int)block.getLocation().getX());
+				areaYaml.set(areaName+".MonsterSpawnRule."+count+".loc.y", (short)block.getLocation().getY()+1);
+				areaYaml.set(areaName+".MonsterSpawnRule."+count+".loc.z", (int)block.getLocation().getZ());
 				areaYaml.saveConfig();
 				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 		    	u.clearAll(player);
 				u.setType(player, "Area");
 				u.setString(player, (byte)1, count);
 				u.setString(player, (byte)2, "AMSC");
-				u.setString(player, (byte)3, AreaName);
+				u.setString(player, (byte)3, areaName);
 				player.sendMessage("§a[영역] : 한 번에 몇 마리 씩 스폰 할까요?");
 				player.sendMessage("§e(최소 1마리 ~ 최대 100마리)");
 			}
@@ -290,7 +272,7 @@ public class EventInteract
 		return;
 	}
 	
-	private void OPwork_Gamble(PlayerInteractEvent event)
+	private void opWork_Gamble(PlayerInteractEvent event)
 	{
 		event.setCancelled(true);
 		Player player = event.getPlayer();
@@ -300,7 +282,7 @@ public class EventInteract
 		
 		UserDataObject u = new UserDataObject();
 
-		String AreaName = u.getString(player, (byte)2);
+		String areaName = u.getString(player, (byte)2);
 		if(event.getAction()==Action.LEFT_CLICK_BLOCK)
 		{
 			/*
@@ -321,39 +303,39 @@ public class EventInteract
 		{
 			if(u.getString(player, (byte)0).equals("NSM"))//NewSlotMachine
 			{
-				String Name = block.getLocation().getWorld().getName()+"_"+(int)block.getLocation().getX()+","+(short)block.getLocation().getY()+","+(int)block.getLocation().getZ();
-				if(gambleYaml.contains(Name))
+				String name = block.getLocation().getWorld().getName()+"_"+(int)block.getLocation().getX()+","+(short)block.getLocation().getY()+","+(int)block.getLocation().getZ();
+				if(gambleYaml.contains(name))
 				{
 					SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
 					player.sendMessage("§c[도박] : 해당 블록에는 이미 다른 도박 기기가 설치되어 있습니다!");
 					return;
 				}
-				gambleYaml.set(Name+".0", "null");
-				gambleYaml.set(Name+".1", "null");
-				gambleYaml.set(Name+".2", "null");
-				gambleYaml.set(Name+".3", "null");
-				gambleYaml.set(Name+".4", "null");
-				gambleYaml.set(Name+".5", "null");
-				gambleYaml.set(Name+".6", "null");
-				gambleYaml.set(Name+".8", "null");
-				gambleYaml.set(Name+".9", "null");
-				gambleYaml.set(Name+".10", "null");
-				gambleYaml.set(Name+".11", "null");
-				gambleYaml.set(Name+".12", "null");
-				gambleYaml.set(Name+".13", "null");
-				gambleYaml.set(Name+".14", "null");
-				gambleYaml.set(Name+".15", "null");
+				gambleYaml.set(name+".0", "null");
+				gambleYaml.set(name+".1", "null");
+				gambleYaml.set(name+".2", "null");
+				gambleYaml.set(name+".3", "null");
+				gambleYaml.set(name+".4", "null");
+				gambleYaml.set(name+".5", "null");
+				gambleYaml.set(name+".6", "null");
+				gambleYaml.set(name+".8", "null");
+				gambleYaml.set(name+".9", "null");
+				gambleYaml.set(name+".10", "null");
+				gambleYaml.set(name+".11", "null");
+				gambleYaml.set(name+".12", "null");
+				gambleYaml.set(name+".13", "null");
+				gambleYaml.set(name+".14", "null");
+				gambleYaml.set(name+".15", "null");
 				gambleYaml.saveConfig();
 				SoundEffect.playSound(player, Sound.ENTITY_IRONGOLEM_DEATH, 1.0F, 1.8F);
 		    	u.clearAll(player);
 				player.sendMessage("§a[도박] : 기계가 설치 되었습니다!");
-				new admin.GambleGui().slotMachineDetailGUI(player, Name);
+				new admin.GambleGui().slotMachineDetailGUI(player, name);
 			}
 		}
 		return;
 	}
 	
-	private void AreaChecker(PlayerInteractEvent event)
+	private void areaChecker(PlayerInteractEvent event)
 	{
 		Player player = event.getPlayer();
 		Block block = event.getClickedBlock();
@@ -382,14 +364,15 @@ public class EventInteract
 	
 	public void PlayerGetItem(PlayerPickupItemEvent event)
 	{
-	  	if(main.MainServerOption.PlayerList.get(event.getPlayer().getUniqueId().toString()).isAlert_ItemPickUp())
+		Player player = event.getPlayer();
+	  	if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).isAlert_ItemPickUp())
 	  	{
-			String ItemName = null;
+			String itemName = null;
 	  		if(event.getItem().getItemStack().hasItemMeta()&&event.getItem().getItemStack().getItemMeta().hasDisplayName())
-	  			ItemName = event.getItem().getItemStack().getItemMeta().getDisplayName();
+	  			itemName = event.getItem().getItemStack().getItemMeta().getDisplayName();
 	  		else
-				ItemName = setItemDefaultName((short) event.getItem().getItemStack().getTypeId(),event.getItem().getItemStack().getData().getData());
-	  		new effect.SendPacket().sendActionBar(event.getPlayer(), "§7§l(§l"+ItemName+" §7§l"+event.getItem().getItemStack().getAmount()+"개)", false);
+				itemName = setItemDefaultName(event.getItem().getItemStack().getTypeId(),event.getItem().getItemStack().getData().getData());
+	  		new effect.SendPacket().sendActionBar(player, "§7§l(§l"+itemName+" §7§l"+event.getItem().getItemStack().getAmount()+"개)", false);
 	  	}
 	  	return;
 	}

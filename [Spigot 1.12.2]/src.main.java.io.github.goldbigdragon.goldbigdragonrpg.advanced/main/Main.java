@@ -56,6 +56,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import corpse.CorpseAPI;
 import corpse.gui.ReviveSelectGui;
 import effect.SoundEffect;
+import monster.gui.MonsterListGui;
 import net.milkbowl.vault.economy.Economy;
 import net.minecraft.server.v1_12_R1.PacketPlayInClientCommand;
 import party.PartyDataManager;
@@ -223,12 +224,10 @@ public class Main extends JavaPlugin implements Listener
 	@EventHandler
 	private void PlayerItemDrop(PlayerDropItemEvent event)
 	{
-		ItemStack IT = event.getItemDrop().getItemStack();
-		if(IT.hasItemMeta() == true)
-			if(IT.getItemMeta().hasLore() == true)
-				if(IT.getItemMeta().getLore().size() == 4)
-					if(IT.getItemMeta().getLore().get(3).equals("§e[클릭시 퀵슬롯에서 삭제]")==true)
-						event.setCancelled(true);
+		ItemStack item = event.getItemDrop().getItemStack();
+		if(item.hasItemMeta() && item.getItemMeta().hasLore() && item.getItemMeta().getLore().size() == 4
+			&& item.getItemMeta().getLore().get(3).equals("§e[클릭시 퀵슬롯에서 삭제]"))
+				event.setCancelled(true);
 		return;
 	}
 	
@@ -236,17 +235,17 @@ public class Main extends JavaPlugin implements Listener
 	private void AmorStand(PlayerArmorStandManipulateEvent event)
 	{
 		Player player = event.getPlayer();
-		ArmorStand AS = event.getRightClicked();
-		String name = AS.getCustomName();
-		if(name!=null)
+		ArmorStand armorstand = event.getRightClicked();
+		String armorstandName = armorstand.getCustomName();
+		if(armorstandName!=null)
 		{
-			if(name.charAt(0)=='§'&&name.charAt(1)=='0'&&name.charAt(2)=='§'&&name.charAt(3)=='l')
+			if(armorstandName.charAt(0)=='§'&&armorstandName.charAt(1)=='0'&&armorstandName.charAt(2)=='§'&&armorstandName.charAt(3)=='l')
 			{
 				event.setCancelled(true);
-				new structure.StructureMain().StructureUse(player,AS.getCustomName());
+				new structure.StructureMain().StructureUse(player,armorstand.getCustomName());
 				return;
 			}
-			else if(name.charAt(0)=='§'&&name.charAt(1)=='c'&&name.charAt(2)=='§'&&name.charAt(3)=='0')
+			else if(armorstandName.charAt(0)=='§'&&armorstandName.charAt(1)=='c'&&armorstandName.charAt(2)=='§'&&armorstandName.charAt(3)=='0')
 			{
 				event.setCancelled(true);
 				if(player.getInventory().getItemInMainHand() != null)
@@ -255,25 +254,24 @@ public class Main extends JavaPlugin implements Listener
 					{
 						if(MainServerOption.DeathRescue.getTypeId()==player.getInventory().getItemInMainHand().getTypeId())
 						{
-							ItemStack Pitem = player.getInventory().getItemInMainHand();
-							if(MainServerOption.DeathRescue.getAmount()<=Pitem.getAmount())
+							ItemStack playerItem = player.getInventory().getItemInMainHand();
+							if(MainServerOption.DeathRescue.getAmount()<=playerItem.getAmount())
 							{
-								
-								String Name = null;
-								if(AS.getItemInHand().getType() != Material.AIR)
-									Name = AS.getItemInHand().getItemMeta().getDisplayName();
-								else if(AS.getHelmet().getType() != Material.AIR)
-									Name = AS.getHelmet().getItemMeta().getDisplayName();
-								if(Name != null)
+								String name = null;
+								if(armorstand.getItemInHand().getType() != Material.AIR)
+									name = armorstand.getItemInHand().getItemMeta().getDisplayName();
+								else if(armorstand.getHelmet().getType() != Material.AIR)
+									name = armorstand.getHelmet().getItemMeta().getDisplayName();
+								if(name != null)
 								{
-									Player target = Bukkit.getPlayer(Name);
+									Player target = Bukkit.getPlayer(name);
 									if(target != null)
 									{
 									  	if(main.MainServerOption.PlayerList.get(target.getUniqueId().toString()).isDeath())
 									  	{
 											if(new util.PlayerUtil().deleteItem(player, MainServerOption.DeathRescue, MainServerOption.DeathRescue.getAmount()))
 											{
-												new corpse.CorpseAPI().removeCorpse(Name);
+												new corpse.CorpseAPI().removeCorpse(name);
 												player.updateInventory();
 												player.sendMessage("§d[구조] : §e"+target.getName()+"§d님을 부활시켰습니다!");
 												target.sendMessage("§d[부활] : §e"+player.getName()+"§d님에 의해 부활하였습니다!");
@@ -307,17 +305,17 @@ public class Main extends JavaPlugin implements Listener
 											Entity now = ((Entity)aa.toArray()[count]);
 											if(now.getType()==EntityType.ARMOR_STAND)
 											{
-												String CustomName = now.getCustomName();
-												if(CustomName != null)
+												String customName = now.getCustomName();
+												if(customName != null)
 												{
-													if(CustomName.charAt(0)=='§'&&CustomName.charAt(1)=='c'&&CustomName.charAt(2)=='§'&&CustomName.charAt(3)=='0')
+													if(customName.charAt(0)=='§'&&customName.charAt(1)=='c'&&customName.charAt(2)=='§'&&customName.charAt(3)=='0')
 													{
-														String Name2 = null;
-														if(AS.getItemInHand().getType() != Material.AIR)
-															Name2 = AS.getItemInHand().getItemMeta().getDisplayName();
-														else if(AS.getHelmet().getType() != Material.AIR)
-															Name2 = AS.getHelmet().getItemMeta().getDisplayName();
-														if(Name.equals(Name2))
+														String name2 = null;
+														if(armorstand.getItemInHand().getType() != Material.AIR)
+															name2 = armorstand.getItemInHand().getItemMeta().getDisplayName();
+														else if(armorstand.getHelmet().getType() != Material.AIR)
+															name2 = armorstand.getHelmet().getItemMeta().getDisplayName();
+														if(name.equals(name2))
 															now.remove();
 													}
 												}
@@ -328,7 +326,7 @@ public class Main extends JavaPlugin implements Listener
 								}
 								else
 								{
-									AS.remove();
+									armorstand.remove();
 									return;
 								}
 							}
@@ -338,13 +336,13 @@ public class Main extends JavaPlugin implements Listener
 			}
 			else
 			{
-				if(event.getPlayer().isOp()==false)
+				if( ! event.getPlayer().isOp())
 				{
-					String TargetArea = null;
-					area.AreaAPI A = new area.AreaAPI();
-					if(A.getAreaName((Entity)AS) != null)
-						TargetArea = A.getAreaName((Entity)AS)[0];
-					if(TargetArea != null && A.getAreaOption(TargetArea, (char) 7) == false)
+					String targetArea = null;
+					area.AreaAPI areaApi = new area.AreaAPI();
+					if(areaApi.getAreaName((Entity)armorstand) != null)
+						targetArea = areaApi.getAreaName((Entity)armorstand)[0];
+					if(targetArea != null && ! areaApi.getAreaOption(targetArea, (char) 7))
 					{
 						event.setCancelled(true);
 						return;
@@ -427,7 +425,7 @@ public class Main extends JavaPlugin implements Listener
 	}
 	
     @EventHandler
-	private void EntitySpawn(CreatureSpawnEvent event) {new monster.MonsterSpawn().EntitySpawn(event);return;}
+	private void EntitySpawn(CreatureSpawnEvent event) {new monster.MonsterSpawn().entitySpawn(event);return;}
     @EventHandler
     private void ITBlock(PlayerInteractEvent event)
     {
@@ -465,14 +463,14 @@ public class Main extends JavaPlugin implements Listener
     {
     	new util.ETC().updatePlayerHPMP(event.getPlayer());
     	new main.MainServerOption().CitizensCatch();
-    	new event.EventInteract().PlayerInteractEntity(event);
+    	new event.EventInteract().playerInteractEntity(event);
     	return;
     }
     
     @EventHandler
     private void ItemGetMessage(PlayerPickupItemEvent event) {new event.EventInteract().PlayerGetItem(event);}
 	@EventHandler
-	private void MonsterKill(EntityDeathEvent event)	{new monster.MonsterKill().MonsterKilling(event);return;}
+	private void MonsterKill(EntityDeathEvent event)	{new monster.MonsterKill().monsterKilling(event);return;}
 
 	@EventHandler
 	private void EntityExplode(EntityExplodeEvent event)
@@ -492,8 +490,8 @@ public class Main extends JavaPlugin implements Listener
 			else
 			{
 				event.setCancelled(true);
-				new monster.MonsterKill().Boomb(event.getEntity());
-				new monster.MonsterKill().DungeonKilled((LivingEntity)event.getEntity(), true);
+				new monster.MonsterKill().boomb(event.getEntity());
+				new monster.MonsterKill().dungeonKilled((LivingEntity)event.getEntity(), true);
 			}
 			event.getEntity().remove();
 		}
@@ -731,10 +729,10 @@ public class Main extends JavaPlugin implements Listener
 					return true;
 		  		case "몬스터" :
 		  		case "gbdmobs" :
-				  if(talker.isOp() == true)
+				  if(talker.isOp())
 				  {
 					  SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
-		  			new monster.MonsterGui().monsterListGUI(player, 0);
+					  new MonsterListGui().monsterListGUI(player, 0);
 				  }
 				  else
 				  {
@@ -744,48 +742,43 @@ public class Main extends JavaPlugin implements Listener
 		  			return true;
 		  		case "워프":
 		  		case "gbdwarp":
-		  			warp.WarpCommand WarpC = new warp.WarpCommand();
-		  			WarpC.onCommand(talker, command, string, args);
+		  			new warp.WarpCommand().onCommand(talker, command, string, args);
 		  			return true;
 		  		case "영역":
 		  		case "gbdarea":
-		  			area.AreaCommand AreaC = new area.AreaCommand();
-		  			AreaC.onCommand(talker, command, string, args);
+		  			new area.AreaCommand().onCommand(talker, command, string, args);
 		  			return true;
 		  		case "상점":
 		  		case "gbdshop":
-		  			npc.NpcCommand NPCC = new npc.NpcCommand();
-		  			NPCC.onCommand(talker, command, string, args);
+		  			new npc.NpcCommand().onCommand(talker, command, string, args);
 		  			return true;
 		  		case "퀘스트":
 		  		case "gbdquest":
-		  			quest.QuestCommand QC = new quest.QuestCommand();
-		  			QC.onCommand(talker, command, string, args);
+		  			new quest.QuestCommand().onCommand(talker, command, string, args);
 		  			return true;
 		  		case "커맨드":
 		  		case "gbdcommand":
-		  			if(player.isOp() == true)
+		  			if(player.isOp())
 		  			{
 		  				UserDataObject u = new UserDataObject();
 						if(u.getType(player)!=null&&u.getType(player).equals("Skill"))
 						{
 							if(u.getString(player, (byte)1).equalsIgnoreCase("SKC"))
 							{
-								String CommandString = "";
+								String commandString = "";
 								for(int count = 0; count <args.length-1; count ++)
-									CommandString = CommandString+args[count]+" ";
-								CommandString = CommandString+args[args.length-1];
+									commandString = commandString+args[count]+" ";
+								commandString = commandString+args[args.length-1];
 							  	YamlLoader skillYaml = new YamlLoader();
 								skillYaml.getConfig("Skill/SkillList.yml");
-								if(CommandString.contains("/")==false)
-									CommandString = "/"+CommandString;
-								if(CommandString.equalsIgnoreCase("/없음"))
+								if( ! commandString.contains("/"))
+									commandString = "/"+commandString;
+								if(commandString.equalsIgnoreCase("/없음"))
 									skillYaml.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".Command","null");
 								else
-									skillYaml.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".Command",CommandString);
+									skillYaml.set(u.getString(player, (byte)2)+".SkillRank."+u.getInt(player, (byte)4)+".Command",commandString);
 								skillYaml.saveConfig();
-								skill.OPboxSkillGui SKGUI = new skill.OPboxSkillGui();
-								SKGUI.SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
+								new skill.OPboxSkillGui().SkillRankOptionGUI(player, u.getString(player, (byte)2), (short) u.getInt(player, (byte)4));
 								u.clearAll(player);
 							}
 						}

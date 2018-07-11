@@ -22,6 +22,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import effect.SendPacket;
 import effect.SoundEffect;
 import main.MainServerOption;
+import quest.QuestGui;
 import util.YamlLoader;
 
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
@@ -117,33 +118,33 @@ public class MonsterKill
 			return main.MainServerOption.MonsterNameMatching.get(name);
 	}
 	
-	public void Boomb(Entity entity)
+	public void boomb(Entity entity)
 	{
-		String EntityName = getRealName(entity);
-		int MonsterINT = 10;
+		String entityName = getRealName(entity);
+		int monsterINT = 10;
 		int radius = 5;
-		if(main.MainServerOption.MonsterList.containsKey(EntityName))
-			MonsterINT = main.MainServerOption.MonsterList.get(EntityName).getINT();
+		if(main.MainServerOption.MonsterList.containsKey(entityName))
+			monsterINT = main.MainServerOption.MonsterList.get(entityName).getINT();
 		else
 		{
 			if(entity.getType()==EntityType.CREEPER)
 			{
 				Creeper c = (Creeper)entity;
 				if(c.isPowered())
-					MonsterINT = 40;
+					monsterINT = 40;
 				else
-					MonsterINT = 20;
+					monsterINT = 20;
 			}
 			else if(entity.getType() == EntityType.ENDER_CRYSTAL)
-				MonsterINT = 200;
+				monsterINT = 200;
 			else if(entity.getType() == EntityType.PRIMED_TNT || entity.getType() == EntityType.MINECART_TNT)
-				MonsterINT = 90;
+				monsterINT = 90;
 		}
-		int MinPower = (int)(MonsterINT/4);
-		int MaxPower = (int)(MonsterINT/2.5);
+		int minPower = monsterINT/4;
+		int maxPower = (int)(monsterINT/2.5);
 		
-		int Power = new Random().nextInt((int) (MaxPower-MinPower+1))+MinPower;
-		radius = (int)((Power/3)*2);
+		int power = new Random().nextInt(maxPower-minPower+1)+minPower;
+		radius = (power/3)*2;
 		if(radius < 3)
 			radius = 3;
 		else if(radius > 8)
@@ -154,71 +155,69 @@ public class MonsterKill
 		Iterator<Entity> e = Bukkit.getWorld("Dungeon").getNearbyEntities(entity.getLocation(), radius, radius, radius).iterator();
 	    while(e.hasNext())
 	    {
-			int Temp = Power;
-	        Entity Choosedentity = e.next();
-	        if(Choosedentity!=null)
+	        Entity choosedEntity = e.next();
+	        if(choosedEntity!=null)
 	        {
-				String name = Choosedentity.getCustomName();
+				String name = choosedEntity.getCustomName();
 				if(ChatColor.stripColor(name) == null)
 					name = null;
 				else if(ChatColor.stripColor(name).length() == 0)
 					name = null;
-		        if(Choosedentity.isDead()==false)
+		        if(! choosedEntity.isDead())
 		        {
-			        int DEF = 0;
-			        int PRO = 0;
+			        int def = 0;
+			        int pro = 0;
 			        
-			        if(Choosedentity.getType()==EntityType.PLAYER)
+			        if(choosedEntity.getType()==EntityType.PLAYER)
 			        {
-			        	Player p = (Player) Choosedentity;
+			        	Player p = (Player) choosedEntity;
 			        	if(p.getGameMode()==GameMode.SURVIVAL||p.getGameMode()==GameMode.ADVENTURE)
 			        	{
 			        		if(p.isOnline())
 			        		{
-			        			DEF = main.MainServerOption.PlayerList.get(p.getUniqueId().toString()).getStat_DEF();
-			        			PRO = main.MainServerOption.PlayerList.get(p.getUniqueId().toString()).getStat_Protect();
+			        			def = main.MainServerOption.PlayerList.get(p.getUniqueId().toString()).getStat_DEF();
+			        			pro = main.MainServerOption.PlayerList.get(p.getUniqueId().toString()).getStat_Protect();
 			        		}
 			        		else if(name!=null)
 			        		{
-								name = getRealName(Choosedentity);
-			        			DEF = main.MainServerOption.MonsterList.get(name).getDEF();
-			        			PRO = main.MainServerOption.MonsterList.get(name).getPRO();
+								name = getRealName(choosedEntity);
+			        			def = main.MainServerOption.MonsterList.get(name).getDEF();
+			        			pro = main.MainServerOption.MonsterList.get(name).getPRO();
 			        		}
 			        	}
 			        }
 			        else if(name!=null)
 			        {
-						name = getRealName(Choosedentity);
-						DEF = main.MainServerOption.MonsterList.get(name).getDEF();
-	        			PRO = main.MainServerOption.MonsterList.get(name).getPRO();
+						name = getRealName(choosedEntity);
+						def = main.MainServerOption.MonsterList.get(name).getDEF();
+	        			pro = main.MainServerOption.MonsterList.get(name).getPRO();
 	        		}
 
-					if(Power >= 100)
-						Temp =(int)(Power*(100-PRO)/100);
-					else if(Power >= 10)
-						Temp =(int)(Power*((100-PRO)/10)/10);
+					if(power >= 100)
+						power = power*(100-pro)/100;
+					else if(power >= 10)
+						power = power*((100-pro)/10)/10;
 					else
-						Temp =(int)(Power-PRO);
-					Temp = Temp-DEF;
-					if(Choosedentity.getType()!=EntityType.DROPPED_ITEM&&Choosedentity.getType()!=EntityType.ARMOR_STAND&&
-						Choosedentity.getType()!=EntityType.ARROW&&Choosedentity.getType()!=EntityType.BOAT&&
-						Choosedentity.getType()!=EntityType.EGG&&Choosedentity.getType()!=EntityType.ENDER_PEARL&&
-						Choosedentity.getType()!=EntityType.ENDER_SIGNAL&&Choosedentity.getType()!=EntityType.EXPERIENCE_ORB&&
-						Choosedentity.getType()!=EntityType.FALLING_BLOCK&&Choosedentity.getType()!=EntityType.FIREBALL&&
-						Choosedentity.getType()!=EntityType.FIREWORK&&Choosedentity.getType()!=EntityType.FISHING_HOOK&&
-						Choosedentity.getType()!=EntityType.ITEM_FRAME&&Choosedentity.getType()!=EntityType.LEASH_HITCH&&
-						Choosedentity.getType()!=EntityType.LIGHTNING&&Choosedentity.getType()!=EntityType.PAINTING&&
-						Choosedentity.getType()!=EntityType.PRIMED_TNT&&Choosedentity.getType()!=EntityType.SMALL_FIREBALL&&
-						Choosedentity.getType()!=EntityType.SNOWBALL&&Choosedentity.getType()!=EntityType.SPLASH_POTION&&
-						Choosedentity.getType()!=EntityType.THROWN_EXP_BOTTLE&&Choosedentity.getType()!=EntityType.UNKNOWN&&
-						Choosedentity.getType()!=EntityType.WITHER_SKULL)
+						power = power-pro;
+					power = power-def;
+					if(choosedEntity.getType()!=EntityType.DROPPED_ITEM&&choosedEntity.getType()!=EntityType.ARMOR_STAND&&
+						choosedEntity.getType()!=EntityType.ARROW&&choosedEntity.getType()!=EntityType.BOAT&&
+						choosedEntity.getType()!=EntityType.EGG&&choosedEntity.getType()!=EntityType.ENDER_PEARL&&
+						choosedEntity.getType()!=EntityType.ENDER_SIGNAL&&choosedEntity.getType()!=EntityType.EXPERIENCE_ORB&&
+						choosedEntity.getType()!=EntityType.FALLING_BLOCK&&choosedEntity.getType()!=EntityType.FIREBALL&&
+						choosedEntity.getType()!=EntityType.FIREWORK&&choosedEntity.getType()!=EntityType.FISHING_HOOK&&
+						choosedEntity.getType()!=EntityType.ITEM_FRAME&&choosedEntity.getType()!=EntityType.LEASH_HITCH&&
+						choosedEntity.getType()!=EntityType.LIGHTNING&&choosedEntity.getType()!=EntityType.PAINTING&&
+						choosedEntity.getType()!=EntityType.PRIMED_TNT&&choosedEntity.getType()!=EntityType.SMALL_FIREBALL&&
+						choosedEntity.getType()!=EntityType.SNOWBALL&&choosedEntity.getType()!=EntityType.SPLASH_POTION&&
+						choosedEntity.getType()!=EntityType.THROWN_EXP_BOTTLE&&choosedEntity.getType()!=EntityType.UNKNOWN&&
+						choosedEntity.getType()!=EntityType.WITHER_SKULL)
 					{
-						if(Choosedentity != entity)
-							if(!Choosedentity.isDead())
-							{
-								LivingEntity LE = (LivingEntity) Choosedentity;
-								LE.damage(Temp, entity);
-							}
+						if(choosedEntity != entity && !choosedEntity.isDead())
+						{
+							LivingEntity livingEntity = (LivingEntity) choosedEntity;
+							livingEntity.damage(power, entity);
+						}
 					}
 		        }
 	        }
@@ -233,7 +232,7 @@ public class MonsterKill
 		//마지막에 폭발 사운드와 이펙트 넣기.
 	}
 
-	public void DungeonKilled(LivingEntity entity, boolean isBoomed)
+	public void dungeonKilled(LivingEntity entity, boolean isBoomed)
 	{
 		if(entity.getCustomName()!=null)
 		{
@@ -263,15 +262,15 @@ public class MonsterKill
 					switch(name.charAt(7))
 					{
 					case 'e' : //일반
-						if(SearchRoomMonster((byte) 20, name.charAt(9), loc) <= 0)
+						if(searchRoomMonster((byte) 20, name.charAt(9), loc) <= 0)
 							new dungeon.DungeonMain().dungeonTrapDoorWorker(loc, false);
 						break;
 					case '1' : //다음 웨이브 존재
-						if(SearchRoomMonster((byte) 20, name.charAt(9), loc) <= 0)
+						if(searchRoomMonster((byte) 20, name.charAt(9), loc) <= 0)
 							new dungeon.DungeonMain().monsterSpawn(loc);
 						break;
 					case '4' : //열쇠 가진 놈
-						if(SearchRoomMonster((byte) 20, name.charAt(9), loc) <= 0)
+						if(searchRoomMonster((byte) 20, name.charAt(9), loc) <= 0)
 							new dungeon.DungeonMain().dungeonTrapDoorWorker(loc, false);
 						loc.setY(loc.getY()+1);
 						item = new ItemStack(292);
@@ -309,22 +308,22 @@ public class MonsterKill
 								dungeonYaml.getConfig("Dungeon/Dungeon/"+main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getDungeon_Enter()+"/Entered/"+main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getDungeon_UTC()+".yml");
 								if(dungeonYaml.contains("Boss"))
 								{
-									int BossCount = dungeonYaml.getConfigurationSection("Boss").getKeys(false).size();
-									ArrayList<String> BossList = new ArrayList<String>();
+									int bossCount = dungeonYaml.getConfigurationSection("Boss").getKeys(false).size();
+									ArrayList<String> bossList = new ArrayList<>();
 									boolean isChecked = false;
-									for(int count = 0; count < BossCount; count++)
+									for(int count = 0; count < bossCount; count++)
 									{
 										if(!isChecked&&dungeonYaml.getString("Boss."+count).equals(name))
 											isChecked = true;
 										else
-											BossList.add(dungeonYaml.getString("Boss."+count));
+											bossList.add(dungeonYaml.getString("Boss."+count));
 									}
 									dungeonYaml.removeKey("Boss");
 									dungeonYaml.saveConfig();
-									if(BossList.isEmpty() == false)
+									if(! bossList.isEmpty())
 									{
-							    		for(int count = 0; count < BossList.size(); count++)
-							    			dungeonYaml.set("Boss."+count, BossList.get(count));
+							    		for(int count = 0; count < bossList.size(); count++)
+							    			dungeonYaml.set("Boss."+count, bossList.get(count));
 							    		dungeonYaml.saveConfig();
 									}
 									else
@@ -339,30 +338,71 @@ public class MonsterKill
 		}
 	}
 	
-	public void MonsterKilling(EntityDeathEvent event)
+	
+	
+	public void monsterKilling(EntityDeathEvent event)
 	{
-		if(event.getEntity().getLocation().getWorld().getName().equals("Dungeon"))
-			DungeonKilled(event.getEntity(), false);
-    	if(event.getEntity()!=null && event.getEntity().getKiller() != null)
+		LivingEntity entity = event.getEntity();
+		if(entity.getLocation().getWorld().getName().equals("Dungeon"))
+			dungeonKilled(entity, false);
+    	if(entity!=null && entity.getKiller() != null)
     	{
-    		if(event.getEntity().getLastDamageCause().getCause() == DamageCause.ENTITY_ATTACK  || event.getEntity().getLastDamageCause().getCause() == DamageCause.PROJECTILE
-    				|| event.getEntity().getLastDamageCause().getCause() == DamageCause.MAGIC)
+    		if((entity.getLastDamageCause().getCause() == DamageCause.ENTITY_ATTACK  || entity.getLastDamageCause().getCause() == DamageCause.PROJECTILE
+    				|| entity.getLastDamageCause().getCause() == DamageCause.MAGIC)
+    			&& entity.getKiller().getType() == EntityType.PLAYER&&entity.getKiller().isOnline())
     		{
-				if(Bukkit.getServer().getPlayer(event.getEntity().getKiller().getName()).isOnline())
+				Player player = entity.getKiller();
+				if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).isAlert_MobHealth())
+				    new SendPacket().sendTitle(player, "§0■■■■■■■■■■", "§4§l[DEAD]", 0, 0, 1);
+				reward(entity, player);
+				questProgress(entity, player);
+			}
+		}
+    	
+    	
+
+		if(main.MainServerOption.removeMonsterDefaultDrops)
+		{
+			List<ItemStack> finalDrops = new ArrayList<>();
+			List<ItemStack> drops = event.getDrops();
+			if(!drops.isEmpty())
+			{
+				List<String> customDropsString = new ArrayList<>();
+				List<ItemStack> items = new ArrayList<>();
+				items.add(entity.getEquipment().getItemInMainHand());
+				items.add(entity.getEquipment().getItemInOffHand());
+				items.add(entity.getEquipment().getHelmet());
+				items.add(entity.getEquipment().getChestplate());
+				items.add(entity.getEquipment().getLeggings());
+				items.add(entity.getEquipment().getBoots());
+				for(int count = 0; count < items.size(); count++)
 				{
-					Player player = (Player) Bukkit.getServer().getPlayer(event.getEntity().getKiller().getName());
-					if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).isAlert_MobHealth())
-					    new SendPacket().sendTitle(player, "§0■■■■■■■■■■", "§4§l[DEAD]", 0, 0, 1);
-    				Reward(event,player);
-    				Quest(event, player);
-					return;
+					if(items.get(count)!=null)
+					{
+						if(items.get(count).hasItemMeta() && items.get(count).getItemMeta().hasDisplayName())
+							customDropsString.add(items.get(count).getItemMeta().getDisplayName());
+						else
+							customDropsString.add(items.get(count).getTypeId() + ":" + items.get(count).getDurability());
+					}
+				}
+				String name = null;
+				for(int count = 0; count < drops.size(); count++)
+				{
+					if(drops.get(count).hasItemMeta() && drops.get(count).getItemMeta().hasDisplayName())
+						name = drops.get(count).getItemMeta().getDisplayName();
+					else
+						name = drops.get(count).getTypeId() + ":" + drops.get(count).getDurability();
+					if(customDropsString.contains(name))
+						finalDrops.add(drops.get(count));
 				}
 			}
+			event.getDrops().clear();
+			event.getDrops().addAll(finalDrops);
 		}
     	return;
 	}
 
-	public byte SearchRoomMonster(byte searchSize, char Group, Location loc)
+	public byte searchRoomMonster(byte searchSize, char group, Location loc)
 	{
 		byte mobs = 0;
 		List<Entity> e = (List<Entity>) loc.getWorld().getNearbyEntities(loc, searchSize, searchSize, searchSize);
@@ -374,7 +414,7 @@ public class MonsterKill
 			{
 				if(name.length() >= 6)
 				{
-					if(e.get(i).isDead() == false)
+					if(! e.get(i).isDead())
 					{
 						if(!name.equals("爆死"))
 						{
@@ -382,7 +422,7 @@ public class MonsterKill
 								name.charAt(2)=='§'&&name.charAt(3)=='0'&&
 								name.charAt(4)=='§'&&name.charAt(5)=='2')
 							{
-								if(name.charAt(9)==Group)
+								if(name.charAt(9)==group)
 									mobs++;
 							}
 						}
@@ -394,18 +434,18 @@ public class MonsterKill
 	}
 	
 	
-	public void Reward(EntityDeathEvent event, Player player)
+	public void reward(Entity entity, Player player)
 	{
-		util.NumericUtil N = new util.NumericUtil();
-		byte amount = 1;
-		if(40 <= N.RandomNum(0, 100) * MainServerOption.eventDropChance)
+		util.NumericUtil numericUtil = new util.NumericUtil();
+		int amount = 1;
+		if(40 <= numericUtil.RandomNum(0, 100) * MainServerOption.eventDropChance)
 		{
 			int lucky = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK()/30;
 			if(lucky >= 10) lucky =10;
 			if(lucky <= 0) lucky = 1;
-			if(lucky >= N.RandomNum(0, 100))
+			if(lucky >= numericUtil.RandomNum(0, 100))
 			{
-				int luckysize = N.RandomNum(0, 100);
+				int luckysize = numericUtil.RandomNum(0, 100);
 				if(luckysize <= 80){player.sendMessage("§e§l[SYSTEM] : 럭키 피니시!");amount = 2;	SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 0.5F, 0.9F);}
 				else if(luckysize <= 95){player.sendMessage("§e§l[SYSTEM] : 빅 럭키 피니시!");amount = 5;	SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 0.7F, 1.0F);}
 				else{player.sendMessage("§e§l[SYSTEM] : 휴즈 럭키 피니시!");amount = 20;	SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.1F);}
@@ -413,207 +453,157 @@ public class MonsterKill
 		}
 		else
 			amount = 0;
-		String name = getRealName(event.getEntity());
+		String name = getRealName(entity);
 		if(main.MainServerOption.MonsterList.containsKey(name))
 		{
 			if(amount == 0)
-				new util.PlayerUtil().addMoneyAndEXP(player, 0, main.MainServerOption.MonsterList.get(name).getEXP(), event.getEntity().getLocation(), true, false);
+				new util.PlayerUtil().addMoneyAndEXP(player, 0, main.MainServerOption.MonsterList.get(name).getEXP(), entity.getLocation(), true, false);
 			else
-				new util.PlayerUtil().addMoneyAndEXP(player, amount* N.RandomNum(main.MainServerOption.MonsterList.get(name).getMinMoney(), main.MainServerOption.MonsterList.get(name).getMaxMoney()), main.MainServerOption.MonsterList.get(name).getEXP(), event.getEntity().getLocation(), true, false);
+				new util.PlayerUtil().addMoneyAndEXP(player, amount* numericUtil.RandomNum(main.MainServerOption.MonsterList.get(name).getMinMoney(), main.MainServerOption.MonsterList.get(name).getMaxMoney()), main.MainServerOption.MonsterList.get(name).getEXP(), entity.getLocation(), true, false);
 			return;
 		}
 		else
 		{
 			YamlLoader configYaml = new YamlLoader();
 			configYaml.getConfig("config.yml");
-			EntityType ET = event.getEntityType();
-			if(ET == EntityType.SKELETON)
+			EntityType entityType = entity.getType();
+			if(entityType == EntityType.SKELETON)
+				new util.PlayerUtil().addMoneyAndEXP(player, numericUtil.RandomNum(configYaml.getInt("Normal_Monster.SKELETON.MIN_MONEY"), configYaml.getInt("Normal_Monster.SKELETON.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SKELETON.EXP"), entity.getLocation(), true, false);
+			else if(entityType == EntityType.CREEPER)
 			{
-				Skeleton s = (Skeleton)event.getEntity();
-				new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.SKELETON.MIN_MONEY"), configYaml.getInt("Normal_Monster.SKELETON.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SKELETON.EXP"), event.getEntity().getLocation(), true, false);
-			}
-			else if(ET == EntityType.CREEPER)
-			{
-				Creeper c = (Creeper)event.getEntity();
+				Creeper c = (Creeper)entity;
 				if(!c.isPowered())
-					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.CREEPER.MIN_MONEY"), configYaml.getInt("Normal_Monster.CREEPER.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.CREEPER.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, numericUtil.RandomNum(configYaml.getInt("Normal_Monster.CREEPER.MIN_MONEY"), configYaml.getInt("Normal_Monster.CREEPER.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.CREEPER.EXP"), entity.getLocation(), true, false);
 				else
-					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.CHARGED_CREEPER.MIN_MONEY"), configYaml.getInt("Normal_Monster.CHARGED_CREEPER.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.CHARGED_CREEPER.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, numericUtil.RandomNum(configYaml.getInt("Normal_Monster.CHARGED_CREEPER.MIN_MONEY"), configYaml.getInt("Normal_Monster.CHARGED_CREEPER.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.CHARGED_CREEPER.EXP"), entity.getLocation(), true, false);
 			}
-			else if(ET == EntityType.SLIME)
+			else if(entityType == EntityType.SLIME)
 			{
-				Slime sl = (Slime)event.getEntity();
+				Slime sl = (Slime)entity;
 				if(sl.getSize() == 1)
-					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.SLIME_SMALL.MIN_MONEY"), configYaml.getInt("Normal_Monster.SLIME_SMALL.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SLIME_SMALL.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, numericUtil.RandomNum(configYaml.getInt("Normal_Monster.SLIME_SMALL.MIN_MONEY"), configYaml.getInt("Normal_Monster.SLIME_SMALL.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SLIME_SMALL.EXP"), entity.getLocation(), true, false);
 				else if(sl.getSize() <= 3)
-					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.SLIME_MIDDLE.MIN_MONEY"), configYaml.getInt("Normal_Monster.SLIME_MIDDLE.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SLIME_MIDDLE.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, numericUtil.RandomNum(configYaml.getInt("Normal_Monster.SLIME_MIDDLE.MIN_MONEY"), configYaml.getInt("Normal_Monster.SLIME_MIDDLE.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SLIME_MIDDLE.EXP"), entity.getLocation(), true, false);
 				else if(sl.getSize() == 4)
-					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.SLIME_BIG.MIN_MONEY"), configYaml.getInt("Normal_Monster.SLIME_BIG.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SLIME_BIG.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, numericUtil.RandomNum(configYaml.getInt("Normal_Monster.SLIME_BIG.MIN_MONEY"), configYaml.getInt("Normal_Monster.SLIME_BIG.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SLIME_BIG.EXP"), entity.getLocation(), true, false);
 				else
-					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.SLIME_HUGE.MIN_MONEY"), configYaml.getInt("Normal_Monster.SLIME_HUGE.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SLIME_HUGE.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, numericUtil.RandomNum(configYaml.getInt("Normal_Monster.SLIME_HUGE.MIN_MONEY"), configYaml.getInt("Normal_Monster.SLIME_HUGE.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.SLIME_HUGE.EXP"), entity.getLocation(), true, false);
 			}
-			else if(ET == EntityType.MAGMA_CUBE)
+			else if(entityType == EntityType.MAGMA_CUBE)
 			{
-				MagmaCube ma = (MagmaCube)event.getEntity();
+				MagmaCube ma = (MagmaCube)entity;
 				if(ma.getSize() == 1)
-					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.MAGMA_CUBE_SMALL.MIN_MONEY"), configYaml.getInt("Normal_Monster.MAGMA_CUBE_SMALL.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.MAGMA_CUBE_SMALL.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, numericUtil.RandomNum(configYaml.getInt("Normal_Monster.MAGMA_CUBE_SMALL.MIN_MONEY"), configYaml.getInt("Normal_Monster.MAGMA_CUBE_SMALL.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.MAGMA_CUBE_SMALL.EXP"), entity.getLocation(), true, false);
 				else if(ma.getSize() <= 3)
-					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.MAGMA_CUBE_MIDDLE.MIN_MONEY"), configYaml.getInt("Normal_Monster.MAGMA_CUBE_MIDDLE.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.MAGMA_CUBE_MIDDLE.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, numericUtil.RandomNum(configYaml.getInt("Normal_Monster.MAGMA_CUBE_MIDDLE.MIN_MONEY"), configYaml.getInt("Normal_Monster.MAGMA_CUBE_MIDDLE.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.MAGMA_CUBE_MIDDLE.EXP"), entity.getLocation(), true, false);
 				else if(ma.getSize() == 4)
-					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.MAGMA_CUBE_BIG.MIN_MONEY"), configYaml.getInt("Normal_Monster.MAGMA_CUBE_BIG.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.MAGMA_CUBE_BIG.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, numericUtil.RandomNum(configYaml.getInt("Normal_Monster.MAGMA_CUBE_BIG.MIN_MONEY"), configYaml.getInt("Normal_Monster.MAGMA_CUBE_BIG.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.MAGMA_CUBE_BIG.EXP"), entity.getLocation(), true, false);
 				else
-					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster.MAGMA_CUBE_HUGE.MIN_MONEY"), configYaml.getInt("Normal_Monster.MAGMA_CUBE_HUGE.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.MAGMA_CUBE_HUGE.EXP"), event.getEntity().getLocation(), true, false);
+					new util.PlayerUtil().addMoneyAndEXP(player, numericUtil.RandomNum(configYaml.getInt("Normal_Monster.MAGMA_CUBE_HUGE.MIN_MONEY"), configYaml.getInt("Normal_Monster.MAGMA_CUBE_HUGE.MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster.MAGMA_CUBE_HUGE.EXP"), entity.getLocation(), true, false);
 			}
 			else
 			{
-				if(configYaml.contains("Normal_Monster."+ET.toString()))
-					new util.PlayerUtil().addMoneyAndEXP(player, N.RandomNum(configYaml.getInt("Normal_Monster."+ET.toString()+".MIN_MONEY"), configYaml.getInt("Normal_Monster."+ET.toString()+".MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster."+ET.toString()+".EXP"), event.getEntity().getLocation(), true, false);
+				if(configYaml.contains("Normal_Monster."+entityType.toString()))
+					new util.PlayerUtil().addMoneyAndEXP(player, numericUtil.RandomNum(configYaml.getInt("Normal_Monster."+entityType.toString()+".MIN_MONEY"), configYaml.getInt("Normal_Monster."+entityType.toString()+".MAX_MONEY"))*amount, configYaml.getLong("Normal_Monster."+entityType.toString()+".EXP"), entity.getLocation(), true, false);
 			}
 		}
 		return;
 	}
 
-	public void Quest(EntityDeathEvent event, Player player)
+	public void questProgress(Entity entity, Player player)
 	{
-		YamlLoader questYaml = new YamlLoader();
-		questYaml.getConfig("Quest/QuestList.yml");
-		YamlLoader playerQuestListYaml = new YamlLoader();
-		playerQuestListYaml.getConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
-
-		if(MainServerOption.partyJoiner.containsKey(player)==false)
-		{
-			Object[] a = playerQuestListYaml.getConfigurationSection("Started.").getKeys(false).toArray();
-			for(int count = 0; count < a.length; count++)
-			{
-				String QuestName = (String) a[count];
-				short Flow = (short) playerQuestListYaml.getInt("Started."+QuestName+".Flow");
-				if(playerQuestListYaml.getString("Started."+QuestName+".Type").equalsIgnoreCase("Hunt"))
-				{
-					if(questYaml.contains(QuestName)==false)
-					{
-						playerQuestListYaml.removeKey("Started."+QuestName);
-						playerQuestListYaml.saveConfig();
-						return;
-					}
-					Object[] MobList = questYaml.getConfigurationSection(QuestName+".FlowChart."+Flow+".Monster").getKeys(false).toArray();
-					int Finish = 0;
-					for(int counter = 0; counter < MobList.length; counter++)
-					{
-						String QMobName = questYaml.getString(QuestName+".FlowChart."+Flow+".Monster."+counter+".MonsterName");
-						int MAX = questYaml.getInt(QuestName+".FlowChart."+Flow+".Monster."+counter+".Amount");
-						String KilledName = "null";
-						KilledName = event.getEntity().getName();
-						if(event.getEntity().isCustomNameVisible() == true)
-						{
-							KilledName = event.getEntity().getCustomName();
-							if(event.getEntity().getLocation().getWorld().getName().equals("Dungeon"))
-							{
-								if(KilledName.length() >= 6)
-								{
-									if(KilledName.charAt(0)=='§'&&KilledName.charAt(1)=='2'&&
-										KilledName.charAt(2)=='§'&&KilledName.charAt(3)=='0'&&
-										KilledName.charAt(4)=='§'&&KilledName.charAt(5)=='2')
-									{
-										KilledName = KilledName.substring(12, KilledName.length());
-									}
-								}
-							}
-						}
-						if(QMobName.equalsIgnoreCase(KilledName) == true && MAX > playerQuestListYaml.getInt("Started."+QuestName+".Hunt."+counter))
-						{
-							//퀘스트 진행도 알림//
-							playerQuestListYaml.set("Started."+QuestName+".Hunt."+counter, playerQuestListYaml.getInt("Started."+QuestName+".Hunt."+counter)+1);
-							playerQuestListYaml.saveConfig();
-						}
-						if(MAX == playerQuestListYaml.getInt("Started."+QuestName+".Hunt."+counter))
-						{
-							Finish++;
-						}
-						if(Finish == MobList.length)
-						{
-							playerQuestListYaml.set("Started."+QuestName+".Type",questYaml.getString(QuestName+".FlowChart."+(playerQuestListYaml.getInt("Started."+QuestName+".Flow")+1)+".Type"));
-							playerQuestListYaml.set("Started."+QuestName+".Flow",playerQuestListYaml.getInt("Started."+QuestName+".Flow")+1);
-							playerQuestListYaml.removeKey("Started."+QuestName+".Hunt");
-							playerQuestListYaml.saveConfig();
-							quest.QuestGui QGUI = new quest.QuestGui();
-							QGUI.QuestRouter(player, QuestName);
-							//퀘스트 완료 메시지//
-							break;
-						}
-					}
-				}
-			}
-		}
+		List<Player> targetPlayers = new ArrayList<>();
+		if( ! MainServerOption.partyJoiner.containsKey(player))
+			targetPlayers.add(player);
 		else
 		{
-			Player[] PartyMember = MainServerOption.party.get(MainServerOption.partyJoiner.get(player)).getMember();
+			Player[] partyMember = MainServerOption.party.get(MainServerOption.partyJoiner.get(player)).getMember();
 			YamlLoader configYaml = new YamlLoader();
 			configYaml.getConfig("config.yml");
 			int expShareDistance = configYaml.getInt("Party.EXPShareDistance");
-			for(int counta = 0; counta < PartyMember.length; counta++)
+			Player member = null;
+			Location entityLoc = entity.getLocation();
+			for(int counta = 0; counta < partyMember.length; counta++)
 			{
-				player = PartyMember[counta];
-				if(event.getEntity().getLocation().getWorld() == player.getLocation().getWorld())
+				member = partyMember[counta];
+				if(entityLoc.getWorld() == member.getLocation().getWorld() &&
+					entityLoc.distance(member.getLocation()) <= expShareDistance)
+					targetPlayers.add(member);
+			}
+		}
+
+		YamlLoader questYaml = new YamlLoader();
+		questYaml.getConfig("Quest/QuestList.yml");
+		YamlLoader playerQuestYaml = new YamlLoader();
+		String[] startedQuestArrays = null;
+		String questName = null;
+		int flow = 0;
+		int monsterListSize = 0;
+		int finish = 0;
+
+		String questMonsterName = null;
+		int huntAmount = 0;
+		String killedName = null;
+		QuestGui qGui = new quest.QuestGui();
+		for(int playerCount = 0; playerCount < targetPlayers.size(); playerCount++)
+		{
+			playerQuestYaml.getConfig("Quest/PlayerData/"+targetPlayers.get(playerCount).getUniqueId()+".yml");
+			startedQuestArrays = playerQuestYaml.getConfigurationSection("Started.").getKeys(false).toArray(new String[0]);
+			for(int count = 0; count < startedQuestArrays.length; count++)
+			{
+				questName = startedQuestArrays[count];
+				flow = playerQuestYaml.getInt("Started."+questName+".Flow");
+				if(playerQuestYaml.getString("Started."+questName+".Type").equalsIgnoreCase("Hunt"))
 				{
-					if(event.getEntity().getLocation().distance(player.getLocation()) <= expShareDistance)
+					if( ! questYaml.contains(questName))
 					{
-						playerQuestListYaml.getConfig("Quest/PlayerData/"+player.getUniqueId()+".yml");
-						
-						Object[] a = playerQuestListYaml.getConfigurationSection("Started.").getKeys(false).toArray();
-						for(int count = 0; count < a.length; count++)
+						playerQuestYaml.removeKey("Started."+questName);
+						playerQuestYaml.saveConfig();
+						return;
+					}
+					monsterListSize = questYaml.getConfigurationSection(questName+".FlowChart."+flow+".Monster").getKeys(false).size();
+					finish = 0;
+					for(int counter = 0; counter < monsterListSize; counter++)
+					{
+						questMonsterName = questYaml.getString(questName+".FlowChart."+flow+".Monster."+counter+".MonsterName");
+						huntAmount = questYaml.getInt(questName+".FlowChart."+flow+".Monster."+counter+".Amount");
+						killedName = entity.getName();
+						if(entity.isCustomNameVisible())
 						{
-							String QuestName = (String) a[count];
-							short Flow = (short) playerQuestListYaml.getInt("Started."+QuestName+".Flow");
-							if(playerQuestListYaml.getString("Started."+QuestName+".Type").equalsIgnoreCase("Hunt"))
+							killedName = entity.getCustomName();
+							if(entity.getLocation().getWorld().getName().equals("Dungeon"))
 							{
-								Object[] MobList = questYaml.getConfigurationSection(QuestName+".FlowChart."+Flow+".Monster").getKeys(false).toArray();
-								int Finish = 0;
-								for(int counter = 0; counter < MobList.length; counter++)
+								if(killedName.length() >= 6)
 								{
-									String QMobName = questYaml.getString(QuestName+".FlowChart."+Flow+".Monster."+counter+".MonsterName");
-									int MAX = questYaml.getInt(QuestName+".FlowChart."+Flow+".Monster."+counter+".Amount");
-									String KilledName = "null";
-									KilledName = event.getEntity().getName();
-									if(event.getEntity().isCustomNameVisible() == true)
+									if(killedName.charAt(0)=='§'&&killedName.charAt(1)=='2'&&
+										killedName.charAt(2)=='§'&&killedName.charAt(3)=='0'&&
+										killedName.charAt(4)=='§'&&killedName.charAt(5)=='2')
 									{
-										KilledName = event.getEntity().getCustomName();
-										if(event.getEntity().getLocation().getWorld().getName().equals("Dungeon"))
-										{
-											if(KilledName.length() >= 6)
-											{
-												if(KilledName.charAt(0)=='§'&&KilledName.charAt(1)=='2'&&
-													KilledName.charAt(2)=='§'&&KilledName.charAt(3)=='0'&&
-													KilledName.charAt(4)=='§'&&KilledName.charAt(5)=='2')
-												{
-													KilledName = KilledName.substring(12, KilledName.length());
-												}
-											}
-										}
-									}
-									if(QMobName.equalsIgnoreCase(KilledName) == true && MAX > playerQuestListYaml.getInt("Started."+QuestName+".Hunt."+counter))
-									{
-										//퀘스트 진행도 알림//
-										playerQuestListYaml.set("Started."+QuestName+".Hunt."+counter, playerQuestListYaml.getInt("Started."+QuestName+".Hunt."+counter)+1);
-										playerQuestListYaml.saveConfig();
-									}
-									if(MAX == playerQuestListYaml.getInt("Started."+QuestName+".Hunt."+counter))
-									{
-										Finish = Finish+1;
-									}
-									if(Finish == MobList.length)
-									{
-										playerQuestListYaml.set("Started."+QuestName+".Type",questYaml.getString(QuestName+".FlowChart."+(playerQuestListYaml.getInt("Started."+QuestName+".Flow")+1)+".Type"));
-										playerQuestListYaml.set("Started."+QuestName+".Flow",playerQuestListYaml.getInt("Started."+QuestName+".Flow")+1);
-										playerQuestListYaml.removeKey("Started."+QuestName+".Hunt");
-										playerQuestListYaml.saveConfig();
-										quest.QuestGui QGUI = new quest.QuestGui();
-										QGUI.QuestRouter(player, QuestName);
-										//퀘스트 완료 메시지//
-										break;
+										killedName = killedName.substring(12, killedName.length());
 									}
 								}
 							}
-						}	
+						}
+						if(questMonsterName.equalsIgnoreCase(killedName) && huntAmount > playerQuestYaml.getInt("Started."+questName+".Hunt."+counter))
+						{
+							//퀘스트 진행도 알림//
+							playerQuestYaml.set("Started."+questName+".Hunt."+counter, playerQuestYaml.getInt("Started."+questName+".Hunt."+counter)+1);
+							playerQuestYaml.saveConfig();
+						}
+						if(huntAmount == playerQuestYaml.getInt("Started."+questName+".Hunt."+counter))
+						{
+							finish++;
+						}
+						if(finish == monsterListSize)
+						{
+							playerQuestYaml.set("Started."+questName+".Type",questYaml.getString(questName+".FlowChart."+(playerQuestYaml.getInt("Started."+questName+".Flow")+1)+".Type"));
+							playerQuestYaml.set("Started."+questName+".Flow",playerQuestYaml.getInt("Started."+questName+".Flow")+1);
+							playerQuestYaml.removeKey("Started."+questName+".Hunt");
+							playerQuestYaml.saveConfig();
+							qGui.QuestRouter(targetPlayers.get(playerCount), questName);
+							//퀘스트 완료 메시지//
+							break;
+						}
 					}
 				}
 			}

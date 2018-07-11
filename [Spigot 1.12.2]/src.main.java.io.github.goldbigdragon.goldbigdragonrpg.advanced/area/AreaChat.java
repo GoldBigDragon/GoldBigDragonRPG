@@ -3,7 +3,7 @@ package area;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import area.gui.AreaMonsterSpawnSettingGui;
 import area.gui.AreaSettingGui;
@@ -13,11 +13,9 @@ import user.UserDataObject;
 import util.ChatUtil;
 import util.YamlLoader;
 
-
-
 public class AreaChat extends ChatUtil
 {
-	public void areaTypeChatting(PlayerChatEvent event)
+	public void areaTypeChatting(AsyncPlayerChatEvent event)
 	{
 		UserDataObject u = new UserDataObject();
 		Player player = event.getPlayer();

@@ -6,7 +6,7 @@ import org.bukkit.Sound;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import effect.SoundEffect;
 import user.UserDataObject;
@@ -14,7 +14,7 @@ import util.YamlLoader;
 
 public class WorldCreateChat 
 {
-	public void worldCreaterTypeChatting(PlayerChatEvent event)
+	public void worldCreaterTypeChatting(AsyncPlayerChatEvent event)
 	{
 		UserDataObject u = new UserDataObject();
 		event.setCancelled(true);

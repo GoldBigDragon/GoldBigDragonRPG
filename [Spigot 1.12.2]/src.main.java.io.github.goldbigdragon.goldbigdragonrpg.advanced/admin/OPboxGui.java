@@ -16,7 +16,6 @@ import customitem.gui.UseableItemListGui;
 import effect.SoundEffect;
 import job.JobGUI;
 import main.MainServerOption;
-import monster.MonsterGui;
 import quest.QuestGui;
 import skill.OPboxSkillGui;
 import structure.StructureGui;
@@ -214,6 +213,10 @@ public class OPboxGui extends GuiUtil
 		else
 			removeFlagStack("§a§l왼손 무기 데미지 적용", 166,0,1,Arrays.asList("§c[비 활성화]","§7왼손에 장착된 무기는","§7없는 것으로 간주합니다."), 25, inv);
 
+		if(main.MainServerOption.removeMonsterDefaultDrops)
+			removeFlagStack("§c§l몬스터 기본 드랍템 제거", 166,0,1,Arrays.asList("§7몬스터의 기본 드랍템을 제거합니다."), 28, inv);
+		else
+			removeFlagStack("§a§l몬스터 기본 드랍템 유지", 54,0,1,Arrays.asList("§7몬스터의 기본 드랍템을 유지합니다."), 28, inv);
 		
 		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
 		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7작업 관리자 창을 닫습니다."), 53, inv);
@@ -500,7 +503,7 @@ public class OPboxGui extends GuiUtil
 			if(displayName.equals("커스텀 아이템"))
 				new EquipItemListGui().itemListGui(player, 0);
 			else if(displayName.equals("몬스터"))
-				new MonsterGui().monsterListGUI(player, 0);
+				new monster.gui.MonsterListGui().monsterListGUI(player, 0);
 			else if(displayName.equals("서버 설정"))
 				opBoxGuiSetting(player);
 			else if(displayName.equals("퀘스트"))
@@ -525,8 +528,6 @@ public class OPboxGui extends GuiUtil
 				new warp.WarpGui().warpListGUI(player, 0);
 			else if(displayName.equals("월드 생성"))
 				new admin.WorldCreateGui().worldCreateGuiMain(player);
-			else if(displayName.equals("몬스터"))
-				new MonsterGui().monsterListGUI(player, 0);
 			else if(displayName.equals("초심자"))
 				new NewBieGui().newBieGuiMain(player);
 			else if(displayName.equals("개조식"))
@@ -590,14 +591,14 @@ public class OPboxGui extends GuiUtil
 		else
 		{
 			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			if((slot >= 10 && slot <= 13) || slot == 20 || slot == 24|| slot == 25)
+			if((slot >= 10 && slot <= 13) || slot == 20 || slot == 24|| slot == 25|| slot == 28)
 			{
 				if(slot == 10)//엔티티 스폰
-					configYaml.set("Server.EntitySpawn", configYaml.getBoolean("Server.EntitySpawn")==false);
+					configYaml.set("Server.EntitySpawn", ! configYaml.getBoolean("Server.EntitySpawn"));
 				else if(slot == 11)//PVP
 				{
-					configYaml.set("Server.PVP", configYaml.getBoolean("Server.PVP")==false);
-					main.MainServerOption.PVP = configYaml.getBoolean("Server.PVP")==false;
+					configYaml.set("Server.PVP", ! main.MainServerOption.PVP);
+					main.MainServerOption.PVP = ! main.MainServerOption.PVP;
 				}
 				else if(slot == 12)//몬스터 스폰 효과
 				{
@@ -607,18 +608,23 @@ public class OPboxGui extends GuiUtil
 						configYaml.set("Server.MonsterSpawnEffect", 0);
 				}
 				else if(slot == 13)//커스텀 무기 파괴
-					configYaml.set("Server.CustomWeaponBreak", configYaml.getBoolean("Server.CustomWeaponBreak")==false);
+					configYaml.set("Server.CustomWeaponBreak", ! configYaml.getBoolean("Server.CustomWeaponBreak"));
 				else if(slot == 20)//커스텀 블록 설치/설치 금지
-					configYaml.set("Server.CustomBlockPlace", configYaml.getBoolean("Server.CustomBlockPlace")==false);
+					configYaml.set("Server.CustomBlockPlace", ! configYaml.getBoolean("Server.CustomBlockPlace"));
 				else if(slot == 24)//폭발 방지 변경
 				{
-					configYaml.set("Server.AntiExplode", configYaml.getBoolean("Server.AntiExplode")==false);
-					main.MainServerOption.AntiExplode = configYaml.getBoolean("Server.AntiExplode")==false;
+					configYaml.set("Server.AntiExplode", ! main.MainServerOption.AntiExplode);
+					main.MainServerOption.AntiExplode = ! main.MainServerOption.AntiExplode;
 				}
 				else if(slot == 25)//왼손 무기 계산
 				{
-					configYaml.set("Server.LeftHandWeaponDamageEnable", configYaml.getBoolean("Server.LeftHandWeaponDamageEnable")==false);
-					main.MainServerOption.dualWeapon = configYaml.getBoolean("Server.LeftHandWeaponDamageEnable")==false;
+					configYaml.set("Server.LeftHandWeaponDamageEnable", ! main.MainServerOption.dualWeapon);
+					main.MainServerOption.dualWeapon = ! main.MainServerOption.dualWeapon;
+				}
+				else if(slot == 28)//몹 드랍템 유지
+				{
+					configYaml.set("Server.RemoveMonsterDefaultDrops",  ! main.MainServerOption.removeMonsterDefaultDrops);
+					main.MainServerOption.removeMonsterDefaultDrops = ! main.MainServerOption.removeMonsterDefaultDrops;
 				}
 				configYaml.saveConfig();
 				opBoxGuiSetting(player);

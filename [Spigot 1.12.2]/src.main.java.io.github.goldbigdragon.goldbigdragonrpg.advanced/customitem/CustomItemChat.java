@@ -3,7 +3,7 @@ package customitem;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import customitem.gui.EquipItemForgingGui;
 import customitem.gui.UseableItemMakingGui;
@@ -14,7 +14,7 @@ import util.YamlLoader;
 
 public class CustomItemChat extends ChatUtil
 {
-	public void customItemChat(PlayerChatEvent event)
+	public void customItemChat(AsyncPlayerChatEvent event)
 	{
 		UserDataObject u = new UserDataObject();
 		Player player = event.getPlayer();

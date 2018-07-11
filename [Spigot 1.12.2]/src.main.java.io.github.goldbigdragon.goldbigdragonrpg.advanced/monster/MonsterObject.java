@@ -2,159 +2,159 @@ package monster;
 
 public class MonsterObject
 {
-	private String RealName;
-	private String CustomName;
-	private long EXP;
-	private int HP;
-	private int MinMoney;
-	private int MaxMoney;
-	private int STR;
-	private int DEX;
-	private int INT;
-	private int WILL;
-	private int LUK;
-	private int DEF;
-	private int PRO;
-	private int MDEF;
-	private int MPRO;
+	private String realName;
+	private String customName;
+	private long exp;
+	private int hp;
+	private int minMoney;
+	private int maxMoney;
+	private int str;
+	private int dex;
+	private int intelligence;
+	private int will;
+	private int luk;
+	private int def;
+	private int pro;
+	private int magicDef;
+	private int magicPro;
 	
-	public MonsterObject(String RealName, String CustomName, long EXP, int HP, int MinMoney, int MaxMoney, int STR, int DEX, int INT, int WILL, int LUK,
-			int DEF, int PRO, int MDEF, int MPRO)
+	public MonsterObject(String realName, String customName, long exp, int hp, int minMoney, int maxMoney, int str, int dex, int intelligence, int will, int luk,
+			int def, int pro, int magicDef, int magicPro)
 	{
-		this.RealName = RealName;
-		this.CustomName = CustomName;
-		this.EXP = EXP;
-		this.HP = HP;
-		this.MinMoney = MinMoney;
-		this.MaxMoney = MaxMoney;
-		this.STR = STR;
-		this.DEX = DEX;
-		this.INT = INT;
-		this.WILL = WILL;
-		this.LUK = LUK;
-		this.DEF = DEF;
-		this.PRO = PRO;
-		this.MDEF = MDEF;
-		this.MPRO = MPRO;
+		this.realName = realName;
+		this.customName = customName;
+		this.exp = exp;
+		this.hp = hp;
+		this.minMoney = minMoney;
+		this.maxMoney = maxMoney;
+		this.str = str;
+		this.dex = dex;
+		this.intelligence = intelligence;
+		this.will = will;
+		this.luk = luk;
+		this.def = def;
+		this.pro = pro;
+		this.magicDef = magicDef;
+		this.magicPro = magicPro;
 	}
 
 	public String getRealName() {
-		return RealName;
+		return realName;
 	}
 
 	public String getCustomName() {
-		return CustomName;
+		return customName;
 	}
 
 	public int getHP() {
-		return HP;
+		return hp;
 	}
 
 	public int getMinMoney() {
-		return MinMoney;
+		return minMoney;
 	}
 
 	public int getMaxMoney() {
-		return MaxMoney;
+		return maxMoney;
 	}
 
 	public int getSTR() {
-		return STR;
+		return str;
 	}
 
 	public int getDEX() {
-		return DEX;
+		return dex;
 	}
 
 	public int getINT() {
-		return INT;
+		return intelligence;
 	}
 
 	public int getWILL() {
-		return WILL;
+		return will;
 	}
 
 	public int getLUK() {
-		return LUK;
+		return luk;
 	}
 
 	public int getDEF() {
-		return DEF;
+		return def;
 	}
 
 	public int getPRO() {
-		return PRO;
+		return pro;
 	}
 
 	public int getMDEF() {
-		return MDEF;
+		return magicDef;
 	}
 
 	public int getMPRO() {
-		return MPRO;
+		return magicPro;
 	}
 
 	public void setRealName(String realName) {
-		RealName = realName;
+		this.realName = realName;
 	}
 
 	public void setCustomName(String customName) {
-		CustomName = customName;
+		this.customName = customName;
 	}
 
 	public void setHP(int hP) {
-		HP = hP;
+		this.hp = hP;
 	}
 
 	public void setMinMoney(int minMoney) {
-		MinMoney = minMoney;
+		this.minMoney = minMoney;
 	}
 
 	public void setMaxMoney(int maxMoney) {
-		MaxMoney = maxMoney;
+		this.maxMoney = maxMoney;
 	}
 
 	public void setSTR(int sTR) {
-		STR = sTR;
+		this.str = sTR;
 	}
 
 	public void setDEX(int dEX) {
-		DEX = dEX;
+		this.dex = dEX;
 	}
 
 	public void setINT(int iNT) {
-		INT = iNT;
+		this.intelligence = iNT;
 	}
 
 	public void setWILL(int wILL) {
-		WILL = wILL;
+		this.will = wILL;
 	}
 
 	public void setLUK(int lUK) {
-		LUK = lUK;
+		this.luk = lUK;
 	}
 
 	public void setDEF(int dEF) {
-		DEF = dEF;
+		this.def = dEF;
 	}
 
 	public void setPRO(int pRO) {
-		PRO = pRO;
+		this.pro = pRO;
 	}
 
 	public void setMDEF(int mDEF) {
-		MDEF = mDEF;
+		this.magicDef = mDEF;
 	}
 
 	public void setMPRO(int mPRO) {
-		MPRO = mPRO;
+		this.magicPro = mPRO;
 	}
 
 	public long getEXP() {
-		return EXP;
+		return exp;
 	}
 
 	public void setEXP(long eXP) {
-		EXP = eXP;
+		this.exp = eXP;
 	}
 }
