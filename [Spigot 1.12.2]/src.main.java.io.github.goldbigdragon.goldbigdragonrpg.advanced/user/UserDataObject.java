@@ -45,11 +45,11 @@ public class UserDataObject
 			return null;
 	}
 	
-	public String getString(Player player, byte StringNumber)
+	public String getString(Player player, int index)
 	{
 		YamlLoader UserData = new YamlLoader();
 		UserData.getConfig("UserData/"+ player.getUniqueId()+".yml");
-		String string = UserData.getString("Data.String."+StringNumber);
+		String string = UserData.getString("Data.String."+index);
 		if(string != null)
 			return string;
 		else
@@ -119,7 +119,7 @@ public class UserDataObject
 		UserData.saveConfig();
 	}
 	
-	public void setString(Player player, byte StringNumber,String Value)
+	public void setString(Player player, int StringNumber,String Value)
 	{
 		YamlLoader UserData = new YamlLoader();
 		UserData.getConfig("UserData/"+ player.getUniqueId()+".yml");

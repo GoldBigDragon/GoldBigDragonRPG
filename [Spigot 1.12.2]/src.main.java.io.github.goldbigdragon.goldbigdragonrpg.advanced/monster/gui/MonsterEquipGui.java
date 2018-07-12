@@ -71,7 +71,7 @@ public class MonsterEquipGui extends GuiUtil{
 			if(event.getInventory().getItem(count) == getItemStack(partsName[count], partsId[count],0,1,Arrays.asList("§7이곳에 아이템을 넣어 주세요.")))
 				monsterListYaml.set(monsterName+"." + parts[count] + ".Item", null);
 			else
-				monsterListYaml.set(monsterName+"." + parts[count] + ".Item", event.getInventory().getItem(0));
+				monsterListYaml.set(monsterName+"." + parts[count] + ".Item", event.getInventory().getItem(count));
 		}
 		monsterListYaml.saveConfig();
 		event.getPlayer().sendMessage("§a[SYSTEM] : 아이템 설정이 저장되었습니다.");
