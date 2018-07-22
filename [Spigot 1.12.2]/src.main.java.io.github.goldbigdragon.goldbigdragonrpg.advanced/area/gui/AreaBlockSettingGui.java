@@ -3,7 +3,6 @@ package area.gui;
 import java.util.Arrays;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -26,24 +25,26 @@ public class AreaBlockSettingGui extends GuiUtil {
 
 		Inventory inv = Bukkit.createInventory(null, 54, uniqueCode + "§0영역 특산품 : " + (page+1));
 
-		String[] blockIdDataList= areaYaml.getConfigurationSection(areaName+".Mining").getKeys(false).toArray(new String[0]);
-		
-		byte loc=0;
-		for(int count = page*45; count <blockIdDataList.length ;count++)
+		if(areaYaml.contains(areaName+".Mining"))
 		{
-			short id = Short.parseShort(blockIdDataList[count].split(":")[0]);
-			byte data = Byte.parseByte(blockIdDataList[count].split(":")[1]);
+			String[] blockIdDataList= areaYaml.getConfigurationSection(areaName+".Mining").getKeys(false).toArray(new String[0]);
+			
+			byte loc=0;
+			for(int count = page*45; count <blockIdDataList.length ;count++)
+			{
+				short id = Short.parseShort(blockIdDataList[count].split(":")[0]);
+				byte data = Byte.parseByte(blockIdDataList[count].split(":")[1]);
 
-			removeFlagStack(I.setItemDefaultName(id, data), id,data,1,Arrays.asList(
-					"","§c[Shift + 우클릭시 등록 해제]"), loc, inv);
-				loc++;
+				removeFlagStack(I.setItemDefaultName(id, data), id,data,1,Arrays.asList(
+						"","§c[Shift + 우클릭시 등록 해제]"), loc, inv);
+					loc++;
+			}
+			
+			if(blockIdDataList.length-(page*44)>45)
+				removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
+			if(page!=0)
+				removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
 		}
-		
-		if(blockIdDataList.length-(page*44)>45)
-			removeFlagStack("§f§l다음 페이지", 323,0,1,Arrays.asList("§7다음 페이지로 이동 합니다."), 50, inv);
-		if(page!=0)
-			removeFlagStack("§f§l이전 페이지", 323,0,1,Arrays.asList("§7이전 페이지로 이동 합니다."), 48, inv);
-
 		removeFlagStack("§f§l특산물 추가", 52,0,1,Arrays.asList("§7새로운 블록을 설정합니다."), 49, inv);
 		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
 		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+ areaName), 53, inv);
@@ -63,7 +64,7 @@ public class AreaBlockSettingGui extends GuiUtil {
 		else
 		{
 			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			String areaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+			String areaName = event.getInventory().getItem(53).getItemMeta().getLore().get(1).substring(2);
 			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 			if(slot == 45)//이전 목록
 				new AreaSettingGui().areaSettingGui(player, areaName);

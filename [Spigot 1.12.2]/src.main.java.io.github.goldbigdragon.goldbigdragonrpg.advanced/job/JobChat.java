@@ -33,7 +33,7 @@ public class JobChat extends ChatUtil
 				jobYaml.createSection("Mabinogi."+Message);
 				jobYaml.saveConfig();
 				SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 0.5F);
-				JGUI.Mabinogi_ChooseCategory(player,(short) 0);
+				JGUI.mabinogi_ChooseCategory(player,(short) 0);
 
 				configYaml.set("Time.LastSkillChanged", new util.NumericUtil().RandomNum(0, 100000)-new util.NumericUtil().RandomNum(0, 100000));
 				configYaml.saveConfig();
@@ -61,7 +61,7 @@ public class JobChat extends ChatUtil
 			jobYaml.createSection("MapleStory."+Message+"."+Message+".Skill");
 			jobYaml.saveConfig();
 			SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_HORSE_SADDLE, 1.0F, 0.5F);
-			JGUI.MapleStory_JobSetting(player,Message);
+			JGUI.mapleStory_JobSetting(player,Message);
 			u.clearAll(player);
 			return;
 		case "CJL"://CreateJobLevel (승급 만들기)
@@ -79,7 +79,7 @@ public class JobChat extends ChatUtil
 			jobYaml.createSection("MapleStory."+JobName2+"."+Message+".Skill");
 			jobYaml.saveConfig();
 			SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
-			JGUI.MapleStory_JobSetting(player, JobName2);
+			JGUI.mapleStory_JobSetting(player, JobName2);
 			u.clearAll(player);
 			return;
 		case "JNL"://JobNeedLevel (승급을 위한 필요 레벨)
@@ -263,7 +263,7 @@ public class JobChat extends ChatUtil
 				jobYaml.set("MapleStory."+JobName4+"."+JobNick3+".IconAmount",Integer.parseInt(Message));
 				jobYaml.saveConfig();
 				SoundEffect.playSound(player, org.bukkit.Sound.BLOCK_ANVIL_USE, 1.0F, 1.0F);
-				JGUI.MapleStory_JobSetting(player, JobName4);
+				JGUI.mapleStory_JobSetting(player, JobName4);
 				u.clearAll(player);
 			}
 			return;

@@ -9,6 +9,10 @@ import org.bukkit.entity.Player;
 import dungeon.Schematic;
 import effect.SoundEffect;
 import servertick.ServerTickMain;
+import structure.buildcode.AtonomicBoard;
+import structure.buildcode.GoldBigDragon;
+import structure.buildcode.MossyAltar;
+import structure.buildcode.StoneHenge;
 
 public class StructureMain
 {
@@ -99,27 +103,25 @@ public class StructureMain
 		servertick.ServerTickMain.Schedule.put(servertick.ServerTickMain.nowUTC, STSO);
 	}
 	
-	public String getCMD(String StructureName, int LineNumber, String StructureCode, String Direction)
+	public String getCMD(String StructureName, int lineNumber, String structureCode, String direction)
 	{
 		if(StructureName.equals("PB"))
-			return new StructPostBox().CreatePostBox(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
+			return new StructPostBox().CreatePostBox(lineNumber,structureCode, (byte) Byte.parseByte(direction));
 		else if(StructureName.equals("B"))
-			return new StructBoard().CreateBoard(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
+			return new StructBoard().CreateBoard(lineNumber,structureCode, (byte) Byte.parseByte(direction));
 		else if(StructureName.equals("TB"))
-			return new StructTradeBoard().CreateTradeBoard(LineNumber,StructureCode,(byte) Byte.parseByte(Direction));
+			return new StructTradeBoard().CreateTradeBoard(lineNumber,structureCode,(byte) Byte.parseByte(direction));
 		else if(StructureName.equals("CF"))
-			return new StructCampFire().CreateCampFire(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
+			return new StructCampFire().CreateCampFire(lineNumber,structureCode, (byte) Byte.parseByte(direction));
 
 		else if(StructureName.equals("A_M"))
-			return new StructAltar().createMossyAltar(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
+			return new MossyAltar().createMossyAltar(lineNumber, structureCode);
 		else if(StructureName.equals("A_GoldBigDragon"))
-			return new StructAltar().CreateGoldBigDragon1(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
+			return new GoldBigDragon().createGoldBigDragon(lineNumber, structureCode);
 		else if(StructureName.equals("A_SH"))
-			return new StructAltar().CreateStoneHenge(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
+			return new StoneHenge().createStoneHenge(lineNumber, structureCode);
 		else if(StructureName.equals("A_AB"))
-			return new StructAltar().CreateAtonomicBoard(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
-		else if(StructureName.equals("A_TEST"))
-			return new StructAltar().createTestAltar(LineNumber,StructureCode, (byte) Byte.parseByte(Direction));
+			return new AtonomicBoard().createAtonomicBoard(lineNumber, structureCode);
 		return "null";
 	}
 	

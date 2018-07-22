@@ -3,7 +3,6 @@ package area.gui;
 import java.util.Arrays;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -134,7 +133,7 @@ public class AreaSettingGui extends GuiUtil {
 			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 		  	YamlLoader areaYaml = new YamlLoader();
 			areaYaml.getConfig("Area/AreaList.yml");
-			String areaName = ChatColor.stripColor(event.getInventory().getItem(44).getItemMeta().getLore().get(1));
+			String areaName = event.getInventory().getItem(44).getItemMeta().getLore().get(1).substring(2);
 			if(slot == 36)//이전 화면
 				new AreaListGui().areaListGui(player,(short) 0);
 			else if(slot >= 9 && slot <= 16)

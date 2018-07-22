@@ -64,7 +64,7 @@ public class AreaMusicSettingGui extends GuiUtil
 	public void areaMusicSettingGuiClick(InventoryClickEvent event)
 	{
 		Player player = (Player) event.getWhoClicked();
-		String areaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+		String areaName = event.getInventory().getItem(53).getItemMeta().getLore().get(1).substring(2);
 
 		int slot = event.getSlot();
 		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);

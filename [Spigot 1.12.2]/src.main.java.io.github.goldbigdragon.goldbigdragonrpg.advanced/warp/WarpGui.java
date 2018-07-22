@@ -3,7 +3,6 @@ package warp;
 import java.util.Arrays;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -25,24 +24,32 @@ public class WarpGui extends GuiUtil
 
 		Object[] telePortList= telePort.getKeys().toArray();
 
-		byte loc=0;
+		int loc=0;
 		String[] worldname= new String[Bukkit.getServer().getWorlds().size()];
 		for(int count=0;count<Bukkit.getServer().getWorlds().size();count++)
 			worldname[count] = Bukkit.getServer().getWorlds().get(count).getName();
-		short a = 0;
-		for(int count = (short) (page*45); count < telePortList.length+Bukkit.getServer().getWorlds().size();count++)
+		int a = 0;
+		String telePortTitle = null;
+		String world = null;
+		int x = 0;
+		int y = 0;
+		int z = 0;
+		int pitch = 0;
+		int yaw = 0;
+		boolean onlyOpUse = true;
+		for(int count = (page*45); count < telePortList.length+Bukkit.getServer().getWorlds().size();count++)
 		{
 			if(loc >= 45) break;
 			if(count < telePortList.length)
 			{
-				String telePortTitle =telePortList[count].toString();
-				String world = telePort.getString(telePortTitle+".World");
-				int x = telePort.getInt(telePortTitle+".X");
-				short y = (short) telePort.getInt(telePortTitle+".Y");
-				int z = telePort.getInt(telePortTitle+".Z");
-				short pitch = (short) telePort.getInt(telePortTitle+".Pitch");
-				short yaw = (short) telePort.getInt(telePortTitle+".Yaw");
-				boolean onlyOpUse = telePort.getBoolean(telePortTitle+".OnlyOpUse");
+				telePortTitle = telePortList[count].toString();
+				world = telePort.getString(telePortTitle+".World");
+				x = telePort.getInt(telePortTitle+".X");
+				y = telePort.getInt(telePortTitle+".Y");
+				z = telePort.getInt(telePortTitle+".Z");
+				pitch = telePort.getInt(telePortTitle+".Pitch");
+				yaw = telePort.getInt(telePortTitle+".Yaw");
+				onlyOpUse = telePort.getBoolean(telePortTitle+".OnlyOpUse");
 
 				if(player.isOp())
 				{
@@ -83,12 +90,12 @@ public class WarpGui extends GuiUtil
 			{
 				if(player.isOp())
 				{
-					String world = worldname[a];
-					int x = (int) Bukkit.getServer().getWorld(worldname[a]).getSpawnLocation().getX();
-					short y = (short) Bukkit.getServer().getWorld(worldname[a]).getSpawnLocation().getY();
-					int z = (int) Bukkit.getServer().getWorld(worldname[a]).getSpawnLocation().getZ();
-					short pitch = (short) Bukkit.getServer().getWorld(worldname[a]).getSpawnLocation().getPitch();
-					short yaw = (short) Bukkit.getServer().getWorld(worldname[a]).getSpawnLocation().getYaw();
+					world = worldname[a];
+					x = (int) Bukkit.getServer().getWorld(worldname[a]).getSpawnLocation().getX();
+					y = (int) Bukkit.getServer().getWorld(worldname[a]).getSpawnLocation().getY();
+					z = (int) Bukkit.getServer().getWorld(worldname[a]).getSpawnLocation().getZ();
+					pitch = (int) Bukkit.getServer().getWorld(worldname[a]).getSpawnLocation().getPitch();
+					yaw = (int) Bukkit.getServer().getWorld(worldname[a]).getSpawnLocation().getYaw();
 					stack("¡×f"+world, 2, 0, 1,Arrays.asList("¡×3¿ùµå : ¡×f¡×l"+world,
 							"¡×3x ½ºÆù ÁÂÇ¥ : ¡×f¡×l"+x
 							,"¡×3y ½ºÆù ÁÂÇ¥ : ¡×f¡×l"+y
@@ -129,11 +136,11 @@ public class WarpGui extends GuiUtil
 		else
 		{
 			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+			int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
 			if(slot == 45)
 			{
 				if(player.isOp())
-					new admin.OPboxGui().opBoxGuiMain(player, (byte) 2);
+					new admin.OPboxGui().opBoxGuiMain(player, 2);
 				else
 					new user.EtcGui().ETCGUI_Main(player);
 			}
@@ -151,21 +158,22 @@ public class WarpGui extends GuiUtil
 			}
 			else
 			{
+				String teleportName = event.getCurrentItem().getItemMeta().getDisplayName().substring(2);
 				if(event.getCurrentItem().getTypeId()==2)
-					new warp.WarpMain().TeleportUser(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+					new warp.WarpMain().TeleportUser(player, teleportName);
 				else
 				{
 					if(!event.isShiftClick()&&event.isLeftClick())
-						new warp.WarpMain().TeleportUser(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+						new warp.WarpMain().TeleportUser(player, teleportName);
 					else if(event.isShiftClick()&&event.isLeftClick()&&player.isOp())
 					{
-						new warp.WarpMain().setTeleportPermission(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+						new warp.WarpMain().setTeleportPermission(player, teleportName);
 						warpListGUI(player, page);
 					}
 					else if(event.isShiftClick()&&event.isRightClick()&&player.isOp())
 					{
 						SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 1.0F, 1.0F);
-						new warp.WarpMain().RemoveTeleportList(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+						new warp.WarpMain().RemoveTeleportList(player, teleportName);
 						warpListGUI(player, page);
 					}
 				}

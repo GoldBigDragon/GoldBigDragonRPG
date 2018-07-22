@@ -39,7 +39,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
-import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -553,32 +552,28 @@ public class Main extends JavaPlugin implements Listener
 	@EventHandler
 	private void InventoryClick(InventoryClickEvent event)
 	{
-		if(Bukkit.getPluginManager().isPluginEnabled("MagicSpells") == true &&MainServerOption.MagicSpellsCatched==true)
-		{
-			util.ETC ETC = new util.ETC();
-			ETC.updatePlayerHPMP((Player)event.getWhoClicked());
-		}
+		if(Bukkit.getPluginManager().isPluginEnabled("MagicSpells") && MainServerOption.MagicSpellsCatched)
+			new util.ETC().updatePlayerHPMP((Player)event.getWhoClicked());
 		if(event.getClickedInventory() == null || event.getCurrentItem()==null || event.getCurrentItem().getType()==Material.AIR)
 			return;
-		if(event.getCurrentItem().hasItemMeta())
+		ItemStack item = event.getCurrentItem();
+		if(item.hasItemMeta() && item.getItemMeta().hasLore())
 		{
-			if(event.getCurrentItem().getItemMeta().hasLore())
+			List<String> lore = item.getItemMeta().getLore();
+			if(lore.size() == 4 && lore.get(3).equals(("§e[클릭시 퀵슬롯에서 삭제]")))
 			{
-				if(event.getCurrentItem().getItemMeta().getLore().size() == 4)
-				{
-					if(event.getCurrentItem().getItemMeta().getLore().get(3).equals(("§e[클릭시 퀵슬롯에서 삭제]")))
-					{
-						event.setCancelled(true);
-						event.getWhoClicked().getInventory().setItem(event.getSlot(), null);
-						SoundEffect.playSound((Player)event.getWhoClicked(), Sound.BLOCK_ANVIL_LAND, 1.0F, 1.9F);
-						return;
-					}
-				}
+				event.setCancelled(true);
+				event.getWhoClicked().getInventory().setItem(event.getSlot(), null);
+				SoundEffect.playSound((Player)event.getWhoClicked(), Sound.BLOCK_ANVIL_LAND, 1.0F, 1.9F);
+				return;
 			}
 		}
-		if(event.getInventory().getName().charAt(0)=='§')
+		String inventoryName = event.getInventory().getName();
+		if(inventoryName.length() > 10 && inventoryName.charAt(0)=='§' && inventoryName.charAt(2)=='§' &&
+			inventoryName.charAt(4)=='§' && inventoryName.charAt(6)=='§' &&
+			inventoryName.charAt(8)=='§' && inventoryName.charAt(10)=='§')
 		{
-			String InventoryCode = event.getInventory().getName().split("§r")[0].replaceAll("§", "");
+			String InventoryCode = inventoryName.split("§r")[0].replaceAll("§", "");
 			//[§0] [§0§0] [§0§0] [§r]
 			//1번째 색 코드 표 = 클릭시 이벤트 캔슬 여부
 			//2,3번째 색 코드 표 = 해당 GUI화면 타입
@@ -586,7 +581,7 @@ public class Main extends JavaPlugin implements Listener
 			//6번째 되돌림 색 코드 표 = split을 위한 코드
 			
 			//1번째 색 코드가 0이면, 클릭시 무조건 취소되는 것
-			if(event.getInventory().getName().charAt(1)=='0')
+			if(inventoryName.charAt(1)=='0')
 				event.setCancelled(true);
 			new event.EventInventoryClick().InventoryClickRouter(event, InventoryCode);
 		}

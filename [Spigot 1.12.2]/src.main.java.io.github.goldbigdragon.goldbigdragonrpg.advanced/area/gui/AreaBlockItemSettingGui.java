@@ -103,7 +103,7 @@ public class AreaBlockItemSettingGui extends GuiUtil {
 	{
 		Player player = (Player) event.getWhoClicked();
 		int slot = event.getSlot();
-		String areaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+		String areaName = event.getInventory().getItem(53).getItemMeta().getLore().get(1).substring(2);
 
 		if(!event.getClickedInventory().getTitle().equals("container.inventory"))
 		{

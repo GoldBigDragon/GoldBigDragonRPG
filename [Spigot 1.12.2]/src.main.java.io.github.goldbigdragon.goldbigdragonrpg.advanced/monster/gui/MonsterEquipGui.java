@@ -61,7 +61,7 @@ public class MonsterEquipGui extends GuiUtil{
 		YamlLoader monsterListYaml = new YamlLoader();
 
 		monsterListYaml.getConfig("Monster/MonsterList.yml");
-		String monsterName = ChatColor.stripColor(event.getInventory().getItem(8).getItemMeta().getDisplayName().toString());
+		String monsterName = event.getInventory().getItem(8).getItemMeta().getDisplayName().toString().substring(2);
 
 		String[] parts = {"Head", "Chest", "Leggings", "Boots", "Hand", "OffHand"};
 		String[] partsName = {"¡×f¸Ó¸®", "¡×f°©¿Ê", "¡×f¹ÙÁö", "¡×fºÎÃ÷", "¡×f¿À¸¥¼Õ", "¡×f¿Þ¼Õ"};

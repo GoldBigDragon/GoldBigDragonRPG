@@ -76,7 +76,7 @@ public class AreaMonsterSettingGui extends GuiUtil{
 		else
 		{
 			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			String areaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+			String areaName = event.getInventory().getItem(53).getItemMeta().getLore().get(1).substring(2);
 			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
 			if(slot == 45)//이전 화면
 				new AreaSettingGui().areaSettingGui(player, areaName);

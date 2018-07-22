@@ -19,7 +19,7 @@ public class AreaListGui extends GuiUtil {
 
 	private String uniqueCode = "§0§0§2§0§0§r";
 	
-	public void areaListGui(Player player, short page)
+	public void areaListGui(Player player, int page)
 	{
 	  	YamlLoader areaYaml = new YamlLoader();
 		areaYaml.getConfig("Area/AreaList.yml");
@@ -30,20 +30,29 @@ public class AreaListGui extends GuiUtil {
 		byte loc=0;
 		String areaName = null;
 		String world = null;
+
+		int minXLoc = 0;
+		int minYLoc = 0;
+		int minZLoc = 0;
+		int maxXLoc = 0;
+		int maxYLoc = 0;
+		int maxZLoc = 0;
+		int priority = 0;
+		
 		for(int count = page*45; count < areaList.length;count++)
 		{
 			areaName = areaList[count];
 			
 			if(count > areaList.length || loc >= 45) break;
 			world = areaYaml.getString(areaName+".World");
-			int minXLoc = areaYaml.getInt(areaName+".X.Min");
-			int minYLoc = areaYaml.getInt(areaName+".Y.Min");
-			int minZLoc = areaYaml.getInt(areaName+".Z.Min");
-			int maxXLoc = areaYaml.getInt(areaName+".X.Max");
-			int maxYLoc = areaYaml.getInt(areaName+".Y.Max");
-			int maxZLoc = areaYaml.getInt(areaName+".Z.Max");
+			minXLoc = areaYaml.getInt(areaName+".X.Min");
+			minYLoc = areaYaml.getInt(areaName+".Y.Min");
+			minZLoc = areaYaml.getInt(areaName+".Z.Min");
+			maxXLoc = areaYaml.getInt(areaName+".X.Max");
+			maxYLoc = areaYaml.getInt(areaName+".Y.Max");
+			maxZLoc = areaYaml.getInt(areaName+".Z.Max");
 			
-			byte priority = (byte) areaYaml.getInt(areaName+".Priority");
+			priority = areaYaml.getInt(areaName+".Priority");
 			removeFlagStack("§f§l" + areaName, 395,0,1,Arrays.asList(
 					"§3월드 : "+world,"§3X 영역 : "+minXLoc+" ~ " + maxXLoc
 					,"§3Y 영역 : "+minYLoc+" ~ " + maxYLoc
@@ -82,25 +91,25 @@ public class AreaListGui extends GuiUtil {
 		else
 		{
 			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
-			short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
-			String areaName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());
+			int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
+			String areaName = event.getCurrentItem().getItemMeta().getDisplayName().substring(4);
 			
 			if(slot == 45)//이전 목록
-				new OPboxGui().opBoxGuiMain(player, (byte) 2);
+				new OPboxGui().opBoxGuiMain(player, 2);
 			else if(slot == 48)//이전 페이지
-				areaListGui(player, (short) (page-1));
+				areaListGui(player, page-1);
 			else if(slot == 49)//영역 추가
 			{
 			  	YamlLoader configYaml = new YamlLoader();
 				configYaml.getConfig("config.yml");
 				player.closeInventory();
-				event.EventInteract IT = new event.EventInteract();
-				player.sendMessage("§3[영역] : " + IT.setItemDefaultName(configYaml.getInt("Server.AreaSettingWand"), 0) +"§3 아이템으로 구역을 설정을 한 뒤,");
+				event.EventInteract interact = new event.EventInteract();
+				player.sendMessage("§3[영역] : " + interact.setItemDefaultName(configYaml.getInt("Server.AreaSettingWand"), 0) +"§3 아이템으로 구역을 설정을 한 뒤,");
 				player.sendMessage("§6§l /영역 <영역이름> 생성 §3명령어를 입력해 주세요!");
 				SoundEffect.playSound((Player)player, org.bukkit.Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 2.0F, 1.7F);
 			}
 			else if(slot == 50)//다음 페이지
-				areaListGui(player, (short) (page+1));
+				areaListGui(player, page+1);
 			else
 			{
 				if(event.isLeftClick())

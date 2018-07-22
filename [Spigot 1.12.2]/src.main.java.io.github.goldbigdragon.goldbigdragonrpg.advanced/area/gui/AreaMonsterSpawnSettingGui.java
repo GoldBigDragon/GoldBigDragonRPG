@@ -81,7 +81,7 @@ public class AreaMonsterSpawnSettingGui extends GuiUtil {
 		{
 			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
-			String areaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+			String areaName = event.getInventory().getItem(53).getItemMeta().getLore().get(1).substring(2);
 			if(slot == 45)//이전 목록
 				new AreaSettingGui().areaSettingGui(player, areaName);
 			else if(slot == 48)//이전 페이지

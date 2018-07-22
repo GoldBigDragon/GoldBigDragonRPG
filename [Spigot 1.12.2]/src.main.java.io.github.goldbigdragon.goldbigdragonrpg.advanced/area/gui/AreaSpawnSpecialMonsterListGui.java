@@ -169,7 +169,7 @@ public class AreaSpawnSpecialMonsterListGui extends GuiUtil{
 		Player player = (Player) event.getWhoClicked();
 		int slot = event.getSlot();
 
-		String areaName = ChatColor.stripColor(event.getInventory().getItem(49).getItemMeta().getLore().get(3));
+		String areaName = event.getInventory().getItem(49).getItemMeta().getLore().get(3).substring(2);
 		String ruleCounter = ChatColor.stripColor(event.getInventory().getItem(49).getItemMeta().getLore().get(4));
 		int page =  Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
 		if(slot == 49)//³ª°¡±â

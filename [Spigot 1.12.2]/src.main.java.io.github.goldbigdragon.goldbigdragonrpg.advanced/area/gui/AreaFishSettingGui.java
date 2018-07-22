@@ -57,7 +57,7 @@ public class AreaFishSettingGui extends GuiUtil {
 	{
 		Player player = (Player) event.getWhoClicked();
 		int slot = event.getSlot();
-		String areaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+		String areaName = event.getInventory().getItem(53).getItemMeta().getLore().get(1).substring(2);
 		if(event.getClickedInventory().getType() != InventoryType.PLAYER && (slot == 0 || slot == 9 || slot == 18 || slot == 27 || slot == 36 || slot >= 45))
 			event.setCancelled(true);
 		if(slot == 53)//³ª°¡±â

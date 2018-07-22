@@ -133,8 +133,8 @@ public class AreaMonsterListGui extends GuiUtil{
 		Player player = (Player) event.getWhoClicked();
 		int slot = event.getSlot();
 		
-		String areaName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
-		short page =  (short) (Short.parseShort(event.getInventory().getTitle().split(" : ")[1])-1);
+		String areaName = event.getInventory().getItem(53).getItemMeta().getLore().get(1).substring(2);
+		int page = Integer.parseInt(event.getInventory().getTitle().split(" : ")[1])-1;
 		
 		if(slot == 53)//나가기
 		{
@@ -147,9 +147,9 @@ public class AreaMonsterListGui extends GuiUtil{
 			if(slot == 45)//이전 목록
 				new AreaMonsterSettingGui().areaMonsterSettingGui(player, 0, areaName);
 			else if(slot == 48)//이전 페이지
-				areaMonsterListGui(player, (short) (page-1), areaName);
+				areaMonsterListGui(player, page-1, areaName);
 			else if(slot == 50)//다음 페이지
-				areaMonsterListGui(player, (short) (page+1), areaName);
+				areaMonsterListGui(player, page+1, areaName);
 			else
 			{
 				String mobName = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName());

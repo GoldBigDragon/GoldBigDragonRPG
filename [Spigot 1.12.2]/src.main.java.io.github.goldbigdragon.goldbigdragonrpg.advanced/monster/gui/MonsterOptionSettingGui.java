@@ -193,7 +193,7 @@ public class MonsterOptionSettingGui extends GuiUtil{
 		}
 		else
 		{
-			String monsterName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+			String monsterName = event.getInventory().getItem(53).getItemMeta().getLore().get(1).substring(2);
 			
 			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 목록
@@ -274,7 +274,7 @@ public class MonsterOptionSettingGui extends GuiUtil{
 				UserDataObject u = new UserDataObject();
 				player.closeInventory();
 				u.setType(player, "Monster");
-				u.setString(player, (byte)2, ChatColor.stripColor(event.getInventory().getItem(19).getItemMeta().getDisplayName()));
+				u.setString(player, (byte)2, monsterName);
 				if(slot==13)//몹 이름 변경
 				{
 					player.sendMessage("§a[몬스터] : 몬스터의 보여주는 이름을 설정하세요!");

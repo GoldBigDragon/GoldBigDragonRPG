@@ -198,16 +198,17 @@ public class MonsterListGui extends GuiUtil{
 				monsterListGUI(player, page+1);
 			else
 			{
+				String monsterName = event.getCurrentItem().getItemMeta().getDisplayName().substring(2);
 				if(event.isLeftClick() && ! event.isShiftClick())
-					new MonsterOptionSettingGui().monsterOptionSettingGui(player, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+					new MonsterOptionSettingGui().monsterOptionSettingGui(player, monsterName);
 				else if(event.isLeftClick() && event.isShiftClick())
-					new monster.MonsterSpawn().spawnEggGive(player,ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+					new monster.MonsterSpawn().spawnEggGive(player, monsterName);
 				else if(event.isRightClick() && event.isShiftClick())
 				{
 					SoundEffect.playSound(player, Sound.BLOCK_LAVA_POP, 1.0F, 1.0F);
 					YamlLoader monsterListYaml = new YamlLoader();
 					monsterListYaml.getConfig("Monster/MonsterList.yml");
-					monsterListYaml.removeKey(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()));
+					monsterListYaml.removeKey(monsterName);
 					monsterListYaml.saveConfig();
 					monsterListGUI(player, page);
 				}

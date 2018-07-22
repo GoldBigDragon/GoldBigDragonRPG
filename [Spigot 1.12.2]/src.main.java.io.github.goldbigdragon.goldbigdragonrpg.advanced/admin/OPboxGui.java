@@ -25,7 +25,7 @@ import util.YamlLoader;
 
 public class OPboxGui extends GuiUtil
 {
-	public void opBoxGuiMain (Player player, byte page)
+	public void opBoxGuiMain (Player player, int page)
 	{
 		YamlLoader configYaml = new YamlLoader();
 		configYaml.getConfig("config.yml");
@@ -511,7 +511,7 @@ public class OPboxGui extends GuiUtil
 			else if(displayName.equals("스킬"))
 				new OPboxSkillGui().AllSkillsGUI(player,(short) 0,false,null);
 			else if(displayName.equals("카테고리 및 직업"))
-				new JobGUI().ChooseSystemGUI(player);
+				new JobGUI().chooseSystemGUI(player);
 			else if(displayName.equals("소비 아이템"))
 				new UseableItemListGui().useableItemListGui(player, 0);
 			else if(displayName.equals("영역"))

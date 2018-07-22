@@ -20,7 +20,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class OPboxSkillGui extends GuiUtil
 {
-	public void AllSkillsGUI(Player player, short page, boolean isJobGUI,String WhatJob)
+	public void AllSkillsGUI(Player player, int page, boolean isJobGUI,String WhatJob)
 	{
 		YamlLoader SkillList = new YamlLoader();
 		SkillList.getConfig("Skill/SkillList.yml");
@@ -379,12 +379,12 @@ public class OPboxSkillGui extends GuiUtil
 				{
 					if(WhatJob.equals("Maple"))
 					{
-						new job.JobGUI().MapleStory_JobSetting(player, u.getString(player, (byte)3));
+						new job.JobGUI().mapleStory_JobSetting(player, u.getString(player, (byte)3));
 						u.clearAll(player);
 					}
 					else
 					{
-						new job.JobGUI().Mabinogi_ChooseCategory(player, (short) 0);
+						new job.JobGUI().mabinogi_ChooseCategory(player, (short) 0);
 						u.clearAll(player);
 					}
 				}
@@ -418,7 +418,7 @@ public class OPboxSkillGui extends GuiUtil
 						JobList.createSection("MapleStory."+u.getString(player, (byte)3)+"."+u.getString(player, (byte)2)+".Skill."+SkillName);
 						JobList.saveConfig();
 						job.JobGUI JGUI = new job.JobGUI();
-						JGUI.MapleStory_JobSetting(player, u.getString(player, (byte)3));
+						JGUI.mapleStory_JobSetting(player, u.getString(player, (byte)3));
 						u.clearAll(player);
 						YamlLoader Config = new YamlLoader();
 						Config.getConfig("Config.yml");

@@ -64,7 +64,7 @@ public class MonsterPotionGui extends GuiUtil{
 		}
 		else
 		{
-			String monsterName = ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1));
+			String monsterName = event.getInventory().getItem(53).getItemMeta().getLore().get(1).substring(2);
 			
 			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 목록

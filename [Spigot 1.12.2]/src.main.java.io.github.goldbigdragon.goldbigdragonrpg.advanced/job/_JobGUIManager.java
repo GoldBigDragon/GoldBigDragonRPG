@@ -13,16 +13,16 @@ public class _JobGUIManager
 	public void ClickRouting(InventoryClickEvent event, String SubjectCode)
 	{
 		if(SubjectCode.equals("00"))//직업 시스템 선택
-			new job.JobGUI().ChooseSystemGUIClick(event);
+			new job.JobGUI().chooseSystemGUIClick(event);
 		else if(SubjectCode.equals("01"))//메이플 스토리 형식 전체 직업 목록
-			new job.JobGUI().MapleStory_ChooseJobClick(event);
+			new job.JobGUI().mapleStory_ChooseJobClick(event);
 		else if(SubjectCode.equals("02"))//메이플 스토리 형식 전체 직업 설정
-			new job.JobGUI().MapleStory_JobSettingClick(event);
+			new job.JobGUI().mapleStory_JobSettingClick(event);
 		else if(SubjectCode.equals("03"))//마비노기 전체 카테고리 목록
-			new job.JobGUI().Mabinogi_ChooseCategoryClick(event);
+			new job.JobGUI().mabinogi_ChooseCategoryClick(event);
 		else if(SubjectCode.equals("04"))//마비노기 스킬 관리
-			new job.JobGUI().Mabinogi_SkillSettingClick(event);
+			new job.JobGUI().mabinogi_SkillSettingClick(event);
 		else if(SubjectCode.equals("05"))//등록된 스킬 관리
-			new job.JobGUI().AddedSkillsListGUIClick(event);
+			new job.JobGUI().addedSkillsListGUIClick(event);
 	}
 }
