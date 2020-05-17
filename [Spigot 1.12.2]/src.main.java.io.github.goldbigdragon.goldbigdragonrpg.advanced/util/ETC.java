@@ -198,7 +198,7 @@ public class ETC
 			spellMain.setPlayerMaxAndNowMana(player);
 		}
 		Damageable p = player;
-		int bonusHealth = BattleCalculator.getPlayerEquipmentStat(player, "생명력", false, null)[0];
+		int bonusHealth = BattleCalculator.getPlayerEquipmentStat(player, "생명력", false, null, false)[0];
 		int maxHealth = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxHP()+bonusHealth;
 		if(maxHealth > 0)
 			p.setMaxHealth(maxHealth);
@@ -216,7 +216,7 @@ public class ETC
 		}
 		Damageable p = player;
 		
-		int bonusHealth = BattleCalculator.getPlayerEquipmentStat(player, "생명력",  false, newSlot)[0];
+		int bonusHealth = BattleCalculator.getPlayerEquipmentStat(player, "생명력",  false, newSlot, false)[0];
 		int maxHealth = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxHP()+bonusHealth;
 
 		if(maxHealth > 0)

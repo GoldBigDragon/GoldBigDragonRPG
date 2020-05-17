@@ -3,7 +3,7 @@ package structure.buildcode;
 public class StoneHenge {
 
 	private String prefix = "/summon minecraft:armor_stand ";
-	private String stoneSuffix = "\",ShowArms:1,Invisible:1,NoBasePlate:1,NoGravity:1,HandItems:[{id:stone,Count:1},{}],Pose:{Body:[0f,0f,0f],LeftArm:[0f,0f,0f],RightArm:[346f,44f,270f],LeftLeg:[0f,0f,0f],RightLeg:[0f,0f,0f],Head:[0f,0f,0f]}}";
+	private String stoneSuffix = "\",ShowArms:1,Invisible:1,NoBasePlate:1,NoGravity:1,HandItems:[{id:stone,Count:1},{}],Pose:{Body:[0f,0f,0f],LeftArm:[0f,0f,0f],RightArm:[346f,44f,270f],LeftLeg:[0f,0f,0f],RightLeg:[0f,0f,0f]}}";
 	
 	public String createStoneHenge(int lineNumber, String structureCode)
 	{

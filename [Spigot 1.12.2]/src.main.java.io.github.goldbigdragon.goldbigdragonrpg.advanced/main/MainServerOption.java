@@ -1,8 +1,8 @@
 package main;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -19,6 +19,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import area.AreaObject;
 import corpse.CorpseAPI;
@@ -129,10 +133,10 @@ public class MainServerOption
 	public static short Money6ID = 41;
 	public static byte Money6DATA = 0;
 	
-	public static String serverUpdate = "2018-07-22-14:13";
+	public static String serverUpdate = "2020-03-04-20:03";
 	public static String serverVersion = "Advanced";
-	private static String updateCheckURL = "https://goldbigdragon.github.io/1_12.html";
-	public static String currentServerUpdate = "2018-07-22-14:13";
+	private static String updateCheckURL = "http://goldbigdragon.github.io/version/GoldBigDragonRPG_Advanced.json";
+	public static String currentServerUpdate = "2020-03-04-20:03";
 	public static String currentServerVersion = "Advanced";
 	
 	public static java.util.Map<Long, PartyObject> party = new LinkedHashMap<>();
@@ -198,13 +202,13 @@ public class MainServerOption
 	  	Bukkit.getConsoleSender().sendMessage("§2§l[OK]§8 NBS 파일 로드");
 	  	new main.MainConfig().checkConfig();
 	  	Bukkit.getConsoleSender().sendMessage("§2§l[OK]§8 콘피그 정보 로드");
-	  	if(monsterYaml.isExit("Skill/SkillList.yml") == false)
+	  	if(!monsterYaml.isExit("Skill/SkillList.yml"))
 	  	  new skill.SkillConfig().CreateNewSkillList();
 	  	Bukkit.getConsoleSender().sendMessage("§2§l[OK]§8 스킬 정보 로드");
-	  	if(monsterYaml.isExit("Skill/JobList.yml") == false)
+	  	if(!monsterYaml.isExit("Skill/JobList.yml"))
 	  		new skill.SkillConfig().CreateNewJobList();
 	  	Bukkit.getConsoleSender().sendMessage("§2§l[OK]§8 직업 정보 로드");
-	  	if(monsterYaml.isExit("ETC/NewBie.yml") == false)
+	  	if(!monsterYaml.isExit("ETC/NewBie.yml"))
 	  		new admin.NewBieConfig().createNewConfig();
 	  	Bukkit.getConsoleSender().sendMessage("§2§l[OK]§8 초보자 정보 로드");
 	  	
@@ -438,44 +442,56 @@ public class MainServerOption
 
 	public void VersionCheck()
 	{
-		BufferedInputStream in = null;
-		StringBuilder sb = new StringBuilder();
-		try
-		{
-			URL url = new URL(updateCheckURL);
-			URLConnection urlConnection = url.openConnection();
-			in = new BufferedInputStream(urlConnection.getInputStream());
-			byte[] bufRead = new byte[10];
-			int lenRead = 0;
-			
-			while ((lenRead = in.read(bufRead)) >0)
-				sb.append(new String(bufRead, 0, lenRead));
-			String[] parsed = sb.toString().split("<br>");
-			
-			String version = parsed[1].split(": ")[1];
-			String update = parsed[2].split(": ")[1];
-			
-		  	Bukkit.getConsoleSender().sendMessage("§f최신 버전 : "+version);
+        try
+        {
+            StringBuilder sb = new StringBuilder();
+            URL url = new URL(updateCheckURL);
+            URLConnection urlConnection = url.openConnection();
+            InputStreamReader inr = new InputStreamReader(urlConnection.getInputStream(), "UTF-8");
+            char[] bufRead = new char[10];
+            int lenRead = 0;
+            while ((lenRead = inr.read(bufRead)) >0)
+                sb.append(new String(bufRead, 0, lenRead));
+
+            JsonParser parser = new JsonParser();
+            JsonObject element = parser.parse(sb.toString()).getAsJsonObject();
+            String lastVersion = element.get("lastVersion").getAsString();
+            String lastUpdate = element.get("lastUpdate").getAsString();
+            int server = element.get("server").getAsInt();
+            
+		  	Bukkit.getConsoleSender().sendMessage("§f최신 버전 : "+lastVersion);
 		  	Bukkit.getConsoleSender().sendMessage("§7현재 버전 : "+serverVersion);
-		  	Bukkit.getConsoleSender().sendMessage("§f최신 패치 : "+update);
+		  	Bukkit.getConsoleSender().sendMessage("§f최신 패치 : "+lastUpdate);
 		  	Bukkit.getConsoleSender().sendMessage("§7현재 패치 : "+serverUpdate);
 
-			currentServerUpdate = update;
-			currentServerVersion = version;
-			if(serverVersion.equals(version)&&serverUpdate.equals(update))
+			currentServerUpdate = lastUpdate;
+			currentServerVersion = lastVersion;
+			if(serverVersion.equals(lastVersion)&&serverUpdate.equals(lastUpdate))
 				Bukkit.getConsoleSender().sendMessage("§3[ ! ] 현재 GoldBigDragonRPG는 최신 버전입니다!");
 			else
 			{
 				Bukkit.getConsoleSender().sendMessage("§c[ ! ] GoldBigDragonRPG가 최신 버전이 아닙니다! 아래 주소에서 다운로드 받으세요!");
 				Bukkit.getConsoleSender().sendMessage("§c[ ! ] http://cafe.naver.com/goldbigdragon/57885");
-				Bukkit.getConsoleSender().sendMessage("§c[ ! ] 패치가 필요한 이유 : " + parsed[3].split(": ")[1]);
+	            JsonArray changeLogArray = element.get("changeLog").getAsJsonArray();
+				Bukkit.getConsoleSender().sendMessage("────────────────────");
+				Bukkit.getConsoleSender().sendMessage("§c[ ! ] 패치가 필요한 이유");
+				
+				JsonObject logObject = null;
+				String type = null;
+				String comment = null;
+				for(int i = 0 ; i < changeLogArray.size() ; i++ ) {
+					logObject = changeLogArray.get(i).getAsJsonObject();
+					type = logObject.get("type").getAsString();
+					comment = logObject.get("comment").getAsString();
+					Bukkit.getConsoleSender().sendMessage("§7 " + type + " : " + comment);
+				}
+				Bukkit.getConsoleSender().sendMessage("────────────────────");
 			}
-			
-		}
-		catch (IOException ioe)
-		{
+        }
+        catch (IOException ioe)
+        {
 		  	Bukkit.getConsoleSender().sendMessage("§c[버전 체크 오류] 인터넷 연결을 확인 해 주세요!");
-		}
+        }
 	}
 	
 	public void MagicSpellCatch()

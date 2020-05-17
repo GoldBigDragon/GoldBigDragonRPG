@@ -13,57 +13,62 @@ import effect.SoundEffect;
 
 public class ServerTaskServer
 {
-	public void CreateStructureMain(Long UTC)
+	public void createStructureMain(Long utc)
 	{
-		ServerTickObject STSO = ServerTickMain.Schedule.get(UTC);
-		if(STSO.getInt((byte)3)==0)
+		ServerTickObject stso = ServerTickMain.Schedule.get(utc);
+		
+		if(stso.getInt((byte)3)==0)
 		{
-			if(ServerTickMain.Schedule.get(UTC).getCount()==0)
-				CreateCommandBlock(new Location(Bukkit.getServer().getWorld(STSO.getString((byte)1)), STSO.getInt((byte)0), STSO.getInt((byte)1), STSO.getInt((byte)2)));
-			String CMD = new structure.StructureMain().getCMD(STSO.getString((byte)0), STSO.getCount(),STSO.getString((byte)2),STSO.getString((byte)3));
-			if(CMD.equals("null"))
+			if(ServerTickMain.Schedule.get(utc).getCount()==0)
+				createCommandBlock(new Location(Bukkit.getServer().getWorld(stso.getString((byte)1)), stso.getInt((byte)0), stso.getInt((byte)1), stso.getInt((byte)2)));
+
+			String cmd = new structure.StructureMain().getCMD(stso.getString((byte)0), stso.getCount(),stso.getString((byte)2),stso.getString((byte)3));
+
+			if(cmd.equals("null"))
 			{
-				ServerTickMain.Schedule.remove(UTC);
+				ServerTickMain.Schedule.remove(utc);
 				ServerTickMain.ServerTask="null";
 
-				Location CommandLoc = new Location(Bukkit.getServer().getWorld(STSO.getString((byte)1)), STSO.getInt((byte)0), STSO.getInt((byte)1), STSO.getInt((byte)2));
-				Block OriginalBlock = CommandLoc.getBlock();
-				OriginalBlock.setTypeId(STSO.getInt((byte)6));
-				OriginalBlock.setData((byte) STSO.getInt((byte)7));
-				SetBlock(CommandLoc, OriginalBlock);
+				Location commandLoc = new Location(Bukkit.getServer().getWorld(stso.getString((byte)1)), stso.getInt((byte)0), stso.getInt((byte)1), stso.getInt((byte)2));
+				Block originalBlock = commandLoc.getBlock();
+				originalBlock.setTypeId(stso.getInt((byte)6));
+				originalBlock.setData((byte) stso.getInt((byte)7));
+				setBlock(commandLoc, originalBlock);
 
-				if(STSO.getString((byte)0).equals("CF"))
+				if(stso.getString((byte)0).equals("CF"))
 				{
-					Object[] e = OriginalBlock.getLocation().getWorld().getNearbyEntities(OriginalBlock.getLocation(), 2, 2, 2).toArray();
-					for(int count = 0; count < e.length; count++)
-						if(((Entity)e[count]).getType()==EntityType.ARMOR_STAND)
-							if(((Entity)e[count]).getCustomName()!=null)
-								if(((Entity)e[count]).getCustomName().equals(STSO.getString((byte)2)))
-									((Entity)e[count]).setFireTicks(25565);
+					Object[] e = originalBlock.getLocation().getWorld().getNearbyEntities(originalBlock.getLocation(), 2, 2, 2).toArray();
+					Entity entity;
+					for(int count = 0; count < e.length; count++) {
+						entity = (Entity)e[count];
+						if(entity.getType()==EntityType.ARMOR_STAND &&
+							entity.getCustomName() != null &&
+							entity.getCustomName().equals(stso.getString((byte)2))) {
+							((Entity)e[count]).setFireTicks(25565);
+						}
+					}
 				}
-				
-				
-				ServerTickMain.Schedule.remove(UTC);
+				ServerTickMain.Schedule.remove(utc);
 				return;
 			}
 			else
 			{
-				Location CommandBlockLoc = new Location(Bukkit.getServer().getWorld(STSO.getString((byte)1)), STSO.getInt((byte)0), STSO.getInt((byte)1), STSO.getInt((byte)2));
-				Block Command = CommandBlockLoc.getBlock();
-			    CommandBlock CB = (CommandBlock)Command.getState();
-			    CB.setCommand(CMD);
-			    CB.update();
-			    CommandBlockLoc.setY(CommandBlockLoc.getY()-1);
-			    CreateRedStone(CommandBlockLoc);
-			    SoundEffect.playSoundLocation(CommandBlockLoc, Sound.BLOCK_STONE_STEP, 1.0F, 1.0F);
+				Location commandBlockLoc = new Location(Bukkit.getServer().getWorld(stso.getString((byte)1)), stso.getInt((byte)0), stso.getInt((byte)1), stso.getInt((byte)2));
+				Block command = commandBlockLoc.getBlock();
+			    CommandBlock commandBlock = (CommandBlock)command.getState();
+			    commandBlock.setCommand(cmd);
+			    commandBlock.update();
+			    commandBlockLoc.setY(commandBlockLoc.getY()-1);
+			    createRedStone(commandBlockLoc);
+			    SoundEffect.playSoundLocation(commandBlockLoc, Sound.BLOCK_STONE_STEP, 1.0F, 1.0F);
 			    
-				STSO.setInt((byte)3, 1);
-				ServerTickMain.Schedule.remove(UTC);
+				stso.setInt((byte)3, 1);
+				ServerTickMain.Schedule.remove(utc);
 				for(int count=0;count < 32767;count++)
 				{
-					if(ServerTickMain.Schedule.containsKey(UTC+(100+count))==false)
+					if( ! ServerTickMain.Schedule.containsKey(utc+(100+count)))
 					{
-						ServerTickMain.Schedule.put(UTC+(100+count), STSO);
+						ServerTickMain.Schedule.put(utc+(100+count), stso);
 						break;
 					}
 				}
@@ -71,47 +76,44 @@ public class ServerTaskServer
 		}
 		else
 		{
-			Location RedStoneLoc = new Location(Bukkit.getServer().getWorld(STSO.getString((byte)1)), STSO.getInt((byte)0), STSO.getInt((byte)1), STSO.getInt((byte)2));
-			RedStoneLoc.setY(RedStoneLoc.getY()-1);
-			Block OriginalBlock = RedStoneLoc.getBlock();
-			OriginalBlock.setTypeId(STSO.getInt((byte)6));
-			OriginalBlock.setData((byte) STSO.getInt((byte)7));
-			SetBlock(RedStoneLoc, OriginalBlock);
-			STSO.setInt((byte)3, 0);
-			STSO.setCount(STSO.getCount()+1);
-			ServerTickMain.Schedule.remove(UTC);
+			Location redStoneLoc = new Location(Bukkit.getServer().getWorld(stso.getString((byte)1)), stso.getInt((byte)0), stso.getInt((byte)1), stso.getInt((byte)2));
+			redStoneLoc.setY(redStoneLoc.getY()-1);
+			Block originalBlock = redStoneLoc.getBlock();
+			originalBlock.setTypeId(stso.getInt((byte)6));
+			originalBlock.setData((byte) stso.getInt((byte)7));
+			setBlock(redStoneLoc, originalBlock);
+			stso.setInt((byte)3, 0);
+			stso.setCount(stso.getCount()+1);
+			ServerTickMain.Schedule.remove(utc);
 			for(int count=0; count < 32767;count++)
 			{
-				if(ServerTickMain.Schedule.containsKey(UTC+(100+count))==false)
+				if( ! ServerTickMain.Schedule.containsKey(utc+(100+count)))
 				{
-					ServerTickMain.Schedule.put(UTC+(100+count), STSO);
+					ServerTickMain.Schedule.put(utc+(100+count), stso);
 					break;
 				}
 			}
 		}
 	}
 	
-	public void CreateCommandBlock(Location loc)
+	public void createCommandBlock(Location loc)
 	{
-		Block Command = loc.getBlock();
-		Command.setType(Material.COMMAND);
-		Command.setData((byte)0);
-		return;
+		Block command = loc.getBlock();
+		command.setType(Material.COMMAND);
+		command.setData((byte)0);
 	}
 	
-	public void CreateRedStone(Location loc)
+	public void createRedStone(Location loc)
 	{
-		Block RedStone = loc.getBlock();
-		RedStone.setType(Material.REDSTONE_BLOCK);
-		RedStone.setData((byte)0);
-		return;
+		Block redStone = loc.getBlock();
+		redStone.setType(Material.REDSTONE_BLOCK);
+		redStone.setData((byte)0);
 	}
 
-	public void SetBlock(Location loc, Block OriginalBlock)
+	public void setBlock(Location loc, Block block)
 	{
-		Block Original = loc.getBlock();
-		Original.setType(OriginalBlock.getType());
-		Original.setData(OriginalBlock.getData());
-		return;
+		Block targetBlock = loc.getBlock();
+		targetBlock.setType(block.getType());
+		targetBlock.setData(block.getData());
 	}
 }

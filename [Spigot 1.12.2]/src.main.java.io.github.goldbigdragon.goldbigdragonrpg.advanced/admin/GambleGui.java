@@ -18,8 +18,6 @@ import user.UserDataObject;
 import util.GuiUtil;
 import util.YamlLoader;
 
-
-
 public class GambleGui extends GuiUtil
 {
 	public void gambleMainGui(Player player)

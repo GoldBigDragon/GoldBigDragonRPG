@@ -62,23 +62,23 @@ public class SpellMain implements Listener
 			Damageable p = player;
 			String switchCheck = main.MainServerOption.PlayerUseSpell.get(player);
 			if(switchCheck.compareTo("생명력")==0)
-				bonuspower = BattleCalculator.magicSpellsDamageBonus((int) p.getHealth())+BattleCalculator.getPlayerEquipmentStat(player, "HP", false, null)[0];
+				bonuspower = BattleCalculator.magicSpellsDamageBonus((int) p.getHealth())+BattleCalculator.getPlayerEquipmentStat(player, "HP", false, null, false)[0];
 			else if(switchCheck.compareTo("마나")==0)
-				bonuspower = BattleCalculator.magicSpellsDamageBonus(getPlayerMana(player))+BattleCalculator.getPlayerEquipmentStat(player, "MP", false, null)[0];
+				bonuspower = BattleCalculator.magicSpellsDamageBonus(getPlayerMana(player))+BattleCalculator.getPlayerEquipmentStat(player, "MP", false, null, false)[0];
 			else if(switchCheck.compareTo(MainServerOption.statSTR)==0)
-				bonuspower = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR()+BattleCalculator.getPlayerEquipmentStat(player, "STR", false, null)[0];
+				bonuspower = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR()+BattleCalculator.getPlayerEquipmentStat(player, "STR", false, null, false)[0];
 			else if(switchCheck.compareTo(MainServerOption.statDEX)==0)
-				bonuspower = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX()+BattleCalculator.getPlayerEquipmentStat(player, "DEX", false, null)[0];
+				bonuspower = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX()+BattleCalculator.getPlayerEquipmentStat(player, "DEX", false, null, false)[0];
 			else if(switchCheck.compareTo(MainServerOption.statINT)==0)
-				bonuspower = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT()+BattleCalculator.getPlayerEquipmentStat(player, "INT", false, null)[0];
+				bonuspower = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT()+BattleCalculator.getPlayerEquipmentStat(player, "INT", false, null, false)[0];
 			else if(switchCheck.compareTo(MainServerOption.statWILL)==0)
-				bonuspower = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL()+BattleCalculator.getPlayerEquipmentStat(player, "WILL", false, null)[0];
+				bonuspower = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL()+BattleCalculator.getPlayerEquipmentStat(player, "WILL", false, null, false)[0];
 			else if(switchCheck.compareTo(MainServerOption.statLUK)==0)
-				bonuspower = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK()+BattleCalculator.getPlayerEquipmentStat(player, "LUK", false, null)[0];
+				bonuspower = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK()+BattleCalculator.getPlayerEquipmentStat(player, "LUK", false, null, false)[0];
 			else
 				bonuspower = 0;
 		}
-		int[] weaponPower = BattleCalculator.getPlayerEquipmentStat(player, "MagicDamage",  false, main.MainServerOption.PlayerlastItem.get(player));
+		int[] weaponPower = BattleCalculator.getPlayerEquipmentStat(player, "MagicDamage",  false, main.MainServerOption.PlayerlastItem.get(player), true);
 		int weaponPowerFixed = new util.NumericUtil().RandomNum(weaponPower[0], weaponPower[1]);
 		bonuspower = bonuspower+weaponPowerFixed;
 		int negativeBonus = 0;
@@ -370,7 +370,7 @@ public class SpellMain implements Listener
 
 	public void setPlayerMaxAndNowMana(Player player)
 	{
-		int bonusMana = BattleCalculator.getPlayerEquipmentStat(player, "마나", false, null)[0];
+		int bonusMana = BattleCalculator.getPlayerEquipmentStat(player, "마나", false, null, false)[0];
 		int maxMana = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxMP()+bonusMana;
 		if(maxMana > 0 && MainServerOption.MagicSpellsEnable)
 		{
@@ -387,7 +387,7 @@ public class SpellMain implements Listener
 
 	public void setSlotChangePlayerMaxAndNowMana(Player player, ItemStack newSlot)
 	{
-		int bonusMana = BattleCalculator.getPlayerEquipmentStat(player, "마나", false, newSlot)[0];
+		int bonusMana = BattleCalculator.getPlayerEquipmentStat(player, "마나", false, newSlot, false)[0];
 		int maxMana = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_MaxMP()+bonusMana;
 
 		if(maxMana > 0 && main.MainServerOption.MagicSpellsEnable)

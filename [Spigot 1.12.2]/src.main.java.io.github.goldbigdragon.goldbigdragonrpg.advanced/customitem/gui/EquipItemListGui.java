@@ -4,19 +4,49 @@ import java.util.Arrays;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import admin.OPboxGui;
 import customitem.CustomItemAPI;
 import effect.SoundEffect;
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.NBTTagDouble;
+import net.minecraft.server.v1_12_R1.NBTTagInt;
+import net.minecraft.server.v1_12_R1.NBTTagList;
+import net.minecraft.server.v1_12_R1.NBTTagString;
 import util.GuiUtil;
 import util.YamlLoader;
 
 public class EquipItemListGui extends GuiUtil{
 
 	private String uniqueCode = "」0」0」3」0」0」r";
+	
+	
+	public ItemStack tunning(ItemStack nowItem, String attributeName, String name, double amount) {
+		net.minecraft.server.v1_12_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(nowItem);
+		NBTTagCompound compound = (nmsStack.hasTag()) ? nmsStack.getTag() : new net.minecraft.server.v1_12_R1.NBTTagCompound();
+		NBTTagList am = (net.minecraft.server.v1_12_R1.NBTTagList) compound.get("AttributeModifiers");
+		if (am == null)
+		    am = new NBTTagList();
+		
+		NBTTagCompound nbtTag = new NBTTagCompound();
+		nbtTag.set("AttributeName", new NBTTagString(attributeName));
+		nbtTag.set("Name", new NBTTagString(name));
+		nbtTag.set("Amount", new NBTTagDouble(amount));
+		nbtTag.set("Operation", new NBTTagInt(0));
+		nbtTag.set("UUIDLeast", new NBTTagInt(894654));
+		nbtTag.set("UUIDMost", new NBTTagInt(2872));
+		
+		am.add(nbtTag);
+		compound.set("AttributeModifiers", am);
+		nmsStack.setTag(compound);
+		return CraftItemStack.asBukkitCopy(nmsStack);
+	}
+	
 	
 	public void itemListGui(Player player, int page)
 	{
@@ -36,8 +66,11 @@ public class EquipItemListGui extends GuiUtil{
 			String itemName = itemYaml.getString(number+".DisplayName");
 			int itemId = itemYaml.getInt(number+".ID");
 			int itemData = itemYaml.getInt(number+".Data");
+			boolean removeAttackDelay = itemYaml.getBoolean(number+".NoAttackDelay");
 			removeFlagStack(itemName, itemId, itemData, 1,Arrays.asList(ciapi.loreCreater(number)), loc, inv);
-			
+			if(removeAttackDelay) {
+				inv.setItem(loc, tunning(inv.getItem(loc), "generic.attackSpeed", "generic.attackSpeed", 32767));
+			}
 			loc++;
 		}
 		

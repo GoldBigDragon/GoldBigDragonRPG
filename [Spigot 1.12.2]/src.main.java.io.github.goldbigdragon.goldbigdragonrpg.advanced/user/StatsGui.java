@@ -122,7 +122,7 @@ public class StatsGui extends GuiUtil
 				}
 			}
 		}
-		int EquipmentStat = BattleCalculator.getPlayerEquipmentStat(player, "STR", false, null)[0];
+		int EquipmentStat = BattleCalculator.getPlayerEquipmentStat(player, "STR", false, null, false)[0];
 		int PlayerStat = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_STR();
 		if(PlayerStat > main.MainServerOption.maxSTR)
 			PlayerStat = main.MainServerOption.maxSTR;
@@ -142,7 +142,7 @@ public class StatsGui extends GuiUtil
 				Arrays.asList(lore.split("%enter%")), 20, inv);
 
 		int DEX = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEX();
-		EquipmentStat=BattleCalculator.getPlayerEquipmentStat(player, "DEX", false, null)[0];
+		EquipmentStat=BattleCalculator.getPlayerEquipmentStat(player, "DEX", false, null, false)[0];
 		if(DEX > main.MainServerOption.maxDEX)
 			DEX = main.MainServerOption.maxDEX;
 		Additional = "§c§l" + BattleCalculator.returnRangeDamageValue(player, DEX, 0, true) + " ~ " + BattleCalculator.returnRangeDamageValue(player, DEX, 0, false);
@@ -163,8 +163,8 @@ public class StatsGui extends GuiUtil
 		int INT = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_INT();
 		if(INT > main.MainServerOption.maxINT)
 			INT = main.MainServerOption.maxINT;
-		EquipmentStat=BattleCalculator.getPlayerEquipmentStat(player, "INT", false, null)[0];
-		Additional = "§c§l" + ((INT+BattleCalculator.getPlayerEquipmentStat(player, "INT", false, null)[0])*0.6+100) + " %";
+		EquipmentStat=BattleCalculator.getPlayerEquipmentStat(player, "INT", false, null, false)[0];
+		Additional = "§c§l" + ((INT+BattleCalculator.getPlayerEquipmentStat(player, "INT", false, null, false)[0])*0.6+100) + " %";
 		if(EquipmentStat == 0)
 			CurrentStat = "§f§l"+ INT;
 		else if(EquipmentStat > 0)
@@ -182,8 +182,8 @@ public class StatsGui extends GuiUtil
 		int WILL = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_WILL();
 		if(WILL > main.MainServerOption.maxWILL)
 			WILL = main.MainServerOption.maxWILL;
-		EquipmentStat=BattleCalculator.getPlayerEquipmentStat(player, "WILL", false, null)[0];
-		Additional = "§c§l" + ((WILL+BattleCalculator.getPlayerEquipmentStat(player, "WILL", false, null)[0])*0.6+100) + " %";
+		EquipmentStat=BattleCalculator.getPlayerEquipmentStat(player, "WILL", false, null, false)[0];
+		Additional = "§c§l" + ((WILL+BattleCalculator.getPlayerEquipmentStat(player, "WILL", false, null, false)[0])*0.6+100) + " %";
 		if(EquipmentStat == 0)
 			CurrentStat = "§f§l"+ WILL;
 		else if(EquipmentStat > 0)
@@ -201,7 +201,7 @@ public class StatsGui extends GuiUtil
 		int LUK = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK();
 		if(LUK > main.MainServerOption.maxLUK)
 			LUK = main.MainServerOption.maxLUK;
-		EquipmentStat=BattleCalculator.getPlayerEquipmentStat(player, "LUK", false, null)[0];
+		EquipmentStat=BattleCalculator.getPlayerEquipmentStat(player, "LUK", false, null, false)[0];
 		if(EquipmentStat == 0)
 			CurrentStat = "§f§l"+ LUK;
 		else if(EquipmentStat > 0)
@@ -231,8 +231,8 @@ public class StatsGui extends GuiUtil
 					Arrays.asList("§7"+main.MainServerOption.statLUK+" 스텟을 한단계 상승 시킵니다.","§7남은 스텟 포인트 : "+statPoint), 33, inv);
 		}
 		removeFlagStack("§7    [§f§l방어§7]", 307,0,1,
-				Arrays.asList("§f물리 방어 : §f" +(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEF()+BattleCalculator.getPlayerEquipmentStat(player, "방어", false, null)[0]),
-						"§7추가 물리 보호 : §f" + (main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Protect()+BattleCalculator.getPlayerEquipmentStat(player, "보호", false, null)[0]),
+				Arrays.asList("§f물리 방어 : §f" +(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_DEF()+BattleCalculator.getPlayerEquipmentStat(player, "방어", false, null, false)[0]),
+						"§7추가 물리 보호 : §f" + (main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Protect()+BattleCalculator.getPlayerEquipmentStat(player, "보호", false, null, false)[0]),
 						"§b추가 마법 방어 : §f" + (main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Magic_DEF()+BattleCalculator.getMagicDEF(player,INT)),
 						"§3추가 마법 보호 : §f" + (main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Magic_Protect()+BattleCalculator.getMagicProtect(player, INT))), 38, inv);
 

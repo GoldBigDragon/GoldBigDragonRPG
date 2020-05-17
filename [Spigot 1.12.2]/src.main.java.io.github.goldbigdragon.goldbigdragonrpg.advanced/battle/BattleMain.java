@@ -216,8 +216,10 @@ public class BattleMain implements Listener
 	    }
 	    int[] attackerStat = null;
 
-		if (attackType.charAt(0)=='R'||attackType.charAt(0)=='M'||attackType.charAt(0)=='E'||attackType.charAt(0)=='P')//Range Arrow
-			attackerStat = getAttackerStats(attacker);
+		if (attackType.charAt(0)=='R'||attackType.charAt(0)=='E'||attackType.charAt(0)=='P')//Range Arrow
+			attackerStat = getAttackerStats(attacker, false);
+		else if(attackType.charAt(0)=='M')
+			attackerStat = getAttackerStats(attacker, true);
 		
 	    int[] defenderStat = getDefenderStats(event.getEntity());
 			
@@ -327,7 +329,7 @@ public class BattleMain implements Listener
 		return;
 	}
 	
-	public int[] getAttackerStats(Entity entity)
+	public int[] getAttackerStats(Entity entity, boolean isMagicAttack)
 	{
 		int[] attackerStat = new int[9];
 		for(int count=0;count<9;count++)
@@ -349,13 +351,13 @@ public class BattleMain implements Listener
 	    		int balance = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Balance();
 	    		
 	    		BattleCalculator.decreaseDurabilityWeapon(player);
-	    	  	attackerStat[0] = str + BattleCalculator.getPlayerEquipmentStat(player, "STR", false, null)[0];
-	    	  	attackerStat[1] = dex + BattleCalculator.getPlayerEquipmentStat(player, "DEX", false, null)[0];
-	    	  	attackerStat[2] = INT + BattleCalculator.getPlayerEquipmentStat(player, "INT", false, null)[0];
-	    	  	attackerStat[3] = will + BattleCalculator.getPlayerEquipmentStat(player, "WILL", false, null)[0];
-	    	  	attackerStat[4] = luk + BattleCalculator.getPlayerEquipmentStat(player, "LUK", false, null)[0];
-	    	  	attackerStat[5] = defCrash + BattleCalculator.getPlayerEquipmentStat(player, "DEFcrash", false, null)[0] + BattleCalculator.getDEFcrash(player,attackerStat[1]);
-	    	  	attackerStat[6] = magicDefCrash + BattleCalculator.getPlayerEquipmentStat(player, "MagicDEFcrash", false, null)[0];
+	    	  	attackerStat[0] = str + BattleCalculator.getPlayerEquipmentStat(player, "STR", false, null, isMagicAttack)[0];
+	    	  	attackerStat[1] = dex + BattleCalculator.getPlayerEquipmentStat(player, "DEX", false, null, isMagicAttack)[0];
+	    	  	attackerStat[2] = INT + BattleCalculator.getPlayerEquipmentStat(player, "INT", false, null, isMagicAttack)[0];
+	    	  	attackerStat[3] = will + BattleCalculator.getPlayerEquipmentStat(player, "WILL", false, null, isMagicAttack)[0];
+	    	  	attackerStat[4] = luk + BattleCalculator.getPlayerEquipmentStat(player, "LUK", false, null, isMagicAttack)[0];
+	    	  	attackerStat[5] = defCrash + BattleCalculator.getPlayerEquipmentStat(player, "DEFcrash", false, null, isMagicAttack)[0] + BattleCalculator.getDEFcrash(player,attackerStat[1]);
+	    	  	attackerStat[6] = magicDefCrash + BattleCalculator.getPlayerEquipmentStat(player, "MagicDEFcrash", false, null, isMagicAttack)[0];
 	    	  	attackerStat[7] = critical;
 	    	  	attackerStat[8] = BattleCalculator.getBalance(player, attackerStat[1], balance);
 	    	}
@@ -418,10 +420,10 @@ public class BattleMain implements Listener
 	    	  	int magicDef = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Magic_DEF();
 	    	  	int magicProtect = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_Magic_Protect();
 	    	  	
-	    	  	defenderStat[0] = def + BattleCalculator.getPlayerEquipmentStat(player, "DEF", false, null)[0];
-	    	  	defenderStat[1] = protect + BattleCalculator.getPlayerEquipmentStat(player, "Protect", false, null)[0];
-	    	  	defenderStat[2] = magicDef + BattleCalculator.getPlayerEquipmentStat(player, "Magic_DEF", false, null)[0];
-	    	  	defenderStat[3] = magicProtect + BattleCalculator.getPlayerEquipmentStat(player, "Magic_Protect", false, null)[0];
+	    	  	defenderStat[0] = def + BattleCalculator.getPlayerEquipmentStat(player, "DEF", false, null, false)[0];
+	    	  	defenderStat[1] = protect + BattleCalculator.getPlayerEquipmentStat(player, "Protect", false, null, false)[0];
+	    	  	defenderStat[2] = magicDef + BattleCalculator.getPlayerEquipmentStat(player, "Magic_DEF", false, null, false)[0];
+	    	  	defenderStat[3] = magicProtect + BattleCalculator.getPlayerEquipmentStat(player, "Magic_Protect", false, null, false)[0];
 	    	}
 	    	else
 	    	{

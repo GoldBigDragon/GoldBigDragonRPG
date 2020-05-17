@@ -13,99 +13,72 @@ public class PartyCommand
 {
 	public void onCommand(CommandSender talker, Command command, String string, String[] args)
     {
-	    
-			Player player = (Player) talker;
-			if(args.length == 0)
+		Player player = (Player) talker;
+		if(args.length == 0)
+		{
+			SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
+			new party.PartyGUI().PartyGUI_Main(player); return;
+		}
+		if(args.length <= 1)
+		{
+			switch(args[0])
 			{
-				SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
-				new party.PartyGUI().PartyGUI_Main(player); return;
+				case "목록":
+					{
+					 	SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
+					 	new party.PartyGUI().PartyListGUI(player, (short) 0);
+					}
+					return;
+				case "탈퇴":
+					{
+						if(main.MainServerOption.partyJoiner.containsKey(player))
+							main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).QuitParty(player);
+						else
+						{
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
+						}
+					}
+					return;
+				case "정보":
+					{
+						if(main.MainServerOption.partyJoiner.containsKey(player))
+							main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).getPartyInformation();
+						else
+						{
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
+						}
+					}
+					return;
+				case "잠금":
+					{
+						if(main.MainServerOption.partyJoiner.containsKey(player))
+							main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).ChangeLock(player);
+						else
+						{
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
+						}
+					}
+					return;
+				default :
+					{
+						HelpMessage(player);
+					}
+					return;
 			}
-			if(args.length <= 1)
+		}
+		else
+		{
+			switch(args[0])
 			{
-				switch(args[0])
-				{
-					case "목록":
+				case "생성":
+					{
+						if(main.MainServerOption.partyJoiner.containsKey(player)==false)
 						{
-						 	SoundEffect.playSound((Player)talker, org.bukkit.Sound.ENTITY_HORSE_ARMOR, 0.8F, 1.8F);
-						 	new party.PartyGUI().PartyListGUI(player, (short) 0);
-						}
-						return;
-					case "탈퇴":
-						{
-							if(main.MainServerOption.partyJoiner.containsKey(player))
-								main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).QuitParty(player);
-							else
-							{
-								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-								player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
-							}
-						}
-						return;
-					case "정보":
-						{
-							if(main.MainServerOption.partyJoiner.containsKey(player))
-								main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).getPartyInformation();
-							else
-							{
-								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-								player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
-							}
-						}
-						return;
-					case "잠금":
-						{
-							if(main.MainServerOption.partyJoiner.containsKey(player))
-								main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).ChangeLock(player);
-							else
-							{
-								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-								player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
-							}
-						}
-						return;
-					default :
-						{
-							HelpMessage(player);
-						}
-						return;
-				}
-			}
-			else
-			{
-				switch(args[0])
-				{
-					case "생성":
-						{
-							if(main.MainServerOption.partyJoiner.containsKey(player)==false)
-							{
-								ETC e = new ETC();
-			  					long nowSec = e.getSec();
-				  				if(args.length >= 3)
-				  				{
-				  					String SB=null;
-				  					for(int a = 1; a<= ((args.length)-1);a++)
-				  					{
-				  						if(a == (args.length)-2)
-				  							SB=SB+args[a]+" ";
-				  						else
-				  							SB=SB+args[a];
-				  					}
-				  					main.MainServerOption.party.put(nowSec, new PartyObject(nowSec, player, SB.toString()));
-				  				}
-				  				else
-				  					main.MainServerOption.party.put(nowSec, new PartyObject(nowSec, player, args[1]));
-				  				SoundEffect.playSound(player, Sound.BLOCK_WOODEN_DOOR_OPEN, 1.0F, 1.1F);
-				  				new party.PartyGUI().PartyGUI_Main(player);
-							}
-							else
-							{
-								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-								player.sendMessage("§c[파티] : 당신은 이미 파티에 참여한 상태입니다!");
-							}
-						}
-						return;
-					case "제목":
-						{
+							ETC e = new ETC();
+		  					long nowSec = e.getSec();
 			  				if(args.length >= 3)
 			  				{
 			  					String SB=null;
@@ -116,74 +89,100 @@ public class PartyCommand
 			  						else
 			  							SB=SB+args[a];
 			  					}
-								main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).ChangeTitle(player, SB.toString());
+			  					main.MainServerOption.party.put(nowSec, new PartyObject(nowSec, player, SB.toString()));
 			  				}
 			  				else
-								main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).ChangeTitle(player, args[1]);
+			  					main.MainServerOption.party.put(nowSec, new PartyObject(nowSec, player, args[1]));
+			  				SoundEffect.playSound(player, Sound.BLOCK_WOODEN_DOOR_OPEN, 1.0F, 1.1F);
+			  				new party.PartyGUI().PartyGUI_Main(player);
 						}
-						return;
-					case "리더":
+						else
 						{
-							if(main.MainServerOption.partyJoiner.containsKey(player))
-							{
-				  				if(args.length >= 3)
-				  				{
-				  					HelpMessage(player); return;
-				  				}
-								main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).ChangeLeader(player, args[1]);
-							}
-							else
-							{
-								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-								player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
-							}
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							player.sendMessage("§c[파티] : 당신은 이미 파티에 참여한 상태입니다!");
 						}
-						return;
-					case "인원":
+					}
+					return;
+				case "제목":
+					{
+		  				if(args.length >= 3)
+		  				{
+		  					String SB=null;
+		  					for(int a = 1; a<= ((args.length)-1);a++)
+		  					{
+		  						if(a == (args.length)-2)
+		  							SB=SB+args[a]+" ";
+		  						else
+		  							SB=SB+args[a];
+		  					}
+							main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).ChangeTitle(player, SB.toString());
+		  				}
+		  				else
+							main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).ChangeTitle(player, args[1]);
+					}
+					return;
+				case "리더":
+					{
+						if(main.MainServerOption.partyJoiner.containsKey(player))
 						{
-							if(main.MainServerOption.partyJoiner.containsKey(player))
-							{
-				  				if(args.length >= 3)
-				  					HelpMessage(player);
-				  				else
-			  					{
-				  					YamlLoader configYaml = new YamlLoader();
-				  					configYaml.getConfig("config.yml");
-				  					if(isIntMinMax(args[1], player, 2, configYaml.getInt("Party.MaxPartyUnit")))
-				  						main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).ChangeMaxCpacity(player, (byte) Integer.parseInt(args[1]));
-			  					}
-							}
-							else
-							{
-								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-								player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
-							}
+			  				if(args.length >= 3)
+			  				{
+			  					HelpMessage(player); return;
+			  				}
+							main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).ChangeLeader(player, args[1]);
 						}
-						return;
-					case "강퇴":
+						else
 						{
-							if(main.MainServerOption.partyJoiner.containsKey(player))
-							{
-				  				if(args.length >= 3)
-				  				{
-				  					HelpMessage(player); return;
-				  				}
-								main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).KickPartyMember(player, args[1]);
-							}
-							else
-							{
-								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-								player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
-							}
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
 						}
-						return;
-					default :
+					}
+					return;
+				case "인원":
+					{
+						if(main.MainServerOption.partyJoiner.containsKey(player))
 						{
-							HelpMessage(player);
+			  				if(args.length >= 3)
+			  					HelpMessage(player);
+			  				else
+		  					{
+			  					YamlLoader configYaml = new YamlLoader();
+			  					configYaml.getConfig("config.yml");
+			  					if(isIntMinMax(args[1], player, 2, configYaml.getInt("Party.MaxPartyUnit")))
+			  						main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).ChangeMaxCpacity(player, (byte) Integer.parseInt(args[1]));
+		  					}
 						}
-						return;
-				}
+						else
+						{
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
+						}
+					}
+					return;
+				case "강퇴":
+					{
+						if(main.MainServerOption.partyJoiner.containsKey(player))
+						{
+			  				if(args.length >= 3)
+			  				{
+			  					HelpMessage(player); return;
+			  				}
+							main.MainServerOption.party.get(main.MainServerOption.partyJoiner.get(player)).KickPartyMember(player, args[1]);
+						}
+						else
+						{
+							SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
+							player.sendMessage("§c[파티] : 당신은 파티에 참여하지 않은 상태입니다!");
+						}
+					}
+					return;
+				default :
+					{
+						HelpMessage(player);
+					}
+					return;
 			}
+		}
     }
 	private boolean isIntMinMax(String message,Player player, int Min, int Max)
 	{

@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import com.nisovin.magicspells.MagicSpells;
 import com.nisovin.magicspells.Spell;
 
+import customitem.CustomItemAPI;
 import effect.SoundEffect;
 import enums.weaponEnum;
 import main.MainServerOption;
@@ -179,6 +180,7 @@ public class EventChangeHotBar implements Listener
 					int health = 0;
 					int mana = 0;
 					int food = 0;
+					boolean rebirth = false;
 					for(int counter = 0; counter < newItem.getItemMeta().getLore().size();counter++)
 					{
 						String nowlore=ChatColor.stripColor(newItem.getItemMeta().getLore().get(counter));
@@ -193,52 +195,10 @@ public class EventChangeHotBar implements Listener
 						}
 						else if(nowlore.contains("환생") && nowlore.contains(" + "))
 						{
-						  	YamlLoader configYaml = new YamlLoader();
-						    configYaml.getConfig("config.yml");
-							
-							if(configYaml.getBoolean("Server.Like_The_Mabinogi_Online_Stat_System"))
-							{
-								main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).addStat_RealLevel(1);
-								main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_Level(1);
-								main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_EXP(0);
-								main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).setStat_MaxEXP(100);
-								
-								SoundEffect.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 0.5F);
-								SoundEffect.playSound(player, Sound.ENTITY_FIREWORK_LAUNCH, 1.0F, 1.2F);
-								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 0.8F);
-								effect.SendPacket sendPacket = new effect.SendPacket();
-								sendPacket.sendTitle(player,"§e■ [ Rebirth ] ■",  "§e[레벨 및 경험치가 초기화 되었습니다!]", 1, 5, 1);
-							}
-							else
-							{
-								player.sendMessage("§c[SYSTEM] : 서버 시스템에 맞지 않아 환생을 할 수 없습니다!");
-								SoundEffect.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.8F);
-							}
+							rebirth = true;
 						}
 					}
-					if(health > 0)
-					{
-						SoundEffect.playSoundLocation(player.getLocation(), Sound.ENTITY_GENERIC_DRINK, 2.0F, 0.8F);
-						Damageable damageablePlayer = player;
-						if(damageablePlayer.getMaxHealth() < damageablePlayer.getHealth()+health)
-							damageablePlayer.setHealth(damageablePlayer.getMaxHealth());
-						else
-							damageablePlayer.setHealth(damageablePlayer.getHealth() + health);
-					}
-					if(mana > 0 && MainServerOption.MagicSpellsCatched)
-					{
-						otherplugins.SpellMain magicspell = new otherplugins.SpellMain();
-						magicspell.DrinkManaPotion(player, mana);
-						SoundEffect.playSoundLocation(player.getLocation(), Sound.BLOCK_WATER_AMBIENT, 2.0F, 1.9F);
-					}
-					if(food > 0)
-					{
-						SoundEffect.playSoundLocation(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 2.0F, 1.2F);
-						if(player.getFoodLevel()+food > 40)
-							player.setFoodLevel(40);
-						else
-							player.setFoodLevel(player.getFoodLevel()+food);
-					}
+					new CustomItemAPI().usePotion(player, health, mana, food, rebirth);
 					if(newItem.getAmount() != 1)
 						newItem.setAmount(newItem.getAmount()-1);
 					else

@@ -433,6 +433,35 @@ public class MonsterKill
 		return mobs;
 	}
 	
+	public void reward(String realName, String playerName) {
+		Player player = Bukkit.getPlayer(playerName);
+		util.NumericUtil numericUtil = new util.NumericUtil();
+		int amount = 1;
+		if(40 <= numericUtil.RandomNum(0, 100) * MainServerOption.eventDropChance)
+		{
+			int lucky = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getStat_LUK()/30;
+			if(lucky >= 10) lucky =10;
+			if(lucky <= 0) lucky = 1;
+			if(lucky >= numericUtil.RandomNum(0, 100))
+			{
+				int luckysize = numericUtil.RandomNum(0, 100);
+				if(luckysize <= 80){player.sendMessage("§e§l[SYSTEM] : 럭키 피니시!");amount = 2;	SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 0.5F, 0.9F);}
+				else if(luckysize <= 95){player.sendMessage("§e§l[SYSTEM] : 빅 럭키 피니시!");amount = 5;	SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 0.7F, 1.0F);}
+				else{player.sendMessage("§e§l[SYSTEM] : 휴즈 럭키 피니시!");amount = 20;	SoundEffect.playSound(player, org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.1F);}
+			}
+		}
+		else
+			amount = 0;
+		if(main.MainServerOption.MonsterList.containsKey(realName))
+		{
+			if(amount == 0)
+				new util.PlayerUtil().addMoneyAndEXP(player, 0, main.MainServerOption.MonsterList.get(realName).getEXP(), player.getLocation(), true, false);
+			else
+				new util.PlayerUtil().addMoneyAndEXP(player, amount* numericUtil.RandomNum(main.MainServerOption.MonsterList.get(realName).getMinMoney(), main.MainServerOption.MonsterList.get(realName).getMaxMoney()), main.MainServerOption.MonsterList.get(realName).getEXP(), player.getLocation(), true, false);
+			return;
+		}
+		
+	}
 	
 	public void reward(Entity entity, Player player)
 	{

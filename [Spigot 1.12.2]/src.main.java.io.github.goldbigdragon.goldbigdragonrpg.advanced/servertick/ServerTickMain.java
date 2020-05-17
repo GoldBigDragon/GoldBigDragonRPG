@@ -352,7 +352,7 @@ public class ServerTickMain
 			new ServerTaskPlayer().Gamble_SlotMachine_Rolling(utc);
 			return;
 		case "C_S"://Create_Structure
-			new ServerTaskServer().CreateStructureMain(utc);
+			new ServerTaskServer().createStructureMain(utc);
 			return;
 		case "Sound":
 			new ServerTaskEffect().PlaySoundEffect(Schedule.get(utc));

@@ -30,56 +30,55 @@ public class BattleCalculator
 			{
 				if(item.hasItemMeta())
 				{
-					if(item.getItemMeta().hasLore())
-						if(item.getItemMeta().getLore().toString().contains(main.MainServerOption.damage+" : "))
+					if(item.getItemMeta().hasLore()) 
+					{
+						switch(item.getType())
 						{
-							switch(item.getType())
-							{
-							case WOOD_SPADE :
-							case GOLD_SPADE :
-							case WOOD_PICKAXE :
-							case GOLD_PICKAXE:
-								defaultDamage -= 2;
-								break;
-							case STONE_SPADE:
-							case STONE_PICKAXE:
-								defaultDamage -= 3;
-								break;
-							case IRON_SPADE:
-							case WOOD_SWORD:
-							case GOLD_SWORD:
-							case IRON_PICKAXE:
-								defaultDamage -= 4;
-								break;
-							case DIAMOND_SPADE:
-							case STONE_SWORD:
-							case DIAMOND_PICKAXE:
-								defaultDamage -= 5;
-								break;
-							case IRON_SWORD:
-								defaultDamage -= 6;
-								break;
-							case WOOD_AXE:
-							case GOLD_AXE:
-							case DIAMOND_AXE:
-							case DIAMOND_SWORD:
-								defaultDamage -= 7;
-								break;
-							case STONE_AXE:
-							case IRON_AXE:
-								defaultDamage -= 9;
-								break;
-							default:
-								break;
-							}
+						case WOOD_SPADE :
+						case GOLD_SPADE :
+						case WOOD_PICKAXE :
+						case GOLD_PICKAXE:
+							defaultDamage -= 2;
+							break;
+						case STONE_SPADE:
+						case STONE_PICKAXE:
+							defaultDamage -= 3;
+							break;
+						case IRON_SPADE:
+						case WOOD_SWORD:
+						case GOLD_SWORD:
+						case IRON_PICKAXE:
+							defaultDamage -= 4;
+							break;
+						case DIAMOND_SPADE:
+						case STONE_SWORD:
+						case DIAMOND_PICKAXE:
+							defaultDamage -= 5;
+							break;
+						case IRON_SWORD:
+							defaultDamage -= 6;
+							break;
+						case WOOD_AXE:
+						case GOLD_AXE:
+						case DIAMOND_AXE:
+						case DIAMOND_SWORD:
+							defaultDamage -= 7;
+							break;
+						case STONE_AXE:
+						case IRON_AXE:
+							defaultDamage -= 9;
+							break;
+						default:
+							break;
+						}
 					}
 				}
 			}
-			str += getPlayerEquipmentStat((Player)entity, "STR", true, null)[0];
+			str += getPlayerEquipmentStat((Player)entity, "STR", true, null, false)[0];
 			if(isMin)
-				defaultDamage += getPlayerEquipmentStat((Player)entity, "Damage", true, null)[0];
+				defaultDamage += getPlayerEquipmentStat((Player)entity, "Damage", true, null, false)[0];
 			else
-				defaultDamage += getPlayerEquipmentStat((Player)entity, "Damage", true, null)[1];
+				defaultDamage += getPlayerEquipmentStat((Player)entity, "Damage", true, null, false)[1];
 		}
 		return returnCombatValue(str, defaultDamage, isMin);
 	}
@@ -117,11 +116,11 @@ public class BattleCalculator
 		if(entity != null)
 			if(entity.getType() == EntityType.PLAYER)
 			{
-				stat = stat + getPlayerEquipmentStat((Player)entity, "DEX", false, null)[0];
+				stat = stat + getPlayerEquipmentStat((Player)entity, "DEX", false, null, false)[0];
 				if(isMin)
-					defaultDamage = defaultDamage + getPlayerEquipmentStat((Player)entity, "Damage", false, null)[0];
+					defaultDamage = defaultDamage + getPlayerEquipmentStat((Player)entity, "Damage", false, null, false)[0];
 				else
-					defaultDamage = defaultDamage + getPlayerEquipmentStat((Player)entity, "Damage", false, null)[1];
+					defaultDamage = defaultDamage + getPlayerEquipmentStat((Player)entity, "Damage", false, null, false)[1];
 			}
 		int dam=0;
 		if(isMin)
@@ -192,8 +191,8 @@ public class BattleCalculator
 		if(entity!=null)
 		if(entity.getType() == EntityType.PLAYER)
 		{
-			dex = dex + getPlayerEquipmentStat((Player)entity, "DEX", false, null)[0];
-			balance = balance + getPlayerEquipmentStat((Player)entity, "Balance", false, null)[0];
+			dex = dex + getPlayerEquipmentStat((Player)entity, "DEX", false, null, false)[0];
+			balance = balance + getPlayerEquipmentStat((Player)entity, "Balance", false, null, false)[0];
 		}
 		balance = balance + (int)dex/20;
 		if (balance > 80) balance = 80;
@@ -207,7 +206,7 @@ public class BattleCalculator
 		int critical = defaultCritical;
 		if(entity!=null)
 		if(entity.getType() == EntityType.PLAYER)
-			critical = critical + getPlayerEquipmentStat((Player)entity, "Critical", false, null)[0];
+			critical = critical + getPlayerEquipmentStat((Player)entity, "Critical", false, null, false)[0];
 		critical = critical + (playerLuk/5 + playerWill/10);
 		return critical;
 	}
@@ -218,8 +217,8 @@ public class BattleCalculator
 		int magicDef = 0;
 		if(entity.getType() == EntityType.PLAYER)
 		{
-			playerInt = playerInt + getPlayerEquipmentStat((Player)entity, "INT", false, null)[0];
-			magicDef = magicDef + getPlayerEquipmentStat((Player)entity, "Magic_DEF", false, null)[0];
+			playerInt = playerInt + getPlayerEquipmentStat((Player)entity, "INT", false, null, false)[0];
+			magicDef = magicDef + getPlayerEquipmentStat((Player)entity, "Magic_DEF", false, null, false)[0];
 		}
 		magicDef = magicDef + (playerInt/20);
 		return magicDef;
@@ -231,8 +230,8 @@ public class BattleCalculator
 		int magicProtect = 0;
 		if(entity.getType() == EntityType.PLAYER)
 		{
-			playerInt = playerInt + getPlayerEquipmentStat((Player)entity, "INT", false, null)[0];
-			magicProtect = magicProtect + getPlayerEquipmentStat((Player)entity, "Magic_Protect", false, null)[0];
+			playerInt = playerInt + getPlayerEquipmentStat((Player)entity, "INT", false, null, false)[0];
+			magicProtect = magicProtect + getPlayerEquipmentStat((Player)entity, "Magic_Protect", false, null, false)[0];
 		}
 		magicProtect = magicProtect + (playerInt/100);
 		return magicProtect;
@@ -244,8 +243,8 @@ public class BattleCalculator
 		int defCrash = 0;
 		if(entity.getType() == EntityType.PLAYER)
 		{
-			playerDex = playerDex + getPlayerEquipmentStat((Player)entity, "DEX", false, null)[0];
-			defCrash = defCrash + getPlayerEquipmentStat((Player)entity, "DEFcrash", false, null)[0];
+			playerDex = playerDex + getPlayerEquipmentStat((Player)entity, "DEX", false, null, false)[0];
+			defCrash = defCrash + getPlayerEquipmentStat((Player)entity, "DEFcrash", false, null, false)[0];
 		}
 		defCrash = defCrash + (playerDex/40);
 		return defCrash;
@@ -257,14 +256,14 @@ public class BattleCalculator
 		int magicDefCrash = 0;
 		if(entity.getType() == EntityType.PLAYER)
 		{
-			playeInt = playeInt + getPlayerEquipmentStat((Player)entity, "INT", false, null)[0];
-			magicDefCrash = magicDefCrash + getPlayerEquipmentStat((Player)entity, "MagicDEFcrash", false, null)[0];
+			playeInt = playeInt + getPlayerEquipmentStat((Player)entity, "INT", false, null, false)[0];
+			magicDefCrash = magicDefCrash + getPlayerEquipmentStat((Player)entity, "MagicDEFcrash", false, null, false)[0];
 		}
 		magicDefCrash = magicDefCrash + (playeInt/40);
 		return magicDefCrash;
 	}
 
-	public static int[] getPlayerEquipmentStat(Player player, String type, boolean isCombat, ItemStack newSlot)
+	public static int[] getPlayerEquipmentStat(Player player, String type, boolean isCombat, ItemStack newSlot, boolean isMagicDamage)
 	{
 		int[] bonus = new int[2];
 		switch(type)
@@ -391,13 +390,25 @@ public class BattleCalculator
 									}
 									if(useable)
 									{
+										boolean notsame = false;
 										for(int count = 0; count < lore.size(); count++)
 										{
 											if(exitDurability && lore.get(count).contains(type) &&
 													(lore.get(count).contains(" : ")||lore.get(count).contains("/")))
 											{
+												notsame = false;
 												String[] stat = ChatColor.stripColor(lore.get(count)).split(" : ");
-												if(stat[0].contains(type))
+												if(type.equals(main.MainServerOption.damage) && stat[0].contains(type))
+												{
+													if(stat[0].contains(main.MainServerOption.magicDamage))
+													{
+														stat[0] = main.MainServerOption.magicDamage;
+														notsame = true;
+													}
+													else
+														stat[0] = main.MainServerOption.damage;
+												}
+												if(stat[0].contains(type) && ! notsame)
 												{
 													if(type.equals(main.MainServerOption.statSTR)||type.equals(main.MainServerOption.statDEX)||
 														type.equals(main.MainServerOption.statINT)||type.equals(main.MainServerOption.statWILL)||
@@ -406,20 +417,11 @@ public class BattleCalculator
 														if(!im.getLore().get(count).contains("최소"))
 															bonus[0] = bonus[0] + Integer.parseInt(stat[1]);
 													}
-													else if(type.equals(main.MainServerOption.damage)||type.equals(main.MainServerOption.magicDamage)||type.equals("업그레이드"))
+													else if(type.equals(main.MainServerOption.damage)||(isMagicDamage && type.equals(main.MainServerOption.magicDamage))||type.equals("업그레이드"))
 													{
-														if(type.equals(main.MainServerOption.damage))
-														{
-															String[] subLore = stat[1].split(" ~ ");
-															bonus[0] = bonus[0] + Integer.parseInt(subLore[0]);
-															bonus[1] = bonus[1] + Integer.parseInt(subLore[1]);
-														}
-														else if(type.equals(main.MainServerOption.magicDamage)||type.equals("업그레이드"))
-														{
-															String[] subLore = stat[1].split(" ~ ");
-															bonus[0] = bonus[0] + Integer.parseInt(subLore[0]);
-															bonus[1] = bonus[1] + Integer.parseInt(subLore[1]);
-														}
+														String[] subLore = stat[1].split(" ~ ");
+														bonus[0] = bonus[0] + Integer.parseInt(subLore[0]);
+														bonus[1] = bonus[1] + Integer.parseInt(subLore[1]);
 													}
 													else
 														bonus[0] = bonus[0] + Integer.parseInt(stat[1]);

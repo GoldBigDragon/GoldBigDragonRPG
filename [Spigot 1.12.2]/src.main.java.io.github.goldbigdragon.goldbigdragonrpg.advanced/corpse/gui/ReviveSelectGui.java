@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -26,6 +27,8 @@ public class ReviveSelectGui extends GuiUtil{
 	{
 		if(!player.getOpenInventory().getTitle().equals("§0§0§9§0§0§r§0행동불능 상태 -부활 방법 선택-"))
 		{
+	        LivingEntity entity = (LivingEntity) player;
+	        entity.setCollidable(false);
 			Inventory inv = Bukkit.createInventory(null, 27, uniqueCode + "§0행동불능 상태 -부활 방법 선택-");
 		  	configYaml.getConfig("config.yml");
 

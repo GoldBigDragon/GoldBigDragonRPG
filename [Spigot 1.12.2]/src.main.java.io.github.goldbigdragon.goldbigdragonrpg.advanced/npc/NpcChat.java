@@ -17,17 +17,15 @@ public class NpcChat extends ChatUtil
 		UserDataObject u = new UserDataObject();
 		Player player = event.getPlayer();
 
-		String NPCuuid = u.getString(player, (byte)3);
+		String NPCuuid = u.getNPCuuid(player);
+		if(NPCuuid == null || NPCuuid.length() < 20)
+			NPCuuid = u.getString(player, (byte)3);
 	  	YamlLoader npcScriptYaml = new YamlLoader();
 		
-	  	if(npcScriptYaml.isExit("NPC/NPCData/"+ NPCuuid +".yml") == false)
-	  	{
-	  		npc.NpcConfig NPCC = new npc.NpcConfig();
-	  		NPCC.NPCNPCconfig(NPCuuid);
-	  	}
+	  	if(! npcScriptYaml.isExit("NPC/NPCData/"+ NPCuuid +".yml"))
+	  		new npc.NpcConfig().NPCNPCconfig(NPCuuid);
+	  	
 		npcScriptYaml.getConfig("NPC/NPCData/"+ NPCuuid +".yml");
-	  	YamlLoader npcYaml = new YamlLoader();
-		npcYaml.getConfig("NPC/NPCData/"+u.getNPCuuid(player)+".yml");
 		npc.NpcGui NPGUI = new npc.NpcGui();
 		event.setCancelled(true);
 		String Message = ChatColor.stripColor(event.getMessage());
@@ -45,10 +43,10 @@ public class NpcChat extends ChatUtil
 		case "SaleSetting2":
 			if(isIntMinMax(Message, player, 0, 100))
 			{
-				npcYaml.set("Sale.Enable", true);
-				npcYaml.set("Sale.Minlove", u.getInt(player, (byte)0));
-				npcYaml.set("Sale.discount", Integer.parseInt(Message));
-				npcYaml.saveConfig();
+				npcScriptYaml.set("Sale.Enable", true);
+				npcScriptYaml.set("Sale.Minlove", u.getInt(player, (byte)0));
+				npcScriptYaml.set("Sale.discount", Integer.parseInt(Message));
+				npcScriptYaml.saveConfig();
 				new npc.NpcGui().MainGUI(player, u.getString(player, (byte)2), player.isOp());
 				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 				u.clearAll(player);
@@ -57,8 +55,8 @@ public class NpcChat extends ChatUtil
 		case "PresentLove":
 			if(isIntMinMax(Message, player, -1000, 1000))
 			{
-				npcYaml.set("Present."+u.getInt(player, (byte)0)+".love", Integer.parseInt(Message));
-				npcYaml.saveConfig();
+				npcScriptYaml.set("Present."+u.getInt(player, (byte)0)+".love", Integer.parseInt(Message));
+				npcScriptYaml.saveConfig();
 				new npc.NpcGui().PresentSettingGUI(player, u.getString(player, (byte)2));
 				SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.8F);
 				u.clearAll(player);
@@ -67,8 +65,8 @@ public class NpcChat extends ChatUtil
 		case "NUC"://NPC'sUpgradeCost
 			if(isIntMinMax(Message, player, 0, Integer.MAX_VALUE))
 			{
-				npcYaml.set("Job.UpgradeRecipe."+u.getString(player, (byte)6),  Integer.parseInt(Message));
-				npcYaml.saveConfig();
+				npcScriptYaml.set("Job.UpgradeRecipe."+u.getString(player, (byte)6),  Integer.parseInt(Message));
+				npcScriptYaml.saveConfig();
 				npc.NpcGui NGUI = new npc.NpcGui();
 				NGUI.UpgraderGUI(player, (short) 0, u.getString(player, (byte)8));
 				SoundEffect.playSound(player, Sound.ENTITY_HORSE_SADDLE, 1.0F, 1.8F);
@@ -266,12 +264,11 @@ public class NpcChat extends ChatUtil
 			}
 			if(isExitJob)
 			{
-				npcScriptYaml.getConfig("NPC/NPCData/"+ u.getString(player, (byte)2) +".yml");
 				npcScriptYaml.removeKey("Job");
 				npcScriptYaml.set("Job.Type", "Master");
 				npcScriptYaml.set("Job.Job", Message);
 				npcScriptYaml.saveConfig();
-				NPGUI.MainGUI(player, u.getString(player, (byte)3),player.isOp());
+				NPGUI.MainGUI(player, u.getString(player, (byte)2),player.isOp());
 				u.clearAll(player);
 			}
 			else

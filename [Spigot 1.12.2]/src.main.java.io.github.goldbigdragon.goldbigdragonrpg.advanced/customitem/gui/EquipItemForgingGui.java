@@ -68,6 +68,12 @@ public class EquipItemForgingGui extends GuiUtil{
 		removeFlagStack("§3[      스텟 제한      ]", 166,0,1,Arrays.asList("§f아이템 장착에 제한을","§f걸어둡니다.",""), 49, inv);
 		removeFlagStack("§3[      직업 제한      ]", 397,3,1,Arrays.asList("§f아이템 장착에 제한을","§f걸어둡니다.","§c[우 클릭시 해제]",""), 50, inv);
 		
+		boolean removeDelay = itemYaml.getBoolean(number+".NoAttackDelay");
+		if(removeDelay)
+			removeFlagStack("§c[  공격 딜레이 없음      ]", 166,0,1,Arrays.asList("§f언제나 데미지가 동일합니다.",""), 51, inv);
+		else
+			removeFlagStack("§3[  공격 딜레이 있음      ]", 347,0,1,Arrays.asList("§f공격 딜레이에 따라", "§f데미지가 달라집니다.",""), 51, inv);
+		
 		removeFlagStack("§f§l이전 목록", 323,0,1,Arrays.asList("§7이전 화면으로 돌아갑니다."), 45, inv);
 		removeFlagStack("§f§l닫기", 324,0,1,Arrays.asList("§7창을 닫습니다.","§0"+number), 53, inv);
 		player.openInventory(inv);
@@ -88,7 +94,7 @@ public class EquipItemForgingGui extends GuiUtil{
 			SoundEffect.playSound(player, Sound.ENTITY_ITEM_PICKUP, 0.8F, 1.0F);
 			if(slot == 45)//이전 화면
 				new EquipItemListGui().itemListGui(player, 0);
-			else if(!((event.getSlot()>=9&&event.getSlot()<=11)||(event.getSlot()>=18&&event.getSlot()<=20)||(event.getSlot()>=27&&event.getSlot()<=29)))
+			else if(!((event.getSlot()>=9&&event.getSlot()<=11)||(event.getSlot()>=18&&event.getSlot()<=20)||(event.getSlot()>=27&&event.getSlot()<=29))||event.getSlot()==51)
 			{
 				int itemnumber = Integer.parseInt(ChatColor.stripColor(event.getInventory().getItem(53).getItemMeta().getLore().get(1)));
 			  	YamlLoader itemYaml = new YamlLoader();
@@ -235,6 +241,14 @@ public class EquipItemForgingGui extends GuiUtil{
 						itemYaml.saveConfig();
 						itemForgingGui(player, itemnumber);
 					}
+				}
+				else if(slot==51)//공격 딜레이
+				{
+					boolean removeDelay = itemYaml.getBoolean(itemnumber+".NoAttackDelay");
+					itemYaml.set(itemnumber+".NoAttackDelay", !removeDelay);
+					itemYaml.saveConfig();
+					SoundEffect.playSound(player, Sound.BLOCK_ANVIL_PLACE, 0.8F, 1.0F);
+					itemForgingGui(player, itemnumber);
 				}
 				else
 				{

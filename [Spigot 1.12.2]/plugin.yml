@@ -3,6 +3,9 @@ main: main.Main
 version: 20180214
 description: Mabinogi!!!
 commands:
+  보상:
+    aliases: reward
+    description: 몬스터를 잡은것과 동일한 보상을 줍니다.
   경주:
     aliases: [경험치주기, giveexp]
     description: 경험치를 줍니다.

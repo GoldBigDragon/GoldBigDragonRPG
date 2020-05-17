@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.SkullType;
 import org.bukkit.Sound;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -183,6 +184,8 @@ public class CorpseAPI
 
 	public void removeCorpse(String player)
 	{
+        LivingEntity entity = (LivingEntity) Bukkit.getPlayer(player);
+        entity.setCollidable(true);
 		if(corpses.containsKey(player))
 		{
 			for(int count = 0; count < corpses.get(player).size(); count ++)

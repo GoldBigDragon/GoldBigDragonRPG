@@ -55,6 +55,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import corpse.CorpseAPI;
 import corpse.gui.ReviveSelectGui;
 import effect.SoundEffect;
+import monster.MonsterKill;
 import monster.gui.MonsterListGui;
 import net.milkbowl.vault.economy.Economy;
 import net.minecraft.server.v1_12_R1.PacketPlayInClientCommand;
@@ -621,8 +622,6 @@ public class Main extends JavaPlugin implements Listener
 		if(talker instanceof Player)
 		{
 			Player player = (Player) talker;
-			
-			
 			switch(string)
 			{
 				case"gui사용":
@@ -672,6 +671,22 @@ public class Main extends JavaPlugin implements Listener
 		  				 ItemC.onCommand2(talker, command, string, args);
 		  			 else
 				  		ItemC.onCommand1(talker, command, string, args);
+		  			break;
+		  		case "보상" :
+		  		case "reward" :
+		  			if(talker.isOp()) {
+		  				if(args.length == 2) {
+		  					if(main.MainServerOption.MonsterList.containsKey(args[0]))
+		  						new MonsterKill().reward(args[0], args[1]);
+		  					else
+		  						talker.sendMessage("§c[SYSTEM] : 등록되지 않은 몬스터입니다!");
+		  				} else {
+		  					talker.sendMessage("§c[SYSTEM] : /보상 [몬스터이름] [플레이어이름]");
+		  					talker.sendMessage("§c(몬스터 이름은 '보여지는 이름'이 아닌 '등록된 이름'입니다.)");
+		  				}
+		  			} else {
+		  				talker.sendMessage("§c[SYSTEM] : 관리자 권한이 필요합니다!");
+		  			}
 		  			break;
 		  		case "파티":
 		  		case "gbdparty":
@@ -824,6 +839,21 @@ public class Main extends JavaPlugin implements Listener
 				{
 					  	Bukkit.getConsoleSender().sendMessage("§c[SYSTEM] : /경주 [닉네임] [경험치]");
 				}
+			}
+			if(string.equals("보상")||string.equals("reward")) {
+	  			if(talker.isOp()) {
+	  				if(args.length == 2) {
+	  					if(main.MainServerOption.MonsterList.containsKey(args[0]))
+	  						new MonsterKill().reward(args[0], args[1]);
+	  					else
+	  						talker.sendMessage("§c[SYSTEM] : 등록되지 않은 몬스터입니다!");
+	  				} else {
+	  					talker.sendMessage("§c[SYSTEM] : /보상 [몬스터이름] [플레이어이름]");
+	  					talker.sendMessage("§c(몬스터 이름은 '보여지는 이름'이 아닌 '등록된 이름'입니다.)");
+	  				}
+	  			} else {
+	  				talker.sendMessage("§c[SYSTEM] : 관리자 권한이 필요합니다!");
+	  			}
 			}
 		}
 		return false;
