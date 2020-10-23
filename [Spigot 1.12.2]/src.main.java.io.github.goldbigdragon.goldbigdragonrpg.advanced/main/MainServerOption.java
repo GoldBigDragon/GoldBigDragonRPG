@@ -133,10 +133,10 @@ public class MainServerOption
 	public static short Money6ID = 41;
 	public static byte Money6DATA = 0;
 	
-	public static String serverUpdate = "2020-03-04-20:03";
+	public static String serverUpdate = "2020-10-24-01:30";
 	public static String serverVersion = "Advanced";
 	private static String updateCheckURL = "http://goldbigdragon.github.io/version/GoldBigDragonRPG_Advanced.json";
-	public static String currentServerUpdate = "2020-03-04-20:03";
+	public static String currentServerUpdate = "2020-10-24-01:30";
 	public static String currentServerVersion = "Advanced";
 	
 	public static java.util.Map<Long, PartyObject> party = new LinkedHashMap<>();

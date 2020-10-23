@@ -1,6 +1,6 @@
 ﻿name: GoldBigDragonRPG
 main: main.Main
-version: 20180214
+version: 20201024
 description: Mabinogi!!!
 commands:
   보상:

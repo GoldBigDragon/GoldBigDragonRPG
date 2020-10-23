@@ -30,85 +30,80 @@ public class CorpseAPI
 
 	public boolean deathCapture(Player player, boolean isJoin)
 	{
-		if(player.getGameMode()==GameMode.SPECTATOR)
+		if(player.getGameMode()==GameMode.SPECTATOR &&
+		main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).isDeath())
 		{
-		  	if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).isDeath())
-		  	{
-	  			Location l = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getLastDeathPoint();
-		  		if(l.getBlockY() < 0)
-		  			l.setY(0);
-		  		if(l.getBlockX()!=player.getLocation().getBlockX()||l.getBlockY()!=player.getLocation().getBlockY()||l.getBlockZ()!=player.getLocation().getBlockZ())
-		  			player.teleport(l);
-		  		if(!isJoin)
-		  			new ReviveSelectGui().openReviveSelectGui(player);
-		  		else if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).isBgmOn())
-		  		{
-	  	    		new otherplugins.NoteBlockApiMain().Stop(player);
-	  			  	YamlLoader configYaml = new YamlLoader();
-	  				configYaml.getConfig("config.yml");
-	  				if(configYaml.getInt("Death.Track")!=-1)
-	  					new otherplugins.NoteBlockApiMain().Play(player, configYaml.getInt("Death.Track"));
-		  		}
-		  		if(corpses.containsKey(player.getName())==false)
-		  			createCorpse(player);
-		  		return true;
-		  	}
+  			Location l = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getLastDeathPoint();
+	  		if(l.getBlockY() < 0)
+	  			l.setY(0);
+	  		if(l.getBlockX()!=player.getLocation().getBlockX()||l.getBlockY()!=player.getLocation().getBlockY()||l.getBlockZ()!=player.getLocation().getBlockZ())
+	  			player.teleport(l);
+	  		if(!isJoin)
+	  			new ReviveSelectGui().openReviveSelectGui(player);
+	  		else if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).isBgmOn())
+	  		{
+  	    		new otherplugins.NoteBlockApiMain().Stop(player);
+  			  	YamlLoader configYaml = new YamlLoader();
+  				configYaml.getConfig("config.yml");
+  				if(configYaml.getInt("Death.Track")!=-1)
+  					new otherplugins.NoteBlockApiMain().Play(player, configYaml.getInt("Death.Track"));
+	  		}
+	  		if(corpses.containsKey(player.getName())==false)
+	  			createCorpse(player);
+	  		return true;
 		}
 		return false;
 	}
 	
 	public void asyncDeathCapture(final Player player)
 	{
-		if(player.getGameMode()==GameMode.SPECTATOR)
+		if(player.getGameMode()==GameMode.SPECTATOR&&
+		main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).isDeath())
 		{
-		  	if(main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).isDeath())
-		  	{
-	  			Location l = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getLastDeathPoint();
-		  		if(l.getBlockY() < 0)
-		  			l.setY(0);
-		  		if(l.getBlockX()!=player.getLocation().getBlockX()||l.getBlockY()!=player.getLocation().getBlockY()||l.getBlockZ()!=player.getLocation().getBlockZ())
-		  		{
-		  			final Location loc = l.clone();
-		  			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main.Main.plugin, new Runnable()
-		  	        {
-		  	            @Override
-		  	            public void run() 
-		  	            {
-		  	            	try
-		  	            	{
-					  			player.teleport(loc);
-		  	            	}
-		  	            	catch(Exception e)
-		  	            	{
-		  	            	}
-		  	            }
-		  	        }, 0);
-		  		}
-	  			new ReviveSelectGui().openReviveSelectGui(player);
-		  		if(!corpses.containsKey(player.getName()))
-		  		{
-		  			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main.Main.plugin, new Runnable()
-		  	        {
-		  	            @Override
-		  	            public void run() 
-		  	            {
-				  			createCorpse(player);
-		  	            }
-		  	        }, 0);
-		  		}
-		  	}
+  			Location l = main.MainServerOption.PlayerList.get(player.getUniqueId().toString()).getLastDeathPoint();
+	  		if(l.getBlockY() < 0)
+	  			l.setY(0);
+	  		if(l.getBlockX()!=player.getLocation().getBlockX()||l.getBlockY()!=player.getLocation().getBlockY()||l.getBlockZ()!=player.getLocation().getBlockZ())
+	  		{
+	  			final Location loc = l.clone();
+	  			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main.Main.plugin, new Runnable()
+	  	        {
+	  	            @Override
+	  	            public void run() 
+	  	            {
+	  	            	try
+	  	            	{
+	  	            		if(player.getLocation().distance(loc) >= 5) {
+					  			player.teleport(loc);	
+	  	            		}
+	  	            	}
+	  	            	catch(Exception e)
+	  	            	{
+	  	            	}
+	  	            }
+	  	        }, 0);
+	  		}
+  			new ReviveSelectGui().openReviveSelectGui(player);
+	  		if(!corpses.containsKey(player.getName()))
+	  		{
+	  			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main.Main.plugin, new Runnable()
+	  	        {
+	  	            @Override
+	  	            public void run() 
+	  	            {
+			  			createCorpse(player);
+	  	            }
+	  	        }, 0);
+	  		}
 		}
 	}
 	
 	public void createCorpse(Player player)
 	{
-		if(corpses.containsKey(player.getName()))
-			return;
-		else
-		{
+		if(!corpses.containsKey(player.getName())) {
 			removeCorpse(player.getName());
 			String name = player.getName();
-			ArrayList<ArmorStand> AL = new ArrayList<ArmorStand>();
+			ArrayList<ArmorStand> AL = new ArrayList<>();
 	        player.setGameMode(GameMode.SPECTATOR);
 	        int playerRandom = new Random().nextInt((int) (91))-45;
 			//if(CorpseStyle == 0)
